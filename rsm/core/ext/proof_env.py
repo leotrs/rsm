@@ -36,9 +36,9 @@ def visit_proof_env(self, node):
             <div class="border-btn border-btn--relative" onclick="show_all_options(this)">
                 <span>⋮</span>
                 <div class="options-container" onmouseleave="hide_all_options(this)">
-                    <span class="option show" onclick="toggle_all_steps(this)">steps</span>
-                    <span class="option show" onclick="copy_link(this)">link</span>
-                    <span class="option show" onclick="show_tree(this)">tree</span>
+                    <span class="option" onclick="toggle_all_steps(this)">steps</span>
+                    <span class="option" onclick="copy_link(this)">link</span>
+                    <span class="option" onclick="show_tree(this)">tree</span>
                     <span class="option">source</span>
                 </div>
             </div>

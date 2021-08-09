@@ -61,9 +61,33 @@ body {
     right: 0;
 }
 
-.step > .tombstone-container.no-ellipsis > .ellipsis-border,
-.step > .tombstone-container.no-ellipsis > .ellipsis-container {
-    display: none;
+.tombstone-container::before {
+    content: '';
+    display: flex;
+    border-style: solid;
+    border-color: var(--keyword-blue) var(--keyword-blue) var(--keyword-blue) var(--keyword-blue);
+    border-width: .0625em 0 .0625em .0625em;
+    position: absolute;
+    right: 8px;
+    width: var(--ellipsis-width);
+    height: var(--tombstone-side-length);
+    justify-content: space-evenly;
+    align-items: center;
+    background:
+	radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 2px/2px 2px,
+	radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 6px/2px 2px,
+	radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 10px/2px 2px;
+    background-repeat: no-repeat;
+}
+
+.tombstone-container::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    height: var(--tombstone-side-length);
+    width: var(--tombstone-side-length);
+    background-color: var(--keyword-blue);
 }
 
 .options-container {
@@ -129,46 +153,7 @@ body {
      text-shadow: 0 0 1px black;
  }
 
-.proof-env > .tombstone-container {
-    margin-top: calc(-1 * var(--left-border-margin-block) + var(--tombstone-side-length));
-}
 
-.tombstone {
-    height: var(--tombstone-side-length);
-    width: var(--tombstone-side-length);
-    background-color: var(--keyword-blue);
-}
-
-.ellipsis-border {
-    display: block;
-    margin-left: auto;
-    margin-right: 0;
-    border-style: solid;
-    border-color: var(--keyword-blue) var(--keyword-blue) var(--keyword-blue) var(--keyword-blue);
-    position: relative;
-    width: var(--ellipsis-width);
-    height: var(--tombstone-side-length);
-    border-width: .0625em 0 .0625em .0625em;
-}
-
-.ellipsis-container {
-    display: flex;
-    position: absolute;
-    right: 8px;
-    width: var(--ellipsis-width);
-    height: var(--tombstone-side-length);
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.ellipsis-container > .circle {
-    width: .125em;
-    height: .125em;
-    background-color: var(--keyword-blue);
-    border-radius: 50%;
-    position: relative;
-    content: '';
-}
 
 .proof-env {
     position: relative;

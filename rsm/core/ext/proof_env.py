@@ -27,9 +27,7 @@ class proof_env(nodes.Element):
 
 
 def visit_proof_env(self, node):
-    self.body.append(self.starttag(
-        node, 'div', CLASS=('proof-env')
-    ))
+    self.body.append(self.starttag(node, 'div', CLASS=('proof-env with-tombstone')))
     self.body.append('''
     <div class="left-border proof-env">
         <div class="border-btn-container">
@@ -52,18 +50,10 @@ def visit_proof_env(self, node):
 
 
 def depart_proof_env(self, node):
-    self.body.append('</div></div>')
-    self.body.append('''
-    <div class="tombstone-container no-ellipsis">
-        <div class="ellipsis-border"></div>
-        <div class="ellipsis-container">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-        </div>
-        <div class="tombstone"></div>
-    </div>
-    ''')
+    self.body.append('</div>')  # proof-container
+    self.body.append('</div>')  # left-border proof-env
+    self.body.append('<div class="tombstone-container no-ellipsis"></div>')
+    self.body.append('</div>')  # proof-env
 
 
 class keyword(nodes.Inline, nodes.TextElement):
@@ -333,25 +323,13 @@ class ProofDirective(SphinxDirective):
 
 
 def visit_step(self, node):
-    self.body.append(self.starttag(node, 'div', CLASS=('step')))
+    self.body.append(self.starttag(node, 'div', CLASS=('step with-tombstone')))
     self.body.append('<div class="step-container">')
 
 
 def depart_step(self, node):
     self.body.append('</div>')   # step-container
-    self.body.append('''
-    <div class="tombstone-container no-ellipsis hide">
-        <div class="ellipsis-border"></div>
-        <div class="ellipsis-container">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-        </div>
-        <div class="tombstone"></div>
-    </div>
-    '''
-    )
-
+    self.body.append('<div class="tombstone-container no-ellipsis hide"></div>')
     self.body.append('</div>')   # step
 
 

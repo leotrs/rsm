@@ -152,8 +152,9 @@ def setup(app):
 
 
 
-# proof envs have two nested divs with class 'proof-env'...
 # tombstones should be an ::after element
+
+# proof envs have two nested divs with class 'proof-env'...
 # what things should go into a custom writer?
 # click on a sub-step is hiding the parent step too!
 # convert all ".show" to ".hide" bc it's easier to set "display: none" once

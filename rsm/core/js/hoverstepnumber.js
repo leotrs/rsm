@@ -1,13 +1,13 @@
 $(document).ready(function() {
     $( "div.step" ).hover(function() {
         tomb = $( this ).children( "div.tombstone-container" );
-        tomb.addClass("show");
+        tomb.removeClass("hide");
     }, function() {
         tomb = $( this ).children( "div.tombstone-container" );
         if (tomb.hasClass("no-ellipsis")) {
-            tomb.removeClass("show");
+            tomb.addClass("hide");
         } else {
-            tomb.addClass("show");
+            tomb.removeClass("hide");
         };
     });
 
@@ -20,25 +20,24 @@ $(document).ready(function() {
 function toggle_proof(btn) {
     console.log(btn);
     div = $( btn ).closest( ".proof-env" ).children( ".proof-container" );
-    console.log(div);
-    if (div.hasClass("show")) {
-        div.removeClass("show");
+    if (div.hasClass("hide")) {
+        div.removeClass("hide");
     } else {
-        div.addClass("show");
+        div.addClass("hide");
     };
 };
 
 function toggle_step(step) {
     div = $( step ).children( "div.statement-proof" );
     tomb = $( step ).siblings( "div.tombstone-container" );
-    if (div.hasClass("show")) {
-        div.removeClass("show");
-        tomb.removeClass("no-ellipsis");
-        tomb.addClass("show");
-    } else {
-        div.addClass("show");
+    if (div.hasClass("hide")) {
+	div.removeClass("hide");
         tomb.addClass("no-ellipsis");
-        tomb.removeClass("show");
+        tomb.addClass("hide");
+    } else {
+        div.addClass("hide");
+        tomb.removeClass("no-ellipsis");
+        tomb.removeClass("hide");
     };
 };
 

@@ -8,6 +8,7 @@
     --keyword-blue: #005187;
     --left-border-margin-block: 1rem;
     --tombstone-side-length: 0.5em;
+    --ellipsis-width: 1em;
 }
 
 *, *::before, *::after {
@@ -54,14 +55,10 @@ div.documentwrapper {
 }
 
 .tombstone-container {
-    display: none;
+    display: flex;
     justify-content: flex-end;
     position: absolute;
     right: 0;
-}
-
-.tombstone-container.show {
-    display: flex;
 }
 
 div.step > .tombstone-container.no-ellipsis > .ellipsis-border,
@@ -70,7 +67,7 @@ div.step > .tombstone-container.no-ellipsis > .ellipsis-container {
 }
 
 .options-container {
-    display: none;
+    display: inline-flex;
     flex-direction: column;
     align-items: flex-end;
     position: absolute;
@@ -84,10 +81,6 @@ div.step > .tombstone-container.no-ellipsis > .ellipsis-container {
     top: 2em;
     right: 0;
     z-index: 1;
-}
-
-.options-container.show {
-    display: inline-flex;
 }
 
 .options-container .option:hover {
@@ -153,7 +146,7 @@ div.ellipsis-border {
     border-style: solid;
     border-color: var(--keyword-blue) var(--keyword-blue) var(--keyword-blue) var(--keyword-blue);
     position: relative;
-    width: .875em;
+    width: var(--ellipsis-width);
     height: var(--tombstone-side-length);
     border-width: .0625em 0 .0625em .0625em;
 }
@@ -162,7 +155,7 @@ div.ellipsis-container {
     display: flex;
     position: absolute;
     right: 8px;
-    width: .875em;
+    width: var(--ellipsis-width);
     height: var(--tombstone-side-length);
     justify-content: space-evenly;
     align-items: center;
@@ -284,10 +277,6 @@ div.statement p {
 
 div.statement-proof {
     margin-block-start: 0.25rem;
-    display: none;
-}
-
-div.statement-proof.show {
     display: block;
 }
 
@@ -301,10 +290,6 @@ div.proof-container > div.step:last-of-type {
 }
 
 div.proof-container {
-    display: none;
-}
-
-div.proof-container.show {
     display: block;
 }
 
@@ -318,5 +303,9 @@ a:hover {
 }
 
 div.sphinxsidebar {
+    display: none;
+}
+
+.hide {
     display: none;
 }

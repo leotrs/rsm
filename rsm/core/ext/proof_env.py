@@ -54,7 +54,7 @@ def visit_proof_env(self, node):
 def depart_proof_env(self, node):
     self.body.append('</div></div>')
     self.body.append('''
-    <div class="tombstone-container show no-ellipsis">
+    <div class="tombstone-container no-ellipsis">
         <div class="ellipsis-border"></div>
         <div class="ellipsis-container">
             <div class="circle"></div>
@@ -63,8 +63,7 @@ def depart_proof_env(self, node):
         </div>
         <div class="tombstone"></div>
     </div>
-    '''
-    )
+    ''')
 
 
 class keyword(nodes.Inline, nodes.TextElement):
@@ -340,9 +339,8 @@ def visit_step(self, node):
 
 def depart_step(self, node):
     self.body.append('</div>')   # step-container
-
     self.body.append('''
-    <div class="tombstone-container no-ellipsis">
+    <div class="tombstone-container no-ellipsis hide">
         <div class="ellipsis-border"></div>
         <div class="ellipsis-container">
             <div class="circle"></div>
@@ -380,7 +378,7 @@ def depart_statement(self, node):
 
 
 def visit_statement_proof(self, node):
-    self.body.append(self.starttag(node, 'div', CLASS='statement-proof left-border left-border-hug show'))
+    self.body.append(self.starttag(node, 'div', CLASS='statement-proof left-border left-border-hug'))
 
 
 def depart_statement_proof(self, node):

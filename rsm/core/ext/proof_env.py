@@ -47,7 +47,7 @@ def visit_proof_env(self, node):
         <div class="proof-env__title">
             <strong>Proof.</strong>
         </div>
-        <div class="proof-container show">
+        <div class="proof-container">
     ''')
 
 

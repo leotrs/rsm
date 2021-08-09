@@ -15,6 +15,11 @@ $(document).ready(function() {
         toggle_step(this);
     });
 
+    $(".proof-env").mouseleave(function () {
+	console.log('leave');
+	$(this).find(".options-container").addClass("hide");
+    });
+
 });
 
 function toggle_proof(btn) {
@@ -52,10 +57,6 @@ function show_all_options(btn) {
     options.each(function() {
         $(this).removeClass("hide");
     });
-};
-
-function hide_all_options(opts) {
-    $(opts).addClass("hide");
 };
 
 function copy_link(opt) {

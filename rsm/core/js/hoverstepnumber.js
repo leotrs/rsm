@@ -1,9 +1,9 @@
 $(document).ready(function() {
-    $("div.step").hover(function() {
-        tomb = $(this).children("div.tombstone-container");
+    $(".step").hover(function() {
+        tomb = $(this).children(".tombstone-container");
         tomb.removeClass("hide");
     }, function() {
-        tomb = $(this).children("div.tombstone-container");
+        tomb = $(this).children(".tombstone-container");
         if (tomb.hasClass("no-ellipsis")) {
             tomb.addClass("hide");
         } else {
@@ -11,7 +11,7 @@ $(document).ready(function() {
         };
     });
 
-    $("div.step-container").click(function() {
+    $(".step-container").click(function() {
         toggle_step(this);
     });
 
@@ -33,8 +33,8 @@ function toggle_proof(btn) {
 };
 
 function toggle_step(step) {
-    div = $(step).children("div.statement-proof");
-    tomb = $(step).siblings("div.tombstone-container");
+    div = $(step).children(".statement-proof");
+    tomb = $(step).siblings(".tombstone-container");
     if (div.hasClass("hide")) {
 	div.removeClass("hide");
         tomb.addClass("no-ellipsis");

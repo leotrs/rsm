@@ -151,16 +151,12 @@ def setup(app):
     }
 
 
-# core should take care of generating the doctree and the html
-# rsm-theme should take care of styling, layout, and interactivitiy
-# in particular, rsm-theme should include all css/js files
-
-
 # -- organize CSS -------------------------------------------------------
 # convert the .css to .scss and use a sphinx extension to compile
 # after setting up SASS, use BEM everywhere
 #
 # -- new features -------------------------------------------------------
+# make step number a ::before element? (only if it simplifies the DOM)
 # refactor: go over the other files and move depart/visit to writer
 # show a modal when anything is copied to the clipboard
 # title handrail: 'cite this article'
@@ -170,6 +166,8 @@ def setup(app):
 #
 # -- MVC ----------------------------------------------------------------
 # the doctree is my model, the html/css is my view
+# only use JS for complex selectors and adding/removing classes
+# anything more complicated goes to rsm-read
 
 
 

@@ -22,12 +22,15 @@ $(document).ready(function() {
 });
 
 function toggle_proof(btn) {
-    div = $(btn).closest(".proof-env").children(".proof-container");
+    proof = $(btn).closest(".proof-env")
+    div = proof.children(".proof-container");
     tomb = $(div).siblings(".tombstone");
     if (div.hasClass("hide")) {
+	proof.removeClass("collapsed");
         div.removeClass("hide");
 	tomb.removeClass("with-ellipsis");
     } else {
+	proof.addClass("collapsed");
         div.addClass("hide");
 	tomb.addClass("with-ellipsis");
     };

@@ -327,11 +327,9 @@ class ProofDirective(SphinxDirective):
 
 def visit_step(self, node):
     self.body.append(self.starttag(node, 'div', CLASS=('step with-tombstone')))
-    self.body.append('<div class="step-container">')
 
 
 def depart_step(self, node):
-    self.body.append('</div>')   # step-container
     self.body.append('<div class="tombstone hide"></div>')
     self.body.append('</div>')   # step
 

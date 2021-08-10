@@ -11,7 +11,7 @@ $(document).ready(function() {
         };
     });
 
-    $(".step-container").click(function() {
+    $(".step").click(function() {
         toggle_step(this);
     });
 
@@ -35,7 +35,7 @@ function toggle_proof(btn) {
 
 function toggle_step(step) {
     div = $(step).children(".statement-proof");
-    tomb = $(step).siblings(".tombstone");
+    tomb = $(step).children(".tombstone");
     if (div.hasClass("hide")) {
 	div.removeClass("hide");
         tomb.removeClass("with-ellipsis");
@@ -49,7 +49,7 @@ function toggle_step(step) {
 
 function toggle_all_steps(option) {
     proof_container = $(option).closest(".proof-env").find(".proof-container");
-    steps = $(proof_container).children(".step").children(".step-container");
+    steps = $(proof_container).children(".step");
     steps.each(function() {toggle_step($(this))});
 };
 

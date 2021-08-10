@@ -20,19 +20,7 @@ from util import Targetable, LabeledDirective, NodeClassDirective
 INDENT_SIZE = 3
 
 
-class proof_env(nodes.Element):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-
-class keyword(nodes.Inline, nodes.TextElement):
-    pass
-
-
-def keyword_role(name, rawtext, text, lineno, inliner, options={}, content=[]):
-    return [keyword(rawtext, text)], []
-
+# -- Keywords ------------------------------------------------------------
 
 KEYWORDS = {'LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED'}
 SYMBOLS = {'⊢', '■'}
@@ -44,11 +32,93 @@ REGEX = re.compile(
 )
 
 
+class keyword(nodes.Inline, nodes.TextElement):
+    pass
+
+
+def keyword_role(name, rawtext, text, lineno, inliner, options={}, content=[]):
+    return [keyword(rawtext, text)], []
+
+
 def parse_keywords(source):
     for pattern in KEYWORDS | SYMBOLS:
         source = re.sub(pattern, f':kw:`{pattern}`', source)
     return source
 
+
+# -- Nodes --------------------------------------------------------------
+
+class _within_proof_env(nodes.Element):
+    def __init__(self, _proof_env, *args, **kwargs):
+        self._proof_env = _proof_env
+        super().__init__(*args, **kwargs)
+
+    @property
+    def proof_env(self):
+        return self._proof_env
+
+    @proof_env.setter
+    def proof_env(self, env):
+        self._proof_env = env
+        for c in self.children:
+            c.proof_env = env
+
+
+class proof_env(nodes.Element): pass
+class proof(_within_proof_env): pass
+class step_list(nodes.Sequential, _within_proof_env): pass
+class statement(_within_proof_env): pass
+class statement_proof(_within_proof_env): pass
+
+
+class step(_within_proof_env, Targetable):
+    def __init__(self, data, number=None, *args, **kwargs):
+        super().__init__(data, *args, **kwargs)
+        self.number = number
+
+    def has_statement_proof(self):
+        for c in self.children:
+            if isinstance(c, statement_proof):
+                return True
+        return False
+
+    def default_link_text(self):
+        return f'step {self.number}'
+
+
+# -- Directives ------------------------------------------------------------
+
+class StepDirective(SphinxDirective, LabeledDirective):
+    has_content = True
+    optional_arguments = 1
+    option_spec = {'label': str}
+
+    def run(self):
+        node = step(
+            data='\n'.join(self.content),
+            number=f'{self.arguments[0]}' if self.arguments else '',
+        )
+        self.state.nested_parse(self.content, self.content_offset, node)
+
+        if self.label:
+            node['ids'].append(self.label)
+
+        return [node]
+
+
+class StatementDirective(NodeClassDirective):
+    nodeclass = statement
+
+
+class StatementProofDirective(NodeClassDirective):
+    nodeclass = statement_proof
+
+
+class ProofDirective(NodeClassDirective):
+    nodeclass = proof
+
+
+# -- Proof environment directive -------------------------------------------------------
 
 def split_steps(content, indent=''):
     assert content.startswith(indent + ':step:'), 'Step list must start with :step:'
@@ -203,71 +273,7 @@ class ProofEnvironmentDirective(SphinxDirective):
         return [proof_node]
 
 
-class _within_proof_env(nodes.Element):
-    def __init__(self, _proof_env, *args, **kwargs):
-        self._proof_env = _proof_env
-        super().__init__(*args, **kwargs)
-
-    @property
-    def proof_env(self):
-        return self._proof_env
-
-    @proof_env.setter
-    def proof_env(self, env):
-        self._proof_env = env
-        for c in self.children:
-            c.proof_env = env
-
-class proof(_within_proof_env): pass
-class step_list(nodes.Sequential, _within_proof_env): pass
-class statement(_within_proof_env): pass
-class statement_proof(_within_proof_env): pass
-
-
-class step(_within_proof_env, Targetable):
-    def __init__(self, data, number=None, *args, **kwargs):
-        super().__init__(data, *args, **kwargs)
-        self.number = number
-
-    def has_statement_proof(self):
-        for c in self.children:
-            if isinstance(c, statement_proof):
-                return True
-        return False
-
-    def default_link_text(self):
-        return f'step {self.number}'
-
-
-class StepDirective(SphinxDirective, LabeledDirective):
-    has_content = True
-    optional_arguments = 1
-    option_spec = {'label': str}
-
-    def run(self):
-        node = step(
-            data='\n'.join(self.content),
-            number=f'{self.arguments[0]}' if self.arguments else '',
-        )
-        self.state.nested_parse(self.content, self.content_offset, node)
-
-        if self.label:
-            node['ids'].append(self.label)
-
-        return [node]
-
-
-class StatementDirective(NodeClassDirective):
-    nodeclass = statement
-
-
-class StatementProofDirective(NodeClassDirective):
-    nodeclass = statement_proof
-
-
-class ProofDirective(NodeClassDirective):
-    nodeclass = proof
-
+# -- Transforms ----------------------------------------------------------------------------
 
 class AutoNumberProofs(SphinxTransform):
     # always run after numbering theorems
@@ -292,12 +298,6 @@ class AutoNumberProofs(SphinxTransform):
                     newid = f'{label}-{node.number}'
                     node['ids'].append(newid)
                     node.register_as_target(self.env)
-
-
-class pending_step_xref(pending_xref): pass
-class PrevRole(XRefRole):
-    nodeclass = pending_step_xref
-prev_role = PrevRole()
 
 
 class ResolvePendingStepRefs(SphinxTransform):
@@ -338,6 +338,16 @@ class ResolvePendingStepRefs(SphinxTransform):
             node.replace_self(refnode)
 
 
+# -- Step reference nodes ------------------------------------------------------------
+# See also the ResolvePendingStepRefs transform
+class pending_step_xref(pending_xref): pass
+class PrevRole(XRefRole):
+    nodeclass = pending_step_xref
+prev_role = PrevRole()
+
+
+# -- Setup ---------------------------------------------------------------------------
+
 def setup(app):
     app.add_transform(AutoNumberProofs)
     app.add_transform(ResolvePendingStepRefs)
@@ -361,15 +371,3 @@ def setup(app):
         'parallel_read_safe': True,
         'parallel_write_safe': True,
     }
-
-
-# Use something similar to the following in order to reduce boilerplate:
-#
-# class GenericRole(object):
-#     def __init__(self, role_name, node_class):
-#         self.name = role_name
-#         self.node_class = node_class
-#     def __call__(self, role, rawtext, text, lineno, inliner,
-#                  options={}, content=[]):
-#         set_classes(options)
-#         return [self.node_class(rawtext, text, **options)], []

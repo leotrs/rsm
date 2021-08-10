@@ -151,21 +151,26 @@ def setup(app):
     }
 
 
+# core should take care of generating the doctree and the html
+# rsm-theme should take care of styling, layout, and interactivitiy
+# in particular, rsm-theme should include all css/js files
 
-# tombstones should be an ::after element
 
-# proof envs have two nested divs with class 'proof-env'...
-# what things should go into a custom writer?
-# click on a sub-step is hiding the parent step too!
-# convert all ".show" to ".hide" bc it's easier to set "display: none" once
+# -- organize CSS -------------------------------------------------------
 # convert the .css to .scss and use a sphinx extension to compile
-# stop and write tests
-# implement proof environment options: steps, tree, link
-# implement step options: narrow, link
-# title handrail: 'cite this article'
-# show a modal when anything is copied to the clipboard
-# separate CSS in multiple files (OOCSS?)
 # after setting up SASS, use BEM everywhere
+#
+# -- new features -------------------------------------------------------
+# refactor: go over the other files and move depart/visit to writer
+# show a modal when anything is copied to the clipboard
+# title handrail: 'cite this article'
+# step handrail: narrow, link
+# put a box-shadow on top, left, and right so the thing looks like a pdf
+# only ship the output css with the theme, no the sass files
+#
+# -- MVC ----------------------------------------------------------------
+# the doctree is my model, the html/css is my view
+
 
 
 

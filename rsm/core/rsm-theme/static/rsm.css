@@ -49,6 +49,17 @@ body {
     padding: 0 0 0 var(--border-offset);
 }
 
+.left-border > h1,
+.left-border > h2,
+.left-border > h3,
+.left-border > h4,
+.left-border > h5,
+.left-border > h6 {
+    margin-block: 0 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
 .left-offset {
     position: relative;
     left: calc( -1 * var(--border-offset));
@@ -184,16 +195,7 @@ h4 {
     font-weight: 500;
 }
 
-.left-border > h1,
-.left-border > h2,
-.left-border > h3,
-.left-border > h4,
-.left-border > h5,
-.left-border > h6 {
-    margin-block: 0 0;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
+
 
 section {
     margin-block-end: 2rem;

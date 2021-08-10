@@ -60,6 +60,13 @@ function show_all_options(btn) {
     });
 };
 
+function hide_all_options(btn) {
+    options = $(btn).children(".options-container");
+    options.each(function() {
+        $(this).addClass("hide");
+    });
+};
+
 function copy_link(opt) {
     id = $(opt).closest(".proof-env").attr("id");
     current_url = location.protocol+'//'+location.host+location.pathname;

@@ -6,8 +6,8 @@ setup(
     description='reStructuredManuscript',
     author='leotrs',
     author_email='leo@leotrs.com',
-    url='https://rescript.science/',
-    entry_points = {
+    url='https://rsm-suite.org/',
+    entry_points={
         'console_scripts': ['rsm-make=rsm.rsm_make.main:main'],
-    }
+    },
 )

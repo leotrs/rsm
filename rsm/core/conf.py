@@ -33,20 +33,8 @@ extensions = [
 
 # -- HTML theme --------------------------------------------------------------
 
-html_theme = 'rsm-theme'
-html_theme_path = ['.']
-
-
-# -- Static files -----------------------------------------------------------
-
-# Paths must be relative to this directory. These are copied after the builtin static
-# files, so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["js"]
-html_js_files = [
-    # "tooltips.js",
-    "hoverstepnumber.js",
-    # "stepcontextmenu.js",
-]
+html_theme = 'rsm_theme'
+# html_theme_path = ['.']
 
 
 # -- Math options ------------------------------------------------------------

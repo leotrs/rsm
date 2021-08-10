@@ -15,7 +15,7 @@ from sphinx.transforms import SphinxTransform
 
 from envs import AutoNumberTheoremLike, theorem_like
 
-from util import Targetable, LabeledDirective
+from util import Targetable, LabeledDirective, NodeClassDirective
 
 INDENT_SIZE = 3
 
@@ -26,49 +26,8 @@ class proof_env(nodes.Element):
         super().__init__(*args, **kwargs)
 
 
-def visit_proof_env(self, node):
-    self.body.append(self.starttag(
-        node,
-        'div',
-        CLASS=('proof-env with-tombstone left-border')
-        )
-    )
-    self.body.append('''
-    <div class="border-btn-container">
-        <div class="border-btn border-btn--relative" onclick="show_all_options(this)">
-            <span>⋮</span>
-            <div class="options-container hide" onmouseleave="hide_all_options(this)">
-                <span class="option" onclick="toggle_all_steps(this)">steps</span>
-                <span class="option" onclick="copy_link(this)">link</span>
-                <span class="option" onclick="show_tree(this)">tree</span>
-                <span class="option">source</span>
-            </div>
-        </div>
-        <div class="border-btn" onclick="toggle_proof(this)"><span>▹</span></div>
-    </div>
-    <div class="proof-env__title">
-        <strong>Proof.</strong>
-    </div>
-    <div class="proof-container">
-    ''')
-
-
-def depart_proof_env(self, node):
-    self.body.append('</div>')  # proof-container
-    self.body.append('<div class="tombstone"></div>')
-    self.body.append('</div>')  # proof-env
-
-
 class keyword(nodes.Inline, nodes.TextElement):
     pass
-
-
-def visit_keyword(self, node):
-    self.body.append(self.starttag(node, 'span', CLASS=('keyword')))
-
-
-def depart_keyword(self, node):
-    self.body.append('</span>')
 
 
 def keyword_role(name, rawtext, text, lineno, inliner, options={}, content=[]):
@@ -298,59 +257,17 @@ class StepDirective(SphinxDirective, LabeledDirective):
         return [node]
 
 
-class StatementDirective(SphinxDirective):
-    has_content = True
-
-    def run(self):
-        node = statement('\n'.join(self.content))
-        self.state.nested_parse(self.content, self.content_offset, node)
-        return [node]
+class StatementDirective(NodeClassDirective):
+    nodeclass = statement
 
 
-class StatementProofDirective(SphinxDirective):
-    has_content = True
-
-    def run(self):
-        node = statement_proof('\n'.join(self.content))
-        self.state.nested_parse(self.content, self.content_offset, node)
-        return [node]
+class StatementProofDirective(NodeClassDirective):
+    nodeclass = statement_proof
 
 
-class ProofDirective(SphinxDirective):
-    has_content = True
+class ProofDirective(NodeClassDirective):
+    nodeclass = proof
 
-    def run(self):
-        node = proof('\n'.join(self.content))
-        self.state.nested_parse(self.content, self.content_offset, node)
-        return [node]
-
-
-def visit_step(self, node):
-    self.body.append(self.starttag(node, 'div', CLASS=('step with-tombstone')))
-
-
-def depart_step(self, node):
-    self.body.append('<div class="tombstone hide"></div>')
-    self.body.append('</div>')   # step
-
-
-def visit_statement(self, node):
-    self.body.append(self.starttag(node, 'div', CLASS=('statement-container')))
-    self.body.append(f'<div class="step-number">({node.parent.number})</div>')
-    self.body.append(self.starttag(node, 'div', CLASS=('statement')))
-
-
-def depart_statement(self, node):
-    self.body.append('</div>')   # statement
-    self.body.append('</div>')   # statement-container
-
-
-def visit_statement_proof(self, node):
-    self.body.append(self.starttag(node, 'div', CLASS='statement-proof left-border left-border-hug'))
-
-
-def depart_statement_proof(self, node):
-    self.body.append('</div>')
 
 class AutoNumberProofs(SphinxTransform):
     # always run after numbering theorems
@@ -425,11 +342,11 @@ def setup(app):
     app.add_transform(AutoNumberProofs)
     app.add_transform(ResolvePendingStepRefs)
 
-    app.add_node(proof_env, html=(visit_proof_env, depart_proof_env))
-    app.add_node(step, html=(visit_step, depart_step))
-    app.add_node(statement, html=(visit_statement, depart_statement))
-    app.add_node(statement_proof, html=(visit_statement_proof, depart_statement_proof))
-    app.add_node(keyword, html=(visit_keyword, depart_keyword))
+    app.add_node(proof_env)
+    app.add_node(step)
+    app.add_node(statement)
+    app.add_node(statement_proof)
+    app.add_node(keyword)
 
     app.add_directive('proof', ProofEnvironmentDirective)
     app.add_directive('step', StepDirective)

@@ -7,6 +7,17 @@ Utilities for RSM extensions.
 """
 
 from docutils import nodes
+from sphinx.util.docutils import SphinxDirective
+
+
+class NodeClassDirective(SphinxDirective):
+    has_content = True
+    nodeclass = None
+
+    def run(self):
+        node = self.nodeclass('\n'.join(self.content))
+        self.state.nested_parse(self.content, self.content_offset, node)
+        return [node]
 
 
 class LabeledDirective:

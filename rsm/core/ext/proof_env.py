@@ -27,31 +27,34 @@ class proof_env(nodes.Element):
 
 
 def visit_proof_env(self, node):
-    self.body.append(self.starttag(node, 'div', CLASS=('proof-env with-tombstone')))
+    self.body.append(self.starttag(
+        node,
+        'div',
+        CLASS=('proof-env with-tombstone left-border')
+        )
+    )
     self.body.append('''
-    <div class="left-border proof-env">
-        <div class="border-btn-container">
-            <div class="border-btn border-btn--relative" onclick="show_all_options(this)">
-                <span>⋮</span>
-                <div class="options-container hide" onmouseleave="hide_all_options(this)">
-                    <span class="option" onclick="toggle_all_steps(this)">steps</span>
-                    <span class="option" onclick="copy_link(this)">link</span>
-                    <span class="option" onclick="show_tree(this)">tree</span>
-                    <span class="option">source</span>
-                </div>
+    <div class="border-btn-container">
+        <div class="border-btn border-btn--relative" onclick="show_all_options(this)">
+            <span>⋮</span>
+            <div class="options-container hide" onmouseleave="hide_all_options(this)">
+                <span class="option" onclick="toggle_all_steps(this)">steps</span>
+                <span class="option" onclick="copy_link(this)">link</span>
+                <span class="option" onclick="show_tree(this)">tree</span>
+                <span class="option">source</span>
             </div>
-            <div class="border-btn" onclick="toggle_proof(this)"><span>▹</span></div>
         </div>
-        <div class="proof-env__title">
-            <strong>Proof.</strong>
-        </div>
-        <div class="proof-container">
+        <div class="border-btn" onclick="toggle_proof(this)"><span>▹</span></div>
+    </div>
+    <div class="proof-env__title">
+        <strong>Proof.</strong>
+    </div>
+    <div class="proof-container">
     ''')
 
 
 def depart_proof_env(self, node):
     self.body.append('</div>')  # proof-container
-    self.body.append('</div>')  # left-border proof-env
     self.body.append('<div class="tombstone"></div>')
     self.body.append('</div>')  # proof-env
 

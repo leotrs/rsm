@@ -16,7 +16,6 @@ $(document).ready(function() {
     });
 
     $(".proof-env").mouseleave(function () {
-	console.log('leave');
 	$(this).find(".options-container").addClass("hide");
     });
 
@@ -24,7 +23,7 @@ $(document).ready(function() {
 
 function toggle_proof(btn) {
     div = $(btn).closest(".proof-env").children(".proof-container");
-    tomb = $(div).parent().siblings(".tombstone");
+    tomb = $(div).siblings(".tombstone");
     if (div.hasClass("hide")) {
         div.removeClass("hide");
 	tomb.removeClass("with-ellipsis");
@@ -62,7 +61,7 @@ function show_all_options(btn) {
 };
 
 function copy_link(opt) {
-    id = $(opt).closest(".proof-env").parent().attr("id");
+    id = $(opt).closest(".proof-env").attr("id");
     current_url = location.protocol+'//'+location.host+location.pathname;
     target_url = current_url + "#" + id;
     navigator.clipboard.writeText(target_url).then(function () {
@@ -71,7 +70,7 @@ function copy_link(opt) {
 };
 
 function show_tree(opt) {
-    proof = $(opt).closest(".proof-env").parent();
+    proof = $(opt).closest(".proof-env");
     parent = $(proof).parent();
     console.log(parent);
     parents = [];

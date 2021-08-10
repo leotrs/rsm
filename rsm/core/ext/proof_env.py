@@ -335,25 +335,14 @@ def depart_step(self, node):
 
 
 def visit_statement(self, node):
-    self.body.append(self.starttag(node, 'div', CLASS=('step-number-container')))
-    self.body.append(self.starttag(node, 'div', CLASS=('step-number')))
-    self.body.append(f'''
-    <div>({node.parent.number})</div>
-    <nav class="menu">
-      <ul>
-          <p class="step-narrow">Narrow</p>
-          <p class="step-copy">Copy link to this step.</p>
-      </ul>
-    </nav>
-    ''')
-    self.body.append('</div>')   # step-number
-
+    self.body.append(self.starttag(node, 'div', CLASS=('statement-container')))
+    self.body.append(f'<div class="step-number">({node.parent.number})</div>')
     self.body.append(self.starttag(node, 'div', CLASS=('statement')))
 
 
 def depart_statement(self, node):
     self.body.append('</div>')   # statement
-    self.body.append('</div>')   # step-number-container
+    self.body.append('</div>')   # statement-container
 
 
 def visit_statement_proof(self, node):

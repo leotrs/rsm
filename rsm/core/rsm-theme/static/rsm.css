@@ -225,13 +225,7 @@ nav.menu {
     margin-block-end: 1.25rem;
 }
 
-.step-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.step-number-container {
+.statement-container {
     display: flex;
     flex-direction: row;
     align-items: baseline;
@@ -239,7 +233,7 @@ nav.menu {
     max-width: 100%;
 }
 
-.step-container:hover > .step-number-container .step-number {
+.step:hover > .statement-container .step-number {
     display: flex;
 }
 

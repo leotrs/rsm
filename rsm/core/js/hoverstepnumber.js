@@ -11,8 +11,9 @@ $(document).ready(function() {
         };
     });
 
-    $(".step").click(function() {
+    $(".step").click(function(event) {
         toggle_step(this);
+	event.stopPropagation();
     });
 
     $(".proof-env").mouseleave(function () {

@@ -48,18 +48,18 @@ class RSMTranslator(HTML5Translator):
         self.body.append('<div class="tombstone"></div>')
         self.body.append('</div>')  # proof-env
 
-    def visit_keyword(self, node):
-        self.body.append(self.starttag(node, 'span', CLASS=('keyword')))
-
-    def depart_keyword(self, node):
-        self.body.append('</span>')
-
     def visit_step(self, node):
         self.body.append(self.starttag(node, 'div', CLASS=('step with-tombstone')))
 
     def depart_step(self, node):
         self.body.append('<div class="tombstone hide"></div>')
         self.body.append('</div>')   # step
+
+    def visit_keyword(self, node):
+        self.body.append(self.starttag(node, 'span', CLASS=('keyword')))
+
+    def depart_keyword(self, node):
+        self.body.append('</span>')
 
     def visit_statement(self, node):
         self.body.append(self.starttag(node, 'div', CLASS=('statement-container')))

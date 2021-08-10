@@ -54,14 +54,14 @@ body {
     left: calc( -1 * var(--border-offset));
 }
 
-.tombstone-container {
+.tombstone {
     display: flex;
     justify-content: flex-end;
     position: absolute;
     right: 0;
 }
 
-.tombstone-container.with-ellipsis::before {
+.tombstone.with-ellipsis::before {
     content: '';
     display: flex;
     border-style: solid;
@@ -80,7 +80,7 @@ body {
     background-repeat: no-repeat;
 }
 
-.tombstone-container::after {
+.tombstone::after {
     content: '';
     display: block;
     position: absolute;

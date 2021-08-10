@@ -1,9 +1,9 @@
 $(document).ready(function() {
     $(".step").hover(function() {
-        tomb = $(this).children(".tombstone-container");
+        tomb = $(this).children(".tombstone");
         tomb.removeClass("hide");
     }, function() {
-        tomb = $(this).children(".tombstone-container");
+        tomb = $(this).children(".tombstone");
         if (tomb.hasClass("with-ellipsis")) {
             tomb.removeClass("hide");
         } else {
@@ -24,7 +24,7 @@ $(document).ready(function() {
 
 function toggle_proof(btn) {
     div = $(btn).closest(".proof-env").children(".proof-container");
-    tomb = $(div).parent().siblings(".tombstone-container");
+    tomb = $(div).parent().siblings(".tombstone");
     if (div.hasClass("hide")) {
         div.removeClass("hide");
 	tomb.removeClass("with-ellipsis");
@@ -36,7 +36,7 @@ function toggle_proof(btn) {
 
 function toggle_step(step) {
     div = $(step).children(".statement-proof");
-    tomb = $(step).siblings(".tombstone-container");
+    tomb = $(step).siblings(".tombstone");
     if (div.hasClass("hide")) {
 	div.removeClass("hide");
         tomb.removeClass("with-ellipsis");

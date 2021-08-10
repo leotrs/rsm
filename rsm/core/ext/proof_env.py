@@ -52,7 +52,7 @@ def visit_proof_env(self, node):
 def depart_proof_env(self, node):
     self.body.append('</div>')  # proof-container
     self.body.append('</div>')  # left-border proof-env
-    self.body.append('<div class="tombstone-container"></div>')
+    self.body.append('<div class="tombstone"></div>')
     self.body.append('</div>')  # proof-env
 
 
@@ -329,7 +329,7 @@ def visit_step(self, node):
 
 def depart_step(self, node):
     self.body.append('</div>')   # step-container
-    self.body.append('<div class="tombstone-container hide"></div>')
+    self.body.append('<div class="tombstone hide"></div>')
     self.body.append('</div>')   # step
 
 

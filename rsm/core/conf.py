@@ -16,11 +16,6 @@ copyright = '2021, leotrs'
 author = 'leotrs'
 
 
-# -- Core RSM stuff ----------------------------------------------------------
-
-html_translator_class = 'writer.RSMTranslato'
-
-
 # -- Extensions --------------------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
@@ -38,12 +33,6 @@ extensions = [
 
 # -- HTML theme --------------------------------------------------------------
 
-# html_theme = 'alabaster'
-# html_theme_options = {
-#     'page_width': '1200px',
-#     'body_max_width': '940px',
-#     'render_sidebar': False,
-# }
 html_theme = 'rsm-theme'
 html_theme_path = ['.']
 

@@ -4,10 +4,10 @@ $(document).ready(function() {
         tomb.removeClass("hide");
     }, function() {
         tomb = $(this).children(".tombstone-container");
-        if (tomb.hasClass("no-ellipsis")) {
-            tomb.addClass("hide");
-        } else {
+        if (tomb.hasClass("with-ellipsis")) {
             tomb.removeClass("hide");
+        } else {
+            tomb.addClass("hide");
         };
     });
 
@@ -23,12 +23,14 @@ $(document).ready(function() {
 });
 
 function toggle_proof(btn) {
-    console.log(btn);
     div = $(btn).closest(".proof-env").children(".proof-container");
+    tomb = $(div).parent().siblings(".tombstone-container");
     if (div.hasClass("hide")) {
         div.removeClass("hide");
+	tomb.removeClass("with-ellipsis");
     } else {
         div.addClass("hide");
+	tomb.addClass("with-ellipsis");
     };
 };
 
@@ -37,11 +39,11 @@ function toggle_step(step) {
     tomb = $(step).siblings(".tombstone-container");
     if (div.hasClass("hide")) {
 	div.removeClass("hide");
-        tomb.addClass("no-ellipsis");
+        tomb.removeClass("with-ellipsis");
         tomb.addClass("hide");
     } else {
         div.addClass("hide");
-        tomb.removeClass("no-ellipsis");
+        tomb.addClass("with-ellipsis");
         tomb.removeClass("hide");
     };
 };

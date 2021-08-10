@@ -61,7 +61,7 @@ body {
     right: 0;
 }
 
-.tombstone-container::before {
+.tombstone-container.with-ellipsis::before {
     content: '';
     display: flex;
     border-style: solid;
@@ -152,8 +152,6 @@ body {
 .border-btn:hover > span {
      text-shadow: 0 0 1px black;
  }
-
-
 
 .proof-env {
     position: relative;

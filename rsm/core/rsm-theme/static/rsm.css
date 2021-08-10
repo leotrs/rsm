@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&family=Source+Sans+Pro&family=Inconsolata:wdth,wght@75,300&display=swap');
 
+/* Base */
+/******************************************************************************************/
+
 :root {
     --border-offset: 20px;
     --light-gray: #CCCCCC;
@@ -19,6 +22,36 @@ body, h1, h2, h3, h4, h5, p {
     margin: 0;
 }
 
+h1, h2, h3, h4 {
+    margin: 3rem 0 1.38rem;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.3;
+}
+
+h1 {
+    margin-top: 0;
+    font-size: 3.052rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2.441rem;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 1.953rem;
+}
+
+h4 {
+    font-size: 1.563rem;
+    font-weight: 500;
+}
+
+section {
+    margin-block-end: 2rem;
+}
+
 body {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
@@ -27,13 +60,21 @@ body {
     color: var(--dark-gray);
 }
 
+
+/* Layout */
+/******************************************************************************************/
+
 .documentwrapper {
     max-width: 800px;
     margin: auto;
 }
 
-.headerlink {
-    display: none;
+
+/* Module */
+/******************************************************************************************/
+
+.hide {
+    display: none!important;
 }
 
 .left-border {
@@ -118,13 +159,6 @@ body {
     z-index: 1;
 }
 
-.options-container .option:hover {
-    color: var(--dark-gray);
-    text-shadow: 0 0 1px #000;
-    cursor: pointer;
-    background: var(--light-gray);
-}
-
 .options-container .option {
     display: block;
     padding-inline: .75em;
@@ -151,68 +185,13 @@ body {
     border-left: 1px solid var(--light-gray);
 }
 
-.proof-env:hover .border-btn-container {
-    display: flex;
-}
-
-.border-btn:hover {
-    background: var(--light-gray);
-    cursor: pointer;
-}
-
-.border-btn:hover > span {
-     text-shadow: 0 0 1px black;
- }
-
-.proof-env {
-    position: relative;
-}
-
-.proof-env:not(.collapsed) {
-    padding-bottom: 0;
-}
-
-h1, h2, h3, h4 {
-    margin: 3rem 0 1.38rem;
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.3;
-}
-
-h1 {
-    margin-top: 0;
-    font-size: 3.052rem;
-    font-weight: 700;
-}
-
-h2 {
-    font-size: 2.441rem;
-    font-weight: 600;
-}
-
-h3 {
-    font-size: 1.953rem;
-
-}
-
-h4 {
-    font-size: 1.563rem;
-    font-weight: 500;
-}
-
-
-
-section {
-    margin-block-end: 2rem;
-}
-
-nav.menu {
-    display: none;
-    background-color: #ffffff;
-}
-
 .keyword {
     color: var(--keyword-blue);
     font-weight: bold;
+}
+
+.proof-env {
+    position: relative;
 }
 
 .statement {
@@ -235,10 +214,6 @@ nav.menu {
     align-items: baseline;
     justify-content: space-between;
     max-width: 100%;
-}
-
-.step:hover > .statement-container .step-number {
-    display: flex;
 }
 
 .step-number {
@@ -276,6 +251,10 @@ nav.menu {
     display: block;
 }
 
+
+/* State */
+/******************************************************************************************/
+
 a:link, a:visited, a:active {
     text-decoration: none;
     color: #088408;
@@ -285,6 +264,38 @@ a:hover {
     text-decoration: underline;
 }
 
-.hide {
+.options-container .option:hover {
+    color: var(--dark-gray);
+    text-shadow: 0 0 1px #000;
+    cursor: pointer;
+    background: var(--light-gray);
+}
+
+.proof-env:hover .border-btn-container {
+    display: flex;
+}
+
+.border-btn:hover {
+    background: var(--light-gray);
+    cursor: pointer;
+}
+
+.border-btn:hover > span {
+     text-shadow: 0 0 1px black;
+ }
+
+.proof-env:not(.collapsed) {
+    padding-bottom: 0;
+}
+
+.step:hover > .statement-container .step-number {
+    display: flex;
+}
+
+
+/* Misc. */
+/******************************************************************************************/
+
+.headerlink {
     display: none;
 }

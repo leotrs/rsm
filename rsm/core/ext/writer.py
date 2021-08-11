@@ -37,7 +37,7 @@ class RSMTranslator(HTML5Translator):
             </div>
             <div class="handrail__btn" onclick="toggle_proof(this)"><span>▹</span></div>
         </div>
-        <div class="proof-env__title">
+        <div class="proof__title">
             <strong>Proof.</strong>
         </div>
         <div class="proof-container">
@@ -46,7 +46,7 @@ class RSMTranslator(HTML5Translator):
     def depart_proof_env(self, node):
         self.body.append('</div>')  # proof-container
         self.body.append('<div class="tombstone"></div>')
-        self.body.append('</div>')  # proof-env
+        self.body.append('</div>')  # proof
 
     def visit_step(self, node):
         self.body.append(self.starttag(node, 'div', CLASS=('step with-tombstone')))

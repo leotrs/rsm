@@ -65,8 +65,11 @@ body {
 /******************************************************************************************/
 
 .documentwrapper {
-    max-width: 800px;
-    margin: auto;
+    max-width: 960px;
+    margin: 2.5em auto 0 auto;
+    box-shadow: 0 0 8px 10px #eee;
+    border-radius: 8px;
+    padding: 1em 4.5em 1em calc(4.5em + var(--handrail-offset));
 }
 
 

@@ -4,21 +4,18 @@
 /******************************************************************************************/
 
 :root {
-    --border-offset: 20px;
+    --handrail-offset: 20px;
     --light-gray: #CCCCCC;
     --medium-gray: #808080;
     --dark-gray: #3E4349;
     --keyword-blue: #005187;
-    --left-border-margin-block: 1rem;
+    --handrail-margin-block: 1rem;
     --tombstone-side-length: 0.5em;
     --ellipsis-width: 1em;
 }
 
 *, *::before, *::after {
     box-sizing: border-box;
-}
-
-body, h1, h2, h3, h4, h5, p {
     margin: 0;
 }
 
@@ -60,6 +57,10 @@ body {
     color: var(--dark-gray);
 }
 
+.hide {
+    display: none!important;
+}
+
 
 /* Layout */
 /******************************************************************************************/
@@ -73,37 +74,33 @@ body {
 /* Module */
 /******************************************************************************************/
 
-.hide {
-    display: none!important;
-}
-
-.left-border {
+.handrail {
     border-width: 0 0 0 1px;
     border-color: var(--light-gray);
     border-style: solid;
-    padding: 1rem 0 1rem var(--border-offset);
-    margin-block: var(--left-border-margin-block) var(--left-border-margin-block);
+    padding: 1rem 0 1rem var(--handrail-offset);
+    margin-block: var(--handrail-margin-block) var(--handrail-margin-block);
 }
 
-.left-border-hug {
+.handrail--hug {
     margin-block: 0 0;
-    padding: 0 0 0 var(--border-offset);
+    padding: 0 0 0 var(--handrail-offset);
 }
 
-.left-border > h1,
-.left-border > h2,
-.left-border > h3,
-.left-border > h4,
-.left-border > h5,
-.left-border > h6 {
+.handrail > h1,
+.handrail > h2,
+.handrail > h3,
+.handrail > h4,
+.handrail > h5,
+.handrail > h6 {
     margin-block: 0 0;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
 
-.left-offset {
+.handrail--offset {
     position: relative;
-    left: calc( -1 * var(--border-offset));
+    left: calc( -1 * var(--handrail-offset));
 }
 
 .tombstone {
@@ -142,7 +139,7 @@ body {
     background-color: var(--keyword-blue);
 }
 
-.options-container {
+.options {
     display: inline-flex;
     flex-direction: column;
     align-items: flex-end;
@@ -159,29 +156,29 @@ body {
     z-index: 1;
 }
 
-.options-container .option {
+.options .option {
     display: block;
     padding-inline: .75em;
     width: 100%;
     text-align: end;
 }
 
-.border-btn.border-btn--relative {
+.handrail__btn.handrail__btn--relative {
     position: relative;
 }
 
-.border-btn-container {
+.handrail__btn {
+    padding-inline: .1em;
+}
+
+.handrail__btn-container {
     position: absolute;
     left: calc(-1.2em - 1px);
     background: #EEE;
     display: none;
 }
 
-.border-btn {
-    padding-inline: .1em;
-}
-
-.border-btn-container .border-btn:last-of-type {
+.handrail__btn-container .handrail__btn:last-of-type {
     border-left: 1px solid var(--light-gray);
 }
 
@@ -190,8 +187,13 @@ body {
     font-weight: bold;
 }
 
-.proof-env {
+.proof {
     position: relative;
+}
+
+.step {
+    margin-block-start: 1.25rem;
+    margin-block-end: 1.25rem;
 }
 
 .statement {
@@ -203,11 +205,6 @@ body {
     padding-inline-start: 1.5rem;
 }
 
-.step {
-    margin-block-start: 1.25rem;
-    margin-block-end: 1.25rem;
-}
-
 .statement-container {
     display: flex;
     flex-direction: row;
@@ -216,7 +213,20 @@ body {
     max-width: 100%;
 }
 
-.step-number {
+.statement__proof {
+    margin-block-start: 0.25rem;
+}
+
+.statement__proof > .step:first-of-type {
+    margin-block-start: 0;
+}
+
+.statement__proof > .step:last-of-type,
+.proof-container > .step:last-of-type {
+    margin-block-end: 0;
+}
+
+.step__number {
     display: none;
     color: gray;
     margin-right: 6px;
@@ -226,29 +236,6 @@ body {
     left: 0;
     transform: translateX(-100%) translateX(-1em);
     font-family: 'Inconsolata', monospace;
-}
-
-.statement p {
-    margin-block-start: 0px;
-    margin-block-end: 0px;
-}
-
-.statement-proof {
-    margin-block-start: 0.25rem;
-    display: block;
-}
-
-.statement-proof > .step:first-of-type {
-    margin-block-start: 0;
-}
-
-.statement-proof > .step:last-of-type,
-.proof-container > .step:last-of-type {
-    margin-block-end: 0;
-}
-
-.proof-container {
-    display: block;
 }
 
 
@@ -264,31 +251,31 @@ a:hover {
     text-decoration: underline;
 }
 
-.options-container .option:hover {
+.options .option:hover {
     color: var(--dark-gray);
     text-shadow: 0 0 1px #000;
     cursor: pointer;
     background: var(--light-gray);
 }
 
-.proof-env:hover .border-btn-container {
+.proof:hover .handrail__btn-container {
     display: flex;
 }
 
-.border-btn:hover {
+.handrail__btn:hover {
     background: var(--light-gray);
     cursor: pointer;
 }
 
-.border-btn:hover > span {
+.handrail__btn:hover > span {
      text-shadow: 0 0 1px black;
  }
 
-.proof-env:not(.collapsed) {
+.proof:not(.collapsed) {
     padding-bottom: 0;
 }
 
-.step:hover > .statement-container .step-number {
+.step:hover > .statement-container .step__number {
     display: flex;
 }
 

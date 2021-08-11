@@ -152,8 +152,7 @@ def setup(app):
 
 
 # -- organize CSS -------------------------------------------------------
-# convert the .css to .scss and use a sphinx extension to compile
-# after setting up SASS, use BEM everywhere
+# use BEM
 #
 # -- new features -------------------------------------------------------
 # make step number a ::before element? (only if it simplifies the DOM)
@@ -163,6 +162,15 @@ def setup(app):
 # step handrail: narrow, link
 # put a box-shadow on top, left, and right so the thing looks like a pdf
 # only ship the output css with the theme, no the sass files
+#
+# -- UI -------------------------------------------------------------------
+# work on UI/typography/contrast (separation, size, color)
+# increase line-height of small text
+# decrease line-height of big text
+# big, medium, small
+# as much as possible, only use margin-bottom
+# Use margins when pushing blocks away from each other
+# Use padding when pushing things into their own block
 #
 # -- MVC ----------------------------------------------------------------
 # the doctree is my model, the html/css is my view

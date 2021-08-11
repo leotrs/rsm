@@ -79,27 +79,23 @@ body {
     border-style: solid;
     padding: 1rem 0 1rem var(--handrail-offset);
     margin-block: var(--handrail-margin-block) var(--handrail-margin-block);
-}
 
-.handrail--hug {
-    margin-block: 0 0;
-    padding: 0 0 0 var(--handrail-offset);
-}
+    &--hug {
+        margin-block: 0 0;
+        padding: 0 0 0 var(--handrail-offset);
+    }
 
-.handrail > h1,
-.handrail > h2,
-.handrail > h3,
-.handrail > h4,
-.handrail > h5,
-.handrail > h6 {
-    margin-block: 0 0;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
+    &--offset {
+        position: relative;
+        left: calc( -1 * var(--handrail-offset));
+    }
 
-.handrail--offset {
-    position: relative;
-    left: calc( -1 * var(--handrail-offset));
+    & > h1, & > h2, & > h3, & > h4, & > h5, & > h6 {
+        margin-block: 0 0;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
 }
 
 .tombstone {
@@ -107,35 +103,36 @@ body {
     justify-content: flex-end;
     position: absolute;
     right: 0;
-}
 
-.tombstone.with-ellipsis::before {
-    content: '';
-    display: flex;
-    border-style: solid;
-    border-color: var(--keyword-blue) var(--keyword-blue) var(--keyword-blue) var(--keyword-blue);
-    border-width: .0625em 0 .0625em .0625em;
-    position: absolute;
-    right: 8px;
-    width: var(--ellipsis-width);
-    height: var(--tombstone-side-length);
-    justify-content: space-evenly;
-    align-items: center;
-    background:
-	radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 2px/2px 2px,
-	radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 6px/2px 2px,
-	radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 10px/2px 2px;
-    background-repeat: no-repeat;
-}
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        right: 0;
+        height: var(--tombstone-side-length);
+        width: var(--tombstone-side-length);
+        background-color: var(--keyword-blue);
+    }
 
-.tombstone::after {
-    content: '';
-    display: block;
-    position: absolute;
-    right: 0;
-    height: var(--tombstone-side-length);
-    width: var(--tombstone-side-length);
-    background-color: var(--keyword-blue);
+    &.with-ellipsis::before {
+        content: '';
+        display: flex;
+        border-style: solid;
+        border-color: var(--keyword-blue) var(--keyword-blue) var(--keyword-blue) var(--keyword-blue);
+        border-width: .0625em 0 .0625em .0625em;
+        position: absolute;
+        right: 8px;
+        width: var(--ellipsis-width);
+        height: var(--tombstone-side-length);
+        justify-content: space-evenly;
+        align-items: center;
+        background:
+	    radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 2px/2px 2px,
+	    radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 6px/2px 2px,
+	    radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 10px/2px 2px;
+        background-repeat: no-repeat;
+    }
+
 }
 
 .options {
@@ -153,32 +150,35 @@ body {
     top: 2em;
     right: 0;
     z-index: 1;
-}
 
-.options .option {
-    display: block;
-    padding-inline: .75em;
-    width: 100%;
-    text-align: end;
-}
+    & .option {
+        display: block;
+        padding-inline: .75em;
+        width: 100%;
+        text-align: end;
+    }
 
-.handrail__btn.handrail__btn--relative {
-    position: relative;
 }
 
 .handrail__btn {
     padding-inline: .1em;
-}
 
-.handrail__btn-container {
-    position: absolute;
-    left: calc(-1.2em - 1px);
-    background: #EEE;
-    display: none;
-}
+    &.handrail__btn--relative {
+        position: relative;
+    }
 
-.handrail__btn-container .handrail__btn:last-of-type {
-    border-left: 1px solid var(--light-gray);
+    &-container {
+        position: absolute;
+        left: calc(-1.2em - 1px);
+        background: #EEE;
+        display: none;
+
+        & .handrail__btn:last-of-type  {
+            border-left: 1px solid var(--light-gray);
+        }
+
+    }
+
 }
 
 .keyword {
@@ -188,50 +188,48 @@ body {
 
 .proof {
     position: relative;
-}
 
-.proof__title {
-    margin-block-end: 1.25rem;
-}
+    &__title {
+        margin-block-end: 1.25rem;
+    }
 
-.proof.collapsed > .proof__title {
-    margin-block-end: 0;
-}
-
-.proof-container > .step:last-of-type {
-    margin-block-end: 0;
+    &-container > .step:last-of-type {
+        margin-block-end: 0;
+    }
 }
 
 .step {
     margin-block-end: 1.25rem;
+
+    &__number {
+        display: none;
+        color: gray;
+        max-width: 40px;
+        position: absolute;
+        left: 0;
+        transform: translateX(-100%) translateX(-1em);
+        font-family: 'Inconsolata', monospace;
+    }
+
 }
 
 .statement {
     max-width: inherit;
     margin-block-end: 0.25rem;
-}
 
-.statement ol {
-    margin-block: 0 0;
-    padding-inline-start: 1.5rem;
-}
+    & ol {
+        margin-block: 0 0;
+        padding-inline-start: 1.5rem;
+    }
 
-.statement-container {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: space-between;
-    max-width: 100%;
-}
+    &-container {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-between;
+        max-width: 100%;
+    }
 
-.step__number {
-    display: none;
-    color: gray;
-    max-width: 40px;
-    position: absolute;
-    left: 0;
-    transform: translateX(-100%) translateX(-1em);
-    font-family: 'Inconsolata', monospace;
 }
 
 
@@ -254,21 +252,30 @@ a:hover {
     background: var(--light-gray);
 }
 
-.proof:hover .handrail__btn-container {
-    display: flex;
-}
-
 .handrail__btn:hover {
     background: var(--light-gray);
     cursor: pointer;
+
+    & > span {
+        text-shadow: 0 0 1px black;
+    }
+
 }
 
-.handrail__btn:hover > span {
-     text-shadow: 0 0 1px black;
- }
+.proof {
 
-.proof:not(.collapsed) {
-    padding-bottom: 0;
+    &:not(.collapsed) {
+        padding-bottom: 0;
+    }
+
+    &.collapsed > .proof__title {
+        margin-block-end: 0;
+    }
+
+    &:hover .handrail__btn-container {
+        display: flex;
+    }
+
 }
 
 .step:hover > .statement-container .step__number {

@@ -89,8 +89,9 @@ body {
     }
 
     &--offset {
-        position: relative;
-        left: calc( -1 * var(--handrail-offset));
+        left: calc( -1 * var(--handrail-offset) - 1px);
+        transform: translateX(calc(-1 * var(--handrail-offset) - 1px));
+        width: calc(100% + var(--handrail-offset) + 1px);
     }
 
     & > h1, & > h2, & > h3, & > h4, & > h5, & > h6 {
@@ -175,7 +176,6 @@ body {
         left: calc(-1.2em - 1px);
         background: #EEE;
         display: none;
-        top: calc(-1 * var(--handrail-margin-block) / 2);
 
         & .handrail__btn:last-of-type  {
             border-left: 1px solid var(--light-gray);
@@ -210,7 +210,7 @@ body {
         color: gray;
         position: absolute;
         left: 0;
-        transform: translateX(-100%) translateX(-1em);
+        transform: translateX(-100%) translateX(-2em);
         font-family: 'Inconsolata', monospace;
     }
 
@@ -257,7 +257,7 @@ a:hover {
 
 }
 
-.handrail:hover .handrail__btn-container {
+.handrail:hover > .handrail__btn-container {
     display: flex;
 }
 

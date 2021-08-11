@@ -7,7 +7,7 @@ Custom HTML writer for RSM.
 from docutils import nodes
 from sphinx.writers.html5 import HTML5Translator
 
-from proof_env import proof_env
+from proof_env import proof_env, step
 
 
 class RSMTranslator(HTML5Translator):
@@ -15,6 +15,7 @@ class RSMTranslator(HTML5Translator):
     options = {
         proof_env: ['steps', 'link', 'tree', 'source'],
         nodes.title: ['link', 'citation'],
+        step: ['foo', 'bar'],
     }
 
     def visit_title(self, node):
@@ -40,7 +41,7 @@ class RSMTranslator(HTML5Translator):
 
         self.body.append('''
         <div class="proof__title"><strong>Proof.</strong></div>
-        <div class="proof-container">
+        <div class="proof-container handrail__collapsible">
         ''')
 
     def _append_handrail_button_container(self, node):
@@ -72,7 +73,12 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>')  # proof
 
     def visit_step(self, node):
-        self.body.append(self.starttag(node, 'div', CLASS=('step with-tombstone')))
+        self.body.append(self.starttag(
+            node,
+            'div',
+            CLASS=('step with-tombstone handrail handrail--offset handrail--hug')
+        ))
+        self._append_handrail_button_container(node)
 
     def depart_step(self, node):
         self.body.append('<div class="tombstone hide"></div>')
@@ -92,7 +98,11 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>')   # statement
 
     def visit_statement_proof(self, node):
-        self.body.append(self.starttag(node, 'div', CLASS='statement__proof handrail handrail--hug'))
+        self.body.append(self.starttag(
+            node,
+            'div',
+            CLASS='statement__proof handrail handrail--hug handrail__collapsible'
+        ))
 
     def depart_statement_proof(self, node):
         self.body.append('</div>')

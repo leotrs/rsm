@@ -12,12 +12,7 @@ $(document).ready(function() {
         };
     });
 
-    $(".step").click(function(event) {
-        toggle_step(this);
-	event.stopPropagation();
-    });
-
-    $(".proof").mouseleave(function () {
+    $(".handrail").mouseleave(function () {
 	$(this).find(".options").addClass("hide");
     });
 
@@ -29,8 +24,8 @@ $(document).ready(function() {
     });
 
     $(".handrail__btn-toggle").click(function() {
-        proof = $(this).closest(".proof");
-        div = proof.children(".proof-container");
+        proof = $(this).closest(".handrail");
+        div = proof.children(".handrail__collapsible");
         tomb = $(div).siblings(".tombstone");
         if (div.hasClass("hide")) {
 	    proof.removeClass("collapsed");

@@ -4,6 +4,7 @@ Custom HTML writer for RSM.
 
 """
 
+from docutils import nodes
 from sphinx.writers.html5 import HTML5Translator
 
 from proof_env import proof_env
@@ -11,10 +12,16 @@ from proof_env import proof_env
 
 class RSMTranslator(HTML5Translator):
 
-    options = {proof_env: ['steps', 'link', 'tree', 'source']}
+    options = {
+        proof_env: ['steps', 'link', 'tree', 'source'],
+        nodes.title: ['foo', 'bar'],
+    }
 
     def visit_title(self, node):
         self.body.append('<div class="handrail handrail--offset">')
+
+        self._append_handrail_button_container(node)
+
         super().visit_title(node)
 
     def depart_title(self, node):
@@ -45,7 +52,7 @@ class RSMTranslator(HTML5Translator):
                 <div class="options hide">
         ''')
 
-        for opt in self.options[type(node)]:
+        for opt in self.options.get(type(node), []):
             self.body.append(f'<span class="option option__{opt}">{opt}</span>')
 
         self.body.append('</div>')  # options

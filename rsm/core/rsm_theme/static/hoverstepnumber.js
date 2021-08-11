@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $(".step").hover(function() {
         tomb = $(this).children(".tombstone");
         tomb.removeClass("hide");

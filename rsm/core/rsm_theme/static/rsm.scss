@@ -172,6 +172,7 @@ body {
         left: calc(-1.2em - 1px);
         background: #EEE;
         display: none;
+        top: calc(-1 * var(--handrail-margin-block) / 2);
 
         & .handrail__btn:last-of-type  {
             border-left: 1px solid var(--light-gray);
@@ -262,6 +263,10 @@ a:hover {
 
 }
 
+.handrail:hover .handrail__btn-container {
+    display: flex;
+}
+
 .proof {
 
     &:not(.collapsed) {
@@ -270,10 +275,6 @@ a:hover {
 
     &.collapsed > .proof__title {
         margin-block-end: 0;
-    }
-
-    &:hover .handrail__btn-container {
-        display: flex;
     }
 
 }

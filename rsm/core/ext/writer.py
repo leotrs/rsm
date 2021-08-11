@@ -85,13 +85,11 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</span>')
 
     def visit_statement(self, node):
-        self.body.append(self.starttag(node, 'div', CLASS=('statement-container')))
         self.body.append(f'<div class="step__number">({node.parent.number})</div>')
         self.body.append(self.starttag(node, 'div', CLASS=('statement')))
 
     def depart_statement(self, node):
         self.body.append('</div>')   # statement
-        self.body.append('</div>')   # statement-container
 
     def visit_statement_proof(self, node):
         self.body.append(self.starttag(node, 'div', CLASS='statement__proof handrail handrail--hug'))

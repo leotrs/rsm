@@ -205,7 +205,6 @@ body {
     &__number {
         display: none;
         color: gray;
-        max-width: 40px;
         position: absolute;
         left: 0;
         transform: translateX(-100%) translateX(-1em);
@@ -221,14 +220,6 @@ body {
     & ol {
         margin-block: 0 0;
         padding-inline-start: 1.5rem;
-    }
-
-    &-container {
-        display: flex;
-        flex-direction: row;
-        align-items: baseline;
-        justify-content: space-between;
-        max-width: 100%;
     }
 
 }
@@ -279,8 +270,8 @@ a:hover {
 
 }
 
-.step:hover > .statement-container .step__number {
-    display: flex;
+.step:hover > .step__number {
+    display: block;
 }
 
 

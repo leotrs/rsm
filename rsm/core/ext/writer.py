@@ -26,16 +26,16 @@ class RSMTranslator(HTML5Translator):
         )
         self.body.append('''
         <div class="handrail__btn-container">
-            <div class="handrail__btn handrail__btn--relative" onclick="show_all_options(this)">
+            <div class="handrail__btn handrail__btn-menu handrail__btn--relative">
                 <span>⋮</span>
-                <div class="options hide" onmouseleave="hide_all_options(this)">
-                    <span class="option" onclick="toggle_all_steps(this)">steps</span>
-                    <span class="option" onclick="copy_link(this)">link</span>
-                    <span class="option" onclick="show_tree(this)">tree</span>
-                    <span class="option">source</span>
+                <div class="options hide">
+                    <span class="option option__toggle-all">steps</span>
+                    <span class="option option__link">link</span>
+                    <span class="option option__tree">tree</span>
+                    <span class="option option__source">source</span>
                 </div>
             </div>
-            <div class="handrail__btn" onclick="toggle_proof(this)"><span>▹</span></div>
+            <div class="handrail__btn handrail__btn-toggle"><span>▹</span></div>
         </div>
         <div class="proof__title">
             <strong>Proof.</strong>

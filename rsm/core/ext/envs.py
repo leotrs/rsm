@@ -150,9 +150,6 @@ def setup(app):
     }
 
 
-# remove all callbacks from html
-
-
 # -- new features -------------------------------------------------------
 # make step number a ::before element? (only if it simplifies the DOM)
 # refactor: go over the other files and move depart/visit to writer

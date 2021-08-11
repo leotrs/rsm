@@ -28,7 +28,10 @@ def remove_css(app, exc):
 
 def setup(app):
     app.add_html_theme('rsm_theme', THIS_DIR)
-    app.add_js_file('hoverstepnumber.js')
-
     app.connect('builder-inited', process_sass)
     app.connect('build-finished', remove_css)
+
+    # There is a bug where calling app.add_js_file will add the file twice to the <head>
+    # of the HTML output: see https://github.com/sphinx-doc/sphinx/issues/9267
+    # As a workaround, we call app.registry.add_js_file instead
+    app.registry.add_js_file('hoverstepnumber.js')

@@ -16,14 +16,14 @@ $(document).ready(function() {
 	event.stopPropagation();
     });
 
-    $(".proof-env").mouseleave(function () {
-	$(this).find(".options-container").addClass("hide");
+    $(".proof").mouseleave(function () {
+	$(this).find(".options").addClass("hide");
     });
 
 });
 
 function toggle_proof(btn) {
-    proof = $(btn).closest(".proof-env")
+    proof = $(btn).closest(".proof")
     div = proof.children(".proof-container");
     tomb = $(div).siblings(".tombstone");
     if (div.hasClass("hide")) {
@@ -58,21 +58,21 @@ function toggle_all_steps(option) {
 };
 
 function show_all_options(btn) {
-    options = $(btn).children(".options-container");
+    options = $(btn).children(".options");
     options.each(function() {
         $(this).removeClass("hide");
     });
 };
 
 function hide_all_options(btn) {
-    options = $(btn).children(".options-container");
+    options = $(btn).children(".options");
     options.each(function() {
         $(this).addClass("hide");
     });
 };
 
 function copy_link(opt) {
-    id = $(opt).closest(".proof-env").attr("id");
+    id = $(opt).closest(".proof").attr("id");
     current_url = location.protocol+'//'+location.host+location.pathname;
     target_url = current_url + "#" + id;
     navigator.clipboard.writeText(target_url).then(function () {
@@ -81,7 +81,7 @@ function copy_link(opt) {
 };
 
 function show_tree(opt) {
-    proof = $(opt).closest(".proof-env");
+    proof = $(opt).closest(".proof");
     parent = $(proof).parent();
     console.log(parent);
     parents = [];

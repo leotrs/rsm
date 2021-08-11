@@ -97,6 +97,25 @@ class RSMTranslator(HTML5Translator):
     def depart_statement_proof(self, node):
         self.body.append('</div>')
 
+    def visit_theorem_like(self, node):
+        self.body.append(self.starttag(node, 'div'))
+
+    def depart_theorem_like(self, node):
+        self.body.append('</div>')
+
+    def visit_claim_start(self, node):
+        self.body.append(self.starttag(node, 'span', CLASS=('claim')))
+
+    def depart_claim_start(self, node):
+        # the span will be closed when departing the corresponding claim_end
+        pass
+
+    def visit_claim_end(self, node):
+        # the span was opened when visiting the corresponding claim_start
+        pass
+
+    def depart_claim_end(self, node):
+        self.body.append('</span>')
 
 
 def setup(app):

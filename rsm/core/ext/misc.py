@@ -94,33 +94,13 @@ def claim_end_role(name, rawtext, text, lineno, inliner, options={}, content=[])
     return [claim_end('', '')], []
 
 
-def visit_claim_start(self, node):
-    self.body.append(self.starttag(node, 'span', CLASS=('claim')))
-
-
-def depart_claim_start(self, node):
-    pass
-    # The span will be closed when departing the corresponding claim_end
-    # self.body.append('</span>')
-
-
-def visit_claim_end(self, node):
-    pass
-    # The span was opened when visiting the corresponding claim_start
-    # self.body.append('<span class="claim">')
-
-
-def depart_claim_end(self, node):
-    self.body.append('</span>')
-
-
 def setup(app):
     app.connect('source-read', substitute_turnstile)
     app.connect('source-read', mark_up_claims)
     app.add_role('claim-start', claim_start_role)
     app.add_role('claim-end', claim_end_role)
-    app.add_node(claim_start, html=(visit_claim_start, depart_claim_start))
-    app.add_node(claim_end, html=(visit_claim_end, depart_claim_end))
+    app.add_node(claim_start)
+    app.add_node(claim_end)
 
     return {
         'version': '0.1',

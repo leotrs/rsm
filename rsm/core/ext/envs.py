@@ -69,14 +69,6 @@ class TheoremLikeDirective(SphinxDirective, LabeledDirective):
         return [node]
 
 
-def visit_theorem_like(self, node):
-    self.body.append(self.starttag(node, 'div'))
-
-
-def depart_theorem_like(self, node):
-    self.body.append('</div>')
-
-
 # DO use these directives, each must subclass TheoremLikeDirective and use the correct
 # node class.
 class theorem(theorem_like): pass
@@ -137,10 +129,7 @@ def setup(app):
 
     for node_class in [theorem, proposition, remark, sketch, lemma, corollary]:
         name = node_class.__name__
-        app.add_node(
-            node_class,
-            html=(visit_theorem_like, depart_theorem_like),
-        )
+        app.add_node(node_class)
         app.add_directive(name, globals()[f'{name.capitalize()}Directive'])
 
     return {
@@ -151,7 +140,6 @@ def setup(app):
 
 
 # -- new features -------------------------------------------------------
-# make step number a ::before element? (only if it simplifies the DOM)
 # refactor: go over the other files and move depart/visit to writer
 # show a modal when anything is copied to the clipboard
 # title handrail: 'cite this article'

@@ -43,7 +43,7 @@ $(document).ready(function() {
 
     });
 
-    $(".option__toggle-all").click(function() {
+    $(".option__steps").click(function() {
         proof_container = $(this).closest(".proof").find(".proof-container");
         steps = $(proof_container).children(".step");
         steps.each(function() {toggle_step($(this))});

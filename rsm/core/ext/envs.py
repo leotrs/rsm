@@ -140,14 +140,9 @@ def setup(app):
 
 
 # -- new features -------------------------------------------------------
-# refactor: go over the other files and move depart/visit to writer
-# show a modal when anything is copied to the clipboard
-# title handrail: 'cite this article'
-# step handrail: narrow, link
-# put a box-shadow on top, left, and right so the thing looks like a pdf
-# only ship the output css with the theme, no the sass files
+# improve handrail look&feel
 #
-# -- UI -------------------------------------------------------------------
+# -- UI -----------------------------------------------------------------
 # work on UI/typography/contrast (separation, size, color)
 # increase line-height of small text
 # decrease line-height of big text

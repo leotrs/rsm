@@ -15,7 +15,7 @@ class RSMTranslator(HTML5Translator):
     options = {
         proof_env: ['steps', 'link', 'tree', 'source'],
         nodes.title: ['link', 'citation'],
-        step: ['foo', 'bar'],
+        step: ['narrow', 'link'],
     }
 
     def visit_title(self, node):

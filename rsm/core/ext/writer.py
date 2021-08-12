@@ -19,15 +19,17 @@ class RSMTranslator(HTML5Translator):
     }
 
     def visit_title(self, node):
-        self.body.append('<div class="handrail handrail--offset">')
-
+        self.body.append('<div class="handrail handrail--offset handrail--hug">')
         self._append_handrail_button_container(node)
-
         super().visit_title(node)
 
     def depart_title(self, node):
         super().depart_title(node)
         self.body.append('</div>')
+
+    def visit_section(self, node):
+        node['classes'].append(f'level-{self.section_level+1}')
+        super().visit_section(node)
 
     def visit_proof_env(self, node):
         self.body.append(self.starttag(

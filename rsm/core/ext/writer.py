@@ -61,7 +61,7 @@ class RSMTranslator(HTML5Translator):
 
         self.body.append('''
         <div class="handrail__btn handrail__btn-toggle">
-            <span>▹</span>
+            <span>〉</span>
         </div>
         ''')
 

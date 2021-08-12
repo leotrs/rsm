@@ -5,13 +5,24 @@
 
 :root {
     --handrail-offset: 20px;
-    --light-gray: #CCCCCC;
-    --medium-gray: #808080;
-    --dark-gray: #3E4349;
     --keyword-blue: #005187;
     --handrail-margin-block: 1rem;
     --tombstone-side-length: 0.5em;
     --ellipsis-width: 1em;
+
+    --gray-900: #2C343A;
+    --gray-800: #404C54;
+    --gray-700: #53646E;
+    --gray-600: #677B89;
+    --gray-500: #7F929F;
+    --gray-400: #99A8B2;
+    --gray-300: #B3BFC6;
+    --gray-200: #CED5DA;
+    --gray-100: #E8EBED;
+    --lgt-gray: #CED5DA;
+    --med-gray: #7F929F;
+    --drk-gray: #2C343A;
+
 }
 
 *, *::before, *::after {
@@ -53,7 +64,7 @@ body {
     font-weight: 400;
     font-size: 1em;
     line-height: 1.5;
-    color: var(--dark-gray);
+    color: var(--drk-gray);
 }
 
 .hide {
@@ -78,7 +89,7 @@ body {
 
 .handrail {
     border-width: 0 0 0 1px;
-    border-color: var(--light-gray);
+    border-color: var(--lgt-gray);
     border-style: solid;
     padding: 1rem 0 1rem var(--handrail-offset);
     margin-block: var(--handrail-margin-block) var(--handrail-margin-block);
@@ -144,16 +155,16 @@ body {
     flex-direction: column;
     align-items: flex-end;
     position: absolute;
-    color: var(--dark-gray);
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
     font-size: 0.75rem;
     letter-spacing: .1em;
     padding-block: .5em;
-    background: #EEE;
     top: 2em;
     right: 0;
     z-index: 1;
+    background: var(--gray-100);
+    color: var(--drk-gray);
 
     & .option {
         display: block;
@@ -174,11 +185,12 @@ body {
     &-container {
         position: absolute;
         left: calc(-1.2em - 1px);
-        background: #EEE;
+        background: var(--gray-100);
+        font-weight: bold;
         display: none;
 
         & .handrail__btn:last-of-type  {
-            border-left: 1px solid var(--light-gray);
+            border-left: 1px solid var(--lgt-gray);
         }
 
     }
@@ -233,7 +245,7 @@ body {
 
 a:link, a:visited, a:active {
     text-decoration: none;
-    color: #088408;
+    color: #108969;
 }
 
 a:hover {
@@ -241,14 +253,15 @@ a:hover {
 }
 
 .options .option:hover {
-    color: var(--dark-gray);
-    text-shadow: 0 0 1px #000;
+    text-shadow: 0 0 1px var(--lgt-gray);
     cursor: pointer;
-    background: var(--light-gray);
+    background: var(--drk-gray);
+    color: var(--lgt-gray);
 }
 
 .handrail__btn:hover {
-    background: var(--light-gray);
+    background: var(--gray-900);
+    color: var(--gray-200);
     cursor: pointer;
 
     & > span {

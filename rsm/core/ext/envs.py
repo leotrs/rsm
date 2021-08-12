@@ -139,23 +139,22 @@ def setup(app):
     }
 
 
-# -- new features -------------------------------------------------------
-# improve handrail look&feel
-#
 # -- UI -----------------------------------------------------------------
-# work on UI/typography/contrast (separation, size, color)
-# increase line-height of small text
-# decrease line-height of big text
-# big, medium, small
-# as much as possible, only use margin-bottom
-# Use margins when pushing blocks away from each other
-# Use padding when pushing things into their own block
+# tooltips
+# table of contents
+# auto number sections
+# refactor handrail--hug (almost all handrails are hug...)
 #
 # -- MVC ----------------------------------------------------------------
 # the doctree is my model, the html/css is my view
 # only use JS for complex selectors and adding/removing classes
-# anything more complicated goes to rsm-read
+# anything more complicated goes to rsm-read (exception tooltips)
 
+# Remember
+#
+# as much as possible, only use margin-bottom
+# Use margins when pushing blocks away from each other
+# Use padding when pushing things into their own block
 
 
 

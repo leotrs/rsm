@@ -47,7 +47,6 @@ class RSMTranslator(HTML5Translator):
         ''')
 
     def _append_handrail_button_container(self, node):
-        print(type(node))
         self.body.append('''
         <div class="handrail__btn-container">
             <div class="handrail__btn handrail__btn-menu handrail__btn--relative">

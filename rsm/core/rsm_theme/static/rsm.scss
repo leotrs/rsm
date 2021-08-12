@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&family=Source+Sans+Pro&family=Inconsolata:wdth,wght@75,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Source+Sans+Pro&family=Inconsolata:wdth,wght@75,300&display=swap');
 
 /* Base */
 /******************************************************************************************/
@@ -19,7 +19,8 @@
     --gray-300: #B3BFC6;
     --gray-200: #CED5DA;
     --gray-100: #E8EBED;
-    --lgt-gray: #CED5DA;
+
+    --lgt-gray: #B3BFC6;
     --med-gray: #7F929F;
     --drk-gray: #2C343A;
 
@@ -29,6 +30,12 @@
     --h4-size: 1.563rem;
     --h5-size: 1.250rem;
     --h6-size: 1.000rem;
+
+    --bold: 700;
+    --semi: 600;
+    --medium: 500;
+    --regular: 400;
+    --light: 300;
 
 }
 
@@ -45,31 +52,31 @@ h1, h2, h3, h4, h5 {
 h1 {
     font-size: var(--h1-size);
     margin: var(--h1-size) 0 var(--h1-size) 0;
-    font-weight: 700;
+    font-weight: var(--bold);
 }
 
 h2 {
     font-size: var(--h2-size);
     margin: var(--h2-size) 0 var(--h2-size) 0;
-    font-weight: 600;
+    font-weight: var(--semi);
 }
 
 h3 {
     font-size: var(--h3-size);
     margin: var(--h3-size) 0 var(--h3-size) 0;
-    font-weight: 600;
+    font-weight: var(--medium);
 }
 
 h4 {
     font-size: var(--h4-size);
     margin: var(--h4-size) 0 var(--h4-size) 0;
-    font-weight: 500;
+    font-weight: var(--medium);
 }
 
 h5 {
     font-size: var(--h5-size);
     margin: var(--h5-size) 0 var(--h5-size) 0;
-    font-weight: 500;
+    font-weight: var(--regular);
 }
 
 @for $i from 1 through 5 {
@@ -80,7 +87,7 @@ h5 {
 
 body {
     font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 400;
+    font-weight: var(--regular);
     font-size: 1em;
     line-height: 1.5;
     color: var(--drk-gray);
@@ -176,7 +183,7 @@ body {
     align-items: flex-end;
     position: absolute;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
+    font-weight: var(--light);
     font-size: 0.75rem;
     letter-spacing: .1em;
     padding-block: .5em;
@@ -206,7 +213,7 @@ body {
         position: absolute;
         left: calc(-1.2em - 1px);
         background: var(--gray-100);
-        font-weight: bold;
+        font-weight: var(--bold);
         display: none;
 
         & .handrail__btn:last-of-type  {
@@ -219,7 +226,7 @@ body {
 
 .keyword {
     color: var(--keyword-blue);
-    font-weight: bold;
+    font-weight: var(--bold);
 }
 
 .proof {

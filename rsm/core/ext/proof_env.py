@@ -333,8 +333,8 @@ class ResolvePendingStepRefs(SphinxTransform):
             if not title:
                 title = prev_step.default_link_text()
 
-            refnode = nodes.reference(title, title)
-            refnode['refuri'] = f'#{target}'
+            refnode = nodes.reference(title, title, internal=True)
+            refnode['refid'] = target
             node.replace_self(refnode)
 
 

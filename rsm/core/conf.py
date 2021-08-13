@@ -34,13 +34,13 @@ extensions = [
 # -- HTML theme --------------------------------------------------------------
 
 html_theme = 'rsm_theme'
-# html_theme_path = ['.']
 
 
 # -- Math options ------------------------------------------------------------
 
 default_role = 'math'
 math_number_all = True
+mathjax_options = {'async': False}
 
 
 # -- User config -------------------------------------------------------------

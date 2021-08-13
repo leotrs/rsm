@@ -34,4 +34,7 @@ def setup(app):
     # There is a bug where calling app.add_js_file will add the file twice to the <head>
     # of the HTML output: see https://github.com/sphinx-doc/sphinx/issues/9267
     # As a workaround, we call app.registry.add_js_file instead
-    app.registry.add_js_file('hoverstepnumber.js')
+    app.registry.add_js_file('classes.js')
+    app.registry.add_js_file('tooltips.js')
+    app.registry.add_js_file('tooltipster.bundle.js')
+    app.add_css_file('tooltipster.bundle.css')

@@ -1,3 +1,9 @@
+// classes.js
+//
+// This file contains code pertaining to adding and removing classes of DOM elements in
+// response to user interaction.
+//
+
 $(document).ready(function() {
 
     $(".step").hover(function() {

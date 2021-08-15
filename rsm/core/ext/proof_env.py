@@ -131,18 +131,24 @@ def split_steps(content, indent=''):
     # From the second line on, all lines have the right amount of indent PLUS an extra 6
     # whitespace characters that account for the ':step:' of the first line. We need to
     # get rid of those 6 characters so that the indentation lines up.
+    within_statement = True
     for line in lines[1:]:
         assert (not line.strip()) or line.startswith(indent), 'Wrong indentation'
+
         if line.startswith(indent + ':step:'):
             steps.append(step)
+            within_statement = True
             step = line[:len(indent)] + line[len(indent)+6:].lstrip()
         else:
             if not line.strip():
                 step += line
             elif line.lstrip().startswith(':'):
+                within_statement = False
                 step += line
+            elif within_statement:
+                step += line[:len(indent)] + line[len(indent)+7:]
             else:
-                step += line[:len(indent)] + line[len(indent)+7:].lstrip()
+                step += line
     steps.append(step)
 
     return steps

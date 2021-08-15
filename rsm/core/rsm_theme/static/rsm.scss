@@ -5,7 +5,6 @@
 
 :root {
     --handrail-offset: 20px;
-    --keyword-blue: #005187;
     --handrail-margin-block: 1rem;
     --tombstone-side-length: 0.5em;
     --ellipsis-width: 1em;
@@ -23,6 +22,10 @@
     --lgt-gray: #B3BFC6;
     --med-gray: #7F929F;
     --drk-gray: #2C343A;
+
+    --link-color: #108969;
+    --link-color-hover: #69B4A9;
+    --keyword-blue: #005187;
 
     --h1-size: 3.052rem;
     --h2-size: 2.441rem;
@@ -272,11 +275,12 @@ body {
 
 a:link, a:visited, a:active {
     text-decoration: none;
-    color: #108969;
+    color: var(--link-color);
 }
 
 a:hover {
     text-decoration: underline;
+    color: var(--link-color-hover);
 }
 
 .options .option:hover {

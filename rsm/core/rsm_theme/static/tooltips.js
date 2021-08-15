@@ -1,5 +1,4 @@
-$(document).ready(function() {
-
+loadTooltips = function() {
     $("a.reference.internal").tooltipster({
         theme: 'tooltipster-shadow',
         functionInit: function(instance, helper) {
@@ -21,7 +20,4 @@ $(document).ready(function() {
             MathJax.typeset();
         }
     });
-
-
-
-});
+}

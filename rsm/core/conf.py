@@ -40,7 +40,7 @@ html_theme = 'rsm_theme'
 
 default_role = 'math'
 math_number_all = True
-mathjax_options = {'async': False}
+mathjax_options = {'onload': 'loadTooltips()'}
 
 
 # -- User config -------------------------------------------------------------

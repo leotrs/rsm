@@ -18,6 +18,11 @@ class RSMTranslator(HTML5Translator):
         step: ['narrow', 'link'],
     }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._last_section_action = None
+        self._current_section = None
+
     def visit_title(self, node):
         self.body.append('<div class="handrail handrail--offset handrail--hug">')
         self._append_handrail_button_container(node)
@@ -28,8 +33,44 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>')
 
     def visit_section(self, node):
+        print([type(n) for n in node.children[0].children])
         node['classes'].append(f'level-{self.section_level+1}')
+
+        # NOTE: this call increases self.section_level by 1
         super().visit_section(node)
+
+        if self._current_section is None:
+            self._current_section = [0]
+            return
+
+        section_title = node.children[0]
+        is_numbered = not section_title.astext().startswith(':no-num:')
+        if is_numbered:
+            if self._last_section_action == 'visit':
+                self._current_section.append(1)
+            elif self._last_section_action == 'depart':
+                self._current_section[-1] += 1
+
+            section_number = nodes.Text(
+                '.'.join(str(i) for i in self._current_section)
+                + ' '
+            )
+            section_title.insert(0, section_number)
+        else:
+            text = section_title.pop().astext()
+            section_title.append(nodes.Text(text[8:]))
+
+        self._last_section_action = 'visit'
+
+    def depart_section(self, node):
+        section_title = node.children[0]
+        is_numbered = not section_title.astext().startswith(':no-num:')
+        if is_numbered:
+            if self._last_section_action == 'depart':
+               self._current_section.pop()
+
+        super().depart_section(node)
+        self._last_section_action = 'depart'
 
     def visit_proof_env(self, node):
         self.body.append(self.starttag(

@@ -82,7 +82,11 @@ h5 {
     font-weight: var(--regular);
 }
 
-@for $i from 1 through 5 {
+section.level-1 {
+    margin-block: calc(var(--h1-size));
+}
+
+@for $i from 2 through 5 {
     section.level-#{$i} {
 	margin-block: calc(var(--h#{$i}-size) * 1.5);
     }

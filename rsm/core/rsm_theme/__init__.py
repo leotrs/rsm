@@ -37,4 +37,11 @@ def setup(app):
     app.registry.add_js_file('classes.js')
     app.registry.add_js_file('tooltips.js')
     app.registry.add_js_file('tooltipster.bundle.js')
+
+    app.registry.add_js_file('https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js')
+    app.registry.add_js_file('https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@latest/dist/svg.min.js')
+
+    app.registry.add_js_file('tree.js')
+    app.registry.add_js_file('https://d3js.org/d3.v7.min.js')
+
     app.add_css_file('tooltipster.bundle.css')

@@ -27,6 +27,7 @@ extensions = [
     'envs',
     'misc',
     'labels',
+    'contents',
     'writer',
 ]
 
@@ -34,6 +35,7 @@ extensions = [
 # -- HTML theme --------------------------------------------------------------
 
 html_theme = 'rsm_theme'
+html_permalinks = False
 
 
 # -- Math options ------------------------------------------------------------

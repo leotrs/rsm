@@ -33,14 +33,17 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>')
 
     def visit_section(self, node):
-        print([type(n) for n in node.children[0].children])
         node['classes'].append(f'level-{self.section_level+1}')
+
+        if self._current_section is None:
+            node['ids'].insert(0, 'manuscript-root')
 
         # NOTE: this call increases self.section_level by 1
         super().visit_section(node)
 
         if self._current_section is None:
             self._current_section = [0]
+            node['ids'].insert(0, 'manuscript-root')
             return
 
         section_title = node.children[0]

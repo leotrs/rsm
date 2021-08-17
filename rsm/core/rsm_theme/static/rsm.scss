@@ -47,7 +47,7 @@
     margin: 0;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, p.topic-title {
     font-family: 'Montserrat', sans-serif;
     line-height: 1.3;
 }
@@ -64,7 +64,7 @@ h2 {
     font-weight: var(--semi);
 }
 
-h3 {
+h3, p.topic-title {
     font-size: var(--h3-size);
     margin: var(--h3-size) 0 var(--h3-size) 0;
     font-weight: var(--medium);
@@ -133,7 +133,6 @@ body {
     }
 
     &--offset {
-        left: calc( -1 * var(--handrail-offset) - 1px);
         transform: translateX(calc(-1 * var(--handrail-offset) - 1px));
         width: calc(100% + var(--handrail-offset) + 1px);
     }
@@ -224,7 +223,9 @@ body {
         display: none;
 
         & .handrail__btn:last-of-type  {
-            border-left: 1px solid var(--lgt-gray);
+            border-width: 0 0 0 1px;
+            border-color: var(--lgt-gray);
+            border-style: solid;
         }
 
     }

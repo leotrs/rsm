@@ -140,14 +140,14 @@ constructTangleLayout = levels => {
     });
 
     // layout
-    const padding = 32;
+    const padding = 5;
     const text_padding = 150;
-    const node_height = 32;
-    const node_width = 70;
+    const node_height = 37;
+    const node_width = 100;
     const bundle_width = 14;
-    const level_y_padding = 16;
+    const level_y_padding = 5;
     const metro_d = 4;
-    const c = 16;
+    const c = 20;
     const min_family_height = 24;
 
     nodes.forEach(
@@ -155,7 +155,7 @@ constructTangleLayout = levels => {
     );
 
     var x_offset = padding;
-    var y_offset = padding;
+    var y_offset = 0;
     levels.forEach(l => {
         x_offset += l.bundles.length * bundle_width;
         y_offset += level_y_padding;

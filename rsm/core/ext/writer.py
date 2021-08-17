@@ -8,6 +8,7 @@ from docutils import nodes
 from sphinx.writers.html5 import HTML5Translator
 
 from proof_env import proof_env, step
+from contents import contents_title
 
 
 class RSMTranslator(HTML5Translator):
@@ -15,6 +16,7 @@ class RSMTranslator(HTML5Translator):
     options = {
         proof_env: ['steps', 'link', 'tree', 'source'],
         nodes.title: ['link', 'citation'],
+        contents_title: ['table', 'tree'],
         step: ['narrow', 'link'],
     }
 
@@ -42,7 +44,7 @@ class RSMTranslator(HTML5Translator):
         super().visit_section(node)
 
         if self._current_section is None:
-            self._current_section = [0]
+            self._current_section = [1]
             node['ids'].insert(0, 'manuscript-root')
             return
 
@@ -52,7 +54,8 @@ class RSMTranslator(HTML5Translator):
             if self._last_section_action == 'visit':
                 self._current_section.append(1)
             elif self._last_section_action == 'depart':
-                self._current_section[-1] += 1
+                if self._current_section:
+                    self._current_section[-1] += 1
 
             section_number = nodes.Text(
                 '.'.join(str(i) for i in self._current_section)
@@ -69,7 +72,7 @@ class RSMTranslator(HTML5Translator):
         section_title = node.children[0]
         is_numbered = not section_title.astext().startswith(':no-num:')
         if is_numbered:
-            if self._last_section_action == 'depart':
+            if self._last_section_action == 'depart' and self._current_section:
                self._current_section.pop()
 
         super().depart_section(node)

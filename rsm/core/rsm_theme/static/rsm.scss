@@ -243,7 +243,8 @@ body {
 
     &-container {
         position: absolute;
-        left: calc(-1.2em - 1px);
+        left: calc(-1.2em);
+        transform: translateX(calc(-1 * var(--border-thin)));
         background: var(--gray-100);
         font-weight: var(--bold);
         display: none;
@@ -359,30 +360,77 @@ a:hover {
 .handrail.stars-1,
 .handrail.clocks-1 {
     border-width: 0 0 0 var(--border-thin);
+
+    & .handrail__btn:last-of-type  {
+        border-width: 0 0 0 var(--border-thin);
+    }
+
+    & .handrail__btn-container {
+        transform: translateX(calc(-1 * var(--border-thin)));
+    }
+
 }
 
 .handrail.stars-2,
 .handrail.clocks-2 {
     border-width: 0 0 0 var(--border-med);
+
+    & .handrail__btn:last-of-type  {
+        border-width: 0 0 0 var(--border-med);
+    }
+
+    & .handrail__btn-container {
+        transform: translateX(calc(-1 * var(--border-med)));
+    }
+
 }
 
 .handrail.stars-3,
 .handrail.clocks-3 {
     border-width: 0 0 0 var(--border-thick);
+
+    & .handrail__btn:last-of-type  {
+        border-width: 0 0 0 var(--border-thick);
+    }
+
+    & .handrail__btn-container {
+        transform: translateX(calc(-1 * var(--border-thick)));
+    }
+
 }
 
 .handrail.clocks-2 {
     border-color: var(--clock-color);
+
+    & .handrail__btn:last-of-type  {
+        border-color: var(--clock-color);
+    }
+
 }
 
 .handrail.stars-2 {
     border-color: var(--star-color);
+
+    & .handrail__btn:last-of-type  {
+        border-color: var(--star-color);
+    }
+
 }
 
 .handrail.clocks-3 {
     border-color: var(--clock-color);
+
+    & .handrail__btn:last-of-type  {
+        border-color: var(--clock-color);
+    }
+
 }
 
 .handrail.stars-3 {
     border-color: var(--star-color);
+
+    & .handrail__btn:last-of-type  {
+        border-color: var(--star-color);
+    }
+
 }

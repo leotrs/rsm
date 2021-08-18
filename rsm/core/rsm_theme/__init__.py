@@ -44,4 +44,9 @@ def setup(app):
     app.registry.add_js_file('tree.js')
     app.registry.add_js_file('https://d3js.org/d3.v7.min.js')
 
+    app.registry.add_js_file(
+        'https://kit.fontawesome.com/0e1aa62e6e.js',
+        crossorigin="anonymous",
+    )
+
     app.add_css_file('tooltipster.bundle.css')

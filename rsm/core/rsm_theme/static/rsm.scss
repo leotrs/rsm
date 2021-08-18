@@ -5,6 +5,7 @@
 
 :root {
     --handrail-offset: 20px;
+    --side-padding: 5.5em;
     --handrail-margin-block: 1rem;
     --tombstone-side-length: 0.5em;
     --ellipsis-width: 1em;
@@ -27,6 +28,9 @@
     --link-color-hover: #69B4A9;
     --keyword-blue: #005187;
 
+    --clock-color: #DD6F40;
+    --star-color: #1FB5A2;
+
     --h1-size: 3.052rem;
     --h2-size: 2.441rem;
     --h3-size: 1.953rem;
@@ -40,6 +44,9 @@
     --regular: 400;
     --light: 300;
 
+    --border-thick: 6px;
+    --border-med: 4px;
+    --border-thin: 1px;
 }
 
 *, *::before, *::after {
@@ -113,7 +120,7 @@ body {
     margin: 2.5em auto 0 auto;
     box-shadow: 0 0 8px 10px #eee;
     border-radius: 8px;
-    padding: 1em 4.5em 1em calc(4.5em + var(--handrail-offset));
+    padding: 1em var(--side-padding) 1em calc(var(--side-padding) + var(--handrail-offset));
 }
 
 
@@ -126,6 +133,25 @@ body {
     border-style: solid;
     padding: 1rem 0 1rem var(--handrail-offset);
     margin-block: var(--handrail-margin-block) var(--handrail-margin-block);
+    position: relative;
+
+    &__icons {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        transform: translateX(calc(-100% - 1.5*var(--handrail-offset)));
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    &__icons--stars {
+        color: var(--star-color);
+    }
+
+    &__icons--clocks {
+        color: var(--clock-color);
+    }
 
     &--hug {
         margin-block: 0 0;
@@ -223,7 +249,7 @@ body {
         display: none;
 
         & .handrail__btn:last-of-type  {
-            border-width: 0 0 0 1px;
+            border-width: 0 0 0 var(--border-thin);
             border-color: var(--lgt-gray);
             border-style: solid;
         }
@@ -238,7 +264,6 @@ body {
 }
 
 .proof {
-    position: relative;
 
     &__title {
         margin-block-end: 1.25rem;
@@ -306,7 +331,8 @@ a:hover {
 
 }
 
-.handrail:hover > .handrail__btn-container {
+.handrail:hover > .handrail__btn-container,
+.handrail:hover > .handrail__icons {
     display: flex;
 }
 
@@ -329,3 +355,34 @@ a:hover {
 
 /* Theming */
 /******************************************************************************************/
+
+.handrail.stars-1,
+.handrail.clocks-1 {
+    border-width: 0 0 0 var(--border-thin);
+}
+
+.handrail.stars-2,
+.handrail.clocks-2 {
+    border-width: 0 0 0 var(--border-med);
+}
+
+.handrail.stars-3,
+.handrail.clocks-3 {
+    border-width: 0 0 0 var(--border-thick);
+}
+
+.handrail.clocks-2 {
+    border-color: var(--clock-color);
+}
+
+.handrail.stars-2 {
+    border-color: var(--star-color);
+}
+
+.handrail.clocks-3 {
+    border-color: var(--clock-color);
+}
+
+.handrail.stars-3 {
+    border-color: var(--star-color);
+}

@@ -21,12 +21,14 @@ class theorem_like_title(nodes.strong): pass
 # Main node class for all theorem-like environments
 class theorem_like(nodes.Element, Targetable):
 
-    def __init__(self, content,  label=None, *args, **kwargs):
+    def __init__(self, content,  label=None, stars=0, clocks=0, *args, **kwargs):
         super().__init__(content, *args, **kwargs)
         self._number = None      # will be filled by AutoNumberTheoremLike
         self.label = label
         if self.label is not None:
             self['ids'] = [label]
+        self.stars = stars
+        self.clocks = clocks
 
         # The contents of self.attributes['classes'] are added as html tag class (for
         # example '<div class="...">').
@@ -55,13 +57,19 @@ class theorem_like(nodes.Element, Targetable):
 # Subclass it and change the node_class
 class TheoremLikeDirective(SphinxDirective, LabeledDirective):
     node_class = None
-    option_spec = {'label': str}
     has_content = True
+    option_spec = {
+        'label': str,
+        'stars': int,
+        'clocks': int,
+    }
 
     def run(self):
         node = self.node_class(
             content='\n'.join(self.content),
-            label=self.label
+            label=self.label,
+            stars=self.options.get('stars', 0),
+            clocks=self.options.get('clocks', 0),
         )
         self.state.nested_parse(self.content, self.content_offset, node)
         assert len(node.children), 'Theorem-like environment cannot be empty'

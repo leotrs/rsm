@@ -7,6 +7,7 @@ Custom HTML writer for RSM.
 from docutils import nodes
 from sphinx.writers.html5 import HTML5Translator
 
+from envs import theorem_like
 from proof_env import proof_env, step
 from contents import contents_title
 
@@ -14,6 +15,7 @@ from contents import contents_title
 class RSMTranslator(HTML5Translator):
 
     options = {
+        theorem_like: ['link', 'tree'],
         proof_env: ['steps', 'link', 'tree', 'source'],
         nodes.title: ['link', 'citation'],
         contents_title: ['table', 'tree'],
@@ -101,7 +103,14 @@ class RSMTranslator(HTML5Translator):
                 <div class="options hide">
         ''')
 
-        for opt in self.options.get(type(node), []):
+        options = self.options.get(type(node), [])
+        if not options:
+            for cls in self.options:
+                print(type(node), cls, isinstance(node, cls))
+                if isinstance(node, cls):
+                    options: self.options[cls]
+                    break
+        for opt in options:
             self.body.append(f'<span class="option option__{opt}">{opt}</span>')
 
         self.body.append('</div>')  # options
@@ -140,7 +149,7 @@ class RSMTranslator(HTML5Translator):
 
     def visit_statement(self, node):
         self.body.append(f'<div class="step__number">({node.parent.number})</div>')
-        self.body.append(self.starttag(node, 'div', CLASS=('statement')))
+        self.body.append(self.starttag(node, 'div', CLASS='statement'))
 
     def depart_statement(self, node):
         self.body.append('</div>')   # statement
@@ -156,13 +165,30 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>')
 
     def visit_theorem_like(self, node):
-        self.body.append(self.starttag(node, 'div'))
+        self.body.append(self.starttag(
+            node,
+            'div',
+            CLASS=f'stars-{node.stars} clocks-{node.clocks}',
+        ))
+        self._append_handrail_button_container(node)
+
+        if node.stars or node.clocks:
+            self.body.append('<div class=handrail__icons>')
+            if node.stars:
+                self.body.append('<div class=handrail__icons--stars>')
+                self.body.append('<i class="fas fa-star"></i>' * node.stars)
+                self.body.append('</div>')
+            if node.clocks:
+                self.body.append('<div class=handrail__icons--clocks>')
+                self.body.append('<i class="fas fa-clock"></i>' * node.clocks)
+                self.body.append('</div>')
+            self.body.append('</div>')
 
     def depart_theorem_like(self, node):
         self.body.append('</div>')
 
     def visit_claim_start(self, node):
-        self.body.append(self.starttag(node, 'span', CLASS=('claim')))
+        self.body.append(self.starttag(node, 'span', CLASS='claim'))
 
     def depart_claim_start(self, node):
         # the span will be closed when departing the corresponding claim_end

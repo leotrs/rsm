@@ -472,6 +472,23 @@ a:hover {
 
 }
 
+.tooltipster-sidetip {
+
+    & .tooltipster-box {
+        background: white!important;
+     }
+
+    & .tooltipster-arrow-background {
+        border-top-color: white!important;
+    }
+
+    & .tooltipster-content {
+        color: var(--drk-gray)!important;
+    }
+
+
+}
+
 @media (min-width: 70em) {
 
     .documentwrapper {

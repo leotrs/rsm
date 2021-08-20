@@ -288,6 +288,5 @@ $(document).ready(function() {
     color = d3.scaleOrdinal(d3.schemeDark2);
     svg_string = renderChart(data);
     div = document.getElementById("tree-of-contents");
-    console.log(div);
     div.innerHTML = svg_string;
 });

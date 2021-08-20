@@ -8,16 +8,27 @@ loadTooltips = function() {
             // trying to select a class instead!
             target = target.replaceAll(".", "\\.");
 
+            tag = $(target).prop('tagName');
             classes = $(target)[0].classList;
             content = "";
-            switch(true) {
-            case classes.contains("step"):
-                content = $(target).children(".statement").html();
-                instance.content($(content));
-                break;
+
+            if (tag == "P") {
+                content = $(target).html();
+
+
+            } else if (tag == "SPAN") {
+                content = $(target).parent().html();
+            } else {
+                switch(true) {
+                case classes.contains("step"):
+                    content = $(target).children(".statement").html();
+                    break;
+                }
             }
 
-            MathJax.typeset();
+            instance.content($(content));
+
         }
     });
+    MathJax.typeset();
 }

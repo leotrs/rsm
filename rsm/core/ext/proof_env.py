@@ -126,7 +126,7 @@ def split_steps(content, indent=''):
     lines = content.splitlines(keepends=True)
 
     # take the line, including the indentation, but not the ':step:'
-    step = lines[0][:len(indent)] + lines[0][len(indent)+6:].lstrip()
+    step = lines[0][:len(indent)] + lines[0][len(indent)+6:]
 
     # From the second line on, all lines have the right amount of indent PLUS an extra 6
     # whitespace characters that account for the ':step:' of the first line. We need to
@@ -138,7 +138,7 @@ def split_steps(content, indent=''):
         if line.startswith(indent + ':step:'):
             steps.append(step)
             within_statement = True
-            step = line[:len(indent)] + line[len(indent)+6:].lstrip()
+            step = line[:len(indent)] + line[len(indent)+6:]
         else:
             if not line.strip():
                 step += line

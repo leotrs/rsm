@@ -147,27 +147,36 @@ def setup(app):
     }
 
 
-# -- UI -----------------------------------------------------------------
-# tooltips
-# table of contents
-# auto number sections
-# refactor handrail--hug (almost all handrails are hug...)
-#
-# -- MVC ----------------------------------------------------------------
-# the doctree is my model, the html/css is my view
-# only use JS for complex selectors and adding/removing classes
-# anything more complicated goes to rsm-read (exception tooltips)
+# -- Feats ----------------------------------------------------------------
+# what to do with claims?
+# include figures
+# built-in pagination for slideshows
+# can we use :numfig: for theorems?
+# reference list: show where each reference is cited
 
-# Remember
-#
+# -- Tests ----------------------------------------------------------------
+# Statement contianing math
+# Statement longer than one line
+# In sub-step: Statement contianing math
+# In sub-step: Statement longer than one line
+# And then again in sub-sub-step
+# Statmeent made up of a single latex symbol
+# Test that :step:`lbl` and :step: `some_latex` are parsed correctly
+
+# -- Remember -----------------------------------------------------------
+# the doctree is the model, the html/css is the view
 # as much as possible, only use margin-bottom
 # Use margins when pushing blocks away from each other
 # Use padding when pushing things into their own block
+# only use JS for complex selectors and adding/removing classes
+# anything more complicated goes to rsm-read (exception tooltips/tree)
 
-
-
-
-# Use something similar to the following in order to reduce boilerplate:
+# -- Refactor -----------------------------------------------------------
+# refactor handrail--hug (almost all handrails are hug...)
+# refactor AutoNumberProofs, -Theorems, and -Sections
+# use docutils.directives.class_option
+# should theorem-like even have handrail buttons? (just put them in the proof...)
+# Use something similar to the following to reduce boilerplate:
 #
 # class GenericRole(object):
 #     def __init__(self, role_name, node_class):

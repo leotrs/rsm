@@ -16,7 +16,7 @@ CMDS = {
         'sphinx-build '         # rsm-make is a wrapper for sphinx-build
         '-b html '              # build in html forat
         '-c ../rsm/rsm/core/ '  # use the config that ships with RSM
-        '-D root_doc={root} '   # the root file
+        '-D master_doc={root} ' # the root file
         '. '                    # SOURCEDIR
         'build '                # OUTPUTDIR
     ),
@@ -27,7 +27,7 @@ CMDS = {
         'build '                # OUTPUTDIR
         '--watch=*.rst '        # watch all source files
         ' -c ../rsm/rsm/core/ ' # use the config that ships with RSM
-        '-D root_doc={root}'    # the root file
+        '-D master_doc={root}'  # the root file
     )
 }
 

@@ -23,6 +23,7 @@ author = 'leotrs'
 # ones.
 
 extensions = [
+    'sphinxcontrib.bibtex',
     'proof_env',
     'envs',
     'misc',
@@ -31,7 +32,18 @@ extensions = [
     'writer',
 ]
 
+
+# -- Bibliography ------------------------------------------------------------
+
+bibtex_bibfiles = ['references.bib']
+bibtex_bibliography_header = ''
+bibtex_footbibliography_header = ''
+
+
+# -- Auto number figures -----------------------------------------------------
+
 numfig = True
+
 
 # -- HTML theme --------------------------------------------------------------
 

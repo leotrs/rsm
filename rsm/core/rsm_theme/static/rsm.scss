@@ -291,6 +291,15 @@ figcaption {
     }
 }
 
+.topic > .handrail > .handrail__btn-container {
+    top: calc((var(--header-line-height)*var(--h3-size) - var(--body-line-height)*1rem)/2);
+}
+
+section > .theorem-env.handrail > .handrail__btn-container,
+section > .proof.handrail > .handrail__btn-container {
+    top: 1rem;
+}
+
 .keyword {
     color: var(--keyword-blue);
     font-weight: var(--bold);

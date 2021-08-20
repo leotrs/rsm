@@ -148,11 +148,7 @@ def setup(app):
 
 
 # -- Feats ----------------------------------------------------------------
-# what to do with claims?
-# include figures
-# built-in pagination for slideshows
-# can we use :numfig: for theorems?
-# reference list: show where each reference is cited
+# references: show where each reference is cited
 
 # -- Tests ----------------------------------------------------------------
 # Statement contianing math
@@ -173,6 +169,7 @@ def setup(app):
 
 # -- Refactor -----------------------------------------------------------
 # refactor handrail--hug (almost all handrails are hug...)
+# refactor the position of handrail__btn-container
 # refactor AutoNumberProofs, -Theorems, and -Sections
 # use docutils.directives.class_option
 # should theorem-like even have handrail buttons? (just put them in the proof...)

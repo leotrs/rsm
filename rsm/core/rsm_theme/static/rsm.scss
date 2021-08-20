@@ -5,7 +5,7 @@
 
 :root {
     --handrail-offset: 20px;
-    --side-padding: 5.5em;
+    --side-padding: 6.5em;
     --handrail-margin-block: 1rem;
     --tombstone-side-length: 0.5em;
     --ellipsis-width: 1em;
@@ -40,6 +40,7 @@
     --h4-size: 1.563rem;
     --h5-size: 1.250rem;
     --h6-size: 1.000rem;
+    --font-size: 100%;
 
     --bold: 700;
     --semi: 600;
@@ -105,7 +106,7 @@ section.level-1 {
 body {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: var(--regular);
-    font-size: 1rem;
+    font-size: var(--font-size);
     line-height: var(--body-line-height);
     color: var(--drk-gray);
 }
@@ -153,7 +154,8 @@ figcaption {
         display: none;
         position: absolute;
         left: 0;
-        top: 0;
+        top: 0.5rem;
+        font-size: 0.8rem;
         transform: translateX(calc(-100% - 1.5*var(--handrail-offset)));
         flex-direction: column;
         align-items: flex-end;
@@ -508,7 +510,8 @@ a:hover {
         --h4-size: 1.440rem;
         --h5-size: 1.200rem;
         --h6-size: 1.000rem;
-        --side-padding: 3.5em;
+        --side-padding: 4em;
+        --font-size: 93.75%;
     }
 
     .handrail--offset {
@@ -520,5 +523,17 @@ a:hover {
         transform: translateX(calc(-1 * var(--handrail-offset) - var(--border-thin)));
         width: calc(100% + var(--handrail-offset) + var(--border-thin));
     }
+
+    .fas:not(.handrail__icons-last) {
+        display: none;
+    }
+
+    .handrail.stars-3 .handrail__icons--stars::before {content: '3x';}
+    .handrail.stars-2 .handrail__icons--stars::before {content: '2x';}
+    .handrail.stars-1 .handrail__icons--stars::before {content: '1x';}
+
+    .handrail.clocks-3 .handrail__icons--clocks::before {content: '3x';}
+    .handrail.clocks-2 .handrail__icons--clocks::before {content: '2x';}
+    .handrail.clocks-1 .handrail__icons--clocks::before {content: '1x';}
 
 }

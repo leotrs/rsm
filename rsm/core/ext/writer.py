@@ -181,11 +181,13 @@ class RSMTranslator(HTML5Translator):
             self.body.append('<div class=handrail__icons>')
             if node.stars:
                 self.body.append('<div class=handrail__icons--stars>')
-                self.body.append('<i class="fas fa-star"></i>' * node.stars)
+                self.body.append('<i class="fas fa-star"></i>' * (node.stars-1))
+                self.body.append('<i class="fas fa-star handrail__icons-last"></i>')
                 self.body.append('</div>')
             if node.clocks:
                 self.body.append('<div class=handrail__icons--clocks>')
-                self.body.append('<i class="fas fa-clock"></i>' * node.clocks)
+                self.body.append('<i class="fas fa-clock"></i>' * (node.clocks-1))
+                self.body.append('<i class="fas fa-clock handrail__icons-last"></i>')
                 self.body.append('</div>')
             self.body.append('</div>')
 

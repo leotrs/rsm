@@ -29,7 +29,11 @@ class RSMTranslator(HTML5Translator):
         self._current_section = None
 
     def visit_title(self, node):
-        self.body.append('<div class="handrail handrail--offset handrail--hug">')
+        self.body.append(self.starttag(
+            node,
+            'div',
+            CLASS='handrail handrail--offset',
+        ))
         self._append_handrail_button_container(node)
         super().visit_title(node)
 

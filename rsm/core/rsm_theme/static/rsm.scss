@@ -270,6 +270,14 @@ figcaption {
 
 }
 
+.handrail.handrail--hug > .handrail__btn-container {
+    top: 0;
+}
+
+.handrail:not(.handrail--hug) > .handrail__btn-container {
+    top: calc(var(--h2-size)/2 + (var(--header-line-height)*var(--h2-size) - var(--body-line-height)*1rem)/2);
+}
+
 .keyword {
     color: var(--keyword-blue);
     font-weight: var(--bold);
@@ -442,6 +450,40 @@ a:hover {
 
     & .handrail__btn:last-of-type  {
         border-color: var(--star-color);
+    }
+
+}
+
+@media (min-width: 70em) {
+
+    .documentwrapper {
+        box-shadow: 0 0 8px 10px #eee;
+        margin: 2.5em auto;
+    }
+
+}
+
+
+@media (max-width: 48em) {
+
+    :root {
+        --h1-size: 2.488rem;
+        --h2-size: 2.074rem;
+        --h3-size: 1.728rem;
+        --h4-size: 1.440rem;
+        --h5-size: 1.200rem;
+        --h6-size: 1.000rem;
+        --side-padding: 3.5em;
+    }
+
+    .handrail--offset {
+        transform: none;
+        width: 100%;
+    }
+
+    .handrail--nested {
+        transform: translateX(calc(-1 * var(--handrail-offset) - var(--border-thin)));
+        width: calc(100% + var(--handrail-offset) + var(--border-thin));
     }
 
 }

@@ -33,7 +33,7 @@ class theorem_like(nodes.Element, Targetable):
         # The contents of self.attributes['classes'] are added as html tag class (for
         # example '<div class="...">').
         html_class = self.__class__.__name__
-        classes = ['theorem-env', 'handrail', html_class]
+        classes = ['theorem-env', 'handrail', 'handrail--offset', html_class]
         self.attributes['classes'] += classes
 
     @property

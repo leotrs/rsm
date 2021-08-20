@@ -85,7 +85,7 @@ class RSMTranslator(HTML5Translator):
         self.body.append(self.starttag(
             node,
             'div',
-            CLASS=('proof with-tombstone handrail')
+            CLASS=('proof with-tombstone handrail handrail--offset')
             )
         )
 
@@ -134,7 +134,7 @@ class RSMTranslator(HTML5Translator):
         self.body.append(self.starttag(
             node,
             'div',
-            CLASS=('step with-tombstone handrail handrail--offset handrail--hug')
+            CLASS=('step with-tombstone handrail handrail--offset handrail--nested handrail--hug')
         ))
         self._append_handrail_button_container(node)
 

@@ -18,6 +18,7 @@ class RSMTranslator(HTML5Translator):
         theorem_like: ['link', 'tree'],
         proof_env: ['steps', 'link', 'tree', 'source'],
         nodes.title: ['link', 'citation'],
+        nodes.caption: ['foo', 'bar'],
         contents_title: ['table', 'tree'],
         step: ['narrow', 'link'],
     }
@@ -108,7 +109,7 @@ class RSMTranslator(HTML5Translator):
             for cls in self.options:
                 print(type(node), cls, isinstance(node, cls))
                 if isinstance(node, cls):
-                    options: self.options[cls]
+                    options = self.options[cls]
                     break
         for opt in options:
             self.body.append(f'<span class="option option__{opt}">{opt}</span>')
@@ -200,6 +201,19 @@ class RSMTranslator(HTML5Translator):
 
     def depart_claim_end(self, node):
         self.body.append('</span>')
+
+    def visit_caption(self, node):
+        if isinstance(node.parent, nodes.figure):
+            self.body.append(self.starttag(
+                node,
+                'figcaption',
+                CLASS='handrail handrail--offset handrail--hug'
+            ))
+        self._append_handrail_button_container(node)
+        self.body.append(self.starttag(node, 'p', ''))
+        self.add_fignumber(node.parent)
+
+
 
 
 def setup(app):

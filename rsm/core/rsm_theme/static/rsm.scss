@@ -120,7 +120,18 @@ body {
     margin: 2.5em auto 0 auto;
     box-shadow: 0 0 8px 10px #eee;
     border-radius: 8px;
-    padding: 1em var(--side-padding) 1em calc(var(--side-padding) + var(--handrail-offset));
+    padding: 0 var(--side-padding) 0 var(--side-padding);
+    overflow: hidden;
+}
+
+figure {
+    text-align: center;
+    margin-block: var(--h2-size);
+}
+
+figcaption {
+    margin-block: var(--h4-size);
+    text-align: left;
 }
 
 

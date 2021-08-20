@@ -107,7 +107,6 @@ class RSMTranslator(HTML5Translator):
         options = self.options.get(type(node), [])
         if not options:
             for cls in self.options:
-                print(type(node), cls, isinstance(node, cls))
                 if isinstance(node, cls):
                     options = self.options[cls]
                     break

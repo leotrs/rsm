@@ -21,6 +21,7 @@ class RSMTranslator(HTML5Translator):
         nodes.caption: ['foo', 'bar'],
         contents_title: ['table', 'tree'],
         step: ['narrow', 'link'],
+        nodes.label: ['bibtex'],
     }
 
     def __init__(self, *args, **kwargs):
@@ -215,6 +216,24 @@ class RSMTranslator(HTML5Translator):
         self._append_handrail_button_container(node)
         self.body.append(self.starttag(node, 'p', ''))
         self.add_fignumber(node.parent)
+
+    def visit_citation(self, node):
+        super().visit_citation(node)
+
+    def visit_label(self, node):
+        # closed in depart_citation()
+        self.body.append('<div class="handrail handrail--offset citation__item">')
+        self._append_handrail_button_container(node)
+        super().visit_label(node)
+
+    def depart_citation(self, node):
+        # overridden from _html_base:HTMLTranslator to close the handrail div
+        self.body.append('</dd>\n')
+        self.body.append('</div>\n') # opened in visit_label()
+        if not isinstance(node.next_node(descend=False, siblings=True),
+                          nodes.citation):
+            self.body.append('</dl>\n')
+            self.in_footnote_list = False
 
 
 

@@ -147,9 +147,6 @@ def setup(app):
     }
 
 
-# -- Feats ----------------------------------------------------------------
-# references: show where each reference is cited
-
 # -- Tests ----------------------------------------------------------------
 # Statement contianing math
 # Statement longer than one line

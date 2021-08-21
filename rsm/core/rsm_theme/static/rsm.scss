@@ -137,6 +137,10 @@ figcaption {
     text-align: left;
 }
 
+img, svg {
+    max-width: 100%;
+}
+
 
 /* Module */
 /******************************************************************************************/
@@ -241,7 +245,6 @@ figcaption {
     font-family: 'Montserrat', sans-serif;
     font-weight: var(--light);
     font-size: 0.75rem;
-    // letter-spacing: .1em;
     padding-block: .5em;
     top: 2em;
     right: 0;
@@ -510,8 +513,17 @@ a:hover {
         --h4-size: 1.440rem;
         --h5-size: 1.200rem;
         --h6-size: 1.000rem;
-        --side-padding: 4em;
+        --side-padding: 1.5em;
         --font-size: 93.75%;
+    }
+
+    .options {
+        left: 0;
+        right: unset;
+    }
+
+    .options .option {
+        text-align: start;
     }
 
     .handrail--offset {

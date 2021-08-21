@@ -536,6 +536,14 @@ a:hover {
         width: calc(100% + var(--handrail-offset) + var(--border-thin));
     }
 
+    .handrail__icons {
+        transform: unset;
+        flex-direction: row;
+        left: var(--handrail--offset);
+        top: 0;
+        gap: .25rem;
+    }
+
     .fas:not(.handrail__icons-last) {
         display: none;
     }

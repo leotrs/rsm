@@ -259,10 +259,10 @@ class ProofEnvironmentDirective(SphinxDirective):
         old_content = '\n'.join(self.content).strip()
         assert old_content[:6] == ':step:', 'A proof must start with :step:'
 
-        # self.content has zero indentation
+        # self.content has zero indentation, even though visually it is indented.
         new_content = process_step_list(old_content, indent='')
 
-        # The last step added unnecessarily two returns, remove them.
+        # The last step added an unnecessary return, remove it.
         new_content = new_content[:-1]
         new_content = parse_keywords(new_content)
 

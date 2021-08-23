@@ -7,15 +7,19 @@ This file defines a number of ReST directives that provide theorem-like environm
 from icecream import ic
 
 from docutils import nodes
+from docutils.statemachine import StringList
 
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 from sphinx.transforms import SphinxTransform
 
-from util import Targetable, LabeledDirective
+from util import Targetable, LabeledDirective, parse_keywords
 
 
-class theorem_like_title(nodes.strong): pass
+# -- Nodes ---------------------------------------------------------------------------
+
+class theorem_like_title(nodes.strong):
+    pass
 
 
 # Main node class for all theorem-like environments
@@ -53,8 +57,17 @@ class theorem_like(nodes.Element, Targetable):
         return f'{cls} {self.number}'
 
 
-# DO NOT use this directive!
-# Subclass it and change the node_class
+class theorem(theorem_like): pass
+class proposition(theorem_like): pass
+class remark(theorem_like): pass
+class sketch(theorem_like): pass
+class lemma(theorem_like): pass
+class corollary(theorem_like): pass
+
+
+# -- Directives ----------------------------------------------------------------------
+
+# DO NOT use this directive! Subclass it and change the node_class.
 class TheoremLikeDirective(SphinxDirective, LabeledDirective):
     node_class = None
     has_content = True
@@ -65,11 +78,16 @@ class TheoremLikeDirective(SphinxDirective, LabeledDirective):
     }
 
     def run(self):
+        content = parse_keywords('\n'.join(self.content))
         node = self.node_class(
-            content='\n'.join(self.content),
+            content=content,
             label=self.label,
             stars=self.options.get('stars', 0),
             clocks=self.options.get('clocks', 0),
+        )
+        self.content = StringList(
+            content.split('\n'),
+            parent=self.content.parent, parent_offset=self.content_offset
         )
         self.state.nested_parse(self.content, self.content_offset, node)
         assert len(node.children), 'Theorem-like environment cannot be empty'
@@ -79,13 +97,6 @@ class TheoremLikeDirective(SphinxDirective, LabeledDirective):
 
 # DO use these directives, each must subclass TheoremLikeDirective and use the correct
 # node class.
-class theorem(theorem_like): pass
-class proposition(theorem_like): pass
-class remark(theorem_like): pass
-class sketch(theorem_like): pass
-class lemma(theorem_like): pass
-class corollary(theorem_like): pass
-
 class TheoremDirective(TheoremLikeDirective):
     node_class = theorem
 class PropositionDirective(TheoremLikeDirective):
@@ -99,6 +110,8 @@ class LemmaDirective(TheoremLikeDirective):
 class CorollaryDirective(TheoremLikeDirective):
     node_class = corollary
 
+
+# -- Transforms ----------------------------------------------------------------------
 
 class AutoNumberTheoremLike(SphinxTransform):
     default_priority = 600
@@ -132,6 +145,8 @@ class AutoNumberTheoremLike(SphinxTransform):
             node.register_as_target(self.env)
 
 
+# -- Setup ----------------------------------------------------------------------
+
 def setup(app):
     app.add_transform(AutoNumberTheoremLike)
 
@@ -146,6 +161,12 @@ def setup(app):
         'parallel_write_safe': True,
     }
 
+
+# -- Feats ----------------------------------------------------------------
+#
+# what to do when a theorem contains more than one claim.
+#
+# thm: ASSUME x, y, z. PROVE |- P is true, and |- Q is true.
 
 # -- Tests ----------------------------------------------------------------
 # Statement contianing math

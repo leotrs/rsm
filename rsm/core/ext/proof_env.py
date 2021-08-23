@@ -15,22 +15,12 @@ from sphinx.transforms import SphinxTransform
 
 from envs import AutoNumberTheoremLike, theorem_like
 
-from util import Targetable, LabeledDirective, NodeClassDirective
+from util import Targetable, LabeledDirective, NodeClassDirective, parse_keywords
 
 INDENT_SIZE = 3
 
 
 # -- Keywords ------------------------------------------------------------
-
-KEYWORDS = {'LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED'}
-SYMBOLS = {'⊢', '■'}
-REGEX = re.compile(
-    '|'.join(r'\b' + kw + r'\b ?' for kw in KEYWORDS)
-    + '|'
-    + '|'.join(SYMBOLS),
-    re.UNICODE
-)
-
 
 class keyword(nodes.Inline, nodes.TextElement):
     pass
@@ -38,12 +28,6 @@ class keyword(nodes.Inline, nodes.TextElement):
 
 def keyword_role(name, rawtext, text, lineno, inliner, options={}, content=[]):
     return [keyword(rawtext, text)], []
-
-
-def parse_keywords(source):
-    for pattern in KEYWORDS | SYMBOLS:
-        source = re.sub(pattern, f':kw:`{pattern}`', source)
-    return source
 
 
 # -- Nodes --------------------------------------------------------------

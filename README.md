@@ -80,7 +80,7 @@ RSM's output document has the following features:
 The RSM framework is comprised of several components, each of which can be used in
 isolation, though using them in unison yields best results.
 
-1. **The **RSM file format, `.rsm`** is a format that allows writers to produce
+1. **The RSM file format, `.rsm`** is a format that allows writers to produce
    technical documents that get rendered directly into web-ready formats. RSM is a plain
    text format so you can edit a .`rsm` file with your favorite text
    editor. Fundamentally, the `.rsm` file format is essentially an extension of the .rst

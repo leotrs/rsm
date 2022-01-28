@@ -1,6 +1,6 @@
-# reStructuredManuscript (RSM)
+# RSM: (R)e-(S)tructured (M)anuscripts
 
-RSM is a framework that aims to change the format of scientific publications using
+RSM is a suite of tools that aims to change the format of scientific publications using
 modern web technology. Currently, most scientific publications are made with LaTeX and
 published in PDF format. While the capabilities of LaTeX and related software are
 undeniable, there are many pitfalls. RSM aims to cover this gap.
@@ -8,25 +8,71 @@ undeniable, there are many pitfalls. RSM aims to cover this gap.
 
 ## What's wrong with LaTeX + PDF?
 
-1. One of the most egregious pitfalls is that LaTeX is designed to output a document in
-   a single style (or class). In theory, changing to a different class should be as easy
-   as changing one line (the one containing the `\documentclass` command, usually at the
-   top of the file), though any scientist who has tried to convert from one journal's
-   LaTeX template to another knows that in practice this process can be much more
-   cumbersome and time-consuming.
+There's nothing inherently wrong with writing scientific manuscripts in LaTeX and
+publishing them in PDF format.  However, the LaTeX ecosystem was designed at a time
+where the main medium of scientific publication was physically printed books and
+magazines.  Today, this is far from the truth as more and more scientists read papers
+online.  The PDF format, and many of LaTeX's features are designed to output documents
+that will be physically printed, and it is not necessarily the best option when reading
+a digital document.  These are some of the problems that arise when reading PDFs on a
+digital device:
 
-1. Nobody teaches LaTeX, everybody learns python
+1. A PDF file has a fixed geometry (page size, margins, etc), while digital devices
+   (laptops, tablets, mobile phones) have a variety of screen sizes and shapes.  The
+   same PDF file may be read easily in, for example, a laptop screen, but not in a
+   tablet or mobile screen.
 
-1. Visualizing the document on different deices is usually a nuisance at best, and
-   impossible at worst. The usual output of LaTeX is a single PDF file, with a
-   predetermined geometry (page size, margins, etc) and typography (font family, font
-   size, etc). When the same document is rendered on different devices (say, a laptop
-   computer or a mobile phone) or with different rendering software (say, an internet
-   browser or Adobe Acrobat), the document is not optimized for a different screen size.
+2. A PDF file has a fixed layout (the relative positions of text, headers, figures,
+   tables, etc).  In contrast, in the last decade, digital documents and especially web
+   pages are moving toward being *responsive*, that is, their layout adapts to the
+   features of the devices they are being read on.  
 
-1. potential to extend using the entire ecosystem of modern web technologies
+3. A PDF file has a fixed typography (font family, weight, size, color, etc).  For
+   accessibility reasons, a reader may prefer different typographic choices.  For
+   example, some font families are designed to be read more easily by people with
+   dyslexia, while high-contrast color schemes are preferred by people with certain
+   sight conditions.  PDF files cannot adapt to the preferences of the user without
+   using external tools.
 
-1. MORE HERE
+4. While there are ways to configure LaTeX to output files in a format different than
+   PDF (e.g. EPS, DVI), most of the above critiques still hold true.
+   
+5. While there are ways to transform the output of LaTeX to a web-ready format
+   (i.e. HTML), this is always an extra step that must be done outside of the LaTeX
+   ecosystem.  As a result, not all of the LaTeX features translate transparently to the
+   final output and some post-processing is sometimes necessary.
+
+
+## What RSM does differently
+
+One of the main aims of the RSM suite is to provide scientists with tools to author
+scientific manuscripts in a format that is web-ready in a transparent, native way that
+is both easy to use and easy to learn.  In particular, RSM is a suite of tools that
+allow the user to write a plain text file (in a special .rsm format) and convert the
+file into a web page (i.e. a set of .html, .css, and .js files).  These files can then
+be opened natively by any web browser on any device.  In the rest of this README, and in
+the documentation, the files output by RSM are referred to as *the document*, or *the
+output document*.
+
+
+## Features
+
+RSM's output document has the following features:
+
+1. Responsive: its geometry and layout adapt to the device it is being read on.
+
+2. Accessible: the user is free to change the geometry, layout, typography and other
+   settings of a RSM document.
+
+3. Separation of concerns: internally, the structure and content of an RSM document are
+   separate from the style and look-and-feel.  The former are stored in HTML format,
+   while the latter are treated with CSS and Javascript.
+
+4. Interactive: RSM documents support context-relevant tooltips, embedded video or
+   animations, enhanced document navigation, smart search, content folding, smart
+   context menus, and many other features that 
+
+5. Extensible: potential to extend using the entire ecosystem of modern web technologies
 
 
 ## Components
@@ -204,3 +250,98 @@ implemented, following these principles, please get in touch.
 
 
 # Mention distill.pub and structured proofs at some point...
+
+
+
+
+-> Only show what the writer intended to show, unlews the writer asks for more via
+"details on demand" interactions. For example don't show menus, buttons, other things
+unless the reader is hovering or selecting somehow
+
+
+
+
+# -- Feats ----------------------------------------------------------------
+#
+# what to do when a theorem contains more than one claim.
+#
+# thm: ASSUME x, y, z. PROVE |- P is true, and |- Q is true.
+# 
+# be able to refer to results by their 'title' (recall Jay Cummings' longform math textbook's "List of results" - an example is on Notion 'linear alg. textbook')
+#
+# consider supporting advanced highlighting systems: (https://twitter.com/joe_doesmath/status/1420816265439027205)
+#
+# consider supporting 'annotated equations' (https://twitter.com/sibinmohan/status/1480583840858996743)
+
+# -- Tests ----------------------------------------------------------------
+# Statement contianing math
+# Statement longer than one line
+# In sub-step: Statement contianing math
+# In sub-step: Statement longer than one line
+# And then again in sub-sub-step
+# Statmeent made up of a single latex symbol
+# Test that :step:`lbl` and :step: `some_latex` are parsed correctly
+
+# -- Remember -----------------------------------------------------------
+# the doctree is the model, the html/css is the view
+# as much as possible, only use margin-bottom
+# Use margins when pushing blocks away from each other
+# Use padding when pushing things into their own block
+# only use JS for complex selectors and adding/removing classes
+# anything more complicated goes to rsm-read (exception tooltips/tree)
+
+# -- Refactor -----------------------------------------------------------
+# refactor handrail--hug (almost all handrails are hug...)
+# refactor the position of handrail__btn-container
+# refactor AutoNumberProofs, -Theorems, and -Sections
+# use docutils.directives.class_option
+# should theorem-like even have handrail buttons? (just put them in the proof...)
+# Use something similar to the following to reduce boilerplate:
+#
+# class GenericRole(object):
+#     def __init__(self, role_name, node_class):
+#         self.name = role_name
+#         self.node_class = node_class
+#     def __call__(self, role, rawtext, text, lineno, inliner,
+#                  options={}, content=[]):
+#         set_classes(options)
+#         return [self.node_class(rawtext, text, **options)], []
+
+
+
+# Only show what the writer intended to show, unlews the writer asks for more via "details
+# on demand" interactions. For example don't show menus, buttons, other things unless the
+# reader is hovering or selecting somehow
+
+
+
+writing: always develop intuition using concrete examples and then introduce a formal
+definition. Perhaps even introduce 'wrong' or outdated definitions.
+
+
+from Conor: how to date/timestamp versions of a web-paper?
+
+Only show what the writer intended to show, unlews the writer asks for more via "details on demand" interactions. For example don't show menus, buttons, other things unless the reader is hovering or selecting somehow
+
+
+
++ mathematical writing should be accessible, as opposed to obfuscated by notation,
+  convention, or implicit assumption
++ the core will NOT be extended for aesthetic purposes. All aesthetics will be handled
+  via CSS. We want to avoid a situation like LaTeX where migrating from one journal
+  template to another is a PITA
++ learn Lean, but remember RSM is about publishing, writing, and reading, not about
+  proof checking/assisting
++ Lean is about checking correctness, RSM is about making a proof easy to read for a human
++ Lean is about writing/checking math, RSM is about publishing/sharing math
++ the proof markup language (PMUL) should be writeable by hand, if at all possible
++ quote Mason Porter: 'a proof should _always_ have accompanying prose'
++ quote Lamport: 'get to a level where every step is obviously true, and then go one
+  level further'
++ write a short paper for a math education or math software meeting
++ the document should only show what the writer intended, all other bells and whistles
+  should only happen "on demand", when the reader requests them
++ the core extensions should take care of the model, the theme should take care of the
+  view. In particular, all css and js belongs to the theme
++ the UI should be seamless and out of your way. The user should be able to hide
+  navigations/menus/buttons and maximize screen real state to show CONTENT.

@@ -80,24 +80,24 @@ RSM's output document has the following features:
 The RSM framework is comprised of several components, each of which can be used in
 isolation, though using them in unison yields best results.
 
-1. **The RSM file format, `.rsm`** is a format that allows writers to produce
-   technical documents that get rendered directly into web-ready formats. RSM is a plain
-   text format so you can edit a .`rsm` file with your favorite text
-   editor. Fundamentally, the `.rsm` file format is essentially an extension of the .rst
-   file format.
+1. **The RSM file format, `.rsm`** is a format that allows writers to produce technical
+   documents that get rendered directly into web-ready formats. RSM is a plain text
+   format so you can edit a .`rsm` file with your favorite text editor. Fundamentally,
+   the `.rsm` file format is essentially an extension of the `.rst` file format.
 
-1. **The RSM project** is simply a folder that contains a `.rsm` file and its .html
-   output. When sharing your RSM document, you should always share *the entire* RSM
+1. **The RSM project** is simply a folder that contains a `.rsm` file and its `.html`
+   output.  When sharing your RSM document, you should always share *the entire* RSM
    folder, not just one file.
 
 2. **rsm-edit, the RSM text editor,** is a text editor specifically designed to edit
-   .rsm files. Besides having basic text editing features, rsm-edit has features
-   specific to producing `.rsm` files.
+   `.rsm` files. Besides having basic text editing features, rsm-edit has features
+   specific to producing `.rsm` files.  *Currently work in progress.*
 
 3. **rsm-view, the RSM reader,** is a file viewer specifically designed to show `.rsm`
    files. It is essentially a web browser, though it has some extra features.
+   *Currently work in progress.*
 
-4. **rsm-make, the RSM command line utility** is for now the main way to execute all the
+4. **rsm-make, the RSM command line utility,** is for now the main way to execute all the
    core functionality of the RSM framework.
 
 
@@ -124,42 +124,6 @@ useful tool and the community starts adopting it, then care will be placed to gu
 that adopting the rsm-view and rsm-edit tools is as easy and accessible as
 possible. Specifically, there should be cloud versions of both tools where all that's
 necessary is an internet connection.
-
-
-## Features
-
-### Basic features
-
-This is a list of features that are available via basic usage, that is, features
-packaged in the `.rsm` file format that will be available when producing `.rsm` files
-with any text editor and viewing them on any web browser.
-
-+ Documents are typeset using HTML and CSS. Any modern web browser is able to render a
-  `.rsm` document. Furthermore, the same document will be viewable on any device that
-  supports web browsing in a native way. Among other things, this means that an RSM
-  document automatically renders at the correct screen size, that font size is
-  customizable, and that screen readers and other accessibility tools are readily
-  available (as long as they are supported by the chosen web browser).
-+ The RSM file format is plain text, which means that a RSM file can be produced on any
-  text editor. Furthermore, the RSM format is designed to be read by humans, not by
-  machines to RSM files are arguably easier to read than LaTeX files even before
-  rendering. Specifically, in contrast to LaTeX, RSM does not make use of backlash
-  commands `\\` with sometimes obscure names that may or may not be overwritten by
-  different packages. Instead, RSM has a small core of text formatting functionality
-  that can not be overwritten and is guaranteed to always mean the same thing.
-
-
-### Advanced features
-
-This is a list of features that are available via the rsm-edit and rsm-view tools.
-
-**rsm-edit**
-
-**rsm-view**
-
-+ Customizable look and feel: margins, font family, etc
-+ LaTeX search
-+ 'my copy'
 
 
 ## Examples
@@ -208,19 +172,26 @@ Currently, the easiest way of using RSM is as follows:
 
 1. Create a new folder in your file system. For this example, we will use
    `project/`. This folder contains all files pertaining to your manuscript, both the
-   `.rsm` source files and the .html output files.
+   `.rsm` source files and the `.html` output files.
 
 2. Create a new text file in your project folder, for example
    `project/manuscript.rsm`. This file contains your source code. It is the equivalent
-   of the .tex files if you are using LaTeX.
+   of the `.tex` files if you are using LaTeX.
 
 3. Write some RSM in your `project/manuscript.rsm` file using your favorite text
    editor. Save your changes.
 
-4. Run the `rsm-make` command line utility from your project folder: ```bash $ cd
-   project/ project/$ rsm-make manuscript.rsm Building RSM...  Done.  $ ``` This will
-   create, among other things, a new file `project/index.html`. This is the equivalent
-   of the PDF file if you are using LaTeX.
+4. Run the `rsm-make` command line utility from your project folder: 
+   ```bash
+   ~$ cd project/ 
+   project/$ rsm-make manuscript.rsm
+   Building RSM...
+   Done.
+   project/$
+   ```
+   
+   This will create, among other things, a new file `project/index.html`. This is the
+   equivalent of the PDF file if you are using LaTeX.
 
 5. To see your rendered manuscript, simply open the `project/index.html` file with any
    web browser. For example, in Firefox, you can click on the File menu, click Open, and
@@ -228,121 +199,73 @@ Currently, the easiest way of using RSM is as follows:
 
 
 
-## Design philosophy
+<!-- ## Design philosophy -->
 
-The RSM project follows a set of principles. Features are designed with these principles
-in mind. If you think a feature could be improved, or a new feature could be
-implemented, following these principles, please get in touch.
+<!-- The RSM project follows a set of principles. Features are designed with these principles -->
+<!-- in mind. If you think a feature could be improved, or a new feature could be -->
+<!-- implemented, following these principles, please get in touch. -->
 
-1. RSM documents should be easily readable in any device, regardless of screen size,
-   operating system, or internet connection. BECAUSE ACCESSIBILITY.
+<!-- 1. RSM documents should be easily readable in any device, regardless of screen size, -->
+<!--    operating system, or internet connection. -->
 
-2. RSM documents should ship with the source code that generated them. BECAUSE
-   TRANSPARENCY AND EXTENSIBILITY.
+<!-- 2. RSM documents should ship with the source code that generated them. -->
 
-3. WHAT ELSE?
-
-
-
-## Under the hood
-
-+ .rst extensions implemented in sphinx
-+ WHAT ELSE?
-
-
-# Mention distill.pub and structured proofs at some point...
+<!-- 3. WHAT ELSE? -->
 
 
 
+<!-- ## Under the hood -->
 
--> Only show what the writer intended to show, unlews the writer asks for more via
-"details on demand" interactions. For example don't show menus, buttons, other things
-unless the reader is hovering or selecting somehow
+<!-- + .rst extensions implemented in sphinx -->
+<!-- + WHAT ELSE? -->
+
+<!-- -> Only show what the writer intended to show, unlews the writer asks for more via -->
+<!-- "details on demand" interactions. For example don't show menus, buttons, other things -->
+<!-- unless the reader is hovering or selecting somehow -->
 
 
+## Related projects
 
+This is a list of other projects or ideas that have inspired RSM or are somehow related.
 
-# -- Feats ----------------------------------------------------------------
-#
-# what to do when a theorem contains more than one claim.
-#
-# thm: ASSUME x, y, z. PROVE |- P is true, and |- Q is true.
-# 
-# be able to refer to results by their 'title' (recall Jay Cummings' longform math textbook's "List of results" - an example is on Notion 'linear alg. textbook')
-#
-# consider supporting advanced highlighting systems: (https://twitter.com/joe_doesmath/status/1420816265439027205)
-#
-# consider supporting 'annotated equations' (https://twitter.com/sibinmohan/status/1480583840858996743)
-
-# -- Tests ----------------------------------------------------------------
-# Statement contianing math
-# Statement longer than one line
-# In sub-step: Statement contianing math
-# In sub-step: Statement longer than one line
-# And then again in sub-sub-step
-# Statmeent made up of a single latex symbol
-# Test that :step:`lbl` and :step: `some_latex` are parsed correctly
-
-# -- Remember -----------------------------------------------------------
-# the doctree is the model, the html/css is the view
-# as much as possible, only use margin-bottom
-# Use margins when pushing blocks away from each other
-# Use padding when pushing things into their own block
-# only use JS for complex selectors and adding/removing classes
-# anything more complicated goes to rsm-read (exception tooltips/tree)
-
-# -- Refactor -----------------------------------------------------------
-# refactor handrail--hug (almost all handrails are hug...)
-# refactor the position of handrail__btn-container
-# refactor AutoNumberProofs, -Theorems, and -Sections
-# use docutils.directives.class_option
-# should theorem-like even have handrail buttons? (just put them in the proof...)
-# Use something similar to the following to reduce boilerplate:
-#
-# class GenericRole(object):
-#     def __init__(self, role_name, node_class):
-#         self.name = role_name
-#         self.node_class = node_class
-#     def __call__(self, role, rawtext, text, lineno, inliner,
-#                  options={}, content=[]):
-#         set_classes(options)
-#         return [self.node_class(rawtext, text, **options)], []
++ https://lamport.azurewebsites.net/pubs/proof.pdf
++ distill.pub
 
 
 
-# Only show what the writer intended to show, unlews the writer asks for more via "details
-# on demand" interactions. For example don't show menus, buttons, other things unless the
-# reader is hovering or selecting somehow
+
+<!-- # -- Remember ----------------------------------------------------------- -->
+
+<!-- # the doctree is the model, the html/css is the view -->
+<!-- # as much as possible, only use margin-bottom -->
+<!-- # Use margins when pushing blocks away from each other -->
+<!-- # Use padding when pushing things into their own block -->
+<!-- # only use JS for complex selectors and adding/removing classes -->
+<!-- # anything more complicated goes to rsm-read (exception tooltips/tree) -->
 
 
+<!-- Only show what the writer intended to show, unlews the writer asks for more via "details -->
+<!-- on demand" interactions. For example don't show menus, buttons, other things unless the -->
+<!-- reader is hovering or selecting somehow -->
 
-writing: always develop intuition using concrete examples and then introduce a formal
-definition. Perhaps even introduce 'wrong' or outdated definitions.
-
-
-from Conor: how to date/timestamp versions of a web-paper?
-
-Only show what the writer intended to show, unlews the writer asks for more via "details on demand" interactions. For example don't show menus, buttons, other things unless the reader is hovering or selecting somehow
-
-
-
-+ mathematical writing should be accessible, as opposed to obfuscated by notation,
-  convention, or implicit assumption
-+ the core will NOT be extended for aesthetic purposes. All aesthetics will be handled
-  via CSS. We want to avoid a situation like LaTeX where migrating from one journal
-  template to another is a PITA
-+ learn Lean, but remember RSM is about publishing, writing, and reading, not about
-  proof checking/assisting
-+ Lean is about checking correctness, RSM is about making a proof easy to read for a human
-+ Lean is about writing/checking math, RSM is about publishing/sharing math
-+ the proof markup language (PMUL) should be writeable by hand, if at all possible
-+ quote Mason Porter: 'a proof should _always_ have accompanying prose'
-+ quote Lamport: 'get to a level where every step is obviously true, and then go one
-  level further'
-+ write a short paper for a math education or math software meeting
-+ the document should only show what the writer intended, all other bells and whistles
-  should only happen "on demand", when the reader requests them
-+ the core extensions should take care of the model, the theme should take care of the
-  view. In particular, all css and js belongs to the theme
-+ the UI should be seamless and out of your way. The user should be able to hide
-  navigations/menus/buttons and maximize screen real state to show CONTENT.
+<!-- + mathematical writing should be accessible, as opposed to obfuscated by notation, -->
+<!--   convention, or implicit assumption -->
+<!-- + the core will NOT be extended for aesthetic purposes. All aesthetics will be handled -->
+<!--   via CSS. We want to avoid a situation like LaTeX where migrating from one journal -->
+<!--   template to another is a PITA -->
+<!-- + learn Lean, but remember RSM is about publishing, writing, and reading, not about -->
+<!--   proof checking/assisting -->
+<!-- + Lean is about checking correctness, RSM is about making a proof easy to read for a human -->
+<!-- + Lean is about writing/checking math, RSM is about publishing/sharing math -->
+<!-- + the proof markup language (PMUL) should be writeable by hand, if at all possible -->
+<!-- + quote Mason Porter: 'a proof should _always_ have accompanying prose' -->
+<!-- + quote Lamport: 'get to a level where every step is obviously true, and then go one -->
+<!--   level further' -->
+<!-- + write a short paper for a math education or math software meeting -->
+<!-- + the document should only show what the writer intended, all other bells and whistles -->
+<!--   should only happen "on demand", when the reader requests them -->
+<!-- + the core extensions should take care of the model, the theme should take care of the -->
+<!--   view. In particular, all css and js belongs to the theme -->
+<!-- + the UI should be seamless and out of your way. The user should be able to hide -->
+<!--   navigations/menus/buttons and maximize screen real state to show CONTENT. -->
+<!-- + from Conor: how to date/timestamp versions of a web-paper? -->

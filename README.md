@@ -12,10 +12,10 @@ There's nothing inherently wrong with writing scientific manuscripts in LaTeX an
 publishing them in PDF format.  However, the LaTeX ecosystem was designed at a time
 where the main medium of scientific publication was physically printed books and
 magazines.  Today, this is far from the truth as more and more scientists read papers
-online.  The PDF format, and many of LaTeX's features are designed to output documents
-that will be physically printed, and it is not necessarily the best option when reading
-a digital document.  These are some of the problems that arise when reading PDFs on a
-digital device:
+online.  The PDF format and many of LaTeX's features are designed to output documents
+that will be physically printed, and this is not necessarily the best option when
+reading a digital document.  These are some of the problems that arise when reading PDFs
+on a digital device:
 
 1. A PDF file has a fixed geometry (page size, margins, etc), while digital devices
    (laptops, tablets, mobile phones) have a variety of screen sizes and shapes.  The
@@ -25,7 +25,7 @@ digital device:
 2. A PDF file has a fixed layout (the relative positions of text, headers, figures,
    tables, etc).  In contrast, in the last decade, digital documents and especially web
    pages are moving toward being *responsive*, that is, their layout adapts to the
-   features of the devices they are being read on.  
+   features of the devices they are being read on.
 
 3. A PDF file has a fixed typography (font family, weight, size, color, etc).  For
    accessibility reasons, a reader may prefer different typographic choices.  For
@@ -48,7 +48,7 @@ digital device:
 One of the main aims of the RSM suite is to provide scientists with tools to author
 scientific manuscripts in a format that is web-ready in a transparent, native way that
 is both easy to use and easy to learn.  In particular, RSM is a suite of tools that
-allow the user to write a plain text file (in a special .rsm format) and convert the
+allow the user to write a plain text file (in a special `.rsm` format) and convert the
 file into a web page (i.e. a set of .html, .css, and .js files).  These files can then
 be opened natively by any web browser on any device.  In the rest of this README, and in
 the documentation, the files output by RSM are referred to as *the document*, or *the
@@ -70,7 +70,7 @@ RSM's output document has the following features:
 
 4. Interactive: RSM documents support context-relevant tooltips, embedded video or
    animations, enhanced document navigation, smart search, content folding, smart
-   context menus, and many other features that 
+   context menus, and many other opportunities for interaction.
 
 5. Extensible: potential to extend using the entire ecosystem of modern web technologies
 
@@ -80,20 +80,21 @@ RSM's output document has the following features:
 The RSM framework is comprised of several components, each of which can be used in
 isolation, though using them in unison yields best results.
 
-1. **.rsm, the **RSM file format** is a format that allows writers to produce technical
-   documents that get rendered directly into web-ready formats. RSM is a plain text
-   format so you can edit an .rsm file with your favorite text editor. Fundamentally,
-   the .rsm file format is essentially an extension of the .rst file format.
+1. **The **RSM file format, `.rsm`** is a format that allows writers to produce
+   technical documents that get rendered directly into web-ready formats. RSM is a plain
+   text format so you can edit a .`rsm` file with your favorite text
+   editor. Fundamentally, the `.rsm` file format is essentially an extension of the .rst
+   file format.
 
-1. **The RSM project** is simply a folder that contains an .rsm file and its .html
+1. **The RSM project** is simply a folder that contains a `.rsm` file and its .html
    output. When sharing your RSM document, you should always share *the entire* RSM
    folder, not just one file.
 
 2. **rsm-edit, the RSM text editor,** is a text editor specifically designed to edit
    .rsm files. Besides having basic text editing features, rsm-edit has features
-   specific to producing .rsm files.
+   specific to producing `.rsm` files.
 
-3. **rsm-view, the RSM reader,** is a file viewer specifically designed to show .rsm
+3. **rsm-view, the RSM reader,** is a file viewer specifically designed to show `.rsm`
    files. It is essentially a web browser, though it has some extra features.
 
 4. **rsm-make, the RSM command line utility** is for now the main way to execute all the
@@ -105,8 +106,8 @@ isolation, though using them in unison yields best results.
 One of the objectives of the RSM project is to make it possible to produce and share
 documents that can be viewed easily at any time anywhere, without restriction of device,
 software, software versions, operating system, internet connection, etc. Therefore, the
-only required component is a .rsm file. An basic .rsm file can be produced with any text
-editor, and it can be viewed on any modern web browser, even without internet
+only required component is a `.rsm` file. An basic `.rsm` file can be produced with any
+text editor, and it can be viewed on any modern web browser, even without internet
 connection.
 
 
@@ -114,7 +115,7 @@ connection.
 
 Additionally to the basic features, the RSM project also provides advanced features that
 do require the adoption of some of the other components. For example, writers using the
-.rsm format may find it useul to use rsm-edit. Accordingly, some of the features of
+`.rsm` format may find it useul to use rsm-edit. Accordingly, some of the features of
 rsm-edit can only be fully enjoyed by readers via rsm-view.
 
 Adopting the rsm-edit and rsm-view is not necessarily the most accessible
@@ -130,11 +131,11 @@ necessary is an internet connection.
 ### Basic features
 
 This is a list of features that are available via basic usage, that is, features
-packaged in the .rsm file format that will be available when producing .rsm files with
-any text editor and viewing them on any web browser.
+packaged in the `.rsm` file format that will be available when producing `.rsm` files
+with any text editor and viewing them on any web browser.
 
 + Documents are typeset using HTML and CSS. Any modern web browser is able to render a
-  .rsm document. Furthermore, the same document will be viewable on any device that
+  `.rsm` document. Furthermore, the same document will be viewable on any device that
   supports web browsing in a native way. Among other things, this means that an RSM
   document automatically renders at the correct screen size, that font size is
   customizable, and that screen readers and other accessibility tools are readily
@@ -163,7 +164,7 @@ This is a list of features that are available via the rsm-edit and rsm-view tool
 
 ## Examples
 
-The following is a short .rsm file:
+The following is a short `.rsm` file:
 
 ```rst
 .. default-role:: math
@@ -207,7 +208,7 @@ Currently, the easiest way of using RSM is as follows:
 
 1. Create a new folder in your file system. For this example, we will use
    `project/`. This folder contains all files pertaining to your manuscript, both the
-   .rsm source files and the .html output files.
+   `.rsm` source files and the .html output files.
 
 2. Create a new text file in your project folder, for example
    `project/manuscript.rsm`. This file contains your source code. It is the equivalent

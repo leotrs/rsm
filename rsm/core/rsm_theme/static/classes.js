@@ -30,15 +30,15 @@ $(document).ready(function() {
     });
 
     $(".handrail__btn-toggle").click(function() {
-        proof = $(this).closest(".handrail");
-        div = proof.children(".handrail__collapsible");
+        block = $(this).closest(".handrail");
+        div = block.children(".handrail__collapsible");
         tomb = $(div).siblings(".tombstone");
         if (div.hasClass("hide")) {
-	    proof.removeClass("collapsed");
+	    block.removeClass("collapsed");
             div.removeClass("hide");
 	    tomb.removeClass("with-ellipsis");
         } else {
-	    proof.addClass("collapsed");
+	    block.addClass("collapsed");
             div.addClass("hide");
 	    tomb.addClass("with-ellipsis");
         };

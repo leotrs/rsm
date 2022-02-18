@@ -33,14 +33,15 @@ class RSMTranslator(HTML5Translator):
         self.body.append(self.starttag(
             node,
             'div',
-            CLASS='handrail handrail--offset',
+            CLASS='header handrail handrail--offset',
         ))
         self._append_handrail_button_container(node)
         super().visit_title(node)
 
     def depart_title(self, node):
         super().depart_title(node)
-        self.body.append('</div>')
+        self.body.append('</div>\n')
+        self.body.append('<div class="section-container handrail__collapsible">')
 
     def visit_section(self, node):
         node['classes'].append(f'level-{self.section_level+1}')

@@ -229,6 +229,7 @@ Currently, the easiest way of using RSM is as follows:
 This is a list of other projects or ideas that have inspired RSM or are somehow related.
 
 + https://lamport.azurewebsites.net/pubs/proof.pdf
++ https://github.com/Mathpix/mathpix-markdown-it
 + distill.pub
 
 

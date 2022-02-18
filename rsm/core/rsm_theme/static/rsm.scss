@@ -58,6 +58,14 @@
     margin: 0;
 }
 
+p {
+    margin-block-end: 1em;
+}
+
+div.statement p {
+    margin-block-end: 0;
+}
+
 h1, h2, h3, h4, h5, p.topic-title {
     font-family: 'Montserrat', sans-serif;
     line-height: var(--header-line-height);
@@ -386,6 +394,10 @@ a:hover {
     }
 
     &.collapsed > .proof__title {
+        margin-block-end: 0;
+    }
+
+    & p:last-child {
         margin-block-end: 0;
     }
 

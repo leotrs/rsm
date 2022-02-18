@@ -32,7 +32,11 @@ $(document).ready(function() {
     $(".handrail__btn-toggle").click(function() {
         block = $(this).closest(".handrail");
         div = block.children(".handrail__collapsible");
+        if (div.length == 0) {
+            div = block.siblings(".handrail__collapsible");
+        };
         tomb = $(div).siblings(".tombstone");
+
         if (div.hasClass("hide")) {
 	    block.removeClass("collapsed");
             div.removeClass("hide");

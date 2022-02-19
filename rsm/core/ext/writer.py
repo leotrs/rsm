@@ -54,6 +54,13 @@ class RSMTranslator(HTML5Translator):
             node['ids'].insert(0, 'manuscript-root')
             return
 
+        # if self._last_section_action is 'visit', then we are opening a sub-section.
+        # if self._last_section_action is None, then this is the first section, and in
+        # that case we set it to 'depart' which essentially means that there are no
+        # sub-sections to close
+        if self._last_section_action is None:
+            self._last_section_action = 'depart'
+
         section_title = node.children[0]
         is_numbered = not section_title.astext().startswith(':no-num:')
         if is_numbered:

@@ -48,10 +48,7 @@ class RSMTranslator(HTML5Translator):
 
         if self._current_section is None:
             node['ids'].insert(0, 'manuscript-root')
-
-        # NOTE: this call increases self.section_level by 1
-        super().visit_section(node)
-
+        super().visit_section(node) # this increases self.section_level
         if self._current_section is None:
             self._current_section = [1]
             node['ids'].insert(0, 'manuscript-root')

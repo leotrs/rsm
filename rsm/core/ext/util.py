@@ -67,6 +67,5 @@ REGEX = re.compile(
 
 def parse_keywords(source):
     for pattern in KEYWORDS | SYMBOLS:
-        print(pattern, type(pattern))
         source = re.sub(pattern, f':kw:`{pattern}`', source)
     return source

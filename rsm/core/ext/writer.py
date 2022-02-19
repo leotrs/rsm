@@ -200,7 +200,8 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>')
 
     def visit_claim_start(self, node):
-        self.body.append(self.starttag(node, 'span', CLASS='claim'))
+        classes = 'claim goal' if node.is_goal else 'claim'
+        self.body.append(self.starttag(node, 'span', CLASS=classes))
 
     def depart_claim_start(self, node):
         # the span will be closed when departing the corresponding claim_end

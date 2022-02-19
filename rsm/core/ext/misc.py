@@ -77,8 +77,10 @@ def mark_up_claims(app, docname, source):
                 idx += 1
 
 
-class claim_start(nodes.TextElement): pass
-class claim_end(nodes.TextElement): pass
+class claim_start(nodes.TextElement):
+    is_goal = False
+class claim_end(nodes.TextElement):
+    pass
 num_claims = 0
 
 

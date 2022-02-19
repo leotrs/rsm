@@ -78,9 +78,18 @@ $(document).ready(function() {
     });
 
     $( ".option__narrow" ).on("click", function() {
-	console.log("narrow was pressed from " + this);
-	step = $( this ).closest("div.step");
-	step.siblings().css("display", "none");
+	step = $(this).closest("div.step");
+	html = $(this).html();
+
+	if (html == "narrow") {
+	    step.siblings().addClass("hide");
+	    $(this).html("widen");
+	}
+	else if (html == "widen"){
+	    step.siblings().removeClass("hide");
+	    $(this).html("narrow");
+	};
+
     });
 
     $(".options").mouseleave(function() {

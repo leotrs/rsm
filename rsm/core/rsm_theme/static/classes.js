@@ -77,6 +77,12 @@ $(document).ready(function() {
         console.log(parents);
     });
 
+    $( ".option__narrow" ).on("click", function() {
+	console.log("narrow was pressed from " + this);
+	step = $( this ).closest("div.step");
+	step.siblings().css("display", "none");
+    });
+
     $(".options").mouseleave(function() {
         options = $(this).children(".options");
         options.each(function() {

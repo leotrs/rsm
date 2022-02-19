@@ -6,7 +6,7 @@
 :root {
     --handrail-offset: 20px;
     --side-padding: 6.5em;
-    --handrail-margin-block: 1rem;
+    --handrail-margin-block: 1.5rem;
     --tombstone-side-length: 0.5em;
     --ellipsis-width: 1em;
 
@@ -414,6 +414,7 @@ a:hover {
 .step.narrow-after::after {
     content: "...";
 }
+
 
 /* Theming */
 /******************************************************************************************/

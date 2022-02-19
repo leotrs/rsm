@@ -84,9 +84,18 @@ $(document).ready(function() {
 	if (html == "narrow") {
 	    step.siblings().addClass("hide");
 	    $(this).html("widen");
+
+	    if (step.prev(".step").length > 0) {
+		step.addClass("narrow-before");
+	    };
+	    if (step.next(".step").length > 0) {
+		step.addClass("narrow-after");
+	    };
 	}
 	else if (html == "widen"){
 	    step.siblings().removeClass("hide");
+	    step.removeClass("narrow-before");
+	    step.removeClass("narrow-after");
 	    $(this).html("narrow");
 	};
 

@@ -407,6 +407,13 @@ a:hover {
     display: block;
 }
 
+.step.narrow-before::before {
+    content: "...";
+}
+
+.step.narrow-after::after {
+    content: "...";
+}
 
 /* Theming */
 /******************************************************************************************/

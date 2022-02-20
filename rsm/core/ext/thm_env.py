@@ -13,7 +13,7 @@ from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 from sphinx.transforms import SphinxTransform
 
-from util import Targetable, LabeledDirective, parse_keywords
+from util import Targetable, LabeledDirective, GoalDirective, parse_keywords
 from misc import claim_start, claim_end
 
 
@@ -34,7 +34,7 @@ class theorem_like(nodes.Element, Targetable):
             self['ids'] = [label]
         self.stars = stars
         self.clocks = clocks
-        self.goal = None
+        self.goal_for_substeps = None
 
         # The contents of self.attributes['classes'] are added as html tag class (for
         # example '<div class="...">').
@@ -70,7 +70,7 @@ class corollary(theorem_like): pass
 # -- Directives ----------------------------------------------------------------------
 
 # DO NOT use this directive! Subclass it and change the node_class.
-class TheoremLikeDirective(SphinxDirective, LabeledDirective):
+class TheoremLikeDirective(SphinxDirective, LabeledDirective, GoalDirective):
     node_class = None
     has_content = True
     option_spec = {
@@ -94,13 +94,7 @@ class TheoremLikeDirective(SphinxDirective, LabeledDirective):
         self.state.nested_parse(self.content, self.content_offset, node)
         assert len(node.children), 'Theorem-like environment cannot be empty'
         assert isinstance(node.children[0], nodes.paragraph), 'First child of theorem-like must be paragraph'
-
-        goal = None
-        for start in node.traverse(lambda n: isinstance(n, claim_start)):
-            start.is_goal = True
-            node.goal = start
-            break
-
+        self.find_goal(node)
         return [node]
 
 

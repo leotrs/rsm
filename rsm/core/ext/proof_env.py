@@ -15,7 +15,8 @@ from sphinx.transforms import SphinxTransform
 
 from thm_env import AutoNumberTheoremLike, theorem_like
 
-from util import Targetable, LabeledDirective, NodeClassDirective, parse_keywords
+from util import Targetable, LabeledDirective, NodeClassDirective, GoalDirective, parse_keywords
+from misc import claim_start
 
 INDENT_SIZE = 3
 
@@ -56,9 +57,13 @@ class statement_proof(_within_proof_env): pass
 
 
 class step(_within_proof_env, Targetable):
-    def __init__(self, data, number=None, *args, **kwargs):
+    def __init__(self, data, number=None, label=None, *args, **kwargs):
         super().__init__(data, *args, **kwargs)
+        self.goal_for_substeps = None
         self.number = number
+        self.label = label
+        if self.label is not None:
+            self['ids'] = [label]
 
     def has_statement_proof(self):
         for c in self.children:
@@ -72,7 +77,7 @@ class step(_within_proof_env, Targetable):
 
 # -- Directives ------------------------------------------------------------
 
-class StepDirective(SphinxDirective, LabeledDirective):
+class StepDirective(SphinxDirective, LabeledDirective, GoalDirective):
     has_content = True
     optional_arguments = 1
     option_spec = {'label': str}
@@ -83,10 +88,9 @@ class StepDirective(SphinxDirective, LabeledDirective):
             number=f'{self.arguments[0]}' if self.arguments else '',
         )
         self.state.nested_parse(self.content, self.content_offset, node)
-
         if self.label:
             node['ids'].append(self.label)
-
+        self.find_goal(node)
         return [node]
 
 
@@ -290,6 +294,17 @@ class AutoNumberProofs(SphinxTransform):
                     node.register_as_target(self.env)
 
 
+class SetTheoremLikeGoals(SphinxTransform):
+    # always run after proofs have been linked to their theorems
+    default_priority = AutoNumberProofs.default_priority + 1
+
+    def apply(self, **kwargs):
+        for node in self.document.traverse(lambda n: isinstance(n, claim_start)):
+            if node.goal_set_by is not None:
+                label = f'{node.goal_set_by.label}-goal'
+                node['ids'].append(label)
+
+
 class ResolvePendingStepRefs(SphinxTransform):
     # from https://www.sphinx-doc.org/en/master/extdev/appapi.html:
     # 700 - 799: Post processing. Deadline to modify text and referencing.
@@ -341,6 +356,7 @@ prev_role = PrevRole()
 def setup(app):
     app.add_transform(AutoNumberProofs)
     app.add_transform(ResolvePendingStepRefs)
+    app.add_transform(SetTheoremLikeGoals)
 
     app.add_node(proof_env)
     app.add_node(step)

@@ -7,7 +7,7 @@ Custom HTML writer for RSM.
 from docutils import nodes
 from sphinx.writers.html5 import HTML5Translator
 
-from envs import theorem_like
+from thm_env import theorem_like
 from proof_env import proof_env, step
 from contents import contents_title
 
@@ -20,7 +20,7 @@ class RSMTranslator(HTML5Translator):
         nodes.title: ['link', 'citation'],
         nodes.caption: ['foo', 'bar'],
         contents_title: ['table', 'tree'],
-        step: ['narrow', 'link'],
+        step: ['narrow', 'goal', 'link'],
         nodes.label: ['bibtex'],
     }
 
@@ -140,11 +140,14 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>')  # proof
 
     def visit_step(self, node):
-        self.body.append(self.starttag(
-            node,
-            'div',
-            CLASS=('step with-tombstone handrail handrail--offset handrail--nested handrail--hug')
-        ))
+        classes = 'step with-tombstone handrail handrail--offset handrail--nested handrail--hug'
+        classes += ' '.join(node['classes'])
+
+        attr = {}
+        if node.goal_for_substeps is not None:
+            attr = {'data-goal-for-substeps': node.goal_for_substeps['ids'][0]}
+
+        self.body.append(self.starttag(node, 'div', CLASS=classes, **attr))
         self._append_handrail_button_container(node)
 
     def depart_step(self, node):
@@ -175,11 +178,14 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>')
 
     def visit_theorem_like(self, node):
-        self.body.append(self.starttag(
-            node,
-            'div',
-            CLASS=f'stars-{node.stars} clocks-{node.clocks}',
-        ))
+        classes = f'stars-{node.stars} clocks-{node.clocks}'
+        classes += ' '.join(node['classes'])
+
+        attr = {}
+        if node.goal_for_substeps is not None:
+            attr = {'data-goal-for-substeps': node.goal_for_substeps['ids'][0]}
+
+        self.body.append(self.starttag(node, 'div', CLASS=classes, **attr))
         self._append_handrail_button_container(node)
 
         if node.stars or node.clocks:
@@ -200,7 +206,7 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>')
 
     def visit_claim_start(self, node):
-        classes = 'claim goal' if node.is_goal else 'claim'
+        classes = 'claim goal' if node.goal_set_by is not None else 'claim'
         self.body.append(self.starttag(node, 'span', CLASS=classes))
 
     def depart_claim_start(self, node):

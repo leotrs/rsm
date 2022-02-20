@@ -77,7 +77,23 @@ $(document).ready(function() {
         console.log(parents);
     });
 
-    $( ".option__narrow" ).on("click", function() {
+    $(".option__goal").on("click", function(){
+	step = $(this).closest(".step");
+	parent = $(step).parent();
+
+	if (parent.hasClass("proof-container")) {
+	    thm_id = $(parent).parent().attr("id").slice(0, -3);
+	    element = `#${thm_id}`
+	} else {
+	    element = parent.closest(".step");
+	};
+
+	goal_id = $(element).attr("data-goal-for-substeps");
+	$(`#${goal_id}`).addClass("hilite");
+
+    });
+
+    $(".option__narrow").on("click", function() {
 	step = $(this).closest("div.step");
 	html = $(this).html();
 

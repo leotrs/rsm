@@ -11,6 +11,8 @@ import re
 from docutils import nodes
 from sphinx.util.docutils import SphinxDirective
 
+from misc import claim_start
+
 
 # -- Directives ----------------------------------------------------------------------
 
@@ -28,6 +30,22 @@ class LabeledDirective:
     @property
     def label(self):
         return self.options['label'] if 'label' in self.options else None
+
+
+class GoalDirective:
+    """Directive that contains a claim that is the goal of a theorem or step."""
+
+    def find_goal(self, node):
+        """Find the claim that is the goal of node.
+
+        Must be called after the contents of node have been parsed, usually with
+        nested_parse.
+
+        """
+        for start in node.traverse(lambda n: isinstance(n, claim_start)):
+            start.goal_set_by = node
+            node.goal_for_substeps = start
+            break
 
 
 # -- References ----------------------------------------------------------------------

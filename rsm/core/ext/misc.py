@@ -78,7 +78,7 @@ def mark_up_claims(app, docname, source):
 
 
 class claim_start(nodes.TextElement):
-    is_goal = False
+    goal_set_by = None
 class claim_end(nodes.TextElement):
     pass
 num_claims = 0

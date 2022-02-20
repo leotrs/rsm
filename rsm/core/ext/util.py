@@ -17,6 +17,8 @@ from misc import claim_start
 # -- Directives ----------------------------------------------------------------------
 
 class NodeClassDirective(SphinxDirective):
+    """Directive that simply parses its contents and returns a specific node."""
+
     has_content = True
     nodeclass = None
 
@@ -27,6 +29,8 @@ class NodeClassDirective(SphinxDirective):
 
 
 class LabeledDirective:
+    """Directive that admits a label option."""
+
     @property
     def label(self):
         return self.options['label'] if 'label' in self.options else None

@@ -27,6 +27,7 @@
     --link-color: #108969;
     --link-color-hover: #69B4A9;
     --keyword-blue: #005187;
+    --hilite-color: #B1E9B1;
 
     --clock-color: #DD6F40;
     --star-color: #22a695;
@@ -330,7 +331,7 @@ img, svg {
 
     &__number {
         display: none;
-        color: gray;
+        color: var(--med-gray);
         position: absolute;
         left: 0;
         transform: translateX(-100%) translateX(-2em);
@@ -418,6 +419,10 @@ a:hover {
 
 /* Theming */
 /******************************************************************************************/
+
+.hilite {
+    background-color: var(--hilite-color);
+};
 
 .handrail.stars-1,
 .handrail.clocks-1 {

@@ -25,7 +25,7 @@ author = 'leotrs'
 extensions = [
     'sphinxcontrib.bibtex',
     'proof_env',
-    'envs',
+    'thm_env',
     'misc',
     'labels',
     'contents',

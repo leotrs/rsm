@@ -13,7 +13,7 @@ from sphinx.util.docutils import SphinxDirective
 from sphinx.roles import XRefRole
 from sphinx.transforms import SphinxTransform
 
-from envs import AutoNumberTheoremLike, theorem_like
+from thm_env import AutoNumberTheoremLike, theorem_like
 
 from util import Targetable, LabeledDirective, NodeClassDirective, parse_keywords
 

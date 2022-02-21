@@ -14,7 +14,7 @@ from conf import *
 
 project = 'RSM test suite'
 html_use_index = False          # do not generate index files
-html_sidebars = {'**': []}
+html_theme = 'rsm_test_theme'
 
 sys.path.append('.')
 extensions = extensions + ['rsm_test_builder']

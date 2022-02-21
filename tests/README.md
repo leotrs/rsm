@@ -11,5 +11,7 @@ RSM is tested in the following manner:
    'html')
 5. The rsm_test builder is defined in tests/rsm_test_builder.py
 5. The conf.py file is a custom rsm config file (which in turn is just a sphinx
-   configuration file) that is specific to the needs of testing
+   configuration file) that is specific to the needs of testing.  In particular, it sets
+   the theme to `rsm_test_theme` which has a dummy template that only outputs the
+   contents, not the header/footer/etc.
 6. Once the inputs have been converted into outputs, the tests are actually ran

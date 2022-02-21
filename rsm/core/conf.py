@@ -3,10 +3,13 @@
 
 # -- Path setup --------------------------------------------------------------
 
-import os
 import sys
-sys.path.append(os.path.abspath("."))
-sys.path.append(os.path.abspath("./ext"))
+from pathlib import Path
+import rsm
+
+root_dir = Path(rsm.__file__).parents[0] / 'core/'
+sys.path.append(root_dir.as_posix())
+sys.path.append((root_dir / 'ext/').as_posix())
 
 
 # -- Project information -----------------------------------------------------

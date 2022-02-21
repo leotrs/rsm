@@ -43,7 +43,7 @@ class RSMTranslator(HTML5Translator):
     def depart_title(self, node):
         super().depart_title(node)
         self.body.append('</div>\n')
-        self.body.append('<div class="section-container handrail__collapsible">')
+        self.body.append('<div class="section-container handrail__collapsible">\n')
 
     def visit_section(self, node):
         node['classes'].append(f'level-{self.section_level+1}')
@@ -103,18 +103,18 @@ class RSMTranslator(HTML5Translator):
 
         self._append_handrail_button_container(node)
 
-        self.body.append('''
-        <div class="proof__title"><strong>Proof.</strong></div>
-        <div class="proof-container handrail__collapsible">
-        ''')
+        self.body.append(
+            '<div class="proof__title"><strong>Proof.</strong></div>\n'
+            '<div class="proof-container handrail__collapsible">\n'
+        )
 
     def _append_handrail_button_container(self, node):
-        self.body.append('''
-        <div class="handrail__btn-container">
-            <div class="handrail__btn handrail__btn-menu handrail__btn--relative">
-                <span>⋮</span>
-                <div class="options hide">
-        ''')
+        self.body.append(
+            '<div class="handrail__btn-container">\n'
+            '<div class="handrail__btn handrail__btn-menu handrail__btn--relative">\n'
+            '<span>⋮</span>\n'
+            '<div class="options hide">\n'
+        )
 
         options = self.options.get(type(node), [])
         if not options:
@@ -123,23 +123,23 @@ class RSMTranslator(HTML5Translator):
                     options = self.options[cls]
                     break
         for opt in options:
-            self.body.append(f'<span class="option option__{opt}">{opt}</span>')
+            self.body.append(f'<span class="option option__{opt}">{opt}</span>\n')
 
-        self.body.append('</div>')  # options
-        self.body.append('</div>')  # handrail__btn-menu
+        self.body.append('</div>\n')  # options
+        self.body.append('</div>\n')  # handrail__btn-menu
 
-        self.body.append('''
-        <div class="handrail__btn handrail__btn-toggle">
-            <span>〉</span>
-        </div>
-        ''')
+        self.body.append(
+            '<div class="handrail__btn handrail__btn-toggle">\n'
+            '<span>〉</span>\n'
+            '</div>\n'
+        )
 
-        self.body.append('</div>') # handrail__btn-container
+        self.body.append('</div>\n') # handrail__btn-container
 
     def depart_proof_env(self, node):
-        self.body.append('</div>')  # proof-container
-        self.body.append('<div class="tombstone"></div>')
-        self.body.append('</div>')  # proof
+        self.body.append('</div>\n')  # proof-container
+        self.body.append('<div class="tombstone"></div>\n')
+        self.body.append('</div>\n')  # proof
 
     def visit_step(self, node):
         classes = 'step with-tombstone handrail handrail--offset handrail--nested handrail--hug'
@@ -153,8 +153,8 @@ class RSMTranslator(HTML5Translator):
         self._append_handrail_button_container(node)
 
     def depart_step(self, node):
-        self.body.append('<div class="tombstone hide"></div>')
-        self.body.append('</div>')   # step
+        self.body.append('<div class="tombstone hide"></div>\n')
+        self.body.append('</div>\n')   # step
 
     def visit_keyword(self, node):
         self.body.append(self.starttag(node, 'span', CLASS=('keyword')))
@@ -163,11 +163,11 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</span>')
 
     def visit_statement(self, node):
-        self.body.append(f'<div class="step__number">({node.parent.number})</div>')
+        self.body.append(f'<div class="step__number">({node.parent.number})</div>\n')
         self.body.append(self.starttag(node, 'div', CLASS='statement'))
 
     def depart_statement(self, node):
-        self.body.append('</div>')   # statement
+        self.body.append('</div>\n')   # statement
 
     def visit_statement_proof(self, node):
         self.body.append(self.starttag(
@@ -177,7 +177,7 @@ class RSMTranslator(HTML5Translator):
         ))
 
     def depart_statement_proof(self, node):
-        self.body.append('</div>')
+        self.body.append('</div>\n')
 
     def visit_theorem_like(self, node):
         classes = f'stars-{node.stars} clocks-{node.clocks}'
@@ -196,16 +196,16 @@ class RSMTranslator(HTML5Translator):
                 self.body.append('<div class=handrail__icons--stars>')
                 self.body.append('<i class="fas fa-star"></i>' * (node.stars-1))
                 self.body.append('<i class="fas fa-star handrail__icons-last"></i>')
-                self.body.append('</div>')
+                self.body.append('</div>\n')
             if node.clocks:
                 self.body.append('<div class=handrail__icons--clocks>')
                 self.body.append('<i class="fas fa-clock"></i>' * (node.clocks-1))
                 self.body.append('<i class="fas fa-clock handrail__icons-last"></i>')
-                self.body.append('</div>')
-            self.body.append('</div>')
+                self.body.append('</div>\n')
+            self.body.append('</div>\n')
 
     def depart_theorem_like(self, node):
-        self.body.append('</div>')
+        self.body.append('</div>\n')
 
     def visit_claim_start(self, node):
         classes = 'claim goal' if node.goal_set_by is not None else 'claim'

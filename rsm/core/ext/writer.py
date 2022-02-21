@@ -1,4 +1,6 @@
-"""writer.py
+"""
+writer.py
+---------
 
 Custom HTML writer for RSM.
 

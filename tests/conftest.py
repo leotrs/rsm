@@ -6,9 +6,21 @@ pytest configuration.
 
 """
 
+import shutil
 from rsm.rsm_make import main
 
 
+CMD = (
+    'sphinx-build '         # rsm-make is a wrapper for sphinx-build
+    '-b rsm_test '          # build in html forat
+    '-c . '                 # folder containing conf.py
+    'inputs/ '              # SOURCEDIR
+    'outputs/ '             # OUTPUTDIR
+)
+
+
 def pytest_configure(config):
-    main.RAN_FROM_PYTEST = True
-    print(main.main(['demo.rst', '--config', '.']))
+    print('Cleaning up output files...')
+    shutil.rmtree('outputs/')
+    print('Generating new output files...')
+    print(main.main(CMD))

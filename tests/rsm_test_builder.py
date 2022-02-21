@@ -17,7 +17,6 @@ class RSMTestBuilder(StandaloneHTMLBuilder):
 
 
 def setup(app):
-    print('setting up rsm test buiilder')
     app.add_builder(RSMTestBuilder)
     app.registry.add_translator('rsm_test', RSMTranslator)
     return {

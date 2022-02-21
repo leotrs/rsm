@@ -111,7 +111,7 @@ class RSMTranslator(HTML5Translator):
     def _append_handrail_button_container(self, node):
         self.body.append(
             '<div class="handrail__btn-container">\n'
-            '<div class="handrail__btn handrail__btn-menu handrail__btn--relative">\n'
+            '<div class="handrail__btn handrail__btn-menu handrail__btn--relative">'
             '<span>⋮</span>\n'
             '<div class="options hide">\n'
         )
@@ -129,8 +129,8 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>\n')  # handrail__btn-menu
 
         self.body.append(
-            '<div class="handrail__btn handrail__btn-toggle">\n'
-            '<span>〉</span>\n'
+            '<div class="handrail__btn handrail__btn-toggle">'
+            '<span>〉</span>'
             '</div>\n'
         )
 

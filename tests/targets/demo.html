@@ -1,0 +1,797 @@
+<section class="level-1" id="manuscript-root">
+<span id="a-demo-rsm-document"></span><div class="header handrail handrail--offset">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__citation">citation</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<h1>A demo RSM document</h1>
+</div>
+<div class="section-container handrail__collapsible">
+<p>RSM is a suite of tools that aims to change the format of scientific publications using
+modern web technology.  Currently, most scientific publications are made with LaTeX and
+published in PDF format.  While the capabilities of LaTeX and related software are
+undeniable, there are many pitfalls.  RSM aims to cover this gap.</p>
+<p>RSM stands for (R)e(S)tructured (M)ath.  It is based on a modified version of the
+(R)s(S)tructured (T)ext markup language.  Essentially, RSM works in the following way:
+an author writes a manuscript in a plain text file with format <code class="code docutils literal notranslate"><span class="pre">.rsm</span></code> (which is an
+alias of <code class="code docutils literal notranslate"><span class="pre">.rst</span></code>).  This file is transformed into a webpage by the command line
+utility <code class="code docutils literal notranslate"><span class="pre">rsm-make</span></code>.  This website is completely standalone and can be viewed by
+any web browser on any device.</p>
+<p>The current document was written and processed with RSM.  It serves to illustrate some
+of its features and functionality.  <strong>WARNING</strong>: Many of the features of RSM are
+currently a work in progress.</p>
+<section class="level-2" id="no-num-the-handrail">
+<div class="header handrail handrail--offset">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__citation">citation</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<h2>The handrail</h2>
+</div>
+<div class="section-container handrail__collapsible">
+<p>One of the advantages of publishing manuscripts using web technology is interactivity.
+This means embedability of images, video, and other media, but also more subtle design
+elements that allow the user (i.e. the reader of the manuscript) to interact with the
+document.  One of the main purposes of RSM is to make full use of such technology by
+enhancing the UI/UX of reading scientific manuscripts in order to make reading papers a
+satisfying experience.</p>
+<p>One such design element is called the <em>handrail</em>.  This is the vertical gray bar that is
+shown to the left of the title of this manuscript or to the left of this section’s
+title.  As a UI element, it serves to clearly demarcate where different sections start
+and end.  As a UX element, it serves to signal opportunities for interaction.</p>
+<p>For example, if you hover over the handrail to the left of this section’s title, you
+will see two buttons show up on the handrail.  First, the arrow button is the content
+folding button: you can press it to hide the entire contents of the webpage.  Second,
+the menu button with the three dots displays a context menu.  In the case of the
+manuscript title, this menu allows the user to obtain a permanent link to the
+manuscript, or to show a citation text.  (<strong>NOTE</strong>: currently these two buttons are
+mock-ups and do not actually work.)</p>
+</section>
+<section class="level-2" id="tooltips">
+<div class="header handrail handrail--offset">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__citation">citation</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<h2>2 Tooltips</h2>
+</div>
+<div class="section-container handrail__collapsible">
+<p>One of the main features of RSM is that anything can be labeled and referenced.  For
+example,</p>
+<div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" id="some-thm">
+<span id="thm-1"></span><div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<p id="some-lbl"><strong>Theorem 1. </strong> All <span class="math notranslate nohighlight">\(X\)</span> are <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+</div>
+<p>The statement of the theorem has been labeled and can now be referred to <a class="reference internal" href="#some-lbl"><span class="std std-ref">like this</span></a>.  Currently not all references will show the tooltips correctly, but the
+reference in the previous line should work.  (<strong>NOTE:</strong> sometimes the math in the
+tooltip is displayed incorrectly.  If the tooltip does not show, refresh the page a few
+times first.)</p>
+<p>Note the Theorem block also has a handrail and will eventually support a more
+fully-featured context menu.</p>
+</section>
+<section class="level-2" id="structured-proofs">
+<div class="header handrail handrail--offset">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__citation">citation</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<h2>3 Structured Proofs</h2>
+</div>
+<div class="section-container handrail__collapsible">
+<p>One major source of inspiration for the RSM project is what Leslie Lamport calls
+‘structured proofs’.  A good introduction to this topic is <a class="reference external" href="https://lamport.azurewebsites.net/pubs/proof.pdf">this paper</a> or <a class="reference external" href="https://www.youtube.com/watch?v=uBiJpip9NVc&amp;ab_channel=HeidelbergLaureateForum">this talk</a>.
+Essentially, a structured proof is a mathematical proof written in a minimal markup
+language that exposes its structure.  RSM implements some design and semantic elements
+that support the idea of structured proofs.</p>
+<section class="level-3" id="a-simple-example">
+<div class="header handrail handrail--offset">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__citation">citation</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<h3>3.1 A simple example</h3>
+</div>
+<div class="section-container handrail__collapsible">
+<p>Perhaps the best way to discuss structured proofs is to illustrate with an example.
+Consider the following theorem and its proof.</p>
+<div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" id="thm-2">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<p><strong>Theorem 2. </strong>Socrates is mortal.</p>
+</div>
+<div class="proof with-tombstone handrail handrail--offset" id="thm-2-pf">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__steps">steps</span>
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+<span class="option option__source">source</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="proof__title"><strong>Proof.</strong></div>
+<div class="proof-container handrail__collapsible">
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" id="thm-2-pf-1">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(1)</div>
+<div class="statement">
+<p>All men are mortal, and Socrates is mortal.  Therefore, Socrates is mortal.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+</div>
+<div class="tombstone"></div>
+</div>
+<p>This is the usual way in which mathematical proofs are presented in a manuscript: first
+the statement, followed by chunk of text, followed by the filled square symbol
+(a.k.a. <em>tombstone</em>).</p>
+<p><strong>NOTE:</strong> if you click the arrow button on the proof block’s handrail, it should
+show/hide the contents of the proof – note this works on the proof block’s handrail NOT
+on the theorem block’s handrail.  Note that when the contents of the proof are hidden,
+the tombstone changes to a ‘tombstone with ellipsis’ symbol, which means that the proof
+has contents (tombstone) that are hidden (ellipsis).</p>
+<p><strong>NOTE:</strong> Another design element in the proof block is that if you hover over the text
+of the proof, you will see its own context menu as well as a gray number one in
+parenthesis appear to the left of the handrail.  In RSM, each proof step has its own
+context menu that allows for interaction.  The gray number is the step number within the
+proof.  The following examples will make better use of these two new design elements,
+but RSM includes them automatically, without requiring any additional work from the
+manuscript’s author, even in this simple theorem/proof.</p>
+</section>
+<section class="level-3" id="no-num-adding-some-syntax">
+<div class="header handrail handrail--offset">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__citation">citation</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<h3>Adding some syntax</h3>
+</div>
+<div class="section-container handrail__collapsible">
+<p>One of the problems with writing mathematics this way is that the logical structure is
+lost in the text, especially when the text is long and involves displayed math, multiple
+symbols, calls to previous results, intuitive explanations or ‘proof sketches’ along
+with more rigorous derivations, etc.</p>
+<p>The idea of ‘structured proofs’ as proposed by Lamport is to markup the text of a proof
+with some keywords and indentation levels that expose its structure.  For example, we
+can write the same proof as above in the following way.</p>
+<div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" data-goal-for-substeps="claim-0" id="thm-3">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<p><strong>Theorem 3. </strong><span class="claim goal" id="claim-0">
+<span id="thm-3-goal"></span> <span class="keyword">
+⊢</span> Socrates is mortal. </span></p>
+</div>
+<div class="proof with-tombstone handrail handrail--offset" id="thm-3-pf">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__steps">steps</span>
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+<span class="option option__source">source</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="proof__title"><strong>Proof.</strong></div>
+<div class="proof-container handrail__collapsible">
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" id="thm-3-pf-1">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(1)</div>
+<div class="statement">
+<p>All men are mortal.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" id="thm-3-pf-2">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(2)</div>
+<div class="statement">
+<p>Socrates is a man.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+</div>
+<div class="tombstone"></div>
+</div>
+<p>There are two main differences now.  First, the use of the ‘<span class="claim" id="claim-1">
+ ⊢’ symbol preceding each
+claim. </span>  Strictly speaking, a claim is a sentence that requires proof.  For example, the
+statement of the theorem is a claim, as demarcated by the symbol ‘<span class="claim" id="claim-2">
+ ⊢’. </span></p>
+<p>The second main difference is that RSM recognizes that this proof has two steps.  It
+does so by separating them in different paragraphs, each of which has its own context
+menu and step number appearing in the handrail when you hover over them.  Finally, each
+step has a tombstone that shows up only when you hover over the text.  This becomes more
+useful in clearly separating the logic involved in different steps in a long proof.</p>
+</section>
+<section class="level-3" id="even-more-syntax">
+<div class="header handrail handrail--offset">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__citation">citation</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<h3>3.2 Even more syntax</h3>
+</div>
+<div class="section-container handrail__collapsible">
+<p>The next step is to realize that each step of a proof can also contain a claim.  In
+fact, it is not necessarily obvious why each step in the previous theorem should be
+accepted as true.  This means we need to write a mini sub-proof for each of the steps
+that needs one.  RSM naturally supports this nested structure.  How many steps and
+sub-steps a proof needs can only be determined by the author.  As Lamport puts it,
+‘write as many levels as you need, and then go one level deeper’.</p>
+<p>In our case, we could explain each step like so:</p>
+<div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" data-goal-for-substeps="claim-3" id="thm-4">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<p><strong>Theorem 4. </strong><span class="claim goal" id="claim-3">
+<span id="thm-4-goal"></span> <span class="keyword">
+⊢</span> Socrates is mortal. </span></p>
+</div>
+<div class="proof with-tombstone handrail handrail--offset" id="thm-4-pf">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__steps">steps</span>
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+<span class="option option__source">source</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="proof__title"><strong>Proof.</strong></div>
+<div class="proof-container handrail__collapsible">
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" data-goal-for-substeps="claim-4" id="thm-4-pf-1">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(1)</div>
+<div class="statement">
+<p><span class="claim goal" id="claim-4">
+<span id="None-goal"></span> <span class="keyword">
+⊢</span> All men are mortal. </span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>Axiom.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" data-goal-for-substeps="claim-5" id="thm-4-pf-2">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(2)</div>
+<div class="statement">
+<p><span class="claim goal" id="claim-5">
+<span id="None-goal"></span> <span class="keyword">
+⊢</span> Socrates is a man. </span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>Axiom.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" id="thm-4-pf-3">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(3)</div>
+<div class="statement">
+<p><span class="keyword">
+QED</span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>By the previous two steps.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+</div>
+<div class="tombstone"></div>
+</div>
+<p>A few things to note: each sub-step can be folded using the arrow buttons appearing on
+the handrail.  Each time you fold a step, a ‘tombstone with ellipsis’ symbol will appear
+signaling that there is part of the proof (tombstone) that is hidden (ellipsis).
+Another new element is the word QED.  Lamport suggests its use as a single step in a
+proof when the previous steps of the proof are sufficient to establish what is claimed
+but some additional text may be necessary to clarify that.</p>
+<p><strong>NOTE:</strong> The current example allows us to illustrate another function of the context
+menu.  If you hover over the Proof title (i.e. the bold text that literally reads
+<strong>Proof</strong> and NOT any of the contained steps), the context menu now shows a ‘STEPS’
+button.  If you press it, it should be obvious what it does: it automatically folds the
+content of each step contained in the proof.  In this case, the proof now looks very
+similar to the proof in the previous section, but the ‘tombstone with ellipsis’ symbols
+signal that there is more content hidden.  If you press the ‘STEPS’ button again, each
+step will show its contents again.  Of course, each step can be individually shown or
+hidden by using its own context menu.</p>
+</section>
+<section class="level-3" id="keywords">
+<div class="header handrail handrail--offset">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__citation">citation</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<h3>3.3 Keywords</h3>
+</div>
+<div class="section-container handrail__collapsible">
+<p>Lamport also suggests the use of keywords that better expose the logical function of
+each statement or claim in a proof.  For example, consider the following.</p>
+<div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" data-goal-for-substeps="claim-6" id="thm-5">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<p><strong>Theorem 5. </strong><span class="claim goal" id="claim-6">
+<span id="thm-5-goal"></span> <span class="keyword">
+⊢</span> Socrates is mortal. </span></p>
+</div>
+<div class="proof with-tombstone handrail handrail--offset" id="thm-5-pf">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__steps">steps</span>
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+<span class="option option__source">source</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="proof__title"><strong>Proof.</strong></div>
+<div class="proof-container handrail__collapsible">
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" data-goal-for-substeps="claim-7" id="thm-5-pf-1">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(1)</div>
+<div class="statement">
+<p><span class="claim goal" id="claim-7">
+<span id="None-goal"></span> <span class="keyword">
+⊢</span> <span class="keyword">
+SUFFICES</span> Socrates is a man. </span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>It suffices to show that Socrates is a man because this fact plus Lemma X together imply the Theorem.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" data-goal-for-substeps="claim-8" id="thm-5-pf-2">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(2)</div>
+<div class="statement">
+<p><span class="claim goal" id="claim-8">
+<span id="None-goal"></span> <span class="keyword">
+⊢</span> Socrates is a man. </span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>Axiom.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+</div>
+<div class="tombstone"></div>
+</div>
+<p>The first step uses the SUFFICES keyword.  Note the claim in the first step includes
+this keyword.  A statement involving the SUFFICES keyword has an important impact in the
+proof: it changes what is being proved.  In this case, it changes the objective of the
+proof from showing that ‘Socrates is mortal’ to showing that ‘Socrates is a man’.
+Highlighting the SUFFICES keyword allows the reader to keep track of the current
+objective of the proof.  This is why the proof can now end after ‘Socrates is a man’ has
+been shown, when in the previous case we needed one more step to guarantee that the
+theorem had been established.</p>
+<p>A much lengthier and better explanation of the SUFFICES keyword and others can be found
+<a class="reference external" href="https://lamport.azurewebsites.net/pubs/proof.pdf">here</a> For now let us remark that
+RSM is designed to support these keywords both syntactically and semantically.</p>
+</section>
+</section>
+<section class="level-2" id="a-longer-proof">
+<div class="header handrail handrail--offset">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__citation">citation</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<h2>4 A longer proof</h2>
+</div>
+<div class="section-container handrail__collapsible">
+<p>The following example shows some of these features in a more realistic setting.  It also
+shows one more feature: if you hover over the statement of the theorem, you will see
+some stars and clocks icons appear to the left of the handrail.  These are meant to
+signal to the reader how important (stars) and time-consuming (clocks) it is to read and
+understand this particular theorem.  Accordingly, since this is an important theorem (it
+has three stars), the handrail is thicker and colored.  Other keywords proposed by
+Lamport are also used; their full explanation can be found in the cited paper.  Another
+thing to note is that if you hover over a sub-proof, the gray numbers on the left will
+show the appropriate sub-step number as well as the number of all parent steps.
+Finally, note that the hyperlinked text will show the appropriate tooltips (<strong>NOTE:</strong> if
+tooltips don’t work, try reloading the page a few times and waiting a bit.)</p>
+<div class="theorem-env handrail handrail--offset theorem stars-3 clocks-2theorem-env" data-goal-for-substeps="claim-9" id="thm-some-name">
+<span id="thm-6"></span><div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class=handrail__icons><div class=handrail__icons--stars><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star handrail__icons-last"></i></div>
+<div class=handrail__icons--clocks><i class="fas fa-clock"></i><i class="fas fa-clock handrail__icons-last"></i></div>
+</div>
+<p><strong>Theorem 6. </strong><span class="keyword">
+ASSUME</span> <span class="math notranslate nohighlight">\(f'(x) &gt; 0\)</span> for all <span class="math notranslate nohighlight">\(x\)</span> in an interval <span class="math notranslate nohighlight">\(I\)</span>.  <span class="keyword">
+PROVE</span> <span class="claim goal" id="claim-9">
+<span id="thm-some-name-goal"></span> <span class="keyword">
+⊢</span> <span class="math notranslate nohighlight">\(f\)</span> is increasing on <span class="math notranslate nohighlight">\(I\)</span>. </span></p>
+</div>
+<div class="proof with-tombstone handrail handrail--offset" id="thm-some-name-pf">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__steps">steps</span>
+<span class="option option__link">link</span>
+<span class="option option__tree">tree</span>
+<span class="option option__source">source</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="proof__title"><strong>Proof.</strong></div>
+<div class="proof-container handrail__collapsible">
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" data-goal-for-substeps="claim-10" id="asm">
+<span id="thm-some-name-pf-1"></span><div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(1)</div>
+<div class="statement">
+<p><span class="claim goal" id="claim-10">
+<span id="None-goal"></span> <span class="keyword">
+⊢</span> <span class="keyword">
+SUFFICES</span> to <span class="keyword">
+ASSUME</span> that</p>
+<ol class="arabic simple">
+<li><p id="asm-1"></span>  <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are points in <span class="math notranslate nohighlight">\(I\)</span>, and</p></li>
+<li><p id="asm-2"> <span class="math notranslate nohighlight">\(a &lt; b\)</span></p></li>
+</ol>
+<p>and <span class="keyword">
+PROVE</span> <span class="claim" id="claim-11">
+ <span class="keyword">
+⊢</span> <span class="math notranslate nohighlight">\(f(b) &gt; f(a)\)</span>. </span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>By definition of increasing function.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" data-goal-for-substeps="claim-12" id="thm-some-name-pf-2">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(2)</div>
+<div class="statement">
+<p><span class="claim goal" id="claim-12">
+<span id="None-goal"></span> <span class="keyword">
+⊢</span> There is some <span class="math notranslate nohighlight">\(x\)</span> in <span class="math notranslate nohighlight">\((a, b)\)</span> with <span class="math notranslate nohighlight">\(f(x)' = \frac{f(b) - f(a)}{b - a}\)</span>. </span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" data-goal-for-substeps="claim-13" id="thm-some-name-pf-2.1">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(2.1)</div>
+<div class="statement">
+<blockquote>
+<div><p><span class="claim goal" id="claim-13">
+<span id="None-goal"></span> <span class="keyword">
+⊢</span> <span class="math notranslate nohighlight">\(f\)</span> is differentiable on <span class="math notranslate nohighlight">\([a, b]\)</span>. </span>  The following equation has nothing to do with the proof but illustrates the feature of displayed math within a sub-step.</p>
+</div></blockquote>
+<div class="math notranslate nohighlight" id="equation-demo-0">
+<span class="eqno">()</span>\[c^2 = b^2 + a^2\]</div>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>By <a class="reference internal" href="#asm-1"><span class="std std-ref">assumption 1</span></a>, since <span class="math notranslate nohighlight">\(f\)</span> is differentiable on <span class="math notranslate nohighlight">\(I\)</span> by hypothesis.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" data-goal-for-substeps="claim-14" id="thm-some-name-pf-2.2">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(2.2)</div>
+<div class="statement">
+<p><span class="claim goal" id="claim-14">
+<span id="None-goal"></span> <span class="keyword">
+⊢</span> <span class="math notranslate nohighlight">\(f\)</span> is continuous on <span class="math notranslate nohighlight">\([a, b]\)</span>. </span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>By <a class="reference internal" href="#thm-some-name-pf-2.1">step 2.1</a> and some other theorem.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" id="thm-some-name-pf-2.3">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(2.3)</div>
+<div class="statement">
+<p><span class="keyword">
+QED</span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>By <a class="reference internal" href="#thm-some-name-pf-2.2">step 2.2</a>, <a class="reference internal" href="#thm-some-name-pf-2.1">step 2.1</a>, and the mean value theorem.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+</div>
+<div class="tombstone hide"></div>
+</div>
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" data-goal-for-substeps="claim-15" id="thm-some-name-pf-3">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(3)</div>
+<div class="statement">
+<p><span class="claim goal" id="claim-15">
+<span id="None-goal"></span> <span class="keyword">
+⊢</span> <span class="math notranslate nohighlight">\(f'(x) &gt; 0\)</span> for all <span class="math notranslate nohighlight">\(x\)</span> in <span class="math notranslate nohighlight">\((a, b)\)</span>. </span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>By the hypothesis and <a class="reference internal" href="#asm-1"><span class="std std-ref">assumption 1</span></a>.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" data-goal-for-substeps="claim-16" id="star">
+<span id="thm-some-name-pf-4"></span><div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(4)</div>
+<div class="statement">
+<p><span class="claim goal" id="claim-16">
+<span id="None-goal"></span> <span class="keyword">
+⊢</span> <span class="math notranslate nohighlight">\(\frac{f(b) - f(a)}{b - a} &gt; 0\)</span>. </span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p>By <a class="reference internal" href="#thm-some-name-pf-3">the prev. step</a> and <a class="reference internal" href="#thm-some-name-pf-2">the one before</a>, also <a class="reference internal" href="#thm-some-name-pf-2">step 2</a> which is the same, and <a class="reference internal" href="#asm">step 1</a>.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+<div class="step with-tombstone handrail handrail--offset handrail--nested handrail--hug" id="thm-some-name-pf-5">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__narrow">narrow</span>
+<span class="option option__goal">goal</span>
+<span class="option option__link">link</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<div class="step__number">(5)</div>
+<div class="statement">
+<p><span class="keyword">
+QED</span></p>
+</div>
+<div class="statement__proof handrail handrail--hug handrail__collapsible">
+<p><a class="reference internal" href="#asm-2"><span class="std std-ref">Assumption 2</span></a> implies <span class="math notranslate nohighlight">\(b - a &gt; 0\)</span>, so <a class="reference internal" href="#star"><span class="std std-ref">step 4</span></a> implies <span class="math notranslate nohighlight">\(f(b) - f(a) &gt; 0\)</span>, which implies <span class="math notranslate nohighlight">\(f(b) &gt; f(a)\)</span>. By <a class="reference internal" href="#asm"><span class="std std-ref">step 1</span></a>, this proves the original statement of the corollary.</p>
+</div>
+<div class="tombstone hide"></div>
+</div>
+</div>
+<div class="tombstone"></div>
+</div>
+</section>
+<section class="level-2" id="wrap-up">
+<div class="header handrail handrail--offset">
+<div class="handrail__btn-container">
+<div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+<div class="options hide">
+<span class="option option__link">link</span>
+<span class="option option__citation">citation</span>
+</div>
+</div>
+<div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+</div>
+<h2>5 Wrap up</h2>
+</div>
+<div class="section-container handrail__collapsible">
+<p>RSM is very much still a work in progress but it aims to put together ideas from
+Lamport’s structured proofs, components from UI/UX, and standard web technologies to
+change the way scientists write, read, and publish their work.  Note that the features
+relating to Lamport’s structured proofs are completely optional and other features (such
+as the handrail and context menus, tooltips, design elements, etc) work independently of
+whether or not the author choose to use structured proofs.</p>
+</section>
+</section>

@@ -9,13 +9,17 @@ Main RSM command line utility.
 import sys
 from argparse import ArgumentParser
 import subprocess
+from pathlib import Path
 
+
+RAN_FROM_PYTEST = False
+DEFAULT_CONFIG = Path(__file__).parents[1] / 'core'
 
 CMDS = {
     False: (
         'sphinx-build '         # rsm-make is a wrapper for sphinx-build
-        '-b html '              # build in html forat
-        '-c ../rsm/rsm/core/ '  # use the config that ships with RSM
+        '-b {builder} '         # build in html forat
+        '-c {config} '          # use the config that ships with RSM
         '-D master_doc={root} ' # the root file
         '. '                    # SOURCEDIR
         'build '                # OUTPUTDIR
@@ -26,7 +30,7 @@ CMDS = {
         '. '                    # SOURCEDIR
         'build '                # OUTPUTDIR
         '--watch=*.rst '        # watch all source files
-        ' -c ../rsm/rsm/core/ ' # use the config that ships with RSM
+        '-c {config} '          # use the config that ships with RSM
         '-D master_doc={root}'  # the root file
     )
 }
@@ -34,16 +38,24 @@ CMDS = {
 
 def make_cmd(args):
     raw = CMDS[args.serve]
-    return raw.format(file=args.file, root=args.root)
+    return raw.format(
+        file=args.file,
+        root=args.root,
+        config=args.config,
+        builder='rsm_test' if RAN_FROM_PYTEST else 'html'
+    )
 
 
-def main():
+def main(args):
     parser = ArgumentParser()
     parser.add_argument('file', help='document to parse')
     parser.add_argument('--serve', help='serve and autoreload', action='store_true')
     parser.add_argument('--root', help='root file, if different from file',
                         default=None)
-    args = parser.parse_args()
+    parser.add_argument('--config', help='config file, if different from default',
+                        default=DEFAULT_CONFIG)
+
+    args = parser.parse_args(args)
 
     if args.root is None:
         args.root = args.file
@@ -51,9 +63,10 @@ def main():
         args.root = args.root[:-4]
 
     cmd = make_cmd(args)
+    print(cmd)
     return subprocess.run(cmd, check=True, shell=True)
 
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])

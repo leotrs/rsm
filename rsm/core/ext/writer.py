@@ -253,6 +253,5 @@ class RSMTranslator(HTML5Translator):
 
 
 
-
 def setup(app):
     app.registry.add_translator('html', RSMTranslator)

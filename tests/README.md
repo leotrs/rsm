@@ -2,7 +2,8 @@
 
 RSM is tested in the following manner:
 
-1. A bunch of .rsm files are processed via rsm-make
+1. The files inputs/*.rsm files are processed via rsm-make and the output is placed in
+   outputs/*.
 2. This particular instance of rsm-make is called programmatically from conftest.py
 3. The conftest.py file sets up the entire testing environment - it is executed before
    any tests are ran

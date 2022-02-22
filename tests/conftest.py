@@ -21,6 +21,9 @@ CMD = (
 
 def pytest_configure(config):
     print('Cleaning up output files...')
-    shutil.rmtree('outputs/')
+    try:
+        shutil.rmtree('outputs/', )
+    except FileNotFoundError:
+        pass
     print('Generating new output files...')
     print(main.main(CMD))

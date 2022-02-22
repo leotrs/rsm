@@ -5,6 +5,9 @@ which generates the contents of the outputs/ folder.  Then, each file in outputs
 compared to its corresponding reference target file, all of which are stored in
 targets/.
 
+NOTE: the correct command to run the test suite is `$ pytest .` FROM THE `rsm/tests/`
+folder, not from the root `rsm/`.
+
 In more detail, RSM is tested in the following manner:
 
 1. The files inputs/*.rsm files are processed via rsm-make and the output is placed in

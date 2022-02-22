@@ -134,17 +134,22 @@ class AutoNumberTheoremLike(SphinxTransform):
         sketch: 1,
         corollary: 1,
     }
+    page_counts = {}
 
     def apply(self, **kwargs):
+        src = self.document['source']
+        if src not in self.page_counts:
+            self.page_counts[src] = self.counts.copy()
+
         for node in self.document.traverse(theorem_like):
             cls = type(node)
-            number = self.counts[cls]
+            number = self.page_counts[src][cls]
             label = f'{self.prefix[cls]}-{number}'
             if not node.label:
                 node.label = label
             node['ids'].append(label)
             node.number = number # MUST set number after setting label
-            self.counts[cls] += 1
+            self.page_counts[src][cls] += 1
             node.register_as_target(self.env)
 
 

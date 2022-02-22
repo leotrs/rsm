@@ -24,6 +24,6 @@ def pytest_configure(config):
     try:
         shutil.rmtree('outputs/', )
     except FileNotFoundError:
-        pass
+        print('outputs/ directory not found, continuing...')
     print('Generating new output files...')
     print(main.main(CMD))

@@ -112,6 +112,10 @@ section.level-1 {
     }
 }
 
+div.topic {
+    margin-block: calc(var(--h3-size) * 1.5);
+}
+
 body {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: var(--regular);

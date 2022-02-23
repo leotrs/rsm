@@ -352,13 +352,15 @@ img, svg {
 
 }
 
-.topic#abstract dl {
+.topic#abstract dl,
+.topic#author dl {
     display: grid;
     grid-template-columns: max-content auto;
     column-gap: 1em;
 }
 
-.topic#abstract dt {
+.topic#abstract dt,
+.topic#author dt {
     text-align: right;
     font-weight: var(--bold);
 }

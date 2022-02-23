@@ -58,7 +58,6 @@ class RSMContentsTransform(ContentsTransform):
 
 
 class Abstract(SphinxDirective):
-
     has_content = True
 
     def run(self):
@@ -71,7 +70,18 @@ class Abstract(SphinxDirective):
         return [abstract]
 
 
+class Author(SphinxDirective):
+    has_content = True
+
+    def run(self):
+        self.assert_has_content()
+        author = nodes.topic(ids=['author'])
+        self.state.nested_parse(self.content, self.content_offset, author)
+        return [author]
+
+
 def setup(app):
+    app.add_directive('author', Author)
     app.add_directive('abstract', Abstract)
     app.add_directive('rsm-contents', RSMContents)
 

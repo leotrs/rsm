@@ -26,7 +26,7 @@ any web browser on any device.</p>
 of its features and functionality.  <strong>WARNING</strong>: Many of the features of RSM are
 currently a work in progress.</p>
 <section class="level-2" id="no-num-the-handrail">
-<div class="header handrail handrail--offset">
+<div class="header handrail handrail--offset collapsed">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -38,7 +38,7 @@ currently a work in progress.</p>
 </div>
 <h2>The handrail</h2>
 </div>
-<div class="section-container handrail__collapsible">
+<div class="section-container handrail__collapsible hide">
 <p>One of the advantages of publishing manuscripts using web technology is interactivity.
 This means embedability of images, video, and other media, but also more subtle design
 elements that allow the user (i.e. the reader of the manuscript) to interact with the
@@ -58,7 +58,7 @@ manuscript, or to show a citation text.  (<strong>NOTE</strong>: currently these
 mock-ups and do not actually work.)</p>
 </section>
 <section class="level-2" id="tooltips">
-<div class="header handrail handrail--offset">
+<div class="header handrail handrail--offset collapsed">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -70,7 +70,7 @@ mock-ups and do not actually work.)</p>
 </div>
 <h2>2 Tooltips</h2>
 </div>
-<div class="section-container handrail__collapsible">
+<div class="section-container handrail__collapsible hide">
 <p>One of the main features of RSM is that anything can be labeled and referenced.  For
 example,</p>
 <div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" id="some-thm">
@@ -93,7 +93,7 @@ times first.)</p>
 fully-featured context menu.</p>
 </section>
 <section class="level-2" id="structured-proofs">
-<div class="header handrail handrail--offset">
+<div class="header handrail handrail--offset collapsed">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -105,14 +105,14 @@ fully-featured context menu.</p>
 </div>
 <h2>3 Structured Proofs</h2>
 </div>
-<div class="section-container handrail__collapsible">
+<div class="section-container handrail__collapsible hide">
 <p>One major source of inspiration for the RSM project is what Leslie Lamport calls
 ‘structured proofs’.  A good introduction to this topic is <a class="reference external" href="https://lamport.azurewebsites.net/pubs/proof.pdf">this paper</a> or <a class="reference external" href="https://www.youtube.com/watch?v=uBiJpip9NVc&amp;ab_channel=HeidelbergLaureateForum">this talk</a>.
 Essentially, a structured proof is a mathematical proof written in a minimal markup
 language that exposes its structure.  RSM implements some design and semantic elements
 that support the idea of structured proofs.</p>
 <section class="level-3" id="a-simple-example">
-<div class="header handrail handrail--offset">
+<div class="header handrail handrail--offset collapsed">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -124,7 +124,7 @@ that support the idea of structured proofs.</p>
 </div>
 <h3>3.1 A simple example</h3>
 </div>
-<div class="section-container handrail__collapsible">
+<div class="section-container handrail__collapsible hide">
 <p>Perhaps the best way to discuss structured proofs is to illustrate with an example.
 Consider the following theorem and its proof.</p>
 <div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" id="thm-2">
@@ -190,7 +190,7 @@ but RSM includes them automatically, without requiring any additional work from 
 manuscript’s author, even in this simple theorem/proof.</p>
 </section>
 <section class="level-3" id="no-num-adding-some-syntax">
-<div class="header handrail handrail--offset">
+<div class="header handrail handrail--offset collapsed">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -202,7 +202,7 @@ manuscript’s author, even in this simple theorem/proof.</p>
 </div>
 <h3>Adding some syntax</h3>
 </div>
-<div class="section-container handrail__collapsible">
+<div class="section-container handrail__collapsible hide">
 <p>One of the problems with writing mathematics this way is that the logical structure is
 lost in the text, especially when the text is long and involves displayed math, multiple
 symbols, calls to previous results, intuitive explanations or ‘proof sketches’ along
@@ -287,7 +287,7 @@ step has a tombstone that shows up only when you hover over the text.  This beco
 useful in clearly separating the logic involved in different steps in a long proof.</p>
 </section>
 <section class="level-3" id="even-more-syntax">
-<div class="header handrail handrail--offset">
+<div class="header handrail handrail--offset collapsed">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -299,7 +299,7 @@ useful in clearly separating the logic involved in different steps in a long pro
 </div>
 <h3>3.2 Even more syntax</h3>
 </div>
-<div class="section-container handrail__collapsible">
+<div class="section-container handrail__collapsible hide">
 <p>The next step is to realize that each step of a proof can also contain a claim.  In
 fact, it is not necessarily obvious why each step in the previous theorem should be
 accepted as true.  This means we need to write a mini sub-proof for each of the steps
@@ -420,7 +420,7 @@ step will show its contents again.  Of course, each step can be individually sho
 hidden by using its own context menu.</p>
 </section>
 <section class="level-3" id="keywords">
-<div class="header handrail handrail--offset">
+<div class="header handrail handrail--offset collapsed">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -432,7 +432,7 @@ hidden by using its own context menu.</p>
 </div>
 <h3>3.3 Keywords</h3>
 </div>
-<div class="section-container handrail__collapsible">
+<div class="section-container handrail__collapsible hide">
 <p>Lamport also suggests the use of keywords that better expose the logical function of
 each statement or claim in a proof.  For example, consider the following.</p>
 <div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" data-goal-for-substeps="claim-6" id="thm-5">
@@ -525,7 +525,7 @@ RSM is designed to support these keywords both syntactically and semantically.</
 </section>
 </section>
 <section class="level-2" id="a-longer-proof">
-<div class="header handrail handrail--offset">
+<div class="header handrail handrail--offset collapsed">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -537,7 +537,7 @@ RSM is designed to support these keywords both syntactically and semantically.</
 </div>
 <h2>4 A longer proof</h2>
 </div>
-<div class="section-container handrail__collapsible">
+<div class="section-container handrail__collapsible hide">
 <p>The following example shows some of these features in a more realistic setting.  It also
 shows one more feature: if you hover over the statement of the theorem, you will see
 some stars and clocks icons appear to the left of the handrail.  These are meant to
@@ -774,7 +774,7 @@ QED</span></p>
 </div>
 </section>
 <section class="level-2" id="wrap-up">
-<div class="header handrail handrail--offset">
+<div class="header handrail handrail--offset collapsed">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -786,7 +786,7 @@ QED</span></p>
 </div>
 <h2>5 Wrap up</h2>
 </div>
-<div class="section-container handrail__collapsible">
+<div class="section-container handrail__collapsible hide">
 <p>RSM is very much still a work in progress but it aims to put together ideas from
 Lamport’s structured proofs, components from UI/UX, and standard web technologies to
 change the way scientists write, read, and publish their work.  Note that the features

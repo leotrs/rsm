@@ -33,7 +33,7 @@ class RSMTranslator(HTML5Translator):
 
     def visit_title(self, node):
         classes = 'header handrail handrail--offset'
-        if self.section_level:
+        if self.section_level > 1:
             classes += ' collapsed'
         self.body.append(self.starttag(node, 'div', CLASS=classes))
         self._append_handrail_button_container(node)

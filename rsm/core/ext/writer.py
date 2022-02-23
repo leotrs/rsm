@@ -32,18 +32,20 @@ class RSMTranslator(HTML5Translator):
         self._current_section = None
 
     def visit_title(self, node):
-        self.body.append(self.starttag(
-            node,
-            'div',
-            CLASS='header handrail handrail--offset',
-        ))
+        classes = 'header handrail handrail--offset'
+        if self.section_level:
+            classes += ' collapsed'
+        self.body.append(self.starttag(node, 'div', CLASS=classes))
         self._append_handrail_button_container(node)
         super().visit_title(node)
 
     def depart_title(self, node):
         super().depart_title(node)
         self.body.append('</div>\n')
-        self.body.append('<div class="section-container handrail__collapsible">\n')
+        classes = 'section-container handrail__collapsible'
+        if self.section_level > 1:
+            classes += ' hide'
+        self.body.append(f'<div class="{classes}">\n')
 
     def visit_section(self, node):
         node['classes'].append(f'level-{self.section_level+1}')

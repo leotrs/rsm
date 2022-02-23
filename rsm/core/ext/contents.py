@@ -25,7 +25,7 @@ class RSMContents(SphinxDirective):
         # container
         document = self.state_machine.document
         classes = ['contents'] + self.options.get('class', [])
-        container = nodes.topic(classes=classes)
+        container = nodes.topic(ids=['contents'], classes=classes)
 
         title = contents_title()
         title += nodes.Text('Contents')

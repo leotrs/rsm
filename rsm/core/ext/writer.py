@@ -11,7 +11,7 @@ from sphinx.writers.html5 import HTML5Translator
 
 from thm_env import theorem_like
 from proof_env import proof_env, step
-from contents import contents_title
+from contents import contents_title, abstract_title
 
 
 class RSMTranslator(HTML5Translator):
@@ -41,11 +41,16 @@ class RSMTranslator(HTML5Translator):
 
     def depart_title(self, node):
         super().depart_title(node)
-        self.body.append('</div>\n')
+        self.body.append('</div>\n') # header handrail handrail--offset
         classes = 'section-container handrail__collapsible'
         if self.section_level > 1:
             classes += ' hide'
         self.body.append(f'<div class="{classes}">\n')
+
+    def depart_topic(self, node):
+        super().depart_topic(node)
+        if node.children and isinstance(node.children[0], abstract_title):
+            self.body.append('</div>\n') # section-container
 
     def visit_section(self, node):
         node['classes'].append(f'level-{self.section_level+1}')

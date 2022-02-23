@@ -351,6 +351,21 @@ img, svg {
 
 }
 
+.topic#abstract dl {
+    display: grid;
+    grid-template-columns: max-content auto;
+    column-gap: 1em;
+}
+
+.topic#abstract dt {
+    text-align: right;
+    font-weight: var(--bold);
+}
+
+dd > p, dt > p {
+    margin-block-end: 0.25em;
+}
+
 
 /* State */
 /******************************************************************************************/

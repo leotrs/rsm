@@ -17,29 +17,6 @@ class pending_label(nodes.Element):
         self.label = lbl
 
 
-# def register_labels(app, document):
-#     domain = app.env.get_domain('std')
-#     for node in document.traverse(label):
-#         docname = app.env.docname
-#         labelid = node['ids'][0]
-
-#         title = cast(nodes.title, node[0])
-#         ref_name = getattr(title, 'rawsource', title.astext())
-#         if app.config.autosectionlabel_prefix_document:
-#             name = nodes.fully_normalize_name(docname + ':' + ref_name)
-#         else:
-#             name = nodes.fully_normalize_name(ref_name)
-#         sectname = clean_astext(title)
-
-#         if name in domain.labels:
-#             logger.warning(__('duplicate label %s, other instance in %s'),
-#                            name, app.env.doc2path(domain.labels[name][0]),
-#                            location=node, type='autosectionlabel', subtype=docname)
-
-#         domain.anonlabels[name] = docname, labelid
-#         domain.labels[name] = docname, labelid, sectname
-
-
 def label_role(name, rawtext, text, lineno, inliner, options={}, content=[]):
     return [pending_label(text)], []
 

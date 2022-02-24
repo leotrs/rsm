@@ -73,7 +73,7 @@ mock-ups and do not actually work.)</p>
 <div class="section-container handrail__collapsible hide">
 <p>One of the main features of RSM is that anything can be labeled and referenced.  For
 example,</p>
-<div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" id="some-thm">
+<div class="theorem-env theorem handrail handrail--offset stars-0 clocks-0" id="some-thm">
 <span id="thm-1"></span><div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -83,7 +83,8 @@ example,</p>
 </div>
 <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 </div>
-<p id="some-lbl"><strong>Theorem 1. </strong> All <span class="math notranslate nohighlight">\(X\)</span> are <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<div class="theorem-env-container"><p id="some-lbl"><strong>Theorem 1. </strong> All <span class="math notranslate nohighlight">\(X\)</span> are <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+</div>
 </div>
 <p>The statement of the theorem has been labeled and can now be referred to <a class="reference internal" href="#some-lbl"><span class="std std-ref">like this</span></a>.  Currently not all references will show the tooltips correctly, but the
 reference in the previous line should work.  (<strong>NOTE:</strong> sometimes the math in the
@@ -127,7 +128,7 @@ that support the idea of structured proofs.</p>
 <div class="section-container handrail__collapsible hide">
 <p>Perhaps the best way to discuss structured proofs is to illustrate with an example.
 Consider the following theorem and its proof.</p>
-<div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" id="thm-2">
+<div class="theorem-env theorem handrail handrail--offset stars-0 clocks-0" id="thm-2">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -137,7 +138,8 @@ Consider the following theorem and its proof.</p>
 </div>
 <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 </div>
-<p><strong>Theorem 2. </strong>Socrates is mortal.</p>
+<div class="theorem-env-container"><p><strong>Theorem 2. </strong>Socrates is mortal.</p>
+</div>
 </div>
 <div class="proof with-tombstone handrail handrail--offset" id="thm-2-pf">
 <div class="handrail__btn-container">
@@ -210,7 +212,7 @@ with more rigorous derivations, etc.</p>
 <p>The idea of ‘structured proofs’ as proposed by Lamport is to markup the text of a proof
 with some keywords and indentation levels that expose its structure.  For example, we
 can write the same proof as above in the following way.</p>
-<div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" data-goal-for-substeps="claim-0" id="thm-3">
+<div class="theorem-env theorem handrail handrail--offset stars-0 clocks-0" data-goal-for-substeps="claim-0" id="thm-3">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -220,9 +222,10 @@ can write the same proof as above in the following way.</p>
 </div>
 <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 </div>
-<p><strong>Theorem 3. </strong><span class="claim goal" id="claim-0">
+<div class="theorem-env-container"><p><strong>Theorem 3. </strong><span class="claim goal" id="claim-0">
 <span id="thm-3-goal"></span> <span class="keyword">
 ⊢</span> Socrates is mortal. </span></p>
+</div>
 </div>
 <div class="proof with-tombstone handrail handrail--offset" id="thm-3-pf">
 <div class="handrail__btn-container">
@@ -307,7 +310,7 @@ that needs one.  RSM naturally supports this nested structure.  How many steps a
 sub-steps a proof needs can only be determined by the author.  As Lamport puts it,
 ‘write as many levels as you need, and then go one level deeper’.</p>
 <p>In our case, we could explain each step like so:</p>
-<div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" data-goal-for-substeps="claim-3" id="thm-4">
+<div class="theorem-env theorem handrail handrail--offset stars-0 clocks-0" data-goal-for-substeps="claim-3" id="thm-4">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -317,9 +320,10 @@ sub-steps a proof needs can only be determined by the author.  As Lamport puts i
 </div>
 <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 </div>
-<p><strong>Theorem 4. </strong><span class="claim goal" id="claim-3">
+<div class="theorem-env-container"><p><strong>Theorem 4. </strong><span class="claim goal" id="claim-3">
 <span id="thm-4-goal"></span> <span class="keyword">
 ⊢</span> Socrates is mortal. </span></p>
+</div>
 </div>
 <div class="proof with-tombstone handrail handrail--offset" id="thm-4-pf">
 <div class="handrail__btn-container">
@@ -435,7 +439,7 @@ hidden by using its own context menu.</p>
 <div class="section-container handrail__collapsible hide">
 <p>Lamport also suggests the use of keywords that better expose the logical function of
 each statement or claim in a proof.  For example, consider the following.</p>
-<div class="theorem-env handrail handrail--offset theorem stars-0 clocks-0theorem-env" data-goal-for-substeps="claim-6" id="thm-5">
+<div class="theorem-env theorem handrail handrail--offset stars-0 clocks-0" data-goal-for-substeps="claim-6" id="thm-5">
 <div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -445,9 +449,10 @@ each statement or claim in a proof.  For example, consider the following.</p>
 </div>
 <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 </div>
-<p><strong>Theorem 5. </strong><span class="claim goal" id="claim-6">
+<div class="theorem-env-container"><p><strong>Theorem 5. </strong><span class="claim goal" id="claim-6">
 <span id="thm-5-goal"></span> <span class="keyword">
 ⊢</span> Socrates is mortal. </span></p>
+</div>
 </div>
 <div class="proof with-tombstone handrail handrail--offset" id="thm-5-pf">
 <div class="handrail__btn-container">
@@ -549,7 +554,7 @@ thing to note is that if you hover over a sub-proof, the gray numbers on the lef
 show the appropriate sub-step number as well as the number of all parent steps.
 Finally, note that the hyperlinked text will show the appropriate tooltips (<strong>NOTE:</strong> if
 tooltips don’t work, try reloading the page a few times and waiting a bit.)</p>
-<div class="theorem-env handrail handrail--offset theorem stars-3 clocks-2theorem-env" data-goal-for-substeps="claim-9" id="thm-some-name">
+<div class="theorem-env theorem handrail handrail--offset stars-3 clocks-2" data-goal-for-substeps="claim-9" id="thm-some-name">
 <span id="thm-6"></span><div class="handrail__btn-container">
 <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
 <div class="options hide">
@@ -562,11 +567,12 @@ tooltips don’t work, try reloading the page a few times and waiting a bit.)</p
 <div class=handrail__icons><div class=handrail__icons--stars><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star handrail__icons-last"></i></div>
 <div class=handrail__icons--clocks><i class="fas fa-clock"></i><i class="fas fa-clock handrail__icons-last"></i></div>
 </div>
-<p><strong>Theorem 6. </strong><span class="keyword">
+<div class="theorem-env-container"><p><strong>Theorem 6. </strong><span class="keyword">
 ASSUME</span> <span class="math notranslate nohighlight">\(f'(x) &gt; 0\)</span> for all <span class="math notranslate nohighlight">\(x\)</span> in an interval <span class="math notranslate nohighlight">\(I\)</span>.  <span class="keyword">
 PROVE</span> <span class="claim goal" id="claim-9">
 <span id="thm-some-name-goal"></span> <span class="keyword">
 ⊢</span> <span class="math notranslate nohighlight">\(f\)</span> is increasing on <span class="math notranslate nohighlight">\(I\)</span>. </span></p>
+</div>
 </div>
 <div class="proof with-tombstone handrail handrail--offset" id="thm-some-name-pf">
 <div class="handrail__btn-container">

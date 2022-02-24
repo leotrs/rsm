@@ -187,13 +187,16 @@ class RSMTranslator(HTML5Translator):
         self.body.append('</div>\n')
 
     def visit_theorem_like(self, node):
-        classes = f'stars-{node.stars} clocks-{node.clocks}'
-        classes += ' '.join(node['classes'])
+        classes = ['handrail', 'handrail--offset']
+        classes += [f'stars-{node.stars}', f'clocks-{node.clocks}']
+        classes += node['classes']
+        classes = ' '.join(classes)
 
         attr = {}
         if node.goal_for_substeps is not None:
             attr = {'data-goal-for-substeps': node.goal_for_substeps['ids'][0]}
 
+        # the next line appends the <div class="theorem-env ..."> tag
         self.body.append(self.starttag(node, 'div', CLASS=classes, **attr))
         self._append_handrail_button_container(node)
 
@@ -211,8 +214,11 @@ class RSMTranslator(HTML5Translator):
                 self.body.append('</div>\n')
             self.body.append('</div>\n')
 
+        self.body.append('<div class="theorem-env-container">')
+
     def depart_theorem_like(self, node):
-        self.body.append('</div>\n')
+        self.body.append('</div>\n') # theorem-env-container
+        self.body.append('</div>\n') # theorem-env
 
     def visit_claim_start(self, node):
         classes = 'claim goal' if node.goal_set_by is not None else 'claim'

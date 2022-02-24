@@ -438,6 +438,11 @@ a:hover {
     content: "...";
 }
 
+// only unprocessed references have class .xref - probably means an error
+.xref {
+    background-color: red;
+}
+
 
 /* Theming */
 /******************************************************************************************/

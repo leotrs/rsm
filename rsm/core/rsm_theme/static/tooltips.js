@@ -11,19 +11,27 @@ loadTooltips = function() {
             classes = $(target)[0].classList;
             content = "";
 
+	    console.log(target, tag, classes);
+
             if (tag == "P") {
                 content = $(target).html();
             } else if (tag == "SPAN") {
                 content = $(target).parent().html();
 	    } else if (tag == "DT") {
 		content = $(target).next().html();
-            } else {
+            } else if (tag == "DIV") {
                 switch(true) {
                 case classes.contains("step"):
                     content = $(target).children(".statement").html();
                     break;
+		case classes.contains("theorem-env"):
+		    content = $(target).children(".theorem-env-container").html();
+		    break;
                 }
-            }
+            } else {
+		console.log("tooltip target with unknown tag");
+	    }
+
             instance.content($(content));
         }
     });

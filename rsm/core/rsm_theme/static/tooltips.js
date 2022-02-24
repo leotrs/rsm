@@ -26,6 +26,11 @@ loadTooltips = function() {
 		case classes.contains("theorem-env"):
 		    content = $(target).children(".theorem-env-container").html();
 		    break;
+                case classes.contains("math"):
+                    content = $(target).html();
+                    break;
+                case true:
+                    console.log("tooltip target DIV with unknown class")
                 }
             } else {
 		console.log("tooltip target with unknown tag");

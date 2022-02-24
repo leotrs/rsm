@@ -7,17 +7,16 @@ loadTooltips = function() {
             // make sure to escape any '.' in the id, otherwise jquery will think we are
             // trying to select a class instead!
             target = target.replaceAll(".", "\\.");
-
             tag = $(target).prop('tagName');
             classes = $(target)[0].classList;
             content = "";
 
             if (tag == "P") {
                 content = $(target).html();
-
-
             } else if (tag == "SPAN") {
                 content = $(target).parent().html();
+	    } else if (tag == "DT") {
+		content = $(target).next().html();
             } else {
                 switch(true) {
                 case classes.contains("step"):
@@ -25,9 +24,7 @@ loadTooltips = function() {
                     break;
                 }
             }
-
             instance.content($(content));
-
         }
     });
     MathJax.typeset();

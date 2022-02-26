@@ -55,12 +55,16 @@ class RSMTranslator(HTML5Translator):
     def visit_section(self, node):
         node['classes'].append(f'level-{self.section_level+1}')
 
+        # handle manuscript title
         if self._current_section is None:
             node['ids'].insert(0, 'manuscript-root')
-        super().visit_section(node) # this increases self.section_level
+
+        # important to run for all sections - increases self.section_level
+        super().visit_section(node)
+
+        # done with manuscript title
         if self._current_section is None:
-            self._current_section = [1]
-            node['ids'].insert(0, 'manuscript-root')
+            self._current_section = [0]
             return
 
         # if self._last_section_action is 'visit', then we are opening a sub-section.

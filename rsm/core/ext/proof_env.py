@@ -214,9 +214,8 @@ def process_step(source, indent, number=''):
     indent = indent[:-INDENT_SIZE]
 
     # -- Process the rest ------------------------------------------------------
-    # There are three possibilities for the rest. i) it is empty, ii) it
-    # consists of a single chunk that starts with :p:, or iii) it consists of a
-    # list of :step:.
+    # There are three possibilities for the rest. i) it is empty, ii) it consists of a
+    # single chunk that starts with :p:, or iii) it consists of a list of :step:.
 
     # i) empty, do nothing
     if not '\n'.join(rest).strip():

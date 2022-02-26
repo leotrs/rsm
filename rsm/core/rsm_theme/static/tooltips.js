@@ -14,6 +14,7 @@ loadTooltips = function() {
 
             if (tag == "P") {
                 content = $(target).html();
+                content = `<div>${content}</div>`;
             } else if (tag == "SPAN") {
                 content = $(target).parent().html();
 	    } else if (tag == "DT") {

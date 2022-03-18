@@ -7,7 +7,7 @@ pytest configuration.
 """
 
 import shutil
-from rsm.rsm_make import main
+import rsm
 
 
 CMD = (
@@ -26,4 +26,4 @@ def pytest_configure(config):
     except FileNotFoundError:
         print('outputs/ directory not found, continuing...')
     print('Generating new output files...')
-    print(main.main(CMD))
+    print(rsm.make(cmd=CMD))

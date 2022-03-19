@@ -13,20 +13,20 @@ from pathlib import Path
 
 
 RAN_FROM_PYTEST = False
-DEFAULT_CONFIG = Path(__file__).parents[1] / 'core'
+CONFIG_DIR = Path(__file__).parents[1] / 'core'
 OUTPUT_DIR = 'build'
 CMD = (
     'sphinx-build '         # rsm-make is a wrapper for sphinx-build
     '-b html '              # build in html forat
     '-c {config} '          # folder containing conf.py
     '-D master_doc={root} ' # the root file
-    '. '                    # SOURCEDIR
+    '{input_dir} '          # SOURCEDIR
     '{output_dir} '         # OUTPUTDIR
 )
 SERVE = (
     'sphinx-autobuild '     # this handles serving and autoreload
     '-a '                   # build all files, not only the outdated ones
-    '. '                    # SOURCEDIR
+    '{input_dir} '          # SOURCEDIR
     '{output_dir} '         # OUTPUTDIR
     '--watch=*.rst '        # watch all source files
     '-c {config} '          # folder containing conf.py
@@ -48,27 +48,51 @@ def make_cmd(args):
     )
 
 
-def make(file=None, cmd=None, return_output=False):
-    if file is not None:
+def make(
+        file=None,
+        outdir=None,
+        indir=None,
+        confdir=None,
+        return_output=False,
+        cmd=None,
+):
+    all_args = all(x is not None for x in [file, outdir, confdir])
+    no_args = all(x is None for x in [file, outdir, confdir])
+    if not all_args and not no_args:
+        print('Either supply all of {file, outdir, confdir}, or none.')
+        exit(2)
+
+    if no_args:
+        if cmd is None:
+            parser = ArgumentParser()
+
+            parser.add_argument('file', help='document to parse')
+            parser.add_argument('--serve', help='serve and autoreload', action='store_true')
+            parser.add_argument('--root', help='root file, if different from file',
+                                default=None)
+            parser.add_argument('--config', help='config file, if different from default',
+                                default=CONFIG_DIR)
+            args = parser.parse_args()
+
+            if args.root is None:
+                args.root = args.file
+            if args.root.endswith('.rst'):
+                args.root = args.root[:-4]
+            cmd = make_cmd(args)
+            output_file = args.file
+        else:
+            output_file = None
+
+    if all_args:
         args = None
-        cmd = CMD.format(file=file, root=file, config=DEFAULT_CONFIG, output_dir=OUTPUT_DIR)
-
-    elif cmd is None:
-        parser = ArgumentParser()
-
-        parser.add_argument('file', help='document to parse')
-        parser.add_argument('--serve', help='serve and autoreload', action='store_true')
-        parser.add_argument('--root', help='root file, if different from file',
-                            default=None)
-        parser.add_argument('--config', help='config file, if different from default',
-                            default=DEFAULT_CONFIG)
-        args = parser.parse_args()
-
-        if args.root is None:
-            args.root = args.file
-        if args.root.endswith('.rst'):
-            args.root = args.root[:-4]
-        cmd = make_cmd(args)
+        cmd = CMD.format(
+            file=file,
+            root=file,
+            config=confdir,
+            input_dir='.' if not indir else indir,
+            output_dir=outdir,
+        )
+        output_file = file
 
     print(cmd)
     result = subprocess.run(cmd, check=True, shell=True)
@@ -76,8 +100,7 @@ def make(file=None, cmd=None, return_output=False):
     if not return_output:
         return result
 
-    output_file = args.root if args is not None else file
-    with open(f'{OUTPUT_DIR}/{output_file}.html') as outfile:
+    with open(f'{outdir}/{output_file}.html') as outfile:
         output = outfile.read()
 
     return result, output

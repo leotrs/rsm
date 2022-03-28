@@ -41,6 +41,7 @@
 
  .body {
      display: flex;
+     gap: 3%;
      width: 100%;
      height: 100%;
  }

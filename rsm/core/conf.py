@@ -33,6 +33,7 @@ extensions = [
     'labels',
     'contents',
     'writer',
+    'rsm_theme',
 ]
 
 
@@ -59,6 +60,14 @@ html_permalinks = False
 default_role = 'math'
 math_number_all = True
 mathjax_options = {'onload': 'loadTooltips()'}
+
+
+# -- RSM build process options -----------------------------------------------
+
+# When True (default), the output includes a _static/ folder with static files.  When
+# False, those files will be read from a remote server and therefore the final .html
+# output file will be standalone (but an internet connection will be needed).
+rsm_theme_local_static = True
 
 
 # -- User config -------------------------------------------------------------

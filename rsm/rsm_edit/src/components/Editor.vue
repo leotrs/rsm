@@ -8,7 +8,18 @@
      methods: {
          make(event) {
              console.log('emitting make event');
-             this.$emit('make', this.value);
+
+             fetch('http://localhost:8001/make', {
+	         method: 'PUT',
+	         headers:{'Content-Type':'application/json'},
+	         body: JSON.stringify({
+                     src: this.value
+                 })
+             }).then(response => {
+                 return response.json()
+             }).then(data => {
+                 this.$emit('make', data.output);
+             });
          }
      }
  }
@@ -26,7 +37,7 @@
      height: 100%;
      width: 50%;
  }
- 
+
  #input {
      height: 100%;
      width: 100%;

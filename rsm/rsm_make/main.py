@@ -45,6 +45,7 @@ def make_cmd(args):
         root=args.root,
         config=args.config,
         output_dir=OUTPUT_DIR,
+        input_dir=args.srcdir,
     )
 
 
@@ -55,6 +56,7 @@ def make(
         confdir=None,
         return_output=False,
         cmd=None,
+        **kwargs
 ):
     all_args = all(x is not None for x in [file, outdir, confdir])
     no_args = all(x is None for x in [file, outdir, confdir])
@@ -72,6 +74,8 @@ def make(
                                 default=None)
             parser.add_argument('--config', help='config file, if different from default',
                                 default=CONFIG_DIR)
+            parser.add_argument('--srcdir', help='source dir, if different from current',
+                                default='.')
             args = parser.parse_args()
 
             if args.root is None:
@@ -92,6 +96,9 @@ def make(
             input_dir='.' if not indir else indir,
             output_dir=outdir,
         )
+        for k, v in kwargs.items():
+            cmd += f' -D {k}={v}'
+
         output_file = file
 
     print(cmd)

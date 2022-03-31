@@ -18,6 +18,5 @@ class Builder:
 
     def build(self, body: HTMLBodyManuscript) -> WebManuscript:
         self.body = body
-
         self.web = WebManuscript(self.body)
         return self.web

@@ -7,8 +7,14 @@ RSM Application: take a file path and output its contents as HTML.
 """
 
 from pathlib import Path
+from icecream import ic
 
-from .manuscript import PlainTextManuscript, AbstractTreeManuscript, WebManuscript
+from .manuscript import (
+    PlainTextManuscript,
+    HTMLBodyManuscript,
+    AbstractTreeManuscript,
+    WebManuscript,
+)
 from .reader import Reader
 from .parser import ManuscriptParser
 from .transformer import Transformer
@@ -24,15 +30,17 @@ class Application:
         self.dst_path: Path = Path()
         self.plain: PlainTextManuscript = None
         self.tree: AbstractTreeManuscript = None
+        self.body: HTMLBodyManuscript = None
         self.web: WebManuscript = None
+        self.reader: Reader = Reader()
         self.parser: ManuscriptParser = ManuscriptParser()
         self.transformer: Transformer = Transformer()
-        self.reader: Reader = Reader()
-        self.builder: Builder = Builder()
         self.translator: Translator = Translator()
+        self.builder: Builder = Builder()
         self.writer: Writer = Writer()
 
     def run(self, src_path: Path | str) -> str:
+        ic('hi')
         self.src_path = Path(src_path)
 
         # Path -> PlainTextManuscript

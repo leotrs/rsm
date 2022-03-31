@@ -17,7 +17,6 @@ from . import nodes
 
 from icecream import ic
 
-
 class RSMParserError(Exception):
     pass
 

@@ -2,20 +2,23 @@
 writer.py
 ---------
 
-RSM Writer: take a document tree and output an HTML string.
+RSM Writer: take a HTML string and write it to disk.
 
 """
 
-from .nodes import Manuscript
+from pathlib import Path
 
 
 class Writer:
+    """Take a HTML string and write to disk."""
 
     def __init__(self):
-        self.tree = None
-        self.html = None
+        self.html: str = ''
+        self.dst_path: Path = Path()
 
-    def write(self, tree: Manuscript) -> str:
-        self.tree = tree
-        self.html = str(tree)
-        return self.html
+    def write(self, html: str, dst_path: Path) -> str:
+        self.html = html
+        self.dst_path = dst_path
+        with open(dst_path / 'index.hml', 'w+', encoding='utf-8') as file:
+            file.write(html)
+        return

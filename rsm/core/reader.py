@@ -8,15 +8,17 @@ RSM Reader: take a file path and return a string.
 
 from pathlib import Path
 
+from .manuscript import PlainTextManuscript
+
 
 class Reader:
 
     def __init__(self):
-        self.path = None
-        self.src = None
+        self.path: Path = Path()
+        self.src: str = ''
 
-    def read(self, path: Path) -> str:
-        self.path = path
+    def read(self, path: Path | str) -> PlainTextManuscript:
+        self.path = Path(path)
         with open(path) as file:
             self.src = file.read()
-        return self.src
+        return PlainTextManuscript(self.src)

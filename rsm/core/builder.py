@@ -6,7 +6,7 @@ RSM Builder: take a complete source string and output a Manuscript.
 
 """
 
-from .nodes import Manuscript
+from .manuscript import PlainTextManuscript, AbstractTreeManuscript, WebManuscript
 from .parser import ManuscriptParser
 
 
@@ -14,11 +14,13 @@ class Builder:
 
     def __init__(self):
         self.src: str = None
-        self.tree: Manuscript | None = None
-        self.parser: ManuscriptParser | None = None
+        self.plain: PlainTextManuscript = None
+        self.tree: AbstractTreeManuscript = None
+        self.parser: ManuscriptParser = None
 
-    def build(self, src: str) -> Manuscript:
-        self.src = src
-        self.parser = ManuscriptParser(src)
+    def build(self, plain: PlainTextManuscript) -> WebManuscript:
+        self.plain = plain
+        self.parser = ManuscriptParser(plain)
         self.tree = self.parser.parse()
+        # apply transforms and resolve references
         return self.tree

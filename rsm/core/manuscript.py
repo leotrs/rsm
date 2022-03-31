@@ -16,5 +16,10 @@ class PlainTextManuscript(str):
 AbstractTreeManuscript = nodes.Manuscript
 
 
-class WebManuscript:
+class HTMLBodyManuscript(str):
     pass
+
+
+class WebManuscript:
+    def __init__(self, body: HTMLBodyManuscript):
+        self.body = body

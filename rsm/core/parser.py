@@ -308,15 +308,15 @@ class TagBlockParser(StartEndParser):
 
 
 class ManuscriptParser(TagBlockParser):
-    def __init__(self, src: str):
+    def __init__(self):
         super().__init__(
             parent=None,
             tag=Tag('manuscript'),
             nodeclass=nodes.Manuscript,
-            src=src
         )
 
-    def parse(self) -> nodes.Manuscript:
+    def parse(self, src: str) -> nodes.Manuscript:
+        self.src = src
         result = super().parse()
         assert isinstance(result.result, nodes.Manuscript)
         return  result.result

@@ -136,10 +136,7 @@ class ParagraphParser(Parser):
         self.consume_whitespace()
 
         self.node = nodes.Paragraph()
-        ic(self.node)
-        ic('adding to paragraph', len(text))
         self.node.add(nodes.Text(text=text))
-        ic(self.node)
 
         s = f'{self.__class__.__name__}.process end'
         ic(s, self.pos)
@@ -286,13 +283,10 @@ class TagBlockParser(StartEndParser):
             ic(s, result.consumed)
             if isinstance(result.result, nodes.Node):
                 self.node.add(result.result)
-            ic(self.pos)
             self.pos += result.consumed
-            ic(self.pos)
 
             self.consume_whitespace()
             hint = self.get_tag_at_pos(consume=False)
-            ic(hint)
 
         self.consume_tombstone()
 
@@ -436,9 +430,7 @@ class MetaPairParser(Parser):
             )
 
         # check if key is valid
-        ic('found key', key)
         if key not in self.nodeclass.metakeys() | {'label', 'types'}:
-            ic('invalid key for', self.nodeclass, self.nodeclass.metakeys())
             return ParsingResult(
                 success=False,
                 result=None,

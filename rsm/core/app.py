@@ -40,7 +40,6 @@ class Application:
         self.writer: Writer = Writer()
 
     def run(self, src_path: Path | str) -> str:
-        ic('hi')
         self.src_path = Path(src_path)
 
         # Path -> PlainTextManuscript

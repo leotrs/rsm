@@ -9,9 +9,8 @@ Utilities.
 
 def short_repr(text: str, classname, limit: int = 20) -> str:
     if len(text) > limit:
-        name = classname if classname else ''
-        before = text[:10].replace('\n', '\\n')
-        after = text[-10:].replace('\n', '\\n')
+        before = text[:10].replace('\n', '\\n').strip()
+        after = text[-10:].replace('\n', '\\n').strip()
         if classname:
             return f'{classname}({before} [...] {after})'
         else:

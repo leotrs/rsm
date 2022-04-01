@@ -128,7 +128,7 @@ class ParagraphParser(Parser):
         while True:
             idx = self.src.find('\n', self.pos)
             line = self.src[self.pos:idx + 1]
-            text += line
+            text += line.lstrip()
             self.pos = idx + 1
             if line == '\n':
                 break

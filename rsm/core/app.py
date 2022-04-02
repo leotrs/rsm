@@ -23,6 +23,10 @@ from .builder import Builder
 from .writer import Writer
 
 
+class RSMApplicationError(Exception):
+    pass
+
+
 class Application:
 
     def __init__(self):
@@ -39,11 +43,21 @@ class Application:
         self.builder: Builder = Builder()
         self.writer: Writer = Writer()
 
-    def run(self, src_path: Path | str) -> str:
-        self.src_path = Path(src_path)
+    def run(self, data: Path | PlainTextManuscript, write: bool = True) -> str:
+        if type(data) in [Path, str]:
+            self.src_path = Path(data)
+            # Path -> PlainTextManuscript
+            self.plain = self.reader.read(self.src_path)
 
-        # Path -> PlainTextManuscript
-        self.plain = self.reader.read(self.src_path)
+        elif isinstance(data, PlainTextManuscript):
+            self.src_path = None
+            self.plain = data
+
+        else:
+            raise RSMApplicationError(
+                'Application.run() expects a path to a .rsm file, or a string'
+                ' of type PlainTextManuscript'
+            )
 
         # PlainTextManuscript -> AbstractTreeManuscript
         self.tree = self.parser.parse(self.plain)
@@ -57,7 +71,8 @@ class Application:
         # AbstractTreeManuscript -> WebManuscript
         self.web = self.builder.build(self.body)
 
-        # write WebManuscript to disk
-        self.writer.write(self.web, self.dst_path)
+        if write:
+            # write WebManuscript to disk
+            self.writer.write(self.web, self.dst_path)
 
         return self.web

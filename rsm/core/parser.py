@@ -16,6 +16,7 @@ from string import whitespace as whitespace_chars
 from . import nodes
 
 from icecream import ic
+ic.disable()
 
 class RSMParserError(Exception):
     pass

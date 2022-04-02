@@ -20,6 +20,6 @@ class Writer:
     def write(self, web: WebManuscript, dst_path: Path) -> str:
         self.web = web
         self.dst_path = dst_path
-        with open(dst_path / 'index.hml', 'w+', encoding='utf-8') as file:
+        with open(dst_path / 'index.html', 'w+', encoding='utf-8') as file:
             file.write(self.web.body)
         return

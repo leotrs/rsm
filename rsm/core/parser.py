@@ -123,6 +123,26 @@ class ParagraphParser(Parser):
         s = f'{self.__class__.__name__}.process start'
         ic(s, self.pos)
         self.pos = self.frompos
+        self.node = nodes.Paragraph()
+
+        try:
+            tag = self.get_tag_at_pos(consume=False)
+        except RSMParserError:
+            tag = None
+
+        if tag:
+            if tag != Tag('paragraph'):
+                raise RSMParserError(f'Was expecting pargraph tag, found {tag}')
+            self.pos += len(Tag('paragraph'))
+            self.consume_whitespace()
+            parser = MetaParser(parent=self, nodeclass=nodes.Paragraph, frompos=self.pos)
+            result = parser.parse()
+            if not result.success:
+                raise RSMParserError(f'Problem reading meta for paragraph block at position {self.pos}')
+            for key, value in result.result.items():
+                setattr(self.node, key, value)
+            self.pos += result.consumed
+            self.consume_whitespace()
 
         text = ''
         while True:
@@ -134,7 +154,6 @@ class ParagraphParser(Parser):
                 break
         self.consume_whitespace()
 
-        self.node = nodes.Paragraph()
         self.node.add(nodes.Text(text=text))
 
         s = f'{self.__class__.__name__}.process end'
@@ -214,13 +233,11 @@ class TagBlockParser(StartEndParser):
             )
         elif result.hint == NoHint:
             self.consume_whitespace()
-            tag = None
             try:
                 tag = self.get_tag_at_pos(consume=False)
             except RSMParserError:
-                result = self.parse_content(None)
-            if tag:
-                result = self.parse_content(tag)
+                tag = None
+            result = self.parse_content(tag)
         elif result.hint == NotATag:
             self.consume_whitespace()
             result = self.parse_content(None)
@@ -285,7 +302,11 @@ class TagBlockParser(StartEndParser):
             self.pos += result.consumed
 
             self.consume_whitespace()
-            hint = self.get_tag_at_pos(consume=False)
+            try:
+                hint = self.get_tag_at_pos(consume=False)
+            except RSMParserError:
+                hint = None
+            ic(hint)
 
         self.consume_tombstone()
 
@@ -360,13 +381,19 @@ class MetaParser(Parser):
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.nodeclass: Type[nodes.Node] = nodeclass
+        self.inline_mode: bool = False
 
     def process(self) -> ParsingResult:
         s = f'{self.__class__.__name__}.process start'
         ic(s, self.pos)
 
         if not self.src[self.frompos].startswith(':'): # there is no meta
-            return {}, 0
+            return ParsingResult(True, {}, NoHint, 0)
+
+        left = self.frompos
+        right = left + self.src[left:].index('\n')
+        if Tombstone in self.src[left:right]:
+            self.inline_mode = True
 
         pairparser = MetaPairParser(parent=self)
         meta = {}
@@ -409,9 +436,12 @@ class MetaPairParser(Parser):
         'types': 'parse_list_value',
     }
 
+    block_delim = '\n'
+    inline_delim = ','
+
     def __init__(self, parent: Type[Parser]):
         super().__init__(parent=parent)
-        self.nodeclass = parent.nodeclass
+        self.nodeclass: Type[nodes.Node] = parent.nodeclass
 
     def process(self) -> ParsingResult:
         oldpos = self.pos
@@ -441,6 +471,7 @@ class MetaPairParser(Parser):
         self.consume_whitespace()
         value, numchars = getattr(self, self.parse_value_methods[key])(key)
         self.pos += numchars
+        self.consume_whitespace()
 
         return ParsingResult(
             success=True,
@@ -449,23 +480,57 @@ class MetaPairParser(Parser):
             consumed=self.pos - oldpos,
         )
 
+    @property
+    def delim(self) -> str:
+        return self.inline_delim if self.parent.inline_mode else self.block_delim
+
     def parse_end_of_line_value(self, key: str) -> tuple[str, int]:
         left = self.pos
-        right = left + self.src[left:].index('\n')
-        value = self.src[left:right+1].strip()
-        return value, len(value) + 1
+        right1 = left + self.src[left:].index(Tombstone)
+        try:
+            right2 = left + self.src[left:].index(self.delim)
+        except ValueError:
+            right2 = right1 + 1
+        right, delim = min((right1, Tombstone), (right2, self.delim))
+        value = self.src[left:right]
+        return value.strip(), len(value) + len(delim)
 
     def parse_datetime_value(self, key: str) -> tuple[datetime, int]:
         value, numchars = self.parse_end_of_line_value(key)
         return datetime.fromisoformat(value), numchars
 
     def parse_list_value(self, key: str) -> tuple[list, int]:
-        value, numchars = self.parse_end_of_line_value(key)
-        if not value.startswith('{'):
-            raise ValueError(f'Key {key}' + ' expects a list, must start with "{"')
-        if not value.endswith('}'):
-            raise ValueError(f'Key {key}' + ' expects a list, must end with "}"')
-        return [x.strip() for x in value[1:-1].split(',')], numchars
+        ic(self.pos)
+        src = self.src[self.pos:]
+        if src[0] != '{':
+            raise ValueError(f'Key "{key}"' + ' expects a list, must start with "{"')
+
+        try:
+            brace = src.index('}')
+        except ValueError:
+            raise ValueError(f'Key "{key}"' + ' expects a list, could not find "}"')
+        try:
+            colon = src.index(':')
+        except ValueError:
+            colon = brace+1
+        if colon <= brace:
+            raise ValueError(f'Key "{key}"' + ' expects a list, but found ":" before "}"')
+
+        after = src[brace+1:]
+        if not after.startswith(self.delim) and not after.startswith(' ' + Tombstone):
+            raise ValueError(f'Expected a "{self.delim}" or a "{Tombstone}" after value of key "{key}"')
+
+        value = src[1:brace]
+        ic(value)
+        oldpos = self.pos
+        numchars = len(value) + 2
+        ic(self.pos, numchars)
+        if self.src[self.pos+numchars:].startswith(self.delim):
+            numchars += len(self.delim)
+        else:
+            assert self.parent.inline_mode and self.src[self.pos+numchars:].startswith(' ' + Tombstone)
+            numchars += len(' ' + Tombstone)
+        return [x.strip() for x in value.split(',')], numchars
 
 
 def _get_tagparser(parent, tag):

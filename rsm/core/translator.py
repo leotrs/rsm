@@ -56,6 +56,11 @@ class EditCommand(ABC):
         return self._edit_command_repr([])
 
 
+class DummyCommand(EditCommand):
+    def execute(self, translator: 'Translator') -> None:
+        pass
+
+
 class AppendTextAndDefer(EditCommand):
 
     def __init__(self, text: str, deferred_text: str):
@@ -367,4 +372,4 @@ class Translator:
         return AppendText(node.text.strip())
 
     def leave_text(self, node: Node) -> None:
-        return AppendText('')
+        return DummyCommand()

@@ -257,21 +257,20 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
             self.consume_tombstone()
             s = f'{self.__class__.__name__}.process end (found Tombstone)'
             ic(s, self.pos)
-            result = ParsingResult(
+            return ParsingResult(
                 success=True,
                 result=self.node,
                 hint=NoHint,
                 consumed=self.pos - oldpos,
             )
-        elif result.hint == NoHint:
-            self.consume_whitespace()
+
+        self.consume_whitespace()
+        if result.hint == NoHint:
             tag = self.get_tag_at_pos(consume=False)
             result = self.parse_content(tag)
         elif result.hint == NotATag:
-            self.consume_whitespace()
             result = self.parse_content(None)
         elif isinstance(result.hint, Tag):
-            self.consume_whitespace()
             result = self.parse_content(result.hint)
 
         s = f'{self.__class__.__name__}.process end'
@@ -345,22 +344,12 @@ class ManuscriptParser(TagBlockParser):
 
 class AuthorParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(
-            parent=parent,
-            tag=Tag('author'),
-            nodeclass=nodes.Author,
-            frompos=frompos
-        )
+        super().__init__(parent, Tag('author'), nodes.Author, frompos)
 
 
 class AbstractParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(
-            parent=parent,
-            tag=Tag('abstract'),
-            nodeclass=nodes.Abstract,
-            frompos=frompos
-        )
+        super().__init__(parent, Tag('abstract'), nodes.Abstract, frompos)
 
 
 class SectionParser(TagBlockParser):
@@ -534,5 +523,8 @@ class MetaPairParser(Parser):
 
 
 def _get_tagparser(parent, tag):
-    parserclass = globals()[f'{tag.name.capitalize()}Parser']
+    try:
+        parserclass = globals()[f'{tag.name.capitalize()}Parser']
+    except KeyError as e:
+        raise RSMParserError(f'Unknown tag {tag}') from e
     return parserclass(parent=parent, frompos=parent.pos)

@@ -109,39 +109,66 @@ class Parser(ABC):
         return tag
 
 
-class ParagraphParser(Parser):
+class ParseMetaMixIn:
 
-    def __init__(self, parent: Parser, frompos: int = 0):
+    def parse_meta(self) -> ParsingResult:
+        oldpos = self.pos
+        parser = MetaParser(parent=self, nodeclass=self.nodeclass, frompos=self.pos)
+        result = parser.parse()
+        if result.success:
+            for key, value in result.result.items():
+                setattr(self.node, key, value)
+            self.pos += result.consumed
+            return ParsingResult(
+                success=True,
+                result=result.result,
+                hint=result.hint,
+                consumed=self.pos - oldpos
+            )
+        else:
+            return ParsingResult(
+                success=False,
+                result=None,
+                hint=NoHint,
+                consumed=self.pos - oldpos
+            )
+
+
+class BaseParagraphParser(Parser, ParseMetaMixIn):
+
+    def __init__(
+            self,
+            parent: Parser,
+            nodeclass: Type[nodes.Node],
+            tag: Tag,
+            frompos: int = 0,
+            tag_optional: bool = True
+    ):
         super().__init__(parent=parent, frompos=frompos)
+        self.nodeclass: Type[nodes.Node] = nodeclass
         self.node: nodes.Paragraph = None
-
-    def _pre_process(self) -> None:
-        super()._pre_process()
-        idx = self.frompos - 1
-        while self.src[idx] in whitespace_chars:
-            idx -= 1
-        if self.src[idx + 1] != '\n':
-            raise RSMParserError(f'Paragraph must start after a newline')
+        self.tag: Tag = tag
+        self.tag_optional: bool = tag_optional
 
     def process(self) -> ParsingResult:
         s = f'{self.__class__.__name__}.process start'
         ic(s, self.pos)
         self.pos = self.frompos
-        self.node = nodes.Paragraph()
+        self.node = self.nodeclass()
 
         tag = self.get_tag_at_pos(consume=False)
+        if not self.tag_optional:
+            if not tag:
+                raise RSMParserError(f'Was expecting {self.tag}, found nothing')
+            if tag != self.tag:
+                raise RSMParserError(f'Was expecting {self.tag} tag, found {tag}')
+
         if tag:
-            if tag != Tag('paragraph'):
-                raise RSMParserError(f'Was expecting pargraph tag, found {tag}')
-            self.pos += len(Tag('paragraph'))
+            self.pos += len(self.tag)
             self.consume_whitespace()
-            parser = MetaParser(parent=self, nodeclass=nodes.Paragraph, frompos=self.pos)
-            result = parser.parse()
+            result = self.parse_meta()
             if not result.success:
                 raise RSMParserError(f'Problem reading meta for paragraph block at position {self.pos}')
-            for key, value in result.result.items():
-                setattr(self.node, key, value)
-            self.pos += result.consumed
             self.consume_whitespace()
 
         text = ''
@@ -164,6 +191,11 @@ class ParagraphParser(Parser):
             hint=NoHint,
             consumed=self.pos - self.frompos
         )
+
+
+class ParagraphParser(BaseParagraphParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, nodes.Paragraph, Tag('paragraph'), frompos, True)
 
 
 class StartEndParser(Parser):
@@ -189,15 +221,15 @@ class StartEndParser(Parser):
         super()._post_process()
 
 
-class TagBlockParser(StartEndParser):
+class TagBlockParser(StartEndParser, ParseMetaMixIn):
 
     def __init__(
             self,
             parent: Parser | None,
             tag: Tag,
             nodeclass: Type[nodes.Node],
+            frompos: int = 0,
             src: str = None,
-            frompos: int = 0
     ):
         super().__init__(start=tag, end=Tombstone, parent=parent, src=src, frompos=frompos)
         self.tag: Tag = tag
@@ -250,32 +282,6 @@ class TagBlockParser(StartEndParser):
             hint=result.hint,
             consumed=self.pos - oldpos,
         )
-
-    def parse_meta(self) -> ParsingResult:
-        s = f'{self.__class__.__name__}.parse_meta start'
-        ic(s, self.pos)
-        oldpos = self.pos
-        parser = MetaParser(parent=self, nodeclass=self.nodeclass, frompos=self.pos)
-        result = parser.parse()
-        if result.success:
-            for key, value in result.result.items():
-                setattr(self.node, key, value)
-            self.pos += result.consumed
-            s = f'{self.__class__.__name__}.parse_meta end'
-            ic(s, self.pos)
-            return ParsingResult(
-                success=True,
-                result=self.node,
-                hint=result.hint,
-                consumed=self.pos - oldpos
-            )
-        else:
-            return ParsingResult(
-                success=False,
-                result=None,
-                hint=NoHint,
-                consumed=self.pos - oldpos
-            )
 
     def parse_content(self, starting_tag: Tag | None) -> ParsingResult:
         s = f'{self.__class__.__name__}.parse_content start'
@@ -334,7 +340,7 @@ class ManuscriptParser(TagBlockParser):
         self.src = src
         result = super().parse()
         assert isinstance(result.result, nodes.Manuscript)
-        return  result.result
+        return result.result
 
 
 class AuthorParser(TagBlockParser):
@@ -453,7 +459,7 @@ class MetaPairParser(Parser):
         key = key.name
 
         # check if key is valid
-        if key not in self.nodeclass.metakeys() | {'label', 'types'}:
+        if key not in self.nodeclass.metakeys() | nodes.Node.globalmetakeys:
             return ParsingResult(
                 success=False,
                 result=None,

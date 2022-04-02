@@ -1,7 +1,9 @@
+import pytest
+import rsm
 from conftest import compare_have_want
 
 
-def test_simple():
+def test_no_manuscript_title():
     compare_have_want(
         have="""\
         :manuscript:
@@ -22,6 +24,8 @@ def test_simple():
         """
     )
 
+
+def test_manuscript_title():
     compare_have_want(
         have="""\
         :manuscript:
@@ -43,6 +47,8 @@ def test_simple():
         """
     )
 
+
+def test_manuscript_meta():
     compare_have_want(
         have="""\
         :manuscript:
@@ -61,3 +67,23 @@ def test_simple():
         </body>
         """
     )
+
+
+def test_no_tombstone():
+    with pytest.raises(rsm.core.parser.RSMParserError):
+        compare_have_want(
+            have="""\
+            :manuscript:
+
+            Lorem ipsum.
+            """,
+            want="""\
+            <body>
+            <div id="mylbl" class="manuscript">
+            <section class="level-1">
+            <h1>My Title</h1>
+            </section>
+            </div>
+            </body>
+            """
+        )

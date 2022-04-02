@@ -146,6 +146,13 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
         self.tag: Tag = tag
         self.tag_optional: bool = tag_optional
 
+    def _pre_process(self) -> None:
+        cease = self.src[:self.frompos].rfind('\n')
+        start = self.src[:cease].rfind('\n')
+        preceeding_line = self.src[start:cease]
+        if preceeding_line.strip() != '':
+            raise RSMParserError('Paragraphs must be preceeded by blank lines')
+
     def process(self) -> ParsingResult:
         s = f'{self.__class__.__name__}.process start'
         ic(s, self.pos)
@@ -176,6 +183,16 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
             if line == '\n':
                 break
         self.consume_whitespace()
+
+        if self.pos == self.frompos:
+            s = f'{self.__class__.__name__}.process end - did not find ANY characters'
+            ic(s, self.pos)
+            return ParsingResult(
+                success=False,
+                result=None,
+                hint=NoHint,
+                consumed=0
+            )
 
         self.node.add(nodes.Text(text=text))
 

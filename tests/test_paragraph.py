@@ -1,4 +1,56 @@
+import pytest
 from conftest import compare_have_want
+import rsm
+
+
+def test_preceding_blankline():
+    with pytest.raises(rsm.core.parser.RSMParserError):
+        compare_have_want(
+            have="""\
+            :manuscript:
+              :title: My Title
+            This is a paragraph.
+
+            ::
+            """,
+            want='XXX'
+        )
+
+    with pytest.raises(rsm.core.parser.RSMParserError):
+        compare_have_want(
+            have="""\
+            :manuscript:
+              :title: My Title
+            :paragraph: This is a paragraph.
+
+            ::
+            """,
+            want='XXX'
+        )
+
+
+def test_succeeding_blankline():
+    with pytest.raises(rsm.core.parser.RSMParserError):
+        compare_have_want(
+            have="""\
+            :manuscript:
+
+            This is a paragraph.
+            ::
+            """,
+            want='XXX'
+        )
+
+    with pytest.raises(rsm.core.parser.RSMParserError):
+        compare_have_want(
+            have="""\
+            :manuscript:
+
+            :paragraph: This is a paragraph.
+            ::
+            """,
+            want='XXX'
+        )
 
 
 def test_no_meta():

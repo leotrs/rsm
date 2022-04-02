@@ -374,6 +374,15 @@ class Translator:
         node.types.insert(0, 'level-2')
         return AppendNodeTag(node, 'section')
 
+    def visit_enumerate(self, node: None) -> None:
+        return AppendNodeTag(node, 'ol')
+
+    def visit_itemize(self, node: None) -> None:
+        return AppendNodeTag(node, 'ul')
+
+    def visit_item(self, node: None) -> None:
+        return AppendNodeTag(node, 'li')
+
     def visit_text(self, node: Node) -> None:
         return AppendText(node.text.strip())
 

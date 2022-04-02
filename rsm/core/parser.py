@@ -354,12 +354,25 @@ class AbstractParser(TagBlockParser):
 
 class SectionParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(
-            parent=parent,
-            tag=Tag('section'),
-            nodeclass=nodes.Section,
-            frompos=frompos
-        )
+        super().__init__(parent, Tag('section'), nodes.Section, frompos)
+
+
+class ItemParser(BaseParagraphParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, nodes.Item, Tag('item'), frompos, tag_optional=False)
+        if type(parent) not in [EnumerateParser, ItemizeParser]:
+            ic(type(parent))
+            raise RSMParserError('Found an :item: ouside of :enumerate: or :itemize:')
+
+
+class EnumerateParser(TagBlockParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, Tag('enumerate'), nodes.Enumerate, frompos)
+
+
+class ItemizeParser(TagBlockParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, Tag('itemize'), nodes.Section, frompos)
 
 
 class MetaParser(Parser):

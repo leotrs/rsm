@@ -98,7 +98,7 @@ class Parser(ABC):
     def get_tag_at_pos(self, consume) -> Tag:
         """Return the first tag starting at self.pos. If skip is True, skip it and update self.pos."""
         if self.src[self.pos] != Tag.delim:
-            raise RSMParserError(f'No tag at position {self.pos}')
+            return None
 
         src = self.src[self.pos:]
         index = src[1:].index(Tag.delim)
@@ -129,11 +129,7 @@ class ParagraphParser(Parser):
         self.pos = self.frompos
         self.node = nodes.Paragraph()
 
-        try:
-            tag = self.get_tag_at_pos(consume=False)
-        except RSMParserError:
-            tag = None
-
+        tag = self.get_tag_at_pos(consume=False)
         if tag:
             if tag != Tag('paragraph'):
                 raise RSMParserError(f'Was expecting pargraph tag, found {tag}')
@@ -237,10 +233,7 @@ class TagBlockParser(StartEndParser):
             )
         elif result.hint == NoHint:
             self.consume_whitespace()
-            try:
-                tag = self.get_tag_at_pos(consume=False)
-            except RSMParserError:
-                tag = None
+            tag = self.get_tag_at_pos(consume=False)
             result = self.parse_content(tag)
         elif result.hint == NotATag:
             self.consume_whitespace()
@@ -306,10 +299,7 @@ class TagBlockParser(StartEndParser):
             self.pos += result.consumed
 
             self.consume_whitespace()
-            try:
-                hint = self.get_tag_at_pos(consume=False)
-            except RSMParserError:
-                hint = None
+            hint = self.get_tag_at_pos(consume=False)
             ic(hint)
 
         self.consume_tombstone()
@@ -452,16 +442,15 @@ class MetaPairParser(Parser):
         oldpos = self.pos
 
         # find the key
-        try:
-            key = self.get_tag_at_pos(consume=True)
-            key = key.name
-        except RSMParserError:
+        key = self.get_tag_at_pos(consume=True)
+        if not key:
             return ParsingResult(
                 success=False,
                 result=None,
                 hint=NoHint,
                 consumed=self.pos - oldpos,
             )
+        key = key.name
 
         # check if key is valid
         if key not in self.nodeclass.metakeys() | {'label', 'types'}:

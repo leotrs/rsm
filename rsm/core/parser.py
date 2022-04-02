@@ -6,6 +6,9 @@ RSM Parser: take a partial source string and output a single node.
 
 """
 
+import logging
+logger = logging.getLogger('RSM').getChild('Parser')
+
 from datetime import datetime
 from typing import Any, Type
 from collections.abc import Iterable
@@ -337,6 +340,7 @@ class ManuscriptParser(TagBlockParser):
         )
 
     def parse(self, src: str) -> nodes.Manuscript:
+        logger.info('ManuscriptParser.parse()')
         self.src = src
         result = super().parse()
         assert isinstance(result.result, nodes.Manuscript)

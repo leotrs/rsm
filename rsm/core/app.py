@@ -6,8 +6,11 @@ RSM Application: take a file path and output its contents as HTML.
 
 """
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('RSM')
+
 from pathlib import Path
-from icecream import ic
 
 from .manuscript import (
     PlainTextManuscript,
@@ -44,6 +47,12 @@ class Application:
         self.writer: Writer = Writer()
 
     def run(self, data: Path | PlainTextManuscript, write: bool = True) -> str:
+        logger.info('Application started')
+
+        logger.info('Configuring...')
+        # self.config = self.config.configure()
+
+        logger.info('Reading...')
         if type(data) in [Path, str]:
             self.src_path = Path(data)
             # Path -> PlainTextManuscript
@@ -60,19 +69,24 @@ class Application:
             )
 
         # PlainTextManuscript -> AbstractTreeManuscript
+        logger.info('Parsing...')
         self.tree = self.parser.parse(self.plain)
 
         # AbstractTreeManuscript -> AbstractTreeManuscript
+        logger.info('Transforming...')
         self.tree = self.transformer.transform(self.tree)
 
         # AbstractTreeManuscript -> HTMLBodyManuscript
+        logger.info('Translating...')
         self.body = self.translator.translate(self.tree)
 
         # AbstractTreeManuscript -> WebManuscript
+        logger.info('Building...')
         self.web = self.builder.build(self.body)
 
         if write:
             # write WebManuscript to disk
+            logger.info('Writing...')
             self.writer.write(self.web, self.dst_path)
 
         return self.web

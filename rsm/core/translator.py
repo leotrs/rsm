@@ -6,12 +6,16 @@ RSM Translator: take a Manuscript and return a HTML string.
 
 """
 
+import logging
+logger = logging.getLogger('RSM').getChild('Translator')
+
 from collections import namedtuple
 from abc import ABC, abstractmethod
 from typing import Iterable
 from icecream import ic
 
 from .nodes import Node
+from . import nodes
 from .manuscript import AbstractTreeManuscript, HTMLBodyManuscript
 from .util import ShortenedString
 

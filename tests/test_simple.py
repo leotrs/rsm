@@ -257,6 +257,80 @@ from textwrap import dedent
             """)
         ),
 
+        # test case
+        (
+            # have
+            dedent("""\
+            :manuscript:
+              :label: mylbl
+              :title: The Perron non-backtracking eigenvalue after node addition
+              :date: 2022-03-29
+
+            :section:
+              :title: Introduction
+              :label: sec-introduction
+              :types: {t1, t2}
+
+            This is a paragraph with no tag.
+
+            :paragraph: This is a paragraph with tag and no meta data.
+
+            :paragraph:
+            This is a paragraph with tag and no meta data.
+
+            ::
+
+            ::
+            """)
+            ,
+            # want
+            dedent("""\
+            <body>
+            <div id="mylbl" class="manuscript">
+            <section class="level-1">
+            <h1>The Perron non-backtracking eigenvalue after node addition</h1>
+            <section id="sec-introduction" class="section level-2 t1 t2">
+            <p class="paragraph">This is a paragraph with no tag.</p>
+            <p class="paragraph">This is a paragraph with tag and no meta data.</p>
+            <p class="paragraph">This is a paragraph with tag and no meta data.</p>
+            </section>
+            </section>
+            </div>
+            </body>
+            """)
+        ),
+
+        # test case
+        (
+            # have
+            dedent("""\
+            :manuscript:
+              :label: mylbl
+              :title: The Perron non-backtracking eigenvalue after node addition
+              :date: 2022-03-29
+
+            :author: ::
+
+            Lorem ipsum.
+
+            ::
+            """)
+            ,
+            # want
+            dedent("""\
+            <body>
+            <div id="mylbl" class="manuscript">
+            <section class="level-1">
+            <h1>The Perron non-backtracking eigenvalue after node addition</h1>
+            <div class="author">
+            </div>
+            <p class="paragraph">Lorem ipsum.</p>
+            </section>
+            </div>
+            </body>
+            """)
+        ),
+
     ]
 )
 def test_simple(have, want):

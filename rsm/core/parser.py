@@ -6,20 +6,16 @@ RSM Parser: take a partial source string and output a single node.
 
 """
 
-import logging
-logger = logging.getLogger('RSM').getChild('Parser')
-
 from datetime import datetime
 from typing import Any, Type
-from collections.abc import Iterable
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from abc import ABC, abstractmethod
-from string import whitespace as whitespace_chars
 
 from . import nodes
 
 from icecream import ic
-ic.disable()
+import logging
+logger = logging.getLogger('RSM').getChild('Parser')
 
 class RSMParserError(Exception):
     pass

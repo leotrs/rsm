@@ -336,10 +336,12 @@ class Translator:
         ])
 
     def visit_author(self, node: Node) -> None:
-        return AppendBatchAndDefer([
-            AppendNodeTag(node),
-            AppendParagraph(f'{node.name}\n{node.affiliation}\n{node.email}'),
-        ])
+        line = [str(x) for x in [node.name, node.affiliation, node.email] if x]
+        line = '\n'.join(line)
+        if line:
+            return AppendBatchAndDefer([AppendNodeTag(node), AppendParagraph(line)])
+        else:
+            return AppendNodeTag(node)
 
     def visit_abstract(self, node: Node) -> None:
         return AppendBatchAndDefer([

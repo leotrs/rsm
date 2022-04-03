@@ -7,7 +7,7 @@ Nodes that make up the Manuscript tree.
 """
 
 from dataclasses import dataclass, field
-from typing import Any, ClassVar
+from typing import Any, ClassVar, Type
 from datetime import datetime
 from icecream import ic
 
@@ -30,11 +30,17 @@ class Node:
     def __post_init__(self):
         self._children: list['Node'] = []
 
-    def add(self, child: 'Node') -> None:
-        if child.parent and child.parent is not self:
-            raise RSMNodeError('Attempting to add child to a different parent')
-        self._children.append(child)
-        child.parent = self
+    def add(self, child: Type['Node'] | list) -> None:
+        if isinstance(child, list):
+            for c in child:
+                self.add(c)
+        elif isinstance(child, Node):
+            if child.parent and child.parent is not self:
+                raise RSMNodeError('Attempting to add child to a different parent')
+            self._children.append(child)
+            child.parent = self
+        else:
+            raise RSMNodeError('Attempting to add a non-Node object as a child of a Node')
 
     def remove(self, child: 'Node') -> None:
         self._children.remove(child)
@@ -56,6 +62,29 @@ class Text(Node):
 
     def __repr__(self):
         return short_repr(self.text, self.__class__.__name__)
+
+    def add(self):
+        raise RSMNodeError('Text nodes have no children; cannot add')
+
+    def remove(self):
+        raise RSMNodeError('Text nodes have no children; cannot remove')
+
+
+@dataclass
+class Span(Node):
+    strong: bool = field(kw_only=True, default=False)
+    emphas: bool = field(kw_only=True, default=False)
+    little: bool = field(kw_only=True, default=False)
+    insert: bool = field(kw_only=True, default=False)
+    delete: bool = field(kw_only=True, default=False)
+    _newmetakeys: ClassVar[set] = {'strong', 'emphas', 'little', 'insert', 'delete'}
+    attr_to_tag: ClassVar[dict] = {
+        'strong': 'strong',
+        'emphas': 'em',
+        'little': 'small',
+        'insert': 'ins',
+        'delete': 'del',
+    }
 
 
 @dataclass

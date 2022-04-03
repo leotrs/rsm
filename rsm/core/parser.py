@@ -293,29 +293,26 @@ class InlineParser(Parser):
         children = []
 
         left = self.pos
-        pos = self.pos
-        while not self.src[pos:].startswith(Tombstone):
+        while not self.src[self.pos:].startswith(Tombstone):
             tag = self.get_tag_at_pos(consume=False)
             if tag and tag not in self.inline_tags:
                 raise RSMParserError(f'Tag {tag} cannot be inline')
             if tag:
-                if pos > left:
-                    children.append(nodes.Text(text=self.src[left:pos]))
+                if self.pos > left:
+                    children.append(nodes.Text(text=self.src[left:self.pos]))
                     ic(children[-1].text)
-                    self.pos = pos
                 parser = _get_tagparser(self, tag)
                 result = parser.parse()
                 children.append(result.result)
                 self.pos += result.consumed
-                left, pos = self.pos, self.pos
+                left = self.pos
             else:
-                pos += 1
+                self.pos += 1
 
-        if pos > left:
-            ic(pos, left, self.src[left:pos])
-            children.append(nodes.Text(text=self.src[left:pos]))
+        if self.pos > left:
+            ic(self.pos, left, self.src[left:self.pos])
+            children.append(nodes.Text(text=self.src[left:self.pos]))
             ic(children[-1].text)
-            self.pos = pos
 
         s = f'{self.__class__.__name__}.process end'
         ic(s, self.pos)

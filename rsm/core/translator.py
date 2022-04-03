@@ -136,7 +136,9 @@ class AppendOpenTag(AppendTextAndDefer):
         self.classes = classes if classes else []
         self.newline = newline
         text = make_tag(self.tag, self.id, self.classes, self.newline)
-        deferred_text = f'</{self.tag}>\n'
+        deferred_text = f'</{self.tag}>'
+        if self.newline:
+            deferred_text = '\n' + deferred_text
         super().__init__(text, deferred_text)
 
     def __repr__(self) -> str:
@@ -388,3 +390,20 @@ class Translator:
 
     def leave_text(self, node: Node) -> None:
         return DummyCommand()
+
+    def visit_span(self, node: Node) -> None:
+        commands = [
+            AppendOpenTag(tag, newline=False)
+            for attr, tag in nodes.Span.attr_to_tag.items()
+            if getattr(node, attr)
+        ]
+        return AppendBatchAndDefer([
+            AppendTextAndDefer('\n', '\n'),
+            AppendNodeTag(node, tag='span'),
+            *commands,
+        ])
+
+    def leave_span(self, node: Node) -> None:
+        s = 'leaving span'
+        ic(s)
+        return self.deferred.pop()

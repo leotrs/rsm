@@ -126,7 +126,12 @@ class ParseMetaMixIn:
 
     def parse_meta(self) -> ParsingResult:
         oldpos = self.pos
-        parser = MetaParser(parent=self, nodeclass=self.nodeclass, frompos=self.pos)
+        parser = MetaParser(
+            parent=self,
+            nodeclass=self.nodeclass,
+            frompos=self.pos,
+            inline_mode=self.meta_inline_mode,
+        )
         result = parser.parse()
         if result.success:
             for key, value in result.result.items():
@@ -155,13 +160,16 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
             nodeclass: Type[nodes.Node],
             tag: Tag,
             frompos: int = 0,
-            tag_optional: bool = True
+            tag_optional: bool = True,
+            *,
+            meta_inline_mode: bool | None = None,
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.nodeclass: Type[nodes.Node] = nodeclass
         self.node: nodes.Paragraph = None
         self.tag: Tag = tag
         self.tag_optional: bool = tag_optional
+        self.meta_inline_mode: bool | None = meta_inline_mode
 
     def _pre_process(self) -> None:
         cease = self.src[:self.frompos].rfind('\n')
@@ -191,16 +199,8 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
                 raise RSMParserError(f'Problem reading meta for paragraph block at position {self.pos}')
             self.consume_whitespace()
 
-        text = ''
-        while True:
-            idx = self.src.find('\n', self.pos)
-            line = self.src[self.pos:idx + 1]
-            text += line.lstrip()
-            self.pos = idx + 1
-            if line == '\n':
-                break
+        result = self.parse_content()
         self.consume_whitespace()
-
         if self.pos == self.frompos:
             s = f'{self.__class__.__name__}.process end - did not find ANY characters'
             ic(s, self.pos)
@@ -211,7 +211,7 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
                 consumed=0
             )
 
-        self.node.add(nodes.Text(text=text))
+        self.node.add(result.result)
 
         s = f'{self.__class__.__name__}.process end'
         ic(s, self.pos)
@@ -222,17 +222,119 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
             consumed=self.pos - self.frompos
         )
 
+    def parse_content(self) -> ParsingResult:
+        oldpos = self.pos
+        content = ''
+        pos = self.pos
+        while True:
+            idx = self.src.find('\n', pos)
+            line = self.src[pos:idx + 1]
+            content += line
+            pos = idx + 1
+            if line == '\n':
+                break
+        end_of_content = pos
+
+        pos = 0
+        children = []
+        while pos < len(content):
+            index = content.find(':', pos)
+            if index < 0:
+                break
+            text = content[pos:index]
+            if text.strip():
+                ic(text)
+                children.append(nodes.Text(text=text))
+
+            pos = index
+            parser = SpanParser(self, self.pos + pos)
+            ic(self.pos+pos, self.pos, self.frompos, parser.pos, parser.frompos)
+            result = parser.parse()
+            children.append(result.result)
+            pos += result.consumed
+            ic(self.pos + pos)
+
+        if pos < len(content):
+            text = content[pos:]
+            if text.strip():
+                ic(text)
+                children.append(nodes.Text(text=text))
+            pos = len(content)
+
+        self.pos = end_of_content
+
+        ic([type(c) for c in children])
+        ic(children)
+        return ParsingResult(
+                success=True,
+                result=children,
+                hint=NoHint,
+                consumed=self.pos - oldpos
+            )
+
 
 class ParagraphParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(parent, nodes.Paragraph, Tag('paragraph'), frompos, True)
 
 
+class InlineParser(Parser):
+
+    inline_tags = {Tag('span')}
+
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, frompos)
+
+    def process(self) -> ParsingResult:
+        s = f'{self.__class__.__name__}.process start'
+        ic(s, self.pos)
+        oldpos = self.pos
+        children = []
+
+        left = self.pos
+        pos = self.pos
+        while not self.src[pos:].startswith(Tombstone):
+            tag = self.get_tag_at_pos(consume=False)
+            if tag and tag not in self.inline_tags:
+                raise RSMParserError(f'Tag {tag} cannot be inline')
+            if tag:
+                if pos > left:
+                    children.append(nodes.Text(text=self.src[left:pos]))
+                    ic(children[-1].text)
+                    self.pos = pos
+                parser = _get_tagparser(self, tag)
+                result = parser.parse()
+                children.append(result.result)
+                self.pos += result.consumed
+                left, pos = self.pos, self.pos
+            else:
+                pos += 1
+
+        if pos > left:
+            ic(pos, left, self.src[left:pos])
+            children.append(nodes.Text(text=self.src[left:pos]))
+            ic(children[-1].text)
+            self.pos = pos
+
+        s = f'{self.__class__.__name__}.process end'
+        ic(s, self.pos)
+        return ParsingResult(
+            success=True,
+            result=children,
+            hint=NoHint,
+            consumed=self.pos - oldpos
+        )
+
+
 class StartEndParser(Parser):
 
     def __init__(self, start: str, end: str, parent: Parser | None, src: str, frompos: int = 0):
         super().__init__(parent=parent, src=src, frompos=frompos)
+        if not start.strip():
+            raise RSMParserError('Block starting string cannot be whitespace')
         self.start = start
+        if not end.strip():
+            raise RSMParserError('Block ending string cannot be whitespace')
         self.end = end
 
     def _pre_process(self):
@@ -245,7 +347,7 @@ class StartEndParser(Parser):
 
     def _post_process(self):
         src = self.src[:self.pos]
-        if not src.endswith(self.end):
+        if not src.rstrip().endswith(self.end):
             name = self.__class__.__name__
             raise RSMParserError(f'{name} did not find ending string "{self.end}"')
         super()._post_process()
@@ -260,11 +362,18 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
             nodeclass: Type[nodes.Node],
             frompos: int = 0,
             src: str = None,
+            *,
+            meta_inline_mode: bool | None = None,
+            has_content: bool = True,
+            contentparser: Type[Parser] = ParagraphParser,
     ):
         super().__init__(start=tag, end=Tombstone, parent=parent, src=src, frompos=frompos)
         self.tag: Tag = tag
         self.nodeclass: Type[nodes.Node] = nodeclass
         self.node: nodes.Node | None = None
+        self.meta_inline_mode: bool | None = meta_inline_mode
+        self.has_content: bool = has_content
+        self.contentparser: Type[Parser] = contentparser
 
     def process(self) -> ParsingResult:
         s = f'{self.__class__.__name__}.process start'
@@ -329,7 +438,7 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
         hint = starting_tag
         while hint != Tombstone:
             if hint in {None, NotATag, NoHint}:
-                parser = ParagraphParser(self, frompos=self.pos)
+                parser = self.contentparser(self, frompos=self.pos)
             else:
                 parser = _get_tagparser(self, hint)
             result = parser.parse()
@@ -338,8 +447,7 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
 
             s = f'subparser {parser.__class__.__name__} done'
             ic(s, result.consumed)
-            if isinstance(result.result, nodes.Node):
-                self.node.add(result.result)
+            self.node.add(result.result)
             self.pos += result.consumed
 
             self.consume_whitespace()
@@ -359,7 +467,8 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
 
     def consume_starttag(self) -> int:
         if self.pos != self.frompos:
-            raise RSMParserError('consume_starttag can only when self.pos == self.frompos')
+            ic(self.pos, self.frompos)
+            raise RSMParserError('consume_starttag can only be called when self.pos == self.frompos')
         numchars = len(self.tag)
         self.pos += numchars
         return numchars
@@ -383,7 +492,7 @@ class ManuscriptParser(TagBlockParser):
 
 class AuthorParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('author'), nodes.Author, frompos)
+        super().__init__(parent, Tag('author'), nodes.Author, frompos, has_content=False)
 
 
 class AbstractParser(TagBlockParser):
@@ -414,18 +523,32 @@ class ItemizeParser(TagBlockParser):
         super().__init__(parent, Tag('itemize'), nodes.Section, frompos)
 
 
+class SpanParser(TagBlockParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(
+            parent=parent,
+            tag=Tag('span'),
+            nodeclass=nodes.Span,
+            frompos=frompos,
+            meta_inline_mode=True,
+            contentparser=InlineParser,
+        )
+
+
 class MetaParser(Parser):
     def __init__(
             self,
             parent: Parser,
             nodeclass: Type[nodes.Node],
-            frompos: int = 0
+            frompos: int = 0,
+            inline_mode: bool | None = None,
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.nodeclass: Type[nodes.Node] = nodeclass
-        self.inline_mode: bool = False
+        self.inline_mode: bool | None = inline_mode
 
     def process(self) -> ParsingResult:
+        oldpos = self.pos
         s = f'{self.__class__.__name__}.process start'
         ic(s, self.pos)
 
@@ -434,7 +557,8 @@ class MetaParser(Parser):
 
         left = self.frompos
         right = left + self.src[left:].index('\n')
-        if Tombstone in self.src[left:right]:
+
+        if self.inline_mode is None and Tombstone in self.src[left:right]:
             self.inline_mode = True
 
         pairparser = MetaPairParser(parent=self)
@@ -448,6 +572,17 @@ class MetaParser(Parser):
                 self.pos += result.consumed
                 numchars += result.consumed
                 numchars += self.consume_whitespace()
+                if result.hint == Tombstone:
+                    result = ParsingResult(
+                        success=True,
+                        result=meta,
+                        hint=Tombstone,
+                        consumed=numchars,
+                    )
+                    break
+                if result.hint == pairparser.delim:
+                    self.pos += len(pairparser.delim)
+                    self.consume_whitespace()
                 pairparser.frompos, pairparser.pos = self.pos, self.pos
 
             else:
@@ -459,6 +594,20 @@ class MetaParser(Parser):
                 )
                 break
 
+        if self.inline_mode:
+            ic(self.pos)
+            self.consume_whitespace()
+            if not self.src[self.pos:].startswith(Tombstone):
+                raise RSMParserError('Expected {Tombstone} after inline meta')
+            self.consume_tombstone()
+            self.consume_whitespace()
+            result = ParsingResult(
+                success=True,
+                result=meta,
+                hint=NoHint,
+                consumed=self.pos - oldpos,
+            )
+
         s = f'{self.__class__.__name__}.process end ({result.hint})'
         ic(s, self.pos)
         return result
@@ -467,15 +616,20 @@ class MetaParser(Parser):
 class MetaPairParser(Parser):
 
     parse_value_methods = {
-        'label': 'parse_end_of_line_value',
-        'title': 'parse_end_of_line_value',
+        'label': 'parse_upto_delim_value',
+        'title': 'parse_upto_delim_value',
         'date': 'parse_datetime_value',
-        'name': 'parse_end_of_line_value',
-        'affiliation': 'parse_end_of_line_value',
-        'email': 'parse_end_of_line_value',
+        'name': 'parse_upto_delim_value',
+        'affiliation': 'parse_upto_delim_value',
+        'email': 'parse_upto_delim_value',
         'keywords': 'parse_list_value',
         'MSC': 'parse_list_value',
         'types': 'parse_list_value',
+        'strong': 'parse_bool_value',
+        'emphas': 'parse_bool_value',
+        'little': 'parse_bool_value',
+        'insert': 'parse_bool_value',
+        'delete': 'parse_bool_value',
     }
 
     block_delim = '\n'
@@ -486,6 +640,8 @@ class MetaPairParser(Parser):
         self.nodeclass: Type[nodes.Node] = parent.nodeclass
 
     def process(self) -> ParsingResult:
+        s = f'{self.__class__.__name__}.process start'
+        ic(s, self.pos)
         oldpos = self.pos
 
         # find the key
@@ -510,14 +666,30 @@ class MetaPairParser(Parser):
 
         # find the value
         self.consume_whitespace()
-        value, numchars = getattr(self, self.parse_value_methods[key])(key)
+        try:
+            method_name = self.parse_value_methods[key]
+        except KeyError as e:
+            raise RSMParserError(
+                f'A parsing method for {Tag(key)} has not been registered '
+                'in MetaPairParser.parse_value_methods') from e
+        value, numchars = getattr(self, method_name)(key)
         self.pos += numchars
         self.consume_whitespace()
 
+        # setup hint
+        if self.src[self.pos:].startswith(self.delim):
+            hint = self.delim
+        elif self.src[self.pos:].startswith(Tombstone):
+            hint = Tombstone
+        else:
+            hint = NoHint
+
+        s = f'{self.__class__.__name__}.process end'
+        ic(s, self.pos, key, value)
         return ParsingResult(
             success=True,
             result=(key, value),
-            hint=NoHint,
+            hint=hint,
             consumed=self.pos - oldpos,
         )
 
@@ -525,52 +697,46 @@ class MetaPairParser(Parser):
     def delim(self) -> str:
         return self.inline_delim if self.parent.inline_mode else self.block_delim
 
-    def parse_end_of_line_value(self, key: str) -> tuple[str, int]:
+    def parse_upto_delim_value(self, key: str) -> tuple[str, int]:
         left = self.pos
-        right1 = left + self.src[left:].index(Tombstone)
+        right1 = self.src.index(Tombstone, left)
         try:
-            right2 = left + self.src[left:].index(self.delim)
+            right2 = self.src.index(self.delim, left)
         except ValueError:
             right2 = right1 + 1
-        right, delim = min((right1, Tombstone), (right2, self.delim))
+        right = min(right1, right2)
         value = self.src[left:right]
-        return value.strip(), len(value) + len(delim)
+        return value.strip(), len(value)
 
     def parse_datetime_value(self, key: str) -> tuple[datetime, int]:
-        value, numchars = self.parse_end_of_line_value(key)
+        value, numchars = self.parse_upto_delim_value(key)
         return datetime.fromisoformat(value), numchars
 
+    def parse_bool_value(self, key: str) -> tuple[bool, int]:
+        return True, 0
+
     def parse_list_value(self, key: str) -> tuple[list, int]:
-        ic(self.pos)
         src = self.src[self.pos:]
         if src[0] != '{':
-            raise ValueError(f'Key "{key}"' + ' expects a list, must start with "{"')
+            raise RSMParserError(f'Key "{key}"' + ' expects a list, must start with "{"')
 
         try:
             brace = src.index('}')
         except ValueError:
-            raise ValueError(f'Key "{key}"' + ' expects a list, could not find "}"')
+            raise RSMParserError(f'Key "{key}"' + ' expects a list, could not find "}"')
         try:
             colon = src.index(':')
-        except ValueError:
+        except RSMParserError:
             colon = brace+1
         if colon <= brace:
-            raise ValueError(f'Key "{key}"' + ' expects a list, but found ":" before "}"')
+            raise RSMParserError(f'Key "{key}"' + ' expects a list, but found ":" before "}"')
 
         after = src[brace+1:]
         if not after.startswith(self.delim) and not after.startswith(' ' + Tombstone):
-            raise ValueError(f'Expected a "{self.delim}" or a "{Tombstone}" after value of key "{key}"')
+            raise RSMParserError(f'Expected a "{self.delim}" or a "{Tombstone}" after value of key "{key}"')
 
         value = src[1:brace]
-        ic(value)
-        oldpos = self.pos
         numchars = len(value) + 2
-        ic(self.pos, numchars)
-        if self.src[self.pos+numchars:].startswith(self.delim):
-            numchars += len(self.delim)
-        else:
-            assert self.parent.inline_mode and self.src[self.pos+numchars:].startswith(' ' + Tombstone)
-            numchars += len(' ' + Tombstone)
         return [x.strip() for x in value.split(',')], numchars
 
 

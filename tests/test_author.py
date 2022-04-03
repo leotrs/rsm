@@ -28,6 +28,7 @@ def test_simple():
         Max Planck Institute for Mathematics in the Sciences
         leo@leotrs.com
         </p>
+
         </div>
         </section>
         </div>
@@ -56,8 +57,8 @@ def test_empty_author():
         <section class="level-1">
         <h1>The Perron non-backtracking eigenvalue after node addition</h1>
         <div class="author">
-        </div>
-        <p class="paragraph">Lorem ipsum.</p>
+
+        </div><p class="paragraph">Lorem ipsum.</p>
         </section>
         </div>
         </body>

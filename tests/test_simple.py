@@ -62,6 +62,7 @@ def test_manuscript_meta():
         <div id="mylbl" class="manuscript">
         <section class="level-1">
         <h1>My Title</h1>
+
         </section>
         </div>
         </body>

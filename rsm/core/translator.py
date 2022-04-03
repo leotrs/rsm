@@ -37,6 +37,11 @@ def make_tag(tag, id, classes, newline=False):
     return text
 
 
+
+# FOR DOCUMENTATION: Classes that inherit from EditCommand are meant to encapsulate
+# _reusable_ operations that convert a node into HTML text.  If an operation is not
+# reusable on multiple node classes and is particular to just one node class, it should
+# go into the visit_* method corresponding to that class.
 class EditCommand(ABC):
     @abstractmethod
     def execute(self, translator: 'Translator') -> None:

@@ -134,6 +134,7 @@ class ParseMetaMixIn:
         )
         result = parser.parse()
         if result.success:
+            ic(result)
             for key, value in result.result.items():
                 setattr(self.node, key, value)
             self.pos += result.consumed

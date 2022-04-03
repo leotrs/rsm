@@ -46,6 +46,22 @@ class ParsingResult:
     hint: Tag = NoHint
     consumed: int = 0
 
+    @staticmethod
+    def from_result(
+            prev: 'ParsingResult',
+            *,
+            success: bool = None,
+            result: Any = None,
+            hint: Tag = None,
+            consumed: int = None,
+    ) -> 'ParsingResult':
+        return ParsingResult(
+            success=success if success else prev.success,
+            result=result if result else prev.result,
+            hint=hint if hint else prev.hint,
+            consumed=consumed if consumed else prev.consumed,
+        )
+
 
 class Parser(ABC):
     def __init__(self, parent: 'Parser' = None, frompos: int = 0, src: str = None):
@@ -276,8 +292,17 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
                 hint=NoHint,
                 consumed=self.pos - oldpos,
             )
-
         self.consume_whitespace()
+
+        if not self.has_content:
+            s = f'{self.__class__.__name__}.process end'
+            ic(s, self.pos)
+            return ParsingResult.from_result(
+                result,
+                result=self.node,
+                consumed=self.pos - oldpos
+            )
+
         if result.hint == NoHint:
             tag = self.get_tag_at_pos(consume=False)
             result = self.parse_content(tag)

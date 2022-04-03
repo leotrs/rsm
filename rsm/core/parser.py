@@ -70,7 +70,7 @@ class Parser(ABC):
         self.frompos: int = 0
         self.pos: int = 0
         if parent:
-            self.parent, self.src, self.pos = parent, parent.src, parent.pos
+            self.parent, self.src = parent, parent.src
             self.frompos = frompos if frompos else parent.frompos
             if self.frompos < parent.frompos:
                 raise RSMParserError(
@@ -79,6 +79,7 @@ class Parser(ABC):
                 )
         else:
             self.frompos = frompos
+        self.pos = self.frompos
 
     @abstractmethod
     def process(self) -> ParsingResult:
@@ -103,9 +104,9 @@ class Parser(ABC):
         return self.pos - oldpos
 
     def consume_tombstone(self) -> int:
-        oldpos = self.pos
-        self.pos += len(Tombstone)
-        return self.pos - oldpos
+        num = len(Tombstone)
+        self.pos += num
+        return num
 
     def get_tag_at_pos(self, consume) -> Tag:
         """Return the first tag starting at self.pos. If skip is True, skip it and update self.pos."""

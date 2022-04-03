@@ -142,3 +142,9 @@ class Itemize(Node):
 @dataclass
 class Item(Paragraph):
     pass
+
+
+@dataclass
+class Math(Node):
+    number: bool = field(kw_only=True, default=False)
+    _newmetakeys: ClassVar[set] = {'number'}

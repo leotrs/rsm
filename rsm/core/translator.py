@@ -390,6 +390,9 @@ class Translator:
     def visit_item(self, node: None) -> None:
         return AppendNodeTag(node, 'li')
 
+    def visit_math(self, node: None) -> None:
+        return AppendNodeTag(node, 'div')
+
     def visit_text(self, node: Node) -> None:
         return AppendText(node.text.strip())
 

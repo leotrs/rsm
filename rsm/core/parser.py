@@ -93,7 +93,11 @@ class Parser(ABC):
 
     def parse(self) -> ParsingResult:
         self._pre_process()
+        s = f'{self.__class__.__name__}.process start'
+        ic(s, self.pos)
         result = self.process()
+        s = f'{self.__class__.__name__}.process end'
+        ic(s, self.pos)
         self._post_process()
         return result
 
@@ -203,8 +207,6 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
         result = self.parse_content()
         self.consume_whitespace()
         if self.pos == self.frompos:
-            s = f'{self.__class__.__name__}.process end - did not find ANY characters'
-            ic(s, self.pos)
             return ParsingResult(
                 success=False,
                 result=None,
@@ -214,8 +216,6 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
 
         self.node.add(result.result)
 
-        s = f'{self.__class__.__name__}.process end'
-        ic(s, self.pos)
         return ParsingResult(
             success=True,
             result=self.node,
@@ -314,12 +314,35 @@ class InlineParser(Parser):
             children.append(nodes.Text(text=self.src[left:self.pos]))
             ic(children[-1].text)
 
-        s = f'{self.__class__.__name__}.process end'
-        ic(s, self.pos)
         return ParsingResult(
             success=True,
             result=children,
             hint=NoHint,
+            consumed=self.pos - oldpos
+        )
+
+
+class AsIsParser(Parser):
+
+    def __init__(
+            self,
+            parent: Parser,
+            frompos: int = 0,
+    ):
+        super().__init__(parent=parent, frompos=frompos)
+        self.node: nodes.Text = None
+
+
+    def process(self) -> ParsingResult:
+        oldpos = self.pos
+        index = self.src.index(Tombstone, self.pos)
+        content = self.src[self.pos:index]
+        self.pos = index
+        self.node = nodes.Text(text=content)
+        return ParsingResult(
+            success=True,
+            result=self.node,
+            hint=Tombstone,
             consumed=self.pos - oldpos
         )
 
@@ -374,9 +397,6 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
         self.contentparser: Type[Parser] = contentparser
 
     def process(self) -> ParsingResult:
-        s = f'{self.__class__.__name__}.process start'
-        ic(s, self.pos)
-
         if self.nodeclass is nodes.Manuscript:
             self.node = self.nodeclass(src=self.src)
         else:
@@ -392,8 +412,6 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
 
         if result.hint == Tombstone:
             self.consume_tombstone()
-            s = f'{self.__class__.__name__}.process end (found Tombstone)'
-            ic(s, self.pos)
             return ParsingResult(
                 success=True,
                 result=self.node,
@@ -403,8 +421,6 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
         self.consume_whitespace()
 
         if not self.has_content:
-            s = f'{self.__class__.__name__}.process end'
-            ic(s, self.pos)
             return ParsingResult.from_result(
                 result,
                 result=self.node,
@@ -419,8 +435,6 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
         elif isinstance(result.hint, Tag):
             result = self.parse_content(result.hint)
 
-        s = f'{self.__class__.__name__}.process end'
-        ic(s, self.pos)
         return ParsingResult(
             success=result.success,
             result=result.result,
@@ -505,10 +519,9 @@ class SectionParser(TagBlockParser):
 
 class ItemParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, nodes.Item, Tag('item'), frompos, tag_optional=False)
         if type(parent) not in [EnumerateParser, ItemizeParser]:
-            ic(type(parent))
             raise RSMParserError('Found an :item: ouside of :enumerate: or :itemize:')
+        super().__init__(parent, nodes.Item, Tag('item'), frompos, tag_optional=False)
 
 
 class EnumerateParser(TagBlockParser):
@@ -533,6 +546,30 @@ class SpanParser(TagBlockParser):
         )
 
 
+class MathParser(TagBlockParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(
+            parent=parent,
+            tag=Tag('math'),
+            nodeclass=nodes.Math,
+            frompos=frompos,
+            meta_inline_mode=True,
+            contentparser=AsIsParser,
+        )
+
+
+class DisplaymathParser(TagBlockParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(
+            parent=parent,
+            tag=Tag('displaymath'),
+            nodeclass=nodes.Math,
+            frompos=frompos,
+            meta_inline_mode=False,
+            contentparser=AsIsParser,
+        )
+
+
 class MetaParser(Parser):
     def __init__(
             self,
@@ -547,9 +584,6 @@ class MetaParser(Parser):
 
     def process(self) -> ParsingResult:
         oldpos = self.pos
-        s = f'{self.__class__.__name__}.process start'
-        ic(s, self.pos)
-
         if not self.src[self.frompos].startswith(':'): # there is no meta
             return ParsingResult(True, {}, NoHint, 0)
 
@@ -606,8 +640,6 @@ class MetaParser(Parser):
                 consumed=self.pos - oldpos,
             )
 
-        s = f'{self.__class__.__name__}.process end ({result.hint})'
-        ic(s, self.pos)
         return result
 
 
@@ -628,6 +660,7 @@ class MetaPairParser(Parser):
         'little': 'parse_bool_value',
         'insert': 'parse_bool_value',
         'delete': 'parse_bool_value',
+        'number': 'parse_bool_value',
     }
 
     block_delim = '\n'
@@ -638,8 +671,6 @@ class MetaPairParser(Parser):
         self.nodeclass: Type[nodes.Node] = parent.nodeclass
 
     def process(self) -> ParsingResult:
-        s = f'{self.__class__.__name__}.process start'
-        ic(s, self.pos)
         oldpos = self.pos
 
         # find the key
@@ -682,8 +713,7 @@ class MetaPairParser(Parser):
         else:
             hint = NoHint
 
-        s = f'{self.__class__.__name__}.process end'
-        ic(s, self.pos, key, value)
+        ic(self.pos, key, value)
         return ParsingResult(
             success=True,
             result=(key, value),

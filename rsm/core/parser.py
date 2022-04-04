@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from abc import ABC, abstractmethod
 
 from . import nodes
+from .manuscript import PlainTextManuscript
 
 from icecream import ic
 import logging
@@ -479,22 +480,6 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
         return numchars
 
 
-class ManuscriptParser(TagBlockParser):
-    def __init__(self):
-        super().__init__(
-            parent=None,
-            tag=Tag('manuscript'),
-            nodeclass=nodes.Manuscript,
-        )
-
-    def parse(self, src: str) -> nodes.Manuscript:
-        logger.info('ManuscriptParser.parse()')
-        self.src = src
-        result = super().parse()
-        assert isinstance(result.result, nodes.Manuscript)
-        return result.result
-
-
 class AuthorParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(parent, Tag('author'), nodes.Author, frompos, has_content=False)
@@ -777,3 +762,40 @@ def _get_tagparser(parent, tag, inline_only=False):
     except KeyError as e:
         raise RSMParserError(f'Unknown tag {tag}') from e
     return parserclass(parent=parent, frompos=parent.pos)
+
+
+class ManuscriptParser(TagBlockParser):
+    def __init__(self):
+        super().__init__(
+            parent=None,
+            tag=Tag('manuscript'),
+            nodeclass=nodes.Manuscript,
+        )
+
+    def parse(self, src: PlainTextManuscript) -> nodes.Manuscript:
+        logger.info('ManuscriptParser.parse()')
+        self.src = self.apply_shortcuts(src)
+        result = super().parse()
+        return result.result
+
+    def apply_shortcuts(self, src: PlainTextManuscript) -> PlainTextManuscript:
+        pos = 0
+
+        while pos < len(src):
+            left = src.find('*', pos)
+            if left < 0:
+                return src
+            right = src.find('*', left+1)
+            if right < 0:
+                raise RSMParserError('Found start ("*") but no end')
+            src = (
+                src[:left]
+                + ':span: :strong: '
+                + Tombstone
+                + src[left+1:right]
+                + Tombstone
+                + src[right+1:]
+            )
+            pos = right+1
+
+        return src

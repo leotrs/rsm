@@ -23,10 +23,6 @@ class HTMLManuscript(str):
     pass
 
 
-class HTMLManuscript(str):
-    pass
-
-
 class WebManuscript(MountFS):
     def __init__(self, src: Path = None):
         super().__init__()

@@ -112,7 +112,7 @@ class Parser(ABC):
         self.pos += num
         return num
 
-    def get_tag_at_pos(self, consume) -> Tag:
+    def get_tag_at_pos(self, consume=False) -> Tag:
         """Return the first tag starting at self.pos. If skip is True, skip it and update self.pos."""
         if self.src[self.pos] != Tag.delim:
             return None
@@ -184,12 +184,10 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
             raise RSMParserError('Paragraphs must be preceeded by blank lines')
 
     def process(self) -> ParsingResult:
-        s = f'{self.__class__.__name__}.process start'
-        ic(s, self.pos)
         self.pos = self.frompos
         self.node = self.nodeclass()
 
-        tag = self.get_tag_at_pos(consume=False)
+        tag = self.get_tag_at_pos()
         if not self.tag_optional:
             if not tag:
                 raise RSMParserError(f'Was expecting {self.tag}, found nothing')
@@ -294,7 +292,7 @@ class InlineParser(Parser):
 
         left = self.pos
         while not self.src[self.pos:].startswith(Tombstone):
-            tag = self.get_tag_at_pos(consume=False)
+            tag = self.get_tag_at_pos()
             if tag and tag not in self.inline_tags:
                 raise RSMParserError(f'Tag {tag} cannot be inline')
             if tag:
@@ -428,7 +426,7 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
             )
 
         if result.hint == NoHint:
-            tag = self.get_tag_at_pos(consume=False)
+            tag = self.get_tag_at_pos()
             result = self.parse_content(tag)
         elif result.hint == NotATag:
             result = self.parse_content(None)
@@ -463,7 +461,7 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
             self.pos += result.consumed
 
             self.consume_whitespace()
-            hint = self.get_tag_at_pos(consume=False)
+            hint = self.get_tag_at_pos()
             ic(hint)
 
         self.consume_tombstone()

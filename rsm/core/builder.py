@@ -9,6 +9,7 @@ RSM Builder: take a complete source string and output a Manuscript.
 from fs import open_fs
 from fs.mountfs import MountFS
 
+from textwrap import dedent
 from pathlib import Path
 
 from .manuscript import HTMLManuscript, WebManuscript
@@ -34,14 +35,28 @@ class Builder:
         return self.web
 
     def make_main_file(self) -> None:
-        html = self.make_html_header()
-        html += self.body
+        html = '<html>\n\n'
+        html += self.make_html_header() + '\n'
+        html += self.body.strip() + '\n\n'
         html += self.make_html_footer()
+        html += '</html>\n'
         self.web.writetext(self.outname, html)
         self.web.html = html
 
     def make_html_header(self) -> str:
-        return ''
+        return dedent("""\
+        <head>
+          <meta charset="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+          <title>{some_title}</title>
+          <link rel="stylesheet" type="text/css" href="_static/rsm.css" />
+
+          <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+          <script src="_static/jquery.js"></script>
+        </head>
+        """)
 
     def make_html_footer(self) -> str:
         return ''

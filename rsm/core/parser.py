@@ -765,6 +765,12 @@ def _get_tagparser(parent, tag, inline_only=False):
 
 
 class ManuscriptParser(TagBlockParser):
+
+    shortcuts = {
+        '*': (':span: :strong: ' + Tombstone, Tombstone),
+        '$': (':math: ', Tombstone),
+    }
+
     def __init__(self):
         super().__init__(
             parent=None,
@@ -779,23 +785,23 @@ class ManuscriptParser(TagBlockParser):
         return result.result
 
     def apply_shortcuts(self, src: PlainTextManuscript) -> PlainTextManuscript:
-        pos = 0
-
-        while pos < len(src):
-            left = src.find('*', pos)
-            if left < 0:
-                return src
-            right = src.find('*', left+1)
-            if right < 0:
-                raise RSMParserError('Found start ("*") but no end')
-            src = (
-                src[:left]
-                + ':span: :strong: '
-                + Tombstone
-                + src[left+1:right]
-                + Tombstone
-                + src[right+1:]
-            )
-            pos = right+1
+        for short in self.shortcuts:
+            ic(short)
+            pos = 0
+            while pos < len(src):
+                left = src.find(short, pos)
+                if left < 0:
+                    break
+                right = src.find(short, left+1)
+                if right < 0:
+                    raise RSMParserError(f'Found start ("{short}") but no end')
+                src = (
+                    src[:left]
+                    + self.shortcuts[short][0]
+                    + src[left+1:right]
+                    + self.shortcuts[short][1]
+                    + src[right+1:]
+                )
+                pos = right+1
 
         return src

@@ -38,8 +38,7 @@ def test_inline_no_meta():
         have="""\
         :manuscript:
 
-        This paragraph contains inline math :math: :label: bar, :types: smallequation :: 2 + 2
-        = 4 ::.
+        This paragraph contains inline math :math: 2 + 2 = 4 ::.
 
         ::
         """,
@@ -48,9 +47,8 @@ def test_inline_no_meta():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph">This paragraph contains inline math<span id="bar" class="math smallequation">
-        2 + 2
-        = 4
+        <p class="paragraph">This paragraph contains inline math<span class="math">
+        2 + 2 = 4
         </span>.</p>
         </section>
         </div>

@@ -7,7 +7,7 @@ RSM Application: take a file path and output its contents as HTML.
 """
 
 import logging
-logging.basicConfig(level=logging.DEBUG)
+from . import rsmlogger
 logger = logging.getLogger('RSM')
 
 from pathlib import Path

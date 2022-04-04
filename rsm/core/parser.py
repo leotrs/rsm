@@ -742,7 +742,14 @@ class MetaPairParser(Parser):
     def parse_list_value(self, key: str) -> tuple[list, int]:
         src = self.src[self.pos:]
         if src[0] != '{':
-            raise RSMParserError(f'Key "{key}"' + ' expects a list, must start with "{"')
+            # if no brace, there can only be one element in the list
+            value, numchars = self.parse_upto_delim_value(key)
+            if ',' in value:
+                raise RSMParserError(
+                    f'Key "{key}"' + ' expects a list surrounded by curlybraces; '
+                    'if there is only one element, it cannot contain a comma ","'
+                )
+            return [value], numchars
 
         try:
             brace = src.index('}')

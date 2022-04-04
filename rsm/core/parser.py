@@ -233,34 +233,33 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
             if line == '\n':
                 break
         end_of_content = pos
+        ic(end_of_content)
 
-        pos = 0
         children = []
-        while pos < len(content):
-            index = content.find(':', pos)
-            if index < 0:
-                break
-            text = content[pos:index]
-            if text.strip():
-                ic(text)
-                children.append(nodes.Text(text=text))
+        while self.pos < end_of_content:
+            tag = self.get_tag_at_pos()
+            if tag:
+                parser = SpanParser(self, self.pos)
+                ic(self.pos, self.frompos, parser.pos, parser.frompos)
+                result = parser.parse()
+                ic(result.result.children)
+                child, consumed = result.result, result.consumed
+                children.append(child)
+            else:
+                index = self.src.find(':', self.pos, end_of_content)
+                if index < 0:
+                    index = end_of_content
+                ic(index)
+                text = self.src[self.pos:index]
+                if text.strip():
+                    ic(text)
+                    child, consumed = nodes.Text(text=text), len(text)
+                    children.append(child)
+                else:
+                    consumed = 0
 
-            pos = index
-            parser = SpanParser(self, self.pos + pos)
-            ic(self.pos+pos, self.pos, self.frompos, parser.pos, parser.frompos)
-            result = parser.parse()
-            children.append(result.result)
-            pos += result.consumed
-            ic(self.pos + pos)
-
-        if pos < len(content):
-            text = content[pos:]
-            if text.strip():
-                ic(text)
-                children.append(nodes.Text(text=text))
-            pos = len(content)
-
-        self.pos = end_of_content
+            self.pos += consumed
+            ic(self.pos, children)
 
         ic([type(c) for c in children])
         ic(children)

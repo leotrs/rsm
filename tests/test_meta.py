@@ -26,6 +26,31 @@ def test_list_with_only_one_element():
     )
 
 
+def test_list_with_one_element_before_key():
+    compare_have_want(
+        have="""\
+        :manuscript:
+          :title: My Title
+
+        :paragraph: :types: mytype, :label: lbl :: This paragraph has only one type,
+        that appears before another key.
+
+        ::
+        """,
+        want="""
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1>My Title</h1>
+        <p id="lbl" class="paragraph mytype">This paragraph has only one type,
+        that appears before another key.</p>
+        </section>
+        </div>
+        </body>
+        """
+    )
+
+
 def test_list_no_braces():
     with pytest.raises(rsm.core.parser.RSMParserError):
         compare_have_want(

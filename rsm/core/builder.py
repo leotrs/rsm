@@ -11,19 +11,22 @@ from fs.mountfs import MountFS
 
 from pathlib import Path
 
-from .manuscript import HTMLBodyManuscript, WebManuscript
+from .manuscript import HTMLManuscript, WebManuscript
 from .parser import ManuscriptParser
 
 
 class Builder:
 
     def __init__(self):
-        self.body: HTMLBodyManuscript = None
+        self.body: HTMLManuscript = None
+        self.html: HTMLManuscript = None
         self.web: WebManuscript = None
+        self.outname: str = 'index.html'
 
-    def build(self, body: HTMLBodyManuscript, src: Path = None) -> WebManuscript:
+    def build(self, body: HTMLManuscript, src: Path = None) -> WebManuscript:
         self.body = body
-        self.web = WebManuscript(self.body, src)
+        self.web = WebManuscript(src)
+        self.web.body = body
 
         # self.mount_static()
         self.make_main_file()
@@ -31,7 +34,17 @@ class Builder:
         return self.web
 
     def make_main_file(self) -> None:
-        self.web.writetext('index.html', self.body)
+        html = self.make_html_header()
+        html += self.body
+        html += self.make_html_footer()
+        self.web.writetext(self.outname, html)
+        self.web.html = html
+
+    def make_html_header(self) -> str:
+        return ''
+
+    def make_html_footer(self) -> str:
+        return ''
 
     def mount_static(self) -> None:
         static1 = open_fs('~/code/rsm/rsm/core/rsm_theme/static')

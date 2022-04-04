@@ -16,7 +16,7 @@ from icecream import ic
 
 from .nodes import Node
 from . import nodes
-from .manuscript import AbstractTreeManuscript, HTMLBodyManuscript
+from .manuscript import AbstractTreeManuscript, HTMLManuscript
 from .util import ShortenedString
 
 
@@ -278,7 +278,7 @@ class Translator:
 
     def __init__(self):
         self.tree: AbstractTreeManuscript = None
-        self.body: HTMLBodyManuscript = ''
+        self.body: HTMLManuscript = ''
         self.deferred: list = []
 
     @classmethod
@@ -298,7 +298,7 @@ class Translator:
     def get_leave_method(cls, node):
         return cls._get_action_method(node, 'leave')
 
-    def translate(self, tree: AbstractTreeManuscript) -> HTMLBodyManuscript:
+    def translate(self, tree: AbstractTreeManuscript) -> HTMLManuscript:
         self.tree = tree
 
         if self.deferred:

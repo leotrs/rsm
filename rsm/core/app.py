@@ -14,7 +14,7 @@ from pathlib import Path
 
 from .manuscript import (
     PlainTextManuscript,
-    HTMLBodyManuscript,
+    HTMLManuscript,
     AbstractTreeManuscript,
     WebManuscript,
 )
@@ -37,7 +37,8 @@ class Application:
         self.dst_path: Path = Path()
         self.plain: PlainTextManuscript = None
         self.tree: AbstractTreeManuscript = None
-        self.body: HTMLBodyManuscript = None
+        self.body: HTMLManuscript = None
+        self.html: HTMLManuscript = None
         self.web: WebManuscript = None
         self.reader: Reader = Reader()
         self.parser: ManuscriptParser = ManuscriptParser()
@@ -79,13 +80,14 @@ class Application:
         logger.info('Transforming...')
         self.tree = self.transformer.transform(self.tree)
 
-        # AbstractTreeManuscript -> HTMLBodyManuscript
+        # AbstractTreeManuscript -> HTMLManuscript
         logger.info('Translating...')
         self.body = self.translator.translate(self.tree)
 
         # AbstractTreeManuscript -> WebManuscript
         logger.info('Building...')
         self.web = self.builder.build(self.body, self.src_path)
+        self.html = self.web.html
 
         if write:
             # write WebManuscript to disk

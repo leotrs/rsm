@@ -19,15 +19,20 @@ class PlainTextManuscript(str):
 AbstractTreeManuscript = nodes.Manuscript
 
 
-class HTMLBodyManuscript(str):
+class HTMLManuscript(str):
+    pass
+
+
+class HTMLManuscript(str):
     pass
 
 
 class WebManuscript(MountFS):
-    def __init__(self, body: HTMLBodyManuscript, src: Path = None):
+    def __init__(self, src: Path = None):
         super().__init__()
         self.src = Path(src) if src else None
-        self.body = HTMLBodyManuscript(body)
+        self.body: HTMLManuscript = None
+        self.html: HTMLManuscript = None
 
     def __str__(self) -> str:
         return self.__repr__()

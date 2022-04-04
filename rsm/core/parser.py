@@ -239,24 +239,20 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
         while self.pos < end_of_content:
             tag = self.get_tag_at_pos()
             if tag:
-                parser = SpanParser(self, self.pos)
+                parser = _get_tagparser(self, tag)
                 ic(self.pos, self.frompos, parser.pos, parser.frompos)
                 result = parser.parse()
-                ic(result.result.children)
                 child, consumed = result.result, result.consumed
                 children.append(child)
             else:
                 index = self.src.find(':', self.pos, end_of_content)
                 if index < 0:
                     index = end_of_content
-                ic(index)
                 text = self.src[self.pos:index]
+                consumed = len(text)
                 if text.strip():
-                    ic(text)
-                    child, consumed = nodes.Text(text=text), len(text)
+                    child = nodes.Text(text=text)
                     children.append(child)
-                else:
-                    consumed = 0
 
             self.pos += consumed
             ic(self.pos, children)
@@ -565,6 +561,9 @@ class DisplaymathParser(TagBlockParser):
             meta_inline_mode=False,
             contentparser=AsIsParser,
         )
+
+    def _post_process(self) -> None:
+        self.node.display = True
 
 
 class MetaParser(Parser):

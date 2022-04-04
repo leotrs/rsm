@@ -146,5 +146,6 @@ class Item(Paragraph):
 
 @dataclass
 class Math(Node):
+    display: bool = field(kw_only=True, default=False)
     number: bool = field(kw_only=True, default=False)
     _newmetakeys: ClassVar[set] = {'number'}

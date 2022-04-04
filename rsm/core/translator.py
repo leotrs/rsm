@@ -391,7 +391,10 @@ class Translator:
         return AppendNodeTag(node, 'li')
 
     def visit_math(self, node: None) -> None:
-        return AppendNodeTag(node, 'div')
+        if node.display:
+            return AppendNodeTag(node, 'div')
+        else:
+            return AppendNodeTag(node, 'span')
 
     def visit_text(self, node: Node) -> None:
         return AppendText(node.text.strip())

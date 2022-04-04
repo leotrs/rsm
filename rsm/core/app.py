@@ -85,7 +85,7 @@ class Application:
 
         # AbstractTreeManuscript -> WebManuscript
         logger.info('Building...')
-        self.web = self.builder.build(self.body)
+        self.web = self.builder.build(self.body, self.src_path)
 
         if write:
             # write WebManuscript to disk

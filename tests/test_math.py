@@ -8,7 +8,7 @@ def test_display_alone():
 
         :displaymath:
           :label: eqn-plus
-          :types: {smallequation}
+          :types: smallequation
           :number:
 
           2 + 2 = 4
@@ -38,7 +38,7 @@ def test_inline_no_meta():
         have="""\
         :manuscript:
 
-        This paragraph contains inline math :math: :label: bar, :types: {smallequation} :: 2 + 2
+        This paragraph contains inline math :math: :label: bar, :types: smallequation :: 2 + 2
         = 4 ::.
 
         ::

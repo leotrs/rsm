@@ -53,6 +53,34 @@ def test_succeeding_blankline():
         )
 
 
+def test_start_with_tag():
+    compare_have_want(
+        have="""\
+        :manuscript:
+          :title: My Title
+
+        :span: :strong: :: this tag :: starts the paragraph.
+
+        ::
+        """,
+        want="""
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1>My Title</h1>
+        <p class="paragraph"><span class="span">
+        <strong>this tag</strong>
+        </span>
+        starts the paragraph.</p>
+        </section>
+        </div>
+        </body>
+        """
+    )
+
+
+
+
 def test_no_meta():
     compare_have_want(
         have="""\

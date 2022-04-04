@@ -445,7 +445,7 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
             if hint in {None, NotATag, NoHint}:
                 parser = self.contentparser(self, frompos=self.pos)
             else:
-                parser = _get_tagparser(self, hint)
+                parser = _get_tagparser(self, hint, inline_only=True)
             result = parser.parse()
             if not result.success:
                 raise RSMParserError('Something went wrong')
@@ -764,7 +764,7 @@ class MetaPairParser(Parser):
         return [x.strip() for x in value.split(',')], numchars
 
 
-def _get_tagparser(parent, tag):
+def _get_tagparser(parent, tag, inline_only=False):
     try:
         parserclass = globals()[f'{tag.name.capitalize()}Parser']
     except KeyError as e:

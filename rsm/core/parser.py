@@ -51,7 +51,7 @@ class BaseParsingResult:
 
     @staticmethod
     def from_result(
-            prev: 'ParsingResult',
+            prev: 'BaseParsingResult',
             *,
             success: bool = None,
             result: Any = None,
@@ -358,7 +358,7 @@ class TagBlockParser(StartEndParser):
     ):
         super().__init__(start=tag, end=Tombstone, parent=parent, frompos=frompos)
         self.tag: Tag = tag
-        self.nodeclass: Type[nodes.Node] = nodeclass
+        self.nodeclass: Type[nodes.NodeWithChildren] = nodeclass
         self.node: nodes.NodeWithChildren | None = None
         self.meta_inline_mode: bool | None = meta_inline_mode
         self.has_content: bool = has_content
@@ -570,9 +570,9 @@ class MetaParser(Parser):
         if result.success:
             ic(result)
             node.ingest_dict_as_meta(result.result)
-            return result
+            return ParsingResult.from_result(result, result=node)
         else:
-            return ParsingResult.from_result(prev=result, result=None, hint=NoHint)
+            return ParsingResult.from_result(result, result=None, hint=NoHint)
 
     def process(self) -> BaseParsingResult:
         oldpos = self.pos

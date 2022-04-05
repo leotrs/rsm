@@ -132,38 +132,7 @@ class Parser(ABC):
         return tag
 
 
-class ParseMetaMixIn:
-
-    def parse_meta(self) -> ParsingResult:
-        oldpos = self.pos
-        parser = MetaParser(
-            parent=self,
-            nodeclass=self.nodeclass,
-            frompos=self.pos,
-            inline_mode=self.meta_inline_mode,
-        )
-        result = parser.parse()
-        if result.success:
-            ic(result)
-            for key, value in result.result.items():
-                setattr(self.node, key, value)
-            self.pos += result.consumed
-            return ParsingResult(
-                success=True,
-                result=result.result,
-                hint=result.hint,
-                consumed=self.pos - oldpos
-            )
-        else:
-            return ParsingResult(
-                success=False,
-                result=None,
-                hint=NoHint,
-                consumed=self.pos - oldpos
-            )
-
-
-class BaseParagraphParser(Parser, ParseMetaMixIn):
+class BaseParagraphParser(Parser):
 
     def __init__(
             self,
@@ -203,7 +172,9 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
         if tag:
             self.pos += len(self.tag)
             self.consume_whitespace()
-            result = self.parse_meta()
+            metaparser = MetaParser(self, self.nodeclass, self.pos, self.meta_inline_mode)
+            result = metaparser.parse_into_node(self.node)
+            self.pos += result.consumed
             if not result.success:
                 raise RSMParserError(f'Problem reading meta for paragraph block at position {self.pos}')
             self.consume_whitespace()
@@ -369,7 +340,7 @@ class StartEndParser(Parser):
         super()._post_process()
 
 
-class TagBlockParser(StartEndParser, ParseMetaMixIn):
+class TagBlockParser(StartEndParser):
 
     def __init__(
             self,
@@ -400,7 +371,9 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
         oldpos = self.pos
         self.consume_starttag()
         self.consume_whitespace()
-        result = self.parse_meta()
+        metaparser = MetaParser(self, self.nodeclass, self.pos, self.meta_inline_mode)
+        result = metaparser.parse_into_node(self.node)
+        self.pos += result.consumed
 
         if not result.success:
             raise RSMParserError('{self.__class__.__name__} could not parse meta block')
@@ -654,6 +627,7 @@ class MetaParser(Parser):
                 consumed=self.pos - oldpos,
             )
 
+        self.pos += result.consumed
         return result
 
 

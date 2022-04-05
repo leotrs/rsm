@@ -28,16 +28,44 @@ class Node:
     globalmetakeys = {'label', 'types', 'comment'}
     _newmetakeys: ClassVar[set] = set()
 
-    def __post_init__(self):
-        self._children: list['Node'] = []
-
     @classmethod
     def metakeys(cls):
         return cls._newmetakeys.union(
             *[b._newmetakeys for b in cls.__bases__]
         )
 
-    def add(self, child: Type['Node'] | list) -> None:
+    @property
+    def children(self) -> tuple:
+        return tuple()
+
+    def traverse(self, condition=lambda n: True, *, nodeclass=None) -> Iterable['Node']:
+        if nodeclass:
+            if issubclass(nodeclass, Node):
+                condition = lambda n: isinstance(n, nodeclass)
+            else:
+                raise RSMNodeError('nodeclass must inherit from Node')
+
+        stack = [self]
+        while stack:
+            node = stack.pop()
+            if condition(node):
+                yield node
+            stack += node.children[::-1]
+
+    def replace_self(self, replace):
+        if not self.parent:
+            raise RSMNodeError('Can only call replace_self on a node with parent')
+        index = self.parent.children.index(self)
+        self.parent.remove(self)
+        self.parent._children.insert(index, replace)
+
+
+@dataclass
+class NodeWithChildren(Node):
+    def __post_init__(self):
+        self._children: list[Node] = []
+
+    def add(self, child: Node | list) -> None:
         if isinstance(child, list):
             for c in child:
                 self.add(c)
@@ -56,27 +84,6 @@ class Node:
     def children(self) -> tuple:
         return tuple(self._children)
 
-    def traverse(self, condition=lambda n: True, *, nodeclass=None) -> Iterable['Node']:
-        if nodeclass:
-            if issubclass(nodeclass, Node):
-                condition = lambda n: isinstance(n, nodeclass)
-            else:
-                raise RSMNodeError('nodeclass must inherit from Node')
-
-        stack = self._children[::-1]
-        while stack:
-            node = stack.pop()
-            if condition(node):
-                yield node
-            stack += node._children[::-1]
-
-    def replace_self(self, replace):
-        if not self.parent:
-            raise RSMNodeError('Can only call replace_self on a node with parent')
-        index = self.parent.children.index(self)
-        self.parent.remove(self)
-        self.parent._children.insert(index, replace)
-
 
 @dataclass
 class Text(Node):
@@ -85,15 +92,9 @@ class Text(Node):
     def __repr__(self):
         return short_repr(self.text, self.__class__.__name__)
 
-    def add(self):
-        raise RSMNodeError('Text nodes have no children; cannot add')
-
-    def remove(self):
-        raise RSMNodeError('Text nodes have no children; cannot remove')
-
 
 @dataclass
-class Span(Node):
+class Span(NodeWithChildren):
     strong: bool = field(kw_only=True, default=False)
     emphas: bool = field(kw_only=True, default=False)
     little: bool = field(kw_only=True, default=False)
@@ -110,7 +111,7 @@ class Span(Node):
 
 
 @dataclass
-class Heading(Node):
+class Heading(NodeWithChildren):
     title: str = ''
     _newmetakeys: ClassVar[set] = {'title'}
 
@@ -135,7 +136,7 @@ class Author(Node):
 
 
 @dataclass
-class Abstract(Node):
+class Abstract(NodeWithChildren):
     keywords: list[str] = field(default_factory=list)
     MSC: list[str] = field(default_factory=list)
     _newmetakeys: ClassVar[set] = {'keywords', 'MSC'}
@@ -152,12 +153,12 @@ class Paragraph(Heading):
 
 
 @dataclass
-class Enumerate(Node):
+class Enumerate(NodeWithChildren):
     pass
 
 
 @dataclass
-class Itemize(Node):
+class Itemize(NodeWithChildren):
     pass
 
 
@@ -167,7 +168,7 @@ class Item(Paragraph):
 
 
 @dataclass
-class Math(Node):
+class Math(NodeWithChildren):
     display: bool = field(kw_only=True, default=False)
     number: bool = field(kw_only=True, default=False)
     _newmetakeys: ClassVar[set] = {'number'}

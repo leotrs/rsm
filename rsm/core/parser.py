@@ -467,6 +467,16 @@ class SectionParser(TagBlockParser):
         super().__init__(parent, Tag('section'), nodes.Section, frompos)
 
 
+class SubsectionParser(TagBlockParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, Tag('subsection'), nodes.Subsection, frompos)
+
+
+class SubsubsectionParser(TagBlockParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, Tag('subsubsection'), nodes.Subsubsection, frompos)
+
+
 class ItemParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         if type(parent) not in [EnumerateParser, ItemizeParser]:
@@ -799,6 +809,8 @@ class ManuscriptParser(TagBlockParser):
 
     shortcuts = [
         Shortcut('*', '*', ':span: :strong: ' + Tombstone, Tombstone),
+        Shortcut('###', '\n', ':subsubsection:\n  :title: ', '\n'),
+        Shortcut('##', '\n', ':subsection:\n  :title: ', '\n'),
         Shortcut('#', '\n', ':section:\n  :title: ', '\n'),
         Shortcut('$:', ':$', ':displaymath:\n' + Placeholder, Placeholder + '\n' + Tombstone),
         Shortcut('$', '$', ':math: \(', '\)' + Tombstone),

@@ -377,11 +377,11 @@ class Translator:
         return AppendNodeTag(node, tag='p', newline=False)
 
     def visit_section(self, node: nodes.Section) -> EditCommand:
-        node.types.insert(0, 'level-2')
+        node.types.insert(0, f'level-{node.level}')
         heading = f'{node.number}. {node.title}' if not node.nonum else f'{node.title}'
         return AppendBatch([
             AppendNodeTag(node, 'section'),
-            AppendHeading(2, heading),
+            AppendHeading(node.level, heading),
         ])
 
     def visit_enumerate(self, node: nodes.Enumerate) -> EditCommand:

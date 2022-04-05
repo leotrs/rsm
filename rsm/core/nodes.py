@@ -155,7 +155,17 @@ class Abstract(NodeWithChildren):
 
 @dataclass
 class Section(Heading):
-    pass
+    level: ClassVar[int] = 2
+
+
+@dataclass
+class Subsection(Section):
+    level: ClassVar[int] = 3
+
+
+@dataclass
+class Subsubsection(Section):
+    level: ClassVar[int] = 4
 
 
 @dataclass

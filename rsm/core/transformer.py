@@ -32,6 +32,8 @@ class Transformer:
 
     def collect_labels(self):
         for node in self.tree.traverse(lambda n: n.label):
+            if node.label in self.labels_to_nodes:
+                raise RSMTransformerError(f'Duplicate label {node.label}')
             self.labels_to_nodes[node.label] = node
 
     def resolve_pending_references(self):

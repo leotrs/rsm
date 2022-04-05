@@ -333,7 +333,14 @@ class Translator:
     def leave_node(self, node: nodes.Node) -> EditCommand:
         s = f'leaving node of class {node.__class__.__name__}'
         ic(s)
-        return self.deferred.pop()
+        try:
+            return self.deferred.pop()
+        except IndexError as e:
+            classname = node.__class__.__name__
+            raise RSMTranslatorError(
+                'Cannot finish translation; did you forget to write '
+                'a visit_* or leave_* method?'
+            ) from e
 
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         if not node.label:

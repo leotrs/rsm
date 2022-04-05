@@ -73,6 +73,8 @@ class Application:
         logger.info('Parsing...')
         self.tree = self.parser.parse(self.plain)
 
+        ic.disable()
+
         # AbstractTreeManuscript -> AbstractTreeManuscript
         logger.info('Transforming...')
         self.tree = self.transformer.transform(self.tree)

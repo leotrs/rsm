@@ -67,3 +67,17 @@ def test_overwrite_reftext():
         </body>
         """
     )
+
+
+def test_overwrite_reftext():
+    with pytest.raises(rsm.core.parser.RSMParserError):
+        compare_have_want(
+        have="""\
+        :manuscript:
+
+        This is a paragraph that refers to :ref:sec-lbl:.
+
+        ::
+        """,
+        want='XXX'
+    )

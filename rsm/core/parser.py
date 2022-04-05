@@ -538,7 +538,10 @@ class RefParser(StartEndParser):
         oldpos = self.pos
         self.pos += len(self.tag)
         self.consume_whitespace()
-        right = self.src.find(Tombstone, self.pos)
+
+        right = self.src.find(Tag.delim, self.pos)
+        if not self.src[right:].startswith(Tombstone):
+            raise RSMParserError(f'Found "{Tag.delim}" inside :ref: tag but no {Tombstone}')
         content = self.src[self.pos:right]
         split = content.split(',')
         if len(split) > 1:

@@ -25,7 +25,8 @@ class Node:
     types: list[str] = field(default_factory=list)
     comment: str = ''
     parent: Optional['NodeWithChildren'] = None
-    globalmetakeys = {'label', 'types', 'comment'}
+    nonum: bool = False
+    globalmetakeys = {'label', 'types', 'comment', 'nonum'}
     _newmetakeys: ClassVar[set] = set()
     number: int | None = None
 

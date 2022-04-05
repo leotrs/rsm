@@ -655,6 +655,7 @@ class MetaPairParser(Parser):
         'insert': 'parse_bool_value',
         'delete': 'parse_bool_value',
         'number': 'parse_bool_value',
+        'nonum': 'parse_bool_value',
     }
 
     block_delim = '\n'

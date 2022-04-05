@@ -378,9 +378,10 @@ class Translator:
 
     def visit_section(self, node: nodes.Section) -> EditCommand:
         node.types.insert(0, 'level-2')
+        heading = f'{node.number}. {node.title}' if not node.nonum else f'{node.title}'
         return AppendBatch([
             AppendNodeTag(node, 'section'),
-            AppendHeading(2, f'{node.number}. {node.title}'),
+            AppendHeading(2, heading),
         ])
 
     def visit_enumerate(self, node: nodes.Enumerate) -> EditCommand:

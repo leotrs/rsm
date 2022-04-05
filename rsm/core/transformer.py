@@ -53,5 +53,6 @@ class Transformer:
     def autonumber_nodes(self) -> None:
         count = 1
         for node in self.tree.traverse(nodeclass=nodes.Section):
-            node.number = count
-            count += 1
+            if not node.nonum:
+                node.number = count
+                count += 1

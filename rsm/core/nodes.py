@@ -122,6 +122,11 @@ class Span(NodeWithChildren):
 
 
 @dataclass
+class Claim(NodeWithChildren):
+    pass
+
+
+@dataclass
 class Heading(NodeWithChildren):
     title: str = ''
     _newmetakeys: ClassVar[set] = {'title'}

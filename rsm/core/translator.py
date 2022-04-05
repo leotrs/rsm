@@ -429,3 +429,6 @@ class Translator:
 
     def leave_reference(self, node: nodes.Reference) -> EditCommand:
         return DummyCommand()
+
+    def visit_claim(self, node: nodes.Claim) -> EditCommand:
+        return AppendNodeTag(node, tag='span', newline=False)

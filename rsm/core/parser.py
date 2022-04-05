@@ -252,7 +252,7 @@ class ParagraphParser(BaseParagraphParser):
 
 class InlineParser(Parser):
 
-    inline_tags = {Tag('span')}
+    inline_tags = {Tag('span'), Tag('math')}
 
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(parent, frompos)
@@ -492,6 +492,18 @@ class EnumerateParser(TagBlockParser):
 class ItemizeParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(parent, Tag('itemize'), nodes.Itemize, frompos)
+
+
+class ClaimParser(TagBlockParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(
+            parent=parent,
+            tag=Tag('claim'),
+            nodeclass=nodes.Claim,
+            frompos=frompos,
+            meta_inline_mode=True,
+            contentparser=InlineParser,
+        )
 
 
 class SpanParser(TagBlockParser):

@@ -10,6 +10,7 @@ from datetime import datetime
 from typing import Any, Type
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
+from collections import namedtuple
 
 from . import nodes
 from .manuscript import PlainTextManuscript
@@ -790,12 +791,16 @@ def _get_tagparser(parent, tag, inline_only=False):
     return parserclass(parent=parent, frompos=parent.pos)
 
 
+Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
+
+
 class ManuscriptParser(TagBlockParser):
 
-    shortcuts = {
-        '*': (':span: :strong: ' + Tombstone, Tombstone),
-        '$': (':math: ', Tombstone),
-    }
+    shortcuts = [
+        Shortcut('*', '*', ':span: :strong: ' + Tombstone, Tombstone),
+        Shortcut('$', '$', ':math: ', Tombstone),
+        Shortcut('#', '\n', ':section:\n  :title: ', '\n'),
+    ]
 
     def __init__(self):
         super().__init__(
@@ -811,22 +816,21 @@ class ManuscriptParser(TagBlockParser):
         return result.result
 
     def apply_shortcuts(self, src: PlainTextManuscript | str) -> PlainTextManuscript:
-        for short, replace in self.shortcuts.items():
-            ic(short)
+        for deliml, delimr, replacel, replacer in self.shortcuts:
             pos = 0
             while pos < len(src):
-                left = src.find(short, pos)
+                left = src.find(deliml, pos)
                 if left < 0:
                     break
-                right = src.find(short, left+1)
+                right = src.find(delimr, left+1)
                 if right < 0:
-                    raise RSMParserError(f'Found start ("{short}") but no end')
+                    raise RSMParserError(f'Found start ("{deliml}") but no end')
                 src = (
                     src[:left]
-                    + replace[0]
-                    + src[left+1:right]
-                    + replace[1]
-                    + src[right+1:]
+                    + replacel
+                    + src[left+len(deliml):right]
+                    + replacer
+                    + src[right+len(delimr):]
                 )
                 pos = right+1
 

@@ -99,3 +99,33 @@ def test_two_math():
         </body>
         """
     )
+
+
+def test_section_shortcut():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        # My Section
+          :label: my-sec
+
+        This section contains a shortcut
+
+        ::
+
+        ::
+        """,
+        want="""
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <section id="my-sec" class="section level-2">
+        <h2>1. My Section</h2>
+        <p class="paragraph">This section contains a shortcut</p>
+        </section>
+        </section>
+        </div>
+        </body>
+        """
+    )

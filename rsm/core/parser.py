@@ -388,7 +388,7 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
 
     def process(self) -> ParsingResult:
         if self.nodeclass is nodes.Manuscript:
-            self.node = self.nodeclass(src=self.src)
+            self.node = nodes.Manuscript(src=self.src)
         else:
             self.node = self.nodeclass()
 
@@ -548,7 +548,6 @@ class RefParser(StartEndParser):
             start=Tag('ref'),
             end=Tombstone,
             frompos=frompos,
-            src=None,
         )
         self.tag = Tag('ref')
         self.node: nodes.PendingReference = nodes.PendingReference()
@@ -804,7 +803,7 @@ class ManuscriptParser(TagBlockParser):
         result = super().parse()
         return result.result
 
-    def apply_shortcuts(self, src: PlainTextManuscript) -> PlainTextManuscript:
+    def apply_shortcuts(self, src: PlainTextManuscript | str) -> PlainTextManuscript:
         for short, replace in self.shortcuts.items():
             ic(short)
             pos = 0
@@ -824,4 +823,4 @@ class ManuscriptParser(TagBlockParser):
                 )
                 pos = right+1
 
-        return src
+        return PlainTextManuscript(src)

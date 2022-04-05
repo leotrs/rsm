@@ -48,15 +48,15 @@ class EditCommand(ABC):
 
     def _edit_command_repr(self, members) -> str:
         start = f'{self.__class__.__name__}('
-        middle = []
+        middles = []
         for key in members:
             s = f'{key}='
             value = getattr(self, key)
             if isinstance(value, str):
                 value = repr(ShortenedString(value.strip()))
             s += f'{value}'
-            middle.append(s)
-        middle = ', '.join(middle)
+            middles.append(s)
+        middle = ', '.join(middles)
         end = ')'
         return start + middle + end
 
@@ -346,8 +346,8 @@ class Translator:
         ])
 
     def visit_author(self, node: nodes.Author) -> EditCommand:
-        line = [str(x) for x in [node.name, node.affiliation, node.email] if x]
-        line = '\n'.join(line)
+        lines = [str(x) for x in [node.name, node.affiliation, node.email] if x]
+        line = '\n'.join(lines)
         if line:
             return AppendBatchAndDefer([AppendNodeTag(node), AppendParagraph(line)])
         else:

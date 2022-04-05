@@ -8,6 +8,7 @@ Nodes that make up the Manuscript tree.
 
 from dataclasses import dataclass, field
 from typing import Any, ClassVar, Type
+from collections.abc import Iterable
 from datetime import datetime
 from icecream import ic
 
@@ -23,7 +24,7 @@ class Node:
     label: str = ''
     types: list[str] = field(default_factory=list)
     comment: str = ''
-    parent: 'Node' = None
+    parent: Type['Node'] | None = None
     globalmetakeys = {'label', 'types', 'comment'}
     _newmetakeys: ClassVar[set] = set()
 
@@ -117,7 +118,7 @@ class Heading(Node):
 @dataclass
 class Manuscript(Heading):
     src: ShortenedString = field(default_factory=ShortenedString, repr=False)
-    date: datetime = None
+    date: datetime | None = None
     _newmetakeys: ClassVar[set] = {'date'}
 
     def __post_init__(self):
@@ -127,9 +128,9 @@ class Manuscript(Heading):
 
 @dataclass
 class Author(Node):
-    name: str = None
-    affiliation: str = None
-    email: str = None
+    name: str = ''
+    affiliation: str = ''
+    email: str = ''
     _newmetakeys: ClassVar[set] = {'name', 'affiliation', 'email'}
 
 
@@ -179,4 +180,4 @@ class PendingReference(Node):
 
 @dataclass
 class Reference(Node):
-    target: Node = field(kw_only=True, default=None)
+    target: Node | None = field(kw_only=True, default=None)

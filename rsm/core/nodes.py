@@ -188,8 +188,10 @@ class Math(NodeWithChildren):
 @dataclass
 class PendingReference(Node):
     targetlabel: str = field(kw_only=True, default='')
+    overwrite_reftext: str | None = field(kw_only=True, default=None)
 
 
 @dataclass
 class Reference(Node):
     target: Node | None = field(kw_only=True, default=None)
+    overwrite_reftext: str | None = field(kw_only=True, default=None)

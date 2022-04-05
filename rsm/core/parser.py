@@ -539,12 +539,21 @@ class RefParser(StartEndParser):
         self.pos += len(self.tag)
         self.consume_whitespace()
         right = self.src.find(Tombstone, self.pos)
-        content = self.src[self.pos:right].strip()
+        content = self.src[self.pos:right]
+        split = content.split(',')
+        if len(split) > 1:
+            if len(split) > 2:
+                raise RSMParserError(
+                    'Use either ":ref:<label>::" or ":ref:<label>, <reftext>::"'
+                )
+            label, reftext = split[0].strip(), split[1]
+        else:
+            label, reftext = content.strip(), None
         self.pos = right
         self.consume_whitespace()
         self.consume_tombstone()
 
-        self.node = nodes.PendingReference(targetlabel=content)
+        self.node = nodes.PendingReference(targetlabel=label, overwrite_reftext=reftext)
         return ParsingResult(
             success=True,
             result=self.node,

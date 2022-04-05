@@ -38,14 +38,17 @@ class Transformer:
             self.labels_to_nodes[node.label] = node
 
     def resolve_pending_references(self) -> None:
-        for node in self.tree.traverse(nodeclass=nodes.PendingReference):
+        for pending in self.tree.traverse(nodeclass=nodes.PendingReference):
             try:
-                target = self.labels_to_nodes[node.targetlabel]
-                node.replace_self(nodes.Reference(target=target))
+                target = self.labels_to_nodes[pending.targetlabel]
             except KeyError as e:
                 raise RSMTransformerError(
-                    f'Reference to nonexistent label "{node.targetlabel}"'
+                    f'Reference to nonexistent label "{pending.targetlabel}"'
                 ) from e
+            pending.replace_self(nodes.Reference(
+                target=target,
+                overwrite_reftext=pending.overwrite_reftext,
+            ))
 
         for node in self.tree.traverse(nodeclass=nodes.PendingReference):
             raise RSMTransformerError(f'Found unresolved referece to "{node.targetlabel}"')

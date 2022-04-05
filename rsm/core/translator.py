@@ -420,7 +420,10 @@ class Translator:
         if not node.target:
             raise RSMTranslatorError('Found a reference without a target')
         tgt = node.target
-        reftext = tgt.reftext.format(nodeclass=tgt.__class__.__name__, number=tgt.number)
+        if node.overwrite_reftext:
+            reftext = node.overwrite_reftext
+        else:
+            reftext = tgt.reftext.format(nodeclass=tgt.__class__.__name__, number=tgt.number)
         text = f'<a href="#{node.target.label}">{reftext}</a>'
         return AppendText(text)
 

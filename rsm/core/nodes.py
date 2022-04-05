@@ -29,7 +29,7 @@ class Node:
     _newmetakeys: ClassVar[set] = set()
 
     @classmethod
-    def metakeys(cls):
+    def metakeys(cls: Type['Node']):
         return cls._newmetakeys.union(
             *[b._newmetakeys for b in cls.__bases__]
         )
@@ -52,12 +52,16 @@ class Node:
                 yield node
             stack += node.children[::-1]
 
-    def replace_self(self, replace):
+    def replace_self(self, replace) -> None:
         if not self.parent:
             raise RSMNodeError('Can only call replace_self on a node with parent')
         index = self.parent.children.index(self)
         self.parent.remove(self)
         self.parent._children.insert(index, replace)
+
+    def ingest_dict_as_meta(self, meta: dict) -> None:
+        for key, value in meta.items():
+            setattr(self, key, value)
 
 
 @dataclass

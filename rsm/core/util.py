@@ -6,6 +6,8 @@ Utilities.
 
 """
 
+from typing import Any
+
 
 def short_repr(text: str, classname, limit: int = 20) -> str:
     if len(text) > limit:

@@ -43,7 +43,7 @@ NoHint = Tag('__NO_HINT__')
 
 
 @dataclass(frozen=True)
-class ParsingResult:
+class BaseParsingResult:
     success: bool
     result: Any = None
     hint: Tag | str = NoHint
@@ -64,6 +64,11 @@ class ParsingResult:
             hint=hint if hint else prev.hint,
             consumed=consumed if consumed else prev.consumed,
         )
+
+
+@dataclass(frozen=True)
+class ParsingResult(BaseParsingResult):
+    result: nodes.Node | None = None
 
 
 class Parser(ABC):
@@ -583,10 +588,19 @@ class MetaParser(Parser):
         self.nodeclass: Type[nodes.Node] = nodeclass
         self.inline_mode: bool | None = inline_mode
 
-    def process(self) -> ParsingResult:
+    def parse_into_node(self, node) -> ParsingResult:
+        result = self.parse()
+        if result.success:
+            ic(result)
+            node.ingest_dict_as_meta(result.result)
+            return result
+        else:
+            return ParsingResult.from_result(prev=result, result=None, hint=NoHint)
+
+    def process(self) -> BaseParsingResult:
         oldpos = self.pos
-        if not self.src[self.frompos].startswith(':'): # there is no meta
-            return ParsingResult(True, {}, NoHint, 0)
+        if not self.src[self.frompos].startswith(Tag.delim): # there is no meta
+            return BaseParsingResult(True, {}, NoHint, 0)
 
         left = self.frompos
         right = left + self.src[left:].index('\n')
@@ -606,7 +620,7 @@ class MetaParser(Parser):
                 numchars += result.consumed
                 numchars += self.consume_whitespace()
                 if result.hint == Tombstone:
-                    result = ParsingResult(
+                    result = BaseParsingResult(
                         success=True,
                         result=meta,
                         hint=Tombstone,
@@ -619,7 +633,7 @@ class MetaParser(Parser):
                 pairparser.frompos, pairparser.pos = self.pos, self.pos
 
             else:
-                result = ParsingResult(
+                result = BaseParsingResult(
                     success=True,
                     result=meta,
                     hint=result.hint,
@@ -633,7 +647,7 @@ class MetaParser(Parser):
                 raise RSMParserError('Expected {Tombstone} after inline meta')
             self.consume_tombstone()
             self.consume_whitespace()
-            result = ParsingResult(
+            result = BaseParsingResult(
                 success=True,
                 result=meta,
                 hint=NoHint,
@@ -670,7 +684,7 @@ class MetaPairParser(Parser):
         super().__init__(parent=parent)
         self.nodeclass: Type[nodes.Node] = parent.nodeclass
 
-    def process(self) -> ParsingResult:
+    def process(self) -> BaseParsingResult:
         oldpos = self.pos
 
         # find the key
@@ -714,7 +728,7 @@ class MetaPairParser(Parser):
             hint = NoHint
 
         ic(self.pos, key, value)
-        return ParsingResult(
+        return BaseParsingResult(
             success=True,
             result=(key, value),
             hint=hint,

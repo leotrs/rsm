@@ -27,6 +27,7 @@ class Transformer:
 
         self.collect_labels()
         self.resolve_pending_references()
+        self.autonumber_nodes()
 
         return tree
 
@@ -48,3 +49,9 @@ class Transformer:
 
         for node in self.tree.traverse(nodeclass=nodes.PendingReference):
             raise RSMTransformerError(f'Found unresolved referece to "{node.targetlabel}"')
+
+    def autonumber_nodes(self) -> None:
+        count = 1
+        for node in self.tree.traverse(nodeclass=nodes.Section):
+            node.number = count
+            count += 1

@@ -380,7 +380,7 @@ class Translator:
         node.types.insert(0, 'level-2')
         return AppendBatch([
             AppendNodeTag(node, 'section'),
-            AppendHeading(2, node.title),
+            AppendHeading(2, f'{node.number}. {node.title}'),
         ])
 
     def visit_enumerate(self, node: nodes.Enumerate) -> EditCommand:

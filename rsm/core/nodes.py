@@ -27,6 +27,7 @@ class Node:
     parent: Optional['NodeWithChildren'] = None
     globalmetakeys = {'label', 'types', 'comment'}
     _newmetakeys: ClassVar[set] = set()
+    number: int | None = None
 
     @classmethod
     def metakeys(cls: Type['Node']):

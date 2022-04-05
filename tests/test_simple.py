@@ -104,7 +104,7 @@ def test_section_header():
         <section class="level-1">
         <h1></h1>
         <p class="paragraph">Lorem ipsum.</p><section class="section level-2">
-        <h2>section title</h2>
+        <h2>1. section title</h2>
         <p class="paragraph">Lorem ipsum.</p>
         </section>
         </section>

@@ -64,7 +64,7 @@ def test_simple():
         </p>
 
         </div><section id="sec:introduction" class="section level-2 t1 t2">
-        <h2>Introduction</h2>
+        <h2>1. Introduction</h2>
         <p class="paragraph">Lorem ipsum.</p>
         </section>
         </section>

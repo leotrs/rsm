@@ -21,13 +21,18 @@ class RSMNodeError(Exception):
 
 @dataclass
 class Node:
+
+    # meta keys
     label: str = ''
     types: list[str] = field(default_factory=list)
     comment: str = ''
     parent: Optional['NodeWithChildren'] = None
     nonum: bool = False
-    globalmetakeys = {'label', 'types', 'comment', 'nonum'}
+    reftext: str = '{nodeclass} {number}'
+    globalmetakeys = {'label', 'types', 'comment', 'nonum', 'reftext'}
     _newmetakeys: ClassVar[set] = set()
+
+    # non-meta instance variables
     number: int | None = None
 
     @classmethod

@@ -417,10 +417,11 @@ class Translator:
         ])
 
     def visit_reference(self, node: nodes.Reference) -> EditCommand:
-        if isinstance(node.target, nodes.Heading):
-            text = f'<a href="#{node.target.label}">{node.target.title}</a>'
-        else:
-            text = f'[[ this is a reference to {node.target}]]'
+        if not node.target:
+            raise RSMTranslatorError('Found a reference without a target')
+        tgt = node.target
+        reftext = tgt.reftext.format(nodeclass=tgt.__class__.__name__, number=tgt.number)
+        text = f'<a href="#{node.target.label}">{reftext}</a>'
         return AppendText(text)
 
     def leave_reference(self, node: nodes.Reference) -> EditCommand:

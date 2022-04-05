@@ -408,8 +408,7 @@ class Translator:
             if getattr(node, attr)
         ]
         return AppendBatchAndDefer([
-            AppendTextAndDefer('\n', '\n'),
-            AppendNodeTag(node, tag='span'),
+            AppendNodeTag(node, tag='span', newline=False),
             *commands,
         ])
 

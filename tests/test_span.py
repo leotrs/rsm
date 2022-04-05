@@ -15,11 +15,7 @@ def test_one_span():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph">This is a
-        <span class="span">
-        <strong>boring</strong>
-        </span>
-        paragraph.</p>
+        <p class="paragraph">This is a<span class="span"><strong>boring</strong></span>paragraph.</p>
         </section>
         </div>
         </body>
@@ -42,15 +38,7 @@ def test_two_spans():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph">This is a
-        <span class="span">
-        <strong>boring</strong>
-        </span>
-        paragraph, though it has two
-        <span class="span">
-        <em>spans</em>
-        </span>
-        so it's less boring.</p>
+        <p class="paragraph">This is a<span class="span"><strong>boring</strong></span>paragraph, though it has two<span class="span"><em>spans</em></span>so it's less boring.</p>
         </section>
         </div>
         </body>
@@ -74,15 +62,7 @@ def test_nested():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph">This is a
-        <span class="span">
-        <strong>paragraph with a
-        <span class="span">
-        <em>span within a span</em>
-        </span>
-        </strong>
-        </span>
-        so that makes it really cool.  BTW it also has a Tombstone at the start of a
+        <p class="paragraph">This is a<span class="span"><strong>paragraph with a<span class="span"><em>span within a span</em></span></strong></span>so that makes it really cool.  BTW it also has a Tombstone at the start of a
         line!</p>
         </section>
         </div>
@@ -109,11 +89,7 @@ def test_span_with_multiline_meta():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph">This is a
-        <span class="span">
-        <strong>paragraph with a span</strong>
-        </span>
-        and it is multi line.</p>
+        <p class="paragraph">This is a<span class="span"><strong>paragraph with a span</strong></span>and it is multi line.</p>
         </section>
         </div>
         </body>
@@ -139,12 +115,8 @@ def test_multiline_span():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph">This is a
-        <span class="span">
-        <strong>paragraph with
-        a span</strong>
-        </span>
-        and it is multi line.</p>
+        <p class="paragraph">This is a<span class="span"><strong>paragraph with
+        a span</strong></span>and it is multi line.</p>
         </section>
         </div>
         </body>
@@ -166,11 +138,7 @@ def test_span_with_label():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph">This is a
-        <span id="myspn" class="span">
-        <strong>boring</strong>
-        </span>
-        paragraph.</p>
+        <p class="paragraph">This is a<span id="myspn" class="span"><strong>boring</strong></span>paragraph.</p>
         </section>
         </div>
         </body>

@@ -16,11 +16,7 @@ def test_one_strong():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1>My Title</h1>
-        <p class="paragraph">This paragraph has a
-        <span class="span">
-        <strong>shortcut</strong>
-        </span>
-        for strong span.</p>
+        <p class="paragraph">This paragraph has a<span class="span"><strong>shortcut</strong></span>for strong span.</p>
         </section>
         </div>
         </body>
@@ -43,15 +39,7 @@ def test_two_strong():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1>My Title</h1>
-        <p class="paragraph">This paragraph has two
-        <span class="span">
-        <strong>shortcuts</strong>
-        </span>
-        for strong
-        <span class="span">
-        <strong>spans</strong>
-        </span>
-        .</p>
+        <p class="paragraph">This paragraph has two<span class="span"><strong>shortcuts</strong></span>for strong<span class="span"><strong>spans</strong></span>.</p>
         </section>
         </div>
         </body>

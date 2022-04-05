@@ -16,11 +16,10 @@ class Writer:
     """Take a HTML string and write to disk."""
 
     def __init__(self):
-        self.web: WebManuscript = None
-        self.dst_path: Path = Path()
+        self.web: WebManuscript | None = None
+        self.dstpath: Path = Path()
 
-    def write(self, web: WebManuscript, dst_path: Path) -> str:
+    def write(self, web: WebManuscript, dstpath: Path):
         self.web = web
-        self.dst_path = dst_path
+        self.dstpath = dstpath
         copy_fs(web, './')
-        return

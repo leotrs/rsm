@@ -17,7 +17,9 @@ class Reader:
         self.path: Path = Path()
         self.src: str = ''
 
-    def read(self, path: Path | str) -> PlainTextManuscript:
+    def read(self, path: Path | None) -> PlainTextManuscript:
+        if not path:
+            raise TypeError('Expected path, got None')
         self.path = Path(path)
         with open(path) as file:
             self.src = file.read()

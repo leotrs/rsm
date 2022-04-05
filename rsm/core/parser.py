@@ -15,8 +15,10 @@ from . import nodes
 from .manuscript import PlainTextManuscript
 
 from icecream import ic
+
 import logging
 logger = logging.getLogger('RSM').getChild('Parser')
+
 
 class RSMParserError(Exception):
     pass
@@ -44,7 +46,7 @@ NoHint = Tag('__NO_HINT__')
 class ParsingResult:
     success: bool
     result: Any = None
-    hint: Tag = NoHint
+    hint: Tag | str = NoHint
     consumed: int = 0
 
     @staticmethod
@@ -65,11 +67,9 @@ class ParsingResult:
 
 
 class Parser(ABC):
-    def __init__(self, parent: 'Parser' = None, frompos: int = 0, src: str = None):
-        self.parent: Parser | None = None
-        self.src: str | None = src
-        self.frompos: int = 0
-        self.pos: int = 0
+    def __init__(self, parent: 'Parser' = None, frompos: int = 0):
+        self.parent: Parser = parent
+        self.frompos: int = frompos
         if parent:
             self.parent, self.src = parent, parent.src
             self.frompos = frompos if frompos else parent.frompos
@@ -79,7 +79,7 @@ class Parser(ABC):
                     'less than parent\'s {parent.frompos}'
                 )
         else:
-            self.frompos = frompos
+            self.src: str = ''
         self.pos = self.frompos
 
     @abstractmethod
@@ -256,10 +256,7 @@ class BaseParagraphParser(Parser, ParseMetaMixIn):
                     children.append(child)
 
             self.pos += consumed
-            ic(self.pos, children)
 
-        ic([type(c) for c in children])
-        ic(children)
         return ParsingResult(
                 success=True,
                 result=children,
@@ -326,7 +323,6 @@ class AsIsParser(Parser):
         super().__init__(parent=parent, frompos=frompos)
         self.node: nodes.Text = None
 
-
     def process(self) -> ParsingResult:
         oldpos = self.pos
         index = self.src.index(Tombstone, self.pos)
@@ -343,8 +339,8 @@ class AsIsParser(Parser):
 
 class StartEndParser(Parser):
 
-    def __init__(self, start: str, end: str, parent: Parser | None, src: str, frompos: int = 0):
-        super().__init__(parent=parent, src=src, frompos=frompos)
+    def __init__(self, start: str, end: str, parent: Parser | None, frompos: int = 0):
+        super().__init__(parent=parent, frompos=frompos)
         if not start.strip():
             raise RSMParserError('Block starting string cannot be whitespace')
         self.start = start
@@ -382,7 +378,7 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
             has_content: bool = True,
             contentparser: Type[Parser] = ParagraphParser,
     ):
-        super().__init__(start=tag, end=Tombstone, parent=parent, src=src, frompos=frompos)
+        super().__init__(start=tag, end=Tombstone, parent=parent, frompos=frompos)
         self.tag: Tag = tag
         self.nodeclass: Type[nodes.Node] = nodeclass
         self.node: nodes.Node | None = None
@@ -429,16 +425,10 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
         elif isinstance(result.hint, Tag):
             result = self.parse_content(result.hint)
 
-        return ParsingResult(
-            success=result.success,
-            result=result.result,
-            hint=result.hint,
-            consumed=self.pos - oldpos,
-        )
+        return ParsingResult.from_result(result, consumed=self.pos - oldpos)
 
     def parse_content(self, starting_tag: Tag | None) -> ParsingResult:
         s = f'{self.__class__.__name__}.parse_content start'
-        ic(s, self.pos)
         oldpos = self.pos
 
         hint = starting_tag
@@ -453,6 +443,7 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
 
             s = f'subparser {parser.__class__.__name__} done'
             ic(s, result.consumed)
+
             self.node.add(result.result)
             self.pos += result.consumed
 
@@ -473,7 +464,6 @@ class TagBlockParser(StartEndParser, ParseMetaMixIn):
 
     def consume_starttag(self) -> int:
         if self.pos != self.frompos:
-            ic(self.pos, self.frompos)
             raise RSMParserError('consume_starttag can only be called when self.pos == self.frompos')
         numchars = len(self.tag)
         self.pos += numchars
@@ -551,6 +541,37 @@ class DisplaymathParser(TagBlockParser):
         self.node.display = True
 
 
+class RefParser(StartEndParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(
+            parent=parent,
+            start=Tag('ref'),
+            end=Tombstone,
+            frompos=frompos,
+            src=None,
+        )
+        self.tag = Tag('ref')
+        self.node: nodes.PendingReference = nodes.PendingReference()
+
+    def process(self) -> ParsingResult:
+        oldpos = self.pos
+        self.pos += len(self.tag)
+        self.consume_whitespace()
+        right = self.src.find(Tombstone, self.pos)
+        content = self.src[self.pos:right].strip()
+        self.pos = right
+        self.consume_whitespace()
+        self.consume_tombstone()
+
+        self.node = nodes.PendingReference(targetlabel=content)
+        return ParsingResult(
+            success=True,
+            result=self.node,
+            hint=NoHint,
+            consumed=self.pos - oldpos,
+        )
+
+
 class MetaParser(Parser):
     def __init__(
             self,
@@ -608,7 +629,6 @@ class MetaParser(Parser):
                 break
 
         if self.inline_mode:
-            ic(self.pos)
             self.consume_whitespace()
             if not self.src[self.pos:].startswith(Tombstone):
                 raise RSMParserError('Expected {Tombstone} after inline meta')
@@ -647,7 +667,7 @@ class MetaPairParser(Parser):
     block_delim = '\n'
     inline_delim = ','
 
-    def __init__(self, parent: Type[Parser]):
+    def __init__(self, parent: MetaParser):
         super().__init__(parent=parent)
         self.nodeclass: Type[nodes.Node] = parent.nodeclass
 
@@ -785,7 +805,7 @@ class ManuscriptParser(TagBlockParser):
         return result.result
 
     def apply_shortcuts(self, src: PlainTextManuscript) -> PlainTextManuscript:
-        for short in self.shortcuts:
+        for short, replace in self.shortcuts.items():
             ic(short)
             pos = 0
             while pos < len(src):
@@ -797,9 +817,9 @@ class ManuscriptParser(TagBlockParser):
                     raise RSMParserError(f'Found start ("{short}") but no end')
                 src = (
                     src[:left]
-                    + self.shortcuts[short][0]
+                    + replace[0]
                     + src[left+1:right]
-                    + self.shortcuts[short][1]
+                    + replace[1]
                     + src[right+1:]
                 )
                 pos = right+1

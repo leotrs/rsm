@@ -32,14 +32,23 @@ class RSMApplicationError(Exception):
 
 class Application:
 
-    def __init__(self):
-        self.src_path: Path = Path()
-        self.dst_path: Path = Path()
-        self.plain: PlainTextManuscript = None
-        self.tree: AbstractTreeManuscript = None
-        self.body: HTMLManuscript = None
-        self.html: HTMLManuscript = None
-        self.web: WebManuscript = None
+    def __init__(
+            self,
+            *,
+            srcpath: Path | None = None,
+            plain: PlainTextManuscript = PlainTextManuscript(),
+    ):
+        if not srcpath and not plain:
+            raise RSMApplicationError('Must specify exactly one of srcpath, plain')
+        if srcpath and plain:
+            raise RSMApplicationError('Must specify exactly one of srcpath, plain')
+        self.srcpath: Path | None = srcpath
+        self.plain: PlainTextManuscript = plain
+        self.dstpath: Path = Path()
+        self.tree: AbstractTreeManuscript | None = None
+        self.body: HTMLManuscript | None = None
+        self.html: HTMLManuscript | None = None
+        self.web: WebManuscript | None = None
         self.reader: Reader = Reader()
         self.parser: ManuscriptParser = ManuscriptParser()
         self.transformer: Transformer = Transformer()
@@ -47,34 +56,20 @@ class Application:
         self.builder: Builder = Builder()
         self.writer: Writer = Writer()
 
-    def run(self, data: Path | PlainTextManuscript, write: bool = True) -> str:
+    def run(self, write: bool = True) -> WebManuscript:
         logger.info('Application started')
 
         logger.info('Configuring...')
         # self.config = self.config.configure()
 
-        logger.info('Reading...')
-        if type(data) in [Path, str]:
-            self.src_path = Path(data)
+        if not self.plain:
+            logger.info('Reading...')
             # Path -> PlainTextManuscript
-            self.plain = self.reader.read(self.src_path)
-
-        elif isinstance(data, PlainTextManuscript):
-            self.src_path = None
-            self.plain = data
-
-        else:
-            raise RSMApplicationError(
-                'Application.run() expects a path to a .rsm file, or a string'
-                ' of type PlainTextManuscript'
-            )
+            self.plain = self.reader.read(self.srcpath)
 
         # PlainTextManuscript -> AbstractTreeManuscript
         logger.info('Parsing...')
         self.tree = self.parser.parse(self.plain)
-
-        from icecream import ic
-        ic.disable()
 
         # AbstractTreeManuscript -> AbstractTreeManuscript
         logger.info('Transforming...')
@@ -86,12 +81,13 @@ class Application:
 
         # AbstractTreeManuscript -> WebManuscript
         logger.info('Building...')
-        self.web = self.builder.build(self.body, self.src_path)
+        self.web = self.builder.build(self.body, self.srcpath)
         self.html = self.web.html
 
         if write:
             # write WebManuscript to disk
             logger.info('Writing...')
-            self.writer.write(self.web, self.dst_path)
+            self.writer.write(self.web, self.dstpath)
 
+        logger.info('Done.')
         return self.web

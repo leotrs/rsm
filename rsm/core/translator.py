@@ -14,7 +14,6 @@ from abc import ABC, abstractmethod
 from typing import Iterable
 from icecream import ic
 
-from .nodes import Node
 from . import nodes
 from .manuscript import AbstractTreeManuscript, HTMLManuscript
 from .util import ShortenedString
@@ -155,7 +154,7 @@ class AppendNodeTag(AppendOpenTag):
 
     def __init__(
             self,
-            node: Node,
+            node: nodes.Node,
             tag: str = 'div',
             *,
             newline: bool = True,
@@ -328,15 +327,15 @@ class Translator:
 
         return self.body
 
-    def visit_node(self, node: Node) -> None:
+    def visit_node(self, node: nodes.Node) -> EditCommand:
         return AppendText(str(node) + '\n')
 
-    def leave_node(self, node: Node) -> None:
+    def leave_node(self, node: nodes.Node) -> EditCommand:
         s = f'leaving node of class {node.__class__.__name__}'
         ic(s)
         return self.deferred.pop()
 
-    def visit_manuscript(self, node: Node) -> None:
+    def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         if not node.label:
             node.label = 'manuscript'
         return AppendBatchAndDefer([
@@ -346,7 +345,7 @@ class Translator:
             AppendHeading(1, node.title)
         ])
 
-    def visit_author(self, node: Node) -> None:
+    def visit_author(self, node: nodes.Author) -> EditCommand:
         line = [str(x) for x in [node.name, node.affiliation, node.email] if x]
         line = '\n'.join(line)
         if line:
@@ -354,13 +353,13 @@ class Translator:
         else:
             return AppendNodeTag(node)
 
-    def visit_abstract(self, node: Node) -> None:
+    def visit_abstract(self, node: nodes.Abstract) -> EditCommand:
         return AppendBatchAndDefer([
             AppendNodeTag(node),
             AppendHeading(3, 'Abstract'),
         ])
 
-    def leave_abstract(self, node: Node) -> None:
+    def leave_abstract(self, node: nodes.Abstract) -> EditCommand:
         batch = AppendBatch([])
 
         if node.keywords:
@@ -374,35 +373,35 @@ class Translator:
 
         return batch
 
-    def visit_paragraph(self, node: Node) -> None:
+    def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
         return AppendNodeTag(node, tag='p', newline=False)
 
-    def visit_section(self, node: None) -> None:
+    def visit_section(self, node: nodes.Section) -> EditCommand:
         node.types.insert(0, 'level-2')
         return AppendNodeTag(node, 'section')
 
-    def visit_enumerate(self, node: None) -> None:
+    def visit_enumerate(self, node: nodes.Enumerate) -> EditCommand:
         return AppendNodeTag(node, 'ol')
 
-    def visit_itemize(self, node: None) -> None:
+    def visit_itemize(self, node: nodes.Itemize) -> EditCommand:
         return AppendNodeTag(node, 'ul')
 
-    def visit_item(self, node: None) -> None:
+    def visit_item(self, node: nodes.Item) -> EditCommand:
         return AppendNodeTag(node, 'li')
 
-    def visit_math(self, node: None) -> None:
+    def visit_math(self, node: nodes.Math) -> EditCommand:
         if node.display:
             return AppendNodeTag(node, 'div')
         else:
             return AppendNodeTag(node, 'span')
 
-    def visit_text(self, node: Node) -> None:
+    def visit_text(self, node: nodes.Text) -> EditCommand:
         return AppendText(node.text.strip())
 
-    def leave_text(self, node: Node) -> None:
+    def leave_text(self, node: nodes.Text) -> EditCommand:
         return DummyCommand()
 
-    def visit_span(self, node: Node) -> None:
+    def visit_span(self, node: nodes.Span) -> EditCommand:
         commands = [
             AppendOpenTag(tag, newline=False)
             for attr, tag in nodes.Span.attr_to_tag.items()
@@ -414,7 +413,12 @@ class Translator:
             *commands,
         ])
 
-    def leave_span(self, node: Node) -> None:
-        s = 'leaving span'
-        ic(s)
-        return self.deferred.pop()
+    def visit_reference(self, node: nodes.Reference) -> EditCommand:
+        if isinstance(node.target, nodes.Heading):
+            text = f'<a href="#{node.target.label}">{node.target.title}</a>'
+        else:
+            text = f'[[ this is a reference to {node.target}]]'
+        return AppendText(text)
+
+    def leave_reference(self, node: nodes.Reference) -> EditCommand:
+        return DummyCommand()

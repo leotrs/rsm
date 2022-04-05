@@ -17,7 +17,7 @@ def make(file=None):
         parser.add_argument('file', help='file to parse')
         args = parser.parse_args()
         file = args.file
-    return rsm.Application().run(file)
+    return rsm.Application(srcpath=file).run()
 
 
 if __name__ == '__main__':

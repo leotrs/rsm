@@ -1,11 +1,12 @@
 import rsm
+from rsm.core.manuscript import PlainTextManuscript
 from textwrap import dedent
 
 
 def compare_have_want(have, want):
     want = dedent(want).strip()
-    have = rsm.core.manuscript.PlainTextManuscript(dedent(have))
-    have = rsm.Application().run(have, write=False)
+    have = PlainTextManuscript(dedent(have).strip())
+    have = rsm.Application(plain=have).run(write=False)
     have = have.body.strip()
 
     # compare without whitespace

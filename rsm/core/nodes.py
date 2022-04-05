@@ -30,6 +30,12 @@ class Node:
     def __post_init__(self):
         self._children: list['Node'] = []
 
+    @classmethod
+    def metakeys(cls):
+        return cls._newmetakeys.union(
+            *[b._newmetakeys for b in cls.__bases__]
+        )
+
     def add(self, child: Type['Node'] | list) -> None:
         if isinstance(child, list):
             for c in child:
@@ -49,11 +55,26 @@ class Node:
     def children(self) -> tuple:
         return tuple(self._children)
 
-    @classmethod
-    def metakeys(cls):
-        return cls._newmetakeys.union(
-            *[b._newmetakeys for b in cls.__bases__]
-        )
+    def traverse(self, condition=lambda n: True, *, nodeclass=None) -> Iterable['Node']:
+        if nodeclass:
+            if issubclass(nodeclass, Node):
+                condition = lambda n: isinstance(n, nodeclass)
+            else:
+                raise RSMNodeError('nodeclass must inherit from Node')
+
+        stack = self._children[::-1]
+        while stack:
+            node = stack.pop()
+            if condition(node):
+                yield node
+            stack += node._children[::-1]
+
+    def replace_self(self, replace):
+        if not self.parent:
+            raise RSMNodeError('Can only call replace_self on a node with parent')
+        index = self.parent.children.index(self)
+        self.parent.remove(self)
+        self.parent._children.insert(index, replace)
 
 
 @dataclass
@@ -149,3 +170,13 @@ class Math(Node):
     display: bool = field(kw_only=True, default=False)
     number: bool = field(kw_only=True, default=False)
     _newmetakeys: ClassVar[set] = {'number'}
+
+
+@dataclass
+class PendingReference(Node):
+    targetlabel: str = field(kw_only=True, default='')
+
+
+@dataclass
+class Reference(Node):
+    target: Node = field(kw_only=True, default=None)

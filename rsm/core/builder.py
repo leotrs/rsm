@@ -35,11 +35,13 @@ class Builder:
         return self.web
 
     def make_main_file(self) -> None:
-        html = '<html>\n\n'
-        html += self.make_html_header() + '\n'
-        html += self.body.strip() + '\n\n'
-        html += self.make_html_footer()
-        html += '</html>\n'
+        html = HTMLManuscript(
+            '<html>\n\n'
+            + self.make_html_header() + '\n'
+            + self.body.strip() + '\n\n'
+            + self.make_html_footer()
+            + '</html>\n'
+        )
         self.web.writetext(self.outname, html)
         self.web.html = html
 

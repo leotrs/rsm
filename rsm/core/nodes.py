@@ -7,7 +7,7 @@ Nodes that make up the Manuscript tree.
 """
 
 from dataclasses import dataclass, field
-from typing import Any, ClassVar, Type
+from typing import Any, ClassVar, Type, Optional
 from collections.abc import Iterable
 from datetime import datetime
 from icecream import ic
@@ -24,7 +24,7 @@ class Node:
     label: str = ''
     types: list[str] = field(default_factory=list)
     comment: str = ''
-    parent: Type['Node'] | None = None
+    parent: Optional['NodeWithChildren'] = None
     globalmetakeys = {'label', 'types', 'comment'}
     _newmetakeys: ClassVar[set] = set()
 

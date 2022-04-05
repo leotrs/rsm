@@ -72,8 +72,10 @@ class ParsingResult(BaseParsingResult):
 
 
 class Parser(ABC):
+    src: PlainTextManuscript | str
+
     def __init__(self, parent: 'Parser' = None, frompos: int = 0):
-        self.parent: Parser = parent
+        self.parent: Parser | None = parent
         self.frompos: int = frompos
         if parent:
             self.parent, self.src = parent, parent.src
@@ -88,7 +90,7 @@ class Parser(ABC):
         self.pos = self.frompos
 
     @abstractmethod
-    def process(self) -> ParsingResult:
+    def process(self) -> BaseParsingResult:
         pass
 
     def _pre_process(self) -> None:
@@ -97,7 +99,7 @@ class Parser(ABC):
     def _post_process(self) -> None:
         pass
 
-    def parse(self) -> ParsingResult:
+    def parse(self) -> BaseParsingResult:
         self._pre_process()
         s = f'{self.__class__.__name__}.process start'
         ic(s, self.pos)
@@ -346,7 +348,7 @@ class TagBlockParser(StartEndParser):
             self,
             parent: Parser | None,
             tag: Tag,
-            nodeclass: Type[nodes.Node],
+            nodeclass: Type[nodes.NodeWithChildren],
             frompos: int = 0,
             src: str = None,
             *,
@@ -357,7 +359,7 @@ class TagBlockParser(StartEndParser):
         super().__init__(start=tag, end=Tombstone, parent=parent, frompos=frompos)
         self.tag: Tag = tag
         self.nodeclass: Type[nodes.Node] = nodeclass
-        self.node: nodes.Node | None = None
+        self.node: nodes.NodeWithChildren | None = None
         self.meta_inline_mode: bool | None = meta_inline_mode
         self.has_content: bool = has_content
         self.contentparser: Type[Parser] = contentparser
@@ -505,6 +507,8 @@ class MathParser(TagBlockParser):
 
 
 class DisplaymathParser(TagBlockParser):
+    node: nodes.Math
+
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(
             parent=parent,

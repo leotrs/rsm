@@ -78,13 +78,37 @@ def test_no_tombstone():
 
             Lorem ipsum.
             """,
-            want="""\
-            <body>
-            <div id="mylbl" class="manuscript">
-            <section class="level-1">
-            <h1>My Title</h1>
-            </section>
-            </div>
-            </body>
-            """
+            want='XXX'
         )
+
+
+def test_section_header():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        Lorem ipsum.
+
+        :section:
+          :title: section title
+
+        Lorem ipsum.
+
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <p class="paragraph">Lorem ipsum.</p><section class="section level-2">
+        <h2>section title</h2>
+        <p class="paragraph">Lorem ipsum.</p>
+        </section>
+        </section>
+        </div>
+        </body>
+        """
+    )

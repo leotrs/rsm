@@ -210,7 +210,7 @@ class AppendHeading(AppendOpenCloseTag):
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['level', 'content', 'id', 'classes', 'node', 'newline'])
+        return self._edit_command_repr(['level', 'content', 'id', 'classes', 'newline'])
 
 
 class EditCommandBatch(EditCommand):
@@ -378,7 +378,10 @@ class Translator:
 
     def visit_section(self, node: nodes.Section) -> EditCommand:
         node.types.insert(0, 'level-2')
-        return AppendNodeTag(node, 'section')
+        return AppendBatch([
+            AppendNodeTag(node, 'section'),
+            AppendHeading(2, node.title),
+        ])
 
     def visit_enumerate(self, node: nodes.Enumerate) -> EditCommand:
         return AppendNodeTag(node, 'ol')

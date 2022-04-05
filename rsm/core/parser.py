@@ -479,7 +479,7 @@ class EnumerateParser(TagBlockParser):
 
 class ItemizeParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('itemize'), nodes.Section, frompos)
+        super().__init__(parent, Tag('itemize'), nodes.Itemize, frompos)
 
 
 class SpanParser(TagBlockParser):

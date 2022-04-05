@@ -55,7 +55,7 @@ def test_simple():
         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
           ipsum dolor sit amet.
         </li>
-        </ol><section id="itm-foo" class="section level-2">
+        </ol><ul id="itm-foo" class="itemize">
         <li id="itm-4" class="item">
         Foo bar.
         </li><li id="itm-5" class="item">
@@ -65,7 +65,7 @@ def test_simple():
         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
           ipsum dolor sit amet.
         </li>
-        </section>
+        </ul>
         </section>
         </div>
         </body>

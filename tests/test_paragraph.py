@@ -107,6 +107,7 @@ def test_no_meta():
         <section class="level-1">
         <h1>The Perron non-backtracking eigenvalue after node addition</h1>
         <section class="section level-2">
+        <h2>Introduction</h2>
         <p class="paragraph">This is a paragraph with tag and no meta data.</p><p class="paragraph">This is a paragraph with tag and no meta data.</p>
         </section>
         </section>
@@ -155,6 +156,7 @@ def test_simple():
         <section class="level-1">
         <h1>The Perron non-backtracking eigenvalue after node addition</h1>
         <section id="sec-introduction" class="section level-2 t1 t2">
+        <h2>Introduction</h2>
         <p class="paragraph">Lorem ipsum.</p><p id="par1" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines
         of text. It has several lines of text. It has several lines of text. It has several
         lines of text.</p><p id="par2" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines

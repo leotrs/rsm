@@ -637,6 +637,8 @@ class MetaParser(Parser):
 
 class MetaPairParser(Parser):
 
+    parent: MetaParser
+
     parse_value_methods = {
         'label': 'parse_upto_delim_value',
         'title': 'parse_upto_delim_value',

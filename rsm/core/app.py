@@ -6,6 +6,8 @@ RSM Application: take a file path and output its contents as HTML.
 
 """
 
+from icecream import ic
+
 import logging
 from . import rsmlogger
 logger = logging.getLogger('RSM')

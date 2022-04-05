@@ -41,6 +41,7 @@ class Tag(str):
 Tombstone = Tag('')
 NotATag = Tag('__NOT_A_TAG__')
 NoHint = Tag('__NO_HINT__')
+Placeholder = Tag('__PLACEHOLDER__')
 
 
 @dataclass(frozen=True)
@@ -798,8 +799,10 @@ class ManuscriptParser(TagBlockParser):
 
     shortcuts = [
         Shortcut('*', '*', ':span: :strong: ' + Tombstone, Tombstone),
-        Shortcut('$', '$', ':math: ', Tombstone),
         Shortcut('#', '\n', ':section:\n  :title: ', '\n'),
+        Shortcut('$:', ':$', ':displaymath:\n' + Placeholder, Placeholder + '\n' + Tombstone),
+        Shortcut('$', '$', ':math: \(', '\)' + Tombstone),
+        Shortcut(Placeholder, Placeholder, '$$', '$$'),
     ]
 
     def __init__(self):

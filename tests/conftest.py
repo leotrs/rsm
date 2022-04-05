@@ -1,6 +1,8 @@
 import rsm
 from rsm.core.manuscript import PlainTextManuscript
 from textwrap import dedent
+from icecream import ic
+ic.disable()
 
 
 def compare_have_want(have, want):

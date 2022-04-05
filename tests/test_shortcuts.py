@@ -63,7 +63,7 @@ def test_one_math():
         <section class="level-1">
         <h1>My Title</h1>
         <p class="paragraph">This paragraph has some<span class="math">
-        2+2=4
+        \(2+2=4\)
         </span>awesome math.</p>
         </section>
         </div>
@@ -89,11 +89,36 @@ def test_two_math():
         <section class="level-1">
         <h1>My Title</h1>
         <p class="paragraph">This paragraph has some<span class="math">
-        2+2=4
+        \(2+2=4\)
         </span>awesome math and also some math that<span class="math">
-        2 + 2 + 2
-        + 2 + 2 = 10
+        \(2 + 2 + 2
+        + 2 + 2 = 10\)
         </span>is broken down.</p>
+        </section>
+        </div>
+        </body>
+        """
+    )
+
+
+def test_displaymath():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        This paragraph contains display math
+        $:2 + 2 = 4.:$
+
+        ::
+        """,
+        want="""
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <p class="paragraph">This paragraph contains display math<div class="math">
+        $$2 + 2 = 4.$$
+        </div></p>
         </section>
         </div>
         </body>

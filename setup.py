@@ -8,6 +8,9 @@ setup(
     author_email='leo@leotrs.com',
     url='https://rsm-suite.org/',
     entry_points={
-        'console_scripts': ['rsm-make=rsm.rsm_make.main:main'],
+        'console_scripts': [
+            'rsm-make=rsm.scripts.make:main',
+            'rsm-render=rsm.scripts.render:main',
+        ],
     },
 )

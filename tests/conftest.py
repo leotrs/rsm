@@ -8,8 +8,7 @@ ic.disable()
 def compare_have_want(have, want):
     want = dedent(want).strip()
     have = PlainTextManuscript(dedent(have).strip())
-    have = rsm.RSMProcessorApplication(plain=have).run()
-    have = have.strip()
+    have = rsm.render(have).strip()
 
     # compare without whitespace
     assert ''.join(have.split()) == ''.join(want.split())

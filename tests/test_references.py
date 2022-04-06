@@ -28,7 +28,7 @@ def test_reftext():
         <section id="sec-lbl" class="section level-2">
         <h2>1. First</h2>
         <p class="paragraph">Content of first.</p>
-        </section><p class="paragraph">This is a paragraph that refers to<a href="#sec-lbl">Section 1</a>.</p>
+        </section><p class="paragraph">This is a paragraph that refers to <a href="#sec-lbl">Section 1</a>.</p>
         </section>
         </div>
         </body>

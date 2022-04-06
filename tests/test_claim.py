@@ -24,11 +24,11 @@ def test_simple():
         <h1></h1>
         <section class="section level-2">
         <h2>1. Section</h2>
-        <p class="paragraph">This pargraph contains a claim<span id="clm-lbl" class="claim">all<span class="math">
+        <p class="paragraph">This pargraph contains a claim <span id="clm-lbl" class="claim">all <span class="math">
         \(X\)
-        </span>are<span class="math">
+        </span> are <span class="math">
         \(Y\)
-        </span></span>.</p>
+        </span> </span>.</p>
         </section>
         </section>
         </div>

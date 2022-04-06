@@ -407,7 +407,7 @@ class Translator:
             return AppendNodeTag(node, 'span')
 
     def visit_text(self, node: nodes.Text) -> EditCommand:
-        return AppendText(node.text.strip())
+        return AppendText(node.text)
 
     def leave_text(self, node: nodes.Text) -> EditCommand:
         return DummyCommand()

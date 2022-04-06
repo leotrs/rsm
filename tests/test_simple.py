@@ -77,6 +77,7 @@ def test_no_tombstone():
             :manuscript:
 
             Lorem ipsum.
+
             """,
             want='XXX'
         )

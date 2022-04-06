@@ -211,7 +211,7 @@ class BaseParagraphParser(Parser):
             line = self.src[pos:idx + 1]
             content += line
             pos = idx + 1
-            if line == '\n':
+            if line == '\n':    # every paragraph must end with a blank line
                 break
         end_of_content = pos
         ic(end_of_content)
@@ -236,6 +236,12 @@ class BaseParagraphParser(Parser):
                     children.append(child)
 
             self.pos += consumed
+
+        # Every paragraph ends with (at least) two new lines.  The first one is the end
+        # of line of the last line in the paragraph.  The second one is the obligatory
+        # blank line after the paragraph.  Both are unnecessary in the final output.
+        if children and isinstance(children[-1], nodes.Text):
+            children[-1].text = children[-1].text[:-2]
 
         return BaseParsingResult(
                 success=True,

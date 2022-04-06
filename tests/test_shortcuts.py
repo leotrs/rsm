@@ -16,7 +16,7 @@ def test_one_strong():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1>My Title</h1>
-        <p class="paragraph">This paragraph has a<span class="span"><strong>shortcut</strong></span>for strong span.</p>
+        <p class="paragraph">This paragraph has a <span class="span"><strong>shortcut</strong></span> for strong span.</p>
         </section>
         </div>
         </body>
@@ -39,7 +39,7 @@ def test_two_strong():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1>My Title</h1>
-        <p class="paragraph">This paragraph has two<span class="span"><strong>shortcuts</strong></span>for strong<span class="span"><strong>spans</strong></span>.</p>
+        <p class="paragraph">This paragraph has two <span class="span"><strong>shortcuts</strong></span> for strong <span class="span"><strong>spans</strong></span>.</p>
         </section>
         </div>
         </body>
@@ -62,9 +62,9 @@ def test_one_math():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1>My Title</h1>
-        <p class="paragraph">This paragraph has some<span class="math">
+        <p class="paragraph">This paragraph has some <span class="math">
         \(2+2=4\)
-        </span>awesome math.</p>
+        </span> awesome math.</p>
         </section>
         </div>
         </body>
@@ -88,12 +88,12 @@ def test_two_math():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1>My Title</h1>
-        <p class="paragraph">This paragraph has some<span class="math">
+        <p class="paragraph">This paragraph has some <span class="math">
         \(2+2=4\)
-        </span>awesome math and also some math that<span class="math">
+        </span> awesome math and also some math that <span class="math">
         \(2 + 2 + 2
         + 2 + 2 = 10\)
-        </span>is broken down.</p>
+        </span> is broken down.</p>
         </section>
         </div>
         </body>
@@ -116,8 +116,10 @@ def test_displaymath():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph">This paragraph contains display math<div class="math">
+        <p class="paragraph">This paragraph contains display math
+        <div class="math">
         $$2 + 2 = 4.$$
+
         </div></p>
         </section>
         </div>

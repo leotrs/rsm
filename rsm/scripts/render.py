@@ -16,14 +16,18 @@ def render(source):
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument('file', help='RSM string to render')
+    parser.add_argument('src', help='RSM string to render')
     args = parser.parse_args()
     return args
 
 
 def main():
+    from icecream import ic
+    ic.disable()
     args = parse_args()
-    return render(args.file)
+    body = render(args.src)
+    print(body)
+    return 0
 
 
 if __name__ == '__main__':

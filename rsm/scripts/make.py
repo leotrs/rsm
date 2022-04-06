@@ -34,7 +34,8 @@ def main():
         server.watch(args.file, livereload.shell(cmd))
         server.serve(root='.')
     else:
-        return make(args.file)
+        make(args.file)
+        return 0
 
 
 if __name__ == '__main__':

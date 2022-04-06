@@ -15,7 +15,6 @@ from textwrap import dedent
 from pathlib import Path
 import sass
 from icecream import ic
-ic()
 
 from .manuscript import HTMLManuscript, WebManuscript
 from .parser import ManuscriptParser

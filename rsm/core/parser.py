@@ -263,7 +263,7 @@ class InlineParser(Parser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(parent, frompos)
 
-    def process(self) -> ParsingResult:
+    def process(self) -> BaseParsingResult:
         s = f'{self.__class__.__name__}.process start'
         ic(s, self.pos)
         oldpos = self.pos
@@ -277,7 +277,6 @@ class InlineParser(Parser):
             if tag:
                 if self.pos > left:
                     children.append(nodes.Text(text=self.src[left:self.pos]))
-                    ic(children[-1].text)
                 parser = _get_tagparser(self, tag)
                 result = parser.parse()
                 children.append(result.result)
@@ -287,11 +286,9 @@ class InlineParser(Parser):
                 self.pos += 1
 
         if self.pos > left:
-            ic(self.pos, left, self.src[left:self.pos])
             children.append(nodes.Text(text=self.src[left:self.pos]))
-            ic(children[-1].text)
 
-        return ParsingResult(
+        return BaseParsingResult(
             success=True,
             result=children,
             hint=NoHint,

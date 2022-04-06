@@ -122,7 +122,7 @@ class Parser(ABC):
         self.pos += num
         return num
 
-    def get_tag_at_pos(self, consume=False) -> Tag:
+    def get_tag_at_pos(self, consume=False) -> Tag | None:
         """Return the first tag starting at self.pos. If skip is True, skip it and update self.pos."""
         if self.src[self.pos] != Tag.delim:
             return None
@@ -202,7 +202,7 @@ class BaseParagraphParser(Parser):
             consumed=self.pos - self.frompos
         )
 
-    def parse_content(self) -> ParsingResult:
+    def parse_content(self) -> BaseParsingResult:
         oldpos = self.pos
         content = ''
         pos = self.pos
@@ -237,7 +237,7 @@ class BaseParagraphParser(Parser):
 
             self.pos += consumed
 
-        return ParsingResult(
+        return BaseParsingResult(
                 success=True,
                 result=children,
                 hint=NoHint,

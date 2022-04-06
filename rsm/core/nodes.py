@@ -98,7 +98,7 @@ class NodeWithChildren(Node):
 
 @dataclass
 class Text(Node):
-    text: ShortenedString = field(default_factory=ShortenedString)
+    text: str = ''
 
     def __repr__(self):
         return short_repr(self.text, self.__class__.__name__)

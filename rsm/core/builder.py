@@ -96,4 +96,4 @@ class FullBuilder(SingleFileBuilder):
         # copy JS files
         copy_file(source, 'jquery-3.6.0.js', self.web, 'static/jquery-3.6.0.js')
 
-        ic(self.web.tree())
+        self.web.tree()

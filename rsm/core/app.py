@@ -31,13 +31,13 @@ class RSMApplicationError(Exception):
     pass
 
 
-class RSMProcessorApplication:
+class ParserApplication:
 
     def __init__(
-            self,
-            *,
-            srcpath: Path | None = None,
-            plain: PlainTextManuscript = PlainTextManuscript(),
+        self,
+        *,
+        srcpath: Path | None = None,
+        plain: PlainTextManuscript = PlainTextManuscript(),
     ):
         if not srcpath and not plain:
             raise RSMApplicationError('Must specify exactly one of srcpath, plain')
@@ -47,19 +47,16 @@ class RSMProcessorApplication:
         self.plain: PlainTextManuscript = plain
         self.dstpath: Path = Path()
         self.tree: AbstractTreeManuscript | None = None
-        self.body: HTMLManuscript | None = None
         self.reader: Reader | None = None
         self.parser: ManuscriptParser | None = None
         self.transformer: Transformer | None = None
-        self.translator: Translator | None = None
 
-    def run(self) -> HTMLManuscript:
+    def run(self) -> AbstractTreeManuscript:
         self.configure()
         self.read()             # Path -> PlainTextManuscript
         self.parse()            # PlainTextManuscript -> AbstractTreeManuscript
         self.transform()        # AbstractTreeManuscript -> AbstractTreeManuscript
-        self.translate()        # AbstractTreeManuscript -> HTMLManuscript
-        return self.body
+        return self.tree
 
     def configure(self) -> None:
         logger.info('Application started')
@@ -82,6 +79,62 @@ class RSMProcessorApplication:
         self.transformer = Transformer()
         self.tree = self.transformer.transform(self.tree)
 
+
+class LinterApplication(ParserApplication):
+
+    def __init__(
+        self,
+        *,
+        srcpath: Path | None = None,
+        plain: PlainTextManuscript = PlainTextManuscript(),
+    ):
+        super().__init__(srcpath=srcpath, plain=plain)
+        self.linter = None
+
+    def run(self) -> AbstractTreeManuscript:
+        self.configure()
+        self.read()             # Path -> PlainTextManuscript
+        self.parse()            # PlainTextManuscript -> AbstractTreeManuscript
+        self.transform()        # AbstractTreeManuscript -> AbstractTreeManuscript
+        self.lint()
+        return self.tree
+
+    def configure(self) -> None:
+        # self.linter: Linter = Linter()
+        # instantiate handler
+        # register everything
+        super().configure()
+
+    def lint(self) -> None:
+        pass
+
+
+class RSMProcessorApplication(LinterApplication):
+
+    def __init__(
+            self,
+            *,
+            srcpath: Path | None = None,
+            plain: PlainTextManuscript = PlainTextManuscript(),
+            run_linter: bool = False,
+    ):
+        super().__init__(srcpath=srcpath, plain=plain)
+        self.translator: Translator | None = None
+        self.run_linter: bool = run_linter
+
+    def run(self) -> HTMLManuscript:
+        self.configure()
+        self.read()             # Path -> PlainTextManuscript
+        self.parse()            # PlainTextManuscript -> AbstractTreeManuscript
+        self.transform()        # AbstractTreeManuscript -> AbstractTreeManuscript
+        self.lint()
+        self.translate()        # AbstractTreeManuscript -> HTMLManuscript
+        return self.body
+
+    def lint(self) -> None:
+        if self.run_linter:
+            super().lint()
+
     def translate(self) -> None:
         logger.info('Translating...')
         self.translator = Translator()
@@ -95,15 +148,21 @@ class Application(RSMProcessorApplication):
             *,
             srcpath: Path | None = None,
             plain: PlainTextManuscript = PlainTextManuscript(),
+            run_linter: bool = False,
     ):
-        super().__init__(srcpath=srcpath, plain=plain)
+        super().__init__(srcpath=srcpath, plain=plain, run_linter=run_linter)
         self.html: HTMLManuscript | None = None
         self.web: WebManuscript | None = None
         self.builder: BaseBuilder | None = None
         self.writer: Writer | None = None
 
-    def run(self) -> WebManuscript:
-        super().run()
+    def run(self) -> HTMLManuscript:
+        self.configure()
+        self.read()             # Path -> PlainTextManuscript
+        self.parse()            # PlainTextManuscript -> AbstractTreeManuscript
+        self.transform()        # AbstractTreeManuscript -> AbstractTreeManuscript
+        self.lint()
+        self.translate()        # AbstractTreeManuscript -> HTMLManuscript
         self.build()            # HTMLManuscript -> WebManuscript
         self.write()            # WebManuscript -> HDD
         return self.web

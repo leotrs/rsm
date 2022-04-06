@@ -32,7 +32,7 @@ def main():
         cmd = f'rsm-make {args.file}'
         server = livereload.Server()
         server.watch(args.file, livereload.shell(cmd))
-        server.serve(root='index.html')
+        server.serve(root='.')
     else:
         return make(args.file)
 

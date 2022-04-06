@@ -41,7 +41,7 @@ class BaseBuilder(ABC):
         pass
 
 
-class BodyOnlyBuilder(BaseBuilder):
+class SingleFileBuilder(BaseBuilder):
 
     def make_main_file(self) -> None:
         html = HTMLManuscript(
@@ -75,7 +75,7 @@ class BodyOnlyBuilder(BaseBuilder):
         return ''
 
 
-class FullBuilder(BodyOnlyBuilder):
+class FullBuilder(SingleFileBuilder):
 
     def build(self, body: HTMLManuscript, src: Path = None) -> WebManuscript:
         super().build(body, src)

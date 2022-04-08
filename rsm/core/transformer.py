@@ -38,6 +38,7 @@ class Transformer:
             self.labels_to_nodes[node.label] = node
 
     def resolve_pending_references(self) -> None:
+        pending: nodes.PendingReference
         for pending in self.tree.traverse(nodeclass=nodes.PendingReference):
             try:
                 target = self.labels_to_nodes[pending.targetlabel]
@@ -50,6 +51,7 @@ class Transformer:
                 overwrite_reftext=pending.overwrite_reftext,
             ))
 
+        node: nodes.PendingReference
         for node in self.tree.traverse(nodeclass=nodes.PendingReference):
             raise RSMTransformerError(f'Found unresolved referece to "{node.targetlabel}"')
 

@@ -134,7 +134,7 @@ class Heading(NodeWithChildren):
 
 @dataclass
 class Manuscript(Heading):
-    src: ShortenedString = field(default_factory=ShortenedString, repr=False)
+    src: str = field(repr=False, default='')
     date: datetime | None = None
     _newmetakeys: ClassVar[set] = {'date'}
 

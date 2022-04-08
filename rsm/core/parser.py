@@ -150,7 +150,7 @@ class BaseParagraphParser(Parser):
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.nodeclass: Type[nodes.Node] = nodeclass
-        self.node: nodes.Paragraph = None
+        self.node: nodes.Paragraph | None = None
         self.tag: Tag = tag
         self.tag_optional: bool = tag_optional
         self.meta_inline_mode: bool | None = meta_inline_mode
@@ -172,6 +172,8 @@ class BaseParagraphParser(Parser):
                 raise RSMParserError(f'Was expecting {self.tag}, found nothing')
             if tag != self.tag:
                 raise RSMParserError(f'Was expecting {self.tag} tag, found {tag}')
+
+        logger.warning('woops this is a warning')
 
         if tag:
             self.pos += len(self.tag)
@@ -840,12 +842,12 @@ class ManuscriptParser(TagBlockParser):
         )
 
     def parse(self, src: PlainTextManuscript) -> nodes.Manuscript:
-        logger.info('ManuscriptParser.parse()')
         self.src = self.apply_shortcuts(src)
         result = super().parse()
         return result.result
 
     def apply_shortcuts(self, src: PlainTextManuscript | str) -> PlainTextManuscript:
+        logger.debug('applying shortcuts')
         for deliml, delimr, replacel, replacer in self.shortcuts:
             pos = 0
             while pos < len(src):

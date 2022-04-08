@@ -6,22 +6,22 @@ RSM command line utility to build a manuscript.
 
 """
 
-import sys
-from pathlib import Path
+from .app import FullBuildApplication
 from argparse import ArgumentParser
-
 import livereload
-import rsm
 
 
-def make(file):
-    return rsm.Application(srcpath=file).run()
+def make(file, lint, verbose):
+    app = FullBuildApplication(srcpath=file, run_linter=lint, verbosity=verbose)
+    return app.run()
 
 
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument('file', help='RSM source to parse')
     parser.add_argument('--serve', help='serve and autoreload', action='store_true')
+    parser.add_argument('--lint', help='activate the linter', action='store_true')
+    parser.add_argument('-v', '--verbose', help='verbosity', action='count', default=0)
     args = parser.parse_args()
     return args
 
@@ -34,7 +34,7 @@ def main():
         server.watch(args.file, livereload.shell(cmd))
         server.serve(root='.')
     else:
-        make(args.file)
+        make(args.file, args.lint, args.verbose)
         return 0
 
 

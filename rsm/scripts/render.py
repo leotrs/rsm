@@ -6,12 +6,12 @@ RSM command line utility to convert RSM markup to HTML.
 
 """
 
+from .app import RSMProcessorApplication
 from argparse import ArgumentParser
-import rsm
 
 
 def render(source):
-    return rsm.RSMProcessorApplication(plain=source).run()
+    return RSMProcessorApplication(plain=source).run()
 
 
 def parse_args():

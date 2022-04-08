@@ -439,3 +439,15 @@ class Translator:
 
     def visit_claim(self, node: nodes.Claim) -> EditCommand:
         return AppendNodeTag(node, tag='span', newline=False)
+
+    def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
+        return AppendBatchAndDefer([
+            AppendNodeTag(node),
+            AppendHeading(3, 'Theorem'),
+        ])
+
+    def visit_cite(self, node: nodes.Cite) -> EditCommand:
+        return AppendText('<This is a cite>')
+
+    def leave_cite(self, node: nodes.Cite) -> EditCommand:
+        return DummyCommand()

@@ -29,8 +29,7 @@ class Node:
     parent: Optional['NodeWithChildren'] = None
     nonum: bool = False
     reftext: str = '{nodeclass} {number}'
-    globalmetakeys = {'label', 'types', 'comment', 'nonum', 'reftext'}
-    _newmetakeys: ClassVar[set] = set()
+    _newmetakeys: ClassVar[set] = {'label', 'types', 'comment', 'nonum', 'reftext'}
 
     # non-meta instance variables
     number: int | None = None
@@ -38,7 +37,7 @@ class Node:
     @classmethod
     def metakeys(cls: Type['Node']):
         return cls._newmetakeys.union(
-            *[b._newmetakeys for b in cls.__bases__]
+            *[b.metakeys() for b in cls.__bases__ if hasattr(b, 'metakeys')]
         )
 
     @property
@@ -201,12 +200,36 @@ class Math(NodeWithChildren):
 
 
 @dataclass
-class PendingReference(Node):
-    targetlabel: str = field(kw_only=True, default='')
+class BaseReference(Node):
     overwrite_reftext: str | None = field(kw_only=True, default=None)
 
 
 @dataclass
-class Reference(Node):
+class PendingReference(BaseReference):
+    targetlabel: str = field(kw_only=True, default='')
+
+
+@dataclass
+class Reference(BaseReference):
     target: Node | None = field(kw_only=True, default=None)
-    overwrite_reftext: str | None = field(kw_only=True, default=None)
+
+
+@dataclass
+class Cite(Node):
+    targets: list[str] = field(kw_only=True, default_factory=list)
+
+
+@dataclass
+class Theorem(Heading):
+    goals: list[BaseReference] = field(kw_only=True, default_factory=list)
+    _newmetakeys: ClassVar[set] = {'goals'}
+
+
+@dataclass
+class Lemma(Theorem):
+    _newmetakeys: ClassVar[set] = set()
+
+
+@dataclass
+class Remark(Paragraph):
+    _newmetakeys: ClassVar[set] = set()

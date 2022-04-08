@@ -523,6 +523,30 @@ class SpanParser(TagBlockParser):
         )
 
 
+class TheoremParser(TagBlockParser):
+    def __init__(self, parent: Parser, frompos: int = 0, tag=Tag('theorem'), nodeclass=nodes.Theorem):
+        super().__init__(
+            parent=parent,
+            tag=tag,
+            nodeclass=nodeclass,
+            frompos=frompos,
+        )
+
+
+class LemmaParser(TheoremParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(
+            parent=parent,
+            tag=Tag('lemma'),
+            nodeclass=nodes.Lemma,
+            frompos=frompos,
+        )
+
+
+class RemarkParser(ParagraphParser):
+    pass
+
+
 class MathParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(
@@ -582,7 +606,41 @@ class RefParser(StartEndParser):
         else:
             label, reftext = content.strip(), None
         self.pos = right
+        self.consume_tombstone()
+        return ParsingResult(
+            success=True,
+            result=self.node,
+            hint=NoHint,
+            consumed=self.pos - oldpos,
+        )
+
+
+class CiteParser(StartEndParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(
+            parent=parent,
+            start=Tag('cite'),
+            end=Tombstone,
+            frompos=frompos,
+        )
+        self.tag = Tag('cite')
+        self.node: nodes.Cite = nodes.Cite()
+
+    def process(self) -> ParsingResult:
+        oldpos = self.pos
+        self.pos += len(self.tag)
         self.consume_whitespace()
+
+        right = self.src.find(Tag.delim, self.pos)
+        if not self.src[right:].startswith(Tombstone):
+            ic(oldpos)
+            raise RSMParserError(f'Found "{Tag.delim}" inside {self.tag} tag but no {Tombstone}')
+        content = self.src[self.pos:right]
+
+        targets = [s.strip() for s in content.split(',')]
+        self.node = nodes.Cite(targets=targets)
+
+        self.pos = right
         self.consume_tombstone()
 
         self.node = nodes.PendingReference(targetlabel=label, overwrite_reftext=reftext)
@@ -682,14 +740,23 @@ class MetaPairParser(Parser):
 
     parse_value_methods = {
         'label': 'parse_upto_delim_value',
+        'types': 'parse_list_value',
+        'comment': 'parse_upto_tombstone_value',
+
+        # Heading
         'title': 'parse_upto_delim_value',
+
+        # Author
         'date': 'parse_datetime_value',
         'name': 'parse_upto_delim_value',
         'affiliation': 'parse_upto_delim_value',
         'email': 'parse_upto_delim_value',
+
+        # Abstract
         'keywords': 'parse_list_value',
         'MSC': 'parse_list_value',
-        'types': 'parse_list_value',
+
+        # Span
         'strong': 'parse_bool_value',
         'emphas': 'parse_bool_value',
         'little': 'parse_bool_value',
@@ -697,6 +764,9 @@ class MetaPairParser(Parser):
         'delete': 'parse_bool_value',
         'number': 'parse_bool_value',
         'nonum': 'parse_bool_value',
+
+        # Theorem
+        'goals': 'parse_list_value',
     }
 
     block_delim = '\n'
@@ -721,7 +791,7 @@ class MetaPairParser(Parser):
         key = key.name
 
         # check if key is valid
-        if key not in self.nodeclass.metakeys() | nodes.Node.globalmetakeys:
+        if key not in self.nodeclass.metakeys():
             return ParsingResult(
                 success=False,
                 result=None,

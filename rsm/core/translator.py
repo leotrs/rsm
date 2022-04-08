@@ -447,7 +447,7 @@ class Translator:
         ])
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
-        return AppendText('<This is a cite>')
+        return AppendText('::This is a cite::')
 
     def leave_cite(self, node: nodes.Cite) -> EditCommand:
         return DummyCommand()

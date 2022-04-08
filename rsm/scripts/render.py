@@ -22,8 +22,6 @@ def parse_args():
 
 
 def main():
-    from icecream import ic
-    ic.disable()
     args = parse_args()
     body = render(args.src)
     print(body)

@@ -49,6 +49,7 @@ class ParserApplication:
         self.verbosity: int = verbosity
 
     def run(self) -> manuscript.AbstractTreeManuscript:
+        ic.disable()
         self.configure()
         self.read()             # Path -> PlainTextManuscript
         self.parse()            # PlainTextManuscript -> AbstractTreeManuscript
@@ -227,6 +228,7 @@ class FullBuildApplication(RSMProcessorApplication):
         self.writer: writer.Writer | None = None
 
     def run(self) -> manuscript.HTMLManuscript:
+        ic.disable()
         self.configure()
         self.read()             # Path -> PlainTextManuscript
         self.parse()            # PlainTextManuscript -> AbstractTreeManuscript

@@ -228,17 +228,13 @@ class FullBuildApplication(RSMProcessorApplication):
 
     def run(self) -> manuscript.HTMLManuscript:
         self.configure()
-        ic.disable()
         self.read()             # Path -> PlainTextManuscript
         self.parse()            # PlainTextManuscript -> AbstractTreeManuscript
         self.transform()        # AbstractTreeManuscript -> AbstractTreeManuscript
-        ic.enable()
         self.lint()
-        ic.disable()
         self.translate()        # AbstractTreeManuscript -> HTMLManuscript
         self.build()            # HTMLManuscript -> WebManuscript
         self.write()            # WebManuscript -> HDD
-        ic.enable()
         self.wrapup()
         return self.web
 

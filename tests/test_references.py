@@ -61,7 +61,7 @@ def test_overwrite_reftext():
         <section id="sec-lbl" class="section level-2">
         <h2>1. First</h2>
         <p class="paragraph">Content of first.</p>
-        </section><p class="paragraph">This is a paragraph that refers to<a href="#sec-lbl">The Section</a>.</p>
+        </section><p class="paragraph">This is a paragraph that refers to <a href="#sec-lbl">The Section</a>.</p>
         </section>
         </div>
         </body>
@@ -69,7 +69,7 @@ def test_overwrite_reftext():
     )
 
 
-def test_overwrite_reftext():
+def test_no_target():
     with pytest.raises(rsm.core.parser.RSMParserError):
         compare_have_want(
         have="""\

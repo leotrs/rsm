@@ -350,6 +350,7 @@ class StartEndParser(Parser):
 
 
 class TagBlockParser(StartEndParser):
+    """Only for nodes whose content will be parsed into children and added to self.node."""
 
     def __init__(
             self,
@@ -594,8 +595,9 @@ class RefParser(StartEndParser):
 
         right = self.src.find(Tag.delim, self.pos)
         if not self.src[right:].startswith(Tombstone):
-            raise RSMParserError(f'Found "{Tag.delim}" inside :ref: tag but no {Tombstone}')
+            raise RSMParserError(f'Found "{Tag.delim}" inside {self.tag} tag but no {Tombstone}')
         content = self.src[self.pos:right]
+
         split = content.split(',')
         if len(split) > 1:
             if len(split) > 2:
@@ -605,6 +607,8 @@ class RefParser(StartEndParser):
             label, reftext = split[0].strip(), split[1]
         else:
             label, reftext = content.strip(), None
+        self.node = nodes.PendingReference(targetlabel=label, overwrite_reftext=reftext)
+
         self.pos = right
         self.consume_tombstone()
         return ParsingResult(
@@ -643,7 +647,6 @@ class CiteParser(StartEndParser):
         self.pos = right
         self.consume_tombstone()
 
-        self.node = nodes.PendingReference(targetlabel=label, overwrite_reftext=reftext)
         return ParsingResult(
             success=True,
             result=self.node,
@@ -720,7 +723,7 @@ class MetaParser(Parser):
         if self.inline_mode:
             self.consume_whitespace()
             if not self.src[self.pos:].startswith(Tombstone):
-                raise RSMParserError('Expected {Tombstone} after inline meta')
+                raise RSMParserError(f'Expected {Tombstone} after inline meta')
             self.consume_tombstone()
             self.consume_whitespace()
             result = BaseParsingResult(
@@ -882,6 +885,8 @@ class MetaPairParser(Parser):
 
 
 def _get_tagparser(parent, tag, inline_only=False):
+    if not tag.name.capitalize():
+        raise RSMParserError('Requesting parser for empty tag')
     try:
         parserclass = globals()[f'{tag.name.capitalize()}Parser']
     except KeyError as e:

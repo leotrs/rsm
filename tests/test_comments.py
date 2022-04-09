@@ -3,7 +3,7 @@ from conftest import compare_have_want
 import rsm
 
 
-def test_comment_single_line():
+def test_simple():
     compare_have_want(
         have="""\
         :manuscript:
@@ -25,10 +25,9 @@ def test_comment_single_line():
         <section class="level-1">
         <h1></h1>
         <div class="theorem">
-        <h3>Theorem</h3>
         <div class="comment">
         This is a single line comment.
-        </div><p class="paragraph">Theorem contents.</p>
+        </div><p class="paragraph"><span class="span"><strong>Theorem. </strong></span>Theorem contents.</p>
         </div>
         </section>
         </div>

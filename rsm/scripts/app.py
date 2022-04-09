@@ -228,7 +228,7 @@ class FullBuildApplication(RSMProcessorApplication):
         self.writer: writer.Writer | None = None
 
     def run(self) -> manuscript.HTMLManuscript:
-        # ic.disable()
+        ic.disable()
         self.configure()
         self.read()             # Path -> PlainTextManuscript
         self.parse()            # PlainTextManuscript -> AbstractTreeManuscript

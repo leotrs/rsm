@@ -764,8 +764,10 @@ class MetaPairParser(Parser):
     parent: MetaParser
 
     parse_value_methods = {
+        # Node
         'label': 'parse_upto_delim_value',
         'types': 'parse_list_value',
+        'reftext': 'parse_upto_delim_value',
 
         # Heading
         'title': 'parse_upto_delim_value',

@@ -6,7 +6,7 @@ Nodes that make up the Manuscript tree.
 
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, InitVar
 from typing import Any, ClassVar, Type, Optional
 from collections.abc import Iterable
 from datetime import datetime
@@ -27,11 +27,15 @@ class Node:
     types: list[str] = field(default_factory=list)
     parent: Optional['NodeWithChildren'] = None
     nonum: bool = False
-    reftext: str = '{nodeclass} {number}'
+    classreftext: str = '{nodeclass} {number}'
+    customreftext: InitVar[str] = ''
     _newmetakeys: ClassVar[set] = {'label', 'types', 'nonum', 'reftext'}
 
     # non-meta instance variables
     number: int | None = None
+
+    def __post_init__(self, customreftext: str):
+        self._reftext = customreftext
 
     @classmethod
     def metakeys(cls: Type['Node']):
@@ -58,6 +62,14 @@ class Node:
                 yield node
             stack += node.children[::-1]
 
+    @property
+    def reftext(self) -> str:
+        return self._reftext or self.classreftext
+
+    @reftext.setter
+    def reftext(self, value) -> str:
+        self._reftext = value
+
     def replace_self(self, replace) -> None:
         if not self.parent:
             raise RSMNodeError('Can only call replace_self on a node with parent')
@@ -72,7 +84,8 @@ class Node:
 
 @dataclass
 class NodeWithChildren(Node):
-    def __post_init__(self):
+    def __post_init__(self, customreftext):
+        self._reftext = customreftext
         self._children: list[Node] = []
 
     @property
@@ -150,8 +163,8 @@ class Manuscript(Heading):
     date: datetime | None = None
     _newmetakeys: ClassVar[set] = {'date'}
 
-    def __post_init__(self):
-        super().__post_init__()
+    def __post_init__(self, customreftext):
+        super().__post_init__(customreftext)
         self.src = ShortenedString(self.src)
 
 

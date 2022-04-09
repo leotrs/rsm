@@ -135,6 +135,20 @@ class Parser(ABC):
 
         return tag
 
+    def get_lines_until(self, condition, consume=False) -> tuple[str, int]:
+        content = ''
+        pos = self.pos
+        while True:
+            idx = self.src.find('\n', pos)
+            line = self.src[pos:idx + 1]
+            content += line
+            pos = idx + 1
+            if condition(line):
+                break
+        if consume:
+            self.pos = pos
+        return content, pos
+
 
 class BaseParagraphParser(Parser):
 
@@ -206,16 +220,8 @@ class BaseParagraphParser(Parser):
 
     def parse_content(self) -> BaseParsingResult:
         oldpos = self.pos
-        content = ''
-        pos = self.pos
-        while True:
-            idx = self.src.find('\n', pos)
-            line = self.src[pos:idx + 1]
-            content += line
-            pos = idx + 1
-            if line == '\n':    # every paragraph must end with a blank line
-                break
-        end_of_content = pos
+        # every paragraph must end with a blank line
+        _, end_of_content = self.get_lines_until(lambda l: l == '\n')
         ic(end_of_content)
 
         children = []
@@ -787,6 +793,7 @@ class MetaPairParser(Parser):
         oldpos = self.pos
 
         # find the key
+        ic(self.src[self.pos-30:self.pos+30])
         key = self.get_tag_at_pos(consume=True)
         if not key:
             return ParsingResult(
@@ -898,10 +905,9 @@ def _get_tagparser(parent, tag, inline_only=False):
     return parserclass(parent=parent, frompos=parent.pos)
 
 
-Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
-
-
 class ManuscriptParser(TagBlockParser):
+
+    Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
 
     shortcuts = [
         Shortcut('*', '*', ':span: :strong: ' + Tombstone, Tombstone),

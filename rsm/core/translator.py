@@ -444,6 +444,7 @@ class Translator:
         return AppendNodeTag(node, tag='span', newline=False)
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
+        ic(node.children)
         return AppendBatchAndDefer([
             AppendNodeTag(node),
             AppendHeading(3, 'Theorem'),

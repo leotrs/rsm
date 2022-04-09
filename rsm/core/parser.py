@@ -234,7 +234,7 @@ class BaseParagraphParser(Parser):
                 child, consumed = result.result, result.consumed
                 children.append(child)
             else:
-                index = self.src.find(':', self.pos, end_of_content)
+                index = self.src.find(Tag.delim, self.pos, end_of_content)
                 if index < 0:
                     index = end_of_content
                 text = self.src[self.pos:index]
@@ -272,8 +272,6 @@ class InlineParser(Parser):
         super().__init__(parent, frompos)
 
     def process(self) -> BaseParsingResult:
-        s = f'{self.__class__.__name__}.process start'
-        ic(s, self.pos)
         oldpos = self.pos
         children = []
 
@@ -458,7 +456,7 @@ class TagBlockParser(StartEndParser):
 
     def consume_starttag(self) -> int:
         if self.pos != self.frompos:
-            raise RSMParserError('consume_starttag can only be called when self.pos == self.frompos')
+            raise ValueError('consume_starttag can only be called when self.pos == self.frompos')
         numchars = len(self.tag)
         self.pos += numchars
         return numchars
@@ -472,21 +470,6 @@ class AuthorParser(TagBlockParser):
 class AbstractParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(parent, Tag('abstract'), nodes.Abstract, frompos)
-
-
-class SectionParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('section'), nodes.Section, frompos)
-
-
-class SubsectionParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('subsection'), nodes.Subsection, frompos)
-
-
-class SubsubsectionParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('subsubsection'), nodes.Subsubsection, frompos)
 
 
 class ItemParser(BaseParagraphParser):
@@ -664,6 +647,37 @@ class CiteParser(StartEndParser):
             hint=NoHint,
             consumed=self.pos - oldpos,
         )
+
+
+class ShouldHaveHeadingParser(TagBlockParser):
+    def __init__(
+            self,
+            parent: Parser,
+            tag: Tag,
+            nodeclass: Type[nodes.Heading] = nodes.Heading,
+            frompos: int = 0
+    ):
+        super().__init__(parent, tag, nodeclass, frompos)
+
+    def _post_process(self) -> None:
+        if not self.node.title:
+            nodeclass = self.nodeclass.__name__
+            logger.warn(f'{nodeclass} with empty title')
+
+
+class SectionParser(ShouldHaveHeadingParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, Tag('section'), nodes.Section, frompos)
+
+
+class SubsectionParser(ShouldHaveHeadingParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, Tag('subsection'), nodes.Subsection, frompos)
+
+
+class SubsubsectionParser(ShouldHaveHeadingParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, Tag('subsubsection'), nodes.Subsubsection, frompos)
 
 
 class MetaParser(Parser):

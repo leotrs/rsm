@@ -209,7 +209,7 @@ class BaseParagraphParser(Parser):
                 consumed=0
             )
 
-        self.node.add(result.result)
+        self.node.append(result.result)
 
         return ParsingResult(
             success=True,
@@ -436,7 +436,7 @@ class TagBlockParser(StartEndParser):
             s = f'subparser {parser.__class__.__name__} done'
             ic(s, result.consumed)
 
-            self.node.add(result.result)
+            self.node.append(result.result)
             self.pos += result.consumed
 
             self.consume_whitespace()

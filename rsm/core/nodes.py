@@ -41,6 +41,7 @@ class Node:
 
     @property
     def children(self) -> tuple:
+        # necessary for methods such as Nodes.traverse
         return tuple()
 
     def traverse(self, condition=lambda n: True, *, nodeclass=None) -> Iterable['Node']:
@@ -74,24 +75,37 @@ class NodeWithChildren(Node):
     def __post_init__(self):
         self._children: list[Node] = []
 
-    def add(self, child: Node | list) -> None:
-        if isinstance(child, list):
-            for c in child:
-                self.add(c)
-        elif isinstance(child, Node):
-            if child.parent and child.parent is not self:
-                raise RSMNodeError('Attempting to add child to a different parent')
-            self._children.append(child)
-            child.parent = self
-        else:
-            raise RSMNodeError('Attempting to add a non-Node object as a child of a Node')
-
-    def remove(self, child: 'Node') -> None:
-        self._children.remove(child)
-
     @property
     def children(self) -> tuple:
         return tuple(self._children)
+
+    def append(self, child: Node | list) -> None:
+        if isinstance(child, list):
+            for c in child:
+                self.append(c)
+        elif isinstance(child, Node):
+            if child.parent and child.parent is not self:
+                raise RSMNodeError('Attempting to append child to a different parent')
+            self._children.append(child)
+            child.parent = self
+        else:
+            raise TypeError('Can only append a Node or iterable of Nodes as children')
+
+    def prepend(self, child: Node | list) -> None:
+        if isinstance(child, list):
+            for c in child:
+                self.prepend(c)
+        elif isinstance(child, Node):
+            if child.parent and child.parent is not self:
+                raise RSMNodeError('Attempting to prepend child to a different parent')
+            self._children.insert(0, child)
+            child.parent = self
+        else:
+            raise TypeError('Can only prepend a Node or iterable of Nodes as children')
+
+
+    def remove(self, child: 'Node') -> None:
+        self._children.remove(child)
 
 
 @dataclass

@@ -490,6 +490,11 @@ class ItemParser(BaseParagraphParser):
         super().__init__(parent, nodes.Item, Tag('item'), frompos, tag_optional=False)
 
 
+class CommentParser(BaseParagraphParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(parent, nodes.Comment, Tag('comment'), frompos, tag_optional=False)
+
+
 class EnumerateParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(parent, Tag('enumerate'), nodes.Enumerate, frompos)
@@ -744,7 +749,6 @@ class MetaPairParser(Parser):
     parse_value_methods = {
         'label': 'parse_upto_delim_value',
         'types': 'parse_list_value',
-        'comment': 'parse_upto_tombstone_value',
 
         # Heading
         'title': 'parse_upto_delim_value',

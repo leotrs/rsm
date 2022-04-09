@@ -25,11 +25,10 @@ class Node:
     # meta keys
     label: str = ''
     types: list[str] = field(default_factory=list)
-    comment: str = ''
     parent: Optional['NodeWithChildren'] = None
     nonum: bool = False
     reftext: str = '{nodeclass} {number}'
-    _newmetakeys: ClassVar[set] = {'label', 'types', 'comment', 'nonum', 'reftext'}
+    _newmetakeys: ClassVar[set] = {'label', 'types', 'nonum', 'reftext'}
 
     # non-meta instance variables
     number: int | None = None
@@ -174,6 +173,11 @@ class Subsubsection(Section):
 
 @dataclass
 class Paragraph(Heading):
+    pass
+
+
+@dataclass
+class Comment(Heading):
     pass
 
 

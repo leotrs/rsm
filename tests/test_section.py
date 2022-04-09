@@ -37,9 +37,9 @@ def test_simple():
         <section class="section level-2">
         <h2>1. Section</h2>
         <p class="paragraph">Lorem ipsum.</p><section class="subsection level-3">
-        <h3>2. Sub section</h3>
+        <h3>1.1. Sub section</h3>
         <p class="paragraph">Foo</p><section class="subsubsection level-4">
-        <h4>3. Sub sub section</h4>
+        <h4>1.1.1. Sub sub section</h4>
         <p class="paragraph">Bar</p>
         </section>
         </section>
@@ -84,9 +84,9 @@ def test_simple():
         <section class="section level-2">
         <h2>1. Section</h2>
         <p class="paragraph">Lorem ipsum.</p><section class="subsection level-3">
-        <h3>2. Sub section</h3>
+        <h3>1.1. Sub section</h3>
         <p class="paragraph">Foo</p><section class="subsubsection level-4">
-        <h4>3. Sub sub section</h4>
+        <h4>1.1.1. Sub sub section</h4>
         <p class="paragraph">Bar</p>
         </section>
         </section>

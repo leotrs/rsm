@@ -117,7 +117,7 @@ def test_displaymath():
         <section class="level-1">
         <h1></h1>
         <p class="paragraph">This paragraph contains display math
-        <div class="math">
+        <div class="displaymath">
         $$2 + 2 = 4.$$
 
         </div></p>

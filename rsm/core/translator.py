@@ -404,10 +404,10 @@ class Translator:
         return AppendNodeTag(node)
 
     def visit_math(self, node: nodes.Math) -> EditCommand:
-        if node.display:
-            return AppendNodeTag(node, 'div')
-        else:
-            return AppendNodeTag(node, 'span')
+        return AppendNodeTag(node, 'span')
+
+    def visit_displaymath(self, node: nodes.DisplayMath) -> EditCommand:
+        return AppendNodeTag(node, 'div')
 
     def visit_text(self, node: nodes.Text) -> EditCommand:
         return AppendText(node.text)

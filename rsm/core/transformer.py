@@ -56,8 +56,13 @@ class Transformer:
             raise RSMTransformerError(f'Found unresolved referece to "{node.targetlabel}"')
 
     def autonumber_nodes(self) -> None:
-        count = 1
-        for node in self.tree.traverse(nodeclass=nodes.Section):
-            if not node.nonum:
-                node.number = count
-                count += 1
+        counts = {
+            nodes.Section: 0,
+            nodes.DisplayMath: 0,
+            nodes.Lemma: 0,
+        }
+        for node in self.tree.traverse():
+            nodeclass = type(node)
+            if nodeclass in counts and not node.nonum:
+                counts[nodeclass] += 1
+                node.number = counts[nodeclass]

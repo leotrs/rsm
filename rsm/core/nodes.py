@@ -212,9 +212,12 @@ class Item(Paragraph):
 
 @dataclass
 class Math(NodeWithChildren):
-    display: bool = field(kw_only=True, default=False)
-    number: bool = field(kw_only=True, default=False)
-    _newmetakeys: ClassVar[set] = {'number'}
+    pass
+
+
+@dataclass
+class DisplayMath(NodeWithChildren):
+    reftext: str = 'Equation {number}'
 
 
 @dataclass

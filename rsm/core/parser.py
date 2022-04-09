@@ -561,14 +561,11 @@ class DisplaymathParser(TagBlockParser):
         super().__init__(
             parent=parent,
             tag=Tag('displaymath'),
-            nodeclass=nodes.Math,
+            nodeclass=nodes.DisplayMath,
             frompos=frompos,
             meta_inline_mode=False,
             contentparser=AsIsParser,
         )
-
-    def _post_process(self) -> None:
-        self.node.display = True
 
 
 class RefParser(StartEndParser):

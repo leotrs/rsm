@@ -27,7 +27,7 @@ def test_simple():
         <div class="theorem">
         <div class="comment">
         This is a single line comment.
-        </div><p class="paragraph"><span class="span"><strong>Theorem. </strong></span>Theorem contents.</p>
+        </div><p class="paragraph"><span class="span"><strong>Theorem 1. </strong></span>Theorem contents.</p>
         </div>
         </section>
         </div>

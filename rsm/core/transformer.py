@@ -59,6 +59,7 @@ class Transformer:
         counts = {
             nodes.Section: 0,
             nodes.DisplayMath: 0,
+            nodes.Theorem: 0,
             nodes.Lemma: 0,
         }
         for node in self.tree.traverse():

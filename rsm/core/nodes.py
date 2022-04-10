@@ -62,6 +62,12 @@ class Node:
                 yield node
             stack += node.children[::-1]
 
+    def first_of_type(self, cls: Type['Node']) -> Optional['Node']:
+        for child in self.children:
+            if isinstance(child, cls):
+                return child
+        return None
+
     @property
     def reftext(self) -> str:
         return self._reftext or self.classreftext

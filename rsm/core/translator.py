@@ -444,14 +444,11 @@ class Translator:
         return AppendNodeTag(node, tag='span', newline=False)
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
-        for child in node.children:
-            if isinstance(child, nodes.Paragraph):
-                paragraph = child
-                classname = node.__class__.__name__.capitalize()
-                span = nodes.Span(strong=True)
-                span.append(nodes.Text(text=f'{classname}. '))
-                paragraph.prepend(span)
-                break
+        child: nodes.Paragraph = node.first_of_type(nodes.Paragraph)
+        classname = node.__class__.__name__.capitalize()
+        span = nodes.Span(strong=True)
+        span.append(nodes.Text(text=f'{classname} {node.number}. '))
+        child.prepend(span)
         return AppendNodeTag(node)
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:

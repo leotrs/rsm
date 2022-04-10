@@ -819,7 +819,7 @@ class MetaPairParser(Parser):
 
         # find the key
         ic(self.src[self.pos-30:self.pos+30])
-        key = self.get_tag_at_pos(consume=True)
+        key = self.get_tag_at_pos()
         if not key:
             return ParsingResult(
                 success=False,
@@ -827,26 +827,26 @@ class MetaPairParser(Parser):
                 hint=NoHint,
                 consumed=self.pos - oldpos,
             )
-        key = key.name
 
         # check if key is valid
-        if key not in self.nodeclass.metakeys():
+        if key.name not in self.nodeclass.metakeys():
             return ParsingResult(
                 success=False,
                 result=None,
-                hint=Tag(key),
+                hint=key,
                 consumed=self.pos - oldpos,
             )
 
-        # find the value
+        # advance and find the value
+        self.pos += len(key)
         self.consume_whitespace()
         try:
-            method_name = self.parse_value_methods[key]
+            method_name = self.parse_value_methods[key.name]
         except KeyError as e:
             raise RSMParserError(
-                f'A parsing method for {Tag(key)} has not been registered '
+                f'A parsing method for {key} has not been registered '
                 'in MetaPairParser.parse_value_methods') from e
-        value, numchars = getattr(self, method_name)(key)
+        value, numchars = getattr(self, method_name)(key.name)
         self.pos += numchars
         self.consume_whitespace()
 
@@ -858,10 +858,10 @@ class MetaPairParser(Parser):
         else:
             hint = NoHint
 
-        ic(self.pos, key, value)
+        ic(self.pos, key.name, value)
         return BaseParsingResult(
             success=True,
-            result=(key, value),
+            result=(key.name, value),
             hint=hint,
             consumed=self.pos - oldpos,
         )

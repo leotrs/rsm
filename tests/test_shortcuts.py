@@ -156,3 +156,27 @@ def test_section_shortcut():
         </body>
         """
     )
+
+
+def test_claim_shortcut():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        This paragraph contains a |- claim with a turnstile. And also another one ⊢ but it takes
+        multiple lines.
+
+        ::
+        """,
+        want="""
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <p class="paragraph">This paragraph contains a <span class="claim">claim with a turnstile</span>. And also another one <span class="claim">but it takes
+        multiple lines</span>.</p>
+        </section>
+        </div>
+        </body>
+        """
+    )

@@ -568,6 +568,18 @@ class DisplaymathParser(TagBlockParser):
         )
 
 
+class KeywordParser(TagBlockParser):
+    def __init__(self, parent: Parser, frompos: int = 0):
+        super().__init__(
+            parent=parent,
+            tag=Tag('keyword'),
+            nodeclass=nodes.Keyword,
+            frompos=frompos,
+            meta_inline_mode=True,
+            contentparser=AsIsParser,
+        )
+
+
 class RefParser(StartEndParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(
@@ -920,6 +932,8 @@ def _get_tagparser(parent, tag, inline_only=False):
 
 class ManuscriptParser(TagBlockParser):
 
+    keywords = ['LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED']
+
     Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
 
     shortcuts = [
@@ -929,6 +943,8 @@ class ManuscriptParser(TagBlockParser):
         Shortcut('#', '\n', ':section:\n  :title: ', '\n'),
         Shortcut('$:', ':$', ':displaymath:\n' + Placeholder, Placeholder + '\n' + Tombstone),
         Shortcut('$', '$', ':math: \(', '\)' + Tombstone),
+        Shortcut('|-', '.', ':claim:', Tombstone + '.'),
+        Shortcut('⊢', '.', ':claim:', Tombstone + '.'),
         Shortcut(Placeholder, Placeholder, '$$', '$$'),
     ]
 
@@ -946,6 +962,10 @@ class ManuscriptParser(TagBlockParser):
 
     def apply_shortcuts(self, src: PlainTextManuscript | str) -> PlainTextManuscript:
         logger.debug('applying shortcuts')
+
+        for keyword in self.keywords:
+            src = src.replace(keyword, f':keyword:{keyword}::')
+
         for deliml, delimr, replacel, replacer in self.shortcuts:
             pos = 0
             while pos < len(src):

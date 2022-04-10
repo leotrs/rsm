@@ -224,6 +224,11 @@ class Item(Paragraph):
 
 
 @dataclass
+class Keyword(Span):
+    pass
+
+
+@dataclass
 class Math(NodeWithChildren):
     pass
 

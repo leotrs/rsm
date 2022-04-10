@@ -722,9 +722,11 @@ class MetaParser(Parser):
         pairparser = MetaPairParser(parent=self)
         meta = {}
         numchars = 0
+        found = False
         while True:
             result = pairparser.parse()
             if result.success:
+                found = True
                 key, value = result.result
                 meta[key] = value
                 self.pos += result.consumed
@@ -752,7 +754,7 @@ class MetaParser(Parser):
                 )
                 break
 
-        if self.inline_mode:
+        if self.inline_mode and found:
             self.consume_whitespace()
             if not self.src[self.pos:].startswith(Tombstone):
                 raise RSMParserError(f'Expected {Tombstone} after inline meta')

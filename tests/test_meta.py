@@ -64,3 +64,29 @@ def test_list_no_braces():
             """,
             want="XXX"
         )
+
+
+def test_inline_no_meta_start_with_tag():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        :paragraph: :label: lbl:: Foo bar.
+
+        This span starts with a tag that is not a meta key, :span: :ref:lbl::, instead
+        it starts with a ref::.
+
+        ::
+        """,
+        want="""\
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <p id="lbl" class="paragraph">Foo bar.</p><p class="paragraph">This span starts with a tag that is not a meta key, <span class="span"><a href="#lbl">Paragraph None</a>, instead
+        it starts with a ref</span>.</p>
+        </section>
+        </div>
+        </body>
+        """
+    )

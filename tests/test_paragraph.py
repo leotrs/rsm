@@ -57,7 +57,6 @@ def test_start_with_tag():
     compare_have_want(
         have="""\
         :manuscript:
-          :title: My Title
 
         :span: :strong: :: this tag :: starts the paragraph.
 
@@ -67,7 +66,7 @@ def test_start_with_tag():
         <body>
         <div id="manuscript" class="manuscript">
         <section class="level-1">
-        <h1>My Title</h1>
+        <h1></h1>
         <p class="paragraph"><span class="span">
         <strong>this tag</strong>
         </span>
@@ -79,6 +78,28 @@ def test_start_with_tag():
     )
 
 
+def test_start_with_shortcut():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        |- The eigenvalues $\pm1$ of the NB matrix $\mathbf{B}$ admit a basis that is
+        orthonormal with respect to $\langle \cdot, \cdot \rangle$.
+
+        ::
+        """,
+        want="""
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <p class="paragraph"><span class="claim">The eigenvalues <span clas="math">\(\pm1\)</span> of the NB matrix <span class="math">\(\mathbf{B}\)</span> admit a basis that is
+        orthonormal with respect to <span class="math">\(\langle \cdot, \cdot \rangle\)</span>.</p>
+        </section>
+        </div>
+        </body>
+        """
+    )
 
 
 def test_no_meta():

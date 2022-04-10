@@ -409,13 +409,8 @@ class TagBlockParser(StartEndParser):
                 consumed=self.pos - oldpos
             )
 
-        if result.hint == NoHint:
-            tag = self.get_tag_at_pos()
-            result = self.parse_content(tag)
-        elif result.hint == NotATag:
-            result = self.parse_content(None)
-        elif isinstance(result.hint, Tag):
-            result = self.parse_content(result.hint)
+        tag = result.hint if result.hint != NoHint else self.get_tag_at_pos()
+        result = self.parse_content(tag)
 
         return ParsingResult.from_result(result, consumed=self.pos - oldpos)
 

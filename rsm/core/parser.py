@@ -48,7 +48,7 @@ Placeholder = Tag('__PLACEHOLDER__')
 class BaseParsingResult:
     success: bool
     result: Any = None
-    hint: Tag | str = NoHint
+    hint: Tag | None = NoHint
     consumed: int = 0
 
     @staticmethod

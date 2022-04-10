@@ -555,8 +555,6 @@ class MathParser(TagBlockParser):
 
 
 class DisplaymathParser(TagBlockParser):
-    node: nodes.Math
-
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(
             parent=parent,
@@ -926,7 +924,7 @@ def _get_tagparser(parent, tag, inline_only=False):
     try:
         parserclass = globals()[f'{tag.name.capitalize()}Parser']
     except KeyError as e:
-        raise RSMParserError(f'Unknown tag {tag}') from e
+        raise RSMParserError(f'No parser for tag {tag}') from e
     return parserclass(parent=parent, frompos=parent.pos)
 
 

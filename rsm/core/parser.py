@@ -18,6 +18,7 @@ from .manuscript import PlainTextManuscript
 from icecream import ic
 
 import logging
+
 logger = logging.getLogger('RSM').getChild('Parser')
 
 
@@ -53,12 +54,12 @@ class BaseParsingResult:
 
     @staticmethod
     def from_result(
-            prev: 'BaseParsingResult',
-            *,
-            success: bool = None,
-            result: Any = None,
-            hint: Tag = None,
-            consumed: int = None,
+        prev: 'BaseParsingResult',
+        *,
+        success: bool = None,
+        result: Any = None,
+        hint: Tag = None,
+        consumed: int = None,
     ) -> 'ParsingResult':
         return ParsingResult(
             success=success if success else prev.success,
@@ -114,7 +115,7 @@ class Parser(ABC):
     def consume_whitespace(self) -> int:
         """Skip any whitespace characters and return the number of characters skipped."""
         oldpos = self.pos
-        self.pos += len(self.src[self.pos:]) - len(self.src[self.pos:].lstrip())
+        self.pos += len(self.src[self.pos :]) - len(self.src[self.pos :].lstrip())
         return self.pos - oldpos
 
     def consume_tombstone(self) -> int:
@@ -127,9 +128,9 @@ class Parser(ABC):
         if self.src[self.pos] != Tag.delim:
             return None
 
-        src = self.src[self.pos:]
+        src = self.src[self.pos :]
         index = src[1:].index(Tag.delim)
-        tag = Tag(src[1:index + 1])
+        tag = Tag(src[1 : index + 1])
         if consume:
             self.pos += len(tag)
 
@@ -140,7 +141,7 @@ class Parser(ABC):
         pos = self.pos
         while True:
             idx = self.src.find('\n', pos)
-            line = self.src[pos:idx + 1]
+            line = self.src[pos : idx + 1]
             content += line
             pos = idx + 1
             if condition(line):
@@ -151,16 +152,15 @@ class Parser(ABC):
 
 
 class BaseParagraphParser(Parser):
-
     def __init__(
-            self,
-            parent: Parser,
-            nodeclass: Type[nodes.Node],
-            tag: Tag,
-            frompos: int = 0,
-            tag_optional: bool = True,
-            *,
-            meta_inline_mode: bool | None = None,
+        self,
+        parent: Parser,
+        nodeclass: Type[nodes.Node],
+        tag: Tag,
+        frompos: int = 0,
+        tag_optional: bool = True,
+        *,
+        meta_inline_mode: bool | None = None,
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.nodeclass: Type[nodes.Node] = nodeclass
@@ -170,7 +170,7 @@ class BaseParagraphParser(Parser):
         self.meta_inline_mode: bool | None = meta_inline_mode
 
     def _pre_process(self) -> None:
-        cease = self.src[:self.frompos].rfind('\n')
+        cease = self.src[: self.frompos].rfind('\n')
         start = self.src[:cease].rfind('\n')
         preceeding_line = self.src[start:cease]
         if preceeding_line.strip() != '':
@@ -192,22 +192,21 @@ class BaseParagraphParser(Parser):
         if tag:
             self.pos += len(self.tag)
             self.consume_whitespace()
-            metaparser = MetaParser(self, self.nodeclass, self.pos, self.meta_inline_mode)
+            metaparser = MetaParser(
+                self, self.nodeclass, self.pos, self.meta_inline_mode
+            )
             result = metaparser.parse_into_node(self.node)
             self.pos += result.consumed
             if not result.success:
-                raise RSMParserError(f'Problem reading meta for paragraph block at position {self.pos}')
+                raise RSMParserError(
+                    f'Problem reading meta for paragraph block at position {self.pos}'
+                )
             self.consume_whitespace()
 
         result = self.parse_content()
         self.consume_whitespace()
         if self.pos == self.frompos:
-            return ParsingResult(
-                success=False,
-                result=None,
-                hint=NoHint,
-                consumed=0
-            )
+            return ParsingResult(success=False, result=None, hint=NoHint, consumed=0)
 
         self.node.append(result.result)
 
@@ -215,7 +214,7 @@ class BaseParagraphParser(Parser):
             success=True,
             result=self.node,
             hint=NoHint,
-            consumed=self.pos - self.frompos
+            consumed=self.pos - self.frompos,
         )
 
     def parse_content(self) -> BaseParsingResult:
@@ -237,7 +236,7 @@ class BaseParagraphParser(Parser):
                 index = self.src.find(Tag.delim, self.pos, end_of_content)
                 if index < 0:
                     index = end_of_content
-                text = self.src[self.pos:index]
+                text = self.src[self.pos : index]
                 consumed = len(text)
                 if text.strip():
                     child = nodes.Text(text=text)
@@ -252,11 +251,8 @@ class BaseParagraphParser(Parser):
             children[-1].text = children[-1].text[:-2]
 
         return BaseParsingResult(
-                success=True,
-                result=children,
-                hint=NoHint,
-                consumed=self.pos - oldpos
-            )
+            success=True, result=children, hint=NoHint, consumed=self.pos - oldpos
+        )
 
 
 class ParagraphParser(BaseParagraphParser):
@@ -276,13 +272,13 @@ class InlineParser(Parser):
         children = []
 
         left = self.pos
-        while not self.src[self.pos:].startswith(Tombstone):
+        while not self.src[self.pos :].startswith(Tombstone):
             tag = self.get_tag_at_pos()
             if tag and tag not in self.inline_tags:
                 raise RSMParserError(f'Tag {tag} cannot be inline')
             if tag:
                 if self.pos > left:
-                    children.append(nodes.Text(text=self.src[left:self.pos]))
+                    children.append(nodes.Text(text=self.src[left : self.pos]))
                 parser = _get_tagparser(self, tag)
                 result = parser.parse()
                 children.append(result.result)
@@ -292,22 +288,18 @@ class InlineParser(Parser):
                 self.pos += 1
 
         if self.pos > left:
-            children.append(nodes.Text(text=self.src[left:self.pos]))
+            children.append(nodes.Text(text=self.src[left : self.pos]))
 
         return BaseParsingResult(
-            success=True,
-            result=children,
-            hint=NoHint,
-            consumed=self.pos - oldpos
+            success=True, result=children, hint=NoHint, consumed=self.pos - oldpos
         )
 
 
 class AsIsParser(Parser):
-
     def __init__(
-            self,
-            parent: Parser,
-            frompos: int = 0,
+        self,
+        parent: Parser,
+        frompos: int = 0,
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.node: nodes.Text = None
@@ -315,19 +307,15 @@ class AsIsParser(Parser):
     def process(self) -> ParsingResult:
         oldpos = self.pos
         index = self.src.index(Tombstone, self.pos)
-        content = self.src[self.pos:index]
+        content = self.src[self.pos : index]
         self.pos = index
         self.node = nodes.Text(text=content)
         return ParsingResult(
-            success=True,
-            result=self.node,
-            hint=Tombstone,
-            consumed=self.pos - oldpos
+            success=True, result=self.node, hint=Tombstone, consumed=self.pos - oldpos
         )
 
 
 class StartEndParser(Parser):
-
     def __init__(self, start: str, end: str, parent: Parser | None, frompos: int = 0):
         super().__init__(parent=parent, frompos=frompos)
         if not start.strip():
@@ -339,14 +327,14 @@ class StartEndParser(Parser):
 
     def _pre_process(self):
         super()._pre_process()
-        if not self.src[self.frompos:].startswith(self.start):
+        if not self.src[self.frompos :].startswith(self.start):
             raise RSMParserError(
                 f'Did not find starting string "{self.start}" '
                 f'in source at position {self.frompos}'
             )
 
     def _post_process(self):
-        src = self.src[:self.pos]
+        src = self.src[: self.pos]
         if not src.rstrip().endswith(self.end):
             name = self.__class__.__name__
             raise RSMParserError(f'{name} did not find ending string "{self.end}"')
@@ -357,16 +345,16 @@ class TagBlockParser(StartEndParser):
     """Only for nodes whose content will be parsed into children and added to self.node."""
 
     def __init__(
-            self,
-            parent: Parser | None,
-            tag: Tag,
-            nodeclass: Type[nodes.NodeWithChildren],
-            frompos: int = 0,
-            src: str = None,
-            *,
-            meta_inline_mode: bool | None = None,
-            has_content: bool = True,
-            contentparser: Type[Parser] = ParagraphParser,
+        self,
+        parent: Parser | None,
+        tag: Tag,
+        nodeclass: Type[nodes.NodeWithChildren],
+        frompos: int = 0,
+        src: str = None,
+        *,
+        meta_inline_mode: bool | None = None,
+        has_content: bool = True,
+        contentparser: Type[Parser] = ParagraphParser,
     ):
         super().__init__(start=tag, end=Tombstone, parent=parent, frompos=frompos)
         self.tag: Tag = tag
@@ -404,9 +392,7 @@ class TagBlockParser(StartEndParser):
 
         if not self.has_content:
             return ParsingResult.from_result(
-                result,
-                result=self.node,
-                consumed=self.pos - oldpos
+                result, result=self.node, consumed=self.pos - oldpos
             )
 
         tag = result.hint if result.hint != NoHint else self.get_tag_at_pos()
@@ -451,7 +437,9 @@ class TagBlockParser(StartEndParser):
 
     def consume_starttag(self) -> int:
         if self.pos != self.frompos:
-            raise ValueError('consume_starttag can only be called when self.pos == self.frompos')
+            raise ValueError(
+                'consume_starttag can only be called when self.pos == self.frompos'
+            )
         numchars = len(self.tag)
         self.pos += numchars
         return numchars
@@ -459,7 +447,9 @@ class TagBlockParser(StartEndParser):
 
 class AuthorParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('author'), nodes.Author, frompos, has_content=False)
+        super().__init__(
+            parent, Tag('author'), nodes.Author, frompos, has_content=False
+        )
 
 
 class AbstractParser(TagBlockParser):
@@ -476,7 +466,9 @@ class ItemParser(BaseParagraphParser):
 
 class CommentParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, nodes.Comment, Tag('comment'), frompos, tag_optional=False)
+        super().__init__(
+            parent, nodes.Comment, Tag('comment'), frompos, tag_optional=False
+        )
 
 
 class EnumerateParser(TagBlockParser):
@@ -514,7 +506,13 @@ class SpanParser(TagBlockParser):
 
 
 class TheoremParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0, tag=Tag('theorem'), nodeclass=nodes.Theorem):
+    def __init__(
+        self,
+        parent: Parser,
+        frompos: int = 0,
+        tag=Tag('theorem'),
+        nodeclass=nodes.Theorem,
+    ):
         super().__init__(
             parent=parent,
             tag=tag,
@@ -591,8 +589,10 @@ class RefParser(StartEndParser):
 
         right = self.src.find(Tag.delim, self.pos)
         if not self.src[right:].startswith(Tombstone):
-            raise RSMParserError(f'Found "{Tag.delim}" inside {self.tag} tag but no {Tombstone}')
-        content = self.src[self.pos:right]
+            raise RSMParserError(
+                f'Found "{Tag.delim}" inside {self.tag} tag but no {Tombstone}'
+            )
+        content = self.src[self.pos : right]
 
         split = content.split(',')
         if len(split) > 1:
@@ -634,8 +634,10 @@ class CiteParser(StartEndParser):
         right = self.src.find(Tag.delim, self.pos)
         if not self.src[right:].startswith(Tombstone):
             ic(oldpos)
-            raise RSMParserError(f'Found "{Tag.delim}" inside {self.tag} tag but no {Tombstone}')
-        content = self.src[self.pos:right]
+            raise RSMParserError(
+                f'Found "{Tag.delim}" inside {self.tag} tag but no {Tombstone}'
+            )
+        content = self.src[self.pos : right]
 
         targets = [s.strip() for s in content.split(',')]
         self.node = nodes.Cite(targets=targets)
@@ -653,11 +655,11 @@ class CiteParser(StartEndParser):
 
 class ShouldHaveHeadingParser(TagBlockParser):
     def __init__(
-            self,
-            parent: Parser,
-            tag: Tag,
-            nodeclass: Type[nodes.Heading] = nodes.Heading,
-            frompos: int = 0
+        self,
+        parent: Parser,
+        tag: Tag,
+        nodeclass: Type[nodes.Heading] = nodes.Heading,
+        frompos: int = 0,
     ):
         super().__init__(parent, tag, nodeclass, frompos)
 
@@ -684,11 +686,11 @@ class SubsubsectionParser(ShouldHaveHeadingParser):
 
 class MetaParser(Parser):
     def __init__(
-            self,
-            parent: Parser,
-            nodeclass: Type[nodes.Node],
-            frompos: int = 0,
-            inline_mode: bool | None = None,
+        self,
+        parent: Parser,
+        nodeclass: Type[nodes.Node],
+        frompos: int = 0,
+        inline_mode: bool | None = None,
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.nodeclass: Type[nodes.Node] = nodeclass
@@ -705,7 +707,7 @@ class MetaParser(Parser):
 
     def process(self) -> BaseParsingResult:
         oldpos = self.pos
-        if not self.src[self.frompos].startswith(Tag.delim): # there is no meta
+        if not self.src[self.frompos].startswith(Tag.delim):  # there is no meta
             return BaseParsingResult(True, {}, NoHint, 0)
 
         left = self.frompos
@@ -751,7 +753,7 @@ class MetaParser(Parser):
 
         if self.inline_mode and found:
             self.consume_whitespace()
-            if not self.src[self.pos:].startswith(Tombstone):
+            if not self.src[self.pos :].startswith(Tombstone):
                 raise RSMParserError(f'Expected {Tombstone} after inline meta')
             self.consume_tombstone()
             self.consume_whitespace()
@@ -775,20 +777,16 @@ class MetaPairParser(Parser):
         'label': 'parse_upto_delim_value',
         'types': 'parse_list_value',
         'reftext': 'parse_upto_delim_value',
-
         # Heading
         'title': 'parse_upto_delim_value',
-
         # Author
         'date': 'parse_datetime_value',
         'name': 'parse_upto_delim_value',
         'affiliation': 'parse_upto_delim_value',
         'email': 'parse_upto_delim_value',
-
         # Abstract
         'keywords': 'parse_list_value',
         'MSC': 'parse_list_value',
-
         # Span
         'strong': 'parse_bool_value',
         'emphas': 'parse_bool_value',
@@ -797,7 +795,6 @@ class MetaPairParser(Parser):
         'delete': 'parse_bool_value',
         'number': 'parse_bool_value',
         'nonum': 'parse_bool_value',
-
         # Theorem
         'goals': 'parse_list_value',
     }
@@ -840,15 +837,16 @@ class MetaPairParser(Parser):
         except KeyError as e:
             raise RSMParserError(
                 f'A parsing method for {key} has not been registered '
-                'in MetaPairParser.parse_value_methods') from e
+                'in MetaPairParser.parse_value_methods'
+            ) from e
         value, numchars = getattr(self, method_name)(key.name)
         self.pos += numchars
         self.consume_whitespace()
 
         # setup hint
-        if self.src[self.pos:].startswith(self.delim):
+        if self.src[self.pos :].startswith(self.delim):
             hint = self.delim
-        elif self.src[self.pos:].startswith(Tombstone):
+        elif self.src[self.pos :].startswith(Tombstone):
             hint = Tombstone
         else:
             hint = NoHint
@@ -884,7 +882,7 @@ class MetaPairParser(Parser):
         return True, 0
 
     def parse_list_value(self, key: str) -> tuple[list, int]:
-        src = self.src[self.pos:]
+        src = self.src[self.pos :]
         if src[0] != '{':
             # if no brace, there can only be one element in the list
             value, numchars = self.parse_upto_delim_value(key)
@@ -902,13 +900,17 @@ class MetaPairParser(Parser):
         try:
             colon = src.index(':')
         except RSMParserError:
-            colon = brace+1
+            colon = brace + 1
         if colon <= brace:
-            raise RSMParserError(f'Key "{key}"' + ' expects a list, but found ":" before "}"')
+            raise RSMParserError(
+                f'Key "{key}"' + ' expects a list, but found ":" before "}"'
+            )
 
-        after = src[brace+1:]
+        after = src[brace + 1 :]
         if not after.startswith(self.delim) and not after.startswith(' ' + Tombstone):
-            raise RSMParserError(f'Expected a "{self.delim}" or a "{Tombstone}" after value of key "{key}"')
+            raise RSMParserError(
+                f'Expected a "{self.delim}" or a "{Tombstone}" after value of key "{key}"'
+            )
 
         value = src[1:brace]
         numchars = len(value) + 2
@@ -936,8 +938,10 @@ class ManuscriptParser(TagBlockParser):
         Shortcut('###', '\n', ':subsubsection:\n  :title: ', '\n'),
         Shortcut('##', '\n', ':subsection:\n  :title: ', '\n'),
         Shortcut('#', '\n', ':section:\n  :title: ', '\n'),
-        Shortcut('$:', ':$', ':displaymath:\n' + Placeholder, Placeholder + '\n' + Tombstone),
-        Shortcut('$', '$', ':math: \(', '\)' + Tombstone),
+        Shortcut(
+            '$:', ':$', ':displaymath:\n' + Placeholder, Placeholder + '\n' + Tombstone
+        ),
+        Shortcut('$', '$', r':math: \(', r'\)' + Tombstone),
         Shortcut('|-', '.', ':claim:', Tombstone + '.'),
         Shortcut('⊢', '.', ':claim:', Tombstone + '.'),
         Shortcut(Placeholder, Placeholder, '$$', '$$'),
@@ -967,16 +971,19 @@ class ManuscriptParser(TagBlockParser):
                 left = src.find(deliml, pos)
                 if left < 0:
                     break
-                right = src.find(delimr, left+1)
+                right = src.find(delimr, left + 1)
                 if right < 0:
                     raise RSMParserError(f'Found start ("{deliml}") but no end')
                 src = (
                     src[:left]
                     + replacel
-                    + src[left+len(deliml):right]
+                    + src[left + len(deliml) : right]
                     + replacer
-                    + src[right+len(delimr):]
+                    + src[right + len(delimr) :]
                 )
-                pos = right+1
+                pos = right + 1
+
+        ic.enable()
+        ic(src)
 
         return PlainTextManuscript(src)

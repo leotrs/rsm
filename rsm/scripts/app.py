@@ -6,6 +6,7 @@ RSM Application: take a file path and output its contents as HTML.
 
 """
 
+from ..core import nodes
 from ..core import manuscript
 from ..core import reader
 from ..core import parser
@@ -19,6 +20,7 @@ from pathlib import Path
 from icecream import ic
 import logging
 from logging.handlers import BufferingHandler
+
 logger = logging.getLogger('RSM')
 
 
@@ -27,13 +29,12 @@ class RSMApplicationError(Exception):
 
 
 class ParserApplication:
-
     def __init__(
-            self,
-            *,
-            srcpath: Path | None = None,
-            plain: manuscript.PlainTextManuscript = manuscript.PlainTextManuscript(),
-            verbosity: int = 0
+        self,
+        *,
+        srcpath: Path | None = None,
+        plain: manuscript.PlainTextManuscript = manuscript.PlainTextManuscript(),
+        verbosity: int = 0,
     ):
         if not srcpath and not plain:
             raise RSMApplicationError('Must specify exactly one of srcpath, plain')
@@ -77,8 +78,8 @@ class ParserApplication:
 
     def parse(self) -> None:
         logger.info('Parsing...')
-        self.parser = parser.ManuscriptParser()
-        self.tree = self.parser.parse(self.plain)
+        self.parser = parser.ManuscriptParser(nodes.Manuscript(src=self.plain))
+        self.tree = self.parser.parse()
 
     def transform(self) -> None:
         logger.info('Transforming...')
@@ -90,7 +91,6 @@ class ParserApplication:
 
 
 class GatherHandler(BufferingHandler):
-
     def __init__(self, levels, target=None):
         super().__init__(capacity=float('inf'))
         self.gatherlevels = set(levels)
@@ -113,14 +113,15 @@ class GatherHandler(BufferingHandler):
 
 
 class Linter:
-
     def __init__(self):
         self.tree: manuscript.AbstractTreeManuscript | None = None
         logging.LINT = 25
         logging.addLevelName(logging.LINT, 'LINT')
-        logger.lint = lambda msg, *args, **kwargs: logger.log(logging.LINT, msg, *args, **kwargs)
+        logger.lint = lambda msg, *args, **kwargs: logger.log(
+            logging.LINT, msg, *args, **kwargs
+        )
         if logger.level > logging.LINT:
-           logger.level = logging.LINT
+            logger.level = logging.LINT
         target = logging.StreamHandler()
         target.setLevel(logging.LINT)
         # target.setFormatter(RSMFormatter())
@@ -143,13 +144,12 @@ class Linter:
 
 
 class LinterApplication(ParserApplication):
-
     def __init__(
-            self,
-            *,
-            srcpath: Path | None = None,
-            plain: manuscript.PlainTextManuscript = manuscript.PlainTextManuscript(),
-            verbosity: int = 0,
+        self,
+        *,
+        srcpath: Path | None = None,
+        plain: manuscript.PlainTextManuscript = manuscript.PlainTextManuscript(),
+        verbosity: int = 0,
     ):
         super().__init__(srcpath=srcpath, plain=plain, verbosity=verbosity)
         self.linter: Linter = Linter()
@@ -172,14 +172,13 @@ class LinterApplication(ParserApplication):
 
 
 class RSMProcessorApplication(ParserApplication):
-
     def __init__(
-            self,
-            *,
-            srcpath: Path | None = None,
-            plain: manuscript.PlainTextManuscript = manuscript.PlainTextManuscript(),
-            verbosity: int = 0,
-            run_linter: bool = False,
+        self,
+        *,
+        srcpath: Path | None = None,
+        plain: manuscript.PlainTextManuscript = manuscript.PlainTextManuscript(),
+        verbosity: int = 0,
+        run_linter: bool = False,
     ):
         super().__init__(srcpath=srcpath, plain=plain, verbosity=verbosity)
         self.translator: translator.Translator | None = None

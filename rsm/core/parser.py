@@ -155,7 +155,7 @@ class BaseParagraphParser(Parser):
     def __init__(
         self,
         parent: Parser,
-        nodeclass: Type[nodes.Node],
+        node: nodes.Paragraph,
         tag: Tag,
         frompos: int = 0,
         tag_optional: bool = True,
@@ -163,8 +163,7 @@ class BaseParagraphParser(Parser):
         meta_inline_mode: bool | None = None,
     ):
         super().__init__(parent=parent, frompos=frompos)
-        self.nodeclass: Type[nodes.Node] = nodeclass
-        self.node: nodes.Paragraph | None = None
+        self.node: nodes.Paragraph = node
         self.tag: Tag = tag
         self.tag_optional: bool = tag_optional
         self.meta_inline_mode: bool | None = meta_inline_mode
@@ -178,7 +177,6 @@ class BaseParagraphParser(Parser):
 
     def process(self) -> ParsingResult:
         self.pos = self.frompos
-        self.node = self.nodeclass()
 
         tag = self.get_tag_at_pos()
         if not self.tag_optional:
@@ -192,9 +190,7 @@ class BaseParagraphParser(Parser):
         if tag:
             self.pos += len(self.tag)
             self.consume_whitespace()
-            metaparser = MetaParser(
-                self, self.nodeclass, self.pos, self.meta_inline_mode
-            )
+            metaparser = MetaParser(self, self.node, self.pos, self.meta_inline_mode)
             result = metaparser.parse_into_node(self.node)
             self.pos += result.consumed
             if not result.success:
@@ -257,7 +253,7 @@ class BaseParagraphParser(Parser):
 
 class ParagraphParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, nodes.Paragraph, Tag('paragraph'), frompos, True)
+        super().__init__(parent, nodes.Paragraph(), Tag('paragraph'), frompos, True)
 
 
 class InlineParser(Parser):
@@ -348,7 +344,7 @@ class TagBlockParser(StartEndParser):
         self,
         parent: Parser | None,
         tag: Tag,
-        nodeclass: Type[nodes.NodeWithChildren],
+        node: nodes.NodeWithChildren,
         frompos: int = 0,
         src: str = None,
         *,
@@ -358,22 +354,16 @@ class TagBlockParser(StartEndParser):
     ):
         super().__init__(start=tag, end=Tombstone, parent=parent, frompos=frompos)
         self.tag: Tag = tag
-        self.nodeclass: Type[nodes.NodeWithChildren] = nodeclass
-        self.node: nodes.NodeWithChildren | None = None
+        self.node: nodes.NodeWithChildren = node
         self.meta_inline_mode: bool | None = meta_inline_mode
         self.has_content: bool = has_content
         self.contentparser: Type[Parser] = contentparser
 
     def process(self) -> ParsingResult:
-        if self.nodeclass is nodes.Manuscript:
-            self.node = nodes.Manuscript(src=self.src)
-        else:
-            self.node = self.nodeclass()
-
         oldpos = self.pos
         self.consume_starttag()
         self.consume_whitespace()
-        metaparser = MetaParser(self, self.nodeclass, self.pos, self.meta_inline_mode)
+        metaparser = MetaParser(self, self.node, self.pos, self.meta_inline_mode)
         result = metaparser.parse_into_node(self.node)
         self.pos += result.consumed
 
@@ -448,37 +438,37 @@ class TagBlockParser(StartEndParser):
 class AuthorParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(
-            parent, Tag('author'), nodes.Author, frompos, has_content=False
+            parent, Tag('author'), nodes.Author(), frompos, has_content=False
         )
 
 
 class AbstractParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('abstract'), nodes.Abstract, frompos)
+        super().__init__(parent, Tag('abstract'), nodes.Abstract(), frompos)
 
 
 class ItemParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         if type(parent) not in [EnumerateParser, ItemizeParser]:
             raise RSMParserError('Found an :item: ouside of :enumerate: or :itemize:')
-        super().__init__(parent, nodes.Item, Tag('item'), frompos, tag_optional=False)
+        super().__init__(parent, nodes.Item(), Tag('item'), frompos, tag_optional=False)
 
 
 class CommentParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(
-            parent, nodes.Comment, Tag('comment'), frompos, tag_optional=False
+            parent, nodes.Comment(), Tag('comment'), frompos, tag_optional=False
         )
 
 
 class EnumerateParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('enumerate'), nodes.Enumerate, frompos)
+        super().__init__(parent, Tag('enumerate'), nodes.Enumerate(), frompos)
 
 
 class ItemizeParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('itemize'), nodes.Itemize, frompos)
+        super().__init__(parent, Tag('itemize'), nodes.Itemize(), frompos)
 
 
 class ClaimParser(TagBlockParser):
@@ -486,7 +476,7 @@ class ClaimParser(TagBlockParser):
         super().__init__(
             parent=parent,
             tag=Tag('claim'),
-            nodeclass=nodes.Claim,
+            node=nodes.Claim(),
             frompos=frompos,
             meta_inline_mode=True,
             contentparser=InlineParser,
@@ -498,7 +488,7 @@ class SpanParser(TagBlockParser):
         super().__init__(
             parent=parent,
             tag=Tag('span'),
-            nodeclass=nodes.Span,
+            node=nodes.Span(),
             frompos=frompos,
             meta_inline_mode=True,
             contentparser=InlineParser,
@@ -506,17 +496,11 @@ class SpanParser(TagBlockParser):
 
 
 class TheoremParser(TagBlockParser):
-    def __init__(
-        self,
-        parent: Parser,
-        frompos: int = 0,
-        tag=Tag('theorem'),
-        nodeclass=nodes.Theorem,
-    ):
+    def __init__(self, parent: Parser, frompos: int = 0, tag=Tag('theorem'), node=None):
         super().__init__(
             parent=parent,
             tag=tag,
-            nodeclass=nodeclass,
+            node=node if node else nodes.Theorem(),
             frompos=frompos,
         )
 
@@ -526,7 +510,7 @@ class LemmaParser(TheoremParser):
         super().__init__(
             parent=parent,
             tag=Tag('lemma'),
-            nodeclass=nodes.Lemma,
+            node=nodes.Lemma(),
             frompos=frompos,
         )
 
@@ -540,7 +524,7 @@ class MathParser(TagBlockParser):
         super().__init__(
             parent=parent,
             tag=Tag('math'),
-            nodeclass=nodes.Math,
+            node=nodes.Math(),
             frompos=frompos,
             meta_inline_mode=True,
             contentparser=AsIsParser,
@@ -552,7 +536,7 @@ class DisplaymathParser(TagBlockParser):
         super().__init__(
             parent=parent,
             tag=Tag('displaymath'),
-            nodeclass=nodes.DisplayMath,
+            node=nodes.DisplayMath(),
             frompos=frompos,
             meta_inline_mode=False,
             contentparser=AsIsParser,
@@ -564,7 +548,7 @@ class KeywordParser(TagBlockParser):
         super().__init__(
             parent=parent,
             tag=Tag('keyword'),
-            nodeclass=nodes.Keyword,
+            node=nodes.Keyword(),
             frompos=frompos,
             meta_inline_mode=True,
             contentparser=AsIsParser,
@@ -658,42 +642,42 @@ class ShouldHaveHeadingParser(TagBlockParser):
         self,
         parent: Parser,
         tag: Tag,
-        nodeclass: Type[nodes.Heading] = nodes.Heading,
+        node: None,
         frompos: int = 0,
     ):
-        super().__init__(parent, tag, nodeclass, frompos)
+        super().__init__(parent, tag, node if node else nodes.Heading(), frompos)
 
     def _post_process(self) -> None:
         if not self.node.title:
-            nodeclass = self.nodeclass.__name__
+            nodeclass = self.node.__class__.__name__
             logger.warn(f'{nodeclass} with empty title')
 
 
 class SectionParser(ShouldHaveHeadingParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('section'), nodes.Section, frompos)
+        super().__init__(parent, Tag('section'), nodes.Section(), frompos)
 
 
 class SubsectionParser(ShouldHaveHeadingParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('subsection'), nodes.Subsection, frompos)
+        super().__init__(parent, Tag('subsection'), nodes.Subsection(), frompos)
 
 
 class SubsubsectionParser(ShouldHaveHeadingParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, Tag('subsubsection'), nodes.Subsubsection, frompos)
+        super().__init__(parent, Tag('subsubsection'), nodes.Subsubsection(), frompos)
 
 
 class MetaParser(Parser):
     def __init__(
         self,
         parent: Parser,
-        nodeclass: Type[nodes.Node],
+        node: nodes.Node,
         frompos: int = 0,
         inline_mode: bool | None = None,
     ):
         super().__init__(parent=parent, frompos=frompos)
-        self.nodeclass: Type[nodes.Node] = nodeclass
+        self.node: nodes.Node = node
         self.inline_mode: bool | None = inline_mode
 
     def parse_into_node(self, node) -> ParsingResult:
@@ -804,13 +788,12 @@ class MetaPairParser(Parser):
 
     def __init__(self, parent: MetaParser):
         super().__init__(parent=parent)
-        self.nodeclass: Type[nodes.Node] = parent.nodeclass
 
     def process(self) -> BaseParsingResult:
         oldpos = self.pos
 
         # find the key
-        ic(self.src[self.pos-30:self.pos+30])
+        ic(self.src[self.pos - 30 : self.pos + 30])
         key = self.get_tag_at_pos()
         if not key:
             return ParsingResult(
@@ -821,7 +804,8 @@ class MetaPairParser(Parser):
             )
 
         # check if key is valid
-        if key.name not in self.nodeclass.metakeys():
+        if key.name not in self.parent.node.metakeys():
+            ic('invalid key')
             return ParsingResult(
                 success=False,
                 result=None,
@@ -947,15 +931,16 @@ class ManuscriptParser(TagBlockParser):
         Shortcut(Placeholder, Placeholder, '$$', '$$'),
     ]
 
-    def __init__(self):
+    def __init__(self, node: nodes.Manuscript):
         super().__init__(
             parent=None,
             tag=Tag('manuscript'),
-            nodeclass=nodes.Manuscript,
+            node=node,
         )
 
-    def parse(self, src: PlainTextManuscript) -> nodes.Manuscript:
-        self.src = self.apply_shortcuts(src)
+    def parse(self) -> nodes.Manuscript:
+        self.node: nodes.Manuscript
+        self.src = self.apply_shortcuts(self.node.src)
         result = super().parse()
         return result.result
 

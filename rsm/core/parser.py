@@ -155,8 +155,8 @@ class BaseParagraphParser(Parser):
     def __init__(
         self,
         parent: Parser,
-        node: nodes.Paragraph,
         tag: Tag,
+        node: nodes.Paragraph,
         frompos: int = 0,
         tag_optional: bool = True,
         *,
@@ -253,7 +253,7 @@ class BaseParagraphParser(Parser):
 
 class ParagraphParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, nodes.Paragraph(), Tag('paragraph'), frompos, True)
+        super().__init__(parent, Tag('paragraph'), nodes.Paragraph(), frompos, True)
 
 
 class InlineParser(Parser):
@@ -451,13 +451,13 @@ class ItemParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         if type(parent) not in [EnumerateParser, ItemizeParser]:
             raise RSMParserError('Found an :item: ouside of :enumerate: or :itemize:')
-        super().__init__(parent, nodes.Item(), Tag('item'), frompos, tag_optional=False)
+        super().__init__(parent, Tag('item'), nodes.Item(), frompos, tag_optional=False)
 
 
 class CommentParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(
-            parent, nodes.Comment(), Tag('comment'), frompos, tag_optional=False
+            parent, Tag('comment'), nodes.Comment(), frompos, tag_optional=False
         )
 
 

@@ -52,9 +52,9 @@ class ParserApplication:
     def run(self) -> manuscript.AbstractTreeManuscript:
         ic.disable()
         self.configure()
-        self.read()             # Path -> PlainTextManuscript
-        self.parse()            # PlainTextManuscript -> AbstractTreeManuscript
-        self.transform()        # AbstractTreeManuscript -> AbstractTreeManuscript
+        self.read()  # Path -> PlainTextManuscript
+        self.parse()  # PlainTextManuscript -> AbstractTreeManuscript
+        self.transform()  # AbstractTreeManuscript -> AbstractTreeManuscript
         self.wrapup()
         return self.tree
 
@@ -78,7 +78,7 @@ class ParserApplication:
 
     def parse(self) -> None:
         logger.info('Parsing...')
-        self.parser = parser.ManuscriptParser(nodes.Manuscript(src=self.plain))
+        self.parser = parser.ManuscriptParser(self.plain)
         self.tree = self.parser.parse()
 
     def transform(self) -> None:
@@ -156,9 +156,9 @@ class LinterApplication(ParserApplication):
 
     def run(self) -> manuscript.AbstractTreeManuscript:
         self.configure()
-        self.read()             # Path -> PlainTextManuscript
-        self.parse()            # PlainTextManuscript -> AbstractTreeManuscript
-        self.transform()        # AbstractTreeManuscript -> AbstractTreeManuscript
+        self.read()  # Path -> PlainTextManuscript
+        self.parse()  # PlainTextManuscript -> AbstractTreeManuscript
+        self.transform()  # AbstractTreeManuscript -> AbstractTreeManuscript
         self.lint()
         self.wrapup()
         return self.tree
@@ -187,11 +187,11 @@ class RSMProcessorApplication(ParserApplication):
 
     def run(self) -> manuscript.HTMLManuscript:
         self.configure()
-        self.read()             # Path -> PlainTextManuscript
-        self.parse()            # PlainTextManuscript -> AbstractTreeManuscript
-        self.transform()        # AbstractTreeManuscript -> AbstractTreeManuscript
+        self.read()  # Path -> PlainTextManuscript
+        self.parse()  # PlainTextManuscript -> AbstractTreeManuscript
+        self.transform()  # AbstractTreeManuscript -> AbstractTreeManuscript
         self.lint()
-        self.translate()        # AbstractTreeManuscript -> HTMLManuscript
+        self.translate()  # AbstractTreeManuscript -> HTMLManuscript
         self.wrapup()
         return self.body
 
@@ -211,16 +211,17 @@ class RSMProcessorApplication(ParserApplication):
 
 
 class FullBuildApplication(RSMProcessorApplication):
-
     def __init__(
-            self,
-            *,
-            srcpath: Path | None = None,
-            plain: manuscript.PlainTextManuscript = manuscript.PlainTextManuscript(),
-            run_linter: bool = False,
-            verbosity: int = 0
+        self,
+        *,
+        srcpath: Path | None = None,
+        plain: manuscript.PlainTextManuscript = manuscript.PlainTextManuscript(),
+        run_linter: bool = False,
+        verbosity: int = 0,
     ):
-        super().__init__(srcpath=srcpath, plain=plain, run_linter=run_linter, verbosity=verbosity)
+        super().__init__(
+            srcpath=srcpath, plain=plain, run_linter=run_linter, verbosity=verbosity
+        )
         self.html: manuscript.HTMLManuscript | None = None
         self.web: manuscript.WebManuscript | None = None
         self.builder: builder.BaseBuilder | None = None
@@ -229,13 +230,13 @@ class FullBuildApplication(RSMProcessorApplication):
     def run(self) -> manuscript.HTMLManuscript:
         ic.disable()
         self.configure()
-        self.read()             # Path -> PlainTextManuscript
-        self.parse()            # PlainTextManuscript -> AbstractTreeManuscript
-        self.transform()        # AbstractTreeManuscript -> AbstractTreeManuscript
+        self.read()  # Path -> PlainTextManuscript
+        self.parse()  # PlainTextManuscript -> AbstractTreeManuscript
+        self.transform()  # AbstractTreeManuscript -> AbstractTreeManuscript
         self.lint()
-        self.translate()        # AbstractTreeManuscript -> HTMLManuscript
-        self.build()            # HTMLManuscript -> WebManuscript
-        self.write()            # WebManuscript -> HDD
+        self.translate()  # AbstractTreeManuscript -> HTMLManuscript
+        self.build()  # HTMLManuscript -> WebManuscript
+        self.write()  # WebManuscript -> HDD
         self.wrapup()
         return self.web
 

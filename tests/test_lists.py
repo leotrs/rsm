@@ -1,4 +1,5 @@
-
+import pytest
+import rsm
 from conftest import compare_have_want
 
 
@@ -69,5 +70,47 @@ def test_simple():
         </section>
         </div>
         </body>
-        """
+        """,
     )
+
+
+def test_item_with_wrong_parent():
+    with pytest.raises(rsm.core.nodes.RSMNodeError):
+        compare_have_want(
+            have="""\
+        :manuscript:
+
+        :item: Foo bar.
+
+        ::
+        """,
+            want="XXX",
+        )
+
+    with pytest.raises(rsm.core.nodes.RSMNodeError):
+        compare_have_want(
+            have="""\
+        :manuscript:
+
+        # Some section
+
+        :item: Foo bar.
+
+        ::
+        """,
+            want="XXX",
+        )
+
+    with pytest.raises(rsm.core.nodes.RSMNodeError):
+        compare_have_want(
+            have="""\
+        :manuscript:
+
+        # Some section
+
+        Lorem ipsum :item: Foo bar.
+
+        ::
+        """,
+            want="XXX",
+        )

@@ -11,18 +11,11 @@ from typing import Any, Type
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from collections import namedtuple
+from enum import Enum, auto
 
 from . import nodes
-from .tags import (
-    Tag,
-    gettag,
-    ContentMode,
-    Tombstone,
-    NotATag,
-    NoHint,
-    Placeholder,
-    ManuscriptTag,
-)
+from . import tags
+from .tags import TagName, Tag, Tombstone
 from .manuscript import PlainTextManuscript
 
 from icecream import ic
@@ -36,11 +29,16 @@ class RSMParserError(Exception):
     pass
 
 
+class Hint(Enum):
+    NOTATAG = auto()
+    NOHINT = auto()
+
+
 @dataclass(frozen=True)
 class BaseParsingResult:
     success: bool
     result: Any = None
-    hint: Tag | None = NoHint
+    hint: Hint | TagName = Hint.NOHINT
     consumed: int = 0
 
     @staticmethod
@@ -198,14 +196,16 @@ class BaseParagraphParser(Parser):
         result = self.parse_content()
         self.consume_whitespace()
         if self.pos == self.frompos:
-            return ParsingResult(success=False, result=None, hint=NoHint, consumed=0)
+            return ParsingResult(
+                success=False, result=None, hint=Hint.NOHINT, consumed=0
+            )
 
         self.node.append(result.result)
 
         return ParsingResult(
             success=True,
             result=self.node,
-            hint=NoHint,
+            hint=Hint.NOHINT,
             consumed=self.pos - self.frompos,
         )
 
@@ -243,7 +243,7 @@ class BaseParagraphParser(Parser):
             children[-1].text = children[-1].text[:-2]
 
         return BaseParsingResult(
-            success=True, result=children, hint=NoHint, consumed=self.pos - oldpos
+            success=True, result=children, hint=Hint.NOHINT, consumed=self.pos - oldpos
         )
 
 
@@ -277,7 +277,7 @@ class InlineParser(Parser):
             children.append(nodes.Text(text=self.src[left : self.pos]))
 
         return BaseParsingResult(
-            success=True, result=children, hint=NoHint, consumed=self.pos - oldpos
+            success=True, result=children, hint=Hint.NOHINT, consumed=self.pos - oldpos
         )
 
 
@@ -323,9 +323,9 @@ class TagBlockParser(StartEndParser):
     """Only for nodes whose content will be parsed into children and added to self.node."""
 
     contentparsers = {
-        ContentMode.PARAGRAPH: ParagraphParser,
-        ContentMode.INLINE: InlineParser,
-        ContentMode.ASIS: AsIsParser,
+        tags.PARAGRAPH: ParagraphParser,
+        tags.INLINE: InlineParser,
+        tags.ASIS: AsIsParser,
     }
 
     def __init__(
@@ -355,7 +355,7 @@ class TagBlockParser(StartEndParser):
             return ParsingResult(
                 success=True,
                 result=self.node,
-                hint=NoHint,
+                hint=Hint.NOHINT,
                 consumed=self.pos - oldpos,
             )
         self.consume_whitespace()
@@ -365,7 +365,7 @@ class TagBlockParser(StartEndParser):
                 result, result=self.node, consumed=self.pos - oldpos
             )
 
-        tag = result.hint if result.hint != NoHint else self.get_tag_at_pos()
+        tag = result.hint if result.hint != Hint.NOHINT else self.get_tagname_at_pos()
         result = self.parse_content(tag)
 
         return ParsingResult.from_result(result, consumed=self.pos - oldpos)
@@ -376,7 +376,7 @@ class TagBlockParser(StartEndParser):
 
         hint = starting_tag
         while hint != Tombstone:
-            if hint in {None, NotATag, NoHint}:
+            if hint in {None, Hint.NOTATAG, Hint.NOHINT}:
                 parser = self.contentparser(self, frompos=self.pos)
             else:
                 parser = self.get_subparser(hint)
@@ -391,7 +391,7 @@ class TagBlockParser(StartEndParser):
             self.pos += result.consumed
 
             self.consume_whitespace()
-            hint = self.get_tag_at_pos()
+            hint = self.get_tagname_at_pos()
             ic(hint)
 
         self.consume_tombstone()
@@ -521,7 +521,7 @@ class RefParser(StartEndParser):
         return ParsingResult(
             success=True,
             result=self.node,
-            hint=NoHint,
+            hint=Hint.NOHINT,
             consumed=self.pos - oldpos,
         )
 
@@ -559,7 +559,7 @@ class CiteParser(StartEndParser):
         return ParsingResult(
             success=True,
             result=self.node,
-            hint=NoHint,
+            hint=Hint.NOHINT,
             consumed=self.pos - oldpos,
         )
 
@@ -606,12 +606,12 @@ class MetaParser(Parser):
             node.ingest_dict_as_meta(result.result)
             return ParsingResult.from_result(result, result=node)
         else:
-            return ParsingResult.from_result(result, result=None, hint=NoHint)
+            return ParsingResult.from_result(result, result=None, hint=Hint.NOHINT)
 
     def process(self) -> BaseParsingResult:
         oldpos = self.pos
         if not self.src[self.frompos].startswith(Tag.delim):  # there is no meta
-            return BaseParsingResult(True, {}, NoHint, 0)
+            return BaseParsingResult(True, {}, Hint.NOHINT, 0)
 
         left = self.frompos
         right = left + self.src[left:].index('\n')
@@ -663,7 +663,7 @@ class MetaParser(Parser):
             result = BaseParsingResult(
                 success=True,
                 result=meta,
-                hint=NoHint,
+                hint=Hint.NOHINT,
                 consumed=self.pos - oldpos,
             )
 
@@ -718,7 +718,7 @@ class MetaPairParser(Parser):
             return ParsingResult(
                 success=False,
                 result=None,
-                hint=NoHint,
+                hint=Hint.NOHINT,
                 consumed=self.pos - oldpos,
             )
 
@@ -752,7 +752,7 @@ class MetaPairParser(Parser):
         elif self.src[self.pos :].startswith(Tombstone):
             hint = Tombstone
         else:
-            hint = NoHint
+            hint = Hint.NOHINT
 
         ic(self.pos, key.name, value)
         return BaseParsingResult(
@@ -826,6 +826,8 @@ class ManuscriptParser(TagBlockParser):
 
     Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
 
+    Placeholder = TagName('__PLACEHOLDER__')
+
     shortcuts = [
         Shortcut('*', '*', ':span: :strong: ' + Tombstone, Tombstone),
         Shortcut('###', '\n', ':subsubsection:\n  :title: ', '\n'),
@@ -841,7 +843,7 @@ class ManuscriptParser(TagBlockParser):
     ]
 
     def __init__(self, src: str):
-        self.tag = ManuscriptTag('manuscript')
+        self.tag = tags.ManuscriptTag('manuscript')
         self.tag.set_source(src)
         super().__init__(parent=None, tag=self.tag)
 

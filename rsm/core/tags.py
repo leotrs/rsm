@@ -12,13 +12,7 @@ from enum import Enum, auto
 from . import nodes
 
 
-class ContentMode(Enum):
-    PARAGRAPH = auto()
-    INLINE = auto()
-    ASIS = auto()
-
-
-class Tag(str):
+class TagName(str):
     delim: str = ':'
     has_content: bool = False
     inline_only: bool = True

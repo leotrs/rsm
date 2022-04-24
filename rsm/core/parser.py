@@ -139,6 +139,15 @@ class Parser(ABC):
             self.pos = pos
         return content, pos
 
+    def get_subparser(self, tag) -> 'Parser':
+        if not tag.name.capitalize():
+            raise RSMParserError('Requesting parser for empty tag')
+        try:
+            parserclass = globals()[f'{tag.name.capitalize()}Parser']
+        except KeyError as e:
+            raise RSMParserError(f'No parser for tag {tag}') from e
+        return parserclass(parent=self, frompos=self.pos)
+
 
 class BaseParagraphParser(Parser):
     def __init__(
@@ -210,7 +219,7 @@ class BaseParagraphParser(Parser):
         while self.pos < end_of_content:
             tag = self.get_tag_at_pos()
             if tag:
-                parser = _get_tagparser(self, tag)
+                parser = self.get_subparser(tag)
                 ic(self.pos, self.frompos, parser.pos, parser.frompos)
                 result = parser.parse()
                 child, consumed = result.result, result.consumed
@@ -370,7 +379,7 @@ class TagBlockParser(StartEndParser):
             if hint in {None, NotATag, NoHint}:
                 parser = self.contentparser(self, frompos=self.pos)
             else:
-                parser = _get_tagparser(self, hint)
+                parser = self.get_subparser(hint)
             result = parser.parse()
             if not result.success:
                 raise RSMParserError('Something went wrong')
@@ -809,16 +818,6 @@ class MetaPairParser(Parser):
         value = src[1:brace]
         numchars = len(value) + 2
         return [x.strip() for x in value.split(',')], numchars
-
-
-def _get_tagparser(parent, tag):
-    if not tag.name.capitalize():
-        raise RSMParserError('Requesting parser for empty tag')
-    try:
-        parserclass = globals()[f'{tag.name.capitalize()}Parser']
-    except KeyError as e:
-        raise RSMParserError(f'No parser for tag {tag}') from e
-    return parserclass(parent=parent, frompos=parent.pos)
 
 
 class ManuscriptParser(TagBlockParser):

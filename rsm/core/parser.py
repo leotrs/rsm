@@ -259,19 +259,20 @@ class InlineParser(Parser):
 
         left = self.pos
         while not self.src[self.pos :].startswith(Tombstone):
-            tag = self.get_tag_at_pos()
-            if tag and not tag.content_mode != ContentMode.INLINE:
-                raise RSMParserError(f'Tag {tag} cannot be inline')
-            if tag:
-                if self.pos > left:
-                    children.append(nodes.Text(text=self.src[left : self.pos]))
-                parser = _get_tagparser(self, tag)
-                result = parser.parse()
-                children.append(result.result)
-                self.pos += result.consumed
-                left = self.pos
-            else:
+            tagname = self.get_tagname_at_pos()
+            if tagname is None:
                 self.pos += 1
+                continue
+            tag = tags.get(tagname)
+            if not tag.may_be_inline:
+                raise RSMParserError(f'Tag {tag} cannot be inline')
+            if self.pos > left:
+                children.append(nodes.Text(text=self.src[left : self.pos]))
+            parser = self.get_subparser(tag)
+            result = parser.parse()
+            children.append(result.result)
+            self.pos += result.consumed
+            left = self.pos
 
         if self.pos > left:
             children.append(nodes.Text(text=self.src[left : self.pos]))

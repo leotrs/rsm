@@ -249,7 +249,7 @@ class BaseParagraphParser(Parser):
 
 class ParagraphParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('paragraph'), frompos, True)
+        super().__init__(parent, tags.get('paragraph'), frompos, True)
 
 
 class InlineParser(Parser):
@@ -417,80 +417,80 @@ class TagBlockParser(StartEndParser):
 
 class AuthorParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('author'), frompos)
+        super().__init__(parent, tags.get('author'), frompos)
 
 
 class AbstractParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('abstract'), frompos)
+        super().__init__(parent, tags.get('abstract'), frompos)
 
 
 class EnumerateParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('enumerate'), frompos)
+        super().__init__(parent, tags.get('enumerate'), frompos)
 
 
 class ItemizeParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('itemize'), frompos)
+        super().__init__(parent, tags.get('itemize'), frompos)
 
 
 class ItemParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         if type(parent) not in [EnumerateParser, ItemizeParser]:
             raise RSMParserError('Found an :item: ouside of :enumerate: or :itemize:')
-        super().__init__(parent, gettag('item'), frompos)
+        super().__init__(parent, tags.get('item'), frompos)
 
 
 class CommentParser(BaseParagraphParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('comment'), frompos)
+        super().__init__(parent, tags.get('comment'), frompos)
 
 
 class ClaimParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('claim'), frompos)
+        super().__init__(parent, tags.get('claim'), frompos)
 
 
 class MathParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('math'), frompos)
+        super().__init__(parent, tags.get('math'), frompos)
 
 
 class SpanParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('span'), frompos)
+        super().__init__(parent, tags.get('span'), frompos)
 
 
 class TheoremParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('theorem'), frompos)
+        super().__init__(parent, tags.get('theorem'), frompos)
 
 
 class LemmaParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('lemma'), frompos)
+        super().__init__(parent, tags.get('lemma'), frompos)
 
 
 class DisplaymathParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('displaymath'), frompos)
+        super().__init__(parent, tags.get('displaymath'), frompos)
 
 
 class KeywordParser(TagBlockParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('keyword'), frompos)
+        super().__init__(parent, tags.get('keyword'), frompos)
 
 
 class RefParser(StartEndParser):
     def __init__(self, parent: Parser, frompos: int = 0):
         super().__init__(
             parent=parent,
-            start=gettag('ref'),
+            start=tags.get('ref'),
             end=Tombstone,
             frompos=frompos,
         )
-        self.tag = gettag('ref')
+        self.tag = tags.get('ref')
         self.node: nodes.PendingReference = self.tag.makenode()
 
     def process(self) -> ParsingResult:
@@ -573,17 +573,17 @@ class ShouldHaveHeadingParser(TagBlockParser):
 
 class SectionParser(ShouldHaveHeadingParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('section'), frompos)
+        super().__init__(parent, tags.get('section'), frompos)
 
 
 class SubsectionParser(ShouldHaveHeadingParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('subsection'), frompos)
+        super().__init__(parent, tags.get('subsection'), frompos)
 
 
 class SubsubsectionParser(ShouldHaveHeadingParser):
     def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, gettag('subsubsection'), frompos)
+        super().__init__(parent, tags.get('subsubsection'), frompos)
 
 
 class MetaParser(Parser):

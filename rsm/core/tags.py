@@ -118,43 +118,35 @@ class ManuscriptTag(BlockTag):
         return nodes.Manuscript(src=self.src)
 
 
-class InlineTag(Tag):
-    has_content: bool = True
-    inline_only: bool = True
-    content_mode: ContentMode = ContentMode.INLINE
-    nodeclass: None = None
-    meta_inline_only: bool = True
+Tombstone = Tag('')
+_tags = {}
+_tags['paragraph'] = BlockTag.newtag(nodes.Paragraph)
+_tags['author'] = BlockOnlyTag.newtag(nodes.Author, has_content=False)
+_tags['abstract'] = BlockOnlyTag.newtag(nodes.Abstract)
+_tags['enumerate'] = BlockTag.newtag(nodes.Enumerate)
+_tags['itemize'] = BlockTag.newtag(nodes.Itemize)
+_tags['item'] = BlockTag.newtag(nodes.Item)
+_tags['comment'] = BlockTag.newtag(nodes.Comment)
+_tags['theorem'] = BlockOnlyTag.newtag(nodes.Theorem)
+_tags['lemma'] = BlockOnlyTag.newtag(nodes.Lemma)
+_tags['displaymath'] = BlockOnlyTag.newtag(nodes.DisplayMath, content_mode=ASIS)
+_tags['section'] = BlockOnlyTag.newtag(nodes.Section)
+_tags['subsection'] = BlockOnlyTag.newtag(nodes.Subsection)
+_tags['subsubsection'] = BlockOnlyTag.newtag(nodes.Subsubsection)
+_tags['keyword'] = BlockTag.newtag(nodes.Keyword, content_mode=ASIS)
+_tags['claim'] = InlineTag.newtag(nodes.Claim)
+_tags['span'] = InlineTag.newtag(nodes.Span)
+_tags['math'] = InlineTag.newtag(nodes.Math, content_mode=ASIS)
+_tags['ref'] = SpecialInlineTag.newtag(nodes.PendingReference, name='ref')
+_tags['cite'] = SpecialInlineTag.newtag(nodes.Cite)
+_tags['manuscript'] = ManuscriptTag.newtag(nodes.Manuscript)
+_tags[''] = Tombstone
 
 
-class ClaimTag(InlineTag):
-    nodeclass: Type[nodes.Node] = nodes.Claim
-
-
-class SpanTag(InlineTag):
-    nodeclass: Type[nodes.Node] = nodes.Span
-
-
-class MathTag(InlineTag):
-    nodeclass: Type[nodes.Node] = nodes.Math
-    content_mode: ContentMode = ContentMode.ASIS
-
-
-class SpecialInlineTag(Tag):
-    has_content: bool = False
-    inline_only: bool = True
-    content_mode: None = None
-    nodeclass: None = None
-    meta_inline_only: bool = True
-
-
-class RefTag(SpecialInlineTag):
-    nodeclass: Type[nodes.Node] = nodes.PendingReference
-
-
-class CiteTag(SpecialInlineTag):
-    nodeclass: Type[nodes.Node] = nodes.Cite
-
-
-def gettag(name):
-    classname = f'{name.capitalize()}Tag'
-    return globals().get(classname, Tag)(name)
+def get(name: str):
+    if isinstance(name, TagName):
+        name = name.name
+    try:
+        return _tags[name]
+    except KeyError as e:
+        raise KeyError(f'Unrecognized tag name {name}') from e

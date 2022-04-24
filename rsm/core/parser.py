@@ -114,13 +114,13 @@ class Parser(ABC):
         self.pos += num
         return num
 
-    def get_tag_at_pos(self, consume=False) -> Tag | None:
+    def get_tagname_at_pos(self, consume=False) -> TagName | None:
         """Return the first tag starting at self.pos. If skip is True, skip it and update self.pos."""
-        if self.src[self.pos] != Tag.delim:
+        if self.src[self.pos] != TagName.delim:
             return None
         src = self.src[self.pos :]
-        index = src[1:].index(Tag.delim)
-        tag = Tag(src[1 : index + 1])
+        index = src[1:].index(TagName.delim)
+        tag = TagName(src[1 : index + 1])
         if consume:
             self.pos += len(tag)
         return tag
@@ -172,7 +172,7 @@ class BaseParagraphParser(Parser):
     def process(self) -> ParsingResult:
         self.pos = self.frompos
 
-        tag = self.get_tag_at_pos()
+        tag = self.get_tagname_at_pos()
         if not self.tag_optional:
             if not tag:
                 raise RSMParserError(f'Was expecting {self.tag}, found nothing')
@@ -217,7 +217,7 @@ class BaseParagraphParser(Parser):
 
         children = []
         while self.pos < end_of_content:
-            tag = self.get_tag_at_pos()
+            tag = self.get_tagname_at_pos()
             if tag:
                 parser = self.get_subparser(tag)
                 ic(self.pos, self.frompos, parser.pos, parser.frompos)
@@ -713,7 +713,7 @@ class MetaPairParser(Parser):
 
         # find the key
         ic(self.src[self.pos - 30 : self.pos + 30])
-        key = self.get_tag_at_pos()
+        key = self.get_tagname_at_pos()
         if not key:
             return ParsingResult(
                 success=False,

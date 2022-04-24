@@ -14,11 +14,6 @@ from . import nodes
 
 class TagName(str):
     delim: str = ':'
-    has_content: bool = False
-    inline_only: bool = True
-    content_mode: ContentMode | None = None
-    nodeclass: Type[nodes.Node] | None = None
-    meta_inline_only: bool = False
 
     def __new__(cls, name):
         if isinstance(name, cls):
@@ -29,86 +24,88 @@ class TagName(str):
         super().__init__()
         self.name = name
 
+
+class ContentMode(Enum):
+    PARAGRAPH = auto()
+    INLINE = auto()
+    ASIS = auto()
+
+
+PARAGRAPH = ContentMode.PARAGRAPH
+INLINE = ContentMode.INLINE
+ASIS = ContentMode.ASIS
+
+
+class Tag(TagName):
+    delim: str = TagName.delim
+    has_content: bool = False
+    content_mode: ContentMode | None = None
+    nodeclass: Type[nodes.Node] | None = None
+    meta_inline_only: bool = False
+    may_be_block: bool = True
+    may_be_inline: bool = True
+
     def makenode(self) -> nodes.Node:
         if self.nodeclass is None:
             raise ValueError(f'Tag with name {self.name} cannot create nodes')
         return self.nodeclass()
 
+    @classmethod
+    def newtag(
+        cls,
+        nodeclass,
+        *,
+        name=None,
+        has_content=None,
+        content_mode=None,
+        meta_inline_only=None,
+        may_be_block=None,
+        may_be_inline=None,
+    ):
+        name = name or nodeclass.__name__.lower()
+        tag = cls(name)
+        tag.nodeclass = nodeclass
+        tag.has_content = has_content or cls.has_content
+        tag.content_mode = content_mode or cls.content_mode
+        tag.meta_inline_only = meta_inline_only or cls.meta_inline_only
+        tag.may_be_block = may_be_block or cls.may_be_block
+        tag.may_be_inline = may_be_inline or cls.may_be_inline
+        return tag
 
-Tombstone = Tag('')
-NotATag = Tag('__NOT_A_TAG__')
-NoHint = Tag('__NO_HINT__')
-Placeholder = Tag('__PLACEHOLDER__')
+
+class InlineTag(Tag):
+    has_content: bool = True
+    content_mode: ContentMode = INLINE
+    nodeclass: Type[nodes.Node] | None = None
+    meta_inline_only: bool = True
+    may_be_block: bool = False
+    may_be_inline: bool = True
+
+
+class SpecialInlineTag(Tag):
+    has_content: bool = False
+    content_mode: None = None
+    nodeclass: Type[nodes.Node] | None = None
+    meta_inline_only: bool = True
+    may_be_block: bool = False
+    may_be_inline: bool = True
 
 
 class BlockTag(Tag):
     has_content: bool = True
-    inline_only: bool = False
-    content_mode: ContentMode = ContentMode.PARAGRAPH
-    nodeclass: None = None
+    content_mode: ContentMode = PARAGRAPH
+    nodeclass: Type[nodes.Node] | None = None
     meta_inline_only: bool = False
+    may_be_block: bool = True
+    may_be_inline: bool = True
 
 
-class ParagraphTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Paragraph
+class BlockOnlyTag(BlockTag):
+    may_be_block: bool = True
+    may_be_inline: bool = False
 
 
-class AuthorTag(BlockTag):
-    has_content: bool = False
-    nodeclass: Type[nodes.Node] = nodes.Author
-
-
-class AbstractTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Abstract
-
-
-class EnumerateTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Enumerate
-
-
-class ItemizeTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Itemize
-
-
-class ItemTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Item
-
-
-class CommentTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Comment
-
-
-class TheoremTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Theorem
-
-
-class LemmaTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Lemma
-
-
-class DisplaymathTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.DisplayMath
-    content_mode: ContentMode = ContentMode.ASIS
-
-
-class KeywordTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Keyword
-    content_mode: ContentMode = ContentMode.ASIS
-
-
-class SectionTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Section
-
-
-class SubsectionTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Subsection
-
-
-class SubsubsectionTag(BlockTag):
-    nodeclass: Type[nodes.Node] = nodes.Subsubsection
-
-
-class ManuscriptTag(BlockTag):
+class ManuscriptTag(BlockOnlyTag):
     nodeclass: Type[nodes.Node] = nodes.Manuscript
 
     def set_source(self, src):

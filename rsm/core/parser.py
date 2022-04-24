@@ -138,13 +138,14 @@ class Parser(ABC):
         return content, pos
 
     def get_subparser(self, tag) -> 'Parser':
-        if not tag.name.capitalize():
+        if not tag.name:
             raise RSMParserError('Requesting parser for empty tag')
         try:
-            parserclass = globals()[f'{tag.name.capitalize()}Parser']
+            # parserclass = globals()[f'{tag.name.capitalize()}Parser']
+            parserclass = _parsers[tag.name]
         except KeyError as e:
             raise RSMParserError(f'No parser for tag {tag}') from e
-        return parserclass(parent=self, frompos=self.pos)
+        return parserclass(self, tags.get(tag.name), self.pos)
 
 
 class BaseParagraphParser(Parser):
@@ -247,9 +248,11 @@ class BaseParagraphParser(Parser):
         )
 
 
-class ParagraphParser(BaseParagraphParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('paragraph'), frompos, True)
+class ParagraphTagOptionalParser(BaseParagraphParser):
+    def __init__(
+        self, parent: Parser, tag: Tag = tags.get('paragraph'), frompos: int = 0
+    ):
+        super().__init__(parent, tag, frompos, True)
 
 
 class InlineParser(Parser):
@@ -324,7 +327,7 @@ class TagBlockParser(StartEndParser):
     """Only for nodes whose content will be parsed into children and added to self.node."""
 
     contentparsers = {
-        tags.PARAGRAPH: ParagraphParser,
+        tags.PARAGRAPH: ParagraphTagOptionalParser,
         tags.INLINE: InlineParser,
         tags.ASIS: AsIsParser,
     }
@@ -416,78 +419,11 @@ class TagBlockParser(StartEndParser):
         return numchars
 
 
-class AuthorParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('author'), frompos)
-
-
-class AbstractParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('abstract'), frompos)
-
-
-class EnumerateParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('enumerate'), frompos)
-
-
-class ItemizeParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('itemize'), frompos)
-
-
-class ItemParser(BaseParagraphParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        if type(parent) not in [EnumerateParser, ItemizeParser]:
-            raise RSMParserError('Found an :item: ouside of :enumerate: or :itemize:')
-        super().__init__(parent, tags.get('item'), frompos)
-
-
-class CommentParser(BaseParagraphParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('comment'), frompos)
-
-
-class ClaimParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('claim'), frompos)
-
-
-class MathParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('math'), frompos)
-
-
-class SpanParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('span'), frompos)
-
-
-class TheoremParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('theorem'), frompos)
-
-
-class LemmaParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('lemma'), frompos)
-
-
-class DisplaymathParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('displaymath'), frompos)
-
-
-class KeywordParser(TagBlockParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('keyword'), frompos)
-
-
 class RefParser(StartEndParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
+    def __init__(self, parent: Parser, tag: Tag = tags.get('ref'), frompos: int = 0):
         super().__init__(
             parent=parent,
-            start=tags.get('ref'),
+            start=tag,
             end=Tombstone,
             frompos=frompos,
         )
@@ -528,10 +464,10 @@ class RefParser(StartEndParser):
 
 
 class CiteParser(StartEndParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
+    def __init__(self, parent: Parser, tag: Tag = tags.get('cite'), frompos: int = 0):
         super().__init__(
             parent=parent,
-            start=Tag('cite'),
+            start=tag,
             end=Tombstone,
             frompos=frompos,
         )
@@ -572,19 +508,28 @@ class ShouldHaveHeadingParser(TagBlockParser):
             logger.warn(f'{nodeclass} with empty title')
 
 
-class SectionParser(ShouldHaveHeadingParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('section'), frompos)
-
-
-class SubsectionParser(ShouldHaveHeadingParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('subsection'), frompos)
-
-
-class SubsubsectionParser(ShouldHaveHeadingParser):
-    def __init__(self, parent: Parser, frompos: int = 0):
-        super().__init__(parent, tags.get('subsubsection'), frompos)
+_parsers: dict[str, Type[Parser]] = {}
+_parsers['paragraph'] = ParagraphTagOptionalParser
+_parsers['item'] = BaseParagraphParser
+_parsers['comment'] = BaseParagraphParser
+for name in [
+    'author',
+    'abstract',
+    'enumerate',
+    'itemize',
+    'claim',
+    'math',
+    'span',
+    'theorem',
+    'lemma',
+    'displaymath',
+    'keyword',
+]:
+    _parsers[name] = TagBlockParser
+for name in ['section', 'subsection', 'subsubsection']:
+    _parsers[name] = TagBlockParser
+_parsers['ref'] = RefParser
+_parsers['cite'] = CiteParser
 
 
 class MetaParser(Parser):
@@ -822,13 +767,9 @@ class MetaPairParser(Parser):
 
 
 class ManuscriptParser(TagBlockParser):
-
     keywords = ['LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED']
-
     Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
-
     Placeholder = TagName('__PLACEHOLDER__')
-
     shortcuts = [
         Shortcut('*', '*', ':span: :strong: ' + Tombstone, Tombstone),
         Shortcut('###', '\n', ':subsubsection:\n  :title: ', '\n'),

@@ -819,7 +819,4 @@ class ManuscriptParser(TagBlockParser):
                 )
                 pos = right + 1
 
-        ic.enable()
-        ic(src)
-
         return PlainTextManuscript(src)

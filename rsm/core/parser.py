@@ -383,9 +383,11 @@ class TagRegionParser(DelimitedRegionParser):
         hint = starting_tag
         while hint != Tombstone:
             if hint in {None, Hint.NOTATAG, Hint.NOHINT}:
-                parser = self.contentparser(self, frompos=self.pos)
+                parser = self.contentparser(self, self.pos)
             else:
+                hint = tags.get(hint)
                 parser = self.get_subparser(hint)
+
             result = parser.parse()
             if not result.success:
                 raise RSMParserError('Something went wrong')

@@ -1,8 +1,23 @@
-"""
-tags.py
+"""tags.py
 -------
 
 Tag objects contain information about how a :tag: should be interpreted.
+
+A region in a RSM document is a sequence of consecutive characters.  Ther is no other
+restriction to what constitutes a region.  For example, a region may span several lines,
+start and end in the middle of a sentence, or otherwise carry no real (semantic or
+structural) meaning.  Tags are the way that the RSM markup language denotes which
+regions are meaningful.  If a region starts with a :tag: and ends with a tombstone '::',
+then it is considered a structurally meaningful region that indicates something about
+the structure of the document.  There are a few exceptions to this rule (see below).
+
+There are three different types of meaningful regions: blocks, paragraphs, and inlines.
+A paragraph is a region that contains a sequence of complete sentences.  A block is a
+region that can contain one or more paragraphs, as well as other block regions.  An
+inline is a region that can only be contained within a paragraph or another inline.
+
+At the time of writing, all blocks and inlines must start with a tag and end with a
+tombstone.  On the other hand, paragraphs have neither restriction.
 
 """
 

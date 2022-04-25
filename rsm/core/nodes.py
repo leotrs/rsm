@@ -123,7 +123,6 @@ class NodeWithChildren(Node):
         else:
             raise TypeError('Can only prepend a Node or iterable of Nodes as children')
 
-
     def remove(self, child: 'Node') -> None:
         self._children.remove(child)
 

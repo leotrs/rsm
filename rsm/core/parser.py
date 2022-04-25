@@ -7,7 +7,7 @@ RSM Parser: take a partial source string and output a single node.
 """
 
 from datetime import datetime
-from typing import Any, Type
+from typing import Any, Type, Optional
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from collections import namedtuple
@@ -64,9 +64,11 @@ class ParsingResult(BaseParsingResult):
 
 
 class Parser(ABC):
+    """All parsers work on regions."""
+
     src: PlainTextManuscript | str
 
-    def __init__(self, parent: 'Parser' = None, frompos: int = 0):
+    def __init__(self, parent: Optional['Parser'], frompos: int):
         self.parent: Parser | None = parent
         self.frompos: int = frompos
         if parent:
@@ -323,8 +325,14 @@ class StartEndParser(Parser):
         super()._post_process()
 
 
-class TagBlockParser(StartEndParser):
-    """Only for nodes whose content will be parsed into children and added to self.node."""
+class TagRegionParser(DelimitedRegionParser):
+    """Parser for regions that start at a tag and end with a Tombstone.
+
+    This includes all blocks and all inlines.
+
+    Only for nodes whose content will be parsed into children and added to self.node.
+
+    """
 
     contentparsers = {
         tags.PARAGRAPH: ParagraphTagOptionalParser,
@@ -335,10 +343,10 @@ class TagBlockParser(StartEndParser):
     def __init__(
         self,
         parent: Parser | None,
+        frompos: int,
         tag: Tag,
-        frompos: int = 0,
     ):
-        super().__init__(start=tag, end=Tombstone, parent=parent, frompos=frompos)
+        super().__init__(parent=parent, frompos=frompos, start=tag, end=Tombstone)
         self.tag: Tag = tag
         self.node: nodes.NodeWithChildren = tag.makenode()
         self.contentparser: Type[Parser] = self.contentparsers[tag.content_mode]
@@ -419,13 +427,13 @@ class TagBlockParser(StartEndParser):
         return numchars
 
 
-class RefParser(StartEndParser):
-    def __init__(self, parent: Parser, tag: Tag = tags.get('ref'), frompos: int = 0):
+class RefParser(DelimitedRegionParser):
+    def __init__(self, parent: Parser, frompos: int, tag: Tag = tags.get('ref')):
         super().__init__(
             parent=parent,
+            frompos=frompos,
             start=tag,
             end=Tombstone,
-            frompos=frompos,
         )
         self.tag = tags.get('ref')
         self.node: nodes.PendingReference = self.tag.makenode()
@@ -463,13 +471,13 @@ class RefParser(StartEndParser):
         )
 
 
-class CiteParser(StartEndParser):
-    def __init__(self, parent: Parser, tag: Tag = tags.get('cite'), frompos: int = 0):
+class CiteParser(DelimitedRegionParser):
+    def __init__(self, parent: Parser, frompos: int, tag: Tag = tags.get('cite')):
         super().__init__(
             parent=parent,
+            frompos=frompos,
             start=tag,
             end=Tombstone,
-            frompos=frompos,
         )
         self.tag = Tag('cite')
         self.node: nodes.Cite = self.tag.makenode()
@@ -533,19 +541,21 @@ _parsers['cite'] = CiteParser
 
 
 class MetaParser(Parser):
+    """Parser for regions that contain the meta pairs of some other region."""
+
     def __init__(
         self,
         parent: Parser,
-        node: nodes.Node,
         frompos: int = 0,
         inline_only: bool = False,
     ):
         super().__init__(parent=parent, frompos=frompos)
-        self.node: nodes.Node = node
         self.inline_only: bool = inline_only
         self.inline_mode: bool | None = True if inline_only else None
+        self.validkeys = set()
 
     def parse_into_node(self, node) -> ParsingResult:
+        self.validkeys = node.metakeys()
         result = self.parse()
         if result.success:
             ic(result)
@@ -565,7 +575,7 @@ class MetaParser(Parser):
         if self.inline_mode is None and Tombstone in self.src[left:right]:
             self.inline_mode = True
 
-        pairparser = MetaPairParser(parent=self)
+        pairparser = MetaPairParser(parent=self, validkeys=self.validkeys)
         meta = {}
         numchars = 0
         found = False
@@ -618,6 +628,7 @@ class MetaParser(Parser):
 
 
 class MetaPairParser(Parser):
+    """Parser for a region that contains a single meta pair."""
 
     parent: MetaParser
 
@@ -651,8 +662,9 @@ class MetaPairParser(Parser):
     block_delim = '\n'
     inline_delim = ','
 
-    def __init__(self, parent: MetaParser):
-        super().__init__(parent=parent)
+    def __init__(self, parent: MetaParser, validkeys):
+        super().__init__(parent=parent, frompos=parent.pos)
+        self.validkeys = validkeys
 
     def process(self) -> BaseParsingResult:
         oldpos = self.pos
@@ -669,7 +681,7 @@ class MetaPairParser(Parser):
             )
 
         # check if key is valid
-        if key.name not in self.parent.node.metakeys():
+        if key.name not in self.validkeys:
             ic('invalid key')
             return ParsingResult(
                 success=False,
@@ -787,7 +799,7 @@ class ManuscriptParser(TagBlockParser):
     def __init__(self, src: str):
         self.tag = tags.ManuscriptTag('manuscript')
         self.tag.set_source(src)
-        super().__init__(parent=None, tag=self.tag)
+        super().__init__(parent=None, frompos=0, tag=self.tag)
 
     def parse(self) -> nodes.Manuscript:
         self.node: nodes.Manuscript

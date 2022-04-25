@@ -807,27 +807,18 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         return PlainTextManuscript(src)
 
 
-# this should just iterate over all available tags and set all BlockTag instances to
-# BlockParser and so on...
-
 _parsers: dict[str, Type[Parser]] = {}
-for name in ['paragraph', 'item', 'comment']:
-    _parsers[name] = ParagraphParser
-for name in [
-    'author',
-    'abstract',
-    'enumerate',
-    'itemize',
-    'theorem',
-    'lemma',
-    'section',
-    'subsection',
-    'subsubsection',
-    'displaymath',
-]:
-    _parsers[name] = TagRegionParser
-for name in ['claim', 'span', 'keyword', 'math']:
-    _parsers[name] = TagRegionParser
+for tag in tags.all():
+    if isinstance(tag, tags.ParagraphTag):
+        _parsers[tag.name] = ParagraphParser
+    elif isinstance(tag, tags.BlockTag):
+        _parsers[tag.name] = TagRegionParser
+    elif isinstance(tag, tags.InlineTag):
+        _parsers[tag.name] = TagRegionParser
+    elif isinstance(tag, tags.Tag):
+        if tag is Tombstone:
+            continue
+        raise RSMParserError(f"I don't know what to do with tag {tag}")
 _parsers['ref'] = RefParser
 _parsers['cite'] = CiteParser
 _parsers['manuscript'] = ManuscriptParser

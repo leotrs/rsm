@@ -155,5 +155,5 @@ def get(name: str):
         raise KeyError(f'Unrecognized tag name {name}') from e
 
 
-def all_tags():
-    return list(_tags.keys())
+def all():
+    return list(_tags.values())

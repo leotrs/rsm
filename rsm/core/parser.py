@@ -502,7 +502,7 @@ class ShouldHaveHeadingParser(TagRegionParser):
     def _post_process(self) -> None:
         if not self.node.title:
             nodeclass = self.node.__class__.__name__
-            logger.warn(f'{nodeclass} with empty title')
+            logger.warning(f'{nodeclass} with empty title')
         super()._post_process()
 
 

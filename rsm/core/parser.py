@@ -249,14 +249,7 @@ class ParagraphParser(Parser):
         )
 
 
-class ParagraphTagOptionalParser(BaseParagraphParser):
-    def __init__(
-        self, parent: Parser, tag: Tag = tags.get('paragraph'), frompos: int = 0
-    ):
-        super().__init__(parent, tag, frompos, True)
-
-
-class InlineParser(Parser):
+class InlineContentParser(Parser):
     def process(self) -> BaseParsingResult:
         oldpos = self.pos
         children = []
@@ -286,7 +279,7 @@ class InlineParser(Parser):
         )
 
 
-class AsIsParser(Parser):
+class AsIsContentParser(Parser):
     def process(self) -> ParsingResult:
         oldpos = self.pos
         index = self.src.index(Tombstone, self.pos)
@@ -336,9 +329,9 @@ class TagRegionParser(DelimitedRegionParser):
     """
 
     contentparsers = {
-        tags.PARAGRAPH: ParagraphTagOptionalParser,
-        tags.INLINE: InlineParser,
-        tags.ASIS: AsIsParser,
+        tags.BLOCK: ParagraphParser,
+        tags.INLINE: InlineContentParser,
+        tags.ASIS: AsIsContentParser,
     }
 
     def __init__(
@@ -510,35 +503,12 @@ class CiteParser(DelimitedRegionParser):
         )
 
 
-class ShouldHaveHeadingParser(TagBlockParser):
+class ShouldHaveHeadingParser(TagRegionParser):
     def _post_process(self) -> None:
         if not self.node.title:
             nodeclass = self.node.__class__.__name__
             logger.warn(f'{nodeclass} with empty title')
-
-
-_parsers: dict[str, Type[Parser]] = {}
-_parsers['paragraph'] = ParagraphTagOptionalParser
-_parsers['item'] = BaseParagraphParser
-_parsers['comment'] = BaseParagraphParser
-for name in [
-    'author',
-    'abstract',
-    'enumerate',
-    'itemize',
-    'claim',
-    'math',
-    'span',
-    'theorem',
-    'lemma',
-    'displaymath',
-    'keyword',
-]:
-    _parsers[name] = TagBlockParser
-for name in ['section', 'subsection', 'subsubsection']:
-    _parsers[name] = TagBlockParser
-_parsers['ref'] = RefParser
-_parsers['cite'] = CiteParser
+        super()._post_process()
 
 
 class MetaParser(Parser):
@@ -779,7 +749,7 @@ class MetaPairParser(Parser):
         return [x.strip() for x in value.split(',')], numchars
 
 
-class ManuscriptParser(TagBlockParser):
+class ManuscriptParser(ShouldHaveHeadingParser):
     keywords = ['LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED']
     Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
     Placeholder = TagName('__PLACEHOLDER__')
@@ -833,3 +803,29 @@ class ManuscriptParser(TagBlockParser):
                 pos = right + 1
 
         return PlainTextManuscript(src)
+
+
+# this should just iterate over all available tags and set all BlockTag instances to
+# BlockParser and so on...
+
+_parsers: dict[str, Type[Parser]] = {}
+for name in ['paragraph', 'item', 'comment']:
+    _parsers[name] = ParagraphParser
+for name in [
+    'author',
+    'abstract',
+    'enumerate',
+    'itemize',
+    'theorem',
+    'lemma',
+    'section',
+    'subsection',
+    'subsubsection',
+    'displaymath',
+]:
+    _parsers[name] = TagRegionParser
+for name in ['claim', 'span', 'keyword', 'math']:
+    _parsers[name] = TagRegionParser
+_parsers['ref'] = RefParser
+_parsers['cite'] = CiteParser
+_parsers['manuscript'] = ManuscriptParser

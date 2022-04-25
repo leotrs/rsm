@@ -41,11 +41,13 @@ class TagName(str):
 
 
 class ContentMode(Enum):
+    BLOCK = auto()
     PARAGRAPH = auto()
     INLINE = auto()
     ASIS = auto()
 
 
+BLOCK = ContentMode.BLOCK
 PARAGRAPH = ContentMode.PARAGRAPH
 INLINE = ContentMode.INLINE
 ASIS = ContentMode.ASIS
@@ -151,3 +153,7 @@ def get(name: str):
         return _tags[name]
     except KeyError as e:
         raise KeyError(f'Unrecognized tag name {name}') from e
+
+
+def all_tags():
+    return list(_tags.keys())

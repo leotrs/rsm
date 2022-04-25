@@ -82,6 +82,7 @@ class Node:
         index = self.parent.children.index(self)
         self.parent.remove(self)
         self.parent._children.insert(index, replace)
+        replace.parent = self.parent
 
     def ingest_dict_as_meta(self, meta: dict) -> None:
         for key, value in meta.items():

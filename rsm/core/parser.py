@@ -147,16 +147,18 @@ class Parser(ABC):
             parserclass = _parsers[tag.name]
         except KeyError as e:
             raise RSMParserError(f'No parser for tag {tag}') from e
-        return parserclass(self, tags.get(tag.name), self.pos)
+        return parserclass(self, self.pos, tags.get(tag.name))
 
 
-class BaseParagraphParser(Parser):
+class ParagraphParser(Parser):
+    """Paraser for regions that are paragraphs. Whether the tag is optional is read from the
+    tag object itself."""
+
     def __init__(
         self,
         parent: Parser,
-        tag: Tag,
-        frompos: int = 0,
-        tag_optional: bool = False,
+        frompos: int,
+        tag: Tag = tags.get('paragraph'),
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.tag_optional = tag_optional
@@ -185,9 +187,7 @@ class BaseParagraphParser(Parser):
         if tag:
             self.pos += len(self.tag)
             self.consume_whitespace()
-            metaparser = MetaParser(
-                self, self.node, self.pos, self.tag.meta_inline_only
-            )
+            metaparser = MetaParser(self, self.pos, self.tag.meta_inline_only)
             result = metaparser.parse_into_node(self.node)
             self.pos += result.consumed
             if not result.success:
@@ -299,8 +299,10 @@ class AsIsParser(Parser):
         )
 
 
-class StartEndParser(Parser):
-    def __init__(self, start: str, end: str, parent: Parser | None, frompos: int = 0):
+class DelimitedRegionParser(Parser):
+    """Parser for regions with a set starting string and ending string."""
+
+    def __init__(self, parent: Parser | None, frompos: int, start: str, end: str):
         super().__init__(parent=parent, frompos=frompos)
         if not start.strip():
             raise RSMParserError('Block starting string cannot be whitespace')
@@ -355,7 +357,7 @@ class TagRegionParser(DelimitedRegionParser):
         oldpos = self.pos
         self.consume_starttag()
         self.consume_whitespace()
-        metaparser = MetaParser(self, self.node, self.pos, self.tag.meta_inline_only)
+        metaparser = MetaParser(self, self.pos, self.tag.meta_inline_only)
         result = metaparser.parse_into_node(self.node)
         self.pos += result.consumed
 

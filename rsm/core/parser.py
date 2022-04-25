@@ -29,16 +29,11 @@ class RSMParserError(Exception):
     pass
 
 
-class Hint(Enum):
-    NOTATAG = auto()
-    NOHINT = auto()
-
-
 @dataclass(frozen=True)
 class BaseParsingResult:
     success: bool
     result: Any = None
-    hint: Hint | TagName = Hint.NOHINT
+    hint: TagName | None = None
     consumed: int = 0
 
     @staticmethod
@@ -198,16 +193,14 @@ class ParagraphParser(Parser):
         result = self.parse_content()
         self.consume_whitespace()
         if self.pos == self.frompos:
-            return ParsingResult(
-                success=False, result=None, hint=Hint.NOHINT, consumed=0
-            )
+            return ParsingResult(success=False, result=None, hint=None, consumed=0)
 
         self.node.append(result.result)
 
         return ParsingResult(
             success=True,
             result=self.node,
-            hint=Hint.NOHINT,
+            hint=None,
             consumed=self.pos - self.frompos,
         )
 
@@ -245,7 +238,7 @@ class ParagraphParser(Parser):
             children[-1].text = children[-1].text[:-2]
 
         return BaseParsingResult(
-            success=True, result=children, hint=Hint.NOHINT, consumed=self.pos - oldpos
+            success=True, result=children, hint=None, consumed=self.pos - oldpos
         )
 
 
@@ -275,7 +268,7 @@ class InlineContentParser(Parser):
             children.append(nodes.Text(text=self.src[left : self.pos]))
 
         return BaseParsingResult(
-            success=True, result=children, hint=Hint.NOHINT, consumed=self.pos - oldpos
+            success=True, result=children, hint=None, consumed=self.pos - oldpos
         )
 
 
@@ -361,7 +354,7 @@ class TagRegionParser(DelimitedRegionParser):
             return ParsingResult(
                 success=True,
                 result=self.node,
-                hint=Hint.NOHINT,
+                hint=None,
                 consumed=self.pos - oldpos,
             )
         self.consume_whitespace()
@@ -371,7 +364,7 @@ class TagRegionParser(DelimitedRegionParser):
                 result, result=self.node, consumed=self.pos - oldpos
             )
 
-        tag = result.hint if result.hint != Hint.NOHINT else self.get_tagname_at_pos()
+        tag = result.hint if result.hint != None else self.get_tagname_at_pos()
         result = self.parse_content(tag)
 
         return ParsingResult.from_result(result, consumed=self.pos - oldpos)
@@ -382,7 +375,7 @@ class TagRegionParser(DelimitedRegionParser):
 
         hint = starting_tag
         while hint != Tombstone:
-            if hint in {None, Hint.NOTATAG, Hint.NOHINT}:
+            if hint is None:
                 parser = self.contentparser(self, self.pos)
             else:
                 hint = tags.get(hint)
@@ -462,7 +455,7 @@ class RefParser(DelimitedRegionParser):
         return ParsingResult(
             success=True,
             result=self.node,
-            hint=Hint.NOHINT,
+            hint=None,
             consumed=self.pos - oldpos,
         )
 
@@ -500,7 +493,7 @@ class CiteParser(DelimitedRegionParser):
         return ParsingResult(
             success=True,
             result=self.node,
-            hint=Hint.NOHINT,
+            hint=None,
             consumed=self.pos - oldpos,
         )
 
@@ -535,12 +528,12 @@ class MetaParser(Parser):
             node.ingest_dict_as_meta(result.result)
             return ParsingResult.from_result(result, result=node)
         else:
-            return ParsingResult.from_result(result, result=None, hint=Hint.NOHINT)
+            return ParsingResult.from_result(result, result=None, hint=None)
 
     def process(self) -> BaseParsingResult:
         oldpos = self.pos
         if not self.src[self.frompos].startswith(Tag.delim):  # there is no meta
-            return BaseParsingResult(True, {}, Hint.NOHINT, 0)
+            return BaseParsingResult(True, {}, None, 0)
 
         left = self.frompos
         right = left + self.src[left:].index('\n')
@@ -592,7 +585,7 @@ class MetaParser(Parser):
             result = BaseParsingResult(
                 success=True,
                 result=meta,
-                hint=Hint.NOHINT,
+                hint=None,
                 consumed=self.pos - oldpos,
             )
 
@@ -649,7 +642,7 @@ class MetaPairParser(Parser):
             return ParsingResult(
                 success=False,
                 result=None,
-                hint=Hint.NOHINT,
+                hint=None,
                 consumed=self.pos - oldpos,
             )
 
@@ -683,7 +676,7 @@ class MetaPairParser(Parser):
         elif self.src[self.pos :].startswith(Tombstone):
             hint = Tombstone
         else:
-            hint = Hint.NOHINT
+            hint = None
 
         ic(self.pos, key.name, value)
         return BaseParsingResult(

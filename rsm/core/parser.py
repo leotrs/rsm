@@ -161,7 +161,6 @@ class ParagraphParser(Parser):
         tag: Tag = tags.get('paragraph'),
     ):
         super().__init__(parent=parent, frompos=frompos)
-        self.tag_optional = tag_optional
         self.tag = tag
         self.node: nodes.Paragraph = tag.makenode()
 
@@ -176,7 +175,7 @@ class ParagraphParser(Parser):
         self.pos = self.frompos
 
         tag = self.get_tagname_at_pos()
-        if not self.tag_optional:
+        if not self.tag.tag_optional:
             if not tag:
                 raise RSMParserError(f'Was expecting {self.tag}, found nothing')
             if tag != self.tag:
@@ -269,7 +268,7 @@ class InlineParser(Parser):
                 self.pos += 1
                 continue
             tag = tags.get(tagname)
-            if not tag.may_be_inline:
+            if not isinstance(tag, tags.InlineTag):
                 raise RSMParserError(f'Tag {tag} cannot be inline')
             if self.pos > left:
                 children.append(nodes.Text(text=self.src[left : self.pos]))

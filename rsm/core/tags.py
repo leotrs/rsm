@@ -53,12 +53,11 @@ ASIS = ContentMode.ASIS
 
 class Tag(TagName):
     delim: str = TagName.delim
+    nodeclass: Type[nodes.Node] | None = None
     has_content: bool = False
     content_mode: ContentMode | None = None
-    nodeclass: Type[nodes.Node] | None = None
     meta_inline_only: bool = False
-    may_be_block: bool = True
-    may_be_inline: bool = True
+    tag_optional: bool = False
 
     def makenode(self) -> nodes.Node:
         if self.nodeclass is None:
@@ -74,8 +73,7 @@ class Tag(TagName):
         has_content=None,
         content_mode=None,
         meta_inline_only=None,
-        may_be_block=None,
-        may_be_inline=None,
+        tag_optional=None,
     ):
         name = name or nodeclass.__name__.lower()
         tag = cls(name)
@@ -83,44 +81,35 @@ class Tag(TagName):
         tag.has_content = has_content or cls.has_content
         tag.content_mode = content_mode or cls.content_mode
         tag.meta_inline_only = meta_inline_only or cls.meta_inline_only
-        tag.may_be_block = may_be_block or cls.may_be_block
-        tag.may_be_inline = may_be_inline or cls.may_be_inline
+        tag.tag_optional = tag_optional or cls.tag_optional
         return tag
 
 
-class InlineTag(Tag):
+class ParagraphTag(Tag):
+    nodeclass: Type[nodes.Paragraph] = nodes.Paragraph
     has_content: bool = True
-    content_mode: ContentMode = INLINE
-    nodeclass: Type[nodes.Node] | None = None
-    meta_inline_only: bool = True
-    may_be_block: bool = False
-    may_be_inline: bool = True
-
-
-class SpecialInlineTag(Tag):
-    has_content: bool = False
-    content_mode: None = None
-    nodeclass: Type[nodes.Node] | None = None
-    meta_inline_only: bool = True
-    may_be_block: bool = False
-    may_be_inline: bool = True
+    content_mode: ContentMode = PARAGRAPH
+    meta_inline_only: bool = False
+    tag_optional: bool = False
 
 
 class BlockTag(Tag):
-    has_content: bool = True
-    content_mode: ContentMode = PARAGRAPH
     nodeclass: Type[nodes.Node] | None = None
+    has_content: bool = True
+    content_mode: ContentMode = BLOCK
     meta_inline_only: bool = False
-    may_be_block: bool = True
-    may_be_inline: bool = True
+    tag_optional: bool = False
 
 
-class BlockOnlyTag(BlockTag):
-    may_be_block: bool = True
-    may_be_inline: bool = False
+class InlineTag(Tag):
+    nodeclass: Type[nodes.Node] | None = None
+    has_content: bool = True
+    content_mode: ContentMode = INLINE
+    meta_inline_only: bool = True
+    tag_optional: bool = False
 
 
-class ManuscriptTag(BlockOnlyTag):
+class ManuscriptTag(BlockTag):
     nodeclass: Type[nodes.Node] = nodes.Manuscript
 
     def set_source(self, src):
@@ -132,25 +121,25 @@ class ManuscriptTag(BlockOnlyTag):
 
 Tombstone = Tag('')
 _tags = {}
-_tags['paragraph'] = BlockTag.newtag(nodes.Paragraph)
-_tags['author'] = BlockOnlyTag.newtag(nodes.Author, has_content=False)
-_tags['abstract'] = BlockOnlyTag.newtag(nodes.Abstract)
+_tags['paragraph'] = ParagraphTag.newtag(nodes.Paragraph, tag_optional=True)
+_tags['item'] = ParagraphTag.newtag(nodes.Item)
+_tags['comment'] = ParagraphTag.newtag(nodes.Comment)
+_tags['author'] = BlockTag.newtag(nodes.Author, has_content=False)
+_tags['abstract'] = BlockTag.newtag(nodes.Abstract)
 _tags['enumerate'] = BlockTag.newtag(nodes.Enumerate)
 _tags['itemize'] = BlockTag.newtag(nodes.Itemize)
-_tags['item'] = BlockTag.newtag(nodes.Item)
-_tags['comment'] = BlockTag.newtag(nodes.Comment)
-_tags['theorem'] = BlockOnlyTag.newtag(nodes.Theorem)
-_tags['lemma'] = BlockOnlyTag.newtag(nodes.Lemma)
-_tags['displaymath'] = BlockOnlyTag.newtag(nodes.DisplayMath, content_mode=ASIS)
-_tags['section'] = BlockOnlyTag.newtag(nodes.Section)
-_tags['subsection'] = BlockOnlyTag.newtag(nodes.Subsection)
-_tags['subsubsection'] = BlockOnlyTag.newtag(nodes.Subsubsection)
-_tags['keyword'] = BlockTag.newtag(nodes.Keyword, content_mode=ASIS)
+_tags['theorem'] = BlockTag.newtag(nodes.Theorem)
+_tags['lemma'] = BlockTag.newtag(nodes.Lemma)
+_tags['section'] = BlockTag.newtag(nodes.Section)
+_tags['subsection'] = BlockTag.newtag(nodes.Subsection)
+_tags['subsubsection'] = BlockTag.newtag(nodes.Subsubsection)
+_tags['displaymath'] = BlockTag.newtag(nodes.DisplayMath, content_mode=ASIS)
 _tags['claim'] = InlineTag.newtag(nodes.Claim)
 _tags['span'] = InlineTag.newtag(nodes.Span)
+_tags['keyword'] = InlineTag.newtag(nodes.Keyword, content_mode=ASIS)
 _tags['math'] = InlineTag.newtag(nodes.Math, content_mode=ASIS)
-_tags['ref'] = SpecialInlineTag.newtag(nodes.PendingReference, name='ref')
-_tags['cite'] = SpecialInlineTag.newtag(nodes.Cite)
+_tags['ref'] = InlineTag.newtag(nodes.PendingReference, name='ref', content_mode=ASIS)
+_tags['cite'] = InlineTag.newtag(nodes.Cite, content_mode=ASIS)
 _tags['manuscript'] = ManuscriptTag.newtag(nodes.Manuscript)
 _tags[''] = Tombstone
 

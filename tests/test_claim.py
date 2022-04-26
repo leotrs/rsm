@@ -31,7 +31,7 @@ def test_simple():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -55,5 +55,69 @@ def test_with_math():
         </section>
         </div>
         </body>
-        """
+        """,
+    )
+
+
+def test_lonely_claim():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        ⊢ $2+2=4$.
+
+        ::
+        """,
+        want="""\
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <p class="paragraph"><span class="claim"><span class="math">
+        \(2+2=4\)
+        </span></span>.</p>
+        </section>
+        </div>
+        </body>
+        """,
+    )
+
+
+def test_claim_within_list():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        We now make a bunch of claims
+        :enumerate:
+
+        :item: :label: one :: ⊢ $2+2=4$.
+
+        :item: :label: two :: ⊢ $3+3=6$.
+
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <p class="paragraph">We now make a bunch of claims
+        <ol class="enumerate">
+        <li id="one" class="item">
+        <span class="claim"><span class="math">
+        \(2+2=4\)
+        </span></span>.
+        </li><li id="two" class="item">
+        <span class="claim"><span class="math">
+        \(3+3=6\)
+        </span></span>.
+        </li>
+        </ol></p>
+        </section>
+        </div>
+        </body>
+        """,
     )

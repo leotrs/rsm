@@ -158,6 +158,8 @@ class ParagraphParser(Parser):
         super().__init__(parent=parent, frompos=frompos)
         self.tag = tag
         self.node: nodes.Paragraph = tag.makenode()
+        s = f'ParagraphParser created for tag {self.tag}'
+        ic(s)
 
     def _pre_process(self) -> None:
         cease = self.src[: self.frompos].rfind('\n')
@@ -176,18 +178,16 @@ class ParagraphParser(Parser):
             if tag != self.tag:
                 raise RSMParserError(f'Was expecting {self.tag} tag, found {tag}')
 
-        logger.warning('woops this is a warning')
-
-        if tag:
+        if tag and tag.name == self.tag.name:
             self.pos += len(self.tag)
             self.consume_whitespace()
             metaparser = MetaParser(self, self.pos, self.tag.meta_inline_only)
             result = metaparser.parse_into_node(self.node)
-            self.pos += result.consumed
             if not result.success:
                 raise RSMParserError(
                     f'Problem reading meta for paragraph block at position {self.pos}'
                 )
+            self.pos += result.consumed
             self.consume_whitespace()
 
         result = self.parse_content()
@@ -337,6 +337,8 @@ class TagRegionParser(DelimitedRegionParser):
         self.tag: Tag = tag
         self.node: nodes.NodeWithChildren = tag.makenode()
         self.contentparser: Type[Parser] = self.contentparsers[tag.content_mode]
+        s = f'TagRegionParser created for tag {self.tag}'
+        ic(s)
 
     def process(self) -> ParsingResult:
         oldpos = self.pos
@@ -378,8 +380,22 @@ class TagRegionParser(DelimitedRegionParser):
             if hint is None:
                 parser = self.contentparser(self, self.pos)
             else:
-                hint = tags.get(hint)
-                parser = self.get_subparser(hint)
+                nexttag = tags.get(hint)
+                if self.tag.content_mode == tags.BLOCK:
+                    if isinstance(nexttag, tags.InlineTag):
+                        # We have found an inline tag at the start of a block that we
+                        # expected to be a paragraph.  Since all our children must be
+                        # paragraphs, create a paragraph parser instead of the
+                        # appropriate inline parser, and let the paragraph parser take
+                        # care of the inline tag we have just found.
+                        nexttag = tags.get('paragraph')
+                elif self.tag.content_mode == tags.INLINE:
+                    if isinstance(nexttag, tags.BlockTag):
+                        # Inline regions cannot contain blocks!
+                        raise RSMParserError(
+                            f'Found block {nexttag} inside inline {self.tag}'
+                        )
+                parser = self.get_subparser(nexttag)
 
             result = parser.parse()
             if not result.success:

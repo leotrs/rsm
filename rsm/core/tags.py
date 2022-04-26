@@ -1,4 +1,5 @@
-"""tags.py
+"""
+tags.py
 -------
 
 Tag objects contain information about how a :tag: should be interpreted.
@@ -18,6 +19,16 @@ inline is a region that can only be contained within a paragraph or another inli
 
 At the time of writing, all blocks and inlines must start with a tag and end with a
 tombstone.  On the other hand, paragraphs have neither restriction.
+
+A typical region is comprised of the following parts: a tag, an optional meta region,
+the content, and the tombstone.  As mentioned before, if the region is a paragraph, the
+tag is optional and the ending delimiter is a blank line instead of a Tombstone.
+
+The content of a tag can be either itself or 'as is'.  More concretely, a block tag may
+declare its 'content mode' to be 'block' or 'as is', while the content mode of an inline
+tag may be 'inline' or 'as is'.  If the content mode of a (block or inline) tag is 'as
+is', its contents will not be parsed at all and will be gathered into a single Text node
+and added to the manuscrip tree without change.
 
 """
 

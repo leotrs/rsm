@@ -21,18 +21,21 @@ class RSMNodeError(Exception):
 
 @dataclass
 class Node:
+    classreftext: ClassVar[str] = '{nodeclass} {number}'
 
     # meta keys
     label: str = ''
     types: list[str] = field(default_factory=list)
-    parent: Optional['NodeWithChildren'] = None
     nonum: bool = False
-    classreftext: str = '{nodeclass} {number}'
     customreftext: InitVar[str] = ''
     _newmetakeys: ClassVar[set] = {'label', 'types', 'nonum', 'reftext'}
 
     # non-meta instance variables
     number: int | None = None
+    # we need parent to be a property, see https://stackoverflow.com/a/61480946/14157230
+    # for how this works
+    _parent: Optional['NodeWithChildren'] = field(init=False, default=None)
+    parent: Optional['NodeWithChildren'] = None
 
     def __post_init__(self, customreftext: str):
         self._reftext = customreftext
@@ -42,6 +45,17 @@ class Node:
         return cls._newmetakeys.union(
             *[b.metakeys() for b in cls.__bases__ if hasattr(b, 'metakeys')]
         )
+
+    @property
+    def parent(self) -> Optional['NodeWithChildren']:
+        return self._parent
+
+    @parent.setter
+    def parent(self, node) -> None:
+        if isinstance(node, property):
+            # initial value not specified, use default
+            node = self._parent
+        self._parent = node
 
     @property
     def children(self) -> tuple:

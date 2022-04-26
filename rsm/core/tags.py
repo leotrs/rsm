@@ -27,8 +27,9 @@ tag is optional and the ending delimiter is a blank line instead of a Tombstone.
 The content of a tag can be either itself or 'as is'.  More concretely, a block tag may
 declare its 'content mode' to be 'block' or 'as is', while the content mode of an inline
 tag may be 'inline' or 'as is'.  If the content mode of a (block or inline) tag is 'as
-is', its contents will not be parsed at all and will be gathered into a single Text node
-and added to the manuscrip tree without change.
+is', its contents will not be parsed as RSM syntax and will be gathered into a single
+Text node and added to the manuscript tree without change.  The contents of a paragraph
+are always parsed as RSM syntax.
 
 """
 

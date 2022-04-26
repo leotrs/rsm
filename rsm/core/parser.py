@@ -366,12 +366,12 @@ class TagRegionParser(DelimitedRegionParser):
                 result, result=self.node, consumed=self.pos - oldpos
             )
 
-        tag = result.hint if result.hint != None else self.get_tagname_at_pos()
+        tag = result.hint if result.hint is not None else self.get_tagname_at_pos()
         result = self.parse_content(tag)
 
         return ParsingResult.from_result(result, consumed=self.pos - oldpos)
 
-    def parse_content(self, starting_tag: Tag | None) -> ParsingResult:
+    def parse_content(self, starting_tag: TagName | None) -> ParsingResult:
         s = f'{self.__class__.__name__}.parse_content start'
         oldpos = self.pos
 
@@ -817,17 +817,17 @@ class ManuscriptParser(ShouldHaveHeadingParser):
 
 
 _parsers: dict[str, Type[Parser]] = {}
-for tag in tags.all():
-    if isinstance(tag, tags.ParagraphTag):
-        _parsers[tag.name] = ParagraphParser
-    elif isinstance(tag, tags.BlockTag):
-        _parsers[tag.name] = TagRegionParser
-    elif isinstance(tag, tags.InlineTag):
-        _parsers[tag.name] = TagRegionParser
-    elif isinstance(tag, tags.Tag):
-        if tag is Tombstone:
+for t in tags.all():
+    if isinstance(t, tags.ParagraphTag):
+        _parsers[t.name] = ParagraphParser
+    elif isinstance(t, tags.BlockTag):
+        _parsers[t.name] = TagRegionParser
+    elif isinstance(t, tags.InlineTag):
+        _parsers[t.name] = TagRegionParser
+    elif isinstance(t, tags.Tag):
+        if t is Tombstone:
             continue
-        raise RSMParserError(f"I don't know what to do with tag {tag}")
+        raise RSMParserError(f"I don't know what to do with tag {t}")
 _parsers['ref'] = RefParser
 _parsers['cite'] = CiteParser
 _parsers['manuscript'] = ManuscriptParser

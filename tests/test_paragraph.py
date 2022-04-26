@@ -13,7 +13,7 @@ def test_preceding_blankline():
 
             ::
             """,
-            want='XXX'
+            want='XXX',
         )
 
     with pytest.raises(rsm.core.parser.RSMParserError):
@@ -25,7 +25,7 @@ def test_preceding_blankline():
 
             ::
             """,
-            want='XXX'
+            want='XXX',
         )
 
 
@@ -38,7 +38,7 @@ def test_succeeding_blankline():
             This is a paragraph.
             ::
             """,
-            want='XXX'
+            want='XXX',
         )
 
     with pytest.raises(rsm.core.parser.RSMParserError):
@@ -49,7 +49,7 @@ def test_succeeding_blankline():
             :paragraph: This is a paragraph.
             ::
             """,
-            want='XXX'
+            want='XXX',
         )
 
 
@@ -67,14 +67,11 @@ def test_start_with_tag():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph"><span class="span">
-        <strong>this tag</strong>
-        </span>
-        starts the paragraph.</p>
+        <p class="paragraph"><span class="span"><strong>this tag </strong></span> starts the paragraph.</p>
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -98,7 +95,7 @@ def test_start_with_shortcut():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -134,7 +131,7 @@ def test_no_meta():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -189,5 +186,5 @@ def test_simple():
         </section>
         </div>
         </body>
-        """
+        """,
     )

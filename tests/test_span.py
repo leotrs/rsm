@@ -170,3 +170,25 @@ def test_span_part_of_word():
         </body>
         """,
     )
+
+
+def test_span_part_of_word_with_shortcut():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        This word is half bold *bo*ring.
+
+        ::
+        """,
+        want="""\
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <p class="paragraph">This word is half bold <span class="span"><strong>bo</strong></span>ring.</p>
+        </section>
+        </div>
+        </body>
+        """,
+    )

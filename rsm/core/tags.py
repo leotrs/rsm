@@ -53,13 +53,11 @@ class TagName(str):
 
 class ContentMode(Enum):
     BLOCK = auto()
-    PARAGRAPH = auto()
     INLINE = auto()
     ASIS = auto()
 
 
 BLOCK = ContentMode.BLOCK
-PARAGRAPH = ContentMode.PARAGRAPH
 INLINE = ContentMode.INLINE
 ASIS = ContentMode.ASIS
 
@@ -101,7 +99,7 @@ class Tag(TagName):
 class ParagraphTag(Tag):
     nodeclass: Type[nodes.Paragraph] = nodes.Paragraph
     has_content: bool = True
-    content_mode: ContentMode = PARAGRAPH
+    content_mode: ContentMode = INLINE
     meta_inline_only: bool = False
     tag_optional: bool = False
 

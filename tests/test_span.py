@@ -19,7 +19,7 @@ def test_one_span():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -42,7 +42,7 @@ def test_two_spans():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -68,7 +68,7 @@ def test_nested():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -96,7 +96,7 @@ def test_span_with_multiline_meta():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -124,7 +124,7 @@ def test_multiline_span():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -146,5 +146,27 @@ def test_span_with_label():
         </section>
         </div>
         </body>
-        """
+        """,
+    )
+
+
+def test_span_part_of_word():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        This word is half bold :span: :strong: ::bo::ring.
+
+        ::
+        """,
+        want="""\
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <p class="paragraph">This word is half bold <span class="span"><strong>bo</strong></span>ring.</p>
+        </section>
+        </div>
+        </body>
+        """,
     )

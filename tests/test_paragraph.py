@@ -90,8 +90,14 @@ def test_start_with_shortcut():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph"><span class="claim">The eigenvalues <span clas="math">\(\pm1\)</span> of the NB matrix <span class="math">\(\mathbf{B}\)</span> admit a basis that is
-        orthonormal with respect to <span class="math">\(\langle \cdot, \cdot \rangle\)</span>.</p>
+        <p class="paragraph"><span class="claim">The eigenvalues <span class="math">
+        \(\pm1\)
+        </span> of the NB matrix <span class="math">
+        \(\mathbf{B}\)
+        </span> admit a basis that is
+        orthonormal with respect to <span class="math">
+        \(\langle \cdot, \cdot \rangle\)
+        </span></span>.</p>
         </section>
         </div>
         </body>

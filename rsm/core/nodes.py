@@ -6,7 +6,7 @@ Nodes that make up the Manuscript tree.
 
 """
 
-from dataclasses import dataclass, field, InitVar
+from dataclasses import dataclass, field, InitVar, KW_ONLY
 from typing import Any, ClassVar, Type, Optional
 from collections.abc import Iterable
 from datetime import datetime
@@ -137,11 +137,12 @@ class Text(Node):
 
 @dataclass
 class Span(NodeWithChildren):
-    strong: bool = field(kw_only=True, default=False)
-    emphas: bool = field(kw_only=True, default=False)
-    little: bool = field(kw_only=True, default=False)
-    insert: bool = field(kw_only=True, default=False)
-    delete: bool = field(kw_only=True, default=False)
+    _: KW_ONLY
+    strong: bool = False
+    emphas: bool = False
+    little: bool = False
+    insert: bool = False
+    delete: bool = False
     _newmetakeys: ClassVar[set] = {'strong', 'emphas', 'little', 'insert', 'delete'}
     attr_to_tag: ClassVar[dict] = {
         'strong': 'strong',

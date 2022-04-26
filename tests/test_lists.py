@@ -78,39 +78,39 @@ def test_item_with_wrong_parent():
     with pytest.raises(rsm.core.nodes.RSMNodeError):
         compare_have_want(
             have="""\
-        :manuscript:
+            :manuscript:
 
-        :item: Foo bar.
+            :item: Foo bar.
 
-        ::
-        """,
+            ::
+            """,
             want="XXX",
         )
 
     with pytest.raises(rsm.core.nodes.RSMNodeError):
         compare_have_want(
             have="""\
-        :manuscript:
+            :manuscript:
 
-        # Some section
+            # Some section
 
-        :item: Foo bar.
+            :item: Foo bar.
 
-        ::
-        """,
+            ::
+            """,
             want="XXX",
         )
 
     with pytest.raises(rsm.core.nodes.RSMNodeError):
         compare_have_want(
             have="""\
-        :manuscript:
+            :manuscript:
 
-        # Some section
+            # Some section
 
-        Lorem ipsum :item: Foo bar.
+            Lorem ipsum :item: Foo bar.
 
-        ::
-        """,
+            ::
+            """,
             want="XXX",
         )

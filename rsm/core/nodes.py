@@ -22,6 +22,7 @@ class RSMNodeError(Exception):
 @dataclass
 class Node:
     classreftext: ClassVar[str] = '{nodeclass} {number}'
+    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = set()
 
     # meta keys
     label: str = ''
@@ -53,8 +54,15 @@ class Node:
     @parent.setter
     def parent(self, node) -> None:
         if isinstance(node, property):
-            # initial value not specified, use default
-            node = self._parent
+            node = self._parent  # initial value not specified, use default
+        if node is None:
+            self._parent = node
+            return
+        possible_parents = self.__class__.possible_parents
+        if possible_parents and type(node) not in possible_parents:
+            raise RSMNodeError(
+                f'Node of type {type(self)} cannot have parent of type {type(node)}'
+            )
         self._parent = node
 
     @property
@@ -241,7 +249,7 @@ class Itemize(NodeWithChildren):
 
 @dataclass
 class Item(Paragraph):
-    pass
+    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Itemize, Enumerate}
 
 
 @dataclass

@@ -534,7 +534,7 @@ class MetaParser(Parser):
         super().__init__(parent=parent, frompos=frompos)
         self.inline_only: bool = inline_only
         self.inline_mode: bool | None = True if inline_only else None
-        self.validkeys = set()
+        self.validkeys: set = set()
 
     def parse_into_node(self, node) -> ParsingResult:
         self.validkeys = node.metakeys()
@@ -566,7 +566,7 @@ class MetaParser(Parser):
             if result.success:
                 found = True
                 key, value = result.result
-                meta[key] = value
+                meta[str(key)] = value
                 self.pos += result.consumed
                 numchars += result.consumed
                 numchars += self.consume_whitespace()
@@ -719,7 +719,7 @@ class MetaPairParser(Parser):
 
     def parse_datetime_value(self, key: str) -> tuple[datetime, int]:
         value, numchars = self.parse_upto_delim_value(key)
-        return datetime.fromisoformat(value), numchars
+        return datetime.fromisoformat(str(value)), numchars
 
     def parse_bool_value(self, key: str) -> tuple[bool, int]:
         return True, 0
@@ -789,7 +789,7 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         result = super().parse()
         return result.result
 
-    def apply_shortcuts(self, src: PlainTextManuscript | str) -> PlainTextManuscript:
+    def apply_shortcuts(self, src: PlainTextManuscript) -> PlainTextManuscript:
         logger.debug('applying shortcuts')
 
         for keyword in self.keywords:

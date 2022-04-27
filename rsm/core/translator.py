@@ -7,6 +7,7 @@ RSM Translator: take a Manuscript and return a HTML string.
 """
 
 import logging
+
 logger = logging.getLogger('RSM').getChild('Translator')
 
 from collections import namedtuple
@@ -34,7 +35,6 @@ def make_tag(tag, id, classes, newline=False):
     if newline:
         text += '\n'
     return text
-
 
 
 # FOR DOCUMENTATION: Classes that inherit from EditCommand are meant to encapsulate
@@ -70,7 +70,6 @@ class DummyCommand(EditCommand):
 
 
 class AppendTextAndDefer(EditCommand):
-
     def __init__(self, text: str, deferred_text: str):
         self.text = text
         self.deferred_text = deferred_text
@@ -85,7 +84,6 @@ class AppendTextAndDefer(EditCommand):
 
 
 class AppendText(EditCommand):
-
     def __init__(self, text: str):
         self.text = text
 
@@ -98,15 +96,14 @@ class AppendText(EditCommand):
 
 
 class AppendOpenCloseTag(AppendText):
-
     def __init__(
-            self,
-            tag: str = 'div',
-            content: str = '',
-            *,
-            id: str = '',
-            classes: list = None,
-            newline: bool = True
+        self,
+        tag: str = 'div',
+        content: str = '',
+        *,
+        id: str = '',
+        classes: list = None,
+        newline: bool = True,
     ):
         self.tag = tag
         self.content = content
@@ -126,14 +123,13 @@ class AppendOpenCloseTag(AppendText):
 
 
 class AppendOpenTag(AppendTextAndDefer):
-
     def __init__(
-            self,
-            tag: str = 'div',
-            *,
-            id: str = '',
-            classes: list = None,
-            newline: bool = True,
+        self,
+        tag: str = 'div',
+        *,
+        id: str = '',
+        classes: list = None,
+        newline: bool = True,
     ):
         self.tag = tag
         self.id = id
@@ -168,21 +164,16 @@ class AppendNodeTag(AppendOpenTag):
 
 
 class AppendParagraph(AppendOpenCloseTag):
-
     def __init__(
-            self,
-            content: str = '',
-            *,
-            id: str = '',
-            classes: list = None,
-            newline: bool = True,
+        self,
+        content: str = '',
+        *,
+        id: str = '',
+        classes: list = None,
+        newline: bool = True,
     ):
         super().__init__(
-            tag='p',
-            content=content,
-            id=id,
-            classes=classes,
-            newline=newline
+            tag='p', content=content, id=id, classes=classes, newline=newline
         )
 
     def __repr__(self) -> str:
@@ -190,15 +181,14 @@ class AppendParagraph(AppendOpenCloseTag):
 
 
 class AppendHeading(AppendOpenCloseTag):
-
     def __init__(
-            self,
-            level: int,
-            content: str = '',
-            *,
-            id: str = '',
-            classes: list = None,
-            newline: bool = False,
+        self,
+        level: int,
+        content: str = '',
+        *,
+        id: str = '',
+        classes: list = None,
+        newline: bool = False,
     ):
         self.level = level
         super().__init__(
@@ -206,7 +196,7 @@ class AppendHeading(AppendOpenCloseTag):
             content=content,
             id=id,
             classes=classes,
-            newline=newline
+            newline=newline,
         )
 
     def __repr__(self) -> str:
@@ -214,7 +204,6 @@ class AppendHeading(AppendOpenCloseTag):
 
 
 class EditCommandBatch(EditCommand):
-
     def __init__(self, items: Iterable):
         self.items = list(items)
 
@@ -227,7 +216,6 @@ class EditCommandBatch(EditCommand):
 
 
 class AppendBatchAndDefer(EditCommandBatch):
-
     def execute(self, translator: 'Translator') -> None:
         s = f'executing batch of len {len(self)}'
         ic(s)
@@ -247,7 +235,6 @@ class AppendBatchAndDefer(EditCommandBatch):
 
 
 class AppendBatch(EditCommandBatch):
-
     def execute(self, translator: 'Translator') -> None:
         s = f'executing closing batch of len {len(self)}'
         ic(s)
@@ -258,14 +245,12 @@ class AppendBatch(EditCommandBatch):
 
 
 class Action(namedtuple('Action', 'node action method')):
-
     def __repr__(self) -> str:
         classname = self.node.__class__.__name__
         return f'Action(node={classname}(), action="{self.action}")'
 
 
 class TranslateActionStack(list):
-
     def push_visit(self, node):
         self.append(Action(node, 'visit', Translator.get_visit_method(node)))
 
@@ -274,7 +259,6 @@ class TranslateActionStack(list):
 
 
 class Translator:
-
     def __init__(self):
         self.tree: AbstractTreeManuscript = None
         self.body: HTMLManuscript = ''
@@ -345,12 +329,14 @@ class Translator:
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         if not node.label:
             node.label = 'manuscript'
-        return AppendBatchAndDefer([
-            AppendOpenTag('body'),
-            AppendNodeTag(node),
-            AppendOpenTag('section', classes=['level-1']),
-            AppendHeading(1, node.title)
-        ])
+        return AppendBatchAndDefer(
+            [
+                AppendOpenTag('body'),
+                AppendNodeTag(node),
+                AppendOpenTag('section', classes=['level-1']),
+                AppendHeading(1, node.title),
+            ]
+        )
 
     def visit_author(self, node: nodes.Author) -> EditCommand:
         lines = [str(x) for x in [node.name, node.affiliation, node.email] if x]
@@ -361,17 +347,21 @@ class Translator:
             return AppendNodeTag(node)
 
     def visit_abstract(self, node: nodes.Abstract) -> EditCommand:
-        return AppendBatchAndDefer([
-            AppendNodeTag(node),
-            AppendHeading(3, 'Abstract'),
-        ])
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node),
+                AppendHeading(3, 'Abstract'),
+            ]
+        )
 
     def leave_abstract(self, node: nodes.Abstract) -> EditCommand:
         batch = AppendBatch([])
 
         if node.keywords:
             text = ', '.join(node.keywords)
-            batch.items.append(AppendParagraph(f'Keywords: {text}', classes=['keywords']))
+            batch.items.append(
+                AppendParagraph(f'Keywords: {text}', classes=['keywords'])
+            )
         if node.MSC:
             text = ', '.join(node.MSC)
             batch.items.append(AppendParagraph(f'MSC: {text}', classes=['MSC']))
@@ -386,10 +376,12 @@ class Translator:
     def visit_section(self, node: nodes.Section) -> EditCommand:
         node.types.insert(0, f'level-{node.level}')
         heading = f'{node.number}. {node.title}' if not node.nonum else f'{node.title}'
-        return AppendBatch([
-            AppendNodeTag(node, 'section'),
-            AppendHeading(node.level, heading),
-        ])
+        return AppendBatch(
+            [
+                AppendNodeTag(node, 'section'),
+                AppendHeading(node.level, heading),
+            ]
+        )
 
     def visit_enumerate(self, node: nodes.Enumerate) -> EditCommand:
         return AppendNodeTag(node, 'ol')
@@ -421,10 +413,12 @@ class Translator:
             for attr, tag in nodes.Span.attr_to_tag.items()
             if getattr(node, attr)
         ]
-        return AppendBatchAndDefer([
-            AppendNodeTag(node, tag='span', newline=False),
-            *commands,
-        ])
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node, tag='span', newline=False),
+                *commands,
+            ]
+        )
 
     def visit_reference(self, node: nodes.Reference) -> EditCommand:
         if not node.target:
@@ -433,7 +427,9 @@ class Translator:
         if node.overwrite_reftext:
             reftext = node.overwrite_reftext
         else:
-            reftext = tgt.reftext.format(nodeclass=tgt.__class__.__name__, number=tgt.number)
+            reftext = tgt.reftext.format(
+                nodeclass=tgt.__class__.__name__, number=tgt.number
+            )
         text = f'<a href="#{node.target.label}">{reftext}</a>'
         return AppendText(text)
 

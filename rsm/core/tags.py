@@ -162,7 +162,7 @@ def get(name: str):
     try:
         return _tags[name]
     except KeyError as e:
-        raise KeyError(f'Unrecognized tag name {name}') from e
+        raise KeyError(f'Unrecognized tag name "{name}"') from e
 
 
 def all():

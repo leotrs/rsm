@@ -107,7 +107,7 @@ def test_displaymath():
         :manuscript:
 
         This paragraph contains display math
-        $:2 + 2 = 4.:$
+        $$2 + 2 = 4.$$
 
         ::
         """,

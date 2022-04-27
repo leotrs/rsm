@@ -770,7 +770,7 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         Shortcut('###', '\n', ':subsubsection:\n  :title: ', '\n'),
         Shortcut('##', '\n', ':subsection:\n  :title: ', '\n'),
         Shortcut('#', '\n', ':section:\n  :title: ', '\n'),
-        Shortcut('$:', ':$', ':displaymath:\n', '\n' + Tombstone),
+        Shortcut('$$', '$$', ':displaymath:\n', '\n' + Tombstone),
         Shortcut('$', '$', r':math:', Tombstone),
         Shortcut('|-', '.', ':claim:', Tombstone + '.'),
         Shortcut('⊢', '.', ':claim:', Tombstone + '.'),

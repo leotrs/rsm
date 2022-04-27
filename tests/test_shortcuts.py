@@ -20,7 +20,7 @@ def test_one_strong():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -43,7 +43,7 @@ def test_two_strong():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -68,7 +68,7 @@ def test_one_math():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -97,7 +97,7 @@ def test_two_math():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -118,13 +118,14 @@ def test_displaymath():
         <h1></h1>
         <p class="paragraph">This paragraph contains display math
         <div class="displaymath">
-        $$2 + 2 = 4.$$
-
+        $$
+        2 + 2 = 4.
+        $$
         </div></p>
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -154,7 +155,7 @@ def test_section_shortcut():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
@@ -178,5 +179,5 @@ def test_claim_shortcut():
         </section>
         </div>
         </body>
-        """
+        """,
     )

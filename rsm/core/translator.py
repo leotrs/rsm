@@ -292,16 +292,16 @@ class Translator:
         while stack:
             ic(stack)
             node, action, method = stack.pop()
-            append = method(self, node)
+            command = method(self, node)
             if action == 'visit':
-                if append.defers:
+                if command.defers:
                     stack.push_leave(node)
                 for child in reversed(node.children):
                     stack.push_visit(child)
 
             ic('before executing')
             ic(len(self.deferred))
-            append.execute(self)
+            command.execute(self)
             ic('after executing')
             ic(len(self.deferred))
             ic(self.deferred)

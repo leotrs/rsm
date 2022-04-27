@@ -42,6 +42,8 @@ def make_tag(tag, id, classes, newline=False):
 # reusable on multiple node classes and is particular to just one node class, it should
 # go into the visit_* method corresponding to that class.
 class EditCommand(ABC):
+    defers = False
+
     @abstractmethod
     def execute(self, translator: 'Translator') -> None:
         pass
@@ -64,12 +66,9 @@ class EditCommand(ABC):
         return self._edit_command_repr([])
 
 
-class DummyCommand(EditCommand):
-    def execute(self, translator: 'Translator') -> None:
-        pass
-
-
 class AppendTextAndDefer(EditCommand):
+    defers = True
+
     def __init__(self, text: str, deferred_text: str):
         self.text = text
         self.deferred_text = deferred_text
@@ -146,8 +145,6 @@ class AppendOpenTag(AppendTextAndDefer):
 
 
 class AppendNodeTag(AppendOpenTag):
-    """Most inherited fields are ignored and overwritten."""
-
     def __init__(
         self,
         node: nodes.Node,
@@ -216,6 +213,8 @@ class EditCommandBatch(EditCommand):
 
 
 class AppendBatchAndDefer(EditCommandBatch):
+    defers = True
+
     def execute(self, translator: 'Translator') -> None:
         s = f'executing batch of len {len(self)}'
         ic(s)
@@ -282,6 +281,7 @@ class Translator:
         return cls._get_action_method(node, 'leave')
 
     def translate(self, tree: AbstractTreeManuscript) -> HTMLManuscript:
+        # ic.enable()
         self.tree = tree
 
         if self.deferred:
@@ -292,18 +292,19 @@ class Translator:
         while stack:
             ic(stack)
             node, action, method = stack.pop()
+            append = method(self, node)
             if action == 'visit':
-                stack.push_leave(node)
+                if append.defers:
+                    stack.push_leave(node)
                 for child in reversed(node.children):
                     stack.push_visit(child)
-            append = method(self, node)
 
             ic('before executing')
-            # ic(len(self.deferred))
+            ic(len(self.deferred))
             append.execute(self)
             ic('after executing')
-            # ic(len(self.deferred))
-            # ic(self.deferred)
+            ic(len(self.deferred))
+            ic(self.deferred)
 
         if self.deferred:
             raise RSMTranslatorError('Something went wrong')
@@ -365,8 +366,10 @@ class Translator:
             text = ', '.join(node.MSC)
             batch.items.append(AppendParagraph(f'MSC: {text}', classes=['MSC']))
 
+        # For documentation: if a visit_* method returns a command with defers = True,
+        # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
+        # add it to the returned batch!!!
         batch.items.append(self.leave_node(node))
-
         return batch
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
@@ -375,7 +378,7 @@ class Translator:
     def visit_section(self, node: nodes.Section) -> EditCommand:
         node.types.insert(0, f'level-{node.level}')
         heading = f'{node.number}. {node.title}' if not node.nonum else f'{node.title}'
-        return AppendBatch(
+        return AppendBatchAndDefer(
             [
                 AppendNodeTag(node, 'section'),
                 AppendHeading(node.level, heading),
@@ -403,9 +406,6 @@ class Translator:
     def visit_text(self, node: nodes.Text) -> EditCommand:
         return AppendText(node.text)
 
-    def leave_text(self, node: nodes.Text) -> EditCommand:
-        return DummyCommand()
-
     def visit_span(self, node: nodes.Span) -> EditCommand:
         commands = [
             AppendOpenTag(tag, newline=False)
@@ -432,9 +432,6 @@ class Translator:
         text = f'<a href="#{node.target.label}">{reftext}</a>'
         return AppendText(text)
 
-    def leave_reference(self, node: nodes.Reference) -> EditCommand:
-        return DummyCommand()
-
     def visit_claim(self, node: nodes.Claim) -> EditCommand:
         return AppendNodeTag(node, tag='span', newline=False)
 
@@ -448,6 +445,3 @@ class Translator:
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
         return AppendText('::This is a cite::')
-
-    def leave_cite(self, node: nodes.Cite) -> EditCommand:
-        return DummyCommand()

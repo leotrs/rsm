@@ -73,7 +73,7 @@ class Tag(TagName):
 
     def makenode(self) -> nodes.Node:
         if self.nodeclass is None:
-            raise ValueError(f'Tag with name {self.name} cannot create nodes')
+            raise ValueError(f'Tag with name "{self.name}" cannot create nodes')
         return self.nodeclass()
 
     @classmethod
@@ -142,6 +142,7 @@ _tags['enumerate'] = BlockTag.newtag(nodes.Enumerate)
 _tags['itemize'] = BlockTag.newtag(nodes.Itemize)
 _tags['theorem'] = BlockTag.newtag(nodes.Theorem)
 _tags['lemma'] = BlockTag.newtag(nodes.Lemma)
+_tags['remark'] = BlockTag.newtag(nodes.Remark)
 _tags['section'] = BlockTag.newtag(nodes.Section)
 _tags['subsection'] = BlockTag.newtag(nodes.Subsection)
 _tags['subsubsection'] = BlockTag.newtag(nodes.Subsubsection)

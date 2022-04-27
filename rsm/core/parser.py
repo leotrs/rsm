@@ -89,11 +89,14 @@ class Parser(ABC):
         pass
 
     def parse(self) -> BaseParsingResult:
+        _s = f'{self.__class__.__name__}'
+        if hasattr(self, 'tag'):
+            _s += f'({self.tag})'
         self._pre_process()
-        s = f'{self.__class__.__name__}.process start'
+        s = _s + '.process start'
         ic(s, self.pos)
         result = self.process()
-        s = f'{self.__class__.__name__}.process end'
+        s = _s + '.process end'
         ic(s, self.pos)
         self._post_process()
         return result
@@ -483,7 +486,7 @@ class CiteParser(DelimitedRegionParser):
             start=tag,
             end=Tombstone,
         )
-        self.tag = Tag('cite')
+        self.tag = tags.get('cite')
         self.node: nodes.Cite = self.tag.makenode()
 
     def process(self) -> ParsingResult:
@@ -778,7 +781,7 @@ class ManuscriptParser(ShouldHaveHeadingParser):
     ]
 
     def __init__(self, src: PlainTextManuscript):
-        ic.enable()
+        # ic.enable()
         self.tag = tags.ManuscriptTag('manuscript')
         self.tag.set_source(src)
         super().__init__(parent=None, frompos=0, tag=self.tag)

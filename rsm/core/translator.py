@@ -299,12 +299,11 @@ class Translator:
             append = method(self, node)
 
             ic('before executing')
-            ic(len(self.deferred))
+            # ic(len(self.deferred))
             append.execute(self)
             ic('after executing')
-            ic(len(self.deferred))
-            # ic([b.items if hasattr(b, 'items') else b for b in self.deferred ])
-            ic(self.deferred)
+            # ic(len(self.deferred))
+            # ic(self.deferred)
 
         if self.deferred:
             raise RSMTranslatorError('Something went wrong')

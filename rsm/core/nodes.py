@@ -299,5 +299,5 @@ class Lemma(Theorem):
 
 
 @dataclass
-class Remark(Paragraph):
+class Remark(Theorem):
     _newmetakeys: ClassVar[set] = set()

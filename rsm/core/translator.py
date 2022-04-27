@@ -398,10 +398,16 @@ class Translator:
         return AppendNodeTag(node)
 
     def visit_math(self, node: nodes.Math) -> EditCommand:
-        return AppendNodeTag(node, 'span')
+        # the strings r'\(' and r'\)' are MathJax's delimiters for inline math
+        return AppendBatchAndDefer(
+            [AppendNodeTag(node, 'span'), AppendTextAndDefer(r'\(', r'\)')]
+        )
 
     def visit_displaymath(self, node: nodes.DisplayMath) -> EditCommand:
-        return AppendNodeTag(node, 'div')
+        # the strings '$$' and '$$' are MathJax's delimiters for inline math
+        return AppendBatchAndDefer(
+            [AppendNodeTag(node, 'div'), AppendTextAndDefer('$$\n', '$$')]
+        )
 
     def visit_text(self, node: nodes.Text) -> EditCommand:
         return AppendText(node.text)

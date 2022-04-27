@@ -25,9 +25,7 @@ def test_simple():
         :displaymath:
           :label: eqn
           :reftext: Important Equation
-
-        2+2=4
-
+          2+2=4
         ::
 
         Here we refer to the :ref:eqn::.
@@ -40,12 +38,12 @@ def test_simple():
         <section class="level-1">
         <h1></h1>
         <div id="eqn" class="displaymath">
+        $$
         2+2=4
-
-
+        $$
         </div><p class="paragraph">Here we refer to the <a href="#eqn">Important Equation</a>.</p>
         </section>
         </div>
         </body>
-        """
+        """,
     )

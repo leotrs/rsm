@@ -765,19 +765,15 @@ class MetaPairParser(Parser):
 class ManuscriptParser(ShouldHaveHeadingParser):
     keywords = ['LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED']
     Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
-    Placeholder = TagName('__PLACEHOLDER__')
     shortcuts = [
         Shortcut('*', '*', ':span: :strong: ' + Tombstone, Tombstone),
         Shortcut('###', '\n', ':subsubsection:\n  :title: ', '\n'),
         Shortcut('##', '\n', ':subsection:\n  :title: ', '\n'),
         Shortcut('#', '\n', ':section:\n  :title: ', '\n'),
-        Shortcut(
-            '$:', ':$', ':displaymath:\n' + Placeholder, Placeholder + '\n' + Tombstone
-        ),
-        Shortcut('$', '$', r':math: \(', r'\)' + Tombstone),
+        Shortcut('$:', ':$', ':displaymath:\n', '\n' + Tombstone),
+        Shortcut('$', '$', r':math:', Tombstone),
         Shortcut('|-', '.', ':claim:', Tombstone + '.'),
         Shortcut('⊢', '.', ':claim:', Tombstone + '.'),
-        Shortcut(Placeholder, Placeholder, '$$', '$$'),
     ]
 
     def __init__(self, src: PlainTextManuscript):

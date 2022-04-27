@@ -14,8 +14,9 @@ from . import nodes
 from . import tags
 
 
-PlainTextManuscript = util.EscapedString
-PlainTextManuscript.escape_chars = {tags.Tag.delim}
+class PlainTextManuscript(util.EscapedString):
+    def __init__(self, src=''):
+        super().__init__(src, {tags.Tag.delim})
 
 
 AbstractTreeManuscript = nodes.Manuscript

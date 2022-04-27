@@ -29,9 +29,8 @@ class ShortenedString(str):
 
 
 class EscapedString:
-    escape_chars: set = set()
-
-    def __init__(self, src=''):
+    def __init__(self, src='', chars=None):
+        self.escape_chars = set() if chars is None else set(chars)
         self._src = str(src)
 
     def __contains__(self, sub):

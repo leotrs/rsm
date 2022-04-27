@@ -108,7 +108,7 @@ class Node:
 
     def ingest_dict_as_meta(self, meta: dict) -> None:
         for key, value in meta.items():
-            setattr(self, key, value)
+            setattr(self, str(key), value)
 
 
 @dataclass

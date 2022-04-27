@@ -113,9 +113,8 @@ class Parser(ABC):
         """Return the first tag starting at self.pos. If skip is True, skip it and update self.pos."""
         if self.src[self.pos] != TagName.delim:
             return None
-        src = self.src[self.pos :]
-        index = src[1:].index(TagName.delim)
-        tag = TagName(src[1 : index + 1])
+        index = self.src.index(TagName.delim, self.pos + 1)
+        tag = TagName(str(self.src[self.pos + 1 : index]))
         if consume:
             self.pos += len(tag)
         return tag
@@ -778,7 +777,8 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         Shortcut(Placeholder, Placeholder, '$$', '$$'),
     ]
 
-    def __init__(self, src: str):
+    def __init__(self, src: PlainTextManuscript):
+        ic.enable()
         self.tag = tags.ManuscriptTag('manuscript')
         self.tag.set_source(src)
         super().__init__(parent=None, frompos=0, tag=self.tag)
@@ -793,7 +793,7 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         logger.debug('applying shortcuts')
 
         for keyword in self.keywords:
-            src = src.replace(keyword, f':keyword:{keyword}::')
+            src = PlainTextManuscript(src.replace(keyword, f':keyword:{keyword}::'))
 
         for deliml, delimr, replacel, replacer in self.shortcuts:
             pos = 0

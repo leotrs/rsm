@@ -9,11 +9,13 @@ Classes that represent the manuscript at different stages.
 from pathlib import Path
 
 from fs.mountfs import MountFS
+from . import util
 from . import nodes
+from . import tags
 
 
-class PlainTextManuscript(str):
-    pass
+PlainTextManuscript = util.EscapedString
+PlainTextManuscript.escape_chars = {tags.Tag.delim}
 
 
 AbstractTreeManuscript = nodes.Manuscript

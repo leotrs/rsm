@@ -149,14 +149,14 @@ class AppendNodeTag(AppendOpenTag):
     """Most inherited fields are ignored and overwritten."""
 
     def __init__(
-            self,
-            node: nodes.Node,
-            tag: str = 'div',
-            *,
-            newline: bool = True,
+        self,
+        node: nodes.Node,
+        tag: str = 'div',
+        *,
+        newline: bool = True,
     ):
         self.node = node
-        classes = [node.__class__.__name__.lower()] + node.types
+        classes = [node.__class__.__name__.lower()] + [str(t) for t in node.types]
         super().__init__(tag=tag, id=node.label, classes=classes, newline=newline)
 
     def __repr__(self) -> str:

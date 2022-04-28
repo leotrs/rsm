@@ -15,7 +15,8 @@ the structure of the document.  There are a few exceptions to this rule (see bel
 There are three different types of meaningful regions: blocks, paragraphs, and inlines.
 A paragraph is a region that contains a sequence of complete sentences.  A block is a
 region that can contain one or more paragraphs, as well as other block regions.  An
-inline is a region that can only be contained within a paragraph or another inline.
+inline is a region that can only be contained within a paragraph or another inline.  A
+paragraph can only contain inlines.
 
 At the time of writing, all blocks and inlines must start with a tag and end with a
 tombstone.  On the other hand, paragraphs have neither restriction.

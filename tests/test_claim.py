@@ -105,7 +105,7 @@ def test_claim_within_list():
         <section class="level-1">
         <h1></h1>
         <p class="paragraph">We now make a bunch of claims
-        <ol class="enumerate">
+        </p><ol class="enumerate">
         <li id="one" class="item">
         <span class="claim"><span class="math">
         \(2+2=4\)
@@ -115,7 +115,7 @@ def test_claim_within_list():
         \(3+3=6\)
         </span></span>.
         </li>
-        </ol></p>
+        </ol>
         </section>
         </div>
         </body>

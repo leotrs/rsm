@@ -106,7 +106,7 @@ def test_displaymath():
         have="""\
         :manuscript:
 
-        This paragraph contains display math
+        This paragraph is followed by display math
         $$2 + 2 = 4.$$
 
         ::
@@ -116,12 +116,12 @@ def test_displaymath():
         <div id="manuscript" class="manuscript">
         <section class="level-1">
         <h1></h1>
-        <p class="paragraph">This paragraph contains display math
-        <div class="displaymath">
+        <p class="paragraph">This paragraph is followed by display math
+        </p><div class="displaymath">
         $$
         2 + 2 = 4.
         $$
-        </div></p>
+        </div>
         </section>
         </div>
         </body>

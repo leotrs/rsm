@@ -137,8 +137,8 @@ class Parser(ABC):
         return content, pos
 
     def get_subparser(self, tag) -> 'Parser':
-        if not tag.name:
-            raise RSMParserError('Requesting parser for empty tag')
+        if tag == Tombstone or not tag.name:
+            raise RSMParserError('Requesting parser for Tombstone')
         try:
             # parserclass = globals()[f'{tag.name.capitalize()}Parser']
             parserclass = _parsers[tag.name]
@@ -213,11 +213,22 @@ class ParagraphParser(Parser):
         ic(end_of_content)
 
         children = []
+        end_at_tombstone = False
+        end_at_block = False
         while self.pos < end_of_content:
-            tag = self.get_tagname_at_pos()
-            if tag:
-                parser = self.get_subparser(tag)
-                ic(self.pos, self.frompos, parser.pos, parser.frompos)
+            tagname = self.get_tagname_at_pos()
+            if tagname:
+                if tagname == Tombstone:
+                    end_at_tombstone = True
+                    break
+                nexttag = tags.get(tagname)
+                if isinstance(nexttag, tags.BlockTag):
+                    # Paragraph regions cannot contain blocks, so if we find a block,
+                    # just end the paragraph here.
+                    end_at_block = True
+                    break
+                parser = self.get_subparser(tagname)
+                # ic(self.pos, self.frompos, parser.pos, parser.frompos)
                 result = parser.parse()
                 child, consumed = result.result, result.consumed
                 children.append(child)
@@ -233,14 +244,20 @@ class ParagraphParser(Parser):
 
             self.pos += consumed
 
-        # Every paragraph ends with (at least) two new lines.  The first one is the end
-        # of line of the last line in the paragraph.  The second one is the obligatory
-        # blank line after the paragraph.  Both are unnecessary in the final output.
-        if children and isinstance(children[-1], nodes.Text):
-            children[-1].text = children[-1].text[:-2]
+        if end_at_tombstone:
+            hint = Tombstone
+        elif end_at_block:
+            hint = tagname
+        else:
+            hint = None
+            # Every paragraph ends with (at least) two new lines.  The first one is the end
+            # of line of the last line in the paragraph.  The second one is the obligatory
+            # blank line after the paragraph.  Both are unnecessary in the final output.
+            if children and isinstance(children[-1], nodes.Text):
+                children[-1].text = children[-1].text[:-2]
 
         return BaseParsingResult(
-            success=True, result=children, hint=None, consumed=self.pos - oldpos
+            success=True, result=children, hint=hint, consumed=self.pos - oldpos
         )
 
 
@@ -654,7 +671,7 @@ class MetaPairParser(Parser):
         oldpos = self.pos
 
         # find the key
-        ic(self.src[self.pos - 30 : self.pos + 30])
+        # ic(self.src[self.pos - 30 : self.pos + 30])
         key = self.get_tagname_at_pos()
         if not key:
             return ParsingResult(
@@ -666,7 +683,7 @@ class MetaPairParser(Parser):
 
         # check if key is valid
         if key.name not in self.validkeys:
-            ic('invalid key')
+            # ic('invalid key')
             return ParsingResult(
                 success=False,
                 result=None,

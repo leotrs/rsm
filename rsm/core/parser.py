@@ -832,6 +832,32 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         return PlainTextManuscript(src)
 
 
+class MainParser:
+    def __init__(self, src):
+        self.src = src
+        self.tree = None
+
+    def parse(self):
+        ic.enable()
+        parser = ManuscriptParser(self.src)
+        self.tree = parser.parse()
+        parser.consume_whitespace()
+        ic.enable()
+        ic(parser.pos, len(self.src))
+        if parser.pos >= len(self.src):
+            return self.tree
+
+        bibsrc = self.src[parser.pos :].strip()
+        parser = BibTexParser(bibsrc)
+        result = parser.parse()
+        bib_nodes = list(self.tree.traverse(nodeclass=nodes.Bibliography))
+        if len(bib_nodes) > 1:
+            raise RSMParserError('Found more than one bibtex node')
+        bib = bib_nodes[0]
+        bib.append(result.result)
+        return self.tree
+
+
 _parsers: dict[str, Type[Parser]] = {}
 for t in tags.all():
     if isinstance(t, tags.ParagraphTag):

@@ -45,7 +45,7 @@ class ParserApplication:
         self.dstpath: Path = Path()
         self.tree: manuscript.AbstractTreeManuscript | None = None
         self.reader: reader.Reader | None = None
-        self.parser: parser.ManuscriptParser | None = None
+        self.parser: parser.MainParser | None = None
         self.transformer: transformer.Transformer | None = None
         self.verbosity: int = verbosity
 
@@ -78,7 +78,7 @@ class ParserApplication:
 
     def parse(self) -> None:
         logger.info('Parsing...')
-        self.parser = parser.ManuscriptParser(self.plain)
+        self.parser = parser.MainParser(self.plain)
         self.tree = self.parser.parse()
 
     def transform(self) -> None:

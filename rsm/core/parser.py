@@ -7,7 +7,7 @@ RSM Parser: take a partial source string and output a single node.
 """
 
 from datetime import datetime
-from typing import Any, Type, Optional
+from typing import Any, Type, Optional, Callable
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from collections import namedtuple
@@ -112,7 +112,7 @@ class Parser(ABC):
         self.pos += num
         return num
 
-    def get_tagname_at_pos(self, consume=False) -> TagName | None:
+    def get_tagname_at_pos(self, consume: bool = False) -> TagName | None:
         """Return the first tag starting at self.pos. If skip is True, skip it and update self.pos."""
         if self.src[self.pos] != TagName.delim:
             return None
@@ -122,7 +122,9 @@ class Parser(ABC):
             self.pos += len(tag)
         return tag
 
-    def get_lines_until(self, condition, consume=False) -> tuple[str, int]:
+    def get_lines_until(
+        self, condition: Callable, consume: bool = False
+    ) -> tuple[str, int]:
         content = ''
         pos = self.pos
         while True:
@@ -158,7 +160,7 @@ class ParagraphParser(Parser):
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.tag = tag
-        self.node = tag.makenode()
+        self.node: nodes.NodeWithChildren = tag.makenode()
         if not isinstance(self.node, nodes.BaseParagraph):
             raise TypeError(
                 'ParagraphParser called with a tag that created a non-Paragraph '
@@ -223,17 +225,20 @@ class ParagraphParser(Parser):
         children = []
         end_at_tombstone = False
         end_at_block = False
+        hint = None
         while self.pos < end_of_content:
             tagname = self.get_tagname_at_pos()
             if tagname:
                 if tagname == Tombstone:
                     end_at_tombstone = True
+                    hint = Tombstone
                     break
                 nexttag = tags.get(tagname)
                 if isinstance(nexttag, tags.BlockTag):
                     # Paragraph regions cannot contain blocks, so if we find a block,
                     # just end the paragraph here.
                     end_at_block = True
+                    hint = tagname
                     break
                 parser = self.get_subparser(tagname)
                 # ic(self.pos, self.frompos, parser.pos, parser.frompos)
@@ -252,12 +257,7 @@ class ParagraphParser(Parser):
 
             self.pos += consumed
 
-        if end_at_tombstone:
-            hint = Tombstone
-        elif end_at_block:
-            hint = tagname
-        else:
-            hint = None
+        if not end_at_tombstone and not end_at_block:
             # Every paragraph ends with (at least) two new lines.  The first one is the end
             # of line of the last line in the paragraph.  The second one is the obligatory
             # blank line after the paragraph.  Both are unnecessary in the final output.
@@ -358,7 +358,8 @@ class TagRegionParser(DelimitedRegionParser):
         super().__init__(parent=parent, frompos=frompos, start=tag, end=Tombstone)
         self.tag: Tag = tag
         self.node: nodes.NodeWithChildren = tag.makenode()
-        self.contentparser: Type[Parser] = self.contentparsers[tag.content_mode]
+        if self.tag.has_content and tag.content_mode is not None:
+            self.contentparser: Type[Parser] = self.contentparsers[tag.content_mode]
         s = f'TagRegionParser created for tag {self.tag}'
         ic(s)
 
@@ -494,12 +495,12 @@ class SpecialTagRegionParser(DelimitedRegionParser):
             consumed=self.pos - oldpos,
         )
 
-    def parse_content(content: str) -> Type[nodes.Node]:
+    def parse_content(self, content: str) -> Type[nodes.Node]:
         raise NotImplementedError
 
 
 class RefParser(SpecialTagRegionParser):
-    def parse_content(self, content) -> ParsingResult:
+    def parse_content(self, content: str) -> nodes.PendingReference:
         split = content.split(',')
         if len(split) > 1:
             if len(split) > 2:
@@ -513,13 +514,21 @@ class RefParser(SpecialTagRegionParser):
 
 
 class CiteParser(SpecialTagRegionParser):
-    def parse_content(self, content) -> ParsingResult:
+    def parse_content(self, content: str) -> nodes.PendingCite:
         targets = [s.strip() for s in content.split(',')]
         return nodes.PendingCite(targetlabels=targets)
 
 
 class ShouldHaveHeadingParser(TagRegionParser):
+    def _pre_process(self) -> None:
+        if not isinstance(self.node, nodes.Heading):
+            raise RSMParserError(
+                f'Processing node of type {type(self.node)} as if it was a subclass of nodes.Heading.'
+                f'Instead of using {type(self)}, use {self.__class__.__bases__[0]} instead'
+            )
+
     def _post_process(self) -> None:
+        self.node: nodes.Heading
         if not self.node.title:
             nodeclass = self.node.__class__.__name__
             logger.warning(f'{nodeclass} with empty title')
@@ -540,7 +549,7 @@ class MetaParser(Parser):
         self.inline_mode: bool | None = True if inline_only else None
         self.validkeys: set = set()
 
-    def parse_into_node(self, node) -> ParsingResult:
+    def parse_into_node(self, node: nodes.Node) -> ParsingResult:
         self.validkeys = node.metakeys()
         result = self.parse()
         if result.success:
@@ -648,7 +657,7 @@ class MetaPairParser(Parser):
     block_delim = '\n'
     inline_delim = ','
 
-    def __init__(self, parent: MetaParser, validkeys):
+    def __init__(self, parent: MetaParser, validkeys: set):
         super().__init__(parent=parent, frompos=parent.pos)
         self.validkeys = validkeys
 

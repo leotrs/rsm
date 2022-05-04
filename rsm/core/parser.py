@@ -186,16 +186,7 @@ class ParagraphParser(Parser):
                 raise RSMParserError(f'Was expecting {self.tag} tag, found {tag}')
 
         if tag and tag.name == self.tag.name:
-            self.pos += len(self.tag)
-            self.consume_whitespace()
-            metaparser = MetaParser(self, self.pos, self.tag.meta_inline_only)
-            result = metaparser.parse_into_node(self.node)
-            if not result.success:
-                raise RSMParserError(
-                    f'Problem reading meta for paragraph block at position {self.pos}'
-                )
-            self.pos += result.consumed
-            self.consume_whitespace()
+            self.parse_meta()
 
         result = self.parse_content()
         self.consume_whitespace()
@@ -210,6 +201,18 @@ class ParagraphParser(Parser):
             hint=None,
             consumed=self.pos - self.frompos,
         )
+
+    def parse_meta(self) -> None:
+        self.pos += len(self.tag)
+        self.consume_whitespace()
+        metaparser = MetaParser(self, self.pos, self.tag.meta_inline_only)
+        result = metaparser.parse_into_node(self.node)
+        if not result.success:
+            raise RSMParserError(
+                f'Problem reading meta for paragraph block at position {self.pos}'
+            )
+        self.pos += result.consumed
+        self.consume_whitespace()
 
     def parse_content(self) -> BaseParsingResult:
         oldpos = self.pos

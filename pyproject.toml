@@ -2,12 +2,3 @@
 line-length = 88
 target-version = ['py310']
 skip-string-normalization = true
-
-[mypy]
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-disallow_untyped_decorators = true
-warn_unused_ignores = true
-warn_return_any = true
-warn_redundant_casts = true

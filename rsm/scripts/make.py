@@ -7,16 +7,18 @@ RSM command line utility to build a manuscript.
 """
 
 from .app import FullBuildApplication
-from argparse import ArgumentParser
+from ..core.manuscript import HTMLManuscript
+from argparse import ArgumentParser, Namespace
+from pathlib import Path
 import livereload
 
 
-def make(file, lint, verbose):
-    app = FullBuildApplication(srcpath=file, run_linter=lint, verbosity=verbose)
+def make(file: str, lint: bool, verbose: int) -> HTMLManuscript:
+    app = FullBuildApplication(srcpath=Path(file), run_linter=lint, verbosity=verbose)
     return app.run()
 
 
-def parse_args():
+def parse_args() -> Namespace:
     parser = ArgumentParser()
     parser.add_argument('file', help='RSM source to parse')
     parser.add_argument('--serve', help='serve and autoreload', action='store_true')
@@ -26,7 +28,7 @@ def parse_args():
     return args
 
 
-def main():
+def main() -> int:
     args = parse_args()
     if args.serve:
         cmd = f'rsm-make {args.file}'
@@ -35,7 +37,7 @@ def main():
         server.serve(root='.')
     else:
         make(args.file, args.lint, args.verbose)
-        return 0
+    return 0
 
 
 if __name__ == '__main__':

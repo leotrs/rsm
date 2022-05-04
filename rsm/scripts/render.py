@@ -6,23 +6,31 @@ RSM command line utility to convert RSM markup to HTML.
 
 """
 
+from argparse import ArgumentParser, Namespace
+
 from .app import RSMProcessorApplication
-from argparse import ArgumentParser
+from ..core.manuscript import HTMLManuscript
 
 
-def render(source):
+def render(source) -> HTMLManuscript:
     return RSMProcessorApplication(plain=source).run()
 
 
-def parse_args():
+def parse_args() -> Namespace:
     parser = ArgumentParser()
     parser.add_argument('src', help='RSM string to render')
-    parser.add_argument('-f', '--file', help='read source from file', action='store_true', default=False)
+    parser.add_argument(
+        '-f',
+        '--file',
+        help='read source from file',
+        action='store_true',
+        default=False,
+    )
     args = parser.parse_args()
     return args
 
 
-def main():
+def main() -> int:
     args = parse_args()
     if args.file:
         with open(args.src) as file:

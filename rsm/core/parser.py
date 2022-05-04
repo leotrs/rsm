@@ -136,11 +136,10 @@ class Parser(ABC):
             self.pos = pos
         return content, pos
 
-    def get_subparser(self, tag) -> 'Parser':
+    def get_subparser(self, tag: Tag) -> 'Parser':
         if tag == Tombstone or not tag.name:
             raise RSMParserError('Requesting parser for Tombstone')
         try:
-            # parserclass = globals()[f'{tag.name.capitalize()}Parser']
             parserclass = _parsers[tag.name]
         except KeyError as e:
             raise RSMParserError(f'No parser for tag {tag}') from e
@@ -159,7 +158,13 @@ class ParagraphParser(Parser):
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.tag = tag
-        self.node: nodes.Paragraph = tag.makenode()
+        self.node = tag.makenode()
+        if not isinstance(self.node, nodes.BaseParagraph):
+            raise TypeError(
+                'ParagraphParser called with a tag that created a non-Paragraph '
+                f'node ({type(self.node)})'
+            )
+        self.node: nodes.Paragraph
         s = f'ParagraphParser created for tag {self.tag}'
         ic(s)
 
@@ -315,7 +320,7 @@ class DelimitedRegionParser(Parser):
             raise RSMParserError('Block ending string cannot be whitespace')
         self.end = end
 
-    def _pre_process(self):
+    def _pre_process(self) -> None:
         super()._pre_process()
         if not self.src[self.frompos :].startswith(self.start):
             raise RSMParserError(
@@ -323,7 +328,7 @@ class DelimitedRegionParser(Parser):
                 f'in source at position {self.frompos}'
             )
 
-    def _post_process(self):
+    def _post_process(self) -> None:
         src = self.src[: self.pos]
         if not src.rstrip().endswith(self.end):
             name = self.__class__.__name__
@@ -781,6 +786,8 @@ class BibTexParser(DelimitedRegionParser):
         for item in items:
             pairs = {}
             match = re.match(r'(\w+)\s*{([^,]*),\s*(.*)\s*}', item, re.DOTALL)
+            if match is None:
+                raise RSMParserError(f'Could not prase bibtex item "{item}"')
             pairs['kind'] = match.group(1)
             pairs['label'] = match.group(2)
             content = match.group(3)

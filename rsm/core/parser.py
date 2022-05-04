@@ -889,11 +889,11 @@ class MainParser:
         self.tree = None
 
     def parse(self):
-        ic.enable()
+        # ic.enable()
         parser = ManuscriptParser(self.src)
         self.tree = parser.parse()
         parser.consume_whitespace()
-        ic.enable()
+        # ic.enable()
         ic(parser.pos, len(self.src))
         if parser.pos >= len(self.src):
             return self.tree

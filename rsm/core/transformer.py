@@ -42,7 +42,7 @@ class Transformer:
             node = self.labels_to_nodes[label]
         except KeyError as e:
             raise RSMTransformerError(
-                f'Reference to nonexistent label "{pending.targetlabel}"'
+                f'Reference to nonexistent label "{label}"'
             ) from e
         return node
 

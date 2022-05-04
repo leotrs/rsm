@@ -466,5 +466,10 @@ class Translator:
         )
 
     def visit_bibitem(self, node: nodes.Bibitem) -> EditCommand:
-        text = f'{node.author}. "{node.title}". {node.journal}. ({node.year}).'
+        text = f'{node.author}. "{node.title}".'
+        if node.kind == 'article':
+            text += f' {node.journal}.'
+        elif node.kind == 'book':
+            text += f' {node.publisher}.'
+        text += f' {node.year}.'
         return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])

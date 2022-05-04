@@ -8,6 +8,7 @@ Apply transforms to the AbstractTreeManuscript.
 
 from icecream import ic
 
+from typing import Type
 from .manuscript import AbstractTreeManuscript
 from . import nodes
 
@@ -17,7 +18,6 @@ class RSMTransformerError(Exception):
 
 
 class Transformer:
-
     def __init__(self):
         self.tree: AbstractTreeManuscript = None
         self.labels_to_nodes: dict = {}
@@ -37,23 +37,35 @@ class Transformer:
                 raise RSMTransformerError(f'Duplicate label {node.label}')
             self.labels_to_nodes[node.label] = node
 
+    def _label_to_node(self, label) -> Type[nodes.Node]:
+        try:
+            node = self.labels_to_nodes[label]
+        except KeyError as e:
+            raise RSMTransformerError(
+                f'Reference to nonexistent label "{pending.targetlabel}"'
+            ) from e
+        return node
+
     def resolve_pending_references(self) -> None:
-        pending: nodes.PendingReference
-        for pending in self.tree.traverse(nodeclass=nodes.PendingReference):
-            try:
-                target = self.labels_to_nodes[pending.targetlabel]
-            except KeyError as e:
-                raise RSMTransformerError(
-                    f'Reference to nonexistent label "{pending.targetlabel}"'
-                ) from e
-            pending.replace_self(nodes.Reference(
-                target=target,
-                overwrite_reftext=pending.overwrite_reftext,
-            ))
+        condition = lambda n: type(n) in [nodes.PendingReference, nodes.PendingCite]
+        for pending in self.tree.traverse(condition=condition):
+            if isinstance(pending, nodes.PendingReference):
+                target = self._label_to_node(pending.targetlabel)
+                pending.replace_self(
+                    nodes.Reference(
+                        target=target,
+                        overwrite_reftext=pending.overwrite_reftext,
+                    )
+                )
+            elif isinstance(pending, nodes.PendingCite):
+                targets = [self._label_to_node(label) for label in pending.targetlabels]
+                pending.replace_self(nodes.Cite(targets=targets))
 
         node: nodes.PendingReference
         for node in self.tree.traverse(nodeclass=nodes.PendingReference):
-            raise RSMTransformerError(f'Found unresolved referece to "{node.targetlabel}"')
+            raise RSMTransformerError(
+                f'Found unresolved referece to "{node.targetlabel}"'
+            )
 
     def autonumber_nodes(self) -> None:
         counts = {
@@ -61,6 +73,7 @@ class Transformer:
             nodes.DisplayMath: 0,
             nodes.Theorem: 0,
             nodes.Lemma: 0,
+            nodes.Bibitem: 0,
         }
         for node in self.tree.traverse():
             nodeclass = type(node)

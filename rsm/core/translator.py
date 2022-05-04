@@ -450,4 +450,21 @@ class Translator:
         return AppendNodeTag(node)
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
-        return AppendText('::This is a cite::')
+        text = ','.join([str(bibitem.number) for bibitem in node.targets])
+        return AppendText(f'[{text}]')
+
+    def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
+        # ic.enable()
+        # ic(node.children)
+        # ic.disable()
+        return AppendBatchAndDefer(
+            [
+                AppendOpenTag('section', classes=['level-2']),
+                AppendHeading(2, 'References'),
+                AppendNodeTag(node, 'ol'),
+            ]
+        )
+
+    def visit_bibitem(self, node: nodes.Bibitem) -> EditCommand:
+        text = f'{node.author}. "{node.title}". {node.journal}. ({node.year}).'
+        return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])

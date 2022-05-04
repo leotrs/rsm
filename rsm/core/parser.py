@@ -346,12 +346,7 @@ class TagRegionParser(DelimitedRegionParser):
         tags.ASIS: AsIsContentParser,
     }
 
-    def __init__(
-        self,
-        parent: Parser | None,
-        frompos: int,
-        tag: Tag,
-    ):
+    def __init__(self, parent: Parser | None, frompos: int, tag: Tag):
         super().__init__(parent=parent, frompos=frompos, start=tag, end=Tombstone)
         self.tag: Tag = tag
         self.node: nodes.NodeWithChildren = tag.makenode()
@@ -451,60 +446,21 @@ class TagRegionParser(DelimitedRegionParser):
         return numchars
 
 
-class RefParser(DelimitedRegionParser):
-    def __init__(self, parent: Parser, frompos: int, tag: Tag = tags.get('ref')):
+class SpecialTagRegionParser(DelimitedRegionParser):
+    """For regions delimited by tags and Tombstones but whose content is 'special' i.e. it
+    won't be parsed recursively.
+
+    """
+
+    def __init__(self, parent: Parser, frompos: int, tag: Tag):
         super().__init__(
             parent=parent,
             frompos=frompos,
             start=tag,
             end=Tombstone,
         )
-        self.tag = tags.get('ref')
-        self.node: nodes.PendingReference = self.tag.makenode()
-
-    def process(self) -> ParsingResult:
-        oldpos = self.pos
-        self.pos += len(self.tag)
-        self.consume_whitespace()
-
-        right = self.src.find(Tag.delim, self.pos)
-        if not self.src[right:].startswith(Tombstone):
-            raise RSMParserError(
-                f'Found "{Tag.delim}" inside {self.tag} tag but no {Tombstone}'
-            )
-        content = self.src[self.pos : right]
-
-        split = content.split(',')
-        if len(split) > 1:
-            if len(split) > 2:
-                raise RSMParserError(
-                    'Use either ":ref:<label>::" or ":ref:<label>, <reftext>::"'
-                )
-            label, reftext = split[0].strip(), split[1]
-        else:
-            label, reftext = content.strip(), None
-        self.node = nodes.PendingReference(targetlabel=label, overwrite_reftext=reftext)
-
-        self.pos = right
-        self.consume_tombstone()
-        return ParsingResult(
-            success=True,
-            result=self.node,
-            hint=None,
-            consumed=self.pos - oldpos,
-        )
-
-
-class CiteParser(DelimitedRegionParser):
-    def __init__(self, parent: Parser, frompos: int, tag: Tag = tags.get('cite')):
-        super().__init__(
-            parent=parent,
-            frompos=frompos,
-            start=tag,
-            end=Tombstone,
-        )
-        self.tag = tags.get('cite')
-        self.node: nodes.Cite = self.tag.makenode()
+        self.tag = tag
+        self.node = None
 
     def process(self) -> ParsingResult:
         oldpos = self.pos
@@ -519,18 +475,39 @@ class CiteParser(DelimitedRegionParser):
             )
         content = self.src[self.pos : right]
 
-        targets = [s.strip() for s in content.split(',')]
-        self.node = nodes.Cite(targets=targets)
+        self.node = self.parse_content(content)
 
         self.pos = right
         self.consume_tombstone()
-
         return ParsingResult(
             success=True,
             result=self.node,
             hint=None,
             consumed=self.pos - oldpos,
         )
+
+    def parse_content(content: str) -> Type[nodes.Node]:
+        raise NotImplementedError
+
+
+class RefParser(SpecialTagRegionParser):
+    def parse_content(self, content) -> ParsingResult:
+        split = content.split(',')
+        if len(split) > 1:
+            if len(split) > 2:
+                raise RSMParserError(
+                    'Use either ":ref:<label>::" or ":ref:<label>, <reftext>::"'
+                )
+            label, reftext = split[0].strip(), split[1]
+        else:
+            label, reftext = content.strip(), None
+        return nodes.PendingReference(targetlabel=label, overwrite_reftext=reftext)
+
+
+class CiteParser(SpecialTagRegionParser):
+    def parse_content(self, content) -> ParsingResult:
+        targets = [s.strip() for s in content.split(',')]
+        return nodes.PendingCite(targetlabels=targets)
 
 
 class ShouldHaveHeadingParser(TagRegionParser):
@@ -779,6 +756,80 @@ class MetaPairParser(Parser):
         return [x.strip() for x in value.split(',')], numchars
 
 
+class BibTexParser(DelimitedRegionParser):
+    def __init__(self, src):
+        ic(src)
+        self.tag = tags.get('bibtex')
+        super().__init__(parent=None, frompos=0, start=self.tag, end=Tombstone)
+        self.src = src
+
+    def process(self) -> ParsingResult:
+        import re
+
+        ic.enable()
+
+        oldpos = self.pos
+        self.pos += len(self.tag)
+        self.consume_whitespace()
+        endpos = self.src.find(Tombstone, self.pos)
+        if endpos < -1:
+            raise RSMParserError('Could not find closing Tombstone for tag {self.tag}')
+        all_content = self.src[self.pos : endpos]
+
+        items = [stripped for it in all_content.split('@') if (stripped := it.strip())]
+        children = []
+        for item in items:
+            pairs = {}
+            match = re.match(r'(\w+)\s*{([^,]*),\s*(.*)\s*}', item, re.DOTALL)
+            pairs['kind'] = match.group(1)
+            pairs['label'] = match.group(2)
+            content = match.group(3)
+
+            ic(pairs['kind'], pairs['label'], content, len(content))
+
+            spans = []
+            # RSM only accepts fields surrounded by curly braces, NOT quotes.
+            patterns = [
+                r'([^=]*)=\s*{([^}]*)}\s*,?',
+                # r'([^=]*)=\s*\"([^\"]*)\"',
+                # r'([^=]*)=\s*([^,]*),',
+            ]
+            for pat in patterns:
+                for match in re.finditer(pat, content, re.DOTALL):
+                    spans.append(match.span())
+                    key, val = [
+                        stripped
+                        for g in match.groups('')
+                        if (stripped := g.strip().strip(',{}\"').strip())
+                    ]
+                    pairs[key.lower()] = val
+            spans.sort()
+            ic(spans)
+            if spans[0][0] != 0:
+                print('The first key has not been parsed')
+            if spans[-1][1] != len(content) - 1:
+                print('The last key has not been parsed')
+            prev = 0
+            for start, cease in spans:
+                if prev != start:
+                    print('Some middle key has not been parsed')
+                prev = cease
+
+            child = nodes.Bibitem()
+            child.ingest_dict_as_meta(pairs)
+            child.label = pairs['label']
+            children.append(child)
+
+        ic(children)
+        ic.disable()
+
+        self.pos = endpos
+        self.consume_tombstone()
+        return ParsingResult(
+            success=True, result=children, hint=None, consumed=self.pos - oldpos
+        )
+
+
 class ManuscriptParser(ShouldHaveHeadingParser):
     keywords = ['LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED']
     Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
@@ -870,6 +921,7 @@ for t in tags.all():
         if t is Tombstone:
             continue
         raise RSMParserError(f"I don't know what to do with tag {t}")
+_parsers['bibtex'] = BibTexParser
 _parsers['ref'] = RefParser
 _parsers['cite'] = CiteParser
 _parsers['manuscript'] = ManuscriptParser

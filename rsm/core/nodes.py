@@ -35,7 +35,7 @@ class Node:
     number: int | None = None
     # we need parent to be a property, see https://stackoverflow.com/a/61480946/14157230
     # for how this works
-    _parent: Optional['NodeWithChildren'] = field(init=False, default=None)
+    _parent: Optional['NodeWithChildren'] = field(init=False, repr=False, default=None)
     parent: Optional['NodeWithChildren'] = None
 
     def __post_init__(self, customreftext: str):
@@ -283,8 +283,28 @@ class Reference(BaseReference):
 
 
 @dataclass
+class PendingCite(Node):
+    targetlabels: list[str] = field(kw_only=True, default_factory=list)
+
+
+@dataclass
 class Cite(Node):
-    targets: list[str] = field(kw_only=True, default_factory=list)
+    targets: list[Node] | None = field(kw_only=True, default_factory=list)
+
+
+@dataclass
+class Proof(NodeWithChildren):
+    _newmetakeys: ClassVar[set] = set()
+
+
+@dataclass
+class Sketch(Paragraph):
+    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Proof}
+
+
+@dataclass
+class Step(Paragraph):
+    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Proof}
 
 
 @dataclass
@@ -301,3 +321,31 @@ class Lemma(Theorem):
 @dataclass
 class Remark(Theorem):
     _newmetakeys: ClassVar[set] = set()
+
+
+@dataclass
+class Bibliography(NodeWithChildren):
+    pass
+
+
+@dataclass
+class Bibitem(Node):
+    _: KW_ONLY
+    kind: str = ''
+    author: str = ''
+    title: str = ''
+    year: int = -1
+    journal: str = ''
+    volume: int = -1
+    number: int = -1
+    publisher: str = ''
+    _newmetakeys: ClassVar[set] = {
+        'kind',
+        'author',
+        'title',
+        'year',
+        'journal',
+        'volume',
+        'number',
+        'publisher',
+    }

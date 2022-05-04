@@ -228,12 +228,17 @@ class Subsubsection(Section):
 
 
 @dataclass
-class Paragraph(Heading):
+class BaseParagraph(Heading):
     pass
 
 
 @dataclass
-class Comment(Heading):
+class Paragraph(BaseParagraph):
+    pass
+
+
+@dataclass
+class Comment(BaseParagraph):
     pass
 
 
@@ -248,7 +253,7 @@ class Itemize(NodeWithChildren):
 
 
 @dataclass
-class Item(Paragraph):
+class Item(BaseParagraph):
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Itemize, Enumerate}
 
 

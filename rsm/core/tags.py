@@ -88,12 +88,13 @@ class Tag(TagName):
         meta_inline_only: bool | None = None,
         tag_optional: bool | None = None,
     ) -> 'Tag':
-        if nodeclass is None:
-            if not name:
-                raise ValueError('Must supply name or nodeclass')
+        if name:
             name = name
         else:
-            name = nodeclass.__name__.lower()
+            if nodeclass:
+                name = nodeclass.__name__.lower()
+            else:
+                raise ValueError('Must supply name or nodeclass')
         tag = cls(name)
         tag.nodeclass = nodeclass
         tag.has_content = has_content or cls.has_content

@@ -11,6 +11,36 @@ def test_simple():
 
         Lorem ipsum.
 
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+        <div id="manuscript" class="manuscript">
+        <section class="level-1">
+        <h1></h1>
+        <section class="section level-2">
+        <h2>1. Section</h2>
+        <p class="paragraph">Lorem ipsum.</p>
+        </section>
+        </section>
+        </div>
+        </body>
+        """,
+    )
+
+
+def test_subsections():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        :section:
+          :title: Section
+
+        Lorem ipsum.
+
         :subsection:
           :title: Sub section
 
@@ -47,11 +77,11 @@ def test_simple():
         </section>
         </div>
         </body>
-        """
+        """,
     )
 
 
-def test_simple():
+def test_shortcut():
     compare_have_want(
         have="""\
         :manuscript:
@@ -94,5 +124,5 @@ def test_simple():
         </section>
         </div>
         </body>
-        """
+        """,
     )

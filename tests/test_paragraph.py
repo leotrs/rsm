@@ -64,12 +64,19 @@ def test_start_with_tag():
         """,
         want="""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <p class="paragraph"><span class="span"><strong>this tag </strong></span> starts the paragraph.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -87,19 +94,20 @@ def test_start_with_shortcut():
         """,
         want="""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
-        <p class="paragraph"><span class="claim">The eigenvalues <span class="math">
-        \(\pm1\)
-        </span> of the NB matrix <span class="math">
-        \(\mathbf{B}\)
-        </span> admit a basis that is
-        orthonormal with respect to <span class="math">
-        \(\langle \cdot, \cdot \rangle\)
-        </span></span>.</p>
+
+        <p class="paragraph"><span class="claim">The eigenvalues <span class="math">\(\pm1\)</span> of the NB matrix <span class="math">\(\mathbf{B}\)</span> admit a basis that is
+        orthonormal with respect to <span class="math">\(\langle \cdot, \cdot \rangle\)</span></span>.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -127,15 +135,27 @@ def test_no_meta():
         """,
         want="""\
         <body>
+
         <div id="mylbl" class="manuscript">
+
         <section class="level-1">
+
         <h1>The Perron non-backtracking eigenvalue after node addition</h1>
+
         <section class="section level-2">
+
         <h2>1. Introduction</h2>
-        <p class="paragraph">This is a paragraph with tag and no meta data.</p><p class="paragraph">This is a paragraph with tag and no meta data.</p>
+
+        <p class="paragraph">This is a paragraph with tag and no meta data.</p>
+
+        <p class="paragraph">This is a paragraph with tag and no meta data.</p>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -176,21 +196,37 @@ def test_simple():
         """,
         want="""\
         <body>
+
         <div id="mylbl" class="manuscript">
+
         <section class="level-1">
+
         <h1>The Perron non-backtracking eigenvalue after node addition</h1>
+
         <section id="sec-introduction" class="section level-2 t1 t2">
+
         <h2>1. Introduction</h2>
-        <p class="paragraph">Lorem ipsum.</p><p id="par1" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines
+
+        <p class="paragraph">Lorem ipsum.</p>
+
+        <p id="par1" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines
         of text. It has several lines of text. It has several lines of text. It has several
-        lines of text.</p><p id="par2" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines
+        lines of text.</p>
+
+        <p id="par2" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines
         of text. It has several lines of text. It has several lines of text. It has several
-        lines of text.</p><p id="par3" class="paragraph a b c">This is a paragraph with meta data. It
+        lines of text.</p>
+
+        <p id="par3" class="paragraph a b c">This is a paragraph with meta data. It
         has several lines of text. It has several lines of text. It has several lines of
         text. It has several lines of text. It has several lines of text.</p>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )

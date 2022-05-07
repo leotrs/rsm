@@ -34,16 +34,25 @@ def test_simple():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <div id="eqn" class="displaymath">
         $$
         2+2=4
         $$
-        </div><p class="paragraph">Here we refer to the <a href="#eqn">Important Equation</a>.</p>
-        </section>
         </div>
+
+        <p class="paragraph">Here we refer to the <a href="#eqn">Important Equation</a>.</p>
+
+        </section>
+
+        </div>
+
         </body>
         """,
     )

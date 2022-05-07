@@ -9,22 +9,25 @@ def test_render():
 
     ::
     """
-    result = subprocess.run(
-        ['rsm-render', have],
-        stdout=subprocess.PIPE,
-        check=True
-    )
+    result = subprocess.run(['rsm-render', have], stdout=subprocess.PIPE, check=True)
 
     compare_have_want(
         have=have,
         want="""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <p class="paragraph">Lorem ipsum.</p>
+
         </section>
+
         </div>
+
         </body>
-        """
+        """,
     )

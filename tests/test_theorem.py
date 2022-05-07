@@ -30,18 +30,35 @@ def test_simple():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <div class="theorem">
+
         <p class="paragraph"><span class="span"><strong>Theorem 1. </strong></span>Theorem contents.</p>
-        </div><div class="lemma">
+
+        </div>
+
+        <div class="lemma">
+
         <p class="paragraph"><span class="span"><strong>Lemma 1. </strong></span>And a lemma.</p>
-        </div><div class="theorem">
+
+        </div>
+
+        <div class="theorem">
+
         <p class="paragraph"><span class="span"><strong>Theorem 2. </strong></span>Another theorem.</p>
+
         </div>
+
         </section>
+
         </div>
+
         </body>
-        """
+        """,
     )

@@ -25,16 +25,14 @@ class RSMTranslatorError(Exception):
     pass
 
 
-def make_tag(tag: str, id: str, classes: Iterable, newline: bool = False) -> str:
+def make_tag(tag: str, id_: str, classes: Iterable) -> str:
     text = f'<{tag}'
-    if id:
-        text += f' id="{id}"'
+    if id_:
+        text += f' id="{id_}"'
     if classes:
         classes = ' '.join(classes)
         text += f' class="{classes}"'
     text += '>'
-    if newline:
-        text += '\n'
     return text
 
 
@@ -103,23 +101,28 @@ class AppendOpenCloseTag(AppendText):
         *,
         id: str = '',
         classes: list = None,
-        newline: bool = True,
+        newline_inner: bool = True,
+        newline_outer: bool = True,
     ):
         self.tag = tag
         self.content = content
         self.id = id
         self.classes = classes if classes else []
-        self.newline = newline
         text = (
-            make_tag(self.tag, self.id, self.classes, self.newline)
+            ('\n' if newline_outer else '')
+            + make_tag(self.tag, self.id, self.classes)
+            + ('\n' if newline_inner else '')
             + self.content
-            + ('\n' if self.newline else '')
-            + f'</{self.tag}>\n'
+            + ('\n' if newline_inner else '')
+            + f'</{self.tag}>'
+            + ('\n' if newline_outer else '')
         )
         super().__init__(text)
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['tag', 'content', 'id', 'classes', 'newline'])
+        return self._edit_command_repr(
+            ['tag', 'content', 'id', 'classes', 'newline_inner']
+        )
 
 
 class AppendOpenTag(AppendTextAndDefer):
@@ -129,20 +132,26 @@ class AppendOpenTag(AppendTextAndDefer):
         *,
         id: str = '',
         classes: list = None,
-        newline: bool = True,
+        newline_inner: bool = True,
+        newline_outer: bool = True,
     ):
         self.tag = tag
         self.id = id
         self.classes = classes if classes else []
-        self.newline = newline
-        text = make_tag(self.tag, self.id, self.classes, self.newline)
-        deferred_text = f'</{self.tag}>'
-        if self.newline:
-            deferred_text = '\n' + deferred_text
+        text = (
+            ('\n' if newline_outer else '')
+            + make_tag(self.tag, self.id, self.classes)
+            + ('\n' if newline_inner else '')
+        )
+        deferred_text = (
+            ('\n' if newline_inner else '')
+            + f'</{self.tag}>'
+            + ('\n' if newline_outer else '')
+        )
         super().__init__(text, deferred_text)
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['tag', 'id', 'classes', 'newline'])
+        return self._edit_command_repr(['tag', 'id', 'classes', 'newline_inner'])
 
 
 class AppendNodeTag(AppendOpenTag):
@@ -151,14 +160,21 @@ class AppendNodeTag(AppendOpenTag):
         node: nodes.Node,
         tag: str = 'div',
         *,
-        newline: bool = True,
+        newline_inner: bool = True,
+        newline_outer: bool = True,
     ):
         self.node = node
         classes = [node.__class__.__name__.lower()] + [str(t) for t in node.types]
-        super().__init__(tag=tag, id=node.label, classes=classes, newline=newline)
+        super().__init__(
+            tag=tag,
+            id=node.label,
+            classes=classes,
+            newline_inner=newline_inner,
+            newline_outer=newline_outer,
+        )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['tag', 'node', 'newline'])
+        return self._edit_command_repr(['tag', 'node', 'newline_inner'])
 
 
 class AppendParagraph(AppendOpenCloseTag):
@@ -168,14 +184,20 @@ class AppendParagraph(AppendOpenCloseTag):
         *,
         id: str = '',
         classes: list = None,
-        newline: bool = True,
+        newline_inner: bool = False,
+        newline_outer: bool = True,
     ):
         super().__init__(
-            tag='p', content=content, id=id, classes=classes, newline=newline
+            tag='p',
+            content=content,
+            id=id,
+            classes=classes,
+            newline_inner=newline_inner,
+            newline_outer=newline_outer,
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['content', 'id', 'classes', 'newline'])
+        return self._edit_command_repr(['content', 'id', 'classes', 'newline_inner'])
 
 
 class AppendHeading(AppendOpenCloseTag):
@@ -186,7 +208,8 @@ class AppendHeading(AppendOpenCloseTag):
         *,
         id: str = '',
         classes: list = None,
-        newline: bool = False,
+        newline_inner: bool = False,
+        newline_outer: bool = True,
     ):
         self.level = level
         super().__init__(
@@ -194,11 +217,14 @@ class AppendHeading(AppendOpenCloseTag):
             content=content,
             id=id,
             classes=classes,
-            newline=newline,
+            newline_inner=newline_inner,
+            newline_outer=newline_outer,
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['level', 'content', 'id', 'classes', 'newline'])
+        return self._edit_command_repr(
+            ['level', 'content', 'id', 'classes', 'newline_inner']
+        )
 
 
 class EditCommandBatch(EditCommand):
@@ -366,7 +392,7 @@ class Translator:
         return batch
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
-        return AppendNodeTag(node, tag='p', newline=False)
+        return AppendNodeTag(node, tag='p', newline_inner=False)
 
     def visit_section(self, node: nodes.Section) -> EditCommand:
         node.types.insert(0, f'level-{node.level}')
@@ -393,7 +419,10 @@ class Translator:
     def visit_math(self, node: nodes.Math) -> EditCommand:
         # the strings r'\(' and r'\)' are MathJax's delimiters for inline math
         return AppendBatchAndDefer(
-            [AppendNodeTag(node, 'span'), AppendTextAndDefer(r'\(', r'\)')]
+            [
+                AppendNodeTag(node, 'span', newline_inner=False, newline_outer=False),
+                AppendTextAndDefer(r'\(', r'\)'),
+            ]
         )
 
     def visit_displaymath(self, node: nodes.DisplayMath) -> EditCommand:
@@ -407,13 +436,15 @@ class Translator:
 
     def visit_span(self, node: nodes.Span) -> EditCommand:
         commands = [
-            AppendOpenTag(tag, newline=False)
+            AppendOpenTag(tag, newline_inner=False, newline_outer=False)
             for attr, tag in nodes.Span.attr_to_tag.items()
             if getattr(node, attr)
         ]
         return AppendBatchAndDefer(
             [
-                AppendNodeTag(node, tag='span', newline=False),
+                AppendNodeTag(
+                    node, tag='span', newline_inner=False, newline_outer=False
+                ),
                 *commands,
             ]
         )
@@ -432,7 +463,7 @@ class Translator:
         return AppendText(text)
 
     def visit_claim(self, node: nodes.Claim) -> EditCommand:
-        return AppendNodeTag(node, tag='span', newline=False)
+        return AppendNodeTag(node, tag='span', newline_inner=False, newline_outer=False)
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         paragraph = node.first_of_type(nodes.Paragraph)
@@ -449,9 +480,6 @@ class Translator:
         return AppendText(f'[{text}]')
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
-        # ic.enable()
-        # ic(node.children)
-        # ic.disable()
         return AppendBatchAndDefer(
             [
                 AppendOpenTag('section', classes=['level-2']),

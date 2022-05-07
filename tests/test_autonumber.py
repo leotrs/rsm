@@ -26,20 +26,35 @@ def test_numbered_sections():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section class="section level-2">
+
         <h2>1. First</h2>
+
         <p class="paragraph">Content of first.</p>
-        </section><section class="section level-2">
+
+        </section>
+
+        <section class="section level-2">
+
         <h2>2. Second</h2>
+
         <p class="paragraph">Content of second.</p>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
-        """
+        """,
     )
 
 
@@ -74,21 +89,41 @@ def test_nonum():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section class="section level-2">
+
         <h2>1. First</h2>
+
         <p class="paragraph">Content of first.</p>
-        </section><section class="section level-2">
+
+        </section>
+
+        <section class="section level-2">
+
         <h2>Second</h2>
+
         <p class="paragraph">Content of second.</p>
-        </section><section class="section level-2">
+
+        </section>
+
+        <section class="section level-2">
+
         <h2>2. Third</h2>
+
         <p class="paragraph">Content of third.</p>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
-        """
+        """,
     )

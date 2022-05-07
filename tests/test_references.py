@@ -22,17 +22,29 @@ def test_reftext():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section id="sec-lbl" class="section level-2">
+
         <h2>1. First</h2>
+
         <p class="paragraph">Content of first.</p>
-        </section><p class="paragraph">This is a paragraph that refers to <a href="#sec-lbl">Section 1</a>.</p>
+
         </section>
+
+        <p class="paragraph">This is a paragraph that refers to <a href="#sec-lbl">Section 1</a>.</p>
+
+        </section>
+
         </div>
+
         </body>
-        """
+        """,
     )
 
 
@@ -55,29 +67,41 @@ def test_overwrite_reftext():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section id="sec-lbl" class="section level-2">
+
         <h2>1. First</h2>
+
         <p class="paragraph">Content of first.</p>
-        </section><p class="paragraph">This is a paragraph that refers to <a href="#sec-lbl">The Section</a>.</p>
+
         </section>
+
+        <p class="paragraph">This is a paragraph that refers to <a href="#sec-lbl">The Section</a>.</p>
+
+        </section>
+
         </div>
+
         </body>
-        """
+        """,
     )
 
 
 def test_no_target():
     with pytest.raises(rsm.core.parser.RSMParserError):
         compare_have_want(
-        have="""\
+            have="""\
         :manuscript:
 
         This is a paragraph that refers to :ref:sec-lbl:.
 
         ::
         """,
-        want='XXX'
-    )
+            want='XXX',
+        )

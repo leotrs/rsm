@@ -44,16 +44,28 @@ def test_paragraph_ends_at_block():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1>My Title</h1>
-        <p class="paragraph">This paragraph will terminate before the section starts </p><section class="section level-2">
+
+        <p class="paragraph">This paragraph will terminate before the section starts </p>
+
+        <section class="section level-2">
+
         <h2>1. </h2>
+
         <p class="paragraph">And this
         is inside the section. </p>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )

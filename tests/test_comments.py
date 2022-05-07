@@ -21,16 +21,29 @@ def test_simple():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <div class="theorem">
+
         <div class="comment">
-        This is a single line comment.
-        </div><p class="paragraph"><span class="span"><strong>Theorem 1. </strong></span>Theorem contents.</p>
+
+        <p>This is a single line comment.</p>
+
         </div>
+
+        <p class="paragraph"><span class="span"><strong>Theorem 1. </strong></span>Theorem contents.</p>
+
+        </div>
+
         </section>
+
         </div>
+
         </body>
-        """
+        """,
     )

@@ -17,16 +17,23 @@ def test_display_alone():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <div id="eqn-plus" class="displaymath smallequation">
         $$
         2 + 2 = 4
         $$
         </div>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -43,14 +50,19 @@ def test_inline_no_meta():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
-        <p class="paragraph">This paragraph contains inline math <span class="math">
-        \(2 + 2 = 4\)
-        </span>.</p>
+
+        <p class="paragraph">This paragraph contains inline math <span class="math">\(2 + 2 = 4\)</span>.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -68,15 +80,20 @@ def test_inline_with_meta():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
-        <p class="paragraph">This paragraph contains inline math <span id="bar" class="math smallequation">
-        \(2 + 2
-        = 4\)
-        </span>.</p>
+
+        <p class="paragraph">This paragraph contains inline math <span id="bar" class="math smallequation">\(2 + 2
+        = 4\)</span>.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -97,23 +114,31 @@ def test_math_with_shortcuts():
         ::
         """,
         want=r"""        <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section class="section level-2">
+
         <h2>1. My Section</h2>
-        <p class="paragraph">When <span class="math">
-        \(a \ne 0\)
-        </span>, there are two solutions to <span class="math">
-        \(ax^2 + bx + c = 0\)
-        </span> and they are</p><div class="displaymath">
+
+        <p class="paragraph">When <span class="math">\(a \ne 0\)</span>, there are two solutions to <span class="math">\(ax^2 + bx + c = 0\)</span> and they are</p>
+
+        <div class="displaymath">
         $$
         x = {-b \pm \sqrt{b^2-4ac} \over 2a}.
         $$
         </div>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -139,21 +164,33 @@ def test_math_ref():
         ::
         """,
         want=r"""        <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section class="section level-2">
+
         <h2>1. My Section</h2>
-        <p class="paragraph">This is some inline <span class="math">
-        \(2+2=4\)
-        </span> math.  And then some display math.</p><div id="eqn-foo" class="displaymath">
+
+        <p class="paragraph">This is some inline <span class="math">\(2+2=4\)</span> math.  And then some display math.</p>
+
+        <div id="eqn-foo" class="displaymath">
         $$
         2+2=4
         $$
-        </div><p class="paragraph">And now we refer to <a href="#eqn-foo">Equation 1</a>.</p>
-        </section>
-        </section>
         </div>
+
+        <p class="paragraph">And now we refer to <a href="#eqn-foo">Equation 1</a>.</p>
+
+        </section>
+
+        </section>
+
+        </div>
+
         </body>
         """,
     )

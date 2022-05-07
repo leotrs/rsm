@@ -19,21 +19,27 @@ def test_simple():
         """,
         want="""\
         <body>
+
         <div id="mylbl" class="manuscript">
+
         <section class="level-1">
+
         <h1>My Title</h1>
+
         <div class="author">
-        <p>
-        Leo Torres
+
+        <p>Leo Torres
         Max Planck Institute for Mathematics in the Sciences
-        leo@leotrs.com
-        </p>
+        leo@leotrs.com</p>
 
         </div>
+
         </section>
+
         </div>
+
         </body>
-        """
+        """,
     )
 
 
@@ -53,14 +59,23 @@ def test_empty_author():
         """,
         want="""\
         <body>
+
         <div id="mylbl" class="manuscript">
+
         <section class="level-1">
+
         <h1>The Perron non-backtracking eigenvalue after node addition</h1>
+
         <div class="author">
 
-        </div><p class="paragraph">Lorem ipsum.</p>
-        </section>
         </div>
+
+        <p class="paragraph">Lorem ipsum.</p>
+
+        </section>
+
+        </div>
+
         </body>
-        """
+        """,
     )

@@ -43,32 +43,53 @@ def test_simple():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1>My Title</h1>
+
         <ol id="enm-foo" class="enumerate">
+
         <li id="itm-1" class="item">
         Foo bar.
-        </li><li id="itm-2" class="item">
+        </li>
+
+        <li id="itm-2" class="item">
         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
             ipsum dolor sit amet.
-        </li><li id="itm-3" class="item">
+        </li>
+
+        <li id="itm-3" class="item">
         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
           ipsum dolor sit amet.
         </li>
-        </ol><ul id="itm-foo" class="itemize">
+
+        </ol>
+
+        <ul id="itm-foo" class="itemize">
+
         <li id="itm-4" class="item">
         Foo bar.
-        </li><li id="itm-5" class="item">
+        </li>
+
+        <li id="itm-5" class="item">
         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
             ipsum dolor sit amet.
-        </li><li id="itm-6" class="item">
+        </li>
+
+        <li id="itm-6" class="item">
         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
           ipsum dolor sit amet.
         </li>
+
         </ul>
+
         </section>
+
         </div>
+
         </body>
         """,
     )

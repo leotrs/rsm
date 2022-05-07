@@ -27,19 +27,33 @@ def test_single():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1>My Title</h1>
-        <p class="paragraph">This has a citation at the end. [1]</p><section class="level-2">
+
+        <p class="paragraph">This has a citation at the end. [1]</p>
+
+        <section class="level-2">
+
         <h2>References</h2>
+
         <ol class="bibliography">
+
         <li id="knuth" class="bibitem">
         Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.
         </li>
+
         </ol>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -80,21 +94,37 @@ def test_many():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1>My Title</h1>
-        <p class="paragraph">This has a citation at the end. [1,2]</p><section class="level-2">
+
+        <p class="paragraph">This has a citation at the end. [1,2]</p>
+
+        <section class="level-2">
+
         <h2>References</h2>
+
         <ol class="bibliography">
+
         <li id="torres2020" class="bibitem">
         Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.
-        </li><li id="knuth" class="bibitem">
+        </li>
+
+        <li id="knuth" class="bibitem">
         Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.
         </li>
+
         </ol>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -135,21 +165,37 @@ def test_order():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1>My Title</h1>
-        <p class="paragraph">This has a citation at the end. [2,1]</p><section class="level-2">
+
+        <p class="paragraph">This has a citation at the end. [2,1]</p>
+
+        <section class="level-2">
+
         <h2>References</h2>
+
         <ol class="bibliography">
+
         <li id="torres2020" class="bibitem">
         Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.
-        </li><li id="knuth" class="bibitem">
+        </li>
+
+        <li id="knuth" class="bibitem">
         Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.
         </li>
+
         </ol>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )

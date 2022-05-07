@@ -17,15 +17,25 @@ def test_simple():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section class="section level-2">
+
         <h2>1. Section</h2>
+
         <p class="paragraph">Lorem ipsum.</p>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -61,21 +71,41 @@ def test_subsections():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section class="section level-2">
+
         <h2>1. Section</h2>
-        <p class="paragraph">Lorem ipsum.</p><section class="subsection level-3">
+
+        <p class="paragraph">Lorem ipsum.</p>
+
+        <section class="subsection level-3">
+
         <h3>1.1. Sub section</h3>
-        <p class="paragraph">Foo</p><section class="subsubsection level-4">
+
+        <p class="paragraph">Foo</p>
+
+        <section class="subsubsection level-4">
+
         <h4>1.1.1. Sub sub section</h4>
+
         <p class="paragraph">Bar</p>
+
         </section>
+
         </section>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -108,21 +138,41 @@ def test_shortcut():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section class="section level-2">
+
         <h2>1. Section</h2>
-        <p class="paragraph">Lorem ipsum.</p><section class="subsection level-3">
+
+        <p class="paragraph">Lorem ipsum.</p>
+
+        <section class="subsection level-3">
+
         <h3>1.1. Sub section</h3>
-        <p class="paragraph">Foo</p><section class="subsubsection level-4">
+
+        <p class="paragraph">Foo</p>
+
+        <section class="subsubsection level-4">
+
         <h4>1.1.1. Sub sub section</h4>
+
         <p class="paragraph">Bar</p>
+
         </section>
+
         </section>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )

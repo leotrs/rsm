@@ -41,34 +41,50 @@ def test_simple():
         """,
         want="""\
         <body>
-        <div id="mylbl" class="manuscript">
-        <section class="level-1">
-        <h1>The Perron non-backtracking eigenvalue after node addition</h1>
-        <div class="author">
-        <p>
-        Leo Torres
-        Max Planck Institute for Mathematics in the Sciences
-        leo@leotrs.com
-        </p>
 
-        </div><div class="abstract">
+        <div id="mylbl" class="manuscript">
+
+        <section class="level-1">
+
+        <h1>The Perron non-backtracking eigenvalue after node addition</h1>
+
+        <div class="author">
+
+        <p>Leo Torres
+        Max Planck Institute for Mathematics in the Sciences
+        leo@leotrs.com</p>
+
+        </div>
+
+        <div class="abstract">
+
         <h3>Abstract</h3>
+
         <p class="paragraph">Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
           ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-          ipsum. Lorem ipsum.</p><p class="paragraph">Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-          ipsum. Lorem ipsum.</p><p class="keywords">
-        Keywords: spectral graph theory, non-backtracking, interlacing
-        </p>
-        <p class="MSC">
-        MSC: 05C50, 05C82, 15A18, 15B99
-        </p>
+          ipsum. Lorem ipsum.</p>
 
-        </div><section id="sec:introduction" class="section level-2 t1 t2">
-        <h2>1. Introduction</h2>
-        <p class="paragraph">Lorem ipsum.</p>
-        </section>
-        </section>
+        <p class="paragraph">Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
+          ipsum. Lorem ipsum.</p>
+
+        <p class="keywords">Keywords: spectral graph theory, non-backtracking, interlacing</p>
+
+        <p class="MSC">MSC: 05C50, 05C82, 15A18, 15B99</p>
+
         </div>
+
+        <section id="sec:introduction" class="section level-2 t1 t2">
+
+        <h2>1. Introduction</h2>
+
+        <p class="paragraph">Lorem ipsum.</p>
+
+        </section>
+
+        </section>
+
+        </div>
+
         </body>
-        """
+        """,
     )

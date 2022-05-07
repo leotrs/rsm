@@ -13,12 +13,19 @@ def test_one_strong():
         """,
         want="""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1>My Title</h1>
+
         <p class="paragraph">This paragraph has a <span class="span"><strong>shortcut</strong></span> for strong span.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -36,12 +43,19 @@ def test_two_strong():
         """,
         want="""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1>My Title</h1>
+
         <p class="paragraph">This paragraph has two <span class="span"><strong>shortcuts</strong></span> for strong <span class="span"><strong>spans</strong></span>.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -59,14 +73,19 @@ def test_one_math():
         """,
         want="""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1>My Title</h1>
-        <p class="paragraph">This paragraph has some <span class="math">
-        \(2+2=4\)
-        </span> awesome math.</p>
+
+        <p class="paragraph">This paragraph has some <span class="math">\(2+2=4\)</span> awesome math.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -85,17 +104,20 @@ def test_two_math():
         """,
         want="""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1>My Title</h1>
-        <p class="paragraph">This paragraph has some <span class="math">
-        \(2+2=4\)
-        </span> awesome math and also some math that <span class="math">
-        \(2 + 2 + 2
-        + 2 + 2 = 10\)
-        </span> is broken down.</p>
+
+        <p class="paragraph">This paragraph has some <span class="math">\(2+2=4\)</span> awesome math and also some math that <span class="math">\(2 + 2 + 2
+        + 2 + 2 = 10\)</span> is broken down.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -113,17 +135,26 @@ def test_displaymath():
         """,
         want="""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <p class="paragraph">This paragraph is followed by display math
-        </p><div class="displaymath">
+        </p>
+
+        <div class="displaymath">
         $$
         2 + 2 = 4.
         $$
         </div>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -145,15 +176,25 @@ def test_section_shortcut():
         """,
         want="""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section id="my-sec" class="section level-2">
+
         <h2>1. My Section</h2>
+
         <p class="paragraph">This section contains a shortcut</p>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -171,13 +212,20 @@ def test_claim_shortcut():
         """,
         want="""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <p class="paragraph">This paragraph contains a <span class="claim">claim with a turnstile</span>. And also another one <span class="claim">but it takes
         multiple lines</span>.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )

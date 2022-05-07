@@ -15,21 +15,27 @@ def test_simple():
 
         ::
         """,
-        want="""\
+        want=r"""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <section class="section level-2">
+
         <h2>1. Section</h2>
-        <p class="paragraph">This pargraph contains a claim <span id="clm-lbl" class="claim">all <span class="math">
-        \(X\)
-        </span> are <span class="math">
-        \(Y\)
-        </span> </span>.</p>
+
+        <p class="paragraph">This pargraph contains a claim <span id="clm-lbl" class="claim">all <span class="math">\(X\)</span> are <span class="math">\(Y\)</span> </span>.</p>
+
         </section>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -44,16 +50,21 @@ def test_with_math():
 
         ::
         """,
-        want="""\
+        want=r"""
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
-        <p class="paragraph">This paragraph has math inside a claim <span class="claim"><span class="math">
-        \(2+2=4\)
-        </span></span>.</p>
+
+        <p class="paragraph">This paragraph has math inside a claim <span class="claim"><span class="math">\(2+2=4\)</span></span>.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -70,14 +81,19 @@ def test_lonely_claim():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
-        <p class="paragraph"><span class="claim"><span class="math">
-        \(2+2=4\)
-        </span></span>.</p>
+
+        <p class="paragraph"><span class="claim"><span class="math">\(2+2=4\)</span></span>.</p>
+
         </section>
+
         </div>
+
         </body>
         """,
     )
@@ -101,23 +117,32 @@ def test_claim_within_list():
         """,
         want="""\
         <body>
+
         <div id="manuscript" class="manuscript">
+
         <section class="level-1">
+
         <h1></h1>
+
         <p class="paragraph">We now make a bunch of claims
-        </p><ol class="enumerate">
+        </p>
+
+        <ol class="enumerate">
+
         <li id="one" class="item">
-        <span class="claim"><span class="math">
-        \(2+2=4\)
-        </span></span>.
-        </li><li id="two" class="item">
-        <span class="claim"><span class="math">
-        \(3+3=6\)
-        </span></span>.
+        <span class="claim"><span class="math">\(2+2=4\)</span></span>.
         </li>
+
+        <li id="two" class="item">
+        <span class="claim"><span class="math">\(3+3=6\)</span></span>.
+        </li>
+
         </ol>
+
         </section>
+
         </div>
+
         </body>
         """,
     )

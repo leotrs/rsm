@@ -43,12 +43,12 @@ from . import nodes
 class TagName(str):
     delim: str = ':'
 
-    def __new__(cls, name):
+    def __new__(cls, name: str) -> 'TagName':
         if isinstance(name, cls):
             return name
         return super().__new__(cls, f'{cls.delim}{name}{cls.delim}')
 
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         super().__init__()
         self.name = name
 
@@ -79,16 +79,21 @@ class Tag(TagName):
 
     @classmethod
     def newtag(
-        cls,
-        nodeclass,
+        cls: Type['Tag'],
+        nodeclass: Type[nodes.Node] | None,
         *,
-        name=None,
-        has_content=None,
-        content_mode=None,
-        meta_inline_only=None,
-        tag_optional=None,
-    ):
-        name = name or nodeclass.__name__.lower()
+        name: str | None = None,
+        has_content: bool | None = None,
+        content_mode: ContentMode | None = None,
+        meta_inline_only: bool | None = None,
+        tag_optional: bool | None = None,
+    ) -> 'Tag':
+        if nodeclass is None:
+            if not name:
+                raise ValueError('Must supply name or nodeclass')
+            name = name
+        else:
+            name = nodeclass.__name__.lower()
         tag = cls(name)
         tag.nodeclass = nodeclass
         tag.has_content = has_content or cls.has_content
@@ -125,7 +130,7 @@ class InlineTag(Tag):
 class ManuscriptTag(BlockTag):
     nodeclass: Type[nodes.Node] = nodes.Manuscript
 
-    def set_source(self, src):
+    def set_source(self, src: str) -> None:
         self.src = src
 
     def makenode(self) -> nodes.Node:
@@ -164,7 +169,7 @@ _tags['manuscript'] = ManuscriptTag.newtag(nodes.Manuscript)
 _tags[''] = Tombstone
 
 
-def get(name: str):
+def get(name: str) -> Tag:
     if isinstance(name, TagName):
         name = name.name
     try:
@@ -173,5 +178,5 @@ def get(name: str):
         raise KeyError(f'Unrecognized tag name "{name}"') from e
 
 
-def all():
+def all() -> list[Tag]:
     return list(_tags.values())

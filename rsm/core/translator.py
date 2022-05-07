@@ -10,6 +10,7 @@ import logging
 
 logger = logging.getLogger('RSM').getChild('Translator')
 
+from typing import Iterable, Callable
 from collections import namedtuple
 from abc import ABC, abstractmethod
 from typing import Iterable
@@ -24,7 +25,7 @@ class RSMTranslatorError(Exception):
     pass
 
 
-def make_tag(tag, id, classes, newline=False):
+def make_tag(tag: str, id: str, classes: Iterable, newline: bool = False) -> str:
     text = f'<{tag}'
     if id:
         text += f' id="{id}"'
@@ -48,7 +49,7 @@ class EditCommand(ABC):
     def execute(self, translator: 'Translator') -> None:
         pass
 
-    def _edit_command_repr(self, members) -> str:
+    def _edit_command_repr(self, members: Iterable[str]) -> str:
         start = f'{self.__class__.__name__}('
         middles = []
         for key in members:
@@ -218,7 +219,7 @@ class AppendBatchAndDefer(EditCommandBatch):
     def execute(self, translator: 'Translator') -> None:
         s = f'executing batch of len {len(self)}'
         ic(s)
-        deferred: list[AppendText] = []
+        deferred: list[EditCommand] = []
         for item in self.items:
             if isinstance(item, AppendTextAndDefer):
                 deferred.append(AppendText(item.deferred_text))
@@ -250,10 +251,10 @@ class Action(namedtuple('Action', 'node action method')):
 
 
 class TranslateActionStack(list):
-    def push_visit(self, node):
+    def push_visit(self, node: nodes.Node) -> None:
         self.append(Action(node, 'visit', Translator.get_visit_method(node)))
 
-    def push_leave(self, node):
+    def push_leave(self, node: nodes.Node) -> None:
         self.append(Action(node, 'leave', Translator.get_leave_method(node)))
 
 
@@ -261,10 +262,10 @@ class Translator:
     def __init__(self):
         self.tree: AbstractTreeManuscript = None
         self.body: HTMLManuscript = ''
-        self.deferred: list = []
+        self.deferred: list[EditCommand] = []
 
     @classmethod
-    def _get_action_method(cls, node, action):
+    def _get_action_method(cls, node: nodes.Node, action: str) -> Callable:
         nodeclass = node.__class__
         method = f'{action}_{nodeclass.__name__.lower()}'
         while not hasattr(cls, method):
@@ -273,11 +274,11 @@ class Translator:
         return getattr(cls, method)
 
     @classmethod
-    def get_visit_method(cls, node):
+    def get_visit_method(cls, node: nodes.Node) -> Callable:
         return cls._get_action_method(node, 'visit')
 
     @classmethod
-    def get_leave_method(cls, node):
+    def get_leave_method(cls, node: nodes.Node) -> Callable:
         return cls._get_action_method(node, 'leave')
 
     def translate(self, tree: AbstractTreeManuscript) -> HTMLManuscript:
@@ -442,11 +443,13 @@ class Translator:
         return AppendNodeTag(node, tag='span', newline=False)
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
-        paragraph: nodes.Paragraph = node.first_of_type(nodes.Paragraph)
-        classname = node.__class__.__name__.capitalize()
-        span = nodes.Span(strong=True)
-        span.append(nodes.Text(text=f'{classname} {node.number}. '))
-        paragraph.prepend(span)
+        paragraph = node.first_of_type(nodes.Paragraph)
+        if paragraph is not None:
+            paragraph: nodes.Paragraph
+            classname = node.__class__.__name__.capitalize()
+            span = nodes.Span(strong=True)
+            span.append(nodes.Text(text=f'{classname} {node.number}. '))
+            paragraph.prepend(span)
         return AppendNodeTag(node)
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:

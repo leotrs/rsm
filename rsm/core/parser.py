@@ -11,7 +11,6 @@ from typing import Any, Type, Optional, Callable
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from collections import namedtuple
-from enum import Enum, auto
 
 from . import nodes
 from . import tags

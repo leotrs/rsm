@@ -7,7 +7,7 @@ Nodes that make up the Manuscript tree.
 """
 
 from dataclasses import dataclass, field, InitVar, KW_ONLY
-from typing import Any, ClassVar, Type, Optional
+from typing import Any, ClassVar, Type, Optional, Callable
 from collections.abc import Iterable
 from datetime import datetime
 from icecream import ic
@@ -38,11 +38,11 @@ class Node:
     _parent: Optional['NodeWithChildren'] = field(init=False, repr=False, default=None)
     parent: Optional['NodeWithChildren'] = None
 
-    def __post_init__(self, customreftext: str):
+    def __post_init__(self, customreftext: str) -> None:
         self._reftext = customreftext
 
     @classmethod
-    def metakeys(cls: Type['Node']):
+    def metakeys(cls: Type['Node']) -> set:
         return cls._newmetakeys.union(
             *[b.metakeys() for b in cls.__bases__ if hasattr(b, 'metakeys')]
         )
@@ -52,7 +52,7 @@ class Node:
         return self._parent
 
     @parent.setter
-    def parent(self, node) -> None:
+    def parent(self, node: 'Node') -> None:
         if isinstance(node, property):
             node = self._parent  # initial value not specified, use default
         if node is None:
@@ -70,8 +70,13 @@ class Node:
         # necessary for methods such as Nodes.traverse
         return tuple()
 
-    def traverse(self, condition=lambda n: True, *, nodeclass=None) -> Iterable['Node']:
-        if nodeclass:
+    def traverse(
+        self,
+        condition: Callable = lambda n: True,
+        *,
+        nodeclass: Type['Node'] | None = None,
+    ) -> Iterable['Node']:
+        if nodeclass is not None:
             if issubclass(nodeclass, Node):
                 condition = lambda n: isinstance(n, nodeclass)
             else:
@@ -95,10 +100,10 @@ class Node:
         return self._reftext or self.classreftext
 
     @reftext.setter
-    def reftext(self, value) -> str:
+    def reftext(self, value: str) -> None:
         self._reftext = value
 
-    def replace_self(self, replace) -> None:
+    def replace_self(self, replace: 'Node') -> None:
         if not self.parent:
             raise RSMNodeError('Can only call replace_self on a node with parent')
         index = self.parent.children.index(self)
@@ -113,7 +118,7 @@ class Node:
 
 @dataclass
 class NodeWithChildren(Node):
-    def __post_init__(self, customreftext):
+    def __post_init__(self, customreftext: str) -> None:
         self._reftext = customreftext
         self._children: list[Node] = []
 
@@ -153,7 +158,7 @@ class NodeWithChildren(Node):
 class Text(Node):
     text: str = ''
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return short_repr(self.text, self.__class__.__name__)
 
 
@@ -192,7 +197,7 @@ class Manuscript(Heading):
     date: datetime | None = None
     _newmetakeys: ClassVar[set] = {'date'}
 
-    def __post_init__(self, customreftext):
+    def __post_init__(self, customreftext: str) -> None:
         super().__post_init__(customreftext)
         self.src = ShortenedString(self.src)
 
@@ -294,7 +299,7 @@ class PendingCite(Node):
 
 @dataclass
 class Cite(Node):
-    targets: list[Node] | None = field(kw_only=True, default_factory=list)
+    targets: list[Node] = field(kw_only=True, default_factory=list)
 
 
 @dataclass

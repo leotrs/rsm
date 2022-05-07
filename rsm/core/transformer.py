@@ -18,9 +18,9 @@ class RSMTransformerError(Exception):
 
 
 class Transformer:
-    def __init__(self):
-        self.tree: AbstractTreeManuscript = None
-        self.labels_to_nodes: dict = {}
+    def __init__(self) -> None:
+        self.tree: AbstractTreeManuscript | None = None
+        self.labels_to_nodes: dict[str, nodes.Node] = {}
 
     def transform(self, tree: AbstractTreeManuscript) -> AbstractTreeManuscript:
         self.tree = tree
@@ -37,7 +37,7 @@ class Transformer:
                 raise RSMTransformerError(f'Duplicate label {node.label}')
             self.labels_to_nodes[node.label] = node
 
-    def _label_to_node(self, label) -> Type[nodes.Node]:
+    def _label_to_node(self, label: str) -> nodes.Node:
         try:
             node = self.labels_to_nodes[label]
         except KeyError as e:
@@ -61,7 +61,6 @@ class Transformer:
                 targets = [self._label_to_node(label) for label in pending.targetlabels]
                 pending.replace_self(nodes.Cite(targets=targets))
 
-        node: nodes.PendingReference
         for node in self.tree.traverse(nodeclass=nodes.PendingReference):
             raise RSMTransformerError(
                 f'Found unresolved referece to "{node.targetlabel}"'

@@ -252,10 +252,10 @@ class Action(namedtuple('Action', 'node action method')):
 
 class TranslateActionStack(list):
     def push_visit(self, node: nodes.Node) -> None:
-        self.append(Action(node, 'visit', Translator.get_visit_method(node)))
+        self.append(Action(node, 'visit', Translator.get_action_method(node, 'visit')))
 
     def push_leave(self, node: nodes.Node) -> None:
-        self.append(Action(node, 'leave', Translator.get_leave_method(node)))
+        self.append(Action(node, 'leave', Translator.get_action_method(node, 'leave')))
 
 
 class Translator:
@@ -265,21 +265,13 @@ class Translator:
         self.deferred: list[EditCommand] = []
 
     @classmethod
-    def _get_action_method(cls, node: nodes.Node, action: str) -> Callable:
+    def get_action_method(cls, node: nodes.Node, action: str) -> Callable:
         nodeclass = node.__class__
         method = f'{action}_{nodeclass.__name__.lower()}'
         while not hasattr(cls, method):
             nodeclass = nodeclass.__bases__[0]
             method = f'{action}_{nodeclass.__name__.lower()}'
         return getattr(cls, method)
-
-    @classmethod
-    def get_visit_method(cls, node: nodes.Node) -> Callable:
-        return cls._get_action_method(node, 'visit')
-
-    @classmethod
-    def get_leave_method(cls, node: nodes.Node) -> Callable:
-        return cls._get_action_method(node, 'leave')
 
     def translate(self, tree: AbstractTreeManuscript) -> HTMLManuscript:
         # ic.enable()

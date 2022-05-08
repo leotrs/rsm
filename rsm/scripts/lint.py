@@ -18,13 +18,26 @@ def lint(source: str) -> AbstractTreeManuscript:
 def parse_args() -> Namespace:
     parser = ArgumentParser()
     parser.add_argument('src', help='RSM string to render')
+    parser.add_argument(
+        '-f',
+        '--file',
+        help='read source from file',
+        action='store_true',
+        default=False,
+    )
     args = parser.parse_args()
     return args
 
 
 def main() -> int:
     args = parse_args()
-    result = lint(args.src)
+    args = parse_args()
+    if args.file:
+        with open(args.src) as file:
+            src = file.read()
+    else:
+        src = args.src
+    result = lint(src)
     print(result)
     return 0
 

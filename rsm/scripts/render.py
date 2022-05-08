@@ -10,9 +10,10 @@ from argparse import ArgumentParser, Namespace
 
 from .app import RSMProcessorApplication
 from ..core.manuscript import HTMLManuscript
+from ..core.parser import RSMParserError
 
 
-def render(source) -> HTMLManuscript:
+def render(source: str) -> HTMLManuscript:
     return RSMProcessorApplication(plain=source).run()
 
 
@@ -37,7 +38,13 @@ def main() -> int:
             src = file.read()
     else:
         src = args.src
-    body = render(src)
+    try:
+        body = render(src)
+    except RSMParserError as exc:
+        if exc.pos == 0:
+            raise ValueError(
+                'The source does not contain valid RSM.  Did you forget to use the -f flag?'
+            )
     print(body)
     return 0
 

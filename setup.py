@@ -11,6 +11,7 @@ setup(
         'console_scripts': [
             'rsm-make=rsm.scripts.make:main',
             'rsm-render=rsm.scripts.render:main',
+            'rsm-lint=rsm.scripts.lint:main',
         ],
     },
 )

@@ -1,3 +1,4 @@
+import pytest
 import subprocess
 from conftest import compare_have_want
 
@@ -31,3 +32,11 @@ def test_render():
         </body>
         """,
     )
+
+
+def test_invalid_rsm():
+    have = "test_file.rsm"
+    with pytest.raises(subprocess.CalledProcessError):
+        result = subprocess.run(
+            ['rsm-render', have], stdout=subprocess.PIPE, check=True
+        )

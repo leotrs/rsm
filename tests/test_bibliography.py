@@ -101,7 +101,7 @@ def test_many():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [1,2]</p>
+        <p class="paragraph">This has a citation at the end. [1, 2]</p>
 
         <section class="level-2">
 
@@ -172,7 +172,7 @@ def test_order():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [2,1]</p>
+        <p class="paragraph">This has a citation at the end. [2, 1]</p>
 
         <section class="level-2">
 

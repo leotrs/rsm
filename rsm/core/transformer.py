@@ -9,6 +9,7 @@ Apply transforms to the AbstractTreeManuscript.
 from icecream import ic
 
 from typing import Type
+import warnings
 from .manuscript import AbstractTreeManuscript
 from . import nodes
 
@@ -37,14 +38,15 @@ class Transformer:
                 raise RSMTransformerError(f'Duplicate label {node.label}')
             self.labels_to_nodes[node.label] = node
 
-    def _label_to_node(self, label: str) -> nodes.Node:
+    def _label_to_node(self, label: str, default=None) -> nodes.Node:
         try:
-            node = self.labels_to_nodes[label]
+            return self.labels_to_nodes[label]
         except KeyError as e:
-            raise RSMTransformerError(
-                f'Reference to nonexistent label "{label}"'
-            ) from e
-        return node
+            if default is None:
+                raise RSMTransformerError(f'Reference to nonexistent label "{label}" and no default given')
+            else:
+                warnings.warn(f'Reference to nonexistent label "{label}"')
+                return default()
 
     def resolve_pending_references(self) -> None:
         condition = lambda n: type(n) in [nodes.PendingReference, nodes.PendingCite]
@@ -58,7 +60,7 @@ class Transformer:
                     )
                 )
             elif isinstance(pending, nodes.PendingCite):
-                targets = [self._label_to_node(label) for label in pending.targetlabels]
+                targets = [self._label_to_node(label, nodes.UnknownBibitem) for label in pending.targetlabels]
                 pending.replace_self(nodes.Cite(targets=targets))
 
         for node in self.tree.traverse(nodeclass=nodes.PendingReference):

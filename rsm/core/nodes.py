@@ -359,3 +359,8 @@ class Bibitem(Node):
         'number',
         'publisher',
     }
+
+
+@dataclass
+class UnknownBibitem(Bibitem):
+    number: str = "?"

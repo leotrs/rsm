@@ -218,9 +218,7 @@ class AppendHeading(AppendOpenCloseTag):
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(
-            ['level', 'content', 'id', 'classes', 'newline_inner']
-        )
+        return self._edit_command_repr(['level', 'content', 'id', 'classes'])
 
 
 class EditCommandBatch(EditCommand):
@@ -390,7 +388,7 @@ class Translator:
     def visit_item(self, node: nodes.Item) -> EditCommand:
         return AppendNodeTag(node, 'li')
 
-    def visit_comment(self, node: nodes.Comment) -> EditCommand:
+    def visit_comment(self, node: nodes.Item) -> EditCommand:
         return AppendNodeTag(node)
 
     def visit_math(self, node: nodes.Math) -> EditCommand:

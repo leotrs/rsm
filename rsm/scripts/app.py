@@ -50,7 +50,6 @@ class ParserApplication:
         self.transformer: transformer.Transformer
 
     def run(self, wrapup: bool = False) -> manuscript.AbstractTreeManuscript:
-        ic.disable()
         self.configure()
         self.read()  # Path -> PlainTextManuscript
         self.parse()  # PlainTextManuscript -> AbstractTreeManuscript

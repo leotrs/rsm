@@ -76,7 +76,6 @@ class AppendTextAndDefer(EditCommand):
         return self._edit_command_repr(['text', 'deferred_text'])
 
     def execute(self, translator: 'Translator') -> None:
-        ic(self)
         translator.body += self.text
         translator.deferred.append(AppendText(self.deferred_text))
 
@@ -89,7 +88,6 @@ class AppendText(EditCommand):
         return self._edit_command_repr(['text'])
 
     def execute(self, translator: 'Translator') -> None:
-        ic(self)
         translator.body += self.text
 
 
@@ -244,30 +242,20 @@ class AppendBatchAndDefer(EditCommandBatch):
 
     def execute(self, translator: 'Translator') -> None:
         s = f'executing batch of len {len(self)}'
-        ic(s)
         deferred: list[EditCommand] = []
         for item in self.items:
             if isinstance(item, AppendTextAndDefer):
                 deferred.append(AppendText(item.deferred_text))
             AppendText(item.text).execute(translator)
 
-        s = f'appending closing batch of len {len(deferred)}'
-        ic(s)
-
         batch = AppendBatch(reversed(deferred))
-        ic(batch.items)
         translator.deferred.append(batch)
-        ic('finished batch')
 
 
 class AppendBatch(EditCommandBatch):
     def execute(self, translator: 'Translator') -> None:
-        s = f'executing closing batch of len {len(self)}'
-        ic(s)
         for item in self.items:
-            ic(item.__class__.__name__)
             item.execute(translator)
-        ic('finished closing batch')
 
 
 class Action(namedtuple('Action', 'node action method')):
@@ -309,7 +297,6 @@ class Translator:
         stack = TranslateActionStack()
         stack.push_visit(tree)
         while stack:
-            ic(stack)
             node, action, method = stack.pop()
             command = method(self, node)
             if action == 'visit':
@@ -317,13 +304,7 @@ class Translator:
                     stack.push_leave(node)
                 for child in reversed(node.children):
                     stack.push_visit(child)
-
-            ic('before executing')
-            ic(len(self.deferred))
             command.execute(self)
-            ic('after executing')
-            ic(len(self.deferred))
-            ic(self.deferred)
 
         if self.deferred:
             raise RSMTranslatorError('Something went wrong')
@@ -334,8 +315,6 @@ class Translator:
         return AppendText(str(node) + '\n')
 
     def leave_node(self, node: nodes.Node) -> EditCommand:
-        s = f'leaving node of class {node.__class__.__name__}'
-        ic(s)
         try:
             return self.deferred.pop()
         except IndexError as e:

@@ -170,8 +170,6 @@ class ParagraphParser(Parser):
                 f'node ({type(self.node)})'
             )
         self.node: nodes.Paragraph
-        s = f'ParagraphParser created for tag {self.tag}'
-        ic(s)
 
     def _pre_process(self) -> None:
         cease = self.src[: self.frompos].rfind('\n')
@@ -230,7 +228,6 @@ class ParagraphParser(Parser):
         oldpos = self.pos
         # every paragraph must end with a blank line
         _, end_of_content = self.get_lines_until(lambda l: l == '\n')
-        ic(end_of_content)
 
         children = []
         end_at_tombstone = False
@@ -251,7 +248,6 @@ class ParagraphParser(Parser):
                     hint = tagname
                     break
                 parser = self.get_subparser(tagname)
-                # ic(self.pos, self.frompos, parser.pos, parser.frompos)
                 result = parser.parse()
                 child, consumed = result.result, result.consumed
                 children.append(child)
@@ -373,8 +369,6 @@ class TagRegionParser(DelimitedRegionParser):
         self.node: nodes.NodeWithChildren = tag.makenode()
         if self.tag.has_content and tag.content_mode is not None:
             self.contentparser: Type[Parser] = self.contentparsers[tag.content_mode]
-        s = f'TagRegionParser created for tag {self.tag}'
-        ic(s)
 
     def process(self) -> ParsingResult:
         oldpos = self.pos
@@ -439,20 +433,14 @@ class TagRegionParser(DelimitedRegionParser):
             if not result.success:
                 raise RSMParserError(self.pos, 'Something went wrong')
 
-            s = f'subparser {parser.__class__.__name__} done'
-            ic(s, result.consumed)
-
             self.node.append(result.result)
             self.pos += result.consumed
 
             self.consume_whitespace()
             hint = self.get_tagname_at_pos()
-            ic(hint)
 
         self.consume_tombstone()
 
-        s = f'{self.__class__.__name__}.parse_content end'
-        ic(s, self.pos)
         return ParsingResult(
             success=True,
             result=self.node,
@@ -493,7 +481,6 @@ class SpecialTagRegionParser(DelimitedRegionParser):
 
         right = self.src.find(Tag.delim, self.pos)
         if not self.src[right:].startswith(Tombstone):
-            ic(oldpos)
             raise RSMParserError(
                 self.pos,
                 f'Found "{Tag.delim}" inside {self.tag} tag but no {Tombstone}',
@@ -572,7 +559,6 @@ class MetaParser(Parser):
         self.validkeys = node.metakeys()
         result = self.parse()
         if result.success:
-            ic(result)
             node.ingest_dict_as_meta(result.result)
             return ParsingResult.from_result(result, result=node)
         else:
@@ -686,7 +672,6 @@ class MetaPairParser(Parser):
         oldpos = self.pos
 
         # find the key
-        # ic(self.src[self.pos - 30 : self.pos + 30])
         key = self.get_tagname_at_pos()
         if not key:
             return ParsingResult(
@@ -698,7 +683,6 @@ class MetaPairParser(Parser):
 
         # check if key is valid
         if key.name not in self.validkeys:
-            # ic('invalid key')
             return ParsingResult(
                 success=False,
                 result=None,
@@ -729,7 +713,6 @@ class MetaPairParser(Parser):
         else:
             hint = None
 
-        ic(self.pos, key.name, value)
         return BaseParsingResult(
             success=True,
             result=(key.name, value),
@@ -801,7 +784,6 @@ class MetaPairParser(Parser):
 
 class BibTexParser(DelimitedRegionParser):
     def __init__(self, src):
-        ic(src)
         self.tag = tags.get('bibtex')
         super().__init__(parent=None, frompos=0, start=self.tag, end=Tombstone)
         self.src = src
@@ -832,8 +814,6 @@ class BibTexParser(DelimitedRegionParser):
             pairs['label'] = match.group(2)
             content = match.group(3)
 
-            ic(pairs['kind'], pairs['label'], content, len(content))
-
             spans = []
             # RSM only accepts fields surrounded by curly braces, NOT quotes.
             patterns = [
@@ -851,7 +831,6 @@ class BibTexParser(DelimitedRegionParser):
                     ]
                     pairs[key.lower()] = val
             spans.sort()
-            ic(spans)
             if spans[0][0] != 0:
                 print('The first key has not been parsed')
             if spans[-1][1] != len(content) - 1:
@@ -866,9 +845,6 @@ class BibTexParser(DelimitedRegionParser):
             child.ingest_dict_as_meta(pairs)
             child.label = pairs['label']
             children.append(child)
-
-        ic(children)
-        ic.disable()
 
         self.pos = endpos
         self.consume_tombstone()

@@ -118,9 +118,7 @@ class AppendOpenCloseTag(AppendText):
         super().__init__(text)
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(
-            ['tag', 'content', 'id', 'classes', 'newline_inner']
-        )
+        return self._edit_command_repr(['tag', 'content', 'id', 'classes'])
 
 
 class AppendOpenTag(AppendTextAndDefer):
@@ -172,7 +170,7 @@ class AppendNodeTag(AppendOpenTag):
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['tag', 'node', 'newline_inner'])
+        return self._edit_command_repr(['tag', 'node'])
 
 
 class AppendParagraph(AppendOpenCloseTag):
@@ -195,7 +193,7 @@ class AppendParagraph(AppendOpenCloseTag):
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['content', 'id', 'classes', 'newline_inner'])
+        return self._edit_command_repr(['content', 'id', 'classes'])
 
 
 class AppendHeading(AppendOpenCloseTag):
@@ -455,7 +453,7 @@ class Translator:
         return AppendNodeTag(node)
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
-        text = ','.join([str(bibitem.number) for bibitem in node.targets])
+        text = ', '.join([str(bibitem.number) for bibitem in node.targets])
         return AppendText(f'[{text}]')
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:

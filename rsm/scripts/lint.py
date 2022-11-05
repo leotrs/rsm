@@ -31,7 +31,6 @@ def parse_args() -> Namespace:
 
 def main() -> int:
     args = parse_args()
-    args = parse_args()
     if args.file:
         with open(args.src) as file:
             src = file.read()

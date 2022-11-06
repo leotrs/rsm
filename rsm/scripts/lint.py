@@ -36,7 +36,7 @@ def main() -> int:
             src = file.read()
     else:
         src = args.src
-    result = lint(src)
+    lint(src)
     return 0
 
 

@@ -11,6 +11,7 @@ from ..core import manuscript
 from ..core import reader
 from ..core import parser
 from ..core import transformer
+from ..core import linter
 from ..core import translator
 from ..core import builder
 from ..core import writer
@@ -20,7 +21,7 @@ from pathlib import Path
 from icecream import ic
 from typing import NamedTuple, Any, Callable
 import logging
-from logging.handlers import BufferingHandler
+
 
 logger = logging.getLogger('RSM')
 
@@ -103,60 +104,6 @@ class ParserApplication(Pipeline):
         super().__init__(tasks)
 
 
-class GatherHandler(BufferingHandler):
-    def __init__(self, levels: list[int], target: logging.Handler = None) -> None:
-        super().__init__(capacity=float('inf'))
-        self.gatherlevels = set(levels)
-        self.buffer = []
-        self.target = target
-
-    def emit(self, record: logging.LogRecord) -> None:
-        if record.levelno in self.gatherlevels:
-            self.buffer.append(record)
-
-    def flush(self) -> None:
-        self.acquire()
-        try:
-            if self.target:
-                for record in self.buffer:
-                    self.target.handle(record)
-                self.buffer.clear()
-        finally:
-            self.release()
-
-
-class Linter:
-    def __init__(self) -> None:
-        self.tree: manuscript.AbstractTreeManuscript | None = None
-        logging.LINT = 25
-        logging.addLevelName(logging.LINT, 'LINT')
-        logger.lint = lambda msg, *args, **kwargs: logger.log(
-            logging.LINT, msg, *args, **kwargs
-        )
-        if logger.level > logging.LINT:
-            logger.level = logging.LINT
-        target = logging.StreamHandler()
-        target.setLevel(logging.LINT)
-        # target.setFormatter(RSMFormatter())
-        self.handler = GatherHandler([logging.WARNING, logging.LINT], target)
-        self.handler.setLevel(logging.LINT)
-        logger.addHandler(self.handler)
-
-    def flush(self) -> None:
-        if not self.handler.buffer:
-            print('No linting messages')
-            return
-        print()
-        print('------ Start of linting output ------ ')
-        self.handler.flush()
-        print('------ End of linting output ------')
-
-    def lint(self, tree: manuscript.AbstractTreeManuscript) -> None:
-        logger.info("Linting...")
-        self.tree = tree
-        logger.lint('this is a lint message')
-
-
 class LinterApplication(ParserApplication):
     def __init__(
         self,
@@ -165,8 +112,10 @@ class LinterApplication(ParserApplication):
         verbosity: int = 0,
     ):
         super().__init__(srcpath, plain, verbosity)
-        linter = Linter()
-        self.add_task(Task("linter", linter, linter.lint))
+        mylinter = linter.Linter()
+        self.add_task(Task("linter", mylinter, mylinter.lint))
+        self.add_task(Task("linter", mylinter, mylinter.flush))
+        self.add_task(Task("linter", mylinter, lambda: mylinter.flush))
 
 
 class RSMProcessorApplication(ParserApplication):
@@ -179,7 +128,7 @@ class RSMProcessorApplication(ParserApplication):
     ):
         super().__init__(srcpath, plain, verbosity)
         if run_linter:
-            self.add_task(Task("linter", l := Linter(), l.lint))
+            self.add_task(Task("linter", l := linter.Linter(), l.lint))
         self.add_task(Task("translator", t := translator.Translator(), t.translate))
         if run_linter:
             self.add_task(Task("linter", l, l.flush))

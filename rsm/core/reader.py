@@ -10,6 +10,9 @@ from pathlib import Path
 
 from .manuscript import PlainTextManuscript
 
+import logging
+
+logger = logging.getLogger('RSM').getChild('Reader')
 
 
 class Reader:

@@ -37,7 +37,6 @@ def main() -> int:
     else:
         src = args.src
     result = lint(src)
-    print(result)
     return 0
 
 

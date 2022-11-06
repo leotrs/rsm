@@ -13,6 +13,10 @@ import warnings
 from .manuscript import AbstractTreeManuscript
 from . import nodes
 
+import logging
+
+logger = logging.getLogger('RSM').getChild('Transformer')
+
 
 class RSMTransformerError(Exception):
     pass

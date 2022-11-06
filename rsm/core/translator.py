@@ -471,3 +471,7 @@ class Translator:
             text += f' {node.publisher}.'
         text += f' {node.year}.'
         return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])
+
+
+class HandrailsTranslator(Translator):
+    pass

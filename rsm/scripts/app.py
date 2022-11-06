@@ -121,12 +121,15 @@ class RSMProcessorApplication(ParserApplication):
         srcpath: Path | None = None,
         plain: str = '',
         verbosity: int = 0,
+        handrails: bool = False,
         run_linter: bool = False,
     ):
         super().__init__(srcpath, plain, verbosity)
         if run_linter:
             self.add_task(Task("linter", l := linter.Linter(), l.lint))
-        self.add_task(Task("translator", t := translator.Translator(), t.translate))
+
+        tr = translator.HandrailsTranslator() if handrails else translator.Translator()
+        self.add_task(Task("trlator", tr, tr.translate))
         if run_linter:
             self.add_task(Task("linter", l, l.flush))
 
@@ -136,10 +139,11 @@ class FullBuildApplication(RSMProcessorApplication):
         self,
         srcpath: Path | None = None,
         plain: str = '',
-        run_linter: bool = False,
         verbosity: int = 0,
+        handrails: bool = True,
+        run_linter: bool = False,
     ):
-        super().__init__(srcpath, plain, verbosity, run_linter)
+        super().__init__(srcpath, plain, verbosity, handrails, run_linter)
         if run_linter:
             wrapup = self.pop_task()
         self.add_task(Task("builder", b := builder.FullBuilder(), b.build))

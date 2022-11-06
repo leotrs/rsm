@@ -11,15 +11,18 @@ from pathlib import Path
 
 from .manuscript import WebManuscript
 
+import logging
+
+logger = logging.getLogger('RSM').getChild('Writer')
+
 
 class Writer:
     """Take a HTML string and write to disk."""
 
-    def __init__(self):
+    def __init__(self, dstpath: Path | None = None):
         self.web: WebManuscript | None = None
-        self.dstpath: Path = Path()
+        self.dstpath = Path() if dstpath is None else dstpath
 
-    def write(self, web: WebManuscript, dstpath: Path):
+    def write(self, web: WebManuscript):
         self.web = web
-        self.dstpath = dstpath
         copy_fs(web, './')

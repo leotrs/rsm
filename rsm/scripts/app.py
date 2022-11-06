@@ -18,6 +18,7 @@ from ..core.rsmlogger import RSMFormatter
 
 from pathlib import Path
 from icecream import ic
+from typing import NamedTuple, Any, Callable
 import logging
 from logging.handlers import BufferingHandler
 
@@ -28,65 +29,78 @@ class RSMApplicationError(Exception):
     pass
 
 
-class ParserApplication:
+class Task(NamedTuple):
+    name: str
+    obj: Any
+    run: Callable
+
+
+class Pipeline:
+    def __init__(self, tasks: list[Task]):
+        self.tasks = []
+        for t in tasks:
+            self.add_task(t)
+
+    def add_task(self, task):
+        self.tasks.append(task)
+        setattr(self, task.name, task.obj)
+
+    def pop_task(self):
+        task = self.tasks.pop()
+        delattr(self, task.name)
+        return task
+
+    def run(self, initial_args=None):
+        res = initial_args
+        for _, _, call in self.tasks:
+            if isinstance(res, dict):
+                res = call(**res)
+            elif isinstance(res, (list, tuple)):
+                res = call(*res)
+            elif res is None:
+                res = call()
+            else:
+                res = call(res)
+        return res
+
+
+def validate(srcpath, plain) -> None:
+    if not srcpath and not plain:
+        raise RSMApplicationError('Must specify exactly one of srcpath, plain')
+    if srcpath and plain:
+        raise RSMApplicationError('Must specify exactly one of srcpath, plain')
+
+
+def configure(verbosity) -> None:
+    level = logging.WARNING - verbosity * 10
+    level = max(level, logging.DEBUG)
+    logger.level = min(logger.level, level)
+    for handler in logger.handlers:
+        if handler.level > level:
+            handler.setLevel(level)
+    logger.info('Application started')
+    logger.info('Configuring...')
+    # self.config = self.config.configure()
+
+
+class ParserApplication(Pipeline):
     def __init__(
-        self,
-        *,
-        srcpath: Path | None = None,
-        plain: str = '',
-        verbosity: int = 0,
+        self, srcpath: Path | None = None, plain: str = '', verbosity: int = 0
     ):
-        if not srcpath and not plain:
-            raise RSMApplicationError('Must specify exactly one of srcpath, plain')
-        if srcpath and plain:
-            raise RSMApplicationError('Must specify exactly one of srcpath, plain')
-        self.srcpath = srcpath
-        self.plain = plain
-        self.verbosity: int = verbosity
-        self.dstpath: Path = Path()
-        self.tree: manuscript.AbstractTreeManuscript
-        self.reader: reader.Reader
-        self.parser: parser.MainParser
-        self.transformer: transformer.Transformer
+        validate(srcpath, plain)
+        configure(verbosity)
 
-    def run(self, wrapup: bool = False) -> manuscript.AbstractTreeManuscript:
-        self.configure()
-        self.read()  # Path -> PlainTextManuscript
-        self.parse()  # PlainTextManuscript -> AbstractTreeManuscript
-        self.transform()  # AbstractTreeManuscript -> AbstractTreeManuscript
-        if wrapup:
-            self.wrapup()
-        return self.tree
-
-    def configure(self) -> None:
-        level = logging.WARNING - self.verbosity * 10
-        level = max(level, logging.DEBUG)
-        logger.level = min(logger.level, level)
-        for handler in logger.handlers:
-            if handler.level > level:
-                handler.setLevel(level)
-        logger.info('Application started')
-        logger.info('Configuring...')
-        # self.config = self.config.configure()
-
-    def read(self) -> None:
-        if not self.plain:
-            logger.info('Reading...')
-            self.reader = reader.Reader()
-            self.plain = self.reader.read(self.srcpath)
-
-    def parse(self) -> None:
-        logger.info('Parsing...')
-        self.parser = parser.MainParser(self.plain)
-        self.tree = self.parser.parse()
-
-    def transform(self) -> None:
-        logger.info('Transforming...')
-        self.transformer = transformer.Transformer()
-        self.tree = self.transformer.transform(self.tree)
-
-    def wrapup(self) -> None:
-        pass
+        tasks = []
+        if not plain:
+            r = reader.Reader()
+            tasks.append(Task("reader", r, lambda: r.read(srcpath)))
+        else:
+            tasks.append(Task("dummy", None, lambda: plain))
+        tasks += [
+            Task("parser", p := parser.MainParser(), p.parse),
+            Task("transformer", t := transformer.Transformer(), t.transform),
+        ]
+        super().__init__(tasks)
 
 
 class GatherHandler(BufferingHandler):
@@ -138,6 +152,7 @@ class Linter:
         print('------ End of linting output ------')
 
     def lint(self, tree: manuscript.AbstractTreeManuscript) -> None:
+        logger.info("Linting...")
         self.tree = tree
         logger.lint('this is a lint message')
 
@@ -145,102 +160,43 @@ class Linter:
 class LinterApplication(ParserApplication):
     def __init__(
         self,
-        *,
         srcpath: Path | None = None,
         plain: str = '',
         verbosity: int = 0,
     ):
-        super().__init__(srcpath=srcpath, plain=plain, verbosity=verbosity)
-        self.linter: Linter = Linter()
-
-    def run(self, wrapup: bool = False) -> manuscript.AbstractTreeManuscript:
-        self.configure()
-        self.read()  # Path -> PlainTextManuscript
-        self.parse()  # PlainTextManuscript -> AbstractTreeManuscript
-        self.transform()  # AbstractTreeManuscript -> AbstractTreeManuscript
-        self.lint()
-        self.wrapup()
-        return self.tree
-
-    def lint(self) -> None:
-        logger.info('Linting...')
-        self.linter.lint(self.tree)
-
-    def wrapup(self) -> None:
-        self.linter.flush()
+        super().__init__(srcpath, plain, verbosity)
+        linter = Linter()
+        self.add_task(Task("linter", linter, linter.lint))
 
 
 class RSMProcessorApplication(ParserApplication):
     def __init__(
         self,
-        *,
         srcpath: Path | None = None,
         plain: str = '',
         verbosity: int = 0,
         run_linter: bool = False,
     ):
-        super().__init__(srcpath=srcpath, plain=plain, verbosity=verbosity)
-        self.run_linter = run_linter
-        self.translator: translator.Translator
-        self.linter: Linter
-        self.body: manuscript.HTMLManuscript
-
-    def run(self, wrapup: bool = False) -> manuscript.HTMLManuscript:
-        super().run(wrapup=False)
-        self.lint()
-        self.translate()  # AbstractTreeManuscript -> HTMLManuscript
-        if wrapup:
-            self.wrapup()
-        return self.body
-
-    def lint(self) -> None:
-        if self.run_linter:
-            logger.info('Linting...')
-            self.linter = Linter()
-            self.linter.lint(self.tree)
-
-    def translate(self) -> None:
-        logger.info('Translating...')
-        self.translator = translator.Translator()
-        self.body = self.translator.translate(self.tree)
-
-    def wrapup(self) -> None:
-        if self.run_linter:
-            self.linter.flush()
+        super().__init__(srcpath, plain, verbosity)
+        if run_linter:
+            self.add_task(Task("linter", l := Linter(), l.lint))
+        self.add_task(Task("translator", t := translator.Translator(), t.translate))
+        if run_linter:
+            self.add_task(Task("linter", l, l.flush))
 
 
 class FullBuildApplication(RSMProcessorApplication):
     def __init__(
         self,
-        *,
         srcpath: Path | None = None,
         plain: str = '',
         run_linter: bool = False,
         verbosity: int = 0,
     ):
-        super().__init__(
-            srcpath=srcpath, plain=plain, run_linter=run_linter, verbosity=verbosity
-        )
-        self.html: manuscript.HTMLManuscript
-        self.web: manuscript.WebManuscript
-        self.builder: builder.BaseBuilder
-        self.writer: writer.Writer
-
-    def run(self, wrapup: bool = False) -> manuscript.WebManuscript:
-        super().run(wrapup=False)
-        self.build()  # HTMLManuscript -> WebManuscript
-        self.write()  # WebManuscript -> HDD
-        if wrapup:
-            self.wrapup()
-        return self.web
-
-    def build(self) -> None:
-        logger.info('Building...')
-        self.builder = builder.FullBuilder()
-        self.web = self.builder.build(self.body, self.srcpath)
-        self.html = self.web.html
-
-    def write(self) -> None:
-        logger.info('Writing...')
-        self.writer = writer.Writer()
-        self.writer.write(self.web, self.dstpath)
+        super().__init__(srcpath, plain, verbosity, run_linter)
+        if run_linter:
+            wrapup = self.pop_task()
+        self.add_task(Task("builder", b := builder.FullBuilder(), b.build))
+        self.add_task(Task("writer", w := writer.Writer(), w.write))
+        if run_linter:
+            self.add_task(wrapup)

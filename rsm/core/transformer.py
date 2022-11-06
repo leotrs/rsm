@@ -24,6 +24,7 @@ class Transformer:
         self.labels_to_nodes: dict[str, nodes.Node] = {}
 
     def transform(self, tree: AbstractTreeManuscript) -> AbstractTreeManuscript:
+        logger.info("Transforming...")
         self.tree = tree
 
         self.collect_labels()
@@ -43,7 +44,9 @@ class Transformer:
             return self.labels_to_nodes[label]
         except KeyError as e:
             if default is None:
-                raise RSMTransformerError(f'Reference to nonexistent label "{label}" and no default given')
+                raise RSMTransformerError(
+                    f'Reference to nonexistent label "{label}" and no default given'
+                )
             else:
                 warnings.warn(f'Reference to nonexistent label "{label}"')
                 return default()
@@ -60,7 +63,10 @@ class Transformer:
                     )
                 )
             elif isinstance(pending, nodes.PendingCite):
-                targets = [self._label_to_node(label, nodes.UnknownBibitem) for label in pending.targetlabels]
+                targets = [
+                    self._label_to_node(label, nodes.UnknownBibitem)
+                    for label in pending.targetlabels
+                ]
                 pending.replace_self(nodes.Cite(targets=targets))
 
         for node in self.tree.traverse(nodeclass=nodes.PendingReference):

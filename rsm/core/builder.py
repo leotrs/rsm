@@ -19,9 +19,12 @@ from icecream import ic
 from .manuscript import HTMLManuscript, WebManuscript
 from .parser import ManuscriptParser
 
+import logging
+
+logger = logging.getLogger('RSM').getChild('Builder')
+
 
 class BaseBuilder(ABC):
-
     def __init__(self):
         self.body: HTMLManuscript = None
         self.html: HTMLManuscript = None
@@ -29,6 +32,7 @@ class BaseBuilder(ABC):
         self.outname: str = 'index.html'
 
     def build(self, body: HTMLManuscript, src: Path = None) -> WebManuscript:
+        logger.info("Building...")
         self.body = body
         self.web = WebManuscript(src)
         self.web.body = body
@@ -41,12 +45,13 @@ class BaseBuilder(ABC):
 
 
 class SingleFileBuilder(BaseBuilder):
-
     def make_main_file(self) -> None:
         html = HTMLManuscript(
             '<html>\n\n'
-            + self.make_html_header() + '\n'
-            + self.body.strip() + '\n\n'
+            + self.make_html_header()
+            + '\n'
+            + self.body.strip()
+            + '\n\n'
             + self.make_html_footer()
             + '</html>\n'
         )
@@ -54,7 +59,8 @@ class SingleFileBuilder(BaseBuilder):
         self.web.html = html
 
     def make_html_header(self) -> str:
-        return dedent("""\
+        return dedent(
+            """\
         <head>
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -68,14 +74,14 @@ class SingleFileBuilder(BaseBuilder):
 
           <title>{some_title}</title>
         </head>
-        """)
+        """
+        )
 
     def make_html_footer(self) -> str:
         return ''
 
 
 class FullBuilder(SingleFileBuilder):
-
     def build(self, body: HTMLManuscript, src: Path = None) -> WebManuscript:
         super().build(body, src)
         self.mount_static()

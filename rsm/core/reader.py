@@ -11,13 +11,14 @@ from pathlib import Path
 from .manuscript import PlainTextManuscript
 
 
-class Reader:
 
+class Reader:
     def __init__(self):
         self.path: Path = Path()
         self.src: str = ''
 
     def read(self, path: Path | None) -> PlainTextManuscript:
+        logger.info('Reading...')
         if not path:
             raise TypeError('Expected path, got None')
         self.path = Path(path)

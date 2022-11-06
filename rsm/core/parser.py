@@ -909,11 +909,13 @@ class ManuscriptParser(ShouldHaveHeadingParser):
 
 
 class MainParser:
-    def __init__(self, src):
-        self.src = src
+    def __init__(self):
+        self.src = None
         self.tree = None
 
-    def parse(self):
+    def parse(self, src):
+        logger.info('Parsing...')
+        self.src = src
         parser = ManuscriptParser(self.src)
         self.tree = parser.parse()
         parser.consume_whitespace()

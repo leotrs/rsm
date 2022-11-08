@@ -501,7 +501,10 @@ class Translator:
             reftext = tgt.reftext.format(
                 nodeclass=tgt.__class__.__name__, number=tgt.number
             )
-        text = f'<a href="#{node.target.label}">{reftext}</a>'
+        classes = " ".join(node.types)
+        text = (
+            f'<a class="reference {classes}" href="#{node.target.label}">{reftext}</a>'
+        )
         return AppendText(text)
 
     def visit_claim(self, node: nodes.Claim) -> EditCommand:

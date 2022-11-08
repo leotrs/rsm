@@ -67,10 +67,14 @@ class SingleFileBuilder(BaseBuilder):
           <meta name="generator" content="RSM 0.0.1 https://github.com/leotrs/rsm" />
 
           <link rel="stylesheet" type="text/css" href="static/rsm.css" />
+          <link rel="stylesheet" type="text/css" href="static/tooltipster.bundle.css" />
 
           <script src="static/jquery-3.6.0.js"></script>
+          <script src="static/tooltips.js"></script>
+          <script src="static/tooltipster.bundle.js"></script>
           <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
           <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+          <script async="async" onload="loadTooltips()" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
           <title>{some_title}</title>
         </head>
@@ -99,6 +103,13 @@ class FullBuilder(SingleFileBuilder):
         self.web.writetext('static/rsm.css', css)
 
         # copy JS files
-        copy_file(source, 'jquery-3.6.0.js', self.web, 'static/jquery-3.6.0.js')
+        filenames = [
+            'jquery-3.6.0.js',
+            'tooltips.js',
+            'tooltipster.bundle.js',
+            'tooltipster.bundle.css',
+        ]
+        for fn in filenames:
+            copy_file(source, fn, self.web, f'static/{fn}')
 
         # self.web.tree()

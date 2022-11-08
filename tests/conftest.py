@@ -11,10 +11,10 @@ import sys
 sys.setrecursionlimit(100)
 
 
-def compare_have_want(have, want):
+def compare_have_want(have, want, handrails=False):
     want = dedent(want).strip()
     have = PlainTextManuscript(dedent(have).strip())
-    have = rsm.render(have).strip()
+    have = rsm.render(have, handrails=handrails).strip()
 
     # compare without whitespace
     assert ''.join(have.split()) == ''.join(want.split())

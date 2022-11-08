@@ -296,14 +296,6 @@ class Action(namedtuple('Action', 'node action method')):
         return f'Action(node={classname}(), action="{self.action}")'
 
 
-class TranslateActionStack(list):
-    def push_visit(self, node: nodes.Node) -> None:
-        self.append(Action(node, 'visit', Translator.get_action_method(node, 'visit')))
-
-    def push_leave(self, node: nodes.Node) -> None:
-        self.append(Action(node, 'leave', Translator.get_action_method(node, 'leave')))
-
-
 class Translator:
     def __init__(self):
         self.tree: AbstractTreeManuscript = None
@@ -312,30 +304,40 @@ class Translator:
 
     @classmethod
     def get_action_method(cls, node: nodes.Node, action: str) -> Callable:
+        ogclass = node.__class__
         nodeclass = node.__class__
         method = f'{action}_{nodeclass.__name__.lower()}'
         while not hasattr(cls, method):
             nodeclass = nodeclass.__bases__[0]
             method = f'{action}_{nodeclass.__name__.lower()}'
+        if action == 'visit' and ogclass is not nodeclass:
+            logger.debug(f'Using {method} for node of class {ogclass}')
         return getattr(cls, method)
 
+    def push_visit(self, stack, node: nodes.Node) -> None:
+        stack.append(Action(node, 'visit', self.get_action_method(node, 'visit')))
+
+    def push_leave(self, stack, node: nodes.Node) -> None:
+        stack.append(Action(node, 'leave', self.get_action_method(node, 'leave')))
+
     def translate(self, tree: AbstractTreeManuscript) -> HTMLManuscript:
+        logger.info('Translating...')
         # ic.enable()
         self.tree = tree
 
         if self.deferred:
             raise RSMTranslatorError('Something went wrong')
 
-        stack = TranslateActionStack()
-        stack.push_visit(tree)
+        stack = []
+        self.push_visit(stack, tree)
         while stack:
             node, action, method = stack.pop()
             command = method(self, node)
             if action == 'visit':
                 if command.defers:
-                    stack.push_leave(node)
+                    self.push_leave(stack, node)
                 for child in reversed(node.children):
-                    stack.push_visit(child)
+                    self.push_visit(stack, child)
             command.execute(self)
 
         if self.deferred:

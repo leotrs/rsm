@@ -546,6 +546,13 @@ a:hover {
 
 }
 
+span.code {
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0;
+  background: var(--gray-100);
+}
+
 @media (min-width: 70em) {
 
     .manuscriptwrapper {

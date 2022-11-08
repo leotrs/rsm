@@ -468,6 +468,9 @@ class Translator:
             [AppendNodeTag(node, 'div'), AppendTextAndDefer('$$\n', '$$')]
         )
 
+    def visit_code(self, node: nodes.Code) -> EditCommand:
+        return AppendNodeTag(node, 'span', newline_inner=False, newline_outer=False)
+
     def visit_text(self, node: nodes.Text) -> EditCommand:
         return AppendText(node.text)
 

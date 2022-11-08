@@ -273,8 +273,18 @@ class Math(NodeWithChildren):
 
 
 @dataclass
+class Code(NodeWithChildren):
+    pass
+
+
+@dataclass
 class DisplayMath(NodeWithChildren):
     reftext: str = 'Equation {number}'
+
+
+@dataclass
+class DisplayCode(NodeWithChildren):
+    reftext: str = 'Code Listing {number}'
 
 
 @dataclass

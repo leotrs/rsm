@@ -21,3 +21,7 @@ def compare_have_want(have, want, handrails=False):
 
     # compare with whitespace
     assert have == want
+
+
+def compare_have_want_handrails(have, want):
+    return compare_have_want(have, want, True)

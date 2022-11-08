@@ -257,6 +257,26 @@ class AppendHeading(AppendOpenCloseTag):
         return self._edit_command_repr(['level', 'content', 'id', 'classes'])
 
 
+class AppendTombstone(AppendOpenCloseTag):
+    def __init__(
+        self,
+        *,
+        id: str = '',
+        classes: list = None,
+    ):
+        super().__init__(
+            tag='div',
+            content='',
+            id=id,
+            classes=['tombstone'],
+            newline_inner=False,
+            newline_outer=True,
+        )
+
+    def __repr__(self) -> str:
+        return self._edit_command_repr(['classes'])
+
+
 class EditCommandBatch(EditCommand):
     def __init__(self, items: Iterable):
         self.items = list(items)
@@ -500,6 +520,14 @@ class Translator:
         para.append(span)
         node.prepend(para)
         return AppendNodeTag(node)
+
+    def leave_proof(self, node: nodes.Proof) -> EditCommand:
+        batch = AppendBatch([AppendTombstone()])
+        # For documentation: if a visit_* method returns a command with defers = True,
+        # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
+        # add it to the returned batch!!!
+        batch.items.append(self.leave_node(node))
+        return batch
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
         text = ', '.join([str(bibitem.number) for bibitem in node.targets])

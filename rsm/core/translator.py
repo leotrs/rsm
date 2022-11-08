@@ -524,93 +524,34 @@ class Translator:
         return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])
 
 
-# class AppendHeadingHandrail(AppendBatchAndDefer):
-#     def __init__(
-#         self,
-#         level: int,
-#         content: str = '',
-#         *,
-#         id: str = '',
-#         classes: list = None,
-#         newline_inner: bool = False,
-#         newline_outer: bool = True,
-#     ):
-#         self.level = level
-#         self.content = content
-#         self.id = id
-#         super().__init__(
-#             [
-#                 AppendOpenTag(classes=['handrail']),
-#                 AppendOpenCloseTag(classes=['handrail__btn-container']),
-#                 AppendHeading(
-#                     level=level,
-#                     content=content,
-#                     id=id,
-#                     classes=classes,
-#                     newline_inner=newline_inner,
-#                     newline_outer=newline_outer,
-#                 ),
-#             ]
-#         )
-
-#     def __repr__(self) -> str:
-#         return self._edit_command_repr(['level', 'content', 'id'])
-
-
 class HandrailsTranslator(Translator):
-    def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
-        # This assumes that the batch returned by super().visit_section contains as
-        # first element the command that adds the <section> tag.
-        batch = super().visit_manuscript(node)
+    @staticmethod
+    def _replace_with_handrails(index, batch):
         opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
-        batch.items = batch.items[
-            :3
-        ] + [  # body, manuscriptwrapper, manuscript, section
+        newitems = [
             opentag,
-            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
-            batch.items[4],  # AppendHeading(1, node.title)
+            AppendOpenCloseTag(content='bar', classes=['handrail__btn-container']),
+            batch.items[index],
             opentag.close_command(),
         ]
-        return batch
+        newitems = batch.items[:index] + newitems + batch.items[index + 1 :]
+        return batch.__class__(newitems)
+
+    def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
+        batch = super().visit_manuscript(node)
+        return self._replace_with_handrails(4, batch)
 
     def visit_section(self, node: nodes.Section) -> EditCommand:
-        # This assumes that the batch returned by super().visit_section contains as
-        # first element the command that adds the <section> tag.
         batch = super().visit_section(node)
-        opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
-        batch.items = [
-            batch.items[0],  # AppendNodeTag(node, 'section'),
-            opentag,
-            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
-            batch.items[-1],  # AppendHeading(node.level, heading),
-            opentag.close_command(),
-        ]
-        return batch
+        return self._replace_with_handrails(1, batch)
 
     def visit_abstract(self, node: nodes.Abstract) -> EditCommand:
         batch = super().visit_abstract(node)
-        opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
-        batch.items = [
-            batch.items[0],
-            opentag,
-            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
-            batch.items[-1],  # AppendHeading(node.level, heading),
-            opentag.close_command(),
-        ]
-        return batch
+        return self._replace_with_handrails(1, batch)
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
         batch = super().visit_bibliography(node)
-        opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
-        batch.items = [
-            batch.items[0],
-            opentag,
-            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
-            batch.items[1],
-            opentag.close_command(),
-            batch.items[-1],
-        ]
-        return batch
+        return self._replace_with_handrails(1, batch)
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         batch = AppendBatchAndDefer([])
@@ -618,7 +559,7 @@ class HandrailsTranslator(Translator):
         opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
         batch.items = [
             opentag,
-            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
+            AppendOpenCloseTag(content='bar', classes=['handrail__btn-container']),
             append_theorem,
             opentag.close_command(),
         ]
@@ -630,7 +571,7 @@ class HandrailsTranslator(Translator):
         opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
         batch.items = [
             opentag,
-            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
+            AppendOpenCloseTag(content='bar', classes=['handrail__btn-container']),
             append_proof,
             opentag.close_command(),
         ]

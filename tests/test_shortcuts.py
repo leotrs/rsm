@@ -257,3 +257,27 @@ def test_claim_shortcut():
         </body>
         """,
     )
+
+
+def test_code_shortcut():
+    raise NotImplementedError
+
+
+def test_displaycode_shortcut():
+    raise NotImplementedError
+
+
+def test_asterisk_inside_math():
+    raise NotImplementedError
+
+
+def test_asterisk_inside_code():
+    raise NotImplementedError
+
+
+def test_asterisk_inside_displaymath():
+    raise NotImplementedError
+
+
+def test_asterisk_inside_displaycode():
+    raise NotImplementedError

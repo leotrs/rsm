@@ -121,6 +121,42 @@ class AppendOpenCloseTag(AppendText):
         return self._edit_command_repr(['tag', 'content', 'id', 'classes'])
 
 
+class AppendOpenTagNoDefer(AppendText):
+    def __init__(
+        self,
+        tag: str = 'div',
+        content: str = '',
+        *,
+        id: str = '',
+        classes: list = None,
+        newline_inner: bool = True,
+        newline_outer: bool = True,
+    ):
+        self.tag = tag
+        self.content = content
+        self.id = id
+        self.classes = classes if classes else []
+        self.newline_inner = newline_inner
+        self.newline_outer = newline_outer
+        text = (
+            ('\n' if newline_outer else '')
+            + make_tag(self.tag, self.id, self.classes)
+            + ('\n' if newline_inner else '')
+            + self.content
+        )
+        super().__init__(text)
+
+    def __repr__(self) -> str:
+        return self._edit_command_repr(['tag', 'content', 'id', 'classes'])
+
+    def close_command(self):
+        return AppendText(
+            ('\n' if self.newline_inner else '')
+            + f'</{self.tag}>'
+            + ('\n' if self.newline_outer else '')
+        )
+
+
 class AppendOpenTag(AppendTextAndDefer):
     def __init__(
         self,
@@ -370,6 +406,9 @@ class Translator:
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
         return AppendNodeTag(node, tag='p', newline_inner=False)
 
+    def visit_step(self, node: nodes.Step) -> EditCommand:
+        return AppendNodeTag(node)
+
     def visit_section(self, node: nodes.Section) -> EditCommand:
         node.types.insert(0, f'level-{node.level}')
         heading = f'{node.number}. {node.title}' if not node.nonum else f'{node.title}'
@@ -451,6 +490,15 @@ class Translator:
             paragraph.prepend(span)
         return AppendNodeTag(node)
 
+    def visit_proof(self, node: nodes.Proof) -> EditCommand:
+        para = nodes.Paragraph()
+        span = nodes.Span(strong=True)
+        text = nodes.Text(text='Proof.')
+        span.append(text)
+        para.append(span)
+        node.prepend(para)
+        return AppendNodeTag(node)
+
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
         text = ', '.join([str(bibitem.number) for bibitem in node.targets])
         return AppendText(f'[{text}]')
@@ -474,5 +522,114 @@ class Translator:
         return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])
 
 
+# class AppendHeadingHandrail(AppendBatchAndDefer):
+#     def __init__(
+#         self,
+#         level: int,
+#         content: str = '',
+#         *,
+#         id: str = '',
+#         classes: list = None,
+#         newline_inner: bool = False,
+#         newline_outer: bool = True,
+#     ):
+#         self.level = level
+#         self.content = content
+#         self.id = id
+#         super().__init__(
+#             [
+#                 AppendOpenTag(classes=['handrail']),
+#                 AppendOpenCloseTag(classes=['handrail__btn-container']),
+#                 AppendHeading(
+#                     level=level,
+#                     content=content,
+#                     id=id,
+#                     classes=classes,
+#                     newline_inner=newline_inner,
+#                     newline_outer=newline_outer,
+#                 ),
+#             ]
+#         )
+
+#     def __repr__(self) -> str:
+#         return self._edit_command_repr(['level', 'content', 'id'])
+
+
 class HandrailsTranslator(Translator):
-    pass
+    def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
+        # This assumes that the batch returned by super().visit_section contains as
+        # first element the command that adds the <section> tag.
+        batch = super().visit_manuscript(node)
+        opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
+        batch.items = batch.items[
+            :3
+        ] + [  # body, manuscriptwrapper, manuscript, section
+            opentag,
+            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
+            batch.items[4],  # AppendHeading(1, node.title)
+            opentag.close_command(),
+        ]
+        return batch
+
+    def visit_section(self, node: nodes.Section) -> EditCommand:
+        # This assumes that the batch returned by super().visit_section contains as
+        # first element the command that adds the <section> tag.
+        batch = super().visit_section(node)
+        opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
+        batch.items = [
+            batch.items[0],  # AppendNodeTag(node, 'section'),
+            opentag,
+            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
+            batch.items[-1],  # AppendHeading(node.level, heading),
+            opentag.close_command(),
+        ]
+        return batch
+
+    def visit_abstract(self, node: nodes.Abstract) -> EditCommand:
+        batch = super().visit_abstract(node)
+        opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
+        batch.items = [
+            batch.items[0],
+            opentag,
+            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
+            batch.items[-1],  # AppendHeading(node.level, heading),
+            opentag.close_command(),
+        ]
+        return batch
+
+    def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
+        batch = super().visit_bibliography(node)
+        opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
+        batch.items = [
+            batch.items[0],
+            opentag,
+            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
+            batch.items[1],
+            opentag.close_command(),
+            batch.items[-1],
+        ]
+        return batch
+
+    def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
+        batch = AppendBatchAndDefer([])
+        append_theorem = super().visit_theorem(node)
+        opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
+        batch.items = [
+            opentag,
+            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
+            append_theorem,
+            opentag.close_command(),
+        ]
+        return batch
+
+    def visit_proof(self, node: nodes.Proof) -> EditCommand:
+        batch = AppendBatchAndDefer([])
+        append_proof = super().visit_proof(node)
+        opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
+        batch.items = [
+            opentag,
+            AppendOpenCloseTag(content='foo', classes=['handrail__btn-container']),
+            append_proof,
+            opentag.close_command(),
+        ]
+        return batch

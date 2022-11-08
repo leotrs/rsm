@@ -304,7 +304,7 @@ img, svg {
 }
 
 @for $i from 1 through 5 {
-    section.level-#{$i} .header.handrail > .handrail__btn-container {
+    section.level-#{$i} .handrail > .handrail__btn-container {
         top: calc(var(--h#{$i}-size)/2 + (var(--header-line-height)*var(--h#{$i}-size) - var(--body-line-height)*1rem)/2);
     }
 }

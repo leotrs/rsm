@@ -561,12 +561,27 @@ class Translator:
 class HandrailsTranslator(Translator):
     @staticmethod
     def _replace_items_with_handrails(index, items, cls):
-        opentag = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
+        handrail = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
+        btn_cont = AppendOpenTagNoDefer(classes=['handrail__btn-container'])
+        btn_menu = AppendOpenTagNoDefer(
+            classes=["handrail__btn handrail__btn-menu handrail__btn--relative"],
+            newline_inner=False,
+        )
+        btn_togg = AppendOpenTagNoDefer(
+            classes=["handrail__btn handrail__btn-toggle"], newline_inner=False
+        )
         newitems = [
-            opentag,
-            AppendOpenCloseTag(content='bar', classes=['handrail__btn-container']),
+            handrail,
+            btn_cont,
+            btn_menu,
+            AppendOpenCloseTag('span', '⋮', newline_inner=False, newline_outer=False),
+            btn_menu.close_command(),
+            btn_togg,
+            AppendOpenCloseTag('span', '〉', newline_inner=False, newline_outer=False),
+            btn_togg.close_command(),
+            btn_cont.close_command(),
             items[index],
-            opentag.close_command(),
+            handrail.close_command(),
         ]
         newitems = items[:index] + newitems + items[index + 1 :]
         return cls(newitems)

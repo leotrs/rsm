@@ -23,7 +23,11 @@ def test_manuscript():
         <div class="handrail handrail--offset">
 
         <div class="handrail__btn-container">
-        bar
+
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+
+        <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+
         </div>
 
         <h1></h1>
@@ -68,7 +72,11 @@ def test_section():
         <div class="handrail handrail--offset">
 
         <div class="handrail__btn-container">
-        bar
+
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+
+        <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+
         </div>
 
         <h1></h1>
@@ -80,7 +88,11 @@ def test_section():
         <div class="handrail handrail--offset">
 
         <div class="handrail__btn-container">
-        bar
+
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+
+        <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+
         </div>
 
         <h2>1. Title</h2>
@@ -130,7 +142,11 @@ def test_abstract():
         <div class="handrail handrail--offset">
 
         <div class="handrail__btn-container">
-        bar
+
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+
+        <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+
         </div>
 
         <h1></h1>
@@ -142,7 +158,11 @@ def test_abstract():
         <div class="handrail handrail--offset">
 
         <div class="handrail__btn-container">
-        bar
+
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+
+        <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+
         </div>
 
         <h3>Abstract</h3>
@@ -190,7 +210,11 @@ def test_section():
         <div class="handrail handrail--offset">
 
         <div class="handrail__btn-container">
-        bar
+
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+
+        <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+
         </div>
 
         <h1></h1>
@@ -200,7 +224,11 @@ def test_section():
         <div class="handrail handrail--offset">
 
         <div class="handrail__btn-container">
-        bar
+
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+
+        <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
+
         </div>
 
         <div class="theorem">

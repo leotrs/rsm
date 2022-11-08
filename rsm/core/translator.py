@@ -293,7 +293,6 @@ class AppendBatchAndDefer(EditCommandBatch):
     defers = True
 
     def execute(self, translator: 'Translator') -> None:
-        s = f'executing batch of len {len(self)}'
         deferred: list[EditCommand] = []
         for item in self.items:
             if isinstance(item, AppendTextAndDefer):

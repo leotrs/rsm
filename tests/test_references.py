@@ -23,6 +23,8 @@ def test_reftext():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -40,6 +42,8 @@ def test_reftext():
         <p class="paragraph">This is a paragraph that refers to <a href="#sec-lbl">Section 1</a>.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -68,6 +72,8 @@ def test_overwrite_reftext():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -85,6 +91,8 @@ def test_overwrite_reftext():
         <p class="paragraph">This is a paragraph that refers to <a href="#sec-lbl">The Section</a>.</p>
 
         </section>
+
+        </div>
 
         </div>
 

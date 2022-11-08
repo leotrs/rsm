@@ -15,6 +15,8 @@ def test_no_manuscript_title():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -24,6 +26,8 @@ def test_no_manuscript_title():
         <p class="paragraph">Lorem ipsum.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -45,6 +49,8 @@ def test_manuscript_title():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -54,6 +60,8 @@ def test_manuscript_title():
         <p class="paragraph">Lorem ipsum.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -74,6 +82,8 @@ def test_manuscript_meta():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="mylbl" class="manuscript">
 
         <section class="level-1">
@@ -81,6 +91,8 @@ def test_manuscript_meta():
         <h1>My Title</h1>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -121,6 +133,8 @@ def test_section_header():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -138,6 +152,8 @@ def test_section_header():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 

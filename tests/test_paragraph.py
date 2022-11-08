@@ -65,6 +65,8 @@ def test_start_with_tag():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -74,6 +76,8 @@ def test_start_with_tag():
         <p class="paragraph"><span class="span"><strong>this tag </strong></span> starts the paragraph.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -95,6 +99,8 @@ def test_start_with_shortcut():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -105,6 +111,8 @@ def test_start_with_shortcut():
         orthonormal with respect to <span class="math">\(\langle \cdot, \cdot \rangle\)</span></span>.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -136,6 +144,8 @@ def test_no_meta():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="mylbl" class="manuscript">
 
         <section class="level-1">
@@ -153,6 +163,8 @@ def test_no_meta():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -197,6 +209,8 @@ def test_simple():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="mylbl" class="manuscript">
 
         <section class="level-1">
@@ -224,6 +238,8 @@ def test_simple():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 

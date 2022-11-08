@@ -326,6 +326,7 @@ class Translator:
         return AppendBatchAndDefer(
             [
                 AppendOpenTag('body'),
+                AppendOpenTag(classes=['manuscriptwrapper']),
                 AppendNodeTag(node),
                 AppendOpenTag('section', classes=['level-1']),
                 AppendHeading(1, node.title),

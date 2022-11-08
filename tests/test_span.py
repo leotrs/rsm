@@ -13,6 +13,8 @@ def test_one_span():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -22,6 +24,8 @@ def test_one_span():
         <p class="paragraph">This is a <span class="span"><strong>boring </strong></span> paragraph.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -43,6 +47,8 @@ def test_two_spans():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -52,6 +58,8 @@ def test_two_spans():
         <p class="paragraph">This is a <span class="span"><strong>boring </strong></span> paragraph, though it has two <span class="span"><em>spans </em></span> so it's less boring.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -74,6 +82,8 @@ def test_nested():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -85,6 +95,8 @@ def test_nested():
         line!</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -109,6 +121,8 @@ def test_span_with_multiline_meta():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -120,6 +134,8 @@ def test_span_with_multiline_meta():
         and it is multi line.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -144,6 +160,8 @@ def test_multiline_span():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -155,6 +173,8 @@ def test_multiline_span():
         a span </strong></span> and it is multi line.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -175,6 +195,8 @@ def test_span_with_label():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -184,6 +206,8 @@ def test_span_with_label():
         <p class="paragraph">This is a <span id="myspn" class="span"><strong>boring </strong></span> paragraph.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -204,6 +228,8 @@ def test_span_part_of_word():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -213,6 +239,8 @@ def test_span_part_of_word():
         <p class="paragraph">This word is half bold <span class="span"><strong>bo</strong></span>ring.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -233,6 +261,8 @@ def test_span_part_of_word_with_shortcut():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -242,6 +272,8 @@ def test_span_part_of_word_with_shortcut():
         <p class="paragraph">This word is half bold <span class="span"><strong>bo</strong></span>ring.</p>
 
         </section>
+
+        </div>
 
         </div>
 

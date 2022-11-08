@@ -20,6 +20,8 @@ def test_simple():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="mylbl" class="manuscript">
 
         <section class="level-1">
@@ -35,6 +37,8 @@ def test_simple():
         </div>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -60,6 +64,8 @@ def test_empty_author():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="mylbl" class="manuscript">
 
         <section class="level-1">
@@ -73,6 +79,8 @@ def test_empty_author():
         <p class="paragraph">Lorem ipsum.</p>
 
         </section>
+
+        </div>
 
         </div>
 

@@ -44,6 +44,8 @@ def test_simple():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -87,6 +89,8 @@ def test_simple():
         </ul>
 
         </section>
+
+        </div>
 
         </div>
 

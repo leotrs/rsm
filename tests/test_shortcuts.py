@@ -14,6 +14,8 @@ def test_one_strong():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -23,6 +25,8 @@ def test_one_strong():
         <p class="paragraph">This paragraph has a <span class="span"><strong>shortcut</strong></span> for strong span.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -44,6 +48,8 @@ def test_two_strong():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -53,6 +59,8 @@ def test_two_strong():
         <p class="paragraph">This paragraph has two <span class="span"><strong>shortcuts</strong></span> for strong <span class="span"><strong>spans</strong></span>.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -74,6 +82,8 @@ def test_one_math():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -83,6 +93,8 @@ def test_one_math():
         <p class="paragraph">This paragraph has some <span class="math">\(2+2=4\)</span> awesome math.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -105,6 +117,8 @@ def test_two_math():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -115,6 +129,8 @@ def test_two_math():
         + 2 + 2 = 10\)</span> is broken down.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -136,6 +152,8 @@ def test_displaymath():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -152,6 +170,8 @@ def test_displaymath():
         </div>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -177,6 +197,8 @@ def test_section_shortcut():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -192,6 +214,8 @@ def test_section_shortcut():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -213,6 +237,8 @@ def test_claim_shortcut():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -223,6 +249,8 @@ def test_claim_shortcut():
         multiple lines</span>.</p>
 
         </section>
+
+        </div>
 
         </div>
 

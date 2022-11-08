@@ -17,6 +17,8 @@ def test_render():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -26,6 +28,8 @@ def test_render():
         <p class="paragraph">Lorem ipsum.</p>
 
         </section>
+
+        </div>
 
         </div>
 

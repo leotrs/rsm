@@ -18,6 +18,8 @@ def test_display_alone():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -31,6 +33,8 @@ def test_display_alone():
         </div>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -51,6 +55,8 @@ def test_inline_no_meta():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -60,6 +66,8 @@ def test_inline_no_meta():
         <p class="paragraph">This paragraph contains inline math <span class="math">\(2 + 2 = 4\)</span>.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -81,6 +89,8 @@ def test_inline_with_meta():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -91,6 +101,8 @@ def test_inline_with_meta():
         = 4\)</span>.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -115,6 +127,8 @@ def test_math_with_shortcuts():
         """,
         want=r"""        <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -136,6 +150,8 @@ def test_math_with_shortcuts():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -165,6 +181,8 @@ def test_math_ref():
         """,
         want=r"""        <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -188,6 +206,8 @@ def test_math_ref():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 

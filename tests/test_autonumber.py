@@ -27,6 +27,8 @@ def test_numbered_sections():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -50,6 +52,8 @@ def test_numbered_sections():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -90,6 +94,8 @@ def test_nonum():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -121,6 +127,8 @@ def test_nonum():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 

@@ -28,6 +28,8 @@ def test_single():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -51,6 +53,8 @@ def test_single():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -95,6 +99,8 @@ def test_many():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -122,6 +128,8 @@ def test_many():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -166,6 +174,8 @@ def test_order():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -193,6 +203,8 @@ def test_order():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 

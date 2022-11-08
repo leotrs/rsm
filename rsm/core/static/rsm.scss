@@ -132,7 +132,7 @@ body {
 /* Layout */
 /******************************************************************************************/
 
-.documentwrapper {
+.manuscriptwrapper {
     max-width: 960px;
     margin: 0 auto;
     border-radius: 8px;
@@ -548,7 +548,7 @@ a:hover {
 
 @media (min-width: 70em) {
 
-    .documentwrapper {
+    .manuscriptwrapper {
         box-shadow: 0 0 8px 10px #eee;
         margin: 2.5em auto;
     }

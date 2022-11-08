@@ -35,6 +35,8 @@ def test_simple():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -50,6 +52,8 @@ def test_simple():
         <p class="paragraph">Here we refer to the <a href="#eqn">Important Equation</a>.</p>
 
         </section>
+
+        </div>
 
         </div>
 

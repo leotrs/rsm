@@ -16,6 +16,8 @@ def test_list_with_only_one_element():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -25,6 +27,8 @@ def test_list_with_only_one_element():
         <p class="paragraph mytype">This paragraph has only one type</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -47,6 +51,8 @@ def test_list_with_one_element_before_key():
         want="""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -57,6 +63,8 @@ def test_list_with_one_element_before_key():
         that appears before another key.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -95,6 +103,8 @@ def test_inline_no_meta_start_with_tag():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -107,6 +117,8 @@ def test_inline_no_meta_start_with_tag():
         it starts with a ref</span>.</p>
 
         </section>
+
+        </div>
 
         </div>
 

@@ -45,6 +45,8 @@ def test_paragraph_ends_at_block():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -63,6 +65,8 @@ def test_paragraph_ends_at_block():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 

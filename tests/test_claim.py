@@ -18,6 +18,8 @@ def test_simple():
         want=r"""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -33,6 +35,8 @@ def test_simple():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -53,6 +57,8 @@ def test_with_math():
         want=r"""
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -62,6 +68,8 @@ def test_with_math():
         <p class="paragraph">This paragraph has math inside a claim <span class="claim"><span class="math">\(2+2=4\)</span></span>.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -82,6 +90,8 @@ def test_lonely_claim():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -91,6 +101,8 @@ def test_lonely_claim():
         <p class="paragraph"><span class="claim"><span class="math">\(2+2=4\)</span></span>.</p>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -118,6 +130,8 @@ def test_claim_within_list():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -140,6 +154,8 @@ def test_claim_within_list():
         </ol>
 
         </section>
+
+        </div>
 
         </div>
 

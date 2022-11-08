@@ -18,6 +18,8 @@ def test_simple():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -33,6 +35,8 @@ def test_simple():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -72,6 +76,8 @@ def test_subsections():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -103,6 +109,8 @@ def test_subsections():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 
@@ -139,6 +147,8 @@ def test_shortcut():
         want="""\
         <body>
 
+        <div class="manuscriptwrapper">
+
         <div id="manuscript" class="manuscript">
 
         <section class="level-1">
@@ -170,6 +180,8 @@ def test_shortcut():
         </section>
 
         </section>
+
+        </div>
 
         </div>
 

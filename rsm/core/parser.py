@@ -857,7 +857,8 @@ class ManuscriptParser(ShouldHaveHeadingParser):
     keywords = ['LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED']
     Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
     shortcuts = [
-        Shortcut('*', '*', ':span: :strong: ' + Tombstone, Tombstone),
+        Shortcut('**', '**', ':span: :strong: ' + Tombstone, Tombstone),
+        Shortcut('*', '*', ':span: :emphas: ' + Tombstone, Tombstone),
         Shortcut('###', '\n', ':subsubsection:\n  :title: ', '\n'),
         Shortcut('##', '\n', ':subsection:\n  :title: ', '\n'),
         Shortcut('#', '\n', ':section:\n  :title: ', '\n'),

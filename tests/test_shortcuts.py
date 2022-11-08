@@ -7,7 +7,7 @@ def test_one_strong():
         :manuscript:
           :title: My Title
 
-        This paragraph has a *shortcut* for strong span.
+        This paragraph has a **shortcut** for strong span.
 
         ::
         """,
@@ -41,7 +41,7 @@ def test_two_strong():
         :manuscript:
           :title: My Title
 
-        This paragraph has two *shortcuts* for strong *spans*.
+        This paragraph has two **shortcuts** for strong **spans**.
 
         ::
         """,

@@ -260,7 +260,36 @@ def test_claim_shortcut():
 
 
 def test_code_shortcut():
-    raise NotImplementedError
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        This is inline code `comp = [abs(x) for x in range(10)]`.
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">This is inline code <span class="code">comp = [abs(x) for x in range(10)]</span>.</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
 
 
 def test_displaycode_shortcut():

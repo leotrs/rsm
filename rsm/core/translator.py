@@ -472,7 +472,7 @@ class Translator:
         return AppendNodeTag(node, 'span', newline_inner=False, newline_outer=False)
 
     def visit_displaycode(self, node: nodes.Code) -> EditCommand:
-        return AppendNodeTag(node, 'div', newline_inner=True, newline_outer=False)
+        return AppendNodeTag(node, 'div', newline_inner=True, newline_outer=True)
 
     def visit_text(self, node: nodes.Text) -> EditCommand:
         return AppendText(node.text)

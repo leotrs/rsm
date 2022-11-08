@@ -264,7 +264,42 @@ def test_code_shortcut():
 
 
 def test_displaycode_shortcut():
-    raise NotImplementedError
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        ```
+          comp = [abs(x) for x in range(10)]
+        ```
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <div class="displaycode">
+        comp = [abs(x) for x in range(10)]
+
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
 
 
 def test_asterisk_inside_math():

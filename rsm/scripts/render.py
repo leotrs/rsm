@@ -59,6 +59,8 @@ def main() -> int:
             raise ValueError(
                 'The source does not contain valid RSM.  Did you forget to use the -f flag?'
             )
+        else:
+            raise exc
     if not args.supress_output:
         print(body)
     return 0

@@ -48,7 +48,7 @@ def test_simple():
 
         <p class="paragraph proof__title do-not-hide"><span class="span"><strong>Proof. </strong></span></p>
 
-        <div class="step">
+        <div class="step last">
 
         <p class="paragraph">Axiom. </p>
 

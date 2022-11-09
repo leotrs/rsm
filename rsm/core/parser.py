@@ -502,8 +502,8 @@ class SpecialTagRegionParser(DelimitedRegionParser):
         raise NotImplementedError
 
 
-class RefParser(SpecialTagRegionParser):
-    def parse_content(self, content: str) -> nodes.PendingReference:
+class LabelCommaTextParser(SpecialTagRegionParser):
+    def parse_content(self, content: str, cls: Type[nodes.Node]):
         split = content.split(',')
         if len(split) > 1:
             if len(split) > 2:
@@ -514,7 +514,17 @@ class RefParser(SpecialTagRegionParser):
             label, reftext = split[0].strip(), split[1]
         else:
             label, reftext = content.strip(), None
-        return nodes.PendingReference(targetlabel=label, overwrite_reftext=reftext)
+        return cls(target=label, overwrite_reftext=reftext)
+
+
+class RefParser(LabelCommaTextParser):
+    def parse_content(self, content: str) -> nodes.PendingReference:
+        return super().parse_content(content, nodes.PendingReference)
+
+
+class URLParser(LabelCommaTextParser):
+    def parse_content(self, content: str) -> nodes.URL:
+        return super().parse_content(content, nodes.URL)
 
 
 class CiteParser(SpecialTagRegionParser):
@@ -950,5 +960,6 @@ for t in tags.all():
         raise RSMParserError(None, f"I don't know what to do with tag {t}")
 _parsers['bibtex'] = BibTexParser
 _parsers['ref'] = RefParser
+_parsers['url'] = URLParser
 _parsers['cite'] = CiteParser
 _parsers['manuscript'] = ManuscriptParser

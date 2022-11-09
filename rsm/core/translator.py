@@ -491,19 +491,28 @@ class Translator:
             ]
         )
 
-    def visit_reference(self, node: nodes.Reference) -> EditCommand:
+    def _make_ahref_tag_text(self, node: nodes.Node, href_text: str) -> EditCommand:
         if not node.target:
-            raise RSMTranslatorError('Found a reference without a target')
+            raise RSMTranslatorError(f'Found a {node.__class__} without a target')
         tgt = node.target
         if node.overwrite_reftext:
             reftext = node.overwrite_reftext
         else:
-            reftext = tgt.reftext.format(
-                nodeclass=tgt.__class__.__name__, number=tgt.number
-            )
+            if hasattr(tgt, 'reftext'):
+                reftext = tgt.reftext.format(
+                    nodeclass=tgt.__class__.__name__, number=tgt.number
+                )
+            else:
+                reftext = tgt
         classes = " ".join(['reference'] + node.types)
-        text = f'<a class="{classes}" href="#{node.target.label}">{reftext}</a>'
-        return AppendText(text)
+        tag = f'<a class="{classes}" href="{href_text}">{reftext}</a>'
+        return tag
+
+    def visit_reference(self, node: nodes.Reference) -> EditCommand:
+        return AppendText(self._make_ahref_tag_text(node, f"#{node.target.label}"))
+
+    def visit_url(self, node: nodes.URL) -> EditCommand:
+        return AppendText(self._make_ahref_tag_text(node, f"{node.target}"))
 
     def visit_claim(self, node: nodes.Claim) -> EditCommand:
         return AppendNodeTag(node, tag='span', newline_inner=False, newline_outer=False)

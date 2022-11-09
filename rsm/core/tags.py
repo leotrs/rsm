@@ -167,6 +167,7 @@ _tags['keyword'] = InlineTag.newtag(nodes.Keyword, content_mode=ASIS)
 _tags['math'] = InlineTag.newtag(nodes.Math, content_mode=ASIS)
 _tags['code'] = InlineTag.newtag(nodes.Code, content_mode=ASIS)
 _tags['ref'] = InlineTag.newtag(nodes.PendingReference, name='ref', content_mode=ASIS)
+_tags['url'] = InlineTag.newtag(nodes.URL, content_mode=ASIS)
 _tags['cite'] = InlineTag.newtag(nodes.PendingCite, name='cite', content_mode=ASIS)
 _tags['manuscript'] = ManuscriptTag.newtag(nodes.Manuscript)
 _tags[''] = Tombstone

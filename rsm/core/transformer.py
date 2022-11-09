@@ -59,7 +59,7 @@ class Transformer:
         condition = lambda n: type(n) in [nodes.PendingReference, nodes.PendingCite]
         for pending in self.tree.traverse(condition=condition):
             if isinstance(pending, nodes.PendingReference):
-                target = self._label_to_node(pending.targetlabel)
+                target = self._label_to_node(pending.target)
                 pending.replace_self(
                     nodes.Reference(
                         target=target,

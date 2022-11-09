@@ -294,12 +294,17 @@ class BaseReference(Node):
 
 @dataclass
 class PendingReference(BaseReference):
-    targetlabel: str = field(kw_only=True, default='')
+    target: str = field(kw_only=True, default='')
 
 
 @dataclass
 class Reference(BaseReference):
     target: Node | None = field(kw_only=True, default=None)
+
+
+@dataclass
+class URL(BaseReference):
+    target: str = field(kw_only=True, default='')
 
 
 @dataclass

@@ -104,6 +104,13 @@ class Node:
                 return child
         return None
 
+    def last_of_type(self, cls: Type['Node']) -> Optional['Node']:
+        last = None
+        for child in self.children:
+            if isinstance(child, cls):
+                last = child
+        return last
+
     @property
     def reftext(self) -> str:
         return self._reftext or self.classreftext
@@ -328,6 +335,11 @@ class Cite(Node):
 
 @dataclass
 class Proof(NodeWithChildren):
+    _newmetakeys: ClassVar[set] = set()
+
+
+@dataclass
+class Subproof(NodeWithChildren):
     _newmetakeys: ClassVar[set] = set()
 
 

@@ -576,7 +576,26 @@ class Translator:
             ]
         )
 
+    def visit_subproof(self, node: nodes.Subproof) -> EditCommand:
+        classname = node.__class__.__name__.lower()
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node),
+                AppendOpenTag(
+                    classes=[
+                        f'{classname}-contents',
+                        'handrail',
+                        'handrail--hug',
+                        'handrail__collapsible',
+                    ]
+                ),
+            ]
+        )
+
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
+        last = node.last_of_type(nodes.Step)
+        last.types.append('last')
+
         classname = node.__class__.__name__.lower()
         self._prepend_strong_text_in_para(
             node, f'{classname.capitalize()}. ', [f'{classname}__title', 'do-not-hide']

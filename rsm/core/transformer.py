@@ -81,6 +81,8 @@ class Transformer:
     def autonumber_nodes(self) -> None:
         counts = {
             nodes.Section: 0,
+            nodes.Subsection: 0,
+            nodes.Subsubsection: 0,
             nodes.DisplayMath: 0,
             nodes.Theorem: 0,
             nodes.Lemma: 0,
@@ -91,3 +93,12 @@ class Transformer:
             if nodeclass in counts and not node.nonum:
                 counts[nodeclass] += 1
                 node.number = counts[nodeclass]
+                if nodeclass is nodes.Section:
+                    counts[nodes.Subsubsection] = 0
+                    counts[nodes.Subsection] = 0
+                    counts[nodes.Theorem] = 0
+                    counts[nodes.Lemma] = 0
+                if nodeclass is nodes.Subsection:
+                    counts[nodes.Subsubsection] = 0
+                    counts[nodes.Theorem] = 0
+                    counts[nodes.Lemma] = 0

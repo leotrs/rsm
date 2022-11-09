@@ -432,7 +432,9 @@ class Translator:
 
     def visit_section(self, node: nodes.Section) -> EditCommand:
         node.types.insert(0, f'level-{node.level}')
-        heading = f'{node.number}. {node.title}' if not node.nonum else f'{node.title}'
+        heading = (
+            f'{node.full_number}. {node.title}' if not node.nonum else f'{node.title}'
+        )
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node, 'section'),
@@ -530,7 +532,9 @@ class Translator:
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         classname = node.__class__.__name__.lower()
         self._prepend_strong_text_in_para(
-            node, f'{classname.capitalize()} {node.number}. ', [f'{classname}__title']
+            node,
+            f'{classname.capitalize()} {node.full_number}. ',
+            [f'{classname}__title'],
         )
         return AppendBatchAndDefer(
             [

@@ -70,6 +70,15 @@ class Node:
         # necessary for methods such as Nodes.traverse
         return tuple()
 
+    @property
+    def full_number(self) -> str:
+        node = self
+        numbers = []
+        while node.number is not None:
+            numbers.append(str(node.number))
+            node = node.parent
+        return '.'.join(reversed(numbers))
+
     def traverse(
         self,
         condition: Callable = lambda n: True,

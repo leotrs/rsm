@@ -34,6 +34,13 @@ def parse_args() -> Namespace:
         action='store_true',
         default=False,
     )
+    parser.add_argument(
+        '-s',
+        '--supress-output',
+        help='do not show the resulting HTML, show the logs only',
+        action='store_true',
+        default=False,
+    )
     args = parser.parse_args()
     return args
 
@@ -52,7 +59,8 @@ def main() -> int:
             raise ValueError(
                 'The source does not contain valid RSM.  Did you forget to use the -f flag?'
             )
-    print(body)
+    if not args.supress_output:
+        print(body)
     return 0
 
 

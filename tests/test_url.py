@@ -8,7 +8,7 @@ def test_no_reftext():
         have="""\
         :manuscript:
 
-        This paragraph has a hyperlink :url:www.apache.com::.
+        This paragraph has a hyperlink :url:https://www.apache.com::.
 
         ::
         """,
@@ -41,7 +41,7 @@ def test_custom_reftext():
         have="""\
         :manuscript:
 
-        This is a link to :url:www.apache.com, Apache::.
+        This is a link to :url:https://www.apache.com, Apache::.
 
         ::
         """,

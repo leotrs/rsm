@@ -71,8 +71,8 @@ class SingleFileBuilder(BaseBuilder):
 
           <script src="static/jquery-3.6.0.js"></script>
           <script src="static/tooltips.js"></script>
+          <script src="static/classes.js"></script>
           <script src="static/tooltipster.bundle.js"></script>
-          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
           <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
           <script async="async" onload="loadTooltips()" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -106,6 +106,7 @@ class FullBuilder(SingleFileBuilder):
         filenames = [
             'jquery-3.6.0.js',
             'tooltips.js',
+            'classes.js',
             'tooltipster.bundle.js',
             'tooltipster.bundle.css',
         ]

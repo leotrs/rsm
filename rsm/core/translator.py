@@ -534,24 +534,28 @@ class Translator:
         self._prepend_strong_text_in_para(
             node,
             f'{classname.capitalize()} {node.full_number}. ',
-            [f'{classname}__title'],
+            [f'{classname}__title', 'do-not-hide'],
         )
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
-                AppendOpenTag(classes=[f'{classname}-contents']),
+                AppendOpenTag(
+                    classes=[f'{classname}-contents', 'handrail__collapsible']
+                ),
             ]
         )
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         classname = node.__class__.__name__.lower()
         self._prepend_strong_text_in_para(
-            node, f'{classname.capitalize()}. ', [f'{classname}__title']
+            node, f'{classname.capitalize()}. ', [f'{classname}__title', 'do-not-hide']
         )
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
-                AppendOpenTag(classes=[f'{classname}-contents']),
+                AppendOpenTag(
+                    classes=[f'{classname}-contents', 'handrail__collapsible']
+                ),
             ]
         )
 

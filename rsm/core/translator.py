@@ -569,8 +569,12 @@ class Translator:
 
 class HandrailsTranslator(Translator):
     @staticmethod
-    def _replace_items_with_handrails(index, items, cls):
-        handrail = AppendOpenTagNoDefer(classes=['handrail', 'handrail--offset'])
+    def _replace_items_with_handrails(index, items, cls, include_content=False):
+        classes = ['handrail', 'handrail--offset']
+        if include_content:
+            handrail = AppendOpenTag(classes=classes)
+        else:
+            handrail = AppendOpenTagNoDefer(classes=classes)
         btn_cont = AppendOpenTagNoDefer(classes=['handrail__btn-container'])
         btn_menu = AppendOpenTagNoDefer(
             classes=["handrail__btn handrail__btn-menu handrail__btn--relative"],
@@ -590,18 +594,23 @@ class HandrailsTranslator(Translator):
             btn_togg.close_command(),
             btn_cont.close_command(),
             items[index],
-            handrail.close_command(),
         ]
+        if not include_content:
+            newitems.append(handrail.close_command())
         newitems = items[:index] + newitems + items[index + 1 :]
         return cls(newitems)
 
     @classmethod
-    def _replace_batch_with_handrails(cls, index, batch):
-        return cls._replace_items_with_handrails(index, batch.items, batch.__class__)
+    def _replace_batch_with_handrails(cls, index, batch, include_content=False):
+        return cls._replace_items_with_handrails(
+            index, batch.items, batch.__class__, include_content
+        )
 
     @classmethod
-    def _replace_cmd_with_handrails(cls, cmd):
-        return cls._replace_items_with_handrails(0, [cmd], AppendBatchAndDefer)
+    def _replace_cmd_with_handrails(cls, cmd, include_content=False):
+        return cls._replace_items_with_handrails(
+            0, [cmd], AppendBatchAndDefer, include_content
+        )
 
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         batch = super().visit_manuscript(node)

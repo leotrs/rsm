@@ -519,16 +519,13 @@ class Translator:
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         classname = node.__class__.__name__.lower()
-        paragraph = node.first_of_type(nodes.Paragraph)
-        if paragraph is not None:
-            paragraph: nodes.Paragraph
+        para = node.first_of_type(nodes.Paragraph)
+        if para is not None:
+            para: nodes.Paragraph
             span = nodes.Span(strong=True)
-            span.append(nodes.Text(text=f'{classname.capitalize()} {node.number}. '))
-            paragraph.prepend(span)
-        ic(node)
-        ic(len(node.children))
-        ic(paragraph.children)
-
+            text = nodes.Text(text=f'{classname.capitalize()} {node.number}. ')
+            span.append(text)
+            para.prepend(span)
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
@@ -543,7 +540,13 @@ class Translator:
         span.append(text)
         para.append(span)
         node.prepend(para)
-        return AppendNodeTag(node)
+        classname = node.__class__.__name__.lower()
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node),
+                AppendOpenTag(classes=[f'{classname}-contents']),
+            ]
+        )
 
     def leave_proof(self, node: nodes.Proof) -> EditCommand:
         batch = AppendBatch([AppendTombstone()])
@@ -642,5 +645,5 @@ class HandrailsTranslator(Translator):
         return self._replace_batch_with_handrails(1, batch, include_content=True)
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
-        cmd = super().visit_proof(node)
-        return self._replace_cmd_with_handrails(cmd)
+        batch = super().visit_proof(node)
+        return self._replace_batch_with_handrails(1, batch, include_content=True)

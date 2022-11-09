@@ -42,6 +42,8 @@ def test_simple():
 
         <div class="proof">
 
+        <div class="proof-contents">
+
         <p class="paragraph"><span class="span"><strong>Proof.</strong></span></p>
 
         <div class="step">
@@ -51,6 +53,8 @@ def test_simple():
         </div>
 
         <div class="tombstone"></div>
+
+        </div>
 
         </div>
 

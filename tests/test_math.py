@@ -201,7 +201,7 @@ def test_math_ref():
         $$
         </div>
 
-        <p class="paragraph">And now we refer to <a href="#eqn-foo">Equation 1</a>.</p>
+        <p class="paragraph">And now we refer to <a class="reference" href="#eqn-foo">Equation 1</a>.</p>
 
         </section>
 

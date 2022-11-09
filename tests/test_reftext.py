@@ -49,7 +49,7 @@ def test_simple():
         $$
         </div>
 
-        <p class="paragraph">Here we refer to the <a href="#eqn">Important Equation</a>.</p>
+        <p class="paragraph">Here we refer to the <a class="reference" href="#eqn">Important Equation</a>.</p>
 
         </section>
 

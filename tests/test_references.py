@@ -39,7 +39,7 @@ def test_reftext():
 
         </section>
 
-        <p class="paragraph">This is a paragraph that refers to <a href="#sec-lbl">Section 1</a>.</p>
+        <p class="paragraph">This is a paragraph that refers to <a class="reference" href="#sec-lbl">Section 1</a>.</p>
 
         </section>
 
@@ -88,7 +88,7 @@ def test_overwrite_reftext():
 
         </section>
 
-        <p class="paragraph">This is a paragraph that refers to <a href="#sec-lbl">The Section</a>.</p>
+        <p class="paragraph">This is a paragraph that refers to <a class="reference" href="#sec-lbl">The Section</a>.</p>
 
         </section>
 

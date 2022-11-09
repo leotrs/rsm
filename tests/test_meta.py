@@ -113,7 +113,7 @@ def test_inline_no_meta_start_with_tag():
 
         <p id="lbl" class="paragraph">Foo bar.</p>
 
-        <p class="paragraph">This span starts with a tag that is not a meta key, <span class="span"><a href="#lbl">Paragraph None</a>, instead
+        <p class="paragraph">This span starts with a tag that is not a meta key, <span class="span"><a class="reference" href="#lbl">Paragraph None</a>, instead
         it starts with a ref</span>.</p>
 
         </section>

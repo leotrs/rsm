@@ -12,13 +12,9 @@ loadTooltips = function() {
             classes = $(target)[0].classList;
             content = "";
 
-	    console.log(tag);
-	    console.log(classes);
-
             if (tag == "P") {
                 content = $(target).html();
                 content = `<div>${content}</div>`;
-		console.log(content);
             } else if (tag == "SPAN") {
                 content = $(target).parent().html();
 	    } else if (tag == "DT") {

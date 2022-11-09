@@ -221,6 +221,8 @@ def test_section():
 
         </div>
 
+        <div class="theorem">
+
         <div class="handrail handrail--offset">
 
         <div class="handrail__btn-container">
@@ -231,11 +233,13 @@ def test_section():
 
         </div>
 
-        <div class="theorem">
+        <div class="theorem-contents">
+
+        <p class="paragraph"><span class="span"><strong>Theorem 1. </strong></span>All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
 
         </div>
 
-        <p class="paragraph"><span class="span"><strong>Theorem 1. </strong></span>All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
+        </div>
 
         </div>
 

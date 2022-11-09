@@ -29,7 +29,7 @@ loadTooltips = function() {
                     content = $(target).children(".statement").html();
                     break;
 		case classes.contains("theorem"):
-		    content = $(target).children(".theorem-env-container").html();
+		    content = $(target).find(".theorem-contents").html();
 		    break;
                 case classes.contains("math"):
                     content = $(target).html();

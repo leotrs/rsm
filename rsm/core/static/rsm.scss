@@ -191,7 +191,7 @@ img, svg {
         padding: 0 0 0 var(--handrail-offset);
     }
 
-    & > p:not(.topic-title), & > .proof__title {
+    &  p:not(.topic-title), & > .proof__title {
         padding-block: 1rem;
     }
 
@@ -303,20 +303,20 @@ img, svg {
     top: 0;
 }
 
-@for $i from 1 through 5 {
-    section.level-#{$i} .handrail > .handrail__btn-container {
-        top: calc(var(--h#{$i}-size)/2 + (var(--header-line-height)*var(--h#{$i}-size) - var(--body-line-height)*1rem)/2);
-    }
-}
-
-#abstract .handrail > .handrail__btn-container,
-#contents .handrail > .handrail__btn-container {
+#abstract div.handrail > .handrail__btn-container,
+#contents div.handrail > .handrail__btn-container {
     top: calc((var(--header-line-height)*var(--h3-size) - var(--body-line-height)*1rem)/2);
 }
 
-.theorem-env.handrail > .handrail__btn-container,
-.proof.handrail > .handrail__btn-container {
+div.theorem > .handrail > .handrail__btn-container,
+div.proof > .handrail > .handrail__btn-container {
     top: 1rem;
+}
+
+@for $i from 1 through 5 {
+    section.level-#{$i} > .handrail > .handrail__btn-container {
+        top: calc(var(--h#{$i}-size)/2 + (var(--header-line-height)*var(--h#{$i}-size) - var(--body-line-height)*1rem)/2);
+    }
 }
 
 .keyword {

@@ -509,14 +509,23 @@ class Translator:
         return AppendNodeTag(node, tag='span', newline_inner=False, newline_outer=False)
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
+        classname = node.__class__.__name__.lower()
         paragraph = node.first_of_type(nodes.Paragraph)
         if paragraph is not None:
             paragraph: nodes.Paragraph
-            classname = node.__class__.__name__.capitalize()
             span = nodes.Span(strong=True)
-            span.append(nodes.Text(text=f'{classname} {node.number}. '))
+            span.append(nodes.Text(text=f'{classname.capitalize()} {node.number}. '))
             paragraph.prepend(span)
-        return AppendNodeTag(node)
+        ic(node)
+        ic(len(node.children))
+        ic(paragraph.children)
+
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node),
+                AppendOpenTag(classes=[f'{classname}-contents']),
+            ]
+        )
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         para = nodes.Paragraph()
@@ -611,8 +620,8 @@ class HandrailsTranslator(Translator):
         return self._replace_batch_with_handrails(1, batch)
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
-        cmd = super().visit_theorem(node)
-        return self._replace_cmd_with_handrails(cmd)
+        batch = super().visit_theorem(node)
+        return self._replace_batch_with_handrails(1, batch, include_content=True)
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         cmd = super().visit_proof(node)

@@ -186,7 +186,7 @@ def test_abstract():
     )
 
 
-def test_section():
+def test_theorem():
     compare_have_want_handrails(
         have="""\
         :manuscript:

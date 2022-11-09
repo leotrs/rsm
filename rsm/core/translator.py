@@ -257,6 +257,30 @@ class AppendHeading(AppendOpenCloseTag):
         return self._edit_command_repr(['level', 'content', 'id', 'classes'])
 
 
+class AppendKeyword(AppendOpenCloseTag):
+    def __init__(
+        self,
+        keyword: str,
+        *,
+        id: str = '',
+        classes: list = None,
+        newline_inner: bool = False,
+        newline_outer: bool = False,
+    ):
+        classes = ['keyword'] + (classes or [])
+        super().__init__(
+            tag='span',
+            content=keyword,
+            id=id,
+            classes=classes,
+            newline_inner=newline_inner,
+            newline_outer=newline_outer,
+        )
+
+    def __repr__(self) -> str:
+        return self._edit_command_repr(['level', 'content', 'id', 'classes'])
+
+
 class AppendTombstone(AppendOpenCloseTag):
     def __init__(
         self,
@@ -517,7 +541,14 @@ class Translator:
         return AppendText(self._make_ahref_tag_text(node, f"{node.target}"))
 
     def visit_claim(self, node: nodes.Claim) -> EditCommand:
-        return AppendNodeTag(node, tag='span', newline_inner=False, newline_outer=False)
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(
+                    node, tag='span', newline_inner=False, newline_outer=False
+                ),
+                AppendKeyword('⊢'),
+            ]
+        )
 
     def _prepend_strong_text_in_para(
         self, node: nodes.Node, text: str, types: list

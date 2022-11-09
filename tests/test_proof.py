@@ -32,9 +32,9 @@ def test_simple():
 
         <div class="theorem">
 
-        <div class="theorem-contents">
+        <div class="theorem-contents handrail__collapsible">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 1. </strong></span></p>
 
         <p class="paragraph">All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
 
@@ -44,9 +44,9 @@ def test_simple():
 
         <div class="proof">
 
-        <div class="proof-contents">
+        <div class="proof-contents handrail__collapsible">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+        <p class="paragraph proof__title do-not-hide"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="step">
 

@@ -245,7 +245,7 @@ def test_claim_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph">This paragraph contains a <span class="claim">claim with a turnstile</span>. And also another one <span class="claim">but it takes
+        <p class="paragraph">This paragraph contains a <span class="claim"><span class="keyword">⊢</span>claim with a turnstile</span>. And also another one <span class="claim"><span class="keyword">⊢</span>but it takes
         multiple lines</span>.</p>
 
         </section>

@@ -233,9 +233,9 @@ def test_theorem():
 
         </div>
 
-        <div class="theorem-contents">
+        <div class="theorem-contents handrail__collapsible">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 1. </strong></span></p>
 
         <p class="paragraph">All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
 

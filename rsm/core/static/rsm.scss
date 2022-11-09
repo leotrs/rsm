@@ -191,7 +191,11 @@ img, svg {
         padding: 0 0 0 var(--handrail-offset);
     }
 
-    &  p:not(.topic-title), & > .proof__title {
+    & .proof__title, .theorem__title {
+        padding-block: 1rem;
+    }
+
+    & .proof-contents p:last-of-type, .theorem-contents p:last-of-type {
         padding-block: 1rem;
     }
 
@@ -326,9 +330,18 @@ div.proof > .handrail > .handrail__btn-container {
 
 .proof {
 
-    &-container > .step:last-of-type {
+    &-contents :last-of-type, &-contents p.proof__title {
         margin-block-end: 0;
     }
+
+}
+
+.theorem {
+
+    &-contents :last-of-type, &-contents p.theorem__title {
+        margin-block-end: 0;
+    }
+
 }
 
 .step {

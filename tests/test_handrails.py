@@ -235,7 +235,9 @@ def test_theorem():
 
         <div class="theorem-contents">
 
-        <p class="paragraph"><span class="span"><strong>Theorem 1. </strong></span>All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
+
+        <p class="paragraph">All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
 
         </div>
 

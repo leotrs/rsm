@@ -517,15 +517,21 @@ class Translator:
     def visit_claim(self, node: nodes.Claim) -> EditCommand:
         return AppendNodeTag(node, tag='span', newline_inner=False, newline_outer=False)
 
+    def _prepend_strong_text_in_para(
+        self, node: nodes.Node, text: str, types: list
+    ) -> None:
+        para = nodes.Paragraph(types=types)
+        span = nodes.Span(strong=True)
+        text = nodes.Text(text=text)
+        span.append(text)
+        para.append(span)
+        node.prepend(para)
+
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         classname = node.__class__.__name__.lower()
-        para = node.first_of_type(nodes.Paragraph)
-        if para is not None:
-            para: nodes.Paragraph
-            span = nodes.Span(strong=True)
-            text = nodes.Text(text=f'{classname.capitalize()} {node.number}. ')
-            span.append(text)
-            para.prepend(span)
+        self._prepend_strong_text_in_para(
+            node, f'{classname.capitalize()} {node.number}. ', [f'{classname}__title']
+        )
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
@@ -534,13 +540,10 @@ class Translator:
         )
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
-        para = nodes.Paragraph()
-        span = nodes.Span(strong=True)
-        text = nodes.Text(text='Proof.')
-        span.append(text)
-        para.append(span)
-        node.prepend(para)
         classname = node.__class__.__name__.lower()
+        self._prepend_strong_text_in_para(
+            node, f'{classname.capitalize()}. ', [f'{classname}__title']
+        )
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
@@ -549,11 +552,12 @@ class Translator:
         )
 
     def leave_proof(self, node: nodes.Proof) -> EditCommand:
-        batch = AppendBatch([AppendTombstone()])
         # For documentation: if a visit_* method returns a command with defers = True,
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
         # add it to the returned batch!!!
-        batch.items.append(self.leave_node(node))
+        batch = self.leave_node(node)
+        batch.items.insert(1, AppendTombstone())
+        batch = AppendBatch(batch.items)
         return batch
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:

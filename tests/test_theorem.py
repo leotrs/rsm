@@ -43,7 +43,9 @@ def test_simple():
 
         <div class="theorem-contents">
 
-        <p class="paragraph"><span class="span"><strong>Theorem 1. </strong></span>Theorem contents.</p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
+
+        <p class="paragraph">Theorem contents.</p>
 
         </div>
 
@@ -53,7 +55,9 @@ def test_simple():
 
         <div class="lemma-contents">
 
-        <p class="paragraph"><span class="span"><strong>Lemma 1. </strong></span>And a lemma.</p>
+        <p class="paragraph lemma__title"><span class="span"><strong>Lemma 1. </strong></span></p>
+
+        <p class="paragraph">And a lemma.</p>
 
         </div>
 
@@ -63,7 +67,9 @@ def test_simple():
 
         <div class="theorem-contents">
 
-        <p class="paragraph"><span class="span"><strong>Theorem 2. </strong></span>Another theorem.</p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 2. </strong></span></p>
+
+        <p class="paragraph">Another theorem.</p>
 
         </div>
 

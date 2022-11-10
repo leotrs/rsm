@@ -675,6 +675,8 @@ class MetaPairParser(Parser):
         'nonum': 'parse_bool_value',
         # Theorem
         'goals': 'parse_list_value',
+        'stars': 'parse_int_value',
+        'clocks': 'parse_int_value',
     }
 
     block_delim = '\n'

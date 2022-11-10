@@ -240,6 +240,7 @@ class ParagraphParser(Parser):
                     end_at_tombstone = True
                     hint = Tombstone
                     break
+
                 nexttag = tags.get(tagname)
                 if isinstance(nexttag, tags.BlockTag):
                     # Paragraph regions cannot contain blocks, so if we find a block,

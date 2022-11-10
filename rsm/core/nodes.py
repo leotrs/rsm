@@ -36,7 +36,7 @@ class Node:
     # we need parent to be a property, see https://stackoverflow.com/a/61480946/14157230
     # for how this works
     _parent: Optional['NodeWithChildren'] = field(init=False, repr=False, default=None)
-    parent: Optional['NodeWithChildren'] = None
+    parent: Optional['NodeWithChildren'] = field(init=False, repr=False, default=None)
 
     def __post_init__(self, customreftext: str) -> None:
         self._reftext = customreftext
@@ -132,11 +132,20 @@ class Node:
             setattr(self, str(key), value)
 
 
-@dataclass
+@dataclass(eq=False)
 class NodeWithChildren(Node):
     def __post_init__(self, customreftext: str) -> None:
+        self._children = []
         self._reftext = customreftext
-        self._children: list[Node] = []
+
+    def __eq__(self, other):
+        if other is None:
+            return False
+        if self.children and not other.children:
+            return False
+        return Node.__eq__(self, other) and all(
+            id(c1) == id(c2) for c1, c2 in zip(self.children, other.children)
+        )
 
     @property
     def children(self) -> tuple:
@@ -170,7 +179,7 @@ class NodeWithChildren(Node):
         self._children.remove(child)
 
 
-@dataclass
+@dataclass(eq=False)
 class Text(Node):
     text: str = ''
 
@@ -178,7 +187,7 @@ class Text(Node):
         return short_repr(self.text, self.__class__.__name__)
 
 
-@dataclass
+@dataclass(eq=False)
 class Span(NodeWithChildren):
     _: KW_ONLY
     strong: bool = False
@@ -196,18 +205,18 @@ class Span(NodeWithChildren):
     }
 
 
-@dataclass
+@dataclass(eq=False)
 class Claim(NodeWithChildren):
     pass
 
 
-@dataclass
+@dataclass(eq=False)
 class Heading(NodeWithChildren):
     title: str = ''
     _newmetakeys: ClassVar[set] = {'title'}
 
 
-@dataclass
+@dataclass(eq=False)
 class Manuscript(Heading):
     src: str = field(repr=False, default='')
     date: datetime | None = None
@@ -218,7 +227,7 @@ class Manuscript(Heading):
         self.src = ShortenedString(self.src)
 
 
-@dataclass
+@dataclass(eq=False)
 class Author(Node):
     name: str = ''
     affiliation: str = ''
@@ -226,155 +235,163 @@ class Author(Node):
     _newmetakeys: ClassVar[set] = {'name', 'affiliation', 'email'}
 
 
-@dataclass
+@dataclass(eq=False)
 class Abstract(NodeWithChildren):
     keywords: list[str] = field(default_factory=list)
     MSC: list[str] = field(default_factory=list)
     _newmetakeys: ClassVar[set] = {'keywords', 'MSC'}
 
 
-@dataclass
+@dataclass(eq=False)
 class Section(Heading):
     level: ClassVar[int] = 2
 
 
-@dataclass
+@dataclass(eq=False)
 class Subsection(Section):
     level: ClassVar[int] = 3
 
 
-@dataclass
+@dataclass(eq=False)
 class Subsubsection(Section):
     level: ClassVar[int] = 4
 
 
-@dataclass
+@dataclass(eq=False)
 class BaseParagraph(Heading):
     pass
 
 
-@dataclass
+@dataclass(eq=False)
 class Paragraph(BaseParagraph):
     pass
 
 
-@dataclass
+@dataclass(eq=False)
 class Comment(BaseParagraph):
     pass
 
 
-@dataclass
+@dataclass(eq=False)
 class Enumerate(NodeWithChildren):
     pass
 
 
-@dataclass
+@dataclass(eq=False)
 class Itemize(NodeWithChildren):
     pass
 
 
-@dataclass
+@dataclass(eq=False)
 class Item(BaseParagraph):
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Itemize, Enumerate}
 
 
-@dataclass
+@dataclass(eq=False)
 class Keyword(Span):
     pass
 
 
-@dataclass
+@dataclass(eq=False)
 class Math(NodeWithChildren):
     pass
 
 
-@dataclass
+@dataclass(eq=False)
 class Code(NodeWithChildren):
     pass
 
 
-@dataclass
+@dataclass(eq=False)
 class DisplayMath(NodeWithChildren):
     reftext: str = 'Equation {number}'
 
 
-@dataclass
+@dataclass(eq=False)
 class DisplayCode(NodeWithChildren):
     reftext: str = 'Code Listing {number}'
 
 
-@dataclass
+@dataclass(eq=False)
 class BaseReference(Node):
     overwrite_reftext: str | None = field(kw_only=True, default=None)
 
 
-@dataclass
+@dataclass(eq=False)
 class PendingReference(BaseReference):
     target: str = field(kw_only=True, default='')
 
 
-@dataclass
+@dataclass(eq=False)
 class Reference(BaseReference):
     target: Node | None = field(kw_only=True, default=None)
 
 
-@dataclass
+@dataclass(eq=False)
+class PendingPrev(BaseReference):
+    target: str = field(kw_only=True, default='')
+
+
+@dataclass(eq=False)
 class URL(BaseReference):
     target: str = field(kw_only=True, default='')
 
 
-@dataclass
+@dataclass(eq=False)
 class PendingCite(Node):
     targetlabels: list[str] = field(kw_only=True, default_factory=list)
 
 
-@dataclass
+@dataclass(eq=False)
 class Cite(Node):
     targets: list[Node] = field(kw_only=True, default_factory=list)
 
 
-@dataclass
+@dataclass(eq=False)
 class Proof(NodeWithChildren):
     _newmetakeys: ClassVar[set] = set()
 
 
-@dataclass
+@dataclass(eq=False)
 class Subproof(NodeWithChildren):
     _newmetakeys: ClassVar[set] = set()
 
 
-@dataclass
+@dataclass(eq=False)
 class Sketch(Paragraph):
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Proof}
 
 
-@dataclass
+@dataclass(eq=False)
 class Step(Paragraph):
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Proof}
 
 
-@dataclass
+Step.possible_parents.add(Step)
+
+
+@dataclass(eq=False)
 class Theorem(Heading):
     goals: list[BaseReference] = field(kw_only=True, default_factory=list)
-    _newmetakeys: ClassVar[set] = {'goals'}
+    _newmetakeys: ClassVar[set] = {'goals', 'stars', 'clocks'}
 
 
-@dataclass
+@dataclass(eq=False)
 class Lemma(Theorem):
     _newmetakeys: ClassVar[set] = set()
 
 
-@dataclass
+@dataclass(eq=False)
 class Remark(Theorem):
     _newmetakeys: ClassVar[set] = set()
 
 
-@dataclass
+@dataclass(eq=False)
 class Bibliography(NodeWithChildren):
     pass
 
 
-@dataclass
+@dataclass(eq=False)
 class Bibitem(Node):
     _: KW_ONLY
     kind: str = ''
@@ -397,6 +414,6 @@ class Bibitem(Node):
     }
 
 
-@dataclass
+@dataclass(eq=False)
 class UnknownBibitem(Bibitem):
     number: str = "?"

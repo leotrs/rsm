@@ -15,10 +15,10 @@ from collections import namedtuple
 from abc import ABC, abstractmethod
 from typing import Iterable
 from icecream import ic
+import textwrap
 
 from . import nodes
 from .manuscript import AbstractTreeManuscript, HTMLManuscript
-from .util import ShortenedString
 
 
 class RSMTranslatorError(Exception):
@@ -54,7 +54,7 @@ class EditCommand(ABC):
             s = f'{key}='
             value = getattr(self, key)
             if isinstance(value, str):
-                value = repr(ShortenedString(value.strip()))
+                value = repr(textwrap.shorten(value.strip()))
             s += f'{value}'
             middles.append(s)
         middle = ', '.join(middles)

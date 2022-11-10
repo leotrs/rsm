@@ -119,6 +119,8 @@ class Parser(ABC):
         """Return the first tag starting at self.pos. If skip is True, skip it and update self.pos."""
         if self.src[self.pos] != TagName.delim:
             return None
+        if self.src[self.pos - 1] == '\\':  # ignore escaped delimiters!
+            return None
         index = self.src.index(TagName.delim, self.pos + 1)
         tag = TagName(str(self.src[self.pos + 1 : index]))
         if consume:
@@ -259,7 +261,7 @@ class ParagraphParser(Parser):
                 text = self.src[self.pos : index]
                 consumed = len(text)
                 if text.strip():
-                    child = nodes.Text(text=text)
+                    child = nodes.Text(text=text.escape())
                     children.append(child)
 
             self.pos += consumed
@@ -291,7 +293,7 @@ class InlineContentParser(Parser):
             if not isinstance(tag, tags.InlineTag):
                 raise RSMParserError(self.pos, f'Tag {tag} cannot be inline')
             if self.pos > left:
-                children.append(nodes.Text(text=self.src[left : self.pos]))
+                children.append(nodes.Text(text=self.src[left : self.pos].escape()))
             parser = self.get_subparser(tag)
             result = parser.parse()
             children.append(result.result)
@@ -299,7 +301,7 @@ class InlineContentParser(Parser):
             left = self.pos
 
         if self.pos > left:
-            children.append(nodes.Text(text=self.src[left : self.pos]))
+            children.append(nodes.Text(text=self.src[left : self.pos].escape()))
 
         return BaseParsingResult(
             success=True, result=children, hint=None, consumed=self.pos - oldpos
@@ -311,7 +313,7 @@ class AsIsContentParser(Parser):
         oldpos = self.pos
         index = self.src.index(Tombstone, self.pos)
         content = self.src[self.pos : index]
-        node = nodes.Text(text=content)
+        node = nodes.Text(text=content.escape())
         self.pos = index
         return ParsingResult(
             success=True, result=node, hint=Tombstone, consumed=self.pos - oldpos

@@ -6,26 +6,7 @@ Utilities.
 
 """
 
-from typing import Any
-
-
-def short_repr(text: str, classname, limit: int = 20) -> str:
-    if len(text) > limit:
-        before = text[:10].replace('\n', '\\n').strip()
-        after = text[-10:].replace('\n', '\\n').strip()
-        if classname:
-            return f'{classname}({before} [...] {after})'
-        else:
-            return f'"{before} [...] {after}"'
-    else:
-        return repr(text.replace('\n', '\\n'))
-
-
-class ShortenedString(str):
-    """A string that appears shortened."""
-
-    def __repr__(self):
-        return short_repr(self, classname=None)
+import textwrap
 
 
 class EscapedString:
@@ -40,10 +21,16 @@ class EscapedString:
         return len(self._src)
 
     def __repr__(self):
-        return repr(self._src)
+        return f'{self.__class__.__name__}({self.escape_chars}, {textwrap.shorten(self._src, 60)})'
 
     def __str__(self):
         return self._src
+
+    def escape(self):
+        ret = self._src
+        for char in self.escape_chars:
+            ret = ret.replace(f'\\{char}', char)
+        return ret
 
     def __getitem__(self, _slice):
         return self.__class__(self._src[_slice])

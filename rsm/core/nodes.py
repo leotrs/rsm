@@ -11,8 +11,6 @@ from collections.abc import Iterable
 from datetime import datetime
 from icecream import ic
 
-from .util import ShortenedString, short_repr
-
 
 class RSMNodeError(Exception):
     pass
@@ -215,7 +213,7 @@ class Text(Node):
         self.text = text
 
     def __repr__(self) -> str:
-        return short_repr(self.text, self.__class__.__name__)
+        return f'{self.__class__.__name__}({textwrap.shorten(self.text)})'
 
 
 class Span(NodeWithChildren):
@@ -266,7 +264,7 @@ class Manuscript(Heading):
 
     def __init__(self, src: str = '', date: datetime | None = None, **kwargs):
         super().__init__(**kwargs)
-        self.src = ShortenedString(src)
+        self.src = src
         self.date = date
 
 

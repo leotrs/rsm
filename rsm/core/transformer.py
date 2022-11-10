@@ -56,8 +56,13 @@ class Transformer:
                 return default()
 
     def resolve_pending_references(self) -> None:
-        condition = lambda n: type(n) in [nodes.PendingReference, nodes.PendingCite]
-        for pending in self.tree.traverse(condition=condition):
+        classes = [
+            nodes.PendingReference,
+            nodes.PendingCite,
+            nodes.PendingPrev,
+        ]
+
+        for pending in self.tree.traverse(condition=lambda n: type(n) in classes):
             if isinstance(pending, nodes.PendingReference):
                 target = self._label_to_node(pending.target)
                 pending.replace_self(
@@ -72,6 +77,20 @@ class Transformer:
                     for label in pending.targetlabels
                 ]
                 pending.replace_self(nodes.Cite(targets=targets))
+            elif isinstance(pending, nodes.PendingPrev):
+                step = pending.first_ancestor_of_type(nodes.Step)
+                li = step.parent.children
+                if step is None:
+                    raise RSMTransformerError('Found :prev: tag outside proof step')
+                target = step.prev_sibling(nodes.Step)
+                ic(target)
+                if target is None:
+                    raise RSMTransformerError(f'No previous step found')
+                pending.replace_self(
+                    nodes.Reference(
+                        target=target, overwrite_reftext=pending.overwrite_reftext
+                    )
+                )
 
         for node in self.tree.traverse(nodeclass=nodes.PendingReference):
             raise RSMTransformerError(

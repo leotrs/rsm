@@ -528,6 +528,11 @@ class URLParser(LabelCommaTextParser):
         return super().parse_content(content, nodes.URL)
 
 
+class PrevParser(LabelCommaTextParser):
+    def parse_content(self, content: str) -> nodes.PendingReference:
+        return super().parse_content(content, nodes.PendingPrev)
+
+
 class CiteParser(SpecialTagRegionParser):
     def parse_content(self, content: str) -> nodes.PendingCite:
         targets = [s.strip() for s in content.split(',')]
@@ -746,6 +751,10 @@ class MetaPairParser(Parser):
         value = self.src[left:right]
         return value.strip(), len(value)
 
+    def parse_int_value(self, key: str) -> tuple[int, int]:
+        value, numchars = self.parse_upto_delim_value(key)
+        return int(str(value)), numchars
+
     def parse_datetime_value(self, key: str) -> tuple[datetime, int]:
         value, numchars = self.parse_upto_delim_value(key)
         return datetime.fromisoformat(str(value)), numchars
@@ -879,6 +888,12 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         Shortcut('`', '`', r':code:', Tombstone),
         Shortcut('|-', '.', ':claim:', Tombstone + '.'),
         Shortcut('⊢', '.', ':claim:', Tombstone + '.'),
+        Shortcut(':prev', ':', ':prev:1', Tombstone),
+        Shortcut(':prev2', ':', ':prev:2', Tombstone),
+        Shortcut(':prev3', ':', ':prev:3', Tombstone),
+        Shortcut(':prev:', Tombstone, ':prev:1,', Tombstone),
+        Shortcut(':prev2:', Tombstone, ':prev:2,', Tombstone),
+        Shortcut(':prev3:', Tombstone, ':prev:3,', Tombstone),
     ]
 
     def __init__(self, src: PlainTextManuscript):
@@ -962,5 +977,6 @@ for t in tags.all():
 _parsers['bibtex'] = BibTexParser
 _parsers['ref'] = RefParser
 _parsers['url'] = URLParser
+_parsers['prev'] = PrevParser
 _parsers['cite'] = CiteParser
 _parsers['manuscript'] = ManuscriptParser

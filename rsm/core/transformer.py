@@ -92,11 +92,6 @@ class Transformer:
                     )
                 )
 
-        for node in self.tree.traverse(nodeclass=nodes.PendingReference):
-            raise RSMTransformerError(
-                f'Found unresolved referece to "{node.targetlabel}"'
-            )
-
     def autonumber_nodes(self) -> None:
         counts = {
             nodes.Section: 0,
@@ -106,18 +101,21 @@ class Transformer:
             nodes.Theorem: 0,
             nodes.Lemma: 0,
             nodes.Bibitem: 0,
+            nodes.Step: 0,
         }
         for node in self.tree.traverse():
             nodeclass = type(node)
             if nodeclass in counts and not node.nonum:
                 counts[nodeclass] += 1
                 node.number = counts[nodeclass]
-                if nodeclass is nodes.Section:
-                    counts[nodes.Subsubsection] = 0
-                    counts[nodes.Subsection] = 0
-                    counts[nodes.Theorem] = 0
-                    counts[nodes.Lemma] = 0
-                if nodeclass is nodes.Subsection:
-                    counts[nodes.Subsubsection] = 0
-                    counts[nodes.Theorem] = 0
-                    counts[nodes.Lemma] = 0
+            if nodeclass is nodes.Section:
+                counts[nodes.Subsubsection] = 0
+                counts[nodes.Subsection] = 0
+                counts[nodes.Theorem] = 0
+                counts[nodes.Lemma] = 0
+            if nodeclass is nodes.Subsection:
+                counts[nodes.Subsubsection] = 0
+                counts[nodes.Theorem] = 0
+                counts[nodes.Lemma] = 0
+            if nodeclass is nodes.Proof:
+                counts[nodes.Step] = 0

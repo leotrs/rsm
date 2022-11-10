@@ -594,7 +594,8 @@ class Translator:
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         last = node.last_of_type(nodes.Step)
-        last.types.append('last')
+        if last:
+            last.types.append('last')
 
         classname = node.__class__.__name__.lower()
         self._prepend_strong_text_in_para(

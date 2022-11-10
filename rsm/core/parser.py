@@ -888,12 +888,12 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         Shortcut('`', '`', r':code:', Tombstone),
         Shortcut('|-', '.', ':claim:', Tombstone + '.'),
         Shortcut('⊢', '.', ':claim:', Tombstone + '.'),
-        Shortcut(':prev', ':', ':prev:1', Tombstone),
-        Shortcut(':prev2', ':', ':prev:2', Tombstone),
-        Shortcut(':prev3', ':', ':prev:3', Tombstone),
         Shortcut(':prev:', Tombstone, ':prev:1,', Tombstone),
         Shortcut(':prev2:', Tombstone, ':prev:2,', Tombstone),
         Shortcut(':prev3:', Tombstone, ':prev:3,', Tombstone),
+        Shortcut(':prev', ':', ':prev:1', Tombstone),
+        Shortcut(':prev2', ':', ':prev:2', Tombstone),
+        Shortcut(':prev3', ':', ':prev:3', Tombstone),
     ]
 
     def __init__(self, src: PlainTextManuscript):

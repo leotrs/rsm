@@ -30,7 +30,7 @@ def test_simple():
 
         <h2>1. Section</h2>
 
-        <p class="paragraph">This pargraph contains a claim <span id="clm-lbl" class="claim"><span class="keyword">⊢</span>all <span class="math">\(X\)</span> are <span class="math">\(Y\)</span> </span>.</p>
+        <p class="paragraph">This pargraph contains a claim <span id="clm-lbl" class="claim"><span class="keyword">⊢ </span>all <span class="math">\(X\)</span> are <span class="math">\(Y\)</span> </span>.</p>
 
         </section>
 
@@ -65,7 +65,7 @@ def test_with_math():
 
         <h1></h1>
 
-        <p class="paragraph">This paragraph has math inside a claim <span class="claim"><span class="keyword">⊢</span><span class="math">\(2+2=4\)</span></span>.</p>
+        <p class="paragraph">This paragraph has math inside a claim <span class="claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.</p>
 
         </section>
 
@@ -98,7 +98,7 @@ def test_lonely_claim():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="claim"><span class="keyword">⊢</span><span class="math">\(2+2=4\)</span></span>.</p>
+        <p class="paragraph"><span class="claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.</p>
 
         </section>
 
@@ -144,11 +144,11 @@ def test_claim_within_list():
         <ol class="enumerate">
 
         <li id="one" class="item">
-        <span class="claim"><span class="keyword">⊢</span><span class="math">\(2+2=4\)</span></span>.
+        <span class="claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.
         </li>
 
         <li id="two" class="item">
-        <span class="claim"><span class="keyword">⊢</span><span class="math">\(3+3=6\)</span></span>.
+        <span class="claim"><span class="keyword">⊢ </span><span class="math">\(3+3=6\)</span></span>.
         </li>
 
         </ol>

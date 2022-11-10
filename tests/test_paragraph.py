@@ -107,7 +107,7 @@ def test_start_with_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="claim"><span class="keyword">⊢</span>The eigenvalues <span class="math">\(\pm1\)</span> of the NB matrix <span class="math">\(\mathbf{B}\)</span> admit a basis that is
+        <p class="paragraph"><span class="claim"><span class="keyword">⊢ </span>The eigenvalues <span class="math">\(\pm1\)</span> of the NB matrix <span class="math">\(\mathbf{B}\)</span> admit a basis that is
         orthonormal with respect to <span class="math">\(\langle \cdot, \cdot \rangle\)</span></span>.</p>
 
         </section>

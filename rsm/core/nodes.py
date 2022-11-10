@@ -111,6 +111,27 @@ class Node:
                 last = child
         return last
 
+    def prev_sibling(self, cls: Optional[Type['Node']] = None) -> Optional['Node']:
+        if self.parent is None:
+            return None
+        if cls is None:
+            cls = self.__class__
+
+        index = self.parent.children.index(self)
+        prev_sibs = self.parent.children[:index]
+        ic(index)
+        ic(prev_sibs)
+        for node in reversed(prev_sibs):
+            if isinstance(node, cls):
+                return node
+        return None
+
+    def first_ancestor_of_type(self, cls: Type['Node']) -> Optional['Node']:
+        ancestor = self.parent
+        while not isinstance(ancestor, cls):
+            ancestor = ancestor.parent
+        return ancestor  # the root node has parent None
+
     @property
     def reftext(self) -> str:
         return self._reftext or self.classreftext

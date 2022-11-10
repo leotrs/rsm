@@ -897,7 +897,7 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         logger.debug('applying shortcuts')
 
         for keyword in self.keywords:
-            src = PlainTextManuscript(src.replace(keyword, f':keyword:{keyword}::'))
+            src = PlainTextManuscript(src.replace(keyword, f':keyword:{keyword} ::'))
 
         for deliml, delimr, replacel, replacer in self.shortcuts:
             pos = 0

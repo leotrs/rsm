@@ -546,7 +546,7 @@ class Translator:
                 AppendNodeTag(
                     node, tag='span', newline_inner=False, newline_outer=False
                 ),
-                AppendKeyword('⊢'),
+                AppendKeyword('⊢ '),
             ]
         )
 

@@ -89,6 +89,39 @@ def test_colon_inside_bold():
     )
 
 
+def test_colon_inside_bold_no_space():
+    compare_have_want(
+        have=r"""
+        :manuscript:
+
+        :span: :strong: :: Warning\::: this is a warning.
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph"><span class="span"><strong>Warning: </strong></span>this is a warning.</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
 def test_colon_inside_bold_with_shortcut():
     compare_have_want(
         have=r"""

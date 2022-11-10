@@ -881,6 +881,7 @@ class ManuscriptParser(ShouldHaveHeadingParser):
     keywords = ['LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED']
     Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
     shortcuts = [
+        Shortcut('\\::', '', '\\: :', ''),
         Shortcut('**', '**', ':span: :strong: ' + Tombstone, Tombstone),
         Shortcut('*', '*', ':span: :emphas: ' + Tombstone, Tombstone),
         Shortcut('###', '\n', ':subsubsection:\n  :title: ', '\n'),
@@ -924,7 +925,7 @@ class ManuscriptParser(ShouldHaveHeadingParser):
                 left = src.find(deliml, pos)
                 if left < 0:
                     break
-                right = src.find(delimr, left + 1)
+                right = src.find(delimr, left + 1) if delimr else left + len(deliml) + 1
                 if right < 0:
                     raise RSMParserError(
                         self.pos, f'Found start ("{deliml}") but no end'
@@ -934,7 +935,7 @@ class ManuscriptParser(ShouldHaveHeadingParser):
                     + replacel
                     + src[left + len(deliml) : right]
                     + replacer
-                    + src[right + len(delimr) :]
+                    + src[right + max(len(delimr), 1) :]
                 )
                 pos = right + 1
 

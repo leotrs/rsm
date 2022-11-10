@@ -391,6 +391,10 @@ dd > p, dt > p {
     margin-block-end: 0.25em;
 }
 
+.blockclaim p:first-of-type {
+    display: contents;
+}
+
 
 /* State */
 /******************************************************************************************/

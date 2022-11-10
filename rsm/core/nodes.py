@@ -249,6 +249,10 @@ class Claim(NodeWithChildren):
     pass
 
 
+class BlockClaim(Claim):
+    pass
+
+
 class Heading(NodeWithChildren):
     _newmetakeys: ClassVar[set] = {'title'}
 

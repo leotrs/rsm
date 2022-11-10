@@ -17,7 +17,7 @@ def compare_have_want(have, want, handrails=False):
     have = rsm.render(have, handrails=handrails).strip()
 
     # compare without whitespace
-    assert ''.join(have.split()) == ''.join(want.split())
+    # assert ''.join(have.split()) == ''.join(want.split())
 
     # compare with whitespace
     assert have == want

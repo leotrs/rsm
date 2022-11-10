@@ -6,8 +6,7 @@ Nodes that make up the Manuscript tree.
 
 """
 
-from dataclasses import dataclass, field, InitVar, KW_ONLY
-from typing import Any, ClassVar, Type, Optional, Callable
+from typing import Any, Type, Optional, Callable, ClassVar
 from collections.abc import Iterable
 from datetime import datetime
 from icecream import ic
@@ -19,27 +18,48 @@ class RSMNodeError(Exception):
     pass
 
 
-@dataclass
 class Node:
     classreftext: ClassVar[str] = '{nodeclass} {number}'
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = set()
-
-    # meta keys
-    label: str = ''
-    types: list[str] = field(default_factory=list)
-    nonum: bool = False
-    customreftext: InitVar[str] = ''
     _newmetakeys: ClassVar[set] = {'label', 'types', 'nonum', 'reftext'}
 
-    # non-meta instance variables
-    number: int | None = None
-    # we need parent to be a property, see https://stackoverflow.com/a/61480946/14157230
-    # for how this works
-    _parent: Optional['NodeWithChildren'] = field(init=False, repr=False, default=None)
-    parent: Optional['NodeWithChildren'] = field(init=False, repr=False, default=None)
+    def __init__(
+        self,
+        label: str = '',
+        types: list[str] | None = None,
+        number: int | None = None,
+        nonum: bool = False,
+        customreftext: str = '',
+    ) -> None:
+        self.label = label
+        self.types = types or []
+        self.nonum = nonum
+        self.number = number
+        self.reftext = customreftext or self.classreftext
+        self._parent = None
 
-    def __post_init__(self, customreftext: str) -> None:
-        self._reftext = customreftext
+    def _attrs_for_repr_and_eq(self):
+        return ['label', 'types', 'nonum', 'number', 'parent']
+
+    def __repr__(self):
+        cls = self.__class__.__name__
+        d = {att: getattr(self, att) for att in self._attrs_for_repr_and_eq()}
+        d['parent'] = (
+            'None' if self.parent is None else f'{self.parent.__class__.__name__}(...)'
+        )
+        return f'{cls}({d})'
+
+    def __eq__(self, other):
+        attrs = self._attrs_for_repr_and_eq()
+        try:
+            return all(
+                (mine is getattr(other, a))
+                if isinstance(mine := getattr(self, a), Node)
+                else (mine == getattr(other, a))
+                for a in attrs
+            )
+        except AttributeError:
+            return False
 
     @classmethod
     def metakeys(cls: Type['Node']) -> set:
@@ -132,41 +152,28 @@ class Node:
             ancestor = ancestor.parent
         return ancestor  # the root node has parent None
 
-    @property
-    def reftext(self) -> str:
-        return self._reftext or self.classreftext
-
-    @reftext.setter
-    def reftext(self, value: str) -> None:
-        self._reftext = value
-
-    def replace_self(self, replace: 'Node') -> None:
+    def replace_self(self, replacement: 'Node') -> None:
         if not self.parent:
             raise RSMNodeError('Can only call replace_self on a node with parent')
-        index = self.parent.children.index(self)
+        ids = [id(c) for c in self.parent.children]
+        index = ids.index(id(self))
         self.parent.remove(self)
-        self.parent._children.insert(index, replace)
-        replace.parent = self.parent
+        self.parent._children.insert(index, replacement)
+        replacement.parent = self.parent
+        self.parent = None
 
     def ingest_dict_as_meta(self, meta: dict) -> None:
         for key, value in meta.items():
             setattr(self, str(key), value)
 
 
-@dataclass(eq=False)
 class NodeWithChildren(Node):
-    def __post_init__(self, customreftext: str) -> None:
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
         self._children = []
-        self._reftext = customreftext
 
-    def __eq__(self, other):
-        if other is None:
-            return False
-        if self.children and not other.children:
-            return False
-        return Node.__eq__(self, other) and all(
-            id(c1) == id(c2) for c1, c2 in zip(self.children, other.children)
-        )
+    def _attrs_for_repr_and_eq(self):
+        return super()._attrs_for_repr_and_eq() + ['children']
 
     @property
     def children(self) -> tuple:
@@ -197,25 +204,21 @@ class NodeWithChildren(Node):
             raise TypeError('Can only prepend a Node or iterable of Nodes as children')
 
     def remove(self, child: 'Node') -> None:
-        self._children.remove(child)
+        ids = [id(c) for c in self._children]
+        index = ids.index(id(child))
+        del self._children[index]
 
 
-@dataclass(eq=False)
 class Text(Node):
-    text: str = ''
+    def __init__(self, text: str = '', **kwargs):
+        super().__init__(**kwargs)
+        self.text = text
 
     def __repr__(self) -> str:
         return short_repr(self.text, self.__class__.__name__)
 
 
-@dataclass(eq=False)
 class Span(NodeWithChildren):
-    _: KW_ONLY
-    strong: bool = False
-    emphas: bool = False
-    little: bool = False
-    insert: bool = False
-    delete: bool = False
     _newmetakeys: ClassVar[set] = {'strong', 'emphas', 'little', 'insert', 'delete'}
     attr_to_tag: ClassVar[dict] = {
         'strong': 'strong',
@@ -225,165 +228,179 @@ class Span(NodeWithChildren):
         'delete': 'del',
     }
 
+    def __init__(
+        self,
+        strong: bool = False,
+        emphas: bool = False,
+        little: bool = False,
+        insert: bool = False,
+        delete: bool = False,
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self.strong = strong
+        self.emphas = emphas
+        self.little = little
+        self.insert = insert
+        self.delete = delete
 
-@dataclass(eq=False)
+
 class Claim(NodeWithChildren):
     pass
 
 
-@dataclass(eq=False)
 class Heading(NodeWithChildren):
-    title: str = ''
     _newmetakeys: ClassVar[set] = {'title'}
 
+    def __init__(self, title: str = '', **kwargs):
+        super().__init__(**kwargs)
+        self.title = title
 
-@dataclass(eq=False)
+
 class Manuscript(Heading):
-    src: str = field(repr=False, default='')
-    date: datetime | None = None
     _newmetakeys: ClassVar[set] = {'date'}
 
-    def __post_init__(self, customreftext: str) -> None:
-        super().__post_init__(customreftext)
-        self.src = ShortenedString(self.src)
+    def __init__(self, src: str = '', date: datetime | None = None, **kwargs):
+        super().__init__(**kwargs)
+        self.src = ShortenedString(src)
+        self.date = date
 
 
-@dataclass(eq=False)
 class Author(Node):
-    name: str = ''
-    affiliation: str = ''
-    email: str = ''
     _newmetakeys: ClassVar[set] = {'name', 'affiliation', 'email'}
 
+    def __init__(
+        self, name: str = '', affiliation: str = '', email: str = '', **kwargs
+    ):
+        super().__init__(**kwargs)
+        self.name = name
+        self.affiliation = affiliation
+        self.email = email
 
-@dataclass(eq=False)
+
 class Abstract(NodeWithChildren):
-    keywords: list[str] = field(default_factory=list)
-    MSC: list[str] = field(default_factory=list)
     _newmetakeys: ClassVar[set] = {'keywords', 'MSC'}
 
+    def __init__(
+        self, keywords: list[str] | None = None, MSC: list[str] | None = None, **kwargs
+    ):
+        super().__init__(**kwargs)
+        self.keywords = keywords or []
+        self.MSC = MSC or []
 
-@dataclass(eq=False)
+
 class Section(Heading):
     level: ClassVar[int] = 2
 
 
-@dataclass(eq=False)
 class Subsection(Section):
     level: ClassVar[int] = 3
 
 
-@dataclass(eq=False)
 class Subsubsection(Section):
     level: ClassVar[int] = 4
 
 
-@dataclass(eq=False)
 class BaseParagraph(Heading):
     pass
 
 
-@dataclass(eq=False)
 class Paragraph(BaseParagraph):
     pass
 
 
-@dataclass(eq=False)
 class Comment(BaseParagraph):
     pass
 
 
-@dataclass(eq=False)
 class Enumerate(NodeWithChildren):
     pass
 
 
-@dataclass(eq=False)
 class Itemize(NodeWithChildren):
     pass
 
 
-@dataclass(eq=False)
 class Item(BaseParagraph):
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Itemize, Enumerate}
 
 
-@dataclass(eq=False)
 class Keyword(Span):
     pass
 
 
-@dataclass(eq=False)
 class Math(NodeWithChildren):
     pass
 
 
-@dataclass(eq=False)
 class Code(NodeWithChildren):
     pass
 
 
-@dataclass(eq=False)
 class DisplayMath(NodeWithChildren):
-    reftext: str = 'Equation {number}'
+    classreftext: str = 'Equation {number}'
 
 
-@dataclass(eq=False)
 class DisplayCode(NodeWithChildren):
-    reftext: str = 'Code Listing {number}'
+    classreftext: str = 'Code Listing {number}'
 
 
-@dataclass(eq=False)
 class BaseReference(Node):
-    overwrite_reftext: str | None = field(kw_only=True, default=None)
+    def __init__(
+        self, target: str | Node | None = None, overwrite_reftext: str = '', **kwargs
+    ):
+        super().__init__(**kwargs)
+        self.overwrite_reftext = overwrite_reftext
+        self.target = target
+
+    def _attrs_for_repr_and_eq(self):
+        return super()._attrs_for_repr_and_eq() + ['target', 'overwrite_reftext']
 
 
-@dataclass(eq=False)
 class PendingReference(BaseReference):
-    target: str = field(kw_only=True, default='')
+    def __init__(self, target: str = '', **kwargs):
+        super().__init__(target, **kwargs)
 
 
-@dataclass(eq=False)
 class Reference(BaseReference):
-    target: Node | None = field(kw_only=True, default=None)
+    def __init__(self, target: Node | None = None, **kwargs):
+        super().__init__(target, **kwargs)
 
 
-@dataclass(eq=False)
 class PendingPrev(BaseReference):
-    target: str = field(kw_only=True, default='')
+    def __init__(self, target: str = '', **kwargs):
+        super().__init__(target, **kwargs)
 
 
-@dataclass(eq=False)
 class URL(BaseReference):
-    target: str = field(kw_only=True, default='')
+    def __init__(self, target: str = '', **kwargs):
+        super().__init__(target, **kwargs)
 
 
-@dataclass(eq=False)
 class PendingCite(Node):
-    targetlabels: list[str] = field(kw_only=True, default_factory=list)
+    def __init__(self, targetlabels: list[str] = None, **kwargs):
+        super().__init__(**kwargs)
+        self.targetlabels = targetlabels or []
 
 
-@dataclass(eq=False)
 class Cite(Node):
-    targets: list[Node] = field(kw_only=True, default_factory=list)
+    def __init__(self, targets: list[Node] | None = None, **kwargs):
+        super().__init__(**kwargs)
+        self.targets = targets or []
 
 
-@dataclass(eq=False)
 class Proof(NodeWithChildren):
     _newmetakeys: ClassVar[set] = set()
 
 
-@dataclass(eq=False)
 class Subproof(NodeWithChildren):
     _newmetakeys: ClassVar[set] = set()
 
 
-@dataclass(eq=False)
 class Sketch(Paragraph):
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Proof}
 
 
-@dataclass(eq=False)
 class Step(Paragraph):
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Proof}
 
@@ -391,38 +408,35 @@ class Step(Paragraph):
 Step.possible_parents.add(Step)
 
 
-@dataclass(eq=False)
 class Theorem(Heading):
-    goals: list[BaseReference] = field(kw_only=True, default_factory=list)
     _newmetakeys: ClassVar[set] = {'goals', 'stars', 'clocks'}
 
+    def __init__(
+        self,
+        goals: list[BaseReference] | None = None,
+        stars: int = 0,
+        clocks: int = 0,
+        **kwargs,
+    ):
+        super().__init__(*kwargs)
+        self.goals = goals or []
+        self.stars = stars
+        self.clocks = clocks
 
-@dataclass(eq=False)
+
 class Lemma(Theorem):
     _newmetakeys: ClassVar[set] = set()
 
 
-@dataclass(eq=False)
 class Remark(Theorem):
     _newmetakeys: ClassVar[set] = set()
 
 
-@dataclass(eq=False)
 class Bibliography(NodeWithChildren):
     pass
 
 
-@dataclass(eq=False)
 class Bibitem(Node):
-    _: KW_ONLY
-    kind: str = ''
-    author: str = ''
-    title: str = ''
-    year: int = -1
-    journal: str = ''
-    volume: int = -1
-    number: int = -1
-    publisher: str = ''
     _newmetakeys: ClassVar[set] = {
         'kind',
         'author',
@@ -434,7 +448,30 @@ class Bibitem(Node):
         'publisher',
     }
 
+    def __init__(
+        self,
+        kind: str = '',
+        author: str = '',
+        title: str = '',
+        year: int = -1,
+        journal: str = '',
+        volume: int = -1,
+        number: int = -1,
+        publisher: str = '',
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self.kind = kind
+        self.author = author
+        self.title = title
+        self.year = year
+        self.journal = journal
+        self.volume = volume
+        self.number = number
+        self.publisher = publisher
 
-@dataclass(eq=False)
+
 class UnknownBibitem(Bibitem):
-    number: str = "?"
+    def __init__(self, number: str | int = '?', **kwargs):
+        super().__init__(**kwargs)
+        self.number = number

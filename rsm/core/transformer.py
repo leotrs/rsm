@@ -92,6 +92,10 @@ class Transformer:
                     )
                 )
 
+        for pending in self.tree.traverse(condition=lambda n: type(n) in classes):
+            ic(pending)
+            raise RSMTransformerError('Found unresolved pending reference')
+
     def autonumber_nodes(self) -> None:
         counts = {
             nodes.Section: 0,

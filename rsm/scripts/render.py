@@ -13,8 +13,10 @@ from ..core.manuscript import HTMLManuscript
 from ..core.parser import RSMParserError
 
 
-def render(source: str, handrails: bool = False) -> HTMLManuscript:
-    return RSMProcessorApplication(plain=source, handrails=handrails).run()
+def render(source: str, handrails: bool = False, verbosity: int = 0) -> HTMLManuscript:
+    return RSMProcessorApplication(
+        plain=source, handrails=handrails, verbosity=verbosity
+    ).run()
 
 
 def parse_args() -> Namespace:
@@ -41,6 +43,7 @@ def parse_args() -> Namespace:
         action='store_true',
         default=False,
     )
+    parser.add_argument('-v', '--verbose', help='verbosity', action='count', default=0)
     args = parser.parse_args()
     return args
 
@@ -53,7 +56,7 @@ def main() -> int:
     else:
         src = args.src
     try:
-        body = render(src, args.handrails)
+        body = render(src, args.handrails, args.verbose)
     except RSMParserError as exc:
         if exc.pos == 0:
             raise ValueError(

@@ -79,8 +79,7 @@ def test_one_math():
 
         ::
         """,
-        want="""
-        <body>
+        want=r"""        <body>
 
         <div class="manuscriptwrapper">
 
@@ -114,8 +113,7 @@ def test_two_math():
 
         ::
         """,
-        want="""
-        <body>
+        want=r"""        <body>
 
         <div class="manuscriptwrapper">
 

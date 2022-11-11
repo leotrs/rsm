@@ -42,11 +42,16 @@ class Node:
 
     def __repr__(self):
         cls = self.__class__.__name__
-        d = {att: getattr(self, att) for att in self._attrs_for_repr_and_eq()}
+        d = {
+            att: getattr(self, att)
+            for att in self._attrs_for_repr_and_eq()
+            if att != 'children'
+        }
         d['parent'] = (
-            'None' if self.parent is None else f'{self.parent.__class__.__name__}(...)'
+            'None' if self.parent is None else f'{self.parent.__class__.__name__}'
         )
-        return f'{cls}({d})'
+        d_str = ', '.join(f'{k}={v}' for k, v in d.items() if v)
+        return f'{cls}({d_str})'
 
     def __eq__(self, other):
         attrs = self._attrs_for_repr_and_eq()
@@ -174,12 +179,25 @@ class NodeWithChildren(Node):
     def _attrs_for_repr_and_eq(self):
         return super()._attrs_for_repr_and_eq() + ['children']
 
+    def __repr__(self) -> str:
+        if not self._children:
+            return super().__repr__()
+        children_repr = ', '.join(f'{c.__class__.__name__}' for c in self._children)
+        children_repr = '[' + children_repr + ']'
+        ret = super().__repr__()
+        return ret[:-1] + ', ' + children_repr + ')'
+
     @property
     def children(self) -> tuple:
         return tuple(self._children)
 
+    def clear(self) -> None:
+        for c in self._children:
+            c.parent = None
+        self._children = []
+
     def append(self, child: Node | list) -> None:
-        if isinstance(child, list):
+        if isinstance(child, Iterable):
             for c in child:
                 self.append(c)
         elif isinstance(child, Node):

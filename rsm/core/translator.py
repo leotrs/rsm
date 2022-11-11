@@ -389,7 +389,12 @@ class Translator:
         return self.body
 
     def visit_node(self, node: nodes.Node) -> EditCommand:
-        return AppendText(str(node) + '\n')
+        return AppendBatchAndDefer(
+            [
+                AppendOpenTag(classes=['node-with-no-class']),
+                AppendText(str(node) + '\n'),
+            ]
+        )
 
     def leave_node(self, node: nodes.Node) -> EditCommand:
         try:

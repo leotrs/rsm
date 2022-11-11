@@ -102,12 +102,12 @@ def test_overwrite_reftext():
 
 
 def test_no_target():
-    with pytest.raises(rsm.core.parser.RSMParserError):
+    with pytest.raises(rsm.core.transformer.RSMTransformerError):
         compare_have_want(
             have="""\
         :manuscript:
 
-        This is a paragraph that refers to :ref:sec-lbl:.
+        This is a paragraph that refers to :ref:sec-lbl::.
 
         ::
         """,

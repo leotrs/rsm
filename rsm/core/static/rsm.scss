@@ -460,9 +460,9 @@ a:hover {
     content: "...";
 }
 
-// only unprocessed references have class .xref - probably means an error
-.xref {
-    background-color: red;
+// nodes that have been translated using the default visit_node have this class
+.node-with-no-class {
+    background-color: pink;
 }
 
 

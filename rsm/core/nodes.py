@@ -10,6 +10,7 @@ from typing import Any, Type, Optional, Callable, ClassVar
 from collections.abc import Iterable
 from datetime import datetime
 from icecream import ic
+import textwrap
 
 
 class RSMNodeError(Exception):
@@ -213,7 +214,7 @@ class Text(Node):
         self.text = text
 
     def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({textwrap.shorten(self.text)})'
+        return f'{self.__class__.__name__}({textwrap.shorten(self.text, 60)})'
 
 
 class Span(NodeWithChildren):

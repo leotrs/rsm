@@ -23,7 +23,7 @@ def test_no_reftext():
 
         <h1></h1>
 
-        <p class="paragraph">This paragraph has a hyperlink <a class="reference" href="www.apache.com">www.apache.com</a>.</p>
+        <p class="paragraph">This paragraph has a hyperlink <a class="reference" href="https://www.apache.com">https://www.apache.com</a>.</p>
 
         </section>
 
@@ -56,7 +56,7 @@ def test_custom_reftext():
 
         <h1></h1>
 
-        <p class="paragraph">This is a link to <a class="reference" href="www.apache.com"> Apache</a>.</p>
+        <p class="paragraph">This is a link to <a class="reference" href="https://www.apache.com"> Apache</a>.</p>
 
         </section>
 
@@ -70,12 +70,24 @@ def test_custom_reftext():
 
 
 def test_no_target():
-    with pytest.raises(rsm.core.parser.RSMParserError):
+    with pytest.raises(rsm.core.translator.RSMTranslatorError):
         compare_have_want(
             have="""\
         :manuscript:
 
-        This is a malformed url :url::.
+        This is a malformed url :url:::.
+
+        ::
+        """,
+            want='XXX',
+        )
+
+    with pytest.raises(rsm.core.translator.RSMTranslatorError):
+        compare_have_want(
+            have="""\
+        :manuscript:
+
+        This is a malformed url with a space :url: ::.
 
         ::
         """,

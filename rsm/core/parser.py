@@ -482,12 +482,11 @@ class SpecialTagRegionParser(DelimitedRegionParser):
         self.pos += len(self.tag)
         self.consume_whitespace()
 
+        # Tag delimiters (i.e. ':') are allowed within the content of a special tag.  So
+        # we keep searching until we find a Tombstone.
         right = self.src.find(Tag.delim, self.pos)
-        if not self.src[right:].startswith(Tombstone):
-            raise RSMParserError(
-                self.pos,
-                f'Found "{Tag.delim}" inside {self.tag} tag but no {Tombstone}',
-            )
+        while not self.src[right:].startswith(Tombstone):
+            right = self.src.find(Tag.delim, right + 1)
         content = self.src[self.pos : right]
 
         self.node = self.parse_content(content)

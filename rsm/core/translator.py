@@ -58,7 +58,7 @@ class EditCommand(ABC):
             s = f'{key}='
             value = getattr(self, key)
             if isinstance(value, str):
-                value = repr(textwrap.shorten(value.strip()))
+                value = repr(textwrap.shorten(value.strip(), 60))
             s += f'{value}'
             middles.append(s)
         middle = ', '.join(middles)
@@ -318,7 +318,7 @@ class AppendTombstone(AppendOpenCloseTag):
             tag='div',
             content='',
             id=id,
-            classes=['tombstone'],
+            classes=['tombstone'] + (classes or []),
             newline_inner=False,
             newline_outer=True,
         )
@@ -777,4 +777,13 @@ class HandrailsTranslator(Translator):
                 newline_outer=False,
             ),
         )
+        return batch
+
+    def leave_step(self, node: nodes.Step) -> EditCommand:
+        # For documentation: if a visit_* method returns a command with defers = True,
+        # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
+        # add it to the returned batch!!!
+        batch = self.leave_node(node)
+        batch.items.insert(1, AppendTombstone(classes=['hide']))
+        batch = AppendBatch(batch.items)
         return batch

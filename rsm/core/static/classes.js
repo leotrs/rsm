@@ -7,10 +7,10 @@
 $(document).ready(function() {
 
     $(".step").hover(function() {
-        tomb = $(this).children(".tombstone");
+        tomb = $(this).siblings(".tombstone");
         tomb.removeClass("hide");
     }, function() {
-        tomb = $(this).children(".tombstone");
+        tomb = $(this).siblings(".tombstone");
         if (tomb.hasClass("with-ellipsis")) {
             tomb.removeClass("hide");
         } else {

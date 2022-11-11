@@ -32,9 +32,9 @@ def test_simple():
 
         <div class="theorem">
 
-        <div class="theorem-contents handrail__collapsible">
+        <div class="theorem-contents">
 
-        <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title><span class="span"><strong>Theorem 1. </strong></span></p>
 
         <p class="paragraph">All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
 
@@ -44,9 +44,9 @@ def test_simple():
 
         <div class="proof">
 
-        <div class="proof-contents handrail__collapsible">
+        <div class="proof-contents">
 
-        <p class="paragraph proof__title do-not-hide"><span class="span"><strong>Proof. </strong></span></p>
+        <p class="paragraph proof__title><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="step last">
 
@@ -106,9 +106,9 @@ def test_empty_proof():
 
         <div class="theorem">
 
-        <div class="theorem-contents handrail__collapsible">
+        <div class="theorem-contents">
 
-        <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title><span class="span"><strong>Theorem 1. </strong></span></p>
 
         <p class="paragraph">Theorem contents.</p>
 
@@ -118,9 +118,9 @@ def test_empty_proof():
 
         <div class="proof">
 
-        <div class="proof-contents handrail__collapsible">
+        <div class="proof-contents">
 
-        <p class="paragraph proof__title do-not-hide"><span class="span"><strong>Proof. </strong></span></p>
+        <p class="paragraph proof__title><span class="span"><strong>Proof. </strong></span></p>
 
         </div>
 

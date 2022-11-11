@@ -604,9 +604,7 @@ class Translator:
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
-                AppendOpenTag(
-                    classes=[f'{classname}-contents', 'handrail__collapsible']
-                ),
+                AppendOpenTag(classes=[f'{classname}-contents']),
             ]
         )
 
@@ -618,14 +616,7 @@ class Translator:
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
-                AppendOpenTag(
-                    classes=[
-                        f'{classname}-contents',
-                        'handrail',
-                        'handrail--hug',
-                        'handrail__collapsible',
-                    ]
-                ),
+                AppendOpenTag(classes=[f'{classname}-contents']),
             ]
         )
 
@@ -641,9 +632,7 @@ class Translator:
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
-                AppendOpenTag(
-                    classes=[f'{classname}-contents', 'handrail__collapsible']
-                ),
+                AppendOpenTag(classes=[f'{classname}-contents']),
             ]
         )
 
@@ -742,8 +731,15 @@ class HandrailsTranslator(Translator):
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         batch = super().visit_theorem(node)
+        batch.items[1].classes.append('handrail__collapsible')
         return self._replace_batch_with_handrails(1, batch, include_content=True)
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         batch = super().visit_proof(node)
+        batch.items[1].classes.append('handrail__collapsible')
         return self._replace_batch_with_handrails(1, batch, include_content=True)
+
+    def visit_subproof(self, node: nodes.Subproof) -> EditCommand:
+        batch = super().visit_proof(node)
+        batch.items[1].classes += ['handrail', 'handrail--hug', 'handrail__collapsible']
+        return batch

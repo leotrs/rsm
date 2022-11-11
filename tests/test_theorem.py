@@ -41,9 +41,9 @@ def test_simple():
 
         <div class="theorem">
 
-        <div class="theorem-contents handrail__collapsible">
+        <div class="theorem-contents">
 
-        <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
 
         <p class="paragraph">Theorem contents.</p>
 
@@ -53,9 +53,9 @@ def test_simple():
 
         <div class="lemma">
 
-        <div class="lemma-contents handrail__collapsible">
+        <div class="lemma-contents">
 
-        <p class="paragraph lemma__title do-not-hide"><span class="span"><strong>Lemma 1. </strong></span></p>
+        <p class="paragraph lemma__title"><span class="span"><strong>Lemma 1. </strong></span></p>
 
         <p class="paragraph">And a lemma.</p>
 
@@ -65,9 +65,9 @@ def test_simple():
 
         <div class="theorem">
 
-        <div class="theorem-contents handrail__collapsible">
+        <div class="theorem-contents">
 
-        <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 2. </strong></span></p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 2. </strong></span></p>
 
         <p class="paragraph">Another theorem.</p>
 

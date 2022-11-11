@@ -6,13 +6,13 @@ RSM Application: take a file path and output its contents as HTML.
 
 """
 
-from ..core import reader
-from ..core import parser
-from ..core import transformer
-from ..core import linter
-from ..core import translator
-from ..core import builder
-from ..core import writer
+from .. import reader
+from .. import parser
+from .. import transformer
+from .. import linter
+from .. import translator
+from .. import builder
+from .. import writer
 
 from pathlib import Path
 from icecream import ic

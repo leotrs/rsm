@@ -4,7 +4,7 @@ import rsm
 
 
 def test_duplicate_label():
-    with pytest.raises(rsm.core.transformer.RSMTransformerError):
+    with pytest.raises(rsm.transformer.RSMTransformerError):
         compare_have_want(
             have="""\
             :manuscript:
@@ -14,5 +14,5 @@ def test_duplicate_label():
 
             ::
             """,
-            want='XXX'
+            want='XXX',
         )

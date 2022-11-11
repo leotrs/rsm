@@ -102,7 +102,7 @@ def test_manuscript_meta():
 
 
 def test_no_tombstone():
-    with pytest.raises(rsm.core.parser.RSMParserError):
+    with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(
             have="""\
             :manuscript:

@@ -4,7 +4,7 @@ import rsm
 
 
 def test_preceding_blankline():
-    with pytest.raises(rsm.core.parser.RSMParserError):
+    with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(
             have="""\
             :manuscript:
@@ -16,7 +16,7 @@ def test_preceding_blankline():
             want='XXX',
         )
 
-    with pytest.raises(rsm.core.parser.RSMParserError):
+    with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(
             have="""\
             :manuscript:
@@ -30,7 +30,7 @@ def test_preceding_blankline():
 
 
 def test_succeeding_blankline():
-    with pytest.raises(rsm.core.parser.RSMParserError):
+    with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(
             have="""\
             :manuscript:
@@ -41,7 +41,7 @@ def test_succeeding_blankline():
             want='XXX',
         )
 
-    with pytest.raises(rsm.core.parser.RSMParserError):
+    with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(
             have="""\
             :manuscript:

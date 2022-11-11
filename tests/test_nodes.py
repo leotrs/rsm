@@ -1,5 +1,5 @@
 import rsm
-from rsm.core.nodes import (
+from rsm.nodes import (
     Paragraph,
     PendingReference,
     Reference,

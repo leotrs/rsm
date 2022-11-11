@@ -3,7 +3,7 @@ import rsm
 
 
 def test_mechanism():
-    cls = rsm.core.nodes.Section
+    cls = rsm.nodes.Section
     node = cls()
     assert node.classreftext == cls.classreftext
     assert node.reftext == cls.classreftext

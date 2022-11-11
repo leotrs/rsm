@@ -100,7 +100,7 @@ def test_simple():
 
 
 def test_item_with_wrong_parent():
-    with pytest.raises(rsm.core.nodes.RSMNodeError):
+    with pytest.raises(rsm.nodes.RSMNodeError):
         compare_have_want(
             have="""\
             :manuscript:
@@ -112,7 +112,7 @@ def test_item_with_wrong_parent():
             want="XXX",
         )
 
-    with pytest.raises(rsm.core.nodes.RSMNodeError):
+    with pytest.raises(rsm.nodes.RSMNodeError):
         compare_have_want(
             have="""\
             :manuscript:
@@ -126,7 +126,7 @@ def test_item_with_wrong_parent():
             want="XXX",
         )
 
-    with pytest.raises(rsm.core.nodes.RSMNodeError):
+    with pytest.raises(rsm.nodes.RSMNodeError):
         compare_have_want(
             have="""\
             :manuscript:

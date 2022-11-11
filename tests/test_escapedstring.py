@@ -1,6 +1,6 @@
 import pytest
 import rsm
-from rsm.core.util import EscapedString
+from rsm.util import EscapedString
 from conftest import compare_have_want
 
 

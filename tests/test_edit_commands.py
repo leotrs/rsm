@@ -1,4 +1,4 @@
-from rsm.core import translator as tr
+from rsm import translator as tr
 
 
 def test_edit_after_creation():

@@ -7,7 +7,7 @@ RSM command line utility to run the linter.
 """
 
 from .app import LinterApplication
-from ..core.manuscript import AbstractTreeManuscript
+from ..manuscript import AbstractTreeManuscript
 from argparse import ArgumentParser, Namespace
 
 

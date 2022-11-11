@@ -102,7 +102,7 @@ def test_overwrite_reftext():
 
 
 def test_no_target():
-    with pytest.raises(rsm.core.transformer.RSMTransformerError):
+    with pytest.raises(rsm.transformer.RSMTransformerError):
         compare_have_want(
             have="""\
         :manuscript:

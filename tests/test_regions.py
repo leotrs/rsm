@@ -4,7 +4,7 @@ import rsm
 
 
 def test_inline_cannot_contain_block():
-    with pytest.raises(rsm.core.parser.RSMParserError):
+    with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(
             have="""\
             :manuscript:
@@ -17,7 +17,7 @@ def test_inline_cannot_contain_block():
             want='XXX',
         )
 
-    with pytest.raises(rsm.core.parser.RSMParserError):
+    with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(
             have="""\
             :manuscript:

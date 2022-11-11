@@ -7,7 +7,7 @@ RSM command line utility to build a manuscript.
 """
 
 from .app import FullBuildApplication
-from ..core.manuscript import HTMLManuscript
+from ..manuscript import HTMLManuscript
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
 import livereload

@@ -1,5 +1,5 @@
 import rsm
-from rsm.core.manuscript import PlainTextManuscript
+from rsm.manuscript import PlainTextManuscript
 from textwrap import dedent
 from icecream import ic
 

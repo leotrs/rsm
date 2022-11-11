@@ -33,6 +33,7 @@ class Transformer:
 
         self.collect_labels()
         self.resolve_pending_references()
+        self.add_necessary_subproofs()
         self.autonumber_nodes()
 
         return tree
@@ -95,6 +96,37 @@ class Transformer:
         for pending in self.tree.traverse(condition=lambda n: type(n) in classes):
             ic(pending)
             raise RSMTransformerError('Found unresolved pending reference')
+
+    def add_necessary_subproofs(self) -> None:
+        for step in self.tree.traverse(nodeclass=nodes.Step):
+            if not step.children:
+                continue
+
+            _, split_at_idx = step.first_of_type(
+                (nodes.Step, nodes.Subproof), return_idx=True
+            )
+            if split_at_idx is None:
+                split_at_idx = len(step.children)
+
+            children = step.children[::]
+            step.clear()
+
+            statement = nodes.Statement()
+            statement.append(children[:split_at_idx])
+
+            if split_at_idx == len(children):
+                step.append(statement)
+                continue
+
+            if isinstance(children[split_at_idx], nodes.Step):
+                subproof = nodes.Subproof()
+                subproof.append(children[split_at_idx:])
+            elif isinstance(children[split_at_idx], nodes.Subproof):
+                assert split_at_idx == len(children) - 1
+                subproof = children[split_at_idx]
+            else:
+                raise RSMTransformerError('How did we get here?')
+            step.append([statement, subproof])
 
     def autonumber_nodes(self) -> None:
         counts = {

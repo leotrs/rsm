@@ -50,7 +50,11 @@ def test_simple():
 
         <div class="step last">
 
+        <div class="statement">
+
         <p class="paragraph">Axiom. </p>
+
+        </div>
 
         </div>
 

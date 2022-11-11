@@ -576,6 +576,9 @@ class Translator:
             ]
         )
 
+    def visit_statement(self, node: nodes.Statement) -> EditCommand:
+        return AppendNodeTag(node)
+
     def visit_subproof(self, node: nodes.Subproof) -> EditCommand:
         classname = node.__class__.__name__.lower()
         return AppendBatchAndDefer(

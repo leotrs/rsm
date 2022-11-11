@@ -40,7 +40,7 @@ $(document).ready(function() {
         if (div.hasClass("children-hidden")) {
 	    block.removeClass("collapsed");
 	    tomb.removeClass("with-ellipsis");
-            div.addClass("children-hidden");
+            div.removeClass("children-hidden");
             div.children().each(function() {
                 if (! $(this).hasClass("do-not-hide")) {
                     $(this).removeClass("hide");

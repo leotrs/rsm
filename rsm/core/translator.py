@@ -748,7 +748,12 @@ class HandrailsTranslator(Translator):
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         batch = super().visit_theorem(node)
         batch.items[1].classes.append('handrail__collapsible')
-        return self._replace_batch_with_handrails(1, batch, include_content=True)
+        batch = self._replace_batch_with_handrails(1, batch, include_content=True)
+        batch.items[1].classes += [
+            f'stars-{node.stars}',
+            f'clocks-{node.clocks}',
+        ]
+        return batch
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         batch = super().visit_proof(node)

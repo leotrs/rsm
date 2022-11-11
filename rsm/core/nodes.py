@@ -122,17 +122,22 @@ class Node:
                 yield node
             stack += node.children[::-1]
 
-    def first_of_type(self, cls: Type['Node']) -> Optional['Node']:
-        for child in self.children:
+    def first_of_type(
+        self, cls: Type['Node'] | tuple[Type['Node']], return_idx: bool = False
+    ) -> Optional['Node']:
+        for idx, child in enumerate(self.children):
+            ic(child, cls, isinstance(child, cls))
             if isinstance(child, cls):
-                return child
-        return None
+                return (child, idx) if return_idx else child
+        return (None, None) if return_idx else None
 
-    def last_of_type(self, cls: Type['Node']) -> Optional['Node']:
-        last = None
-        for child in self.children:
+    def last_of_type(
+        self, cls: Type['Node'] | tuple[Type['Node']], return_idx: bool = False
+    ) -> Optional['Node']:
+        last = (None, None) if return_idx else None
+        for idx, child in enumerate(self.children):
             if isinstance(child, cls):
-                last = child
+                last = (child, idx) if return_idx else child
         return last
 
     def prev_sibling(self, cls: Optional[Type['Node']] = None) -> Optional['Node']:

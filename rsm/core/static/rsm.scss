@@ -432,6 +432,10 @@ a:hover {
     display: flex;
 }
 
+.handrail:hover > .step__number {
+    display: block;
+}
+
 .proof {
 
     &:not(.collapsed) {
@@ -446,10 +450,6 @@ a:hover {
         margin-block-end: 0;
     }
 
-}
-
-.step:hover > .step__number {
-    display: block;
 }
 
 .step.narrow-before::before {

@@ -84,7 +84,6 @@ class Transformer:
                 if step is None:
                     raise RSMTransformerError('Found :prev: tag outside proof step')
                 target = step.prev_sibling(nodes.Step)
-                ic(target)
                 if target is None:
                     raise RSMTransformerError(f'No previous step found')
                 pending.replace_self(
@@ -94,7 +93,6 @@ class Transformer:
                 )
 
         for pending in self.tree.traverse(condition=lambda n: type(n) in classes):
-            ic(pending)
             raise RSMTransformerError('Found unresolved pending reference')
 
     def add_necessary_subproofs(self) -> None:

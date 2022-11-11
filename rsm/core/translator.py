@@ -698,6 +698,9 @@ class HandrailsTranslator(Translator):
         ]
         if not include_content:
             newitems.append(handrail.close_command())
+        # else:
+        #    nothing to do here since when include_content is True, handrail will defer
+        #    its close command
         newitems = items[:index] + newitems + items[index + 1 :]
         return cls(newitems)
 
@@ -740,6 +743,20 @@ class HandrailsTranslator(Translator):
         return self._replace_batch_with_handrails(1, batch, include_content=True)
 
     def visit_subproof(self, node: nodes.Subproof) -> EditCommand:
-        batch = super().visit_proof(node)
+        batch = super().visit_subproof(node)
         batch.items[1].classes += ['handrail', 'handrail--hug', 'handrail__collapsible']
+        return batch
+
+    def visit_step(self, node: nodes.Step) -> EditCommand:
+        cmd = super().visit_step(node)
+        batch = self._replace_cmd_with_handrails(cmd, include_content=True)
+        batch.items.insert(
+            -1,
+            AppendOpenCloseTag(
+                classes=['step__number'],
+                content=f'({node.full_number})',
+                newline_inner=False,
+                newline_outer=False,
+            ),
+        )
         return batch

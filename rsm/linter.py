@@ -70,3 +70,4 @@ class Linter:
         main_logger.info("Linting...")
         self.tree = tree
         main_logger.lint('this is a lint message')
+        return self.tree

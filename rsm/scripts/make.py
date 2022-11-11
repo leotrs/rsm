@@ -13,7 +13,7 @@ from pathlib import Path
 import livereload
 
 
-def make(file: str, lint: bool, verbose: int) -> HTMLManuscript:
+def make(file: str, lint: bool = True, verbose: int = 0) -> HTMLManuscript:
     app = FullBuildApplication(srcpath=Path(file), run_linter=lint, verbosity=verbose)
     return app.run()
 

@@ -670,7 +670,15 @@ class Translator:
 
 class HandrailsTranslator(Translator):
     @staticmethod
-    def _replace_items_with_handrails(index, items, cls, include_content=False):
+    def _make_option_tag(opt):
+        return AppendOpenCloseTag(
+            'span',
+            opt,
+            classes=['option', f'option__{opt}'],
+            newline_inner=False,
+        )
+
+    def _replace_items_with_handrails(self, index, items, cls, include_content=False):
         classes = ['handrail', 'handrail--offset']
         if include_content:
             handrail = AppendOpenTag(classes=classes)
@@ -678,17 +686,24 @@ class HandrailsTranslator(Translator):
             handrail = AppendOpenTagNoDefer(classes=classes)
         btn_cont = AppendOpenTagNoDefer(classes=['handrail__btn-container'])
         btn_menu = AppendOpenTagNoDefer(
-            classes=["handrail__btn handrail__btn-menu handrail__btn--relative"],
+            classes=["handrail__btn", "handrail__btn-menu", "handrail__btn--relative"],
             newline_inner=False,
         )
         btn_togg = AppendOpenTagNoDefer(
-            classes=["handrail__btn handrail__btn-toggle"], newline_inner=False
+            classes=["handrail__btn", "handrail__btn-toggle"], newline_inner=False
         )
+        opt_tag = AppendOpenTagNoDefer(
+            classes=["options", "hide"], newline_inner=True, newline_outer=True
+        )
+        options = [self._make_option_tag(opt) for opt in ['link', 'tree', 'source']]
         newitems = [
             handrail,
             btn_cont,
             btn_menu,
             AppendOpenCloseTag('span', '⋮', newline_inner=False, newline_outer=False),
+            opt_tag,
+            *options,
+            opt_tag.close_command(),
             btn_menu.close_command(),
             btn_togg,
             AppendOpenCloseTag('span', '〉', newline_inner=False, newline_outer=False),
@@ -704,15 +719,13 @@ class HandrailsTranslator(Translator):
         newitems = items[:index] + newitems + items[index + 1 :]
         return cls(newitems)
 
-    @classmethod
-    def _replace_batch_with_handrails(cls, index, batch, include_content=False):
-        return cls._replace_items_with_handrails(
+    def _replace_batch_with_handrails(self, index, batch, include_content=False):
+        return self._replace_items_with_handrails(
             index, batch.items, batch.__class__, include_content
         )
 
-    @classmethod
-    def _replace_cmd_with_handrails(cls, cmd, include_content=False):
-        return cls._replace_items_with_handrails(
+    def _replace_cmd_with_handrails(self, cmd, include_content=False):
+        return self._replace_items_with_handrails(
             0, [cmd], AppendBatchAndDefer, include_content
         )
 

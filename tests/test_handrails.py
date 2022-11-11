@@ -24,7 +24,17 @@ def test_manuscript():
 
         <div class="handrail__btn-container">
 
-        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+        <div class="options hide">
+
+        <span class="option option__link">link</span>
+
+        <span class="option option__tree">tree</span>
+
+        <span class="option option__source">source</span>
+
+        </div>
+        </div>
 
         <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 
@@ -73,7 +83,17 @@ def test_section():
 
         <div class="handrail__btn-container">
 
-        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+        <div class="options hide">
+
+        <span class="option option__link">link</span>
+
+        <span class="option option__tree">tree</span>
+
+        <span class="option option__source">source</span>
+
+        </div>
+        </div>
 
         <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 
@@ -89,7 +109,17 @@ def test_section():
 
         <div class="handrail__btn-container">
 
-        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+        <div class="options hide">
+
+        <span class="option option__link">link</span>
+
+        <span class="option option__tree">tree</span>
+
+        <span class="option option__source">source</span>
+
+        </div>
+        </div>
 
         <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 
@@ -143,7 +173,17 @@ def test_abstract():
 
         <div class="handrail__btn-container">
 
-        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+        <div class="options hide">
+
+        <span class="option option__link">link</span>
+
+        <span class="option option__tree">tree</span>
+
+        <span class="option option__source">source</span>
+
+        </div>
+        </div>
 
         <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 
@@ -159,7 +199,17 @@ def test_abstract():
 
         <div class="handrail__btn-container">
 
-        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+        <div class="options hide">
+
+        <span class="option option__link">link</span>
+
+        <span class="option option__tree">tree</span>
+
+        <span class="option option__source">source</span>
+
+        </div>
+        </div>
 
         <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 
@@ -211,7 +261,17 @@ def test_theorem():
 
         <div class="handrail__btn-container">
 
-        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+        <div class="options hide">
+
+        <span class="option option__link">link</span>
+
+        <span class="option option__tree">tree</span>
+
+        <span class="option option__source">source</span>
+
+        </div>
+        </div>
 
         <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 
@@ -227,7 +287,17 @@ def test_theorem():
 
         <div class="handrail__btn-container">
 
-        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span></div>
+        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
+        <div class="options hide">
+
+        <span class="option option__link">link</span>
+
+        <span class="option option__tree">tree</span>
+
+        <span class="option option__source">source</span>
+
+        </div>
+        </div>
 
         <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
 

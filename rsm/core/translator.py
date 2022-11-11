@@ -44,6 +44,10 @@ class EditCommand(ABC):
     defers = False
 
     @abstractmethod
+    def make_text(self):
+        pass
+
+    @abstractmethod
     def execute(self, translator: 'Translator') -> None:
         pass
 
@@ -68,27 +72,36 @@ class EditCommand(ABC):
 class AppendTextAndDefer(EditCommand):
     defers = True
 
-    def __init__(self, text: str, deferred_text: str):
-        self.text = text
-        self.deferred_text = deferred_text
+    def __init__(self, text: str = '', deferred_text: str = ''):
+        self._text = text
+        self._deferred_text = deferred_text
 
     def __repr__(self) -> str:
         return self._edit_command_repr(['text', 'deferred_text'])
 
     def execute(self, translator: 'Translator') -> None:
-        translator.body += self.text
-        translator.deferred.append(AppendText(self.deferred_text))
+        translator.body += self.make_text()
+        translator.deferred.append(AppendText(self.make_deferred_text()))
+
+    def make_text(self) -> str:
+        return self._text
+
+    def make_deferred_text(self) -> str:
+        return self._deferred_text
 
 
 class AppendText(EditCommand):
-    def __init__(self, text: str):
-        self.text = text
+    def __init__(self, text: str = ''):
+        self._text = text
 
     def __repr__(self) -> str:
         return self._edit_command_repr(['text'])
 
     def execute(self, translator: 'Translator') -> None:
-        translator.body += self.text
+        translator.body += self.make_text()
+
+    def make_text(self) -> str:
+        return self._text
 
 
 class AppendOpenCloseTag(AppendText):
@@ -106,16 +119,20 @@ class AppendOpenCloseTag(AppendText):
         self.content = content
         self.id = id
         self.classes = classes if classes else []
-        text = (
-            ('\n' if newline_outer else '')
+        self.newline_inner = newline_inner
+        self.newline_outer = newline_outer
+        super().__init__()
+
+    def make_text(self) -> str:
+        return (
+            ('\n' if self.newline_outer else '')
             + make_tag(self.tag, self.id, self.classes)
-            + ('\n' if newline_inner else '')
+            + ('\n' if self.newline_inner else '')
             + self.content
-            + ('\n' if newline_inner else '')
+            + ('\n' if self.newline_inner else '')
             + f'</{self.tag}>'
-            + ('\n' if newline_outer else '')
+            + ('\n' if self.newline_outer else '')
         )
-        super().__init__(text)
 
     def __repr__(self) -> str:
         return self._edit_command_repr(['tag', 'content', 'id', 'classes'])
@@ -138,13 +155,16 @@ class AppendOpenTagNoDefer(AppendText):
         self.classes = classes if classes else []
         self.newline_inner = newline_inner
         self.newline_outer = newline_outer
-        text = (
-            ('\n' if newline_outer else '')
+
+        super().__init__()
+
+    def make_text(self) -> str:
+        return (
+            ('\n' if self.newline_outer else '')
             + make_tag(self.tag, self.id, self.classes)
-            + ('\n' if newline_inner else '')
+            + ('\n' if self.newline_inner else '')
             + self.content
         )
-        super().__init__(text)
 
     def __repr__(self) -> str:
         return self._edit_command_repr(['tag', 'content', 'id', 'classes'])
@@ -170,17 +190,23 @@ class AppendOpenTag(AppendTextAndDefer):
         self.tag = tag
         self.id = id
         self.classes = classes if classes else []
-        text = (
-            ('\n' if newline_outer else '')
+        self.newline_inner = newline_inner
+        self.newline_outer = newline_outer
+        super().__init__()
+
+    def make_text(self) -> str:
+        return (
+            ('\n' if self.newline_outer else '')
             + make_tag(self.tag, self.id, self.classes)
-            + ('\n' if newline_inner else '')
+            + ('\n' if self.newline_inner else '')
         )
-        deferred_text = (
-            ('\n' if newline_inner else '')
+
+    def make_deferred_text(self) -> str:
+        return (
+            ('\n' if self.newline_inner else '')
             + f'</{self.tag}>'
-            + ('\n' if newline_outer else '')
+            + ('\n' if self.newline_outer else '')
         )
-        super().__init__(text, deferred_text)
 
     def __repr__(self) -> str:
         return self._edit_command_repr(['tag', 'id', 'classes', 'newline_inner'])
@@ -312,6 +338,9 @@ class EditCommandBatch(EditCommand):
         classname = self.__class__.__name__
         return f'{classname}({repr(self.items)})'
 
+    def make_text(self) -> str:
+        raise RSMTranslatorError('Why are we here?')
+
 
 class AppendBatchAndDefer(EditCommandBatch):
     defers = True
@@ -320,8 +349,8 @@ class AppendBatchAndDefer(EditCommandBatch):
         deferred: list[EditCommand] = []
         for item in self.items:
             if isinstance(item, AppendTextAndDefer):
-                deferred.append(AppendText(item.deferred_text))
-            AppendText(item.text).execute(translator)
+                deferred.append(AppendText(item.make_deferred_text()))
+            AppendText(item.make_text()).execute(translator)
 
         batch = AppendBatch(reversed(deferred))
         translator.deferred.append(batch)

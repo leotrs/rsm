@@ -98,13 +98,17 @@ class FullBuilder(SingleFileBuilder):
     def mount_static(self) -> None:
         self.web.makedir('static')
 
-        # compile sass into css
         cur_path = Path(__file__).parent.absolute()
         source_path = (cur_path / 'static').resolve()
         source = open_fs(str(source_path))
-        content = source.readtext('rsm.scss')
-        css = sass.compile(string=content, output_style='nested')
-        self.web.writetext('static/rsm.css', css)
+
+        # # compile sass into css
+        # content = source.readtext('rsm.scss')
+        # css = sass.compile(string=content, output_style='nested')
+        # self.web.writetext('static/rsm.css', css)
+
+        # # leave an updated version in the source dir
+        # source.writetext('rsm.css', css)
 
         # copy JS files
         filenames = [
@@ -113,6 +117,7 @@ class FullBuilder(SingleFileBuilder):
             'classes.js',
             'tooltipster.bundle.js',
             'tooltipster.bundle.css',
+            'rsm.css',
         ]
         for fn in filenames:
             copy_file(source, fn, self.web, f'static/{fn}')

@@ -45,11 +45,11 @@ export function createTooltips() {
             instance.content($(content));
         }
     });
-    if ('typeset' in MathJax) {
+    if (typeof MathJax !== 'undefined' && 'typeset' in MathJax) {
         MathJax.typeset();
     }
     else {
-        console.log('updated but did not find typeset');
+        console.log('updated but did not find Mathjax.typeset');
     }
 }
 

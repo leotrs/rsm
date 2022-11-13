@@ -509,7 +509,7 @@ class Translator:
     def visit_item(self, node: nodes.Item) -> EditCommand:
         return AppendNodeTag(node, 'li')
 
-    def visit_comment(self, node: nodes.Item) -> EditCommand:
+    def visit_note(self, node: nodes.Note) -> EditCommand:
         return AppendNodeTag(node)
 
     def visit_math(self, node: nodes.Math) -> EditCommand:

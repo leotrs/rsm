@@ -334,7 +334,7 @@ class Paragraph(BaseParagraph):
     pass
 
 
-class Comment(BaseParagraph):
+class Note(BaseParagraph):
     pass
 
 

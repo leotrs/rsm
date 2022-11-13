@@ -11,7 +11,7 @@ def test_simple():
         :theorem:
           :title: Main Theorem
 
-        :comment: This is a single line comment.
+        :note: This is a single line note.
 
         Theorem contents.
 
@@ -32,13 +32,17 @@ def test_simple():
 
         <div class="theorem">
 
-        <div class="comment">
+        <div class="theorem-contents">
 
-        <p>This is a single line comment.</p>
+        <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 1. </strong></span></p>
 
+        <div class="note">
+        This is a single line note.
         </div>
 
-        <p class="paragraph"><span class="span"><strong>Theorem 1. </strong></span>Theorem contents.</p>
+        <p class="paragraph">Theorem contents.</p>
+
+        </div>
 
         </div>
 

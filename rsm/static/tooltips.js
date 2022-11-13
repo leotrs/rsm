@@ -1,16 +1,21 @@
-loadTooltips = function() {
+// tooltips.js
+//
+// Setup tooltips on <a> tags.
+//
+
+export function createTooltips() {
     $("a.reference").tooltipster({
         theme: 'tooltipster-shadow',
         functionInit: function(instance, helper) {
-            target = $(helper.origin).attr("href");
+            let target = $(helper.origin).attr("href");
 
             // make sure to escape any '.' in the id, otherwise jquery will think we are
             // trying to select a class instead!
             target = target.replaceAll(".", "\\.");
             target = target.replaceAll(":", "\\:");
-            tag = $(target).prop('tagName');
-            classes = $(target)[0].classList;
-            content = "";
+            let tag = $(target).prop('tagName');
+            let classes = $(target)[0].classList;
+            let content = "";
 
             if (tag == "P") {
                 content = $(target).html();
@@ -40,5 +45,35 @@ loadTooltips = function() {
             instance.content($(content));
         }
     });
-    MathJax.typeset();
+    if ('typeset' in MathJax) {
+        MathJax.typeset();
+    }
+    else {
+        console.log('updated but did not find typeset');
+    }
+}
+
+// Modified from https://stackoverflow.com/a/53744331
+export function loadMathJax() {
+    let loadmjx = function() {
+        const script = document.createElement('script');
+        script.type = "text/javascript";
+        script.id = "MathJax-script";
+        script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+        document.body.appendChild(script);
+
+        return new Promise((res, rej) => {
+	    script.onload = res;
+	    script.onerror = rej;
+        });
+    };
+
+    loadmjx()
+        .then(() => {
+	    console.log('Script loaded!');
+	    createTooltips();
+        })
+        .catch(() => {
+	    console.error('Script loading failed! Handle this error');
+        });
 }

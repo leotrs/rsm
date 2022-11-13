@@ -1,16 +1,14 @@
 // classes.js
 //
-// This file contains code pertaining to adding and removing classes of DOM elements in
-// response to user interaction.
+// Add or remove classes of DOM elements in response to user interaction.
 //
 
-$(document).ready(function() {
-
+export function setupClassInteractions() {
     $(".step").hover(function() {
-        tomb = $(this).siblings(".tombstone");
+        let tomb = $(this).siblings(".tombstone");
         tomb.removeClass("hide");
     }, function() {
-        tomb = $(this).siblings(".tombstone");
+        let tomb = $(this).siblings(".tombstone");
         if (tomb.hasClass("with-ellipsis")) {
             tomb.removeClass("hide");
         } else {
@@ -23,19 +21,19 @@ $(document).ready(function() {
     });
 
     $(".handrail__btn-menu").click(function() {
-        options = $(this).children(".options");
+        let options = $(this).children(".options");
         options.each(function() {
             $(this).removeClass("hide");
         });
     });
 
     $(".handrail__btn-toggle").click(function() {
-        block = $(this).closest(".handrail");
-        div = block.children(".handrail__collapsible");
+        let block = $(this).closest(".handrail");
+        let div = block.children(".handrail__collapsible");
         if (div.length == 0) {
             div = block.siblings(".handrail__collapsible");
         };
-        tomb = $(div).siblings(".tombstone");
+        let tomb = $(div).siblings(".tombstone");
 
         if (div.hasClass("children-hidden")) {
 	    block.removeClass("collapsed");
@@ -60,25 +58,24 @@ $(document).ready(function() {
     });
 
     $(".option__steps").click(function() {
-        proof_container = $(this).closest(".proof").find(".proof-container");
-        steps = $(proof_container).children(".step");
+        let proof_container = $(this).closest(".proof").find(".proof-container");
+        let steps = $(proof_container).children(".step");
         steps.each(function() {toggle_step($(this))});
     });
 
     $(".option__link").click(function() {
-        id = $(this).closest(".proof").attr("id");
-        current_url = location.protocol+'//'+location.host+location.pathname;
-        target_url = current_url + "#" + id;
+        let id = $(this).closest(".proof").attr("id");
+        let current_url = location.protocol+'//'+location.host+location.pathname;
+        let target_url = current_url + "#" + id;
         navigator.clipboard.writeText(target_url).then(function () {
 	    console.log('foo')
         });
     });
 
     $(".option__tree").click(function() {
-        proof = $(opt).closest(".proof");
-        parent = $(proof).parent();
-        console.log(parent);
-        parents = [];
+        let proof = $(opt).closest(".proof");
+        let parent = $(proof).parent();
+        let parents = [];
 
         while (!parent.hasClass("body")) {
 	    parents.push(parent);
@@ -88,24 +85,24 @@ $(document).ready(function() {
     });
 
     $(".option__goal").on("click", function(){
-	step = $(this).closest(".step");
-	parent = $(step).parent();
+	let step = $(this).closest(".step");
+	let parent = $(step).parent();
 
 	if (parent.hasClass("proof-container")) {
-	    thm_id = $(parent).parent().attr("id").slice(0, -3);
-	    element = `#${thm_id}`
+	     let thm_id = $(parent).parent().attr("id").slice(0, -3);
+	     let element = `#${thm_id}`
 	} else {
-	    element = parent.closest(".step");
+	    let element = parent.closest(".step");
 	};
 
-	goal_id = $(element).attr("data-goal-for-substeps");
+	let goal_id = $(element).attr("data-goal-for-substeps");
 	$(`#${goal_id}`).addClass("hilite");
 
     });
 
     $(".option__narrow").on("click", function() {
-	step = $(this).closest("div.step");
-	html = $(this).html();
+	let step = $(this).closest("div.step");
+	let html = $(this).html();
 
 	if (html == "narrow") {
 	    step.siblings().addClass("hide");
@@ -128,18 +125,17 @@ $(document).ready(function() {
     });
 
     $(".options").mouseleave(function() {
-        options = $(this).children(".options");
+        let options = $(this).children(".options");
         options.each(function() {
             $(this).addClass("hide");
         });
     });
-
-});
+}
 
 
 function toggle_step(step) {
-    div = $(step).children(".statement__proof");
-    tomb = $(step).children(".tombstone");
+    let div = $(step).children(".statement__proof");
+    let tomb = $(step).children(".tombstone");
     if (div.hasClass("hide")) {
 	div.removeClass("hide");
         tomb.removeClass("with-ellipsis");

@@ -70,11 +70,15 @@ class SingleFileBuilder(BaseBuilder):
           <link rel="stylesheet" type="text/css" href="static/tooltipster.bundle.css" />
 
           <script src="static/jquery-3.6.0.js"></script>
-          <script src="static/tooltips.js"></script>
-          <script src="static/classes.js"></script>
           <script src="static/tooltipster.bundle.js"></script>
-          <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-          <script async="async" onload="loadTooltips()" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+          <script type="module" src="static/tooltips.js"></script>
+          <script type="module" src="static/classes.js"></script>
+          <script type="module">
+            import { loadMathJax } from '/static/tooltips.js';
+            loadMathJax();
+            import { setupClassInteractions } from '/static/classes.js';
+            setupClassInteractions();
+          </script>
 
           <title>{some_title}</title>
         </head>

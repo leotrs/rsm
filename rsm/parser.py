@@ -11,6 +11,7 @@ from typing import Any, Type, Optional, Callable
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from collections import namedtuple
+import re
 
 from . import nodes
 from . import tags
@@ -812,10 +813,6 @@ class BibTexParser(DelimitedRegionParser):
         self.src = src
 
     def process(self) -> ParsingResult:
-        import re
-
-        ic.enable()
-
         oldpos = self.pos
         self.pos += len(self.tag)
         self.consume_whitespace()
@@ -878,30 +875,28 @@ class BibTexParser(DelimitedRegionParser):
 
 class ManuscriptParser(ShouldHaveHeadingParser):
     keywords = ['LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED']
-    Shortcut = namedtuple('Shortcut', 'deliml delimr replacel replacer')
+    Shortcut = namedtuple('Shortcut', 'pattern repl')
+
+    # order matters!
     shortcuts = [
-        Shortcut('\\::', '', '\\: :', ''),
-        Shortcut('**', '**', ':span: :strong: ' + Tombstone, Tombstone),
-        Shortcut('*', '*', ':span: :emphas: ' + Tombstone, Tombstone),
-        Shortcut('###', '\n', ':subsubsection:\n  :title: ', '\n'),
-        Shortcut('##', '\n', ':subsection:\n  :title: ', '\n'),
-        Shortcut('#', '\n', ':section:\n  :title: ', '\n'),
-        Shortcut('$$', '$$', ':displaymath:\n', '\n' + Tombstone),
-        Shortcut('$', '$', r':math:', Tombstone),
-        Shortcut('```', '```', ':displaycode:\n', '\n' + Tombstone),
-        Shortcut('`', '`', r':code:', Tombstone),
-        Shortcut('|-', '.', ':claim:', Tombstone + '.'),
-        Shortcut('⊢', '.', ':claim:', Tombstone + '.'),
-        Shortcut(':prev:', Tombstone, ':prev:1,', Tombstone),
-        Shortcut(':prev2:', Tombstone, ':prev:2,', Tombstone),
-        Shortcut(':prev3:', Tombstone, ':prev:3,', Tombstone),
-        Shortcut(':prev', ':', ':prev:1', Tombstone),
-        Shortcut(':prev2', ':', ':prev:2', Tombstone),
-        Shortcut(':prev3', ':', ':prev:3', Tombstone),
+        Shortcut(r'\\::', r'\\: :'),
+        Shortcut(r'\*\*(.*?)\*\*', r':span: :strong: ::\1::'),
+        Shortcut(r'\*(.*?)\*', r':span: :emphas: ::\1::'),
+        Shortcut(r'###(.*)$', r':subsubsection:\n  :title: \1\n'),
+        Shortcut(r'##(.*)$', r':subsection:\n  :title: \1\n'),
+        Shortcut(r'#(.*)$', r':section:\n  :title: \1\n'),
+        Shortcut(r'\$\$(.*?)\$\$', r':displaymath:\n  \1\n::'),
+        Shortcut(r'\$(.*?)\$', r':math:\1::'),
+        Shortcut(r'```(.*?)```', r':displaycode:\n  \1\n::'),
+        Shortcut(r'`(.*?)`', r':code:\1::'),
+        Shortcut(r'\|-(.*?)\.', r':claim:\1::.'),
+        Shortcut(r'⊢(.*?)\.', r':claim:\1::.'),
+        Shortcut(r':prev:(?=\W)|:prev:(.*?)::', r':prev:1,\1::'),
+        Shortcut(r':prev2:(?=\W)|:prev2:(.*?)::', r':prev:2,\1::'),
+        Shortcut(r':prev3:(?=\W)|:prev3:(.*?)::', r':prev:3,\1::'),
     ]
 
     def __init__(self, src: PlainTextManuscript):
-        # ic.enable()
         self.tag = tags.ManuscriptTag('manuscript')
         self.tag.set_source(src)
         super().__init__(parent=None, frompos=0, tag=self.tag)
@@ -915,28 +910,12 @@ class ManuscriptParser(ShouldHaveHeadingParser):
     def apply_shortcuts(self, src: PlainTextManuscript) -> PlainTextManuscript:
         logger.debug('applying shortcuts')
 
+        src = str(src)
         for keyword in self.keywords:
-            src = PlainTextManuscript(src.replace(keyword, f':keyword:{keyword} ::'))
+            src = src.replace(keyword, f':keyword:{keyword} ::')
 
-        for deliml, delimr, replacel, replacer in self.shortcuts:
-            pos = 0
-            while pos < len(src):
-                left = src.find(deliml, pos)
-                if left < 0:
-                    break
-                right = src.find(delimr, left + 1) if delimr else left + len(deliml) + 1
-                if right < 0:
-                    raise RSMParserError(
-                        self.pos, f'Found start ("{deliml}") but no end'
-                    )
-                src = (
-                    src[:left]
-                    + replacel
-                    + src[left + len(deliml) : right]
-                    + replacer
-                    + src[right + max(len(delimr), 1) :]
-                )
-                pos = right + 1
+        for pattern, replacement in self.shortcuts:
+            src = re.sub(pattern, replacement, src, flags=re.DOTALL)
 
         return PlainTextManuscript(src)
 
@@ -948,6 +927,7 @@ class MainParser:
 
     def parse(self, src):
         logger.info('Parsing...')
+
         self.src = src
         parser = ManuscriptParser(self.src)
         self.tree = parser.parse()

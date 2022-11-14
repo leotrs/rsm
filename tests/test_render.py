@@ -3,6 +3,7 @@ import subprocess
 from conftest import compare_have_want
 
 
+@pytest.mark.slow
 def test_render():
     have = """:manuscript:
 

@@ -3,6 +3,31 @@ import rsm
 from conftest import compare_have_want
 
 
+def test_empty_manuscript():
+    compare_have_want(
+        have=":manuscript: ::\n",
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
 def test_no_manuscript_title():
     compare_have_want(
         have="""\

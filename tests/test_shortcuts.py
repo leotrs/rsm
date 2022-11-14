@@ -797,6 +797,37 @@ def test_displaycode_shortcut():
     )
 
 
+def test_comment():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        % comment
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
 def test_asterisk_inside_math():
     raise NotImplementedError
 

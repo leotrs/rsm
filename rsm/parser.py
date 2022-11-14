@@ -875,16 +875,17 @@ class BibTexParser(DelimitedRegionParser):
 
 class ManuscriptParser(ShouldHaveHeadingParser):
     keywords = ['LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED']
-    Shortcut = namedtuple('Shortcut', 'pattern repl')
+    Shortcut = namedtuple('Shortcut', 'pattern repl flags', defaults=(re.DOTALL,))
 
     # order matters!
     shortcuts = [
         Shortcut(r'\\::', r'\\: :'),
+        Shortcut(r'%(.*)$', r'', re.MULTILINE),
         Shortcut(r'\*\*(.*?)\*\*', r':span: :strong: ::\1::'),
         Shortcut(r'\*(.*?)\*', r':span: :emphas: ::\1::'),
-        Shortcut(r'###(.*)$', r':subsubsection:\n  :title: \1\n'),
-        Shortcut(r'##(.*)$', r':subsection:\n  :title: \1\n'),
-        Shortcut(r'#(.*)$', r':section:\n  :title: \1\n'),
+        Shortcut(r'###(.*)$', r':subsubsection:\n  :title: \1\n', re.MULTILINE),
+        Shortcut(r'##(.*)$', r':subsection:\n  :title: \1\n', re.MULTILINE),
+        Shortcut(r'#(.*)$', r':section:\n  :title: \1\n', re.MULTILINE),
         Shortcut(r'\$\$(.*?)\$\$', r':displaymath:\n  \1\n::'),
         Shortcut(r'\$(.*?)\$', r':math:\1::'),
         Shortcut(r'```(.*?)```', r':displaycode:\n  \1\n::'),
@@ -914,8 +915,8 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         for keyword in self.keywords:
             src = src.replace(keyword, f':keyword:{keyword} ::')
 
-        for pattern, replacement in self.shortcuts:
-            src = re.sub(pattern, replacement, src, flags=re.DOTALL)
+        for pattern, replacement, flags in self.shortcuts:
+            src = re.sub(pattern, replacement, src, flags=flags)
 
         return PlainTextManuscript(src)
 
@@ -932,7 +933,11 @@ class MainParser:
         parser = ManuscriptParser(self.src)
         self.tree = parser.parse()
         parser.consume_whitespace()
-        if parser.pos >= len(self.src):
+
+        # note here we must compare against len(parser.src) and NOT against
+        # len(self.src) because the parser will most likely have changed the source by
+        # applying shortcuts
+        if parser.pos >= len(parser.src):
             return self.tree
 
         bibsrc = self.src[parser.pos :].strip()

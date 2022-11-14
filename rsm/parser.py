@@ -588,7 +588,12 @@ class MetaParser(Parser):
             return BaseParsingResult(True, {}, None, 0)
 
         left = self.frompos
-        right = left + self.src[left:].index('\n')
+        try:
+            right = left + self.src[left:].index('\n')
+        except ValueError as e:
+            raise RSMParserError(
+                self.pos, msg='Expected to find a newline but found none'
+            ) from e
 
         if self.inline_mode is None and Tombstone in self.src[left:right]:
             self.inline_mode = True

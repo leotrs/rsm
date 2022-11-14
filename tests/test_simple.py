@@ -28,6 +28,64 @@ def test_empty_manuscript():
     )
 
 
+def test_no_eof_newline():
+    with pytest.raises(rsm.parser.RSMParserError):
+        compare_have_want(
+            have=":manuscript: ::",
+            want="""X""",
+        )
+
+
+def test_ignore_starting_space():
+    compare_have_want(
+        have="      :manuscript: ::\n",
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_ignore_starting_newline():
+    compare_have_want(
+        have="\n:manuscript: ::\n",
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
 def test_no_manuscript_title():
     compare_have_want(
         have="""\

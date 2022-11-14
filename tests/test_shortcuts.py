@@ -1,4 +1,4 @@
-from conftest import compare_have_want
+from conftest import compare_have_want, EMPTY_WANT
 
 
 def test_one_strong():
@@ -797,12 +797,39 @@ def test_displaycode_shortcut():
     )
 
 
-def test_comment():
+def test_comment_one_line_comment():
     compare_have_want(
         have="""\
         :manuscript:
 
         % comment
+
+        ::
+        """,
+        want=EMPTY_WANT,
+    )
+
+
+def test_comment_multi_line_comment():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        % this is a
+        % multi line comment
+
+        ::
+        """,
+        want=EMPTY_WANT,
+    )
+
+
+def test_comment_multi_line_comment():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        Foo.% this is a comment at the end of a line
 
         ::
         """,
@@ -816,6 +843,8 @@ def test_comment():
         <section class="level-1">
 
         <h1></h1>
+
+        <p class="paragraph">Foo.</p>
 
         </section>
 

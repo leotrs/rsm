@@ -1,27 +1,6 @@
 import pytest
 import rsm
-from conftest import compare_have_want
-
-
-EMPTY_WANT = """\
-<body>
-
-<div class="manuscriptwrapper">
-
-<div id="manuscript" class="manuscript">
-
-<section class="level-1">
-
-<h1></h1>
-
-</section>
-
-</div>
-
-</div>
-
-</body>
-"""
+from conftest import compare_have_want, EMPTY_WANT
 
 
 def test_empty_manuscript():

@@ -147,8 +147,6 @@ class Node:
 
         index = self.parent.children.index(self)
         prev_sibs = self.parent.children[:index]
-        ic(index)
-        ic(prev_sibs)
         for node in reversed(prev_sibs):
             if isinstance(node, cls):
                 return node

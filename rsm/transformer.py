@@ -80,12 +80,16 @@ class Transformer:
                 pending.replace_self(nodes.Cite(targets=targets))
             elif isinstance(pending, nodes.PendingPrev):
                 step = pending.first_ancestor_of_type(nodes.Step)
-                li = step.parent.children
                 if step is None:
                     raise RSMTransformerError('Found :prev: tag outside proof step')
-                target = step.prev_sibling(nodes.Step)
-                if target is None:
-                    raise RSMTransformerError(f'No previous step found')
+
+                target = step
+                for _ in range(int(str(pending.target))):
+                    target = target.prev_sibling(nodes.Step)
+                    if target is None:
+                        raise RSMTransformerError(
+                            f'Did not find previous {pending.target} step(s)'
+                        )
                 pending.replace_self(
                     nodes.Reference(
                         target=target, overwrite_reftext=pending.overwrite_reftext

@@ -34,7 +34,7 @@ def test_simple():
 
         <div class="theorem-contents">
 
-        <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
 
         <div class="note">
         This is a single line note.

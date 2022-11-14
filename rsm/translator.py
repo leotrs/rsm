@@ -327,6 +327,15 @@ class AppendTombstone(AppendOpenCloseTag):
         return self._edit_command_repr(['classes'])
 
 
+class AppendExternalTree(AppendText):
+    def __init__(self, node: nodes.Node):
+        super().__init__()
+        self.node = node
+
+    def make_text(self) -> str:
+        return Translator().translate(self.node)
+
+
 class EditCommandBatch(EditCommand):
     def __init__(self, items: Iterable):
         self.items = list(items)
@@ -584,27 +593,25 @@ class Translator:
             ]
         )
 
-    def _prepend_strong_text_in_para(
-        self, node: nodes.Node, text: str, types: list
-    ) -> None:
+    def _make_title_node(self, text: str, types: list) -> None:
         para = nodes.Paragraph(types=types)
         span = nodes.Span(strong=True)
         text = nodes.Text(text=text)
         span.append(text)
         para.append(span)
-        node.prepend(para)
+        return para
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         classname = node.__class__.__name__.lower()
-        self._prepend_strong_text_in_para(
-            node,
+        title = self._make_title_node(
             f'{classname.capitalize()} {node.full_number}. ',
-            [f'{classname}__title', 'do-not-hide'],
+            [f'{classname}__title'],
         )
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
                 AppendOpenTag(classes=[f'{classname}-contents']),
+                AppendExternalTree(title),
             ]
         )
 
@@ -626,13 +633,14 @@ class Translator:
             last.types.append('last')
 
         classname = node.__class__.__name__.lower()
-        self._prepend_strong_text_in_para(
-            node, f'{classname.capitalize()}. ', [f'{classname}__title', 'do-not-hide']
+        title = self._make_title_node(
+            f'{classname.capitalize()}. ', [f'{classname}__title']
         )
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
                 AppendOpenTag(classes=[f'{classname}-contents']),
+                AppendExternalTree(title),
             ]
         )
 
@@ -753,11 +761,13 @@ class HandrailsTranslator(Translator):
             f'stars-{node.stars}',
             f'clocks-{node.clocks}',
         ]
+        batch.items[-1].node.types.append("do-not-hide")
         return batch
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         batch = super().visit_proof(node)
         batch.items[1].classes.append('handrail__collapsible')
+        batch.items[-1].node.types.append('do-not-hide')
         return self._replace_batch_with_handrails(1, batch, include_content=True)
 
     def visit_subproof(self, node: nodes.Subproof) -> EditCommand:

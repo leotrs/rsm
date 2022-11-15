@@ -89,8 +89,8 @@ export function setupClassInteractions() {
 	let parent = $(step).parent();
 
 	if (parent.hasClass("proof-container")) {
-	     let thm_id = $(parent).parent().attr("id").slice(0, -3);
-	     let element = `#${thm_id}`
+	    let thm_id = $(parent).parent().attr("id").slice(0, -3);
+	    let element = `#${thm_id}`
 	} else {
 	    let element = parent.closest(".step");
 	};

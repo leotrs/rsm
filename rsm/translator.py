@@ -7,9 +7,6 @@ RSM Translator: take a Manuscript and return a HTML string.
 """
 
 import logging
-
-logger = logging.getLogger('RSM').getChild('Translator')
-
 from typing import Iterable, Callable
 from collections import namedtuple
 from abc import ABC, abstractmethod
@@ -19,6 +16,8 @@ import textwrap
 
 from . import nodes
 from .manuscript import AbstractTreeManuscript, HTMLManuscript
+
+logger = logging.getLogger('RSM').getChild('Translator')
 
 
 class RSMTranslatorError(Exception):
@@ -331,12 +330,12 @@ class AppendTombstone(AppendOpenCloseTag):
 
 
 class AppendExternalTree(AppendText):
-    def __init__(self, node: nodes.Node):
+    def __init__(self, root: nodes.Node):
         super().__init__()
-        self.node = node
+        self.root = root
 
     def make_text(self) -> str:
-        return Translator().translate(self.node)
+        return Translator().translate(self.root)
 
 
 class EditCommandBatch(EditCommand):

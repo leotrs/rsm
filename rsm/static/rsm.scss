@@ -154,15 +154,10 @@ img, svg {
     max-width: 100%;
 }
 
-
-/* Module */
-/******************************************************************************************/
-
 .handrail {
     border-width: 0 0 0 var(--border-thin);
     border-color: var(--lgt-gray);
     border-style: solid;
-    // padding: 1rem 0 1rem var(--handrail-offset);
     padding: 0 0 0 var(--handrail-offset);
     margin-block: var(--handrail-margin-block) var(--handrail-margin-block);
     position: relative;

@@ -678,6 +678,23 @@ class Translator:
         text += f' {node.year}.'
         return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])
 
+    def visit_figure(self, node: nodes.Figure) -> EditCommand:
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node, 'figure'),
+                AppendText(
+                    make_tag(
+                        'img',
+                        id_=node.label,
+                        classes=[],
+                        src=node.path,
+                        alt=node.caption,
+                    )
+                ),
+                AppendOpenCloseTag('figcaption', node.caption, newline_inner=False),
+            ]
+        )
+
 
 class HandrailsTranslator(Translator):
     @staticmethod

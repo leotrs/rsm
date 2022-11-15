@@ -11,6 +11,7 @@ from collections.abc import Iterable
 from datetime import datetime
 from icecream import ic
 import textwrap
+from pathlib import Path
 
 
 class RSMNodeError(Exception):
@@ -502,3 +503,12 @@ class UnknownBibitem(Bibitem):
     def __init__(self, number: str | int = '?', **kwargs):
         super().__init__(**kwargs)
         self.number = number
+
+
+class Figure(Node):
+    _newmetakeys: ClassVar[set] = {'path', 'caption'}
+
+    def __init__(self, path: Path | str = '', caption: str = '', **kwargs):
+        super().__init__(**kwargs)
+        self.path = Path(path)
+        self.caption = caption

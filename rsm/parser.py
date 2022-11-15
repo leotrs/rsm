@@ -11,6 +11,7 @@ from typing import Any, Type, Optional, Callable
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from collections import namedtuple
+from pathlib import Path
 import re
 
 from . import nodes
@@ -682,6 +683,9 @@ class MetaPairParser(Parser):
         'goals': 'parse_list_value',
         'stars': 'parse_int_value',
         'clocks': 'parse_int_value',
+        # Figure
+        'path': 'parse_path_value',
+        'caption': 'parse_paragraph_value',
     }
 
     block_delim = '\n'
@@ -758,6 +762,12 @@ class MetaPairParser(Parser):
         value = self.src[left:right]
         return value.strip(), len(value)
 
+    def parse_paragraph_value(self, key: str) -> tuple[str, int]:
+        left = self.pos
+        right = self.src.index(Tombstone, left)
+        value = self.src[left:right]
+        return value.strip(), len(value) + len(Tombstone)
+
     def parse_int_value(self, key: str) -> tuple[int, int]:
         value, numchars = self.parse_upto_delim_value(key)
         return int(str(value)), numchars
@@ -765,6 +775,10 @@ class MetaPairParser(Parser):
     def parse_datetime_value(self, key: str) -> tuple[datetime, int]:
         value, numchars = self.parse_upto_delim_value(key)
         return datetime.fromisoformat(str(value)), numchars
+
+    def parse_path_value(self, key: str) -> tuple[Path, int]:
+        value, numchars = self.parse_upto_delim_value(key)
+        return Path(str(value)), numchars
 
     def parse_bool_value(self, key: str) -> tuple[bool, int]:
         return True, 0

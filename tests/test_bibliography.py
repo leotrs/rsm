@@ -63,6 +63,68 @@ def test_single():
     )
 
 
+def test_with_shortcuts():
+    compare_have_want(
+        have="""\
+        :manuscript:
+          :title: My Title
+
+        This has a **citation** at the end. :cite:knuth::
+
+        :bibliography: ::
+
+        ::
+
+
+        :bibtex:
+
+        @book{knuth,
+          title={Art of computer programming, volume 2: Seminumerical algorithms},
+          author={Knuth, Donald E},
+          year={2014},
+          publisher={Addison-Wesley Professional}
+        }
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1>My Title</h1>
+
+        <p class="paragraph">This has a <span class="span"><strong>citation</strong></span> at the end. [1]</p>
+
+        <section class="level-2">
+
+        <h2>References</h2>
+
+        <ol class="bibliography">
+
+        <li id="knuth" class="bibitem">
+        Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.
+        </li>
+
+        </ol>
+
+        </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
 def test_many():
     compare_have_want(
         have="""\

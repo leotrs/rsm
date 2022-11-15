@@ -10,6 +10,7 @@ from fs import open_fs
 from fs.mountfs import MountFS
 from fs.copy import copy_file
 
+import re
 from abc import ABC, abstractmethod
 from textwrap import dedent
 from pathlib import Path
@@ -26,9 +27,9 @@ logger = logging.getLogger('RSM').getChild('Builder')
 
 class BaseBuilder(ABC):
     def __init__(self):
-        self.body: HTMLManuscript = None
-        self.html: HTMLManuscript = None
-        self.web: WebManuscript = None
+        self.body: HTMLManuscript | None = None
+        self.html: HTMLManuscript | None = None
+        self.web: WebManuscript | None = None
         self.outname: str = 'index.html'
 
     def build(self, body: HTMLManuscript, src: Path = None) -> WebManuscript:
@@ -36,12 +37,23 @@ class BaseBuilder(ABC):
         self.body = body
         self.web = WebManuscript(src)
         self.web.body = body
+
+        logger.debug("Searching required static assets...")
+        self.required_assets = []
+        self.find_required_assets()
+
+        logger.debug("Building main file...")
         self.make_main_file()
         return self.web
 
     @abstractmethod
     def make_main_file(self) -> None:
         pass
+
+    def find_required_assets(self) -> None:
+        self.required_assets = [
+            Path(x) for x in re.findall(r'src="(.*?)"', str(self.body))
+        ]
 
 
 class SingleFileBuilder(BaseBuilder):
@@ -92,25 +104,18 @@ class SingleFileBuilder(BaseBuilder):
 class FullBuilder(SingleFileBuilder):
     def build(self, body: HTMLManuscript, src: Path = None) -> WebManuscript:
         super().build(body, src)
+        logger.debug("Moving default RSM assets...")
         self.mount_static()
+        if self.required_assets:
+            logger.debug("Moving user assets...")
+            self.mount_required_assets()
         return self.web
 
     def mount_static(self) -> None:
-        self.web.makedir('static')
-
-        cur_path = Path(__file__).parent.absolute()
-        source_path = (cur_path / 'static').resolve()
+        working_path = Path(__file__).parent.absolute()
+        source_path = (working_path / 'static').resolve()
         source = open_fs(str(source_path))
 
-        # # compile sass into css
-        # content = source.readtext('rsm.scss')
-        # css = sass.compile(string=content, output_style='nested')
-        # self.web.writetext('static/rsm.css', css)
-
-        # # leave an updated version in the source dir
-        # source.writetext('rsm.css', css)
-
-        # copy JS files
         filenames = [
             'jquery-3.6.0.js',
             'tooltips.js',
@@ -119,7 +124,13 @@ class FullBuilder(SingleFileBuilder):
             'tooltipster.bundle.css',
             'rsm.css',
         ]
+        self.web.makedir('static')
         for fn in filenames:
             copy_file(source, fn, self.web, f'static/{fn}')
 
-        # self.web.tree()
+    def mount_required_assets(self) -> None:
+        source = open_fs(str(Path().resolve()))
+
+        for fn in self.required_assets:
+            print(source, str(fn), self.web, f'{fn.name}')
+            copy_file(source, str(fn), self.web, f'static/{fn.name}')

@@ -81,7 +81,8 @@ export function loadMathJax() {
 	    console.log('Script loaded!');
 	    createTooltips();
         })
-        .catch(() => {
+        .catch((err) => {
 	    console.error('Script loading failed! Handle this error');
+            console.error(err);
         });
 }

@@ -352,7 +352,7 @@ div.proof > .handrail > .handrail__btn-container {
         display: none;
         color: var(--med-gray);
         position: absolute;
-        left: 0;
+        left: calc(var(--handrail-offset) * 0.38);
         transform: translateX(-100%) translateX(-2em);
         font-family: 'Inconsolata', monospace;
     }

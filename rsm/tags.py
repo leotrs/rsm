@@ -182,7 +182,9 @@ def get(name: str) -> Tag:
     try:
         return _tags[name]
     except KeyError as e:
-        raise ValueError(f'Unrecognized tag name "{name}"') from e
+        raise ValueError(
+            f'Unrecognized tag name "{name}". Did you forget to escape a colon?'
+        ) from e
 
 
 def all() -> list[Tag]:

@@ -213,7 +213,7 @@ class NodeWithChildren(Node):
 
     def prepend(self, child: Node | list) -> None:
         if isinstance(child, list):
-            for c in child:
+            for c in reversed(child):
                 self.prepend(c)
         elif isinstance(child, Node):
             if child.parent and child.parent is not self:

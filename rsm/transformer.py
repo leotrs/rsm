@@ -140,6 +140,7 @@ class Transformer:
             nodes.Lemma: 0,
             nodes.Bibitem: 0,
             nodes.Step: 0,
+            nodes.Figure: 0,
         }
         for node in self.tree.traverse():
             nodeclass = type(node)
@@ -151,6 +152,7 @@ class Transformer:
                 counts[nodes.Subsection] = 0
                 counts[nodes.Theorem] = 0
                 counts[nodes.Lemma] = 0
+                counts[nodes.Figure] = 0
             if nodeclass is nodes.Subsection:
                 counts[nodes.Subsubsection] = 0
                 counts[nodes.Theorem] = 0

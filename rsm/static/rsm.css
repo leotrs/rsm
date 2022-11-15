@@ -125,7 +125,7 @@ figure {
 
 figcaption {
   margin-block: var(--h4-size);
-  text-align: left; }
+  text-align: center; }
 
 img, svg {
   max-width: 100%; }

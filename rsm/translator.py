@@ -596,13 +596,17 @@ class Translator:
             ]
         )
 
-    def _make_title_node(self, text: str, types: list) -> None:
-        para = nodes.Paragraph(types=types)
+    def _make_title_node(self, text: str, types: list, paragraph: bool = True) -> None:
+        if paragraph:
+            para = nodes.Paragraph(types=types)
         span = nodes.Span(strong=True)
         text = nodes.Text(text=text)
         span.append(text)
-        para.append(span)
-        return para
+        if paragraph:
+            para.append(span)
+            return para
+        else:
+            return span
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         classname = node.__class__.__name__.lower()
@@ -679,6 +683,11 @@ class Translator:
         return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])
 
     def visit_figure(self, node: nodes.Figure) -> EditCommand:
+        ic(node.number, node.full_number, str(node.caption))
+        figcaption = AppendOpenTagNoDefer('figcaption')
+        title = self._make_title_node(
+            f'{node.__class__.__name__} {node.full_number}. ', types=[], paragraph=False
+        )
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node, 'figure'),
@@ -691,7 +700,10 @@ class Translator:
                         alt=node.caption,
                     )
                 ),
-                AppendOpenCloseTag('figcaption', node.caption, newline_inner=False),
+                figcaption,
+                AppendExternalTree(title),
+                AppendText(str(node.caption)),
+                figcaption.close_command(),
             ]
         )
 

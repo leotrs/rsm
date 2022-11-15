@@ -132,5 +132,4 @@ class FullBuilder(SingleFileBuilder):
         source = open_fs(str(Path().resolve()))
 
         for fn in self.required_assets:
-            print(source, str(fn), self.web, f'{fn.name}')
             copy_file(source, str(fn), self.web, f'static/{fn.name}')

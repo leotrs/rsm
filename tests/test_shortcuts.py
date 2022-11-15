@@ -171,7 +171,7 @@ def test_two_math():
     )
 
 
-def test_displaymath():
+def test_mathblock():
     compare_have_want(
         have="""\
         :manuscript:
@@ -195,7 +195,7 @@ def test_displaymath():
         <p class="paragraph">This paragraph is followed by display math
         </p>
 
-        <div class="displaymath">
+        <div class="mathblock">
         $$
         2 + 2 = 4.
         $$
@@ -719,7 +719,7 @@ def test_code_shortcut():
     )
 
 
-def test_displaycode_shortcut():
+def test_codeblock_shortcut():
     compare_have_want(
         have="""\
         :manuscript:
@@ -741,7 +741,7 @@ def test_displaycode_shortcut():
 
         <h1></h1>
 
-        <div class="displaycode">
+        <div class="codeblock">
         comp = [abs(x) for x in range(10)]
 
 
@@ -758,7 +758,7 @@ def test_displaycode_shortcut():
     )
 
 
-def test_displaycode_shortcut():
+def test_codeblock_shortcut():
     compare_have_want(
         have="""\
         :manuscript:
@@ -780,7 +780,7 @@ def test_displaycode_shortcut():
 
         <h1></h1>
 
-        <div class="displaycode">
+        <div class="codeblock">
         comp = [abs(x) for x in range(10)]
 
 
@@ -865,9 +865,9 @@ def test_asterisk_inside_code():
     raise NotImplementedError
 
 
-def test_asterisk_inside_displaymath():
+def test_asterisk_inside_mathblock():
     raise NotImplementedError
 
 
-def test_asterisk_inside_displaycode():
+def test_asterisk_inside_codeblock():
     raise NotImplementedError

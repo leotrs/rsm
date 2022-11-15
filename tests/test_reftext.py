@@ -22,7 +22,7 @@ def test_simple():
         have="""\
         :manuscript:
 
-        :displaymath:
+        :mathblock:
           :label: eqn
           :reftext: Important Equation
           2+2=4
@@ -43,7 +43,7 @@ def test_simple():
 
         <h1></h1>
 
-        <div id="eqn" class="displaymath">
+        <div id="eqn" class="mathblock">
         $$
         2+2=4
         $$

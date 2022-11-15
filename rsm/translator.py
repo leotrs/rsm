@@ -532,7 +532,7 @@ class Translator:
             ]
         )
 
-    def visit_displaymath(self, node: nodes.DisplayMath) -> EditCommand:
+    def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         # the strings '$$' and '$$' are MathJax's delimiters for inline math
         return AppendBatchAndDefer(
             [AppendNodeTag(node, 'div'), AppendTextAndDefer('$$\n', '$$')]
@@ -541,7 +541,7 @@ class Translator:
     def visit_code(self, node: nodes.Code) -> EditCommand:
         return AppendNodeTag(node, 'span', newline_inner=False, newline_outer=False)
 
-    def visit_displaycode(self, node: nodes.Code) -> EditCommand:
+    def visit_codeblock(self, node: nodes.Code) -> EditCommand:
         return AppendNodeTag(node, 'div', newline_inner=True, newline_outer=True)
 
     def visit_text(self, node: nodes.Text) -> EditCommand:

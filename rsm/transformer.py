@@ -135,7 +135,7 @@ class Transformer:
             nodes.Section: 0,
             nodes.Subsection: 0,
             nodes.Subsubsection: 0,
-            nodes.DisplayMath: 0,
+            nodes.MathBlock: 0,
             nodes.Theorem: 0,
             nodes.Lemma: 0,
             nodes.Bibitem: 0,

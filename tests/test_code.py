@@ -6,7 +6,7 @@ def test_display_alone():
         have="""\
         :manuscript:
 
-        :displaycode:
+        :codeblock:
           :label: some-code
           :types: python
 
@@ -27,7 +27,7 @@ def test_display_alone():
 
         <h1></h1>
 
-        <div id="some-code" class="displaycode python">
+        <div id="some-code" class="codeblock python">
         comp = [abs(x) for x in range(10)]
 
 
@@ -49,7 +49,7 @@ def test_display_alone():
         have="""\
         :manuscript:
 
-        :displaycode:
+        :codeblock:
           :label: some-code
           :types: python
 
@@ -70,7 +70,7 @@ def test_display_alone():
 
         <h1></h1>
 
-        <div id="some-code" class="displaycode python">
+        <div id="some-code" class="codeblock python">
         comp = [abs(x) for x in range(10)]
 
 

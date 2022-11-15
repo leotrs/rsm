@@ -6,7 +6,7 @@ def test_display_alone():
         have="""\
         :manuscript:
 
-        :displaymath:
+        :mathblock:
           :label: eqn-plus
           :types: smallequation
 
@@ -26,7 +26,7 @@ def test_display_alone():
 
         <h1></h1>
 
-        <div id="eqn-plus" class="displaymath smallequation">
+        <div id="eqn-plus" class="mathblock smallequation">
         $$
         2 + 2 = 4
         $$
@@ -141,7 +141,7 @@ def test_math_with_shortcuts():
 
         <p class="paragraph">When <span class="math">\(a \ne 0\)</span>, there are two solutions to <span class="math">\(ax^2 + bx + c = 0\)</span> and they are</p>
 
-        <div class="displaymath">
+        <div class="mathblock">
         $$
         x = {-b \pm \sqrt{b^2-4ac} \over 2a}.
         $$
@@ -168,7 +168,7 @@ def test_math_ref():
 
         This is some inline $2+2=4$ math.  And then some display math.
 
-        :displaymath:
+        :mathblock:
           :label: eqn-foo
           2+2=4
         ::
@@ -195,7 +195,7 @@ def test_math_ref():
 
         <p class="paragraph">This is some inline <span class="math">\(2+2=4\)</span> math.  And then some display math.</p>
 
-        <div id="eqn-foo" class="displaymath">
+        <div id="eqn-foo" class="mathblock">
         $$
         2+2=4
         $$

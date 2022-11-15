@@ -361,11 +361,11 @@ class Code(NodeWithChildren):
     pass
 
 
-class DisplayMath(NodeWithChildren):
+class MathBlock(NodeWithChildren):
     classreftext: str = 'Equation {number}'
 
 
-class DisplayCode(NodeWithChildren):
+class CodeBlock(NodeWithChildren):
     classreftext: str = 'Code Listing {number}'
 
 

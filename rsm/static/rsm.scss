@@ -4,10 +4,10 @@
 /******************************************************************************************/
 
 :root {
-    --handrail-offset: 20px;
+    --handrail-offset: 1.25rem;
     --side-padding: 6.5em;
     --handrail-margin-block: 1.5rem;
-    --tombstone-side-length: 0.5em;
+    --tombstone-side-length: 0.5rem;
     --ellipsis-width: 1em;
 
     --gray-900: #2C343A;
@@ -197,6 +197,10 @@ img, svg {
     &--offset {
         transform: translateX(calc(-1 * var(--handrail-offset) - var(--border-thin)));
         width: calc(100% + var(--handrail-offset) + var(--border-thin));
+    }
+
+    & .handrail--offset {
+        border-width: 0 0 0 0;
     }
 
     @for $i from 1 through 5 {

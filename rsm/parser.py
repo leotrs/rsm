@@ -954,8 +954,10 @@ class MainParser:
         # applying shortcuts
         if parser.pos >= len(parser.src):
             return self.tree
+        # likewise, we must take the input to BibTexParser from parser.src, NOT from
+        # self.src
+        bibsrc = parser.src[parser.pos :].strip()
 
-        bibsrc = self.src[parser.pos :].strip()
         parser = BibTexParser(bibsrc)
         result = parser.parse()
         bib_nodes = list(self.tree.traverse(nodeclass=nodes.Bibliography))

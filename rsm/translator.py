@@ -25,13 +25,16 @@ class RSMTranslatorError(Exception):
     pass
 
 
-def make_tag(tag: str, id_: str, classes: Iterable) -> str:
+def make_tag(tag: str, id_: str, classes: Iterable, **kwargs) -> str:
     text = f'<{tag}'
     if id_:
         text += f' id="{id_}"'
     if classes:
         classes = ' '.join(classes)
         text += f' class="{classes}"'
+    if kwargs:
+        text += ' '
+    text += ' '.join(f'{k}="{v}"' for k, v in kwargs.items())
     text += '>'
     return text
 
@@ -573,8 +576,8 @@ class Translator:
                 )
             else:
                 reftext = tgt
-        classes = " ".join(['reference'] + node.types)
-        tag = f'<a class="{classes}" href="{href_text}">{reftext}</a>'
+        classes = ['reference'] + node.types
+        tag = make_tag('a', id_='', classes=classes, href=href_text) + reftext + '</a>'
         return tag
 
     def visit_reference(self, node: nodes.Reference) -> EditCommand:

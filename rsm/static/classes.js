@@ -57,6 +57,45 @@ export function setupClassInteractions() {
 
     });
 
+    $(".proof .handrail__btn-toggle").click(function() {
+        let handrail = $(this).closest('.handrail')
+        let buttons = $(this).closest('.proof').find('.proof__tabs > button')
+        if (handrail.hasClass("collapsed")) {
+            buttons.each(function() {
+                $(this).removeClass("active")
+            })}
+        else {
+            $(buttons[0]).addClass("active")
+        }
+    });
+
+    $(".proof__tabs > button").click(function() {
+        if (!$(this).hasClass('active')) {
+            $(this).siblings("button").each(function() {
+                $(this).removeClass("active")
+            })
+            $(this).addClass("active")
+        };
+
+        let contents = $(this).closest('.proof').find('.proof-contents');
+        let show = null;
+        let hide = null;
+        if ($(this).hasClass('sketch')) {
+            show = contents.find('.sketch');
+            hide = contents.find(':not(.sketch)');
+        } else if ($(this).hasClass('full')) {
+            show = contents.find(':not(.sketch)');
+            hide = contents.find('.sketch');
+        };
+        hide.children().each(function(){
+            $(this).addClass("hide")
+        });
+        show.children().each(function(){
+            $(this).removeClass("hide")
+        })
+    });
+
+
     $(".option__steps").click(function() {
         let proof_container = $(this).closest(".proof").find(".proof-container");
         let steps = $(proof_container).children(".step");

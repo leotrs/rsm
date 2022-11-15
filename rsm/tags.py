@@ -8,7 +8,7 @@ A region in a RSM document is a sequence of consecutive characters.  Ther is no 
 restriction to what constitutes a region.  For example, a region may span several lines,
 start and end in the middle of a sentence, or otherwise carry no real (semantic or
 structural) meaning.  Tags are the way that the RSM markup language denotes which
-regions are meaningful.  If a region starts with a :tag: and ends with a tombstone '::',
+regions are meaningful.  If a region starts with a :tag: and ends with a halmos '::',
 then it is considered a structurally meaningful region that indicates something about
 the structure of the document.  There are a few exceptions to this rule (see below).
 
@@ -19,11 +19,11 @@ inline is a region that can only be contained within a paragraph or another inli
 paragraph can only contain inlines.
 
 At the time of writing, all blocks and inlines must start with a tag and end with a
-tombstone.  On the other hand, paragraphs have neither restriction.
+halmos.  On the other hand, paragraphs have neither restriction.
 
 A typical region is comprised of the following parts: a tag, an optional meta region,
-the content, and the tombstone.  As mentioned before, if the region is a paragraph, the
-tag is optional and the ending delimiter is a blank line instead of a Tombstone.
+the content, and the halmos.  As mentioned before, if the region is a paragraph, the
+tag is optional and the ending delimiter is a blank line instead of a Halmos.
 
 The content of a tag can be either itself or 'as is'.  More concretely, a block tag may
 declare its 'content mode' to be 'block' or 'as is', while the content mode of an inline
@@ -138,7 +138,7 @@ class ManuscriptTag(BlockTag):
         return nodes.Manuscript(src=self.src)
 
 
-Tombstone = Tag('')
+Halmos = Tag('')
 _tags = {}
 _tags['paragraph'] = ParagraphTag.newtag(nodes.Paragraph, tag_optional=True)
 _tags['item'] = ParagraphTag.newtag(nodes.Item)
@@ -173,7 +173,7 @@ _tags['prev'] = InlineTag.newtag(nodes.PendingPrev, name='prev', content_mode=AS
 _tags['cite'] = InlineTag.newtag(nodes.PendingCite, name='cite', content_mode=ASIS)
 _tags['figure'] = BlockTag.newtag(nodes.Figure, has_content=False)
 _tags['manuscript'] = ManuscriptTag.newtag(nodes.Manuscript)
-_tags[''] = Tombstone
+_tags[''] = Halmos
 
 
 def get(name: str) -> Tag:

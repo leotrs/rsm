@@ -74,7 +74,7 @@ def test_nested():
         :manuscript:
 
         This is a :span: :strong: :: paragraph with a :span: :emphas: :: span within a span ::
-        :: so that makes it really cool.  BTW it also has a Tombstone at the start of a
+        :: so that makes it really cool.  BTW it also has a Halmos at the start of a
         line!
 
         ::
@@ -91,7 +91,7 @@ def test_nested():
         <h1></h1>
 
         <p class="paragraph">This is a <span class="span"><strong>paragraph with a <span class="span"><em>span within a span </em></span>
-        </strong></span> so that makes it really cool.  BTW it also has a Tombstone at the start of a
+        </strong></span> so that makes it really cool.  BTW it also has a Halmos at the start of a
         line!</p>
 
         </section>

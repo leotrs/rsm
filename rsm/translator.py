@@ -309,7 +309,7 @@ class AppendKeyword(AppendOpenCloseTag):
         return self._edit_command_repr(['level', 'content', 'id', 'classes'])
 
 
-class AppendTombstone(AppendOpenCloseTag):
+class AppendHalmos(AppendOpenCloseTag):
     def __init__(
         self,
         *,
@@ -320,7 +320,7 @@ class AppendTombstone(AppendOpenCloseTag):
             tag='div',
             content='',
             id=id,
-            classes=['tombstone'] + (classes or []),
+            classes=['halmos'] + (classes or []),
             newline_inner=False,
             newline_outer=True,
         )
@@ -660,7 +660,7 @@ class Translator:
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
         # add it to the returned batch!!!
         batch = self.leave_node(node)
-        batch.items.insert(1, AppendTombstone())
+        batch.items.insert(1, AppendHalmos())
         batch = AppendBatch(batch.items)
         return batch
 
@@ -875,6 +875,6 @@ class HandrailsTranslator(Translator):
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
         # add it to the returned batch!!!
         batch = self.leave_node(node)
-        batch.items.insert(1, AppendTombstone(classes=['hide']))
+        batch.items.insert(1, AppendHalmos(classes=['hide']))
         batch = AppendBatch(batch.items)
         return batch

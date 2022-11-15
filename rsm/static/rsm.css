@@ -5,7 +5,7 @@
   --handrail-offset: 1.25rem;
   --side-padding: 6.5em;
   --handrail-margin-block: 1.5rem;
-  --tombstone-side-length: 0.5rem;
+  --halmos-side-length: 0.5rem;
   --ellipsis-width: 1em;
   --gray-900: #2C343A;
   --gray-800: #404C54;
@@ -179,24 +179,24 @@ img, svg {
     margin-block: calc(var(--h5-size) / 2);
     padding-block: calc(var(--h5-size) / 2); }
 
-.proof > .handrail.collapsed .tombstone:last-of-type {
+.proof > .handrail.collapsed .halmos:last-of-type {
   bottom: 0; }
 
-.tombstone {
+.halmos {
   display: flex;
   justify-content: flex-end;
   position: absolute;
   right: 0;
   bottom: 1rem; }
-  .tombstone::after {
+  .halmos::after {
     content: '';
     display: block;
     position: absolute;
     right: 0;
-    height: var(--tombstone-side-length);
-    width: var(--tombstone-side-length);
+    height: var(--halmos-side-length);
+    width: var(--halmos-side-length);
     background-color: var(--keyword-blue); }
-  .tombstone.with-ellipsis::before {
+  .halmos.with-ellipsis::before {
     content: '';
     display: flex;
     border-style: solid;
@@ -205,7 +205,7 @@ img, svg {
     position: absolute;
     right: 8px;
     width: var(--ellipsis-width);
-    height: var(--tombstone-side-length);
+    height: var(--halmos-side-length);
     justify-content: space-evenly;
     align-items: center;
     background: radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 2px/2px 2px, radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 6px/2px 2px, radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 10px/2px 2px;

@@ -447,7 +447,7 @@ def test_prev_shortcut():
 
         </div>
 
-        <div class="tombstone"></div>
+        <div class="halmos"></div>
 
         </div>
 
@@ -559,7 +559,7 @@ def test_prev2_shortcut():
 
         </div>
 
-        <div class="tombstone"></div>
+        <div class="halmos"></div>
 
         </div>
 
@@ -671,7 +671,7 @@ def test_prev_and_prev2_shortcut():
 
         </div>
 
-        <div class="tombstone"></div>
+        <div class="halmos"></div>
 
         </div>
 

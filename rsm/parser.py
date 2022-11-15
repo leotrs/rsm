@@ -16,7 +16,7 @@ import re
 
 from . import nodes
 from . import tags
-from .tags import TagName, Tag, Tombstone
+from .tags import TagName, Tag, Halmos
 from .manuscript import PlainTextManuscript
 
 from icecream import ic
@@ -112,8 +112,8 @@ class Parser(ABC):
         self.pos += len(self.src[self.pos :]) - len(self.src[self.pos :].lstrip())
         return self.pos - oldpos
 
-    def consume_tombstone(self) -> int:
-        num = len(Tombstone)
+    def consume_halmos(self) -> int:
+        num = len(Halmos)
         self.pos += num
         return num
 
@@ -146,8 +146,8 @@ class Parser(ABC):
         return content, pos
 
     def get_subparser(self, tag: Tag) -> 'Parser':
-        if tag == Tombstone or not tag.name:
-            raise RSMParserError(self.pos, 'Requesting parser for Tombstone')
+        if tag == Halmos or not tag.name:
+            raise RSMParserError(self.pos, 'Requesting parser for Halmos')
         try:
             parserclass = _parsers[tag.name]
         except KeyError as e:
@@ -234,15 +234,15 @@ class ParagraphParser(Parser):
         _, end_of_content = self.get_lines_until(lambda l: l == '\n')
 
         children = []
-        end_at_tombstone = False
+        end_at_halmos = False
         end_at_block = False
         hint = None
         while self.pos < end_of_content:
             tagname = self.get_tagname_at_pos()
             if tagname:
-                if tagname == Tombstone:
-                    end_at_tombstone = True
-                    hint = Tombstone
+                if tagname == Halmos:
+                    end_at_halmos = True
+                    hint = Halmos
                     break
 
                 nexttag = tags.get(tagname)
@@ -268,7 +268,7 @@ class ParagraphParser(Parser):
 
             self.pos += consumed
 
-        if not end_at_tombstone and not end_at_block:
+        if not end_at_halmos and not end_at_block:
             # Every paragraph ends with (at least) two new lines.  The first one is the end
             # of line of the last line in the paragraph.  The second one is the obligatory
             # blank line after the paragraph.  Both are unnecessary in the final output.
@@ -286,7 +286,7 @@ class InlineContentParser(Parser):
         children = []
 
         left = self.pos
-        while not self.src[self.pos :].startswith(Tombstone):
+        while not self.src[self.pos :].startswith(Halmos):
             tagname = self.get_tagname_at_pos()
             if tagname is None:
                 self.pos += 1
@@ -313,12 +313,12 @@ class InlineContentParser(Parser):
 class AsIsContentParser(Parser):
     def process(self) -> ParsingResult:
         oldpos = self.pos
-        index = self.src.index(Tombstone, self.pos)
+        index = self.src.index(Halmos, self.pos)
         content = self.src[self.pos : index]
         node = nodes.Text(text=content.escape())
         self.pos = index
         return ParsingResult(
-            success=True, result=node, hint=Tombstone, consumed=self.pos - oldpos
+            success=True, result=node, hint=Halmos, consumed=self.pos - oldpos
         )
 
 
@@ -354,7 +354,7 @@ class DelimitedRegionParser(Parser):
 
 
 class TagRegionParser(DelimitedRegionParser):
-    """Parser for regions that start at a tag and end with a Tombstone.
+    """Parser for regions that start at a tag and end with a Halmos.
 
     This includes all blocks and all inlines.
 
@@ -369,7 +369,7 @@ class TagRegionParser(DelimitedRegionParser):
     }
 
     def __init__(self, parent: Parser | None, frompos: int, tag: Tag):
-        super().__init__(parent=parent, frompos=frompos, start=tag, end=Tombstone)
+        super().__init__(parent=parent, frompos=frompos, start=tag, end=Halmos)
         self.tag: Tag = tag
         self.node: nodes.NodeWithChildren = tag.makenode()
         if self.tag.has_content and tag.content_mode is not None:
@@ -388,8 +388,8 @@ class TagRegionParser(DelimitedRegionParser):
                 self.pos, '{self.__class__.__name__} could not parse meta block'
             )
 
-        if result.hint == Tombstone:
-            self.consume_tombstone()
+        if result.hint == Halmos:
+            self.consume_halmos()
             return ParsingResult(
                 success=True,
                 result=self.node,
@@ -413,7 +413,7 @@ class TagRegionParser(DelimitedRegionParser):
         oldpos = self.pos
 
         hint = starting_tag
-        while hint != Tombstone:
+        while hint != Halmos:
             if hint is None:
                 parser = self.contentparser(self, self.pos)
             else:
@@ -444,7 +444,7 @@ class TagRegionParser(DelimitedRegionParser):
             self.consume_whitespace()
             hint = self.get_tagname_at_pos()
 
-        self.consume_tombstone()
+        self.consume_halmos()
 
         return ParsingResult(
             success=True,
@@ -464,7 +464,7 @@ class TagRegionParser(DelimitedRegionParser):
 
 
 class SpecialTagRegionParser(DelimitedRegionParser):
-    """For regions delimited by tags and Tombstones but whose content is 'special' i.e. it
+    """For regions delimited by tags and Halmoss but whose content is 'special' i.e. it
     won't be parsed recursively.
 
     """
@@ -474,7 +474,7 @@ class SpecialTagRegionParser(DelimitedRegionParser):
             parent=parent,
             frompos=frompos,
             start=tag,
-            end=Tombstone,
+            end=Halmos,
         )
         self.tag = tag
         self.node = None
@@ -485,16 +485,16 @@ class SpecialTagRegionParser(DelimitedRegionParser):
         self.consume_whitespace()
 
         # Tag delimiters (i.e. ':') are allowed within the content of a special tag.  So
-        # we keep searching until we find a Tombstone.
+        # we keep searching until we find a Halmos.
         right = self.src.find(Tag.delim, self.pos)
-        while not self.src[right:].startswith(Tombstone):
+        while not self.src[right:].startswith(Halmos):
             right = self.src.find(Tag.delim, right + 1)
         content = self.src[self.pos : right]
 
         self.node = self.parse_content(content)
 
         self.pos = right
-        self.consume_tombstone()
+        self.consume_halmos()
         return ParsingResult(
             success=True,
             result=self.node,
@@ -594,7 +594,7 @@ class MetaParser(Parser):
         if right == -1:  # find returns -1 when failed
             right = len(self.src)
 
-        if self.inline_mode is None and Tombstone in self.src[left:right]:
+        if self.inline_mode is None and Halmos in self.src[left:right]:
             self.inline_mode = True
 
         pairparser = MetaPairParser(parent=self, validkeys=self.validkeys)
@@ -610,11 +610,11 @@ class MetaParser(Parser):
                 self.pos += result.consumed
                 numchars += result.consumed
                 numchars += self.consume_whitespace()
-                if result.hint == Tombstone:
+                if result.hint == Halmos:
                     result = BaseParsingResult(
                         success=True,
                         result=meta,
-                        hint=Tombstone,
+                        hint=Halmos,
                         consumed=numchars,
                     )
                     break
@@ -634,11 +634,9 @@ class MetaParser(Parser):
 
         if self.inline_mode and found:
             self.consume_whitespace()
-            if not self.src[self.pos :].startswith(Tombstone):
-                raise RSMParserError(
-                    self.pos, f'Expected {Tombstone} after inline meta'
-                )
-            self.consume_tombstone()
+            if not self.src[self.pos :].startswith(Halmos):
+                raise RSMParserError(self.pos, f'Expected {Halmos} after inline meta')
+            self.consume_halmos()
             self.consume_whitespace()
             result = BaseParsingResult(
                 success=True,
@@ -735,8 +733,8 @@ class MetaPairParser(Parser):
         # setup hint
         if self.src[self.pos :].startswith(self.delim):
             hint = self.delim
-        elif self.src[self.pos :].startswith(Tombstone):
-            hint = Tombstone
+        elif self.src[self.pos :].startswith(Halmos):
+            hint = Halmos
         else:
             hint = None
 
@@ -753,7 +751,7 @@ class MetaPairParser(Parser):
 
     def parse_upto_delim_value(self, key: str) -> tuple[str, int]:
         left = self.pos
-        right1 = self.src.index(Tombstone, left)
+        right1 = self.src.index(Halmos, left)
         try:
             right2 = self.src.index(self.delim, left)
         except ValueError:
@@ -764,9 +762,9 @@ class MetaPairParser(Parser):
 
     def parse_paragraph_value(self, key: str) -> tuple[str, int]:
         left = self.pos
-        right = self.src.index(Tombstone, left)
+        right = self.src.index(Halmos, left)
         value = self.src[left:right]
-        return value.strip(), len(value) + len(Tombstone)
+        return value.strip(), len(value) + len(Halmos)
 
     def parse_int_value(self, key: str) -> tuple[int, int]:
         value, numchars = self.parse_upto_delim_value(key)
@@ -812,10 +810,10 @@ class MetaPairParser(Parser):
             )
 
         after = src[brace + 1 :]
-        if not after.startswith(self.delim) and not after.startswith(' ' + Tombstone):
+        if not after.startswith(self.delim) and not after.startswith(' ' + Halmos):
             raise RSMParserError(
                 self.pos,
-                f'Expected a "{self.delim}" or a "{Tombstone}" after value of key "{key}"',
+                f'Expected a "{self.delim}" or a "{Halmos}" after value of key "{key}"',
             )
 
         value = src[1:brace]
@@ -826,17 +824,17 @@ class MetaPairParser(Parser):
 class BibTexParser(DelimitedRegionParser):
     def __init__(self, src):
         self.tag = tags.get('bibtex')
-        super().__init__(parent=None, frompos=0, start=self.tag, end=Tombstone)
+        super().__init__(parent=None, frompos=0, start=self.tag, end=Halmos)
         self.src = src
 
     def process(self) -> ParsingResult:
         oldpos = self.pos
         self.pos += len(self.tag)
         self.consume_whitespace()
-        endpos = self.src.find(Tombstone, self.pos)
+        endpos = self.src.find(Halmos, self.pos)
         if endpos < -1:
             raise RSMParserError(
-                self.pos, 'Could not find closing Tombstone for tag {self.tag}'
+                self.pos, 'Could not find closing Halmos for tag {self.tag}'
             )
         all_content = self.src[self.pos : endpos]
 
@@ -884,7 +882,7 @@ class BibTexParser(DelimitedRegionParser):
             children.append(child)
 
         self.pos = endpos
-        self.consume_tombstone()
+        self.consume_halmos()
         return ParsingResult(
             success=True, result=children, hint=None, consumed=self.pos - oldpos
         )
@@ -977,7 +975,7 @@ for t in tags.all():
     elif isinstance(t, tags.InlineTag):
         _parsers[t.name] = TagRegionParser
     elif isinstance(t, tags.Tag):
-        if t is Tombstone:
+        if t is Halmos:
             continue
         raise RSMParserError(None, f"I don't know what to do with tag {t}")
 _parsers['bibtex'] = BibTexParser

@@ -5,10 +5,10 @@
 
 export function setupClassInteractions() {
     $(".step").hover(function() {
-        let tomb = $(this).siblings(".tombstone");
+        let tomb = $(this).siblings(".halmos");
         tomb.removeClass("hide");
     }, function() {
-        let tomb = $(this).siblings(".tombstone");
+        let tomb = $(this).siblings(".halmos");
         if (tomb.hasClass("with-ellipsis")) {
             tomb.removeClass("hide");
         } else {
@@ -33,7 +33,7 @@ export function setupClassInteractions() {
         if (div.length == 0) {
             div = block.siblings(".handrail__collapsible");
         };
-        let tomb = $(div).siblings(".tombstone");
+        let tomb = $(div).siblings(".halmos");
 
         if (div.hasClass("children-hidden")) {
 	    block.removeClass("collapsed");
@@ -174,7 +174,7 @@ export function setupClassInteractions() {
 
 function toggle_step(step) {
     let div = $(step).children(".statement__proof");
-    let tomb = $(step).children(".tombstone");
+    let tomb = $(step).children(".halmos");
     if (div.hasClass("hide")) {
 	div.removeClass("hide");
         tomb.removeClass("with-ellipsis");

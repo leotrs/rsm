@@ -60,7 +60,7 @@ def test_simple():
 
         </div>
 
-        <div class="tombstone"></div>
+        <div class="halmos"></div>
 
         </div>
 
@@ -124,7 +124,7 @@ def test_empty_proof():
 
         </div>
 
-        <div class="tombstone"></div>
+        <div class="halmos"></div>
 
         </div>
 

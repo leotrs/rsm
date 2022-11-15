@@ -24,7 +24,7 @@ export function createTooltips() {
                 content = $(target).parent().html();
 	    } else if (tag == "DT") {
 		content = $(target).next().html();
-            } else if (tag == "FIGURE") {
+            } else if (["FIGURE", "SECTION"].includes(tag)) {
                 content = $(target).html();
             } else if (tag == "DIV") {
                 switch(true) {

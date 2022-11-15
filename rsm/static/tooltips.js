@@ -24,6 +24,8 @@ export function createTooltips() {
                 content = $(target).parent().html();
 	    } else if (tag == "DT") {
 		content = $(target).next().html();
+            } else if (tag == "FIGURE") {
+                content = $(target).html();
             } else if (tag == "DIV") {
                 switch(true) {
                 case classes.contains("step"):
@@ -39,7 +41,7 @@ export function createTooltips() {
                     console.log("tooltip target DIV with unknown class")
                 }
             } else {
-		console.log("tooltip target with unknown tag");
+		console.log(`tooltip target with unknown tag ${tag}`);
 	    }
 
             instance.content($(content));

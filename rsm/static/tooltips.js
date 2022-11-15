@@ -24,8 +24,14 @@ export function createTooltips() {
                 content = $(target).parent().html();
 	    } else if (tag == "DT") {
 		content = $(target).next().html();
-            } else if (["FIGURE", "SECTION"].includes(tag)) {
+            } else if (tag == "FIGURE") {
                 content = $(target).html();
+            } else if (tag == "SECTION") {
+                let clone = $(target).clone();
+                clone.children().slice(2).remove();
+                clone.children().each(function () {$(this).css('transform', 'scale(0.75)');});
+                clone.css('transform', 'scale(0.75)');
+                content = clone.html();
             } else if (tag == "DIV") {
                 switch(true) {
                 case classes.contains("step"):

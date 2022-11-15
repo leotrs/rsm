@@ -87,9 +87,15 @@ class SingleFileBuilder(BaseBuilder):
           <script type="module" src="static/classes.js"></script>
           <script type="module">
             import { loadMathJax } from '/static/tooltips.js';
-            loadMathJax();
+
             import { setupClassInteractions } from '/static/classes.js';
-            setupClassInteractions();
+
+
+            window.addEventListener('load', function () {
+                loadMathJax();
+                setupClassInteractions();
+            })
+
           </script>
 
           <title>{some_title}</title>

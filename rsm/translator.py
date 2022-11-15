@@ -140,7 +140,7 @@ class AppendOpenCloseTag(AppendText):
         return self._edit_command_repr(['tag', 'content', 'id', 'classes'])
 
 
-class AppendOpenTagNoDefer(AppendText):
+class AppendOpenTagManualClose(AppendText):
     def __init__(
         self,
         tag: str = 'div',
@@ -688,7 +688,7 @@ class Translator:
 
     def visit_figure(self, node: nodes.Figure) -> EditCommand:
         ic(node.number, node.full_number, str(node.caption))
-        figcaption = AppendOpenTagNoDefer('figcaption')
+        figcaption = AppendOpenTagManualClose('figcaption')
         title = self._make_title_node(
             f'{node.__class__.__name__} {node.full_number}. ', types=[], paragraph=False
         )
@@ -727,16 +727,16 @@ class HandrailsTranslator(Translator):
         if include_content:
             handrail = AppendOpenTag(classes=classes)
         else:
-            handrail = AppendOpenTagNoDefer(classes=classes)
-        btn_cont = AppendOpenTagNoDefer(classes=['handrail__btn-container'])
-        btn_menu = AppendOpenTagNoDefer(
+            handrail = AppendOpenTagManualClose(classes=classes)
+        btn_cont = AppendOpenTagManualClose(classes=['handrail__btn-container'])
+        btn_menu = AppendOpenTagManualClose(
             classes=["handrail__btn", "handrail__btn-menu", "handrail__btn--relative"],
             newline_inner=False,
         )
-        btn_togg = AppendOpenTagNoDefer(
+        btn_togg = AppendOpenTagManualClose(
             classes=["handrail__btn", "handrail__btn-toggle"], newline_inner=False
         )
-        opt_tag = AppendOpenTagNoDefer(
+        opt_tag = AppendOpenTagManualClose(
             classes=["options", "hide"], newline_inner=True, newline_outer=True
         )
         options = [self._make_option_tag(opt) for opt in ['link', 'tree', 'source']]
@@ -822,8 +822,8 @@ class HandrailsTranslator(Translator):
     def _add_proof_header_with_sketch(
         self, batch: EditCommandBatch, tree: nodes.Node, node: nodes.Proof
     ) -> None:
-        header = AppendOpenTagNoDefer(classes=['proof__header'])
-        tabs = AppendOpenTagNoDefer(classes=['proof__tabs'])
+        header = AppendOpenTagManualClose(classes=['proof__header'])
+        tabs = AppendOpenTagManualClose(classes=['proof__tabs'])
         batch.items = (
             [batch.items[0]]
             + [
@@ -848,7 +848,7 @@ class HandrailsTranslator(Translator):
     def _add_proof_header_no_sketch(
         self, batch: EditCommandBatch, tree: nodes.Node, node: nodes.Proof
     ) -> None:
-        header = AppendOpenTagNoDefer(classes=['proof__header'])
+        header = AppendOpenTagManualClose(classes=['proof__header'])
         batch.items += [header, tree, header.close_command()]
 
     def visit_subproof(self, node: nodes.Subproof) -> EditCommand:

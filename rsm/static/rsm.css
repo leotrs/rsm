@@ -354,6 +354,9 @@ dd > p, dt > p {
   color: var(--link-color-hover);
   cursor: pointer; }
 
+ol.bibliography {
+  padding-inline-start: var(--handrail-offset); }
+
 /* State */
 /******************************************************************************************/
 a:link, a:visited, a:active {

@@ -439,6 +439,10 @@ dd > p, dt > p {
     cursor: pointer;
 }
 
+ol.bibliography {
+    padding-inline-start: var(--handrail-offset);
+}
+
 
 /* State */
 /******************************************************************************************/

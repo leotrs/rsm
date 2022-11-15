@@ -44,9 +44,9 @@ def test_simple():
 
         <div class="proof">
 
-        <div class="proof-contents">
-
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+
+        <div class="proof-contents">
 
         <div class="step last">
 
@@ -118,9 +118,9 @@ def test_empty_proof():
 
         <div class="proof">
 
-        <div class="proof-contents">
-
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+
+        <div class="proof-contents">
 
         </div>
 

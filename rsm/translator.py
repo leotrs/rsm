@@ -596,7 +596,9 @@ class Translator:
             ]
         )
 
-    def _make_title_node(self, text: str, types: list, paragraph: bool = True) -> None:
+    def _make_title_node(
+        self, text: str, types: list, paragraph: bool = True
+    ) -> nodes.Node:
         if paragraph:
             para = nodes.Paragraph(types=types)
         span = nodes.Span(strong=True)
@@ -634,7 +636,7 @@ class Translator:
             ]
         )
 
-    def visit_proof(self, node: nodes.Proof) -> EditCommand:
+    def visit_proof(self, node: nodes.Proof) -> EditCommandBatch:
         last = node.last_of_type(nodes.Step)
         if last:
             last.types.append('last')
@@ -646,10 +648,13 @@ class Translator:
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
-                AppendOpenTag(classes=[f'{classname}-contents']),
                 AppendExternalTree(title),
+                AppendOpenTag(classes=[f'{classname}-contents']),
             ]
         )
+
+    def visit_sketch(self, node: nodes.Sketch) -> EditCommand:
+        return AppendNodeTag(node)
 
     def leave_proof(self, node: nodes.Proof) -> EditCommand:
         # For documentation: if a visit_* method returns a command with defers = True,
@@ -793,14 +798,59 @@ class HandrailsTranslator(Translator):
             f'stars-{node.stars}',
             f'clocks-{node.clocks}',
         ]
-        batch.items[-1].node.types.append("do-not-hide")
+        batch.items[-1].root.types.append("do-not-hide")
         return batch
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         batch = super().visit_proof(node)
-        batch.items[1].classes.append('handrail__collapsible')
-        batch.items[-1].node.types.append('do-not-hide')
+        batch.items[2].classes.append('handrail__collapsible')
+
+        # the last element is the proof title, we pop it as it will be inserted into the
+        # proof header div
+        tree = batch.items[1]
+        batch.items = [batch.items[0], batch.items[2]]
+        tree.root.types.append('do-not-hide')
+
+        if any(type(c) is nodes.Sketch for c in node.children):
+            self._add_proof_header_with_sketch(batch, tree, node)
+            for c in node.children:
+                if type(c) is not nodes.Sketch:
+                    c.types.append('hide')
+        else:
+            self._add_proof_header_no_sketch(batch, tree, node)
         return self._replace_batch_with_handrails(1, batch, include_content=True)
+
+    def _add_proof_header_with_sketch(
+        self, batch: EditCommandBatch, tree: nodes.Node, node: nodes.Proof
+    ) -> None:
+        header = AppendOpenTagNoDefer(classes=['proof__header'])
+        tabs = AppendOpenTagNoDefer(classes=['proof__tabs'])
+        batch.items = (
+            [batch.items[0]]
+            + [
+                header,
+                tree,
+                tabs,
+                AppendOpenCloseTag(
+                    'button',
+                    content="sketch",
+                    classes=["sketch", "active"],
+                    newline_inner=False,
+                ),
+                AppendOpenCloseTag(
+                    'button', content="full", classes=['full'], newline_inner=False
+                ),
+                tabs.close_command(),
+                header.close_command(),
+            ]
+            + batch.items[1:]
+        )
+
+    def _add_proof_header_no_sketch(
+        self, batch: EditCommandBatch, tree: nodes.Node, node: nodes.Proof
+    ) -> None:
+        header = AppendOpenTagNoDefer(classes=['proof__header'])
+        batch.items += [header, tree, header.close_command()]
 
     def visit_subproof(self, node: nodes.Subproof) -> EditCommand:
         batch = super().visit_subproof(node)

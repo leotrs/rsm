@@ -425,7 +425,7 @@ class Subproof(NodeWithChildren):
     _newmetakeys: ClassVar[set] = set()
 
 
-class Sketch(Paragraph):
+class Sketch(NodeWithChildren):
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Proof}
 
 

@@ -411,9 +411,9 @@ def test_prev_shortcut():
 
         <div class="proof">
 
-        <div class="proof-contents">
-
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+
+        <div class="proof-contents">
 
         <div id="st1" class="step">
 
@@ -513,9 +513,9 @@ def test_prev2_shortcut():
 
         <div class="proof">
 
-        <div class="proof-contents">
-
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+
+        <div class="proof-contents">
 
         <div id="st1" class="step">
 
@@ -625,9 +625,9 @@ def test_prev_and_prev2_shortcut():
 
         <div class="proof">
 
-        <div class="proof-contents">
-
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+
+        <div class="proof-contents">
 
         <div id="st1" class="step">
 

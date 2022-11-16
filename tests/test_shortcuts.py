@@ -857,6 +857,49 @@ def test_comment_multi_line_comment():
     )
 
 
+def test_hashtag_not_at_the_start_of_line():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        # This is a section title
+
+        And # this is not!
+
+        ::
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <section class="section level-2">
+
+        <h2>1. This is a section title</h2>
+
+        <p class="paragraph">And # this is not!</p>
+
+        </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
 def test_asterisk_inside_math():
     raise NotImplementedError
 

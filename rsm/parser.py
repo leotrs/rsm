@@ -588,14 +588,12 @@ class MetaParser(Parser):
         if not self.src[self.frompos].startswith(Tag.delim):  # there is no meta
             return BaseParsingResult(True, {}, None, 0)
 
-        left = self.frompos
-
-        right = left + self.src[left:].find('\n')
-        if right == -1:  # find returns -1 when failed
-            right = len(self.src)
-
-        if self.inline_mode is None and Halmos in self.src[left:right]:
-            self.inline_mode = True
+        # The entirety of an inline meta must fit in one line.
+        if self.inline_mode is None:
+            left = self.frompos
+            if (right := self.src.find('\n', left)) == -1:
+                right = len(self.src)
+            self.inline_mode = Halmos in self.src[left:right]
 
         pairparser = MetaPairParser(parent=self, validkeys=self.validkeys)
         meta = {}

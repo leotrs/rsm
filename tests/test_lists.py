@@ -12,9 +12,9 @@ def test_simple():
         :enumerate:
           :label: enm-foo
 
-          :item: :label: itm-1 :: Foo bar.
+          :item: {:label: itm-1} Foo bar.
 
-          :item: :label: itm-2 :: Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
+          :item: {:label: itm-2} Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
             ipsum dolor sit amet.
 
           :item:
@@ -27,9 +27,9 @@ def test_simple():
         :itemize:
           :label: itm-foo
 
-          :item: :label: itm-4 :: Foo bar.
+          :item: {:label: itm-4} Foo bar.
 
-          :item: :label: itm-5 :: Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
+          :item: {:label: itm-5} Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
             ipsum dolor sit amet.
 
           :item:

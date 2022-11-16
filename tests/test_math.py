@@ -81,7 +81,7 @@ def test_inline_with_meta():
         have="""\
         :manuscript:
 
-        This paragraph contains inline math :math: :label: bar, :types: {smallequation} :: 2 + 2
+        This paragraph contains inline math :math: {:label: bar, :types: {smallequation}} 2 + 2
         = 4::.
 
         ::

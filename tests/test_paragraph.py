@@ -58,7 +58,7 @@ def test_start_with_tag():
         have="""\
         :manuscript:
 
-        :span: :strong: :: this tag :: starts the paragraph.
+        :span: {:strong:} this tag :: starts the paragraph.
 
         ::
         """,
@@ -188,7 +188,7 @@ def test_simple():
 
         Lorem ipsum.
 
-        :paragraph: :label: par1 :: This is a paragraph with meta data. It has several lines of text. It has several lines
+        :paragraph: {:label: par1} This is a paragraph with meta data. It has several lines of text. It has several lines
         of text. It has several lines of text. It has several lines of text. It has several
         lines of text.
 
@@ -198,7 +198,7 @@ def test_simple():
         of text. It has several lines of text. It has several lines of text. It has several
         lines of text.
 
-        :paragraph: :label: par3, :types: {a, b, c} :: This is a paragraph with meta data. It
+        :paragraph: {:label: par3, :types: {a, b, c}} This is a paragraph with meta data. It
         has several lines of text. It has several lines of text. It has several lines of
         text. It has several lines of text. It has several lines of text.
 

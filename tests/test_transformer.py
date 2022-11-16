@@ -9,8 +9,8 @@ def test_duplicate_label():
             have="""\
             :manuscript:
 
-            There are :span: :label: mylbl :: two :: spans with the :span: :label: mylbl
-            :: same :: label in this paragraph.
+            There are :span: {:label: mylbl} two :: spans with the :span: {:label: mylbl}
+            same :: label in this paragraph.
 
             ::
             """,

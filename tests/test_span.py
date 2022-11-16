@@ -6,7 +6,7 @@ def test_one_span():
         have="""\
         :manuscript:
 
-        This is a :span: :strong: :: boring :: paragraph.
+        This is a :span: {:strong:} boring :: paragraph.
 
         ::
         """,
@@ -39,8 +39,8 @@ def test_two_spans():
         have="""\
         :manuscript:
 
-        This is a :span: :strong: :: boring :: paragraph, though it has two :span:
-        :emphas: :: spans :: so it's less boring.
+        This is a :span: {:strong:} boring :: paragraph, though it has two :span:
+        {:emphas:} spans :: so it's less boring.
 
         ::
         """,
@@ -73,7 +73,7 @@ def test_nested():
         have="""\
         :manuscript:
 
-        This is a :span: :strong: :: paragraph with a :span: :emphas: :: span within a span ::
+        This is a :span: {:strong:} paragraph with a :span: {:emphas:} span within a span ::
         :: so that makes it really cool.  BTW it also has a Halmos at the start of a
         line!
 
@@ -112,8 +112,8 @@ def test_span_with_multiline_meta():
 
         This is a
         :span:
-          :strong:
-        :: paragraph with a span ::
+          {:strong:}
+        paragraph with a span ::
         and it is multi line.
 
         ::
@@ -151,8 +151,8 @@ def test_multiline_span():
 
         This is a
         :span:
-          :strong:
-        :: paragraph with
+          {:strong:}
+        paragraph with
         a span :: and it is multi line.
 
         ::
@@ -188,7 +188,7 @@ def test_span_with_label():
         have="""\
         :manuscript:
 
-        This is a :span: :label: myspn, :strong: :: boring :: paragraph.
+        This is a :span: {:label: myspn, :strong:} boring :: paragraph.
 
         ::
         """,
@@ -221,7 +221,7 @@ def test_span_part_of_word():
         have="""\
         :manuscript:
 
-        This word is half bold :span: :strong: ::bo::ring.
+        This word is half bold :span: {:strong:} bo::ring.
 
         ::
         """,

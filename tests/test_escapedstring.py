@@ -61,7 +61,7 @@ def test_colon_inside_bold():
         have=r"""
         :manuscript:
 
-        :span: :strong: :: Warning\: :: this is a warning.
+        :span: {:strong:} Warning\: :: this is a warning.
 
         ::
         """,
@@ -94,7 +94,7 @@ def test_colon_inside_bold_no_space():
         have=r"""
         :manuscript:
 
-        :span: :strong: :: Warning\::: this is a warning.
+        :span: {:strong:} Warning\::: this is a warning.
 
         ::
         """,

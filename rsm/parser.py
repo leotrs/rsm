@@ -563,6 +563,9 @@ class ShouldHaveHeadingParser(TagRegionParser):
 class MetaParser(Parser):
     """Parser for regions that contain the meta pairs of some other region."""
 
+    inline_meta_open_delim = '{'
+    inline_meta_close_delim = '}'
+
     def __init__(
         self,
         parent: Parser,
@@ -585,15 +588,20 @@ class MetaParser(Parser):
 
     def process(self) -> BaseParsingResult:
         oldpos = self.pos
-        if not self.src[self.frompos].startswith(Tag.delim):  # there is no meta
-            return BaseParsingResult(True, {}, None, 0)
 
-        # The entirety of an inline meta must fit in one line.
         if self.inline_mode is None:
-            left = self.frompos
-            if (right := self.src.find('\n', left)) == -1:
-                right = len(self.src)
-            self.inline_mode = Halmos in self.src[left:right]
+            if self.src[self.frompos] == self.inline_meta_open_delim:
+                self.inline_mode = True
+            elif self.src[self.frompos :].startswith(Tag.delim):
+                self.inline_mode = False
+            else:
+                return BaseParsingResult(True, {}, None, 0)
+
+        if self.inline_mode:
+            if self.src[self.frompos] != self.inline_meta_open_delim:
+                return BaseParsingResult(True, {}, None, 0)
+            else:
+                self.pos += len(self.inline_meta_open_delim)
 
         pairparser = MetaPairParser(parent=self, validkeys=self.validkeys)
         meta = {}
@@ -632,9 +640,12 @@ class MetaParser(Parser):
 
         if self.inline_mode and found:
             self.consume_whitespace()
-            if not self.src[self.pos :].startswith(Halmos):
-                raise RSMParserError(self.pos, f'Expected {Halmos} after inline meta')
-            self.consume_halmos()
+            if self.src[self.pos] != self.inline_meta_close_delim:
+                raise RSMParserError(
+                    self.pos,
+                    f'Expected {self.inline_meta_close_delim} after inline meta, found {self.src[self.pos]}',
+                )
+            self.pos += len(self.inline_meta_close_delim)
             self.consume_whitespace()
             result = BaseParsingResult(
                 success=True,
@@ -747,12 +758,19 @@ class MetaPairParser(Parser):
     def delim(self) -> str:
         return self.inline_delim if self.parent.inline_mode else self.block_delim
 
+    @property
+    def inline_mode(self) -> bool:
+        return self.parent.inline_mode
+
     def parse_upto_delim_value(self, key: str) -> tuple[str, int]:
         left = self.pos
-        right1 = self.src.index(Halmos, left)
-        try:
-            right2 = self.src.index(self.delim, left)
-        except ValueError:
+
+        if self.inline_mode:
+            right1 = self.src.find(self.parent.inline_meta_close_delim, left)
+        else:
+            right1 = float('inf')
+
+        if (right2 := self.src.find(self.delim, left)) == -1:
             right2 = right1 + 1
         right = min(right1, right2)
         value = self.src[left:right]
@@ -808,10 +826,11 @@ class MetaPairParser(Parser):
             )
 
         after = src[brace + 1 :]
-        if not after.startswith(self.delim) and not after.startswith(' ' + Halmos):
+        inline_delim = self.parent.inline_meta_close_delim
+        if not after.startswith(self.delim) and not after.startswith(inline_delim):
             raise RSMParserError(
                 self.pos,
-                f'Expected a "{self.delim}" or a "{Halmos}" after value of key "{key}"',
+                f'Expected a "{self.delim}" or a "{inline_delim}" after value of key "{key}"',
             )
 
         value = src[1:brace]
@@ -894,8 +913,8 @@ class ManuscriptParser(ShouldHaveHeadingParser):
     shortcuts = [
         Shortcut(r'\\::', r'\\: :'),
         Shortcut(r'%(.*)$', r'', re.MULTILINE),
-        Shortcut(r'\*\*(.*?)\*\*', r':span: :strong: ::\1::'),
-        Shortcut(r'\*(.*?)\*', r':span: :emphas: ::\1::'),
+        Shortcut(r'\*\*(.*?)\*\*', r':span: {:strong:} \1::'),
+        Shortcut(r'\*(.*?)\*', r':span: {:emphas:} \1::'),
         Shortcut(r'^###(.*)$', r':subsubsection:\n  :title: \1\n', re.MULTILINE),
         Shortcut(r'^##(.*)$', r':subsection:\n  :title: \1\n', re.MULTILINE),
         Shortcut(r'^#(.*)$', r':section:\n  :title: \1\n', re.MULTILINE),

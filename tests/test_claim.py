@@ -9,7 +9,7 @@ def test_simple():
         :section:
           :title: Section
 
-        This pargraph contains a claim :claim: :label: clm-lbl :: all $X$ are $Y$ ::.
+        This pargraph contains a claim :claim: {:label: clm-lbl} all $X$ are $Y$ ::.
 
         ::
 
@@ -119,9 +119,9 @@ def test_claim_within_list():
         We now make a bunch of claims
         :enumerate:
 
-        :item: :label: one :: ⊢ $2+2=4$.
+        :item: {:label: one} ⊢ $2+2=4$.
 
-        :item: :label: two :: ⊢ $3+3=6$.
+        :item: {:label: two} ⊢ $3+3=6$.
 
         ::
 

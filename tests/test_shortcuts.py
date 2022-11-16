@@ -375,7 +375,7 @@ def test_prev_shortcut():
 
         :proof:
 
-        :step: :label: st1 :: All $X$ are $Z$ and all $Z$ are $Y$.::
+        :step: {:label: st1} All $X$ are $Z$ and all $Z$ are $Y$.::
 
         :step: QED.
 
@@ -475,9 +475,9 @@ def test_prev2_shortcut():
 
         :proof:
 
-        :step: :label: st1 :: All $X$ are $Z$ and all $Z$ are $Y$.::
+        :step: {:label: st1} All $X$ are $Z$ and all $Z$ are $Y$.::
 
-        :step: :label: st2 :: Something inconsequential here.::
+        :step: {:label: st2} Something inconsequential here.::
 
         :step: QED.
 
@@ -587,9 +587,9 @@ def test_prev_and_prev2_shortcut():
 
         :proof:
 
-        :step: :label: st1 :: All $X$ are $Z$.::
+        :step: {:label: st1} All $X$ are $Z$.::
 
-        :step: :label: st2 :: All $Z$ are $Y$.::
+        :step: {:label: st2} All $Z$ are $Y$.::
 
         :step: QED.
 

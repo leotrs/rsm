@@ -23,7 +23,7 @@ def test_no_reftext():
 
         <h1></h1>
 
-        <p class="paragraph">This paragraph has a hyperlink <a class="reference" href="https://www.apache.com">https://www.apache.com</a>.</p>
+        <p class="paragraph">This paragraph has a hyperlink <a href="https://www.apache.com">https://www.apache.com</a>.</p>
 
         </section>
 
@@ -56,7 +56,7 @@ def test_custom_reftext():
 
         <h1></h1>
 
-        <p class="paragraph">This is a link to <a class="reference" href="https://www.apache.com"> Apache</a>.</p>
+        <p class="paragraph">This is a link to <a href="https://www.apache.com"> Apache</a>.</p>
 
         </section>
 

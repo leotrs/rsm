@@ -575,7 +575,9 @@ class Translator:
                 )
             else:
                 reftext = tgt
-        classes = ['reference'] + node.types
+        classes = node.types
+        if isinstance(node, nodes.Reference):
+            classes.insert(0, 'reference')
         tag = make_tag('a', id_='', classes=classes, href=href_text) + reftext + '</a>'
         return tag
 

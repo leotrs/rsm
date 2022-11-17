@@ -288,8 +288,7 @@ img, svg {
 
     &-container {
         position: absolute;
-        left: calc(-1.2em);
-        transform: translateX(calc(-1 * var(--border-thin)));
+        left: calc(-1.15em);
         background: var(--gray-100);
         font-weight: var(--bold);
         display: none;

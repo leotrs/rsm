@@ -687,7 +687,6 @@ class Translator:
         return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])
 
     def visit_figure(self, node: nodes.Figure) -> EditCommand:
-        ic(node.number, node.full_number, str(node.caption))
         figcaption = AppendOpenTagManualClose('figcaption')
         title = self._make_title_node(
             f'{node.__class__.__name__} {node.full_number}. ', types=[], paragraph=False
@@ -824,32 +823,28 @@ class HandrailsTranslator(Translator):
     ) -> None:
         header = AppendOpenTagManualClose(classes=['proof__header'])
         tabs = AppendOpenTagManualClose(classes=['proof__tabs'])
-        batch.items = (
-            [batch.items[0]]
-            + [
-                header,
-                tree,
-                tabs,
-                AppendOpenCloseTag(
-                    'button',
-                    content="sketch",
-                    classes=["sketch", "active"],
-                    newline_inner=False,
-                ),
-                AppendOpenCloseTag(
-                    'button', content="full", classes=['full'], newline_inner=False
-                ),
-                tabs.close_command(),
-                header.close_command(),
-            ]
-            + batch.items[1:]
-        )
+        batch.items[1:1] = [
+            header,
+            tree,
+            tabs,
+            AppendOpenCloseTag(
+                'button',
+                content="sketch",
+                classes=["sketch", "active"],
+                newline_inner=False,
+            ),
+            AppendOpenCloseTag(
+                'button', content="full", classes=['full'], newline_inner=False
+            ),
+            tabs.close_command(),
+            header.close_command(),
+        ]
 
     def _add_proof_header_no_sketch(
         self, batch: EditCommandBatch, tree: nodes.Node, node: nodes.Proof
     ) -> None:
         header = AppendOpenTagManualClose(classes=['proof__header'])
-        batch.items += [header, tree, header.close_command()]
+        batch.items[1:1] = [header, tree, header.close_command()]
 
     def visit_subproof(self, node: nodes.Subproof) -> EditCommand:
         batch = super().visit_subproof(node)

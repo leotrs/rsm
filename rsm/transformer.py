@@ -79,7 +79,10 @@ class Transformer:
                 ]
                 pending.replace_self(nodes.Cite(targets=targets))
             elif isinstance(pending, nodes.PendingPrev):
-                step = pending.first_ancestor_of_type(nodes.Step)
+                try:
+                    step = pending.first_ancestor_of_type(nodes.Step)
+                except AttributeError:
+                    step = None
                 if step is None:
                     raise RSMTransformerError('Found :prev: tag outside proof step')
 

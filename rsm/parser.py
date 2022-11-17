@@ -924,9 +924,9 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         Shortcut(r'`(.*?)`', r':code:\1::'),
         Shortcut(r'\|-(.*?)\.', r':claim:\1::.'),
         Shortcut(r'⊢(.*?)\.', r':claim:\1::.'),
-        Shortcut(r':prev:(?=\W)|:prev:(.*?)::', r':prev:1,\1::'),
-        Shortcut(r':prev2:(?=\W)|:prev2:(.*?)::', r':prev:2,\1::'),
-        Shortcut(r':prev3:(?=\W)|:prev3:(.*?)::', r':prev:3,\1::'),
+        Shortcut(r':prev:(?=\W)', r':previous:1::'),
+        Shortcut(r':prev2:(?=\W)', r':previous:2::'),
+        Shortcut(r':prev3:(?=\W)', r':previous:3::'),
     ]
 
     def __init__(self, src: PlainTextManuscript):
@@ -1000,6 +1000,6 @@ for t in tags.all():
 _parsers['bibtex'] = BibTexParser
 _parsers['ref'] = RefParser
 _parsers['url'] = URLParser
-_parsers['prev'] = PrevParser
+_parsers['previous'] = PrevParser
 _parsers['cite'] = CiteParser
 _parsers['manuscript'] = ManuscriptParser

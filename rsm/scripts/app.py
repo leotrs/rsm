@@ -35,20 +35,20 @@ class Task(NamedTuple):
 
 class Pipeline:
     def __init__(self, tasks: list[Task]):
-        self.tasks = []
+        self.tasks: list[Task] = []
         for t in tasks:
             self.add_task(t)
 
-    def add_task(self, task):
+    def add_task(self, task: Task) -> None:
         self.tasks.append(task)
         setattr(self, task.name, task.obj)
 
-    def pop_task(self):
+    def pop_task(self) -> Task:
         task = self.tasks.pop()
         delattr(self, task.name)
         return task
 
-    def run(self, initial_args=None):
+    def run(self, initial_args: Any = None) -> Any:
         res = initial_args
         for _, _, call in self.tasks:
             if isinstance(res, dict):
@@ -62,14 +62,14 @@ class Pipeline:
         return res
 
 
-def validate(srcpath, plain) -> None:
+def validate(srcpath: Path | str | None, plain: str) -> None:
     if not srcpath and not plain:
         raise RSMApplicationError('Must specify exactly one of srcpath, plain')
     if srcpath and plain:
         raise RSMApplicationError('Must specify exactly one of srcpath, plain')
 
 
-def configure(verbosity) -> None:
+def configure(verbosity: int) -> None:
     level = logging.WARNING - verbosity * 10
     level = max(level, logging.DEBUG)
     logger.level = min(logger.level, level)

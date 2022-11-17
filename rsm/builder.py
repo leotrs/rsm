@@ -26,7 +26,7 @@ logger = logging.getLogger('RSM').getChild('Builder')
 
 
 class BaseBuilder(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         self.body: HTMLManuscript | None = None
         self.html: HTMLManuscript | None = None
         self.web: WebManuscript | None = None
@@ -39,7 +39,7 @@ class BaseBuilder(ABC):
         self.web.body = body
 
         logger.debug("Searching required static assets...")
-        self.required_assets = []
+        self.required_assets: list[Path] = []
         self.find_required_assets()
 
         logger.debug("Building main file...")

@@ -562,11 +562,13 @@ class Translator:
             ]
         )
 
-    def _make_ahref_tag_text(self, node: nodes.Node, href_text: str) -> EditCommand:
-        if not node.target:
+    def _make_ahref_tag_text(
+        self, node: nodes.Node, target: nodes.Node, href_text: str
+    ) -> str:
+        if not target:
             raise RSMTranslatorError(f'Found a {node.__class__} without a target')
-        tgt = node.target
-        if node.overwrite_reftext:
+        tgt = target
+        if hasattr(node, 'overwrite_reftext') and node.overwrite_reftext:
             reftext = node.overwrite_reftext
         else:
             if hasattr(tgt, 'reftext'):
@@ -576,16 +578,20 @@ class Translator:
             else:
                 reftext = tgt
         classes = node.types
-        if isinstance(node, nodes.Reference):
+        if not isinstance(node, nodes.URL) and 'reference' not in classes:
             classes.insert(0, 'reference')
         tag = make_tag('a', id_='', classes=classes, href=href_text) + reftext + '</a>'
         return tag
 
     def visit_reference(self, node: nodes.Reference) -> EditCommand:
-        return AppendText(self._make_ahref_tag_text(node, f"#{node.target.label}"))
+        return AppendText(
+            self._make_ahref_tag_text(node, node.target, f"#{node.target.label}")
+        )
 
     def visit_url(self, node: nodes.URL) -> EditCommand:
-        return AppendText(self._make_ahref_tag_text(node, f"{node.target}"))
+        return AppendText(
+            self._make_ahref_tag_text(node, node.target, f"{node.target}")
+        )
 
     def visit_claim(self, node: nodes.Claim) -> EditCommand:
         return AppendBatchAndDefer(
@@ -667,7 +673,8 @@ class Translator:
         return batch
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
-        text = ', '.join([str(bibitem.number) for bibitem in node.targets])
+        tags = [self._make_ahref_tag_text(node, t, f'#{t.label}') for t in node.targets]
+        text = ', '.join(tags)
         return AppendText(f'[{text}]')
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:

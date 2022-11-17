@@ -465,6 +465,8 @@ class Bibliography(NodeWithChildren):
 
 
 class Bibitem(Node):
+    classreftext: str = '{number}'
+
     _newmetakeys: ClassVar[set] = {
         'kind',
         'author',

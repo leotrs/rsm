@@ -6,12 +6,14 @@ Nodes that make up the Manuscript tree.
 
 """
 
-from typing import Any, Type, Optional, Callable, ClassVar
+from typing import Any, Type, Optional, Callable, ClassVar, TypeVar
 from collections.abc import Iterable
 from datetime import datetime
 from icecream import ic
 import textwrap
 from pathlib import Path
+
+NodeSubType = TypeVar('N', bound='Node')
 
 
 class RSMNodeError(Exception):
@@ -108,8 +110,8 @@ class Node:
         self,
         condition: Callable = lambda n: True,
         *,
-        nodeclass: Type['Node'] | None = None,
-    ) -> Iterable['Node']:
+        nodeclass: NodeSubType | None = None,
+    ) -> Iterable[NodeSubType]:
         if nodeclass is not None:
             if issubclass(nodeclass, Node):
                 condition = lambda n: isinstance(n, nodeclass)
@@ -175,11 +177,11 @@ class Node:
 
 
 class NodeWithChildren(Node):
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self._children = []
 
-    def _attrs_for_repr_and_eq(self):
+    def _attrs_for_repr_and_eq(self) -> list[str]:
         return super()._attrs_for_repr_and_eq() + ['children']
 
     def __repr__(self) -> str:
@@ -230,7 +232,7 @@ class NodeWithChildren(Node):
 
 
 class Text(Node):
-    def __init__(self, text: str = '', **kwargs):
+    def __init__(self, text: str = '', **kwargs: Any):
         super().__init__(**kwargs)
         self.text = text
 

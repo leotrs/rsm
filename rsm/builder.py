@@ -57,6 +57,9 @@ class BaseBuilder(ABC):
 
 
 class SingleFileBuilder(BaseBuilder):
+    body: HTMLManuscript
+    web: WebManuscript
+
     def make_main_file(self) -> None:
         html = HTMLManuscript(
             '<html>\n\n'

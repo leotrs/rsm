@@ -6,60 +6,67 @@ Utilities.
 
 """
 
+from typing import Any
 import textwrap
 
 
 class EscapedString:
-    def __init__(self, src='', chars=None):
+    def __init__(self, src: str = '', chars: str | None = None):
         self.escape_chars = set() if chars is None else set(chars)
         self._src = str(src)
 
-    def __contains__(self, sub):
+    def __contains__(self, sub: str) -> bool:
         return sub in self._src
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._src)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.escape_chars}, {textwrap.shorten(self._src, 60)})'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self._src
 
-    def escape(self):
+    def escape(self) -> str:
         ret = self._src
         for char in self.escape_chars:
             ret = ret.replace(f'\\{char}', char)
         return ret
 
-    def __getitem__(self, _slice):
+    def __getitem__(self, _slice: int | slice) -> 'EscapedString':
         return self.__class__(self._src[_slice])
 
-    def __add__(self, other):
+    def __add__(self, other: str) -> str:
         return self._src + other
 
-    def __radd__(self, other):
+    def __radd__(self, other: str) -> str:
         return other + self._src
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         return self._src == other
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self._src)
 
-    def format(self, *args, **kwargs):
+    def format(self, *args: Any, **kwargs: Any) -> str:
         return self._src.format(*args, **kwargs)
 
-    def strip(self, chars=None, /):
+    def strip(self, chars: str | None = None, /) -> 'EscapedString':
         return self.__class__(self._src.strip(chars))
 
-    def lstrip(self, chars=None, /):
+    def lstrip(self, chars: str | None = None, /) -> 'EscapedString':
         return self.__class__(self._src.lstrip(chars))
 
-    def rstrip(self, chars=None, /):
+    def rstrip(self, chars: str | None = None, /) -> 'EscapedString':
         return self.__class__(self._src.rstrip(chars))
 
-    def find(self, sub, start=0, end=None, skip_escaped=True):
+    def find(
+        self,
+        sub: str,
+        start: int = 0,
+        end: int | None = None,
+        skip_escaped: bool = True,
+    ) -> int:
         if end is None:
             end = len(self._src)
         if not skip_escaped or sub not in self.escape_chars:
@@ -76,14 +83,26 @@ class EscapedString:
                 return index
         return index
 
-    def rfind(self, sub, start=0, end=None, skip_escaped=True):
+    def rfind(
+        self,
+        sub: str,
+        start: int = 0,
+        end: int | None = None,
+        skip_escaped: bool = True,
+    ) -> int:
         if end is None:
             end = len(self._src)
         if not skip_escaped or sub not in self.escape_chars:
             return self._src.rfind(sub, start, end)
         raise Exception("Leo should have implemented this but didn't")
 
-    def index(self, sub, start=0, end=None, skip_escaped=True):
+    def index(
+        self,
+        sub: str,
+        start: int = 0,
+        end: int | None = None,
+        skip_escaped: bool = True,
+    ) -> int:
         if end is None:
             end = len(self._src)
         if not skip_escaped or sub not in self.escape_chars:
@@ -98,19 +117,33 @@ class EscapedString:
             index = self._src.find(sub, index + 1, end)
         return index
 
-    def rindex(self, sub, start=0, end=None, skip_escaped=True):
+    def rindex(
+        self,
+        sub: str,
+        start: int = 0,
+        end: int | None = None,
+        skip_escaped: bool = True,
+    ) -> int:
         if end is None:
             end = len(self._src)
         if not skip_escaped or sub not in self.escape_chars:
             return self._src.rindex(sub, start, end)
         raise Exception("Leo should have implemented this but didn't")
 
-    def replace(self, old, new, count=-1, /, skip_escaped=True):
+    def replace(
+        self, old: str, new: str, count: int = -1, /, skip_escaped: bool = True
+    ) -> 'EscapedString':
         if not skip_escaped or old not in self.escape_chars:
             return self.__class__(self._src.replace(old, new, count))
         raise Exception("Leo should have implemented this but didn't")
 
-    def startswith(self, prefix, start=0, end=None, skip_escaped=True):
+    def startswith(
+        self,
+        prefix: str,
+        start: int = 0,
+        end: int | None = None,
+        skip_escaped: bool = True,
+    ) -> bool:
         if end == -1:
             end = len(self._src)
         if len(prefix) == 1:
@@ -119,14 +152,22 @@ class EscapedString:
             return self._src.startswith(prefix, start, end)
         raise Exception("Leo should have implemented this but didn't")
 
-    def endswith(self, prefix, start=0, end=None, skip_escaped=True):
+    def endswith(
+        self,
+        prefix: str,
+        start: int = 0,
+        end: int | None = None,
+        skip_escaped: bool = True,
+    ) -> bool:
         if end is None:
             end = len(self._src)
         if not skip_escaped or prefix not in self.escape_chars:
             return self._src.endswith(prefix, start, end)
         raise Exception("Leo should have implemented this but didn't")
 
-    def split(self, /, sep=None, maxsplit=-1, skip_escaped=True):
+    def split(
+        self, /, sep: str | None = None, maxsplit: int = -1, skip_escaped: bool = True
+    ) -> list[str]:
         if not skip_escaped or sep not in self.escape_chars:
             return self._src.split(sep, maxsplit)
         raise Exception("Leo should have implemented this but didn't")

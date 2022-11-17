@@ -7,7 +7,7 @@ RSM Translator: take a Manuscript and return a HTML string.
 """
 
 import logging
-from typing import Iterable, Callable
+from typing import Iterable, Callable, Any
 from collections import namedtuple
 from abc import ABC, abstractmethod
 from typing import Iterable
@@ -24,7 +24,7 @@ class RSMTranslatorError(Exception):
     pass
 
 
-def make_tag(tag: str, id_: str, classes: Iterable, **kwargs) -> str:
+def make_tag(tag: str, id_: str, classes: Iterable, **kwargs: Any) -> str:
     text = f'<{tag}'
     if id_:
         text += f' id="{id_}"'
@@ -46,7 +46,7 @@ class EditCommand(ABC):
     defers = False
 
     @abstractmethod
-    def make_text(self):
+    def make_text(self) -> Any:
         pass
 
     @abstractmethod
@@ -563,7 +563,7 @@ class Translator:
         )
 
     def _make_ahref_tag_text(
-        self, node: nodes.Node, target: nodes.Node, href_text: str
+        self, node: nodes.BaseReference, target: nodes.Node, href_text: str
     ) -> str:
         if not target:
             raise RSMTranslatorError(f'Found a {node.__class__} without a target')

@@ -20,7 +20,7 @@ LINT_LVL = 25
 
 class GatherHandler(BufferingHandler):
     def __init__(self, levels: list[int], target: logging.Handler = None) -> None:
-        super().__init__(capacity=float('inf'))
+        super().__init__(capacity=1000000)
         self.gatherlevels = set(levels)
         self.buffer = []
         self.target = target
@@ -66,7 +66,9 @@ class Linter:
         self.handler.flush()
         print('------ End of linting output ------')
 
-    def lint(self, tree: manuscript.AbstractTreeManuscript) -> None:
+    def lint(
+        self, tree: manuscript.AbstractTreeManuscript
+    ) -> manuscript.AbstractTreeManuscript:
         main_logger.info("Linting...")
         self.tree = tree
         main_logger.lint('this is a lint message')

@@ -475,12 +475,13 @@ ol.bibliography {
 /* State */
 /******************************************************************************************/
 
-a:link, a:visited, a:active {
+a:link, a:visited, a:active, a.note__link {
     text-decoration: none;
     color: var(--link-color);
+    cursor: pointer;
 }
 
-a:hover {
+a:hover, a.note__link:hover {
     text-decoration: underline;
     color: var(--link-color-hover);
 }

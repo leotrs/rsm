@@ -79,3 +79,8 @@ def test_prepend_order():
     parent = rsm.nodes.NodeWithChildren()
     parent.prepend([rsm.nodes.Text('1'), rsm.nodes.Text('2'), rsm.nodes.Text('3')])
     assert str(parent.children) == '(Text(1), Text(2), Text(3))'
+
+
+def test_set_parent_to_none():
+    node = rsm.nodes.Step()
+    node.parent = None

@@ -79,13 +79,18 @@ class Node:
         return self._parent
 
     @parent.setter
-    def parent(self, node: 'NodeWithChildren') -> None:
-        possible_parents = self.__class__.possible_parents
-        if possible_parents and type(node) not in possible_parents:
-            raise RSMNodeError(
-                f'Node of type {type(self)} cannot have parent of type {type(node)}'
-            )
-        self._parent = node
+    def parent(self, node: Optional['NodeWithChildren']) -> None:
+        if node is None:
+            self._parent = None
+        elif not self.__class__.possible_parents:
+            self._parent = node
+        else:
+            possible_parents = self.__class__.possible_parents
+            if possible_parents and type(node) not in possible_parents:
+                raise RSMNodeError(
+                    f'Node of type {type(self)} cannot have parent of type {type(node)}'
+                )
+            self._parent = node
 
     @property
     def children(self) -> tuple:

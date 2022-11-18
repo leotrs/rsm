@@ -466,6 +466,10 @@ class Lemma(Theorem):
     _newmetakeys: ClassVar[set] = set()
 
 
+class Proposition(Theorem):
+    _newmetakeys: ClassVar[set] = set()
+
+
 class Remark(Theorem):
     _newmetakeys: ClassVar[set] = set()
 

@@ -369,7 +369,7 @@ class Code(NodeWithChildren):
 
 
 class MathBlock(NodeWithChildren):
-    classreftext: ClassVar[str] = 'Equation {number}'
+    classreftext: ClassVar[str] = 'Equation ({number})'
 
 
 class CodeBlock(NodeWithChildren):

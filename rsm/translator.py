@@ -594,7 +594,7 @@ class Translator:
         else:
             if hasattr(tgt, 'reftext'):
                 reftext = tgt.reftext.format(
-                    nodeclass=tgt.__class__.__name__, number=tgt.number
+                    nodeclass=tgt.__class__.__name__, number=tgt.full_number
                 )
             else:
                 reftext = tgt

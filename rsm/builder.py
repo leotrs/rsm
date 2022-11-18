@@ -14,7 +14,6 @@ import re
 from abc import ABC, abstractmethod
 from textwrap import dedent
 from pathlib import Path
-import sass
 from icecream import ic
 
 from .manuscript import WebManuscript

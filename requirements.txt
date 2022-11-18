@@ -1,1 +1,3 @@
 sphinx>=4.0.2
+fs>=2.4
+livereload>=2.6

@@ -442,6 +442,16 @@ ol.bibliography {
     padding-inline-start: var(--handrail-offset);
 }
 
+.mathblock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__number--phantom {
+        visibility: hidden;
+    }
+}
+
 
 /* State */
 /******************************************************************************************/

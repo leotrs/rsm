@@ -534,8 +534,27 @@ class Translator:
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         # the strings '$$' and '$$' are MathJax's delimiters for inline math
         return AppendBatchAndDefer(
-            [AppendNodeTag(node, 'div'), AppendTextAndDefer('$$\n', '$$')]
+            [
+                AppendNodeTag(node, 'div'),
+                AppendTextAndDefer('$$\n', '$$'),
+            ]
         )
+
+    def leave_mathblock(self, node: nodes.MathBlock) -> EditCommand:
+        # For documentation: if a visit_* method returns a command with defers = True,
+        # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
+        # add it to the returned batch!!!
+        batch = self.leave_node(node)
+        batch.items.insert(
+            1,
+            AppendOpenCloseTag(
+                content=f'({node.full_number})',
+                classes=['mathblock__number'],
+                newline_inner=False,
+            ),
+        )
+        batch = AppendBatch(batch.items)
+        return batch
 
     def visit_code(self, node: nodes.Code) -> EditCommand:
         return AppendNodeTag(node, 'span', newline_inner=False, newline_outer=False)
@@ -881,3 +900,17 @@ class HandrailsTranslator(Translator):
         batch.items.insert(1, AppendHalmos(classes=['hide']))
         batch = AppendBatch(batch.items)
         return batch
+
+    def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
+        # the strings '$$' and '$$' are MathJax's delimiters for inline math
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node, 'div'),
+                AppendOpenCloseTag(
+                    content=f'({node.full_number})',
+                    classes=['mathblock__number mathblock__number--phantom'],
+                    newline_inner=False,
+                ),
+                AppendTextAndDefer('$$\n', '$$'),
+            ]
+        )

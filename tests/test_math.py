@@ -32,6 +32,8 @@ def test_display_alone():
         $$
         2 + 2 = 4
         $$
+        <div class="mathblock__number">(1)</div>
+
         </div>
 
         </section>
@@ -147,6 +149,8 @@ def test_math_with_shortcuts():
         $$
         x = {-b \pm \sqrt{b^2-4ac} \over 2a}.
         $$
+        <div class="mathblock__number">(1.1)</div>
+
         </div>
 
         </section>
@@ -201,6 +205,8 @@ def test_math_ref():
         $$
         2+2=4
         $$
+        <div class="mathblock__number">(1.1)</div>
+
         </div>
 
         <p class="paragraph">And now we refer to <a class="reference" href="#eqn-foo">Equation 1</a>.</p>

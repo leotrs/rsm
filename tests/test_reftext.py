@@ -47,6 +47,8 @@ def test_simple():
         $$
         2+2=4
         $$
+        <div class="mathblock__number">(1)</div>
+
         </div>
 
         <p class="paragraph">Here we refer to the <a class="reference" href="#eqn">Important Equation</a>.</p>

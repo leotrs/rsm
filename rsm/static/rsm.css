@@ -356,6 +356,13 @@ dd > p, dt > p {
 ol.bibliography {
   padding-inline-start: var(--handrail-offset); }
 
+.mathblock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; }
+  .mathblock__number--phantom {
+    visibility: hidden; }
+
 /* State */
 /******************************************************************************************/
 a:link, a:visited, a:active {

@@ -80,8 +80,6 @@ class Node:
 
     @parent.setter
     def parent(self, node: 'Node') -> None:
-        if isinstance(node, property):
-            node = self._parent  # initial value not specified, use default
         if node is None:
             self._parent = node
             return

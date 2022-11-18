@@ -826,7 +826,40 @@ def test_comment_multi_line_comment():
     )
 
 
-def test_comment_multi_line_comment():
+def test_escape_comment_delimiter():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        \% This is not a comment.
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">% This is not a comment.</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_end_of_line_comment():
     compare_have_want(
         have="""\
         :manuscript:

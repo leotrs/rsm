@@ -369,6 +369,9 @@ ol.bibliography {
   .mathblock__number--phantom {
     visibility: hidden; }
 
+.note__content {
+  display: none; }
+
 /* State */
 /******************************************************************************************/
 a:link, a:visited, a:active {

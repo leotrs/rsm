@@ -142,7 +142,7 @@ Halmos = Tag('')
 _tags = {}
 _tags['paragraph'] = ParagraphTag.newtag(nodes.Paragraph, tag_optional=True)
 _tags['item'] = ParagraphTag.newtag(nodes.Item)
-_tags['note'] = ParagraphTag.newtag(nodes.Note)
+_tags['note'] = InlineTag.newtag(nodes.Note)
 _tags['author'] = BlockTag.newtag(nodes.Author, has_content=False)
 _tags['abstract'] = BlockTag.newtag(nodes.Abstract)
 _tags['enumerate'] = BlockTag.newtag(nodes.Enumerate)

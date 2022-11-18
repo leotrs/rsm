@@ -534,7 +534,23 @@ class Translator:
         )
 
     def visit_note(self, node: nodes.Note) -> EditCommand:
-        return AppendNodeTag(node)
+        return AppendBatchAndDefer(
+            [
+                AppendOpenTag('span', classes=['note']),
+                AppendOpenCloseTag(
+                    'sup',
+                    content=f'<a class="note__link">{node.full_number}</a>',
+                    classes=['note__number'],
+                    newline_inner=False,
+                ),
+                AppendOpenTag(
+                    'span',
+                    id=node.label,
+                    classes=['note__content'],
+                    newline_inner=False,
+                ),
+            ]
+        )
 
     def visit_math(self, node: nodes.Math) -> EditCommand:
         # the strings r'\(' and r'\)' are MathJax's delimiters for inline math

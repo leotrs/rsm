@@ -53,7 +53,8 @@ export function createTooltips() {
                     content = $(target).find('mjx-container').clone();
                     break;
                 case true:
-                    console.log("tooltip target DIV with unknown class")
+                    console.log("tooltip target DIV with unknown class: ")
+                    console.log(classes);
                 }
             } else {
 		console.log(`tooltip target with unknown tag ${tag}`);
@@ -62,6 +63,39 @@ export function createTooltips() {
             instance.content($(content));
         }
     });
+
+    $("a.note__link").tooltipster({
+        theme: 'tooltipster-shadow',
+        functionInit: function(instance, helper) {
+            let content = $(helper.origin).parent().next().html();
+            content = `<div>${content}</div>`;
+
+            // if (tag == "P") {
+            //     content = $(target).html();
+            //     content = `<div>${content}</div>`;
+            // } else if (tag == "LI") {
+            //     content = $(target).html();
+            //     content = `<div>${content}</div>`;
+	    // } else if (tag == "SPAN") {
+            //     content = $(target).parent().html();
+	    // } else if (tag == "DT") {
+	    //     content = $(target).next().html();
+            // } else if (tag == "FIGURE") {
+            //     content = $(target).html();
+            // } else if (tag == "SECTION") {
+            //     let clone = $(target).clone();
+            //     clone.children().slice(2).remove();
+            //     clone.children().each(function () {$(this).css('transform', 'scale(0.75)');});
+            //     clone.css('transform', 'scale(0.75)');
+            //     content = clone.html();
+            // } else {
+	    //     console.log('lolwut');
+	    // }
+
+            instance.content($(content));
+        }
+    });
+
     if (typeof MathJax !== 'undefined' && 'typeset' in MathJax) {
         MathJax.typeset();
     }

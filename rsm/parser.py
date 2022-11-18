@@ -885,13 +885,13 @@ class BibTexParser(DelimitedRegionParser):
                     pairs[key.lower()] = val
             spans.sort()
             if spans[0][0] != 0:
-                print('The first key has not been parsed')
+                logger.warning('The first key has not been parsed')
             if spans[-1][1] != len(content) - 1:
-                print('The last key has not been parsed')
+                logger.warning('The last key has not been parsed')
             prev = 0
             for start, cease in spans:
                 if prev != start:
-                    print('Some middle key has not been parsed')
+                    logger.warning('Some middle key has not been parsed')
                 prev = cease
 
             child = nodes.Bibitem()

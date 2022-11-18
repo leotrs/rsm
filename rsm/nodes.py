@@ -79,10 +79,7 @@ class Node:
         return self._parent
 
     @parent.setter
-    def parent(self, node: 'Node') -> None:
-        if node is None:
-            self._parent = node
-            return
+    def parent(self, node: 'NodeWithChildren') -> None:
         possible_parents = self.__class__.possible_parents
         if possible_parents and type(node) not in possible_parents:
             raise RSMNodeError(

@@ -716,6 +716,11 @@ class Translator:
         text += f' {node.year}.'
         return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])
 
+    def visit_draft(self, node: nodes.Draft) -> EditCommand:
+        return AppendBatchAndDefer(
+            [AppendNodeTag(node, 'span'), AppendTextAndDefer('[ ', ' ]')]
+        )
+
     def visit_figure(self, node: nodes.Figure) -> EditCommand:
         figcaption = AppendOpenTagManualClose('figcaption')
         title = self._make_title_node(

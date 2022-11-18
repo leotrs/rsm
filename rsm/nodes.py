@@ -524,3 +524,7 @@ class Figure(Node):
         super().__init__(**kwargs)
         self.path = Path(path)
         self.caption = caption
+
+
+class Draft(NodeWithChildren):
+    pass

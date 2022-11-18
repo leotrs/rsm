@@ -46,6 +46,9 @@ export function createTooltips() {
                 case classes.contains("math"):
                     content = $(target).html();
                     break;
+                case classes.contains("mathblock"):
+                    content = $(target).prop('outerHTML');
+                    break;
                 case true:
                     console.log("tooltip target DIV with unknown class")
                 }

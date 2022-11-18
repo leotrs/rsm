@@ -6,14 +6,14 @@ Nodes that make up the Manuscript tree.
 
 """
 
-from typing import Any, Type, Optional, Callable, ClassVar, TypeVar
+from typing import Any, Type, Optional, Callable, ClassVar, TypeVar, cast
 from collections.abc import Iterable
 from datetime import datetime
 from icecream import ic
 import textwrap
 from pathlib import Path
 
-NodeSubType = TypeVar('N', bound='Node')
+NodeSubType = TypeVar('NodeSubType', bound='Node')
 
 
 class RSMNodeError(Exception):
@@ -40,10 +40,10 @@ class Node:
         self.reftext = customreftext or self.classreftext
         self._parent = None
 
-    def _attrs_for_repr_and_eq(self):
+    def _attrs_for_repr_and_eq(self) -> list[str]:
         return ['label', 'types', 'nonum', 'number', 'parent']
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         cls = self.__class__.__name__
         d = {
             att: getattr(self, att)
@@ -56,7 +56,7 @@ class Node:
         d_str = ', '.join(f'{k}={v}' for k, v in d.items() if v)
         return f'{cls}({d_str})'
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         attrs = self._attrs_for_repr_and_eq()
         try:
             return all(
@@ -230,7 +230,7 @@ class NodeWithChildren(Node):
 
 
 class Text(Node):
-    def __init__(self, text: str = '', **kwargs: Any):
+    def __init__(self, text: str = '', **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.text = text
 
@@ -255,8 +255,8 @@ class Span(NodeWithChildren):
         little: bool = False,
         insert: bool = False,
         delete: bool = False,
-        **kwargs,
-    ):
+        **kwargs: Any,
+    ) -> None:
         super().__init__(**kwargs)
         self.strong = strong
         self.emphas = emphas
@@ -276,7 +276,7 @@ class BlockClaim(Claim):
 class Heading(NodeWithChildren):
     _newmetakeys: ClassVar[set] = {'title'}
 
-    def __init__(self, title: str = '', **kwargs):
+    def __init__(self, title: str = '', **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.title = title
 
@@ -284,7 +284,9 @@ class Heading(NodeWithChildren):
 class Manuscript(Heading):
     _newmetakeys: ClassVar[set] = {'date'}
 
-    def __init__(self, src: str = '', date: datetime | None = None, **kwargs):
+    def __init__(
+        self, src: str = '', date: datetime | None = None, **kwargs: Any
+    ) -> None:
         super().__init__(**kwargs)
         self.src = src
         self.date = date
@@ -294,8 +296,8 @@ class Author(Node):
     _newmetakeys: ClassVar[set] = {'name', 'affiliation', 'email'}
 
     def __init__(
-        self, name: str = '', affiliation: str = '', email: str = '', **kwargs
-    ):
+        self, name: str = '', affiliation: str = '', email: str = '', **kwargs: Any
+    ) -> None:
         super().__init__(**kwargs)
         self.name = name
         self.affiliation = affiliation
@@ -306,8 +308,11 @@ class Abstract(NodeWithChildren):
     _newmetakeys: ClassVar[set] = {'keywords', 'MSC'}
 
     def __init__(
-        self, keywords: list[str] | None = None, MSC: list[str] | None = None, **kwargs
-    ):
+        self,
+        keywords: list[str] | None = None,
+        MSC: list[str] | None = None,
+        **kwargs: Any,
+    ) -> None:
         super().__init__(**kwargs)
         self.keywords = keywords or []
         self.MSC = MSC or []
@@ -362,53 +367,56 @@ class Code(NodeWithChildren):
 
 
 class MathBlock(NodeWithChildren):
-    classreftext: str = 'Equation {number}'
+    classreftext: ClassVar[str] = 'Equation {number}'
 
 
 class CodeBlock(NodeWithChildren):
-    classreftext: str = 'Code Listing {number}'
+    classreftext: ClassVar[str] = 'Code Listing {number}'
 
 
 class BaseReference(Node):
     def __init__(
-        self, target: str | Node | None = None, overwrite_reftext: str = '', **kwargs
-    ):
+        self,
+        target: str | Node | None = None,
+        overwrite_reftext: str = '',
+        **kwargs: Any,
+    ) -> None:
         super().__init__(**kwargs)
         self.overwrite_reftext = overwrite_reftext
         self.target = target
 
-    def _attrs_for_repr_and_eq(self):
+    def _attrs_for_repr_and_eq(self) -> list[str]:
         return super()._attrs_for_repr_and_eq() + ['target', 'overwrite_reftext']
 
 
 class PendingReference(BaseReference):
-    def __init__(self, target: str = '', **kwargs):
+    def __init__(self, target: str = '', **kwargs: Any) -> None:
         super().__init__(target, **kwargs)
 
 
 class Reference(BaseReference):
-    def __init__(self, target: Node | None = None, **kwargs):
+    def __init__(self, target: Node | None = None, **kwargs: Any) -> None:
         super().__init__(target, **kwargs)
 
 
 class PendingPrev(BaseReference):
-    def __init__(self, target: str = '', **kwargs):
+    def __init__(self, target: str = '', **kwargs: Any) -> None:
         super().__init__(target, **kwargs)
 
 
 class URL(BaseReference):
-    def __init__(self, target: str = '', **kwargs):
+    def __init__(self, target: str = '', **kwargs: Any) -> None:
         super().__init__(target, **kwargs)
 
 
 class PendingCite(Node):
-    def __init__(self, targetlabels: list[str] = None, **kwargs):
+    def __init__(self, targetlabels: list[str] = None, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.targetlabels = targetlabels or []
 
 
 class Cite(Node):
-    def __init__(self, targets: list[Node] | None = None, **kwargs):
+    def __init__(self, targets: list[Node] | None = None, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.targets = targets or []
 
@@ -444,7 +452,7 @@ class Theorem(Heading):
         goals: list[BaseReference] | None = None,
         stars: int = 0,
         clocks: int = 0,
-        **kwargs,
+        **kwargs: Any,
     ):
         super().__init__(*kwargs)
         self.goals = goals or []
@@ -488,7 +496,7 @@ class Bibitem(Node):
         volume: int = -1,
         number: int = -1,
         publisher: str = '',
-        **kwargs,
+        **kwargs: Any,
     ):
         super().__init__(**kwargs)
         self.kind = kind
@@ -502,7 +510,7 @@ class Bibitem(Node):
 
 
 class UnknownBibitem(Bibitem):
-    def __init__(self, number: str | int = '?', **kwargs):
+    def __init__(self, number: str | int = '?', **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.number = number
 
@@ -510,7 +518,7 @@ class UnknownBibitem(Bibitem):
 class Figure(Node):
     _newmetakeys: ClassVar[set] = {'path', 'caption'}
 
-    def __init__(self, path: Path | str = '', caption: str = '', **kwargs):
+    def __init__(self, path: Path | str = '', caption: str = '', **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.path = Path(path)
         self.caption = caption

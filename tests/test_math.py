@@ -1,3 +1,5 @@
+import pytest
+import rsm
 from conftest import compare_have_want
 
 
@@ -214,3 +216,16 @@ def test_math_ref():
         </body>
         """,
     )
+
+
+def test_unclosed_dollar_sign():
+    with pytest.raises(rsm.parser.RSMParserError):
+        compare_have_want(
+            have=r"""        :manuscript:
+
+            There are three dollar signs here $2+2 $= 0$.
+
+            ::
+            """,
+            want="X",
+        )

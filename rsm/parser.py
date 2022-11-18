@@ -7,7 +7,7 @@ RSM Parser: take a partial source string and output a single node.
 """
 
 from datetime import datetime
-from typing import Any, Type, Optional, Callable
+from typing import Any, Type, Optional, Callable, cast
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from collections import namedtuple
@@ -28,7 +28,7 @@ logger = logging.getLogger('RSM').getChild('Parser')
 
 
 class RSMParserError(Exception):
-    def __init__(self, pos, msg=None):
+    def __init__(self, pos: int, msg: str | None = None) -> None:
         self.pos = pos
         self.msg = f'Parser error at position {self.pos}' if msg is None else msg
         super().__init__(self.msg)
@@ -168,13 +168,12 @@ class ParagraphParser(Parser):
     ):
         super().__init__(parent=parent, frompos=frompos)
         self.tag = tag
-        self.node: nodes.NodeWithChildren = tag.makenode()
+        self.node = cast(nodes.Paragraph, tag.makenode())
         if not isinstance(self.node, nodes.BaseParagraph):
             raise TypeError(
                 'ParagraphParser called with a tag that created a non-Paragraph '
                 f'node ({type(self.node)})'
             )
-        self.node: nodes.Paragraph
 
     def _pre_process(self) -> None:
         cease = self.src[: self.frompos].rfind('\n')
@@ -503,12 +502,12 @@ class SpecialTagRegionParser(DelimitedRegionParser):
             consumed=self.pos - oldpos,
         )
 
-    def parse_content(self, content: str) -> Type[nodes.Node]:
+    def parse_content(self, content: str) -> nodes.Node:
         raise NotImplementedError
 
 
 class LabelCommaTextParser(SpecialTagRegionParser):
-    def parse_content(self, content: str, cls: Type[nodes.Node]):
+    def parse_content(self, content: str, cls: Type[nodes.Node]) -> Type[nodes.Node]:
         split = content.split(',')
         if len(split) > 1:
             if len(split) > 2:
@@ -761,7 +760,7 @@ class MetaPairParser(Parser):
 
     @property
     def inline_mode(self) -> bool:
-        return self.parent.inline_mode
+        return bool(self.parent.inline_mode)
 
     def parse_upto_delim_value(self, key: str) -> tuple[str, int]:
         left = self.pos
@@ -935,11 +934,10 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         self.tag.set_source(src)
         super().__init__(parent=None, frompos=0, tag=self.tag)
 
-    def parse(self) -> nodes.Manuscript:
+    def parse(self) -> BaseParsingResult:
         self.node: nodes.Manuscript
         self.src = self.apply_shortcuts(self.node.src)
-        result = super().parse()
-        return result.result
+        return super().parse()
 
     def apply_shortcuts(self, src: PlainTextManuscript) -> PlainTextManuscript:
         logger.debug('applying shortcuts')
@@ -950,6 +948,8 @@ class ManuscriptParser(ShouldHaveHeadingParser):
 
         for pattern, replacement, flags in self.shortcuts:
             src = re.sub(pattern, replacement, src, flags=flags)
+
+        ic(src)
 
         return PlainTextManuscript(src)
 
@@ -964,7 +964,7 @@ class MainParser:
 
         self.src = src.strip()
         parser = ManuscriptParser(self.src)
-        self.tree = parser.parse()
+        self.tree = parser.parse().result
         parser.consume_whitespace()
 
         # note here we must compare against len(parser.src) and NOT against

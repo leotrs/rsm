@@ -101,7 +101,7 @@ class Node:
     def full_number(self) -> str:
         node = self
         numbers = []
-        while node.number is not None:
+        while node and node.number is not None:
             numbers.append(str(node.number))
             node = node.parent
         return '.'.join(reversed(numbers))
@@ -527,4 +527,8 @@ class Figure(Node):
 
 
 class Draft(NodeWithChildren):
+    pass
+
+
+class Definition(NodeWithChildren):
     pass

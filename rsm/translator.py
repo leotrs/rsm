@@ -519,6 +519,20 @@ class Translator:
     def visit_item(self, node: nodes.Item) -> EditCommand:
         return AppendNodeTag(node, 'li')
 
+    def visit_definition(self, node: nodes.Theorem) -> EditCommand:
+        classname = node.__class__.__name__.lower()
+        title = self._make_title_node(
+            f'{classname.capitalize()} {node.full_number}. ',
+            [f'{classname}__title'],
+        )
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node),
+                AppendOpenTag(classes=[f'{classname}-contents']),
+                AppendExternalTree(title),
+            ]
+        )
+
     def visit_note(self, node: nodes.Note) -> EditCommand:
         return AppendNodeTag(node)
 
@@ -641,7 +655,9 @@ class Translator:
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         classname = node.__class__.__name__.lower()
         title = self._make_title_node(
-            f'{classname.capitalize()} {node.full_number}. ',
+            f'{classname.capitalize()}'
+            + (f' {node.full_number}' if not node.nonum and node.number else '')
+            + '. ',
             [f'{classname}__title'],
         )
         return AppendBatchAndDefer(
@@ -831,6 +847,13 @@ class HandrailsTranslator(Translator):
             f'stars-{node.stars}',
             f'clocks-{node.clocks}',
         ]
+        batch.items[-1].root.types.append("do-not-hide")
+        return batch
+
+    def visit_definition(self, node: nodes.Definition) -> EditCommand:
+        batch = super().visit_definition(node)
+        batch.items[1].classes.append('handrail__collapsible')
+        batch = self._replace_batch_with_handrails(1, batch, include_content=True)
         batch.items[-1].root.types.append("do-not-hide")
         return batch
 

@@ -139,6 +139,7 @@ class Transformer:
             nodes.Subsubsection: 0,
             nodes.MathBlock: 0,
             nodes.Theorem: 0,
+            nodes.Definition: 0,
             nodes.Lemma: 0,
             nodes.Bibitem: 0,
             nodes.Step: 0,
@@ -153,11 +154,13 @@ class Transformer:
                 counts[nodes.Subsubsection] = 0
                 counts[nodes.Subsection] = 0
                 counts[nodes.Theorem] = 0
+                counts[nodes.Definition] = 0
                 counts[nodes.Lemma] = 0
                 counts[nodes.Figure] = 0
             if nodeclass is nodes.Subsection:
                 counts[nodes.Subsubsection] = 0
                 counts[nodes.Theorem] = 0
+                counts[nodes.Definition] = 0
                 counts[nodes.Lemma] = 0
             if nodeclass is nodes.Proof:
                 counts[nodes.Step] = 0

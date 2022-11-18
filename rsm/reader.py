@@ -16,7 +16,7 @@ logger = logging.getLogger('RSM').getChild('Reader')
 
 
 class Reader:
-    def __init__(self):
+    def __init__(self) -> None:
         self.path: Path = Path()
         self.src: str = ''
 

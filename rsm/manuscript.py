@@ -15,12 +15,12 @@ from . import tags
 
 
 class PlainTextManuscript(util.EscapedString):
-    def __init__(self, src=''):
-        super().__init__(src, {tags.Tag.delim})
+    def __init__(self, src: str = '') -> None:
+        super().__init__(src, tags.Tag.delim)
 
 
 class WebManuscript(MountFS):
-    def __init__(self, src: Path = None):
+    def __init__(self, src: Path = None) -> None:
         super().__init__()
         self.src = Path(src) if src else None
         self.body: str = ''

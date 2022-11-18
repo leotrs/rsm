@@ -38,7 +38,7 @@ class Node:
         self.nonum = nonum
         self.number = number
         self.reftext = customreftext or self.classreftext
-        self._parent = None
+        self._parent: 'NodeWithChildren' | None = None
 
     def _attrs_for_repr_and_eq(self) -> list[str]:
         return ['label', 'types', 'nonum', 'number', 'parent']
@@ -117,7 +117,7 @@ class Node:
         while stack:
             node = stack.pop()
             if condition(node):
-                yield node
+                yield cast(NodeSubType, node)
             stack += node.children[::-1]
 
     def first_of_type(
@@ -130,7 +130,7 @@ class Node:
 
     def last_of_type(
         self, cls: Type['Node'] | tuple[Type['Node']], return_idx: bool = False
-    ) -> Optional['Node']:
+    ) -> Optional['Node'] | tuple[Optional['Node'], int | None]:
         last = (None, None) if return_idx else None
         for idx, child in enumerate(self.children):
             if isinstance(child, cls):
@@ -174,7 +174,7 @@ class Node:
 class NodeWithChildren(Node):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self._children = []
+        self._children: list[Node] = []
 
     def _attrs_for_repr_and_eq(self) -> list[str]:
         return super()._attrs_for_repr_and_eq() + ['children']
@@ -470,7 +470,7 @@ class Bibliography(NodeWithChildren):
 
 
 class Bibitem(Node):
-    classreftext: str = '{number}'
+    classreftext: ClassVar[str] = '{number}'
 
     _newmetakeys: ClassVar[set] = {
         'kind',

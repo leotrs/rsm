@@ -12,7 +12,7 @@ class RSMFormatter(logging.Formatter):
     reset = "\x1b[0m"
     prefix = grey + '%(asctime)s ' + reset + blue + '%(name)s ' + reset
     msgformat = "%(levelname)-4s | %(message)s"
-    suffix =  reset + grey + " (%(filename)s:%(lineno)d)" + reset
+    suffix = reset + grey + " (%(filename)s:%(lineno)d)" + reset
 
     COLORS = {
         logging.DEBUG: grey,
@@ -22,7 +22,7 @@ class RSMFormatter(logging.Formatter):
         logging.CRITICAL: boldred,
     }
 
-    def format(self, record):
+    def format(self, record: logging.LogRecord) -> str:
         fmt = (
             self.prefix
             + self.COLORS.get(record.levelno, self.grey)

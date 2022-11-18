@@ -840,7 +840,7 @@ class MetaPairParser(Parser):
 
 
 class BibTexParser(DelimitedRegionParser):
-    def __init__(self, src):
+    def __init__(self, src) -> None:
         self.tag = tags.get('bibtex')
         super().__init__(parent=None, frompos=0, start=self.tag, end=Halmos)
         self.src = src

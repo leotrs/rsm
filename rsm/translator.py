@@ -544,6 +544,9 @@ class Translator:
         # For documentation: if a visit_* method returns a command with defers = True,
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
         # add it to the returned batch!!!
+        if node.nonum:
+            return self.leave_node(node)
+
         batch = self.leave_node(node)
         batch.items.insert(
             1,

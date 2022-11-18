@@ -56,8 +56,7 @@ def test_inline_no_meta():
 
         ::
         """,
-        want="""\
-        <body>
+        want=r"""        <body>
 
         <div class="manuscriptwrapper">
 
@@ -90,8 +89,7 @@ def test_inline_with_meta():
 
         ::
         """,
-        want="""\
-        <body>
+        want=r"""        <body>
 
         <div class="manuscriptwrapper">
 
@@ -212,6 +210,83 @@ def test_math_ref():
         <p class="paragraph">And now we refer to <a class="reference" href="#eqn-foo">Equation 1</a>.</p>
 
         </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_mathblock_nonum():
+    compare_have_want(
+        have=r"""        :manuscript:
+
+        :mathblock:
+          :nonum:
+          2+2=4
+        ::
+
+        ::
+        """,
+        want=r"""        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <div class="mathblock">
+        $$
+        2+2=4
+        $$
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_mathblock_nonum_with_shortcut():
+    compare_have_want(
+        have=r"""        :manuscript:
+
+        $$
+          :nonum:
+          2+2=4
+        $$
+
+        ::
+        """,
+        want=r"""        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <div class="mathblock">
+        $$
+        2+2=4
+
+        $$
+        </div>
 
         </section>
 

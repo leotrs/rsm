@@ -199,6 +199,8 @@ def test_mathblock():
         $$
         2 + 2 = 4.
         $$
+        <div class="mathblock__number">(1)</div>
+
         </div>
 
         </section>

@@ -19,19 +19,12 @@ class PlainTextManuscript(util.EscapedString):
         super().__init__(src, {tags.Tag.delim})
 
 
-AbstractTreeManuscript = nodes.Manuscript
-
-
-class HTMLManuscript(str):
-    pass
-
-
 class WebManuscript(MountFS):
     def __init__(self, src: Path = None):
         super().__init__()
         self.src = Path(src) if src else None
-        self.body: HTMLManuscript = HTMLManuscript('')
-        self.html: HTMLManuscript = HTMLManuscript('')
+        self.body: str = ''
+        self.html: str = ''
 
     def __str__(self) -> str:
         return self.__repr__()

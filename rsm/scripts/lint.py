@@ -7,11 +7,11 @@ RSM command line utility to run the linter.
 """
 
 from .app import LinterApplication
-from ..manuscript import AbstractTreeManuscript
+from .. import nodes
 from argparse import ArgumentParser, Namespace
 
 
-def lint(source: str) -> AbstractTreeManuscript:
+def lint(source: str) -> nodes.Manuscript:
     return LinterApplication(plain=source).run()
 
 

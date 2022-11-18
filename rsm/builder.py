@@ -17,7 +17,7 @@ from pathlib import Path
 import sass
 from icecream import ic
 
-from .manuscript import HTMLManuscript, WebManuscript
+from .manuscript import WebManuscript
 from .parser import ManuscriptParser
 
 import logging
@@ -27,12 +27,12 @@ logger = logging.getLogger('RSM').getChild('Builder')
 
 class BaseBuilder(ABC):
     def __init__(self) -> None:
-        self.body: HTMLManuscript | None = None
-        self.html: HTMLManuscript | None = None
+        self.body: str | None = None
+        self.html: str | None = None
         self.web: WebManuscript | None = None
         self.outname: str = 'index.html'
 
-    def build(self, body: HTMLManuscript, src: Path = None) -> WebManuscript:
+    def build(self, body: str, src: Path = None) -> WebManuscript:
         logger.info("Building...")
         self.body = body
         self.web = WebManuscript(src)
@@ -57,11 +57,11 @@ class BaseBuilder(ABC):
 
 
 class SingleFileBuilder(BaseBuilder):
-    body: HTMLManuscript
+    body: str
     web: WebManuscript
 
     def make_main_file(self) -> None:
-        html = HTMLManuscript(
+        html = str(
             '<html>\n\n'
             + self.make_html_header()
             + '\n'
@@ -111,7 +111,7 @@ class SingleFileBuilder(BaseBuilder):
 
 
 class FullBuilder(SingleFileBuilder):
-    def build(self, body: HTMLManuscript, src: Path = None) -> WebManuscript:
+    def build(self, body: str, src: Path = None) -> WebManuscript:
         super().build(body, src)
         logger.debug("Moving default RSM assets...")
         self.mount_static()

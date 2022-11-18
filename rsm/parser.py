@@ -17,7 +17,8 @@ import re
 from . import nodes
 from . import tags
 from .tags import TagName, Tag, Halmos
-from .manuscript import PlainTextManuscript, AbstractTreeManuscript
+from .manuscript import PlainTextManuscript
+from .nodes import Manuscript
 
 from icecream import ic
 
@@ -956,9 +957,9 @@ class ManuscriptParser(ShouldHaveHeadingParser):
 class MainParser:
     def __init__(self) -> None:
         self.src: PlainTextManuscript | None = None
-        self.tree: AbstractTreeManuscript | None = None
+        self.tree: nodes.Manuscript | None = None
 
-    def parse(self, src: str) -> AbstractTreeManuscript:
+    def parse(self, src: str) -> nodes.Manuscript:
         logger.info('Parsing...')
 
         self.src = src.strip()

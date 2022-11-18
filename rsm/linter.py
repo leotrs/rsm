@@ -6,7 +6,7 @@ RSM Linter: analyze the manuscript tree and log linting messages.
 
 """
 
-from . import manuscript
+from . import nodes
 
 import logging
 from logging.handlers import BufferingHandler
@@ -42,7 +42,7 @@ class GatherHandler(BufferingHandler):
 
 class Linter:
     def __init__(self) -> None:
-        self.tree: manuscript.AbstractTreeManuscript | None = None
+        self.tree: nodes.Manuscript | None = None
         logging.LINT = LINT_LVL
         logging.addLevelName(LINT_LVL, 'LINT')
         main_logger.lint = lambda msg, *args, **kwargs: main_logger.log(
@@ -66,9 +66,7 @@ class Linter:
         self.handler.flush()
         print('------ End of linting output ------')
 
-    def lint(
-        self, tree: manuscript.AbstractTreeManuscript
-    ) -> manuscript.AbstractTreeManuscript:
+    def lint(self, tree: nodes.Manuscript) -> nodes.Manuscript:
         main_logger.info("Linting...")
         self.tree = tree
         main_logger.lint('this is a lint message')

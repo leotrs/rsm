@@ -7,13 +7,12 @@ RSM command line utility to build a manuscript.
 """
 
 from .app import FullBuildApplication
-from ..manuscript import HTMLManuscript
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
 import livereload
 
 
-def make(file: str, lint: bool = True, verbose: int = 0) -> HTMLManuscript:
+def make(file: str, lint: bool = True, verbose: int = 0) -> str:
     app = FullBuildApplication(srcpath=Path(file), run_linter=lint, verbosity=verbose)
     return app.run()
 

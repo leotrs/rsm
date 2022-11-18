@@ -2,7 +2,7 @@
 transformer.py
 --------------
 
-Apply transforms to the AbstractTreeManuscript.
+Apply transforms to the nodes.Manuscript.
 
 """
 
@@ -10,7 +10,6 @@ from icecream import ic
 
 from typing import Type
 import warnings
-from .manuscript import AbstractTreeManuscript
 from . import nodes
 
 import logging
@@ -24,10 +23,10 @@ class RSMTransformerError(Exception):
 
 class Transformer:
     def __init__(self) -> None:
-        self.tree: AbstractTreeManuscript | None = None
+        self.tree: nodes.Manuscript | None = None
         self.labels_to_nodes: dict[str, nodes.Node] = {}
 
-    def transform(self, tree: AbstractTreeManuscript) -> AbstractTreeManuscript:
+    def transform(self, tree: nodes.Manuscript) -> nodes.Manuscript:
         logger.info("Transforming...")
         self.tree = tree
 

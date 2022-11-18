@@ -9,11 +9,10 @@ RSM command line utility to convert RSM markup to HTML.
 from argparse import ArgumentParser, Namespace
 
 from .app import RSMProcessorApplication
-from ..manuscript import HTMLManuscript
 from ..parser import RSMParserError
 
 
-def render(source: str, handrails: bool = False, verbosity: int = 0) -> HTMLManuscript:
+def render(source: str, handrails: bool = False, verbosity: int = 0) -> str:
     return RSMProcessorApplication(
         plain=source, handrails=handrails, verbosity=verbosity
     ).run()

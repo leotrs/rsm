@@ -15,7 +15,6 @@ from icecream import ic
 import textwrap
 
 from . import nodes
-from .manuscript import AbstractTreeManuscript, HTMLManuscript
 
 logger = logging.getLogger('RSM').getChild('Translator')
 
@@ -381,8 +380,8 @@ class Action(namedtuple('Action', 'node action method')):
 
 class Translator:
     def __init__(self):
-        self.tree: AbstractTreeManuscript = None
-        self.body: HTMLManuscript = ''
+        self.tree: nodes.Manuscript = None
+        self.body: str = ''
         self.deferred: list[EditCommand] = []
 
     @classmethod
@@ -403,7 +402,7 @@ class Translator:
     def push_leave(self, stack, node: nodes.Node) -> None:
         stack.append(Action(node, 'leave', self.get_action_method(node, 'leave')))
 
-    def translate(self, tree: AbstractTreeManuscript) -> HTMLManuscript:
+    def translate(self, tree: nodes.Manuscript) -> str:
         logger.info('Translating...')
         # ic.enable()
         self.tree = tree

@@ -125,7 +125,7 @@ class Node:
             ancestor = self.first_ancestor_of_type(Manuscript)
         if ancestor.full_number:
             return f'{ancestor.full_number}.{self.number}'
-        return f'{self.number}'
+        return f'{self.number}' if self.number else ''
 
     def traverse(
         self,
@@ -176,9 +176,19 @@ class Node:
                 return node
         return None
 
-    def first_ancestor_of_type(self, cls: Type['Node']) -> Optional['Node']:
+    def first_ancestor_of_type(
+        self, cls: Type['Node'] | tuple[Type['Node']]
+    ) -> Optional['Node']:
         ancestor = self.parent
-        while ancestor and type(ancestor) is not cls:
+        # We use type is not cls instead of the recommended isinstance() because we are
+        # looking for an exact type, not a subtype.  For example, we may want to find
+        # the enclosing Section of a Theorem, bypassing any Subsections that may lie in
+        # between.
+        while ancestor and (
+            all(type(ancestor) is not c for c in cls)
+            if isinstance(cls, tuple)
+            else (type(ancestor) is not cls)
+        ):
             ancestor = ancestor.parent
         return ancestor  # the root node has parent None
 
@@ -476,7 +486,7 @@ class Step(Paragraph):
 
 
 Step.possible_parents.add(Step)
-Step._number_within = Step
+Step._number_within = (Step, Proof)
 
 
 class Theorem(Heading):

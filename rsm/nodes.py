@@ -12,6 +12,9 @@ from datetime import datetime
 from icecream import ic
 import textwrap
 from pathlib import Path
+import logging
+
+logger = logging.getLogger('RSM').getChild('nodes')
 
 NodeSubType = TypeVar('NodeSubType', bound='Node')
 
@@ -23,6 +26,9 @@ class RSMNodeError(Exception):
 class Node:
     classreftext: ClassVar[str] = '{nodeclass} {number}'
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = set()
+    autonumber: ClassVar[bool] = False
+    _number_within: ClassVar[Type['Node'] | None] = None
+    _number_as: ClassVar[Type['Node'] | None] = None
     _newmetakeys: ClassVar[set] = {'label', 'types', 'nonum', 'reftext'}
 
     def __init__(
@@ -98,13 +104,28 @@ class Node:
         return tuple()
 
     @property
+    def number_within(self) -> Type['Node']:
+        return self.__class__._number_within or Manuscript
+
+    @property
+    def number_as(self) -> Type['Node']:
+        return self._number_as or self.__class__
+
+    @property
     def full_number(self) -> str:
-        node = self
-        numbers = []
-        while node and node.number is not None:
-            numbers.append(str(node.number))
-            node = node.parent
-        return '.'.join(reversed(numbers))
+        if self.nonum:
+            return None
+        ancestor = self.first_ancestor_of_type(self.number_within)
+        if not ancestor:
+            logger.warning(
+                f'node of class {self.__class__.__name__} set to be numbered within '
+                f'{self.number_within.__name__} but no ancestor of said type was found; '
+                'using root node instead'
+            )
+            ancestor = self.first_ancestor_of_type(Manuscript)
+        if ancestor.full_number:
+            return f'{ancestor.full_number}.{self.number}'
+        return f'{self.number}'
 
     def traverse(
         self,
@@ -157,7 +178,7 @@ class Node:
 
     def first_ancestor_of_type(self, cls: Type['Node']) -> Optional['Node']:
         ancestor = self.parent
-        while not isinstance(ancestor, cls):
+        while ancestor and type(ancestor) is not cls:
             ancestor = ancestor.parent
         return ancestor  # the root node has parent None
 
@@ -285,6 +306,7 @@ class Heading(NodeWithChildren):
 
 class Manuscript(Heading):
     _newmetakeys: ClassVar[set] = {'date'}
+    nonum = True
 
     def __init__(
         self, src: str = '', date: datetime | None = None, **kwargs: Any
@@ -292,6 +314,10 @@ class Manuscript(Heading):
         super().__init__(**kwargs)
         self.src = src
         self.date = date
+
+    @property
+    def full_number(self) -> str:
+        return ''
 
 
 class Author(Node):
@@ -321,14 +347,17 @@ class Abstract(NodeWithChildren):
 
 
 class Section(Heading):
+    autonumber = True
     level: ClassVar[int] = 2
 
 
 class Subsection(Section):
+    number_within = Section
     level: ClassVar[int] = 3
 
 
 class Subsubsection(Section):
+    number_within = Subsection
     level: ClassVar[int] = 4
 
 
@@ -369,6 +398,8 @@ class Code(NodeWithChildren):
 
 
 class MathBlock(NodeWithChildren):
+    autonumber = True
+    _number_within = Section
     classreftext: ClassVar[str] = 'Equation ({number})'
 
 
@@ -431,7 +462,7 @@ class Proof(NodeWithChildren):
     _newmetakeys: ClassVar[set] = set()
 
 
-class Subproof(NodeWithChildren):
+class Subproof(NodeWithChildren):  # importantly, NOT a subclass of Proof!
     _newmetakeys: ClassVar[set] = set()
 
 
@@ -440,13 +471,17 @@ class Sketch(NodeWithChildren):
 
 
 class Step(Paragraph):
+    autonumber = True
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Proof, Subproof}
 
 
 Step.possible_parents.add(Step)
+Step._number_within = Step
 
 
 class Theorem(Heading):
+    autonumber = True
+    _number_within = Section
     _newmetakeys: ClassVar[set] = {'goals', 'stars', 'clocks'}
 
     def __init__(
@@ -463,14 +498,17 @@ class Theorem(Heading):
 
 
 class Lemma(Theorem):
+    _number_as = Theorem
     _newmetakeys: ClassVar[set] = set()
 
 
 class Proposition(Theorem):
+    _number_as = Theorem
     _newmetakeys: ClassVar[set] = set()
 
 
 class Remark(Theorem):
+    _number_as = Theorem
     _newmetakeys: ClassVar[set] = set()
 
 
@@ -479,6 +517,7 @@ class Bibliography(NodeWithChildren):
 
 
 class Bibitem(Node):
+    autonumber = True
     classreftext: ClassVar[str] = '{number}'
 
     _newmetakeys: ClassVar[set] = {
@@ -522,6 +561,8 @@ class UnknownBibitem(Bibitem):
 
 
 class Figure(Node):
+    autonumber = True
+    number_within = Section
     _newmetakeys: ClassVar[set] = {'path', 'caption'}
 
     def __init__(self, path: Path | str = '', caption: str = '', **kwargs: Any) -> None:

@@ -8,6 +8,7 @@ Apply transforms to the nodes.Manuscript.
 
 from icecream import ic
 
+from collections import defaultdict
 from typing import Type
 from . import nodes
 
@@ -134,38 +135,26 @@ class Transformer:
             step.append([statement, subproof])
 
     def autonumber_nodes(self) -> None:
-        counts = {
-            nodes.Section: 0,
-            nodes.Subsection: 0,
-            nodes.Subsubsection: 0,
-            nodes.MathBlock: 0,
-            nodes.Theorem: 0,
-            nodes.Definition: 0,
-            nodes.Lemma: 0,
-            nodes.Proposition: 0,
-            nodes.Note: 0,
-            nodes.Bibitem: 0,
-            nodes.Step: 0,
-            nodes.Figure: 0,
-        }
+        counts: dict[Type[nodes.Node], dict[Type[nodes.Node], int]] = defaultdict(
+            lambda: defaultdict(int)
+        )
         for node in self.tree.traverse():
-            nodeclass = type(node)
-            if nodeclass in counts and not node.nonum:
-                counts[nodeclass] += 1
-                node.number = counts[nodeclass]
-            if nodeclass is nodes.Section:
-                counts[nodes.Subsubsection] = 0
-                counts[nodes.Subsection] = 0
-                counts[nodes.Theorem] = 0
-                counts[nodes.Definition] = 0
-                counts[nodes.Lemma] = 0
-                counts[nodes.Proposition] = 0
-                counts[nodes.Figure] = 0
-            if nodeclass is nodes.Subsection:
-                counts[nodes.Subsubsection] = 0
-                counts[nodes.Theorem] = 0
-                counts[nodes.Definition] = 0
-                counts[nodes.Lemma] = 0
-                counts[nodes.Proposition] = 0
-            if nodeclass is nodes.Proof:
-                counts[nodes.Step] = 0
+            ic(node, node.number_within, node.number_as, dict(counts))
+            if isinstance(node, (nodes.Proof, nodes.Subproof)):
+                self._autonumber_steps(node)
+                continue
+            if isinstance(node, (nodes.Step, nodes.Subproof)):
+                continue
+
+            if node.autonumber and not node.nonum:
+                counts[type(node)] = defaultdict(int)
+                num = counts[node.number_within][node.number_as]
+                node.number = num + 1
+                counts[node.number_within][node.number_as] = num + 1
+            ic(node, node.number_within, node.number_as, dict(counts))
+
+    def _autonumber_steps(self, proof: nodes.Proof) -> None:
+        step_gen = (s for s in proof.children if isinstance(s, nodes.Step))
+        for idx, step in enumerate(step_gen, start=1):
+            ic(idx, step)
+            step.number = idx

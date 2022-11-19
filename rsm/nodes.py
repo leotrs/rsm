@@ -570,15 +570,18 @@ class UnknownBibitem(Bibitem):
         self.number = number
 
 
-class Figure(Node):
+class Figure(NodeWithChildren):
     autonumber = True
     _number_within = Section
-    _newmetakeys: ClassVar[set] = {'path', 'caption'}
+    _newmetakeys: ClassVar[set] = {'path'}
 
-    def __init__(self, path: Path | str = '', caption: str = '', **kwargs: Any) -> None:
+    def __init__(self, path: Path | str = '', **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.path = Path(path)
-        self.caption = caption
+
+
+class Caption(Paragraph):
+    pass
 
 
 class Draft(NodeWithChildren):

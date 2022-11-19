@@ -756,10 +756,6 @@ class Translator:
         )
 
     def visit_figure(self, node: nodes.Figure) -> EditCommand:
-        figcaption = AppendOpenTagManualClose('figcaption')
-        title = self._make_title_node(
-            f'{node.__class__.__name__} {node.full_number}. ', types=[], paragraph=False
-        )
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node, 'figure'),
@@ -769,13 +765,21 @@ class Translator:
                         id_=node.label,
                         classes=[],
                         src=node.path,
-                        alt=node.caption,
+                        alt=f'{node.__class__.__name__} {node.full_number}.',
                     )
                 ),
-                figcaption,
+            ]
+        )
+
+    def visit_caption(self, node: nodes.Caption) -> EditCommand:
+        fig = node.parent
+        title = self._make_title_node(
+            f'{fig.__class__.__name__} {fig.full_number}. ', types=[], paragraph=False
+        )
+        return AppendBatchAndDefer(
+            [
+                AppendOpenTag('figcaption'),
                 AppendExternalTree(title),
-                AppendText(str(node.caption)),
-                figcaption.close_command(),
             ]
         )
 

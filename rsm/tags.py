@@ -176,6 +176,7 @@ _tags['previous'] = InlineTag.newtag(
 )
 _tags['cite'] = InlineTag.newtag(nodes.PendingCite, name='cite', content_mode=ASIS)
 _tags['figure'] = BlockTag.newtag(nodes.Figure, has_content=False)
+_tags['caption'] = ParagraphTag.newtag(nodes.Caption)
 _tags['draft'] = InlineTag.newtag(nodes.Draft)
 _tags['manuscript'] = ManuscriptTag.newtag(nodes.Manuscript)
 _tags[''] = Halmos

@@ -911,6 +911,8 @@ class ManuscriptParser(ShouldHaveHeadingParser):
 
     # order matters!
     shortcuts = [
+        # Having an escaped colon '\:' right behind a non-esaped colon is a BAD IDEA, so
+        # before applying any other regex, we separate them.
         Shortcut(r'\\::', r'\\: :'),
         Shortcut(r'%(.*)$', r'', re.MULTILINE),
         Shortcut(r'\*\*(.*?)\*\*', r':span: {:strong:} \1::'),
@@ -927,6 +929,9 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         Shortcut(r':prev:(?=\W)', r':previous:1::'),
         Shortcut(r':prev2:(?=\W)', r':previous:2::'),
         Shortcut(r':prev3:(?=\W)', r':previous:3::'),
+        # After applying all the regexes, we may have accidentally left an escaped colon
+        # behind a non-escaped colon, so deal with those again.
+        Shortcut(r'\\::', r'\\: :'),
     ]
 
     def __init__(self, src: PlainTextManuscript):

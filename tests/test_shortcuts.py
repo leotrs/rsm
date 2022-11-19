@@ -896,6 +896,71 @@ def test_hashtag_not_at_the_start_of_line():
     )
 
 
+def test_escaped_colon_behind_halmos():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        Shortcut right beside an escaped colon :span: {:emphas:} foo\:::
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">Shortcut right beside an escaped colon <span class="span"><em>foo: </em></span></p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_escaped_colon_behind_halmos_after_shortcut():
+    compare_have_want(
+        have=r"""        :manuscript:
+
+        Shortcut right beside an escaped colon *foo\:*
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">Shortcut right beside an escaped colon <span class="span"><em>foo: </em></span></p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
 def test_asterisk_inside_math():
     raise NotImplementedError
 

@@ -67,7 +67,7 @@ def test_simple_with_extra_whitespace():
     )
 
 
-def test_simple_with_extra_whitespace():
+def test_simple_with_multi_line_caption():
     compare_have_want(
         have="""\
         :manuscript:

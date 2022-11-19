@@ -760,45 +760,6 @@ def test_codeblock_shortcut():
     )
 
 
-def test_codeblock_shortcut():
-    compare_have_want(
-        have="""\
-        :manuscript:
-
-        ```
-          comp = [abs(x) for x in range(10)]
-        ```
-
-        ::
-        """,
-        want="""
-        <body>
-
-        <div class="manuscriptwrapper">
-
-        <div id="manuscript" class="manuscript">
-
-        <section class="level-1">
-
-        <h1></h1>
-
-        <div class="codeblock">
-        comp = [abs(x) for x in range(10)]
-
-
-        </div>
-
-        </section>
-
-        </div>
-
-        </div>
-
-        </body>
-        """,
-    )
-
-
 def test_comment_one_line_comment():
     compare_have_want(
         have="""\

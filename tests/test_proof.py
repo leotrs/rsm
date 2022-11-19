@@ -137,3 +137,164 @@ def test_empty_proof():
         </body>
         """,
     )
+
+
+def test_sub_step():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        :proof:
+
+          :step: Top level step.
+
+            :step: Sub-step.
+
+              :p: Sub-proof.::
+
+            ::
+          ::
+
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <div class="proof">
+
+        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+
+        <div class="proof-contents">
+
+        <div class="step last">
+
+        <div class="statement">
+
+        <p class="paragraph">Top level step.</p>
+
+        </div>
+
+        <div class="subproof">
+
+        <div class="subproof-contents">
+
+        <div class="step">
+
+        <div class="statement">
+
+        <p class="paragraph">Sub-step.</p>
+
+        </div>
+
+        <div class="subproof">
+
+        <div class="subproof-contents">
+
+        <p class="paragraph">Sub-proof.</p>
+
+        </div>
+
+        </div>
+
+        </div>
+
+        </div>
+
+        </div>
+
+        </div>
+
+        </div>
+
+        <div class="halmos"></div>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_two_steps():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        :proof:
+
+          :step: First step.::
+
+          :step: Secon step.::
+
+          ::
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <div class="proof">
+
+        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+
+        <div class="proof-contents">
+
+        <div class="step">
+
+        <div class="statement">
+
+        <p class="paragraph">First step.</p>
+
+        </div>
+
+        </div>
+
+        <div class="step last">
+
+        <div class="statement">
+
+        <p class="paragraph">Secon step.</p>
+
+        </div>
+
+        </div>
+
+        </div>
+
+        <div class="halmos"></div>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

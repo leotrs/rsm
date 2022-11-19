@@ -425,3 +425,66 @@ def test_theorem_inside_section_with_nonum():
         </body>
         """,
     )
+
+
+def test_theorem_inside_subsection():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        # Section
+
+        ## Subsection
+
+        :theorem:
+
+        ::
+
+        ::
+
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <section class="section level-2">
+
+        <h2>1. Section</h2>
+
+        <section class="subsection level-3">
+
+        <h3>1.1. Subsection</h3>
+
+        <div class="theorem">
+
+        <div class="theorem-contents">
+
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1. </strong></span></p>
+
+        </div>
+
+        </div>
+
+        </section>
+
+        </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

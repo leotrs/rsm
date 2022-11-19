@@ -139,7 +139,6 @@ class Transformer:
             lambda: defaultdict(int)
         )
         for node in self.tree.traverse():
-            ic(node, node.number_within, node.number_as, dict(counts))
             if isinstance(node, (nodes.Proof, nodes.Subproof)):
                 self._autonumber_steps(node)
                 continue
@@ -151,10 +150,8 @@ class Transformer:
                 num = counts[node.number_within][node.number_as]
                 node.number = num + 1
                 counts[node.number_within][node.number_as] = num + 1
-            ic(node, node.number_within, node.number_as, dict(counts))
 
     def _autonumber_steps(self, proof: nodes.Proof) -> None:
         step_gen = (s for s in proof.children if isinstance(s, nodes.Step))
         for idx, step in enumerate(step_gen, start=1):
-            ic(idx, step)
             step.number = idx

@@ -118,8 +118,8 @@ class Node:
         ancestor = self.first_ancestor_of_type(self.number_within)
         if not ancestor:
             logger.warning(
-                f'node of class {self.__class__.__name__} set to be numbered within '
-                f'{self.number_within.__name__} but no ancestor of said type was found; '
+                f'{self.__class__.__name__} node set to be numbered within '
+                f'{self.number_within.__name__} but no such ancestor was found; '
                 'using root node instead'
             )
             ancestor = self.first_ancestor_of_type(Manuscript)
@@ -352,12 +352,12 @@ class Section(Heading):
 
 
 class Subsection(Section):
-    number_within = Section
+    _number_within = Section
     level: ClassVar[int] = 3
 
 
 class Subsubsection(Section):
-    number_within = Subsection
+    _number_within = Subsection
     level: ClassVar[int] = 4
 
 
@@ -562,7 +562,7 @@ class UnknownBibitem(Bibitem):
 
 class Figure(Node):
     autonumber = True
-    number_within = Section
+    _number_within = Section
     _newmetakeys: ClassVar[set] = {'path', 'caption'}
 
     def __init__(self, path: Path | str = '', caption: str = '', **kwargs: Any) -> None:

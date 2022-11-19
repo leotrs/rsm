@@ -21,7 +21,7 @@ from .parser import ManuscriptParser
 
 import logging
 
-logger = logging.getLogger('RSM').getChild('Builder')
+logger = logging.getLogger('RSM').getChild('build')
 
 
 class BaseBuilder(ABC):

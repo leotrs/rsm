@@ -24,7 +24,7 @@ from icecream import ic
 
 import logging
 
-logger = logging.getLogger('RSM').getChild('Parser')
+logger = logging.getLogger('RSM').getChild('parse')
 
 
 class RSMParserError(Exception):
@@ -948,8 +948,6 @@ class ManuscriptParser(ShouldHaveHeadingParser):
 
         for pattern, replacement, flags in self.shortcuts:
             src = re.sub(pattern, replacement, src, flags=flags)
-
-        ic(src)
 
         return PlainTextManuscript(src)
 

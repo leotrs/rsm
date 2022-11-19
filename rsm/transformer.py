@@ -14,7 +14,7 @@ from . import nodes
 
 import logging
 
-logger = logging.getLogger('RSM').getChild('Transformer')
+logger = logging.getLogger('RSM').getChild('tform')
 
 
 class RSMTransformerError(Exception):

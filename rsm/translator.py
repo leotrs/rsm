@@ -16,7 +16,7 @@ import textwrap
 
 from . import nodes
 
-logger = logging.getLogger('RSM').getChild('Translator')
+logger = logging.getLogger('RSM').getChild('tlate')
 
 
 class RSMTranslatorError(Exception):

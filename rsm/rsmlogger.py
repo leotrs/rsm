@@ -11,7 +11,7 @@ class RSMFormatter(logging.Formatter):
     boldred = "\x1b[31;1m"
     reset = "\x1b[0m"
     prefix = grey + '%(asctime)s ' + reset + blue + '%(name)s ' + reset
-    msgformat = "%(levelname)-4s | %(message)s"
+    msgformat = "%(levelname)-3s | %(message)s"
     suffix = reset + grey + " (%(filename)s:%(lineno)d)" + reset
 
     COLORS = {
@@ -35,9 +35,10 @@ class RSMFormatter(logging.Formatter):
 
 # Shorten level names for nicer output
 logging.addLevelName(logging.DEBUG, 'DBG')
-logging.addLevelName(logging.WARN, 'WARN')
-logging.addLevelName(logging.ERROR, 'ERR')
-logging.addLevelName(logging.CRITICAL, 'CRIT')
+logging.addLevelName(logging.INFO, 'INF')
+logging.addLevelName(logging.WARN, 'WRN')
+logging.addLevelName(logging.ERROR, 'ERROR')
+logging.addLevelName(logging.CRITICAL, 'CRITICAL')
 
 logger = logging.getLogger('RSM')
 logger.setLevel(logging.WARN)

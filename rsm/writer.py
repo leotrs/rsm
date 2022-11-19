@@ -13,7 +13,7 @@ from .manuscript import WebManuscript
 
 import logging
 
-logger = logging.getLogger('RSM').getChild('Writer')
+logger = logging.getLogger('RSM').getChild('write')
 
 
 class Writer:

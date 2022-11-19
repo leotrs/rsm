@@ -106,3 +106,322 @@ def test_duplicate_bibtex_item_warning(caplog):
         """,
     )
     assert 'Duplicate label torres2020' in caplog.text
+
+
+def test_theorem_within_section():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        # Section
+
+        :theorem:
+
+        ::
+
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <section class="section level-2">
+
+        <h2>1. Section</h2>
+
+        <div class="theorem">
+
+        <div class="theorem-contents">
+
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1. </strong></span></p>
+
+        </div>
+
+        </div>
+
+        </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_two_theorems_same_section():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        # Section
+
+        :theorem:
+
+        ::
+
+        :theorem:
+
+        ::
+
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <section class="section level-2">
+
+        <h2>1. Section</h2>
+
+        <div class="theorem">
+
+        <div class="theorem-contents">
+
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1. </strong></span></p>
+
+        </div>
+
+        </div>
+
+        <div class="theorem">
+
+        <div class="theorem-contents">
+
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.2. </strong></span></p>
+
+        </div>
+
+        </div>
+
+        </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_two_theorems_different_sections():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        # Section 1
+
+        :theorem:
+
+        ::
+
+        ::
+
+        # Section 2
+
+        :theorem:
+
+        ::
+
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <section class="section level-2">
+
+        <h2>1. Section 1</h2>
+
+        <div class="theorem">
+
+        <div class="theorem-contents">
+
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1. </strong></span></p>
+
+        </div>
+
+        </div>
+
+        </section>
+
+        <section class="section level-2">
+
+        <h2>2. Section 2</h2>
+
+        <div class="theorem">
+
+        <div class="theorem-contents">
+
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 2.1. </strong></span></p>
+
+        </div>
+
+        </div>
+
+        </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_two_theorems_same_section_nonum():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        # Section
+
+        :theorem:
+        :nonum:
+
+        ::
+
+        :theorem:
+
+        ::
+
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <section class="section level-2">
+
+        <h2>1. Section</h2>
+
+        <div class="theorem">
+
+        <div class="theorem-contents">
+
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem. </strong></span></p>
+
+        </div>
+
+        </div>
+
+        <div class="theorem">
+
+        <div class="theorem-contents">
+
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1. </strong></span></p>
+
+        </div>
+
+        </div>
+
+        </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_theorem_inside_section_with_nonum():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        # Section
+        :nonum:
+
+        :theorem:
+
+        ::
+
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <section class="section level-2">
+
+        <h2>Section</h2>
+
+        <div class="theorem">
+
+        <div class="theorem-contents">
+
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
+
+        </div>
+
+        </div>
+
+        </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

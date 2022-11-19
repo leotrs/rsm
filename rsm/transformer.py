@@ -9,7 +9,6 @@ Apply transforms to the nodes.Manuscript.
 from icecream import ic
 
 from typing import Type
-import warnings
 from . import nodes
 
 import logging
@@ -40,7 +39,9 @@ class Transformer:
     def collect_labels(self) -> None:
         for node in self.tree.traverse(lambda n: n.label):
             if node.label in self.labels_to_nodes:
-                raise RSMTransformerError(f'Duplicate label {node.label}')
+                logger.warning(f'Duplicate label {node.label}, using first encountered')
+                node.label = ''
+                continue
             self.labels_to_nodes[node.label] = node
 
     def _label_to_node(self, label: str, default=None) -> nodes.Node:
@@ -52,7 +53,7 @@ class Transformer:
                     f'Reference to nonexistent label "{label}" and no default given'
                 )
             else:
-                warnings.warn(f'Reference to nonexistent label "{label}"')
+                logger.warning(f'Reference to nonexistent label "{label}"')
                 return default()
 
     def resolve_pending_references(self) -> None:

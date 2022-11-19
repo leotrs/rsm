@@ -334,7 +334,7 @@ class AppendExternalTree(AppendText):
         self.root = root
 
     def make_text(self) -> str:
-        return Translator().translate(self.root)
+        return Translator(quiet=True).translate(self.root)
 
 
 class EditCommandBatch(EditCommand):
@@ -379,10 +379,11 @@ class Action(namedtuple('Action', 'node action method')):
 
 
 class Translator:
-    def __init__(self):
+    def __init__(self, quiet: bool = False):
         self.tree: nodes.Manuscript = None
         self.body: str = ''
         self.deferred: list[EditCommand] = []
+        self.quiet = quiet
 
     @classmethod
     def get_action_method(cls, node: nodes.Node, action: str) -> Callable:
@@ -403,7 +404,8 @@ class Translator:
         stack.append(Action(node, 'leave', self.get_action_method(node, 'leave')))
 
     def translate(self, tree: nodes.Manuscript) -> str:
-        logger.info('Translating...')
+        if not self.quiet:
+            logger.info('Translating...')
         # ic.enable()
         self.tree = tree
 

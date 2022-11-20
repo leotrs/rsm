@@ -129,8 +129,8 @@ class Node:
 
     def traverse(
         self,
-        condition: Callable = lambda n: True,
         *,
+        condition: Callable = lambda n: True,
         nodeclass: NodeSubType | None = None,
     ) -> Iterable[NodeSubType]:
         if nodeclass is not None:

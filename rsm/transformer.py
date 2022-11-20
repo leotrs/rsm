@@ -38,7 +38,7 @@ class Transformer:
         return tree
 
     def collect_labels(self) -> None:
-        for node in self.tree.traverse(lambda n: n.label):
+        for node in self.tree.traverse(condition=lambda n: n.label):
             if node.label in self.labels_to_nodes:
                 logger.warning(f'Duplicate label {node.label}, using first encountered')
                 node.label = ''

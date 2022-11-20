@@ -892,7 +892,8 @@ class BibTexParser(DelimitedRegionParser):
             prev = 0
             for start, cease in spans:
                 if prev != start:
-                    logger.warning('Some middle key has not been parsed')
+                    txt = content[start:cease].strip()
+                    logger.warning(f'The key "{txt}" has not been parsed')
                 prev = cease
 
             child = nodes.Bibitem()

@@ -12,7 +12,7 @@ from .manuscript import PlainTextManuscript
 
 import logging
 
-logger = logging.getLogger('RSM').getChild(' read')
+logger = logging.getLogger('RSM').getChild('read ')
 
 
 class Reader:

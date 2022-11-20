@@ -800,7 +800,7 @@ class Translator:
         return AppendNodeTag(node, 'tr')
 
     def visit_tabledatum(self, node: nodes.TableDatum) -> EditCommand:
-        return AppendNodeTag(node, 'td')
+        return AppendNodeTag(node, 'td', newline_inner=False)
 
 
 class HandrailsTranslator(Translator):

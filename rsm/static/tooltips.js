@@ -29,6 +29,9 @@ export function createTooltips() {
 		content = $(target).next().html();
             } else if (tag == "FIGURE") {
                 content = $(target).html();
+            } else if (tag == "TABLE") {
+                // content = $(target).html();
+		content = $(target)[0].outerHTML;
             } else if (tag == "SECTION") {
                 let clone = $(target).clone();
                 clone.children().slice(2).remove();

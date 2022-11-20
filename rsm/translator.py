@@ -772,16 +772,35 @@ class Translator:
         )
 
     def visit_caption(self, node: nodes.Caption) -> EditCommand:
-        fig = node.parent
+        parent = node.parent
         title = self._make_title_node(
-            f'{fig.__class__.__name__} {fig.full_number}. ', types=[], paragraph=False
+            f'{parent.__class__.__name__} {parent.full_number}. ',
+            types=[],
+            paragraph=False,
         )
         return AppendBatchAndDefer(
             [
-                AppendOpenTag('figcaption'),
+                AppendOpenTag(
+                    'figcaption' if isinstance(parent, nodes.Figure) else 'caption'
+                ),
                 AppendExternalTree(title),
             ]
         )
+
+    def visit_table(self, node: nodes.Table) -> EditCommand:
+        return AppendNodeTag(node, 'table')
+
+    def visit_tablehead(self, node: nodes.TableHead) -> EditCommand:
+        return AppendNodeTag(node, 'thead')
+
+    def visit_tablebody(self, node: nodes.TableBody) -> EditCommand:
+        return AppendNodeTag(node, 'tbody')
+
+    def visit_tablerow(self, node: nodes.TableRow) -> EditCommand:
+        return AppendNodeTag(node, 'tr')
+
+    def visit_tabledatum(self, node: nodes.TableDatum) -> EditCommand:
+        return AppendNodeTag(node, 'td')
 
 
 class HandrailsTranslator(Translator):

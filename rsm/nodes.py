@@ -580,13 +580,33 @@ class Figure(NodeWithChildren):
         self.path = Path(path)
 
 
-class Caption(Paragraph):
-    pass
-
-
 class Draft(NodeWithChildren):
     pass
 
 
 class Definition(NodeWithChildren):
     pass
+
+
+class Table(NodeWithChildren):
+    autonumber = True
+
+
+class TableHead(NodeWithChildren):
+    pass
+
+
+class TableBody(NodeWithChildren):
+    pass
+
+
+class TableRow(NodeWithChildren):
+    pass
+
+
+class TableDatum(NodeWithChildren):
+    pass
+
+
+class Caption(Paragraph):
+    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Figure, Table}

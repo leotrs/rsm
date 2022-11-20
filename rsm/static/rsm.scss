@@ -459,9 +459,14 @@ ol.bibliography {
     align-items: center;
     justify-content: space-between;
 
-    &__number--phantom {
+    &__number, &__number--phantom {
         visibility: hidden;
     }
+
+    &:hover > &__number:not(&__number--phantom) {
+	visibility: visible;
+    }
+
 }
 
 .note {
@@ -469,6 +474,42 @@ ol.bibliography {
     &__content {
         display: none;
     }
+}
+
+table.table {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-collapse: collapse;
+    margin-block: 1em;
+}
+
+tbody tr:nth-child(odd) {
+    background: var(--gray-100);
+}
+
+tbody td.tabledatum {
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+}
+
+thead.tablehead td.tabledatum {
+    padding-inline: 1rem;
+    padding-block: 0.75rem;
+}
+
+thead.tablehead {
+    border-top: var(--border-thin) solid var(--drk-gray);
+    border-bottom: calc(var(--border-thin) / 2) solid var(--drk-gray);
+}
+
+tbody tr:last-child {
+    border-bottom: var(--border-thin) solid var(--drk-gray);
+}
+
+table caption {
+    caption-side: bottom;
+    margin-block: 0.5rem;
 }
 
 

@@ -178,6 +178,11 @@ _tags['cite'] = InlineTag.newtag(nodes.PendingCite, name='cite', content_mode=AS
 _tags['figure'] = BlockTag.newtag(nodes.Figure, has_content=False)
 _tags['caption'] = ParagraphTag.newtag(nodes.Caption)
 _tags['draft'] = InlineTag.newtag(nodes.Draft)
+_tags['table'] = BlockTag.newtag(nodes.Table)
+_tags['thead'] = BlockTag.newtag(nodes.TableHead, name='thead')
+_tags['tbody'] = BlockTag.newtag(nodes.TableBody, name='tbody')
+_tags['tr'] = BlockTag.newtag(nodes.TableRow, name='tr')
+_tags['td'] = InlineTag.newtag(nodes.TableDatum, name='td')
 _tags['manuscript'] = ManuscriptTag.newtag(nodes.Manuscript)
 _tags[''] = Halmos
 

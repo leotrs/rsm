@@ -99,11 +99,11 @@ class Parser(ABC):
         if hasattr(self, 'tag'):
             _s += f'({self.tag})'
         self._pre_process()
-        s = _s + '.process start'
-        ic(s, self.pos)
+        s = _s + ' start' + f', {self.pos}'
+        logger.debug(s)
         result = self.process()
-        s = _s + '.process end'
-        ic(s, self.pos)
+        s = _s + ' end' + f', {self.pos}'
+        logger.debug(s)
         self._post_process()
         return result
 
@@ -861,10 +861,10 @@ class BibTexParser(DelimitedRegionParser):
             pairs = {}
             match = re.match(r'(\w+)\s*{([^,]*),\s*(.*)\s*}', item, re.DOTALL)
             if match is None:
-                raise RSMParserError(self.pos, f'Could not prase bibtex item "{item}"')
+                raise RSMParserError(self.pos, f'Could not parse bibtex item "{item}"')
             pairs['kind'] = match.group(1)
             pairs['label'] = match.group(2)
-            content = match.group(3)
+            content = match.group(3).strip()
 
             spans = []
             # RSM only accepts fields surrounded by curly braces, NOT quotes.
@@ -884,9 +884,11 @@ class BibTexParser(DelimitedRegionParser):
                     pairs[key.lower()] = val
             spans.sort()
             if spans[0][0] != 0:
-                logger.warning('The first key has not been parsed')
-            if spans[-1][1] != len(content) - 1:
-                logger.warning('The last key has not been parsed')
+                txt = content[slice(*spans[0])].strip()
+                logger.warning(f'The key "{txt}" has not been parsed')
+            if spans[-1][1] != len(content):
+                txt = content[slice(*spans[-1])].strip()
+                logger.warning(f'The key "{txt}" has not been parsed')
             prev = 0
             for start, cease in spans:
                 if prev != start:
@@ -984,8 +986,16 @@ class MainParser:
         bib_nodes = list(self.tree.traverse(nodeclass=nodes.Bibliography))
         if len(bib_nodes) > 1:
             raise RSMParserError(parser.pos, 'Found more than one bibtex node')
-        bib = bib_nodes[0]
-        bib.append(result.result)
+        if bib_nodes:
+            bib_nodes[0].append(result.result)
+            if len(bib_nodes) > 1:
+                logger.warning(
+                    'Found more than one bibliography tag, using first one',
+                )
+        else:
+            logger.warning(
+                'Did not find a bibliography node to add the bib items to',
+            )
         return self.tree
 
 

@@ -839,3 +839,341 @@ def test_real_life_example_different_spacing():
         </body>
         """,
     )
+
+
+def test_tr_shortcut():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+        :table:
+
+        :thead:
+        :tr: foo : bar : baz ::
+        ::
+        :tbody:
+        :tr: a1 : a2 : a3 ::
+        :tr: b1 : b2 : b3 ::
+        ::
+
+        ::
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <table class="table">
+
+        <thead class="tablehead">
+
+        <tr class="tablerow">
+
+        <td class="tabledatum">foo</td>
+
+        <td class="tabledatum">bar</td>
+
+        <td class="tabledatum">baz</td>
+
+        </tr>
+
+        </thead>
+
+        <tbody class="tablebody">
+
+        <tr class="tablerow">
+
+        <td class="tabledatum">a1</td>
+
+        <td class="tabledatum">a2</td>
+
+        <td class="tabledatum">a3</td>
+
+        </tr>
+
+        <tr class="tablerow">
+
+        <td class="tabledatum">b1</td>
+
+        <td class="tabledatum">b2</td>
+
+        <td class="tabledatum">b3</td>
+
+        </tr>
+
+        </tbody>
+
+        </table>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_tr_shortcut_with_math():
+    compare_have_want(
+        have=r"""        :manuscript:
+
+        :table:
+
+        :thead:
+        :tr: $H^{\tau}$ : $H^{\top}$ : $H^{c}$ ::
+        ::
+        :tbody:
+        :tr: $0.0001$ : $0.0146$ : $0.0549$ ::
+        :tr: $0.1222$ : $0.0139$ : $0.0106$ ::
+        ::
+
+        ::
+
+        ::
+        """,
+        want=r"""        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <table class="table">
+
+        <thead class="tablehead">
+
+        <tr class="tablerow">
+
+        <td class="tabledatum"><span class="math">\(H^{\tau}\)</span></td>
+
+        <td class="tabledatum"><span class="math">\(H^{\top}\)</span></td>
+
+        <td class="tabledatum"><span class="math">\(H^{c}\)</span></td>
+
+        </tr>
+
+        </thead>
+
+        <tbody class="tablebody">
+
+        <tr class="tablerow">
+
+        <td class="tabledatum"><span class="math">\(0.0001\)</span></td>
+
+        <td class="tabledatum"><span class="math">\(0.0146\)</span></td>
+
+        <td class="tabledatum"><span class="math">\(0.0549\)</span></td>
+
+        </tr>
+
+        <tr class="tablerow">
+
+        <td class="tabledatum"><span class="math">\(0.1222\)</span></td>
+
+        <td class="tabledatum"><span class="math">\(0.0139\)</span></td>
+
+        <td class="tabledatum"><span class="math">\(0.0106\)</span></td>
+
+        </tr>
+
+        </tbody>
+
+        </table>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_tr_shortcut_with_newlines():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+        :table:
+
+        :thead:
+        :tr:
+        foo : bar : baz
+        ::
+        ::
+        :tbody:
+        :tr:
+        a1 : a2 : a3
+        ::
+        :tr:
+        b1 : b2 : b3
+        ::
+        ::
+
+        ::
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <table class="table">
+
+        <thead class="tablehead">
+
+        <tr class="tablerow">
+
+        <td class="tabledatum">foo</td>
+
+        <td class="tabledatum">bar</td>
+
+        <td class="tabledatum">baz</td>
+
+        </tr>
+
+        </thead>
+
+        <tbody class="tablebody">
+
+        <tr class="tablerow">
+
+        <td class="tabledatum">a1</td>
+
+        <td class="tabledatum">a2</td>
+
+        <td class="tabledatum">a3</td>
+
+        </tr>
+
+        <tr class="tablerow">
+
+        <td class="tabledatum">b1</td>
+
+        <td class="tabledatum">b2</td>
+
+        <td class="tabledatum">b3</td>
+
+        </tr>
+
+        </tbody>
+
+        </table>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_tr_shortcut_with_escaped_colon():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+        :table:
+
+        :thead:
+        :tr: : foo : bar : baz ::
+        ::
+        :tbody:
+        :tr: a\: : a2 : a3 ::
+        :tr: b1  : b2 : b3 ::
+        ::
+
+        ::
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <table class="table">
+
+        <thead class="tablehead">
+
+        <tr class="tablerow">
+
+        <td class="tabledatum"></td>
+
+        <td class="tabledatum">foo</td>
+
+        <td class="tabledatum">bar</td>
+
+        <td class="tabledatum">baz</td>
+
+        </tr>
+
+        </thead>
+
+        <tbody class="tablebody">
+
+        <tr class="tablerow">
+
+        <td class="tabledatum">a: </td>
+
+        <td class="tabledatum">a2</td>
+
+        <td class="tabledatum">a3</td>
+
+        </tr>
+
+        <tr class="tablerow">
+
+        <td class="tabledatum">b1 </td>
+
+        <td class="tabledatum">b2</td>
+
+        <td class="tabledatum">b3</td>
+
+        </tr>
+
+        </tbody>
+
+        </table>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

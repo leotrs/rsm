@@ -19,6 +19,7 @@ from . import tags
 from .tags import TagName, Tag, Halmos
 from .manuscript import PlainTextManuscript
 from .nodes import Manuscript
+from .util import EscapedString
 
 from icecream import ic
 
@@ -908,6 +909,31 @@ class BibTexParser(DelimitedRegionParser):
         )
 
 
+def _tr_shortcut_rep(pattern, src, flags):
+    last_run_ended_at = 0
+    newstr = ''
+    for match in re.finditer(pattern, src, flags=flags):
+        # The current pattern matches every :tr: tag, whether or not it uses shortcut
+        # notation.  Thus we must ignore every match starting with ":tr: :td: ..."
+        if re.match(r'^:tr:\s*:td:', match.group(0), flags=re.MULTILINE):
+            continue
+
+        # get rid of starting ':tr:' and ending '::'
+        start, cease = match.start() + 4, match.end() - 2
+        rep = EscapedString(src[start:cease], Tag.delim)
+        ic(rep)
+        ic(rep.split(Tag.delim))
+        rep = [f':td:{d}::' for d in rep.split(Tag.delim)]
+        rep = ' ' + ' '.join(rep) + ' '
+
+        newstr = newstr + src[last_run_ended_at:start]
+        newstr = newstr + rep
+        last_run_ended_at = cease
+
+    newstr = newstr + src[last_run_ended_at:]
+    return newstr
+
+
 class ManuscriptParser(ShouldHaveHeadingParser):
     keywords = ['LET', 'ASSUME', 'SUFFICES', 'DEFINE', 'PROVE', 'QED']
     Shortcut = namedtuple('Shortcut', 'pattern repl flags', defaults=(re.DOTALL,))
@@ -919,6 +945,7 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         Shortcut(r'\\::', r'\\: :'),
         # uses negative lookbehind to avoid escaped chars
         Shortcut(r'(?<!\\)%(.*)$', r'', re.MULTILINE),
+        Shortcut(r':tr((?::\s*[^:]*?\s*)+?)::', _tr_shortcut_rep),
         Shortcut(r'\*\*(.*?)\*\*', r':span: {:strong:} \1::'),
         Shortcut(r'\*(.*?)\*', r':span: {:emphas:} \1::'),
         Shortcut(r'^###(.*)$', r':subsubsection:\n  :title: \1\n', re.MULTILINE),
@@ -956,7 +983,12 @@ class ManuscriptParser(ShouldHaveHeadingParser):
             src = src.replace(keyword, f':keyword:{keyword} ::')
 
         for pattern, replacement, flags in self.shortcuts:
-            src = re.sub(pattern, replacement, src, flags=flags)
+            if isinstance(replacement, str):
+                src = re.sub(pattern, replacement, src, flags=flags)
+            elif isinstance(replacement, Callable):
+                src = replacement(pattern, src, flags)
+            else:
+                raise RSMParserError(msg='how did we get here')
 
         return PlainTextManuscript(src)
 

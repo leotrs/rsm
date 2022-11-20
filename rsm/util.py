@@ -170,4 +170,16 @@ class EscapedString:
     ) -> list[str]:
         if not skip_escaped or sep not in self.escape_chars:
             return self._src.split(sep, maxsplit)
-        raise Exception("Leo should have implemented this but didn't")
+        runs = []
+        prev = 0
+        curr = 0
+        while curr < len(self._src):
+            if self._src[curr] in self.escape_chars and (
+                curr > 0 and self._src[curr - 1] != '\\'
+            ):
+                runs.append(self._src[prev + 1 : curr - 1])
+                prev = curr
+            curr += 1
+        runs.append(self._src[prev + 1 : curr - 1])
+
+        return runs

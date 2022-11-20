@@ -361,6 +361,8 @@ dd > p, dt > p {
 
 ol.bibliography {
   padding-inline-start: var(--handrail-offset); }
+  ol.bibliography li {
+    margin-block: 0.75rem; }
 
 .mathblock {
   display: flex;

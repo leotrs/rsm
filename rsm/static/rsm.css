@@ -368,10 +368,12 @@ ol.bibliography {
   display: flex;
   align-items: center;
   justify-content: space-between; }
-  .mathblock__number, .mathblock__number--phantom {
+  .mathblock__number {
+    color: var(--lgt-gray); }
+  .mathblock:hover .mathblock__number {
+    color: var(--drk-gray); }
+  .mathblock__number--phantom {
     visibility: hidden; }
-  .mathblock:hover > .mathblock__number:not(.mathblock__number--phantom) {
-    visibility: visible; }
 
 .note__content {
   display: none; }

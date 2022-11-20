@@ -464,12 +464,16 @@ ol.bibliography {
     align-items: center;
     justify-content: space-between;
 
-    &__number, &__number--phantom {
-        visibility: hidden;
+    &__number {
+	color: var(--lgt-gray);
     }
 
-    &:hover > &__number:not(&__number--phantom) {
-	visibility: visible;
+    &:hover &__number {
+	color: var(--drk-gray);
+    }
+
+    &__number--phantom {
+        visibility: hidden;
     }
 
 }
@@ -684,7 +688,7 @@ a:hover, a.note__link:hover {
 
     & .tooltipster-box {
         background: white!important;
-     }
+    }
 
     & .tooltipster-arrow-background {
         border-top-color: white!important;
@@ -698,10 +702,10 @@ a:hover, a.note__link:hover {
 }
 
 span.code {
-  font-family: monospace;
-  white-space: pre;
-  margin: 1em 0;
-  background: var(--gray-100);
+    font-family: monospace;
+    white-space: pre;
+    margin: 1em 0;
+    background: var(--gray-100);
 }
 
 @media (min-width: 70em) {

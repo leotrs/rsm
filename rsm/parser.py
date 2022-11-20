@@ -917,7 +917,8 @@ class ManuscriptParser(ShouldHaveHeadingParser):
         # Having an escaped colon '\:' right behind a non-esaped colon is a BAD IDEA, so
         # before applying any other regex, we separate them.
         Shortcut(r'\\::', r'\\: :'),
-        Shortcut(r'%(.*)$', r'', re.MULTILINE),
+        # uses negative lookbehind to avoid escaped chars
+        Shortcut(r'(?<!\\)%(.*)$', r'', re.MULTILINE),
         Shortcut(r'\*\*(.*?)\*\*', r':span: {:strong:} \1::'),
         Shortcut(r'\*(.*?)\*', r':span: {:emphas:} \1::'),
         Shortcut(r'^###(.*)$', r':subsubsection:\n  :title: \1\n', re.MULTILINE),

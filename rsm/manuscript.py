@@ -16,7 +16,7 @@ from . import tags
 
 class PlainTextManuscript(util.EscapedString):
     def __init__(self, src: str = '') -> None:
-        super().__init__(src, tags.Tag.delim)
+        super().__init__(src, chars=tags.Tag.delim + '%')
 
 
 class WebManuscript(MountFS):

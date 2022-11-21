@@ -669,6 +669,7 @@ class MetaPairParser(Parser):
         'label': 'parse_upto_delim_value',
         'types': 'parse_list_value',
         'reftext': 'parse_upto_delim_value',
+        'nonum': 'parse_bool_value',
         # Heading
         'title': 'parse_upto_delim_value',
         # Author
@@ -686,7 +687,6 @@ class MetaPairParser(Parser):
         'insert': 'parse_bool_value',
         'delete': 'parse_bool_value',
         'number': 'parse_bool_value',
-        'nonum': 'parse_bool_value',
         # Theorem
         'goals': 'parse_list_value',
         'stars': 'parse_int_value',
@@ -921,8 +921,6 @@ def _tr_shortcut_rep(pattern, src, flags):
         # get rid of starting ':tr:' and ending '::'
         start, cease = match.start() + 4, match.end() - 2
         rep = EscapedString(src[start:cease], Tag.delim)
-        ic(rep)
-        ic(rep.split(Tag.delim))
         rep = [f':td:{d}::' for d in rep.split(Tag.delim)]
         rep = ' ' + ' '.join(rep) + ' '
 

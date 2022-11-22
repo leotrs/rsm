@@ -670,7 +670,9 @@ class Translator:
             + (f': {node.title}.' if node.title else '.'),
             ['theorem__title', f'{classname}__title'],
         )
-        classes = list(set(['theorem-contents', f'{classname}-contents']))
+        classes = ['theorem-contents']
+        if classname != 'theorem':
+            classes.append(f'{classname}-contents')
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node, additional_classes=['theorem']),

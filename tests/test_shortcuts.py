@@ -403,7 +403,7 @@ def test_prev_shortcut():
 
         <div class="theorem-contents">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph">All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
 
@@ -505,7 +505,7 @@ def test_prev2_shortcut():
 
         <div class="theorem-contents">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph">All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
 
@@ -617,7 +617,7 @@ def test_prev_and_prev2_shortcut():
 
         <div class="theorem-contents">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph">All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
 

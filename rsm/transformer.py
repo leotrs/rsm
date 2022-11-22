@@ -64,7 +64,6 @@ class Transformer:
             nodes.PendingPrev,
         ]
 
-        idx = 0
         for pending in self.tree.traverse(condition=lambda n: type(n) in classes):
             if isinstance(pending, nodes.PendingReference):
                 target = self._label_to_node(pending.target)

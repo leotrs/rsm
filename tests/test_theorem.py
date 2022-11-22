@@ -29,7 +29,7 @@ def test_simple():
 
         <div class="theorem-contents">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph">Theorem contents.</p>
 
@@ -118,7 +118,7 @@ def test_simple_with_handrails():
 
         <div class="theorem-contents handrail__collapsible">
 
-        <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph">Theorem contents.</p>
 
@@ -179,7 +179,7 @@ def test_multiple():
 
         <div class="theorem-contents">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph">Theorem contents.</p>
 
@@ -187,11 +187,11 @@ def test_multiple():
 
         </div>
 
-        <div class="lemma">
+        <div class="lemma theorem">
 
-        <div class="lemma-contents">
+        <div class="theorem-contents lemma-contents">
 
-        <p class="paragraph lemma__title"><span class="span"><strong>Lemma 2. </strong></span></p>
+        <p class="paragraph theorem__title lemma__title"><span class="span"><strong>Lemma 2.</strong></span></p>
 
         <p class="paragraph">And a lemma.</p>
 
@@ -203,7 +203,7 @@ def test_multiple():
 
         <div class="theorem-contents">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 3. </strong></span></p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 3.</strong></span></p>
 
         <p class="paragraph">Another theorem.</p>
 

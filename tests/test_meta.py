@@ -191,7 +191,7 @@ def test_block_with_inline_meta_with_content():
 
         <div class="theorem-contents">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1. </strong></span></p>
+        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1.</strong></span></p>
 
         <p class="paragraph">Foo.</p>
 

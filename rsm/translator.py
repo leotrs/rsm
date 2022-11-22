@@ -225,7 +225,7 @@ class AppendNodeTag(AppendOpenTag):
     ):
         self.node = node
         classes = [node.__class__.__name__.lower()] + [str(t) for t in node.types]
-        classes = set(classes + (additional_classes or []))
+        classes = list(dict.fromkeys(classes + (additional_classes or [])))
         super().__init__(
             tag=tag,
             id=node.label,
@@ -625,9 +625,7 @@ class Translator:
         classes = node.types
         if not isinstance(node, nodes.URL) and 'reference' not in classes:
             classes.insert(0, 'reference')
-        tag = (
-            make_tag('a', id_=label, classes=classes, href=href_text) + reftext + '</a>'
-        )
+        tag = make_tag('a', id_='', classes=classes, href=href_text) + reftext + '</a>'
         return tag
 
     def visit_reference(self, node: nodes.Reference) -> EditCommand:
@@ -672,10 +670,11 @@ class Translator:
             + (f': {node.title}.' if node.title else '.'),
             ['theorem__title', f'{classname}__title'],
         )
+        classes = list(set(['theorem-contents', f'{classname}-contents']))
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node, additional_classes=['theorem']),
-                AppendOpenTag(classes=['theorem-contents', f'{classname}-contents']),
+                AppendOpenTag(classes=classes),
                 AppendExternalTree(title),
             ]
         )
@@ -722,12 +721,7 @@ class Translator:
         return batch
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
-        tags = [
-            self._make_ahref_tag_text(
-                node, t, f'#{t.label}', label=f'{node.label}-{idx}'
-            )
-            for idx, t in enumerate(node.targets)
-        ]
+        tags = [self._make_ahref_tag_text(node, t, f'#{t.label}') for t in node.targets]
         text = ', '.join(tags)
         return AppendText(f'[{text}]')
 

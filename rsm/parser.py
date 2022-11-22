@@ -603,6 +603,7 @@ class MetaParser(Parser):
                 return BaseParsingResult(True, {}, None, 0)
             else:
                 self.pos += len(self.inline_meta_open_delim)
+                self.consume_whitespace()
 
         pairparser = MetaPairParser(parent=self, validkeys=self.validkeys)
         meta = {}

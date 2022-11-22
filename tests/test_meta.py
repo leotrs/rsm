@@ -446,3 +446,69 @@ def test_inline_start_with_brace():
         </body>
         """,
     )
+
+
+def test_inline_meta_with_no_space():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        Foo :span: {:strong:} bar ::.
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">Foo <span class="span"><strong>bar </strong></span>.</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_inline_meta_with_space_in_between_braces():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        Foo :span: { :strong: } bar ::.
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">Foo <span class="span"><strong>bar </strong></span>.</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

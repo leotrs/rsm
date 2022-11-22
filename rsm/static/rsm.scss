@@ -187,7 +187,7 @@ img, svg {
         padding: 0 0 0 var(--handrail-offset);
     }
 
-    & .proof__title, .theorem__title, .definition__title {
+    & .proof__title, .theorem__title {
         padding-block: 1rem;
     }
 
@@ -354,7 +354,7 @@ div.proof > .handrail > .handrail__btn-container {
         margin-block-end: 0;
     }
 
-    p:last-of-type {
+    > *:last-of-type {
         padding-block-end: 1rem;
     }
 

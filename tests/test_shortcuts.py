@@ -789,8 +789,7 @@ def test_comment_multi_line_comment():
 
 def test_escape_comment_delimiter():
     compare_have_want(
-        have="""\
-        :manuscript:
+        have=r"""        :manuscript:
 
         \% This is not a comment.
 
@@ -898,8 +897,7 @@ def test_hashtag_not_at_the_start_of_line():
 
 def test_escaped_colon_behind_halmos():
     compare_have_want(
-        have="""\
-        :manuscript:
+        have=r"""        :manuscript:
 
         Shortcut right beside an escaped colon :span: {:emphas:} foo\:::
 

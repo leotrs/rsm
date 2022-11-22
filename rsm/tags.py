@@ -4,7 +4,7 @@ tags.py
 
 Tag objects contain information about how a :tag: should be interpreted.
 
-A region in a RSM document is a sequence of consecutive characters.  Ther is no other
+A region in a RSM document is a sequence of consecutive characters.  There is no other
 restriction to what constitutes a region.  For example, a region may span several lines,
 start and end in the middle of a sentence, or otherwise carry no real (semantic or
 structural) meaning.  Tags are the way that the RSM markup language denotes which

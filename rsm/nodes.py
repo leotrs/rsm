@@ -491,17 +491,20 @@ Step._number_within = (Step, Proof)
 
 class Theorem(Heading):
     autonumber = True
+    title = ''
     _number_within = Section
-    _newmetakeys: ClassVar[set] = {'goals', 'stars', 'clocks'}
+    _newmetakeys: ClassVar[set] = {'title', 'goals', 'stars', 'clocks'}
 
     def __init__(
         self,
+        title: str = '',
         goals: list[BaseReference] | None = None,
         stars: int = 0,
         clocks: int = 0,
         **kwargs: Any,
     ):
         super().__init__(*kwargs)
+        self.title = title
         self.goals = goals or []
         self.stars = stars
         self.clocks = clocks
@@ -518,6 +521,11 @@ class Proposition(Theorem):
 
 
 class Remark(Theorem):
+    _number_as = Theorem
+    _newmetakeys: ClassVar[set] = set()
+
+
+class Definition(Theorem):
     _number_as = Theorem
     _newmetakeys: ClassVar[set] = set()
 
@@ -581,10 +589,6 @@ class Figure(NodeWithChildren):
 
 
 class Draft(NodeWithChildren):
-    pass
-
-
-class Definition(NodeWithChildren):
     pass
 
 

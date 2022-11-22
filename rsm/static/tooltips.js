@@ -46,9 +46,9 @@ export function createTooltips() {
 		case classes.contains("theorem"):
 		    content = $(target).find(".theorem-contents").html();
 		    break;
-                case classes.contains("definition"):
-		    content = $(target).html();
-		    break;
+                // case classes.contains("definition"):
+		//     content = $(target).find(".definition-contents").html();
+		//     break;
                 case classes.contains("math"):
                     content = $(target).html();
                     break;

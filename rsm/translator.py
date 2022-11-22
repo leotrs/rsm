@@ -219,11 +219,13 @@ class AppendNodeTag(AppendOpenTag):
         node: nodes.Node,
         tag: str = 'div',
         *,
+        additional_classes: list[str] | None = None,
         newline_inner: bool = True,
         newline_outer: bool = True,
     ):
         self.node = node
         classes = [node.__class__.__name__.lower()] + [str(t) for t in node.types]
+        classes = set(classes + (additional_classes or []))
         super().__init__(
             tag=tag,
             id=node.label,
@@ -521,20 +523,6 @@ class Translator:
     def visit_item(self, node: nodes.Item) -> EditCommand:
         return AppendNodeTag(node, 'li')
 
-    def visit_definition(self, node: nodes.Theorem) -> EditCommand:
-        classname = node.__class__.__name__.lower()
-        title = self._make_title_node(
-            f'{classname.capitalize()} {node.full_number}. ',
-            [f'{classname}__title'],
-        )
-        return AppendBatchAndDefer(
-            [
-                AppendNodeTag(node),
-                AppendOpenTag(classes=[f'{classname}-contents']),
-                AppendExternalTree(title),
-            ]
-        )
-
     def visit_note(self, node: nodes.Note) -> EditCommand:
         return AppendBatchAndDefer(
             [
@@ -616,7 +604,11 @@ class Translator:
         )
 
     def _make_ahref_tag_text(
-        self, node: nodes.BaseReference, target: nodes.Node, href_text: str
+        self,
+        node: nodes.BaseReference,
+        target: nodes.Node,
+        href_text: str,
+        label: str = '',
     ) -> str:
         if not target:
             raise RSMTranslatorError(f'Found a {node.__class__} without a target')
@@ -633,7 +625,9 @@ class Translator:
         classes = node.types
         if not isinstance(node, nodes.URL) and 'reference' not in classes:
             classes.insert(0, 'reference')
-        tag = make_tag('a', id_='', classes=classes, href=href_text) + reftext + '</a>'
+        tag = (
+            make_tag('a', id_=label, classes=classes, href=href_text) + reftext + '</a>'
+        )
         return tag
 
     def visit_reference(self, node: nodes.Reference) -> EditCommand:
@@ -675,13 +669,13 @@ class Translator:
         title = self._make_title_node(
             f'{classname.capitalize()}'
             + (f' {node.full_number}' if not node.nonum and node.number else '')
-            + '. ',
-            [f'{classname}__title'],
+            + (f': {node.title}.' if node.title else '.'),
+            ['theorem__title', f'{classname}__title'],
         )
         return AppendBatchAndDefer(
             [
-                AppendNodeTag(node),
-                AppendOpenTag(classes=[f'{classname}-contents']),
+                AppendNodeTag(node, additional_classes=['theorem']),
+                AppendOpenTag(classes=['theorem-contents', f'{classname}-contents']),
                 AppendExternalTree(title),
             ]
         )
@@ -728,7 +722,12 @@ class Translator:
         return batch
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
-        tags = [self._make_ahref_tag_text(node, t, f'#{t.label}') for t in node.targets]
+        tags = [
+            self._make_ahref_tag_text(
+                node, t, f'#{t.label}', label=f'{node.label}-{idx}'
+            )
+            for idx, t in enumerate(node.targets)
+        ]
         text = ', '.join(tags)
         return AppendText(f'[{text}]')
 
@@ -891,12 +890,12 @@ class HandrailsTranslator(Translator):
         batch.items[-1].root.types.append("do-not-hide")
         return batch
 
-    def visit_definition(self, node: nodes.Definition) -> EditCommand:
-        batch = super().visit_definition(node)
-        batch.items[1].classes.append('handrail__collapsible')
-        batch = self._replace_batch_with_handrails(1, batch, include_content=True)
-        batch.items[-1].root.types.append("do-not-hide")
-        return batch
+    # def visit_definition(self, node: nodes.Definition) -> EditCommand:
+    #     batch = super().visit_definition(node)
+    #     batch.items[1].classes.append('handrail__collapsible')
+    #     batch = self._replace_batch_with_handrails(1, batch, include_content=True)
+    #     batch.items[-1].root.types.append("do-not-hide")
+    #     return batch
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         batch = super().visit_proof(node)

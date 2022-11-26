@@ -29,7 +29,7 @@ logger = logging.getLogger('RSM').getChild('parse')
 
 
 class RSMParserError(Exception):
-    def __init__(self, pos: int, msg: str | None = None) -> None:
+    def __init__(self, pos: int | None = None, msg: str | None = None) -> None:
         self.pos = pos
         self.msg = f'Parser error at position {self.pos}' if msg is None else msg
         super().__init__(self.msg)

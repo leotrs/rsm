@@ -19,12 +19,12 @@ def test_simple():
           :keywords: {spectral graph theory, non-backtracking, interlacing}
           :MSC: {05C50, 05C82, 15A18, 15B99}
 
-          Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-          ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-          ipsum. Lorem ipsum.
+          first
+          second
+          third
 
-          Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-          ipsum. Lorem ipsum.
+          fourth
+          fifth
 
         ::
 
@@ -62,12 +62,12 @@ def test_simple():
 
         <h3>Abstract</h3>
 
-        <p class="paragraph">Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-        ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-        ipsum. Lorem ipsum.</p>
+        <p class="paragraph">first
+        second
+        third</p>
 
-        <p class="paragraph">Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-        ipsum. Lorem ipsum.</p>
+        <p class="paragraph">fourth
+        fifth</p>
 
         <p class="keywords">Keywords: spectral graph theory, non-backtracking, interlacing</p>
 

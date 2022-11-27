@@ -9,8 +9,40 @@ import tree_sitter
 from rsm import nodes, translator, transformer
 from itertools import groupby
 from icecream import ic
+from typing import cast
 
 from .parser import RSMParserError
+
+
+TAGS_WITH_META = [
+    'block',
+    'caption',
+    'codeblock',
+    'mathblock',
+    'code',
+    'math',
+    'inline',
+    'item',
+    'paragraph',
+    'specialblock',
+    'specialinline',
+    'source_file',
+]
+
+# Nodes of these types are purely syntactical; their content is usually processed when
+# processing their parent node.
+DO_NOT_PROCESS = {
+    'asis_text',
+    'blockmeta',
+    'blocktag',
+    'codeblock',
+    'mathblock',
+    'math',
+    'code',
+    'inlinemeta',
+    'inlinetag',
+    'manuscript',  # the root node is of type source_file, not manuscript
+}
 
 
 class TSParser:
@@ -36,13 +68,9 @@ class TSParser:
 
     def parse(self, src: str, abstractify: bool = True):
         self.cst = self._parser.parse(bytes(str(src), 'utf-8'))
-
         traverse(self.cst)
-
         if not abstractify:
-            self.ast = None
             return self.cst
-
         self.ast = make_ast(self.cst)
         return self.ast
 
@@ -70,38 +98,42 @@ def traverse(tree, named_only=True):
 
 
 CST_TYPE_TO_AST_TYPE = {
-    'source_file': nodes.Manuscript,
-    'paragraph': nodes.Paragraph,
-    # 'text': nodes.Text,
-    'span': nodes.Span,
-    'math': nodes.Math,
-    'mathblock': nodes.MathBlock,
+    'abstract': nodes.Abstract,
+    'author': nodes.Author,
+    'enumerate': nodes.Enumerate,
+    'claim': nodes.Claim,
     'code': nodes.Code,
     'codeblock': nodes.CodeBlock,
-    'author': nodes.Author,
-    'abstract': nodes.Abstract,
+    'item': nodes.Item,
+    'lemma': nodes.Lemma,
+    'math': nodes.Math,
+    'mathblock': nodes.MathBlock,
+    'paragraph': nodes.Paragraph,
+    'proof': nodes.Proof,
     'section': nodes.Section,
+    'sketch': nodes.Sketch,
+    'source_file': nodes.Manuscript,
+    'step': nodes.Step,
     'subsection': nodes.Subsection,
     'subsubsection': nodes.Subsubsection,
+    'span': nodes.Span,
+    'text': nodes.Text,
     'theorem': nodes.Theorem,
-    'lemma': nodes.Lemma,
-    'claim': nodes.Claim,
-    'proof': nodes.Proof,
-    'step': nodes.Step,
-    'sketch': nodes.Sketch,
-    'enumerate': nodes.Enumerate,
 }
 
 
 def parse_metatag_list(cst_key, cst_val):
     key = cst_key.named_children[0].type
-    val = [c.text.decode('utf-8') for c in cst_val.named_children]
+    if cst_val.named_children:
+        val = [c.text.decode('utf-8').strip() for c in cst_val.named_children]
+    else:
+        val = [c.text.decode('utf-8').strip() for c in cst_val.named_children]
     return key, val
 
 
 def parse_metatag_text(cst_key, cst_val):
     key = cst_key.named_children[0].type
-    val = cst_val.text.decode('utf-8')
+    val = cst_val.text.decode('utf-8').strip()
     return key, val
 
 
@@ -122,59 +154,77 @@ def parse_meta_into_dict(node):
     return pairs
 
 
+def merge_text_children(root):
+    for node in root.traverse():
+        for run_is_text, run in groupby(
+            node.children, key=lambda c: isinstance(c, nodes.Text)
+        ):
+            if not run_is_text:
+                continue
+            run = list(run)
+            if len(run) < 2:
+                continue
+            first, rest = run[0], run[1:]
+            first.text = '\n'.join([t.text.strip() for t in run])
+            for t in rest:
+                t.remove_self()
+
+        if isinstance(node, (nodes.Paragraph)):
+            first, last = node.first_of_type(nodes.Text), node.last_of_type(nodes.Text)
+            if first:
+                first.text = first.text.lstrip()
+            if last:
+                last.text = last.text.rstrip()
+
+
 def make_ast(cst):
     stack = [(None, cst.root_node)]
     while stack:
         parent, cst_node = stack.pop()
 
-        # get node that actually contains the contents
+        # After this if statement, cst_node is the node that actually contains the
+        # interesting stuff, and ast_node_type is a string with the type of syntax node
+        # that we are currently analyzing.  NOTE: It may be the case that cst_node is
+        # redirected to point to one of its children; ast_node_type may or may not be
+        # equal to cst_node.type, or neither, or both!  For this reason ,from now on, DO
+        # NOT use cst_node.tpye, always use ast_node_type instead.
+        ast_node_type = ""
         if cst_node.type in ['specialblock', 'specialinline']:
-            cst_node = cst_node.named_children[0]
+            ast_node_type = cst_node.named_children[0].type
+        elif cst_node.type == 'paragraph':
+            first = cst_node.named_children[0]
+            if first.type in ['item', 'caption']:
+                cst_node = first
+        if not ast_node_type:
+            ast_node_type = cst_node.type
 
         # make the correct type of AST node
-        if cst_node.type in CST_TYPE_TO_AST_TYPE:
-            ast_node = CST_TYPE_TO_AST_TYPE[cst_node.type]()
+        if ast_node_type in CST_TYPE_TO_AST_TYPE:
+            ast_node = CST_TYPE_TO_AST_TYPE[ast_node_type]()
             if isinstance(ast_node, nodes.Manuscript):
                 ast_root = ast_node
-            # elif isinstance(ast_node, nodes.Text):
-            #     ast_node.text = cst_node.text.decode('utf-8') + '\n'
-            if cst_node.type in ['math', 'code']:
-                text = cst_node.text.decode('utf-8')
-                text = text[1:-1]  # get rid of $ and `
-                ast_node.append(nodes.Text(text))
-
-        elif cst_node.type in ['inline', 'block']:
+            elif isinstance(ast_node, nodes.Text):
+                ast_node.text = cst_node.text.decode('utf-8')
+        elif ast_node_type in ['inline', 'block']:
             ast_node = CST_TYPE_TO_AST_TYPE[cst_node.children[0].children[0].type]()
-
-        elif cst_node.type == 'ERROR':
+        elif ast_node_type == 'ERROR':
             raise RSMParserError(msg='The CST contains errors.')
-
         else:
-            print(f'not found {cst_node.type}')
+            print(f'not found {ast_node_type}')
             exit(1)
 
         # process meta
-        if cst_node.type in [
-            'specialinline',
-            'specialblock',
-            'inline',
-            'block',
-            'manuscript',
-            'source_file',
-            'paragraph',
-        ]:
+        if ast_node_type in TAGS_WITH_META:
             meta = cst_node.child_by_field_name('meta')
             if meta:
                 ast_node.ingest_dict_as_meta(parse_meta_into_dict(meta))
 
-        # merge text children
-        for run_is_text, run in groupby(
-            cst_node.children, key=lambda c: c.type == 'text'
-        ):
-            if run_is_text:
-                ast_text = nodes.Text()
-                ast_text.text = '\n'.join([t.text.decode('utf-8').strip() for t in run])
-                ast_node.append(ast_text)
+        # process some special tags
+        if ast_node_type in ['math', 'code', 'mathblock', 'codeblock']:
+            asis = cst_node.named_children[-1]
+            assert asis.type == 'asis_text'
+            text = asis.text.strip()
+            ast_node.append(nodes.Text(text.decode('utf-8')))
 
         # add the AST node to the correct place
         if parent and not isinstance(parent, nodes.Text):
@@ -185,16 +235,9 @@ def make_ast(cst):
             [
                 (ast_node, c)
                 for c in cst_node.named_children
-                if c.type
-                not in {
-                    'inlinetag',
-                    'blocktag',
-                    'inlinemeta',
-                    'blockmeta',
-                    'manuscript',  # the manuscript node is of type source_file
-                    'text',  # text nodes are handled when their parents are visited
-                }
+                if c.type not in DO_NOT_PROCESS
             ]
         )
 
+    merge_text_children(ast_root)
     return ast_root

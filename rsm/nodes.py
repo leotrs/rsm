@@ -202,6 +202,10 @@ class Node:
         replacement.parent = self.parent
         self.parent = None
 
+    def remove_self(self) -> None:
+        self.parent.remove(self)
+        self.parent = None
+
     def ingest_dict_as_meta(self, meta: dict) -> None:
         for key, value in meta.items():
             setattr(self, str(key), value)
@@ -260,6 +264,7 @@ class NodeWithChildren(Node):
         ids = [id(c) for c in self._children]
         index = ids.index(id(child))
         del self._children[index]
+        child.parent = None
 
 
 class Text(Node):

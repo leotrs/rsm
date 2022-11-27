@@ -9,7 +9,7 @@ def test_simple():
         :section:
           :title: Section
 
-        This pargraph contains a claim :claim: {:label: clm-lbl} all $X$ are $Y$ ::.
+        This paragraph contains a claim :claim: {:label: clm-lbl}all $X$ are $Y$ ::.
 
         ::
 
@@ -30,7 +30,7 @@ def test_simple():
 
         <h2>1. Section</h2>
 
-        <p class="paragraph">This pargraph contains a claim <span id="clm-lbl" class="claim"><span class="keyword">⊢ </span>all <span class="math">\(X\)</span> are <span class="math">\(Y\)</span> </span>.</p>
+        <p class="paragraph">This paragraph contains a claim <span id="clm-lbl" class="claim"><span class="keyword">⊢ </span>all <span class="math">\(X\)</span> are <span class="math">\(Y\)</span></span>.</p>
 
         </section>
 
@@ -83,7 +83,7 @@ def test_claim_within_list():
         have="""\
         :manuscript:
 
-        We now make a bunch of claims
+        We now make a bunch of claims.
         :enumerate:
 
         :item: {:label: one} :claim: :math:2+2=4:: ::.
@@ -105,8 +105,7 @@ def test_claim_within_list():
 
         <h1></h1>
 
-        <p class="paragraph">We now make a bunch of claims
-        </p>
+        <p class="paragraph">We now make a bunch of claims.</p>
 
         <ol class="enumerate">
 

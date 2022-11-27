@@ -3,6 +3,7 @@ from conftest import compare_have_want
 import rsm
 
 
+@pytest.mark.skip
 def test_simple():
     compare_have_want(
         have="""\

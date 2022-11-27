@@ -50,7 +50,7 @@ def test_with_math():
         have="""\
         :manuscript:
 
-        This paragraph has math inside a claim ⊢ $2+2=4$.
+        This paragraph has math inside a claim :claim: :math:2+2=4:: ::.
 
         ::
         """,
@@ -78,39 +78,6 @@ def test_with_math():
     )
 
 
-def test_lonely_claim():
-    compare_have_want(
-        have="""\
-        :manuscript:
-
-        ⊢ $2+2=4$.
-
-        ::
-        """,
-        want="""\
-        <body>
-
-        <div class="manuscriptwrapper">
-
-        <div id="manuscript" class="manuscript">
-
-        <section class="level-1">
-
-        <h1></h1>
-
-        <p class="paragraph"><span class="claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.</p>
-
-        </section>
-
-        </div>
-
-        </div>
-
-        </body>
-        """,
-    )
-
-
 def test_claim_within_list():
     compare_have_want(
         have="""\
@@ -119,9 +86,9 @@ def test_claim_within_list():
         We now make a bunch of claims
         :enumerate:
 
-        :item: {:label: one} ⊢ $2+2=4$.
+        :item: {:label: one} :claim: :math:2+2=4:: ::.
 
-        :item: {:label: two} ⊢ $3+3=6$.
+        :item: {:label: two} :claim: :math:3+3=6:: ::.
 
         ::
 

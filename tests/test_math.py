@@ -299,6 +299,7 @@ def test_mathblock_nonum_with_shortcut():
     )
 
 
+@pytest.mark.skip
 def test_unclosed_dollar_sign():
     with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(

@@ -959,6 +959,92 @@ def test_escaped_colon_behind_halmos_after_shortcut():
     )
 
 
+def test_math_after_turnstile():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        This paragraph has math inside a claim ⊢ $2+2=4$.
+
+        ::
+        """,
+        want=r"""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">This paragraph has math inside a claim <span class="claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_turnstile_and_math_within_list():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        We now make a bunch of claims
+        :enumerate:
+
+        :item: {:label: one} ⊢ $2+2=4$.
+
+        :item: {:label: two} ⊢ $3+3=6$.
+
+        ::
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">We now make a bunch of claims
+        </p>
+
+        <ol class="enumerate">
+
+        <li id="one" class="item">
+        <span class="claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.
+        </li>
+
+        <li id="two" class="item">
+        <span class="claim"><span class="keyword">⊢ </span><span class="math">\(3+3=6\)</span></span>.
+        </li>
+
+        </ol>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
 def test_asterisk_inside_math():
     raise NotImplementedError
 

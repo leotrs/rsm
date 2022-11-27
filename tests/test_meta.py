@@ -435,7 +435,7 @@ def test_inline_start_with_brace():
 
         <h1></h1>
 
-        <p class="paragraph">This span starts with a brace <span>{</span></p>
+        <p class="paragraph">This span starts with a brace <span class="span">\{ </span>.</p>
 
         </section>
 

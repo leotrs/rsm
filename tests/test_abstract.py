@@ -30,7 +30,7 @@ def test_simple():
 
         :section:
           :title: Introduction
-          :label: sec:introduction
+          :label: sec-introduction
           :types: {t1, t2}
 
         Lorem ipsum.
@@ -63,11 +63,11 @@ def test_simple():
         <h3>Abstract</h3>
 
         <p class="paragraph">Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-          ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-          ipsum. Lorem ipsum.</p>
+        ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
+        ipsum. Lorem ipsum.</p>
 
         <p class="paragraph">Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem ipsum. Lorem
-          ipsum. Lorem ipsum.</p>
+        ipsum. Lorem ipsum.</p>
 
         <p class="keywords">Keywords: spectral graph theory, non-backtracking, interlacing</p>
 
@@ -75,7 +75,7 @@ def test_simple():
 
         </div>
 
-        <section id="sec:introduction" class="section level-2 t1 t2">
+        <section id="sec-introduction" class="section level-2 t1 t2">
 
         <h2>1. Introduction</h2>
 

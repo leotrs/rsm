@@ -12,7 +12,10 @@ from icecream import ic
 from typing import cast
 
 from .parser import RSMParserError
+from .util import EscapedString
 
+
+DELIMS = ':%$`*{'
 
 TAGS_WITH_META = [
     'block',
@@ -154,8 +157,9 @@ def parse_meta_into_dict(node):
     return pairs
 
 
-def merge_text_children(root):
+def normalize_text(root):
     for node in root.traverse():
+        # Merge consecutive text nodes.
         for run_is_text, run in groupby(
             node.children, key=lambda c: isinstance(c, nodes.Text)
         ):
@@ -169,12 +173,17 @@ def merge_text_children(root):
             for t in rest:
                 t.remove_self()
 
-        if isinstance(node, (nodes.Paragraph)):
+        # Strip both ends of a paragraph's text content.
+        if isinstance(node, nodes.Paragraph):
             first, last = node.first_of_type(nodes.Text), node.last_of_type(nodes.Text)
             if first:
                 first.text = first.text.lstrip()
             if last:
                 last.text = last.text.rstrip()
+
+        # Manage escaped characters
+        if isinstance(node, nodes.Text):
+            node.text = EscapedString(node.text, DELIMS).escape()
 
 
 def make_ast(cst):
@@ -239,5 +248,5 @@ def make_ast(cst):
             ]
         )
 
-    merge_text_children(ast_root)
+    normalize_text(ast_root)
     return ast_root

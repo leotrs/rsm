@@ -8,6 +8,7 @@ RSM Application: take a file path and output its contents as HTML.
 
 from .. import reader
 from .. import parser
+from .. import tsparser
 from .. import transformer
 from .. import linter
 from .. import translator
@@ -83,9 +84,12 @@ def configure(verbosity: int) -> None:
 
 class ParserApplication(Pipeline):
     def __init__(
-        self, srcpath: Path | None = None, plain: str = '', verbosity: int = 0
+        self,
+        srcpath: Path | None = None,
+        plain: str = '',
+        verbosity: int = 0,
+        treesitter: bool = False,
     ):
-        # ic.disable()
         validate(srcpath, plain)
         configure(verbosity)
 
@@ -95,8 +99,10 @@ class ParserApplication(Pipeline):
             tasks.append(Task("reader", r, lambda: r.read(srcpath)))
         else:
             tasks.append(Task("dummy", None, lambda: plain))
+
+        p = tsparser.TSParser() if treesitter else parser.MainParser()
         tasks += [
-            Task("parser", p := parser.MainParser(), p.parse),
+            Task("parser", p, p.parse),
             Task("transformer", t := transformer.Transformer(), t.transform),
         ]
         super().__init__(tasks)
@@ -124,8 +130,9 @@ class RSMProcessorApplication(ParserApplication):
         verbosity: int = 0,
         handrails: bool = False,
         run_linter: bool = False,
+        treesitter: bool = False,
     ):
-        super().__init__(srcpath, plain, verbosity)
+        super().__init__(srcpath, plain, verbosity, treesitter)
         if run_linter:
             self.add_task(Task("linter", l := linter.Linter(), l.lint))
 
@@ -143,8 +150,9 @@ class FullBuildApplication(RSMProcessorApplication):
         verbosity: int = 0,
         handrails: bool = True,
         run_linter: bool = False,
+        treesitter: bool = False,
     ):
-        super().__init__(srcpath, plain, verbosity, handrails, run_linter)
+        super().__init__(srcpath, plain, verbosity, handrails, run_linter, treesitter)
         if run_linter:
             wrapup = self.pop_task()
         self.add_task(Task("builder", b := builder.FullBuilder(), b.build))

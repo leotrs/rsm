@@ -39,7 +39,6 @@ def test_duplicate_label_warning(caplog):
     assert 'Duplicate label mylbl' in caplog.text
 
 
-@pytest.mark.skip
 def test_duplicate_bibtex_item_warning(caplog):
     compare_have_want(
         have="""\

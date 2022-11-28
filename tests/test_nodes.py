@@ -63,7 +63,7 @@ def test_replace_self():
     ref = Reference(target=target)
     pending.replace_self(ref)
     assert pending.parent is None
-    assert ref.parent is para
+    assert ref.parent is None
     assert pending not in para.children
     assert ref is para.children[1]
     assert ref == para.children[1]

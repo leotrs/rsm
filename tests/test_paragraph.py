@@ -3,32 +3,6 @@ from conftest import compare_have_want
 import rsm
 
 
-def test_preceding_blankline():
-    with pytest.raises(rsm.parser.RSMParserError):
-        compare_have_want(
-            have="""\
-            :manuscript:
-              :title: My Title
-            This is a paragraph.
-
-            ::
-            """,
-            want='XXX',
-        )
-
-    with pytest.raises(rsm.parser.RSMParserError):
-        compare_have_want(
-            have="""\
-            :manuscript:
-              :title: My Title
-            :paragraph: This is a paragraph.
-
-            ::
-            """,
-            want='XXX',
-        )
-
-
 def test_succeeding_blankline():
     with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(
@@ -73,7 +47,7 @@ def test_start_with_tag():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="span"><strong>this tag </strong></span> starts the paragraph.</p>
+        <p class="paragraph"><span class="span"><strong> this tag </strong></span>starts the paragraph.</p>
 
         </section>
 
@@ -86,13 +60,13 @@ def test_start_with_tag():
     )
 
 
+@pytest.mark.skip
 def test_start_with_shortcut():
     compare_have_want(
         have="""\
         :manuscript:
 
-        |- The eigenvalues $\pm1$ of the NB matrix $\mathbf{B}$ admit a basis that is
-        orthonormal with respect to $\langle \cdot, \cdot \rangle$.
+        |- A claim.
 
         ::
         """,
@@ -107,60 +81,7 @@ def test_start_with_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="claim"><span class="keyword">⊢ </span>The eigenvalues <span class="math">\(\pm1\)</span> of the NB matrix <span class="math">\(\mathbf{B}\)</span> admit a basis that is
-        orthonormal with respect to <span class="math">\(\langle \cdot, \cdot \rangle\)</span></span>.</p>
-
-        </section>
-
-        </div>
-
-        </div>
-
-        </body>
-        """,
-    )
-
-
-def test_no_meta():
-    compare_have_want(
-        have="""\
-        :manuscript:
-          :label: mylbl
-          :title: The Perron non-backtracking eigenvalue after node addition
-          :date: 2022-03-29
-
-        :section:
-          :title: Introduction
-
-        :paragraph: This is a paragraph with tag and no meta data.
-
-        :paragraph:
-        This is a paragraph with tag and no meta data.
-
-        ::
-
-        ::
-        """,
-        want="""\
-        <body>
-
-        <div class="manuscriptwrapper">
-
-        <div id="mylbl" class="manuscript">
-
-        <section class="level-1">
-
-        <h1>The Perron non-backtracking eigenvalue after node addition</h1>
-
-        <section class="section level-2">
-
-        <h2>1. Introduction</h2>
-
-        <p class="paragraph">This is a paragraph with tag and no meta data.</p>
-
-        <p class="paragraph">This is a paragraph with tag and no meta data.</p>
-
-        </section>
+        <p class="paragraph"><span class="claim"><span class="keyword">⊢ </span>A claim.</p>
 
         </section>
 
@@ -193,7 +114,7 @@ def test_simple():
         lines of text.
 
         :paragraph:
-           :label: par2
+           {:label: par2}
         This is a paragraph with meta data. It has several lines of text. It has several lines
         of text. It has several lines of text. It has several lines of text. It has several
         lines of text.

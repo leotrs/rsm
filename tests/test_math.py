@@ -284,7 +284,6 @@ def test_mathblock_nonum_with_shortcut():
         <div class="mathblock">
         $$
         2+2=4
-
         $$
         </div>
 

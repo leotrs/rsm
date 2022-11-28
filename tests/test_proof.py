@@ -14,7 +14,7 @@ def test_simple():
 
         :proof:
 
-        :step: Axiom. ::
+        :step: Axiom.::
 
         ::
 
@@ -52,7 +52,7 @@ def test_simple():
 
         <div class="statement">
 
-        <p class="paragraph">Axiom. </p>
+        <p class="paragraph">Axiom.</p>
 
         </div>
 

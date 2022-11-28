@@ -110,6 +110,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'code': nodes.Code,
     'codeblock': nodes.CodeBlock,
     'item': nodes.Item,
+    'itemize': nodes.Itemize,
     'caption': nodes.Caption,
     'figure': nodes.Figure,
     'lemma': nodes.Lemma,

@@ -86,7 +86,7 @@ def test_simple_with_multi_line_caption():
         """,
         want=SIMPLE_WANT.replace(
             'This is the figure caption.',
-            'This is the figure caption.\n    And it spans multiple lines.',
+            'This is the figure caption.\nAnd it spans multiple lines.',
         ),
     )
 
@@ -99,7 +99,7 @@ def test_caption_with_inline_tags():
         :figure:
           :path: assets/example.png
 
-          :caption: This is the **figure** caption.
+          :caption: This is the *figure* caption.
 
         ::
 

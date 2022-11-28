@@ -110,6 +110,8 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'code': nodes.Code,
     'codeblock': nodes.CodeBlock,
     'item': nodes.Item,
+    'caption': nodes.Caption,
+    'figure': nodes.Figure,
     'lemma': nodes.Lemma,
     'math': nodes.Math,
     'mathblock': nodes.MathBlock,
@@ -141,6 +143,10 @@ def parse_metatag_text(cst_key, cst_val):
     key = cst_key.named_children[0].type
     val = cst_val.text.decode('utf-8').strip()
     return key, val
+
+
+def parse_metatag_any(cst_key, cst_val):
+    return parse_metatag_text(cst_key, cst_val)
 
 
 def parse_metatag_bool(cst_key, _):
@@ -209,6 +215,8 @@ def make_ast(cst):
                 cst_node = first
         if not ast_node_type:
             ast_node_type = cst_node.type
+
+        ic(ast_node_type, cst_node)
 
         # make the correct type of AST node
         if ast_node_type in CST_TYPE_TO_AST_TYPE:

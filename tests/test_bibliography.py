@@ -2,7 +2,6 @@ import pytest
 from conftest import compare_have_want
 
 
-@pytest.mark.skip
 def test_single():
     compare_have_want(
         have="""\
@@ -19,7 +18,7 @@ def test_single():
         :bibtex:
 
         @book{knuth,
-          title={Art of computer programming, volume 2: Seminumerical algorithms},
+          title={Art of computer programming, volume 2, Seminumerical algorithms},
           author={Knuth, Donald E},
           year={2014},
           publisher={Addison-Wesley Professional}
@@ -38,7 +37,7 @@ def test_single():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<a class="reference" href="#knuth">1</a>]</p>
+        <p class="paragraph">This has a citation at the end.[<a class="reference" href="#knuth">1</a>]</p>
 
         <section class="level-2">
 
@@ -47,7 +46,7 @@ def test_single():
         <ol class="bibliography">
 
         <li id="knuth" class="bibitem">
-        Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.
+        Knuth, Donald E. "Art of computer programming, volume 2, Seminumerical algorithms". Addison-Wesley Professional. 2014.
         </li>
 
         </ol>
@@ -65,14 +64,13 @@ def test_single():
     )
 
 
-@pytest.mark.skip
 def test_with_shortcuts():
     compare_have_want(
         have="""\
         :manuscript:
           :title: My Title
 
-        This has a **citation** at the end. :cite:knuth::
+        This has a *citation* at the end. :cite:knuth::
 
         :bibliography: ::
 
@@ -101,7 +99,7 @@ def test_with_shortcuts():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a <span class="span"><strong>citation</strong></span> at the end. [<a class="reference" href="#knuth">1</a>]</p>
+        <p class="paragraph">This has a <span class="span"><strong>citation</strong></span> at the end.[<a class="reference" href="#knuth">1</a>]</p>
 
         <section class="level-2">
 
@@ -128,7 +126,6 @@ def test_with_shortcuts():
     )
 
 
-@pytest.mark.skip
 def test_many():
     compare_have_want(
         have="""\
@@ -173,7 +170,7 @@ def test_many():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<a class="reference" href="#torres2020">1</a>, <a class="reference" href="#knuth">2</a>]</p>
+        <p class="paragraph">This has a citation at the end.[<a class="reference" href="#torres2020">1</a>, <a class="reference" href="#knuth">2</a>]</p>
 
         <section class="level-2">
 
@@ -204,7 +201,6 @@ def test_many():
     )
 
 
-@pytest.mark.skip
 def test_order():
     compare_have_want(
         have="""\
@@ -249,7 +245,7 @@ def test_order():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<a class="reference" href="#knuth">2</a>, <a class="reference" href="#torres2020">1</a>]</p>
+        <p class="paragraph">This has a citation at the end.[<a class="reference" href="#knuth">2</a>, <a class="reference" href="#torres2020">1</a>]</p>
 
         <section class="level-2">
 

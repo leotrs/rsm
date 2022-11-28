@@ -42,6 +42,7 @@ DONT_PUSH_THESE_TYPES = {
     'asis_text',
     'blockmeta',
     'blocktag',
+    'cite',
     'code',
     'codeblock',
     'inlinemeta',
@@ -116,6 +117,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'author': nodes.Author,
     'enumerate': nodes.Enumerate,
     'claim': nodes.Claim,
+    'cite': nodes.PendingCite,
     'code': nodes.Code,
     'codeblock': nodes.CodeBlock,
     'item': nodes.Item,
@@ -215,11 +217,47 @@ def normalize_text(root):
 
 
 def make_ast(cst):
+    ast_root_node = None
+    bibliography_node = None
     stack = [(None, cst.root_node)]
     while stack:
         parent, cst_node = stack.pop()
         dont_push_these_ids = set()
         if cst_node.type == 'comment':
+            continue
+
+        # Handle bibliography-related nodes first and continue
+        if (
+            cst_node.type == 'specialblock'
+            and cst_node.children
+            and cst_node.children[0].type == 'bibliography'
+        ):
+            bibliography_node = nodes.Bibliography()
+            ast_root_node.append(bibliography_node)
+            continue
+
+        if cst_node.type == 'bibtex':
+            if bibliography_node is None:
+                raise RSMParserError(msg='Found bibtex but no bibliography node')
+            stack += reversed(
+                [
+                    (bibliography_node, c)
+                    for c in cst_node.named_children
+                    if c.type == 'bibitem'
+                ]
+            )
+            continue
+
+        if cst_node.type == 'bibitem':
+            ast_node = nodes.Bibitem()
+            ast_node.kind = cst_node.child_by_field_name('kind').text.decode('utf-8')
+            ast_node.label = cst_node.child_by_field_name('label').text.decode('utf-8')
+            for pair in [c for c in cst_node.named_children if c.type == 'bibitempair']:
+                key, value = pair.named_children
+                key, value = key.text.decode('utf-8'), value.text.decode('utf-8')
+                setattr(ast_node, key, value)
+
+            parent.append(ast_node)
             continue
 
         # After this if statement, cst_node is the node that actually contains the
@@ -250,7 +288,7 @@ def make_ast(cst):
         if ast_node_type in CST_TYPE_TO_AST_TYPE:
             ast_node = CST_TYPE_TO_AST_TYPE[ast_node_type]()
             if isinstance(ast_node, nodes.Manuscript):
-                ast_root = ast_node
+                ast_root_node = ast_node
             elif isinstance(ast_node, nodes.Text):
                 ast_node.text = cst_node.text.decode('utf-8')
         elif ast_node_type in ['inline', 'block']:
@@ -286,7 +324,7 @@ def make_ast(cst):
             ast_node.title = text_node.text.decode('utf-8')
             dont_push_these_ids.add(id(text_node))
 
-        if ast_node_type in ['ref', 'previous', 'cite', 'url']:
+        if ast_node_type in ['ref', 'previous', 'url']:
             target_node = cst_node.named_children[1]
             ast_node.target = target_node.text.decode('utf-8')
             dont_push_these_ids.add(id(target_node))
@@ -295,6 +333,12 @@ def make_ast(cst):
                 reftext_node = cst_node.named_children[2]
                 ast_node.overwrite_reftext = reftext_node.text.decode('utf-8')
                 dont_push_these_ids.add(id(reftext_node))
+
+        if ast_node_type == 'cite':
+            target_node = cst_node.named_children[1]
+            ast_node.targetlabels = target_node.text.decode('utf-8').split(',')
+            dont_push_these_ids.add(id(target_node))
+            ic(ast_node, ast_node.targetlabels, parent)
 
         # add the AST node to the correct place
         if parent and not isinstance(parent, nodes.Text):
@@ -310,5 +354,5 @@ def make_ast(cst):
             ]
         )
 
-    normalize_text(ast_root)
-    return ast_root
+    normalize_text(ast_root_node)
+    return ast_root_node

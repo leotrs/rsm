@@ -148,7 +148,9 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'thead': nodes.TableHead,
     'theorem': nodes.Theorem,
     'td': nodes.TableDatum,
+    'tdcontent': nodes.TableDatum,
     'tr': nodes.TableRow,
+    'trshort': nodes.TableRow,
     'url': nodes.URL,
 }
 
@@ -278,6 +280,13 @@ def make_ast(cst):
             if ast_node_type == 'table':
                 stack.append((parent, cst_node.named_children[0]))
                 continue
+
+        if cst_node.type == 'td':
+            # td tags are special because the entire contents are in the first children,
+            # so we might as well add that with the current parent and ignore the
+            # current node
+            stack.append((parent, cst_node.named_children[0]))
+            continue
 
         elif cst_node.type == 'paragraph':
             first = cst_node.named_children[0]

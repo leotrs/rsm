@@ -219,6 +219,8 @@ def make_ast(cst):
     while stack:
         parent, cst_node = stack.pop()
         dont_push_these_ids = set()
+        if cst_node.type == 'comment':
+            continue
 
         # After this if statement, cst_node is the node that actually contains the
         # interesting stuff, and ast_node_type is a string with the type of syntax node
@@ -243,8 +245,6 @@ def make_ast(cst):
                 cst_node = first
         if not ast_node_type:
             ast_node_type = cst_node.type
-
-        ic(ast_node_type, cst_node)
 
         # make the correct type of AST node
         if ast_node_type in CST_TYPE_TO_AST_TYPE:
@@ -296,14 +296,9 @@ def make_ast(cst):
                 ast_node.overwrite_reftext = reftext_node.text.decode('utf-8')
                 dont_push_these_ids.add(id(reftext_node))
 
-        # ic()
-        # ic(ast_node.parent)
-
         # add the AST node to the correct place
         if parent and not isinstance(parent, nodes.Text):
             parent.append(ast_node)
-
-        # ic(ast_node.parent)
 
         # push the children that need to be processed
         stack += reversed(

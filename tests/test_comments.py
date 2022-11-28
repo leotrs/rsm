@@ -1,22 +1,40 @@
 import pytest
-from conftest import compare_have_want
+from conftest import compare_have_want, EMPTY_WANT
 import rsm
 
 
-@pytest.mark.skip
-def test_simple():
+def test_comment_one_line_comment():
     compare_have_want(
         have="""\
         :manuscript:
 
-        :theorem:
-          :title: Main Theorem
-
-        :note: This is a single line note.
-
-        Theorem contents.
+        % comment
 
         ::
+        """,
+        want=EMPTY_WANT,
+    )
+
+
+def test_comment_multi_line_comment():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        % this is a
+        % multi line comment
+
+        ::
+        """,
+        want=EMPTY_WANT,
+    )
+
+
+def test_escape_comment_delimiter():
+    compare_have_want(
+        have=r"""        :manuscript:
+
+        \% This is not a comment.
 
         ::
         """,
@@ -31,21 +49,40 @@ def test_simple():
 
         <h1></h1>
 
-        <div class="theorem">
+        <p class="paragraph">% This is not a comment.</p>
 
-        <div class="theorem-contents">
-
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1. </strong></span></p>
-
-        <div class="note">
-        This is a single line note.
-        </div>
-
-        <p class="paragraph">Theorem contents.</p>
+        </section>
 
         </div>
 
         </div>
+
+        </body>
+        """,
+    )
+
+
+def test_end_of_line_comment():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        Foo.% this is a comment at the end of a line
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">Foo.</p>
 
         </section>
 

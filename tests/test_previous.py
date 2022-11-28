@@ -3,7 +3,6 @@ import rsm
 from conftest import compare_have_want
 
 
-@pytest.mark.skip
 def test_works_with_no_reftext_and_label():
     compare_have_want(
         have="""\
@@ -73,7 +72,6 @@ def test_works_with_no_reftext_and_label():
     )
 
 
-@pytest.mark.skip
 def test_works_with_no_reftext_and_no_label():
     compare_have_want(
         have="""\
@@ -143,7 +141,6 @@ def test_works_with_no_reftext_and_no_label():
     )
 
 
-@pytest.mark.skip
 def test_works_with_reftext_and_label():
     compare_have_want(
         have="""\
@@ -213,7 +210,6 @@ def test_works_with_reftext_and_label():
     )
 
 
-@pytest.mark.skip
 def test_works_with_reftext_and_no_label():
     compare_have_want(
         have="""\
@@ -283,7 +279,6 @@ def test_works_with_reftext_and_no_label():
     )
 
 
-@pytest.mark.skip
 def test_previous_outside_step():
     with pytest.raises(rsm.transformer.RSMTransformerError):
         compare_have_want(

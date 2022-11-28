@@ -9,7 +9,6 @@ def test_ignore_single_char():
     assert esc.find(':') == -1
 
 
-@pytest.mark.skip
 def test_simple_not_escaped():
     with pytest.raises(ValueError):
         compare_have_want(

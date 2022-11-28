@@ -60,7 +60,6 @@ def test_start_with_tag():
     )
 
 
-@pytest.mark.skip
 def test_start_with_shortcut():
     compare_have_want(
         have="""\

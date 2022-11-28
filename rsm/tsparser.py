@@ -244,8 +244,8 @@ def make_ast(cst):
         if ast_node_type in ['math', 'code', 'mathblock', 'codeblock']:
             asis = cst_node.named_children[-1]
             assert asis.type == 'asis_text'
-            text = asis.text.strip()
-            ast_node.append(nodes.Text(text.decode('utf-8')))
+            text = asis.text.decode('utf-8').strip()
+            ast_node.append(nodes.Text(text))
 
         # add the AST node to the correct place
         if parent and not isinstance(parent, nodes.Text):

@@ -556,7 +556,7 @@ class Translator:
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node, 'div'),
-                AppendTextAndDefer('$$\n', '$$'),
+                AppendTextAndDefer('$$\n', '\n$$'),
             ]
         )
 

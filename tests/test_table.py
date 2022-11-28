@@ -200,9 +200,9 @@ def test_with_header():
 
         <tr class="tablerow">
 
-        <td class="tabledatum">head1 </td>
+        <td class="tabledatum"> head1 </td>
 
-        <td class="tabledatum">head2 </td>
+        <td class="tabledatum"> head2 </td>
 
         </tr>
 
@@ -305,7 +305,7 @@ def test_shortcuts_in_header():
 
         :tbody:
 
-        :tr: :td: *foo* :: :td: **bar** :: ::
+        :tr: :td: /foo/ :: :td: *bar* :: ::
 
         ::
 
@@ -427,7 +427,7 @@ def test_simple_caption_with_shortcuts():
         ::
 
         :caption:
-        This is a *caption* with shortcuts $2+2$.
+        This is a /caption/ with shortcuts $2+2$.
 
         ::
 
@@ -657,19 +657,19 @@ def test_real_life_example():
         have=r"""        :manuscript:
 
         :table:
-        :label: lbl
+          :label: lbl
 
-        :thead:
-        :tr: :td: $H^{\tau}$ :: :td: $H^{\top}$ :: :td: $H^{c}$ :: ::
-        ::
-        :tbody:
-        :tr: :td: $0.0001$ :: :td: $0.0146$ :: :td: $0.0549$ :: ::
-        :tr: :td: $0.1222$ :: :td: $0.0139$ :: :td: $0.0106$ :: ::
+          :thead:
+            :tr: :td: $H^{\tau}$ :: :td: $H^{*}$ :: :td: $H^{c}$ :: ::
+          ::
+          :tbody:
+            :tr: :td: $0.0001$ :: :td: $0.0146$ :: :td: $0.0549$ :: ::
+            :tr: :td: $0.1222$ :: :td: $0.0139$ :: :td: $0.0106$ :: ::
 
-        ::
+          ::
 
-        :caption:
-        Values of $\epsilon$ and $\delta$ for select subgraphs of Gr-Qc.
+          :caption:
+          Values of $\epsilon$ and $\delta$ for select subgraphs of Gr-Qc.
 
         ::
 
@@ -693,7 +693,7 @@ def test_real_life_example():
 
         <td class="tabledatum"><span class="math">\(H^{\tau}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{\top}\)</span></td>
+        <td class="tabledatum"><span class="math">\(H^{*}\)</span></td>
 
         <td class="tabledatum"><span class="math">\(H^{c}\)</span></td>
 
@@ -752,7 +752,7 @@ def test_real_life_example_different_spacing():
           :thead:
           :tr:
             :td: $H^{\tau}$ ::
-            :td: $H^{\top}$ ::
+            :td: $H^{*}$ ::
             :td: $H^{c}$ :: ::
           ::
           :tbody:
@@ -769,6 +769,7 @@ def test_real_life_example_different_spacing():
 
           :caption:
           Values of $\epsilon$ and $\delta$ for select subgraphs of Gr-Qc.
+
         ::
 
         ::
@@ -791,7 +792,7 @@ def test_real_life_example_different_spacing():
 
         <td class="tabledatum"><span class="math">\(H^{\tau}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{\top}\)</span></td>
+        <td class="tabledatum"><span class="math">\(H^{*}\)</span></td>
 
         <td class="tabledatum"><span class="math">\(H^{c}\)</span></td>
 
@@ -825,7 +826,6 @@ def test_real_life_example_different_spacing():
 
         <caption>
         <span class="span"><strong>Table 1. </strong></span>Values of <span class="math">\(\epsilon\)</span> and <span class="math">\(\delta\)</span> for select subgraphs of Gr-Qc.
-
         </caption>
 
         </table>

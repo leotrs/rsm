@@ -1054,16 +1054,140 @@ def test_turnstile_and_math_within_list():
 
 
 def test_asterisk_inside_math():
-    raise NotImplementedError
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        $2*2 = 4*1$
+
+        ::
+        """,
+        want=r"""        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph"><span class="math">\(2*2 = 4*1\)</span></p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
 
 
 def test_asterisk_inside_code():
-    raise NotImplementedError
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        `[x**2 for x in range(10)]`
+
+        ::
+        """,
+        want=r"""        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph"><span class="code">[x**2 for x in range(10)]</span></p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
 
 
 def test_asterisk_inside_mathblock():
-    raise NotImplementedError
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        $$
+        2*2 = 4*1
+        $$
+
+        ::
+        """,
+        want=r"""        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <div class="mathblock">
+        $$
+        2*2 = 4*1
+        $$
+        <div class="mathblock__number">(1)</div>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
 
 
 def test_asterisk_inside_codeblock():
-    raise NotImplementedError
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        ```
+        2*2 = 4*1
+        ```
+
+        ::
+        """,
+        want=r"""        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <div class="codeblock">
+        2*2 = 4*1
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

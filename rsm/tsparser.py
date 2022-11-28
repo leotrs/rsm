@@ -33,6 +33,7 @@ TAGS_WITH_META = [
     'source_file',
     'subsection',
     'subsubsection',
+    'table',
 ]
 
 # Nodes of these types are purely syntactical; their content is usually processed when
@@ -136,8 +137,13 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'subsection': nodes.Subsection,
     'subsubsection': nodes.Subsubsection,
     'span': nodes.Span,
+    'table': nodes.Table,
+    'tbody': nodes.TableBody,
     'text': nodes.Text,
+    'thead': nodes.TableHead,
     'theorem': nodes.Theorem,
+    'td': nodes.TableDatum,
+    'tr': nodes.TableRow,
 }
 
 
@@ -221,6 +227,14 @@ def make_ast(cst):
         ast_node_type = ""
         if cst_node.type in ['specialblock', 'specialinline']:
             ast_node_type = cst_node.named_children[0].type
+
+            # Tables are special because the entire contents are in the first children,
+            # so we might as well add that with the current parent and ignore the
+            # current node
+            if ast_node_type == 'table':
+                stack.append((parent, cst_node.named_children[0]))
+                continue
+
         elif cst_node.type == 'paragraph':
             first = cst_node.named_children[0]
             if first.type in ['item', 'caption']:
@@ -228,7 +242,7 @@ def make_ast(cst):
         if not ast_node_type:
             ast_node_type = cst_node.type
 
-        # ic(ast_node_type, cst_node)
+        ic(ast_node_type, cst_node)
 
         # make the correct type of AST node
         if ast_node_type in CST_TYPE_TO_AST_TYPE:

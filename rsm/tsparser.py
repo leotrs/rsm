@@ -349,7 +349,7 @@ def make_ast(cst):
                 ast_node.overwrite_reftext = reftext_node.text.decode('utf-8')
                 dont_push_these_ids.add(id(reftext_node))
 
-        if ast_node_type.startswith('prev'):
+        if ast_node_type.startswith('prev') and ast_node_type != 'previous':
             if ast_node_type == 'prev':
                 target = 1
             else:

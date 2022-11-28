@@ -378,7 +378,10 @@ def test_prev_shortcut():
 
         :proof:
 
-        :step: {:label: st1} All $X$ are $Z$ and all $Z$ are $Y$.::
+        :step:
+          :label: st1
+          All $X$ are $Z$ and all $Z$ are $Y$.
+        ::
 
         :step: QED.
 

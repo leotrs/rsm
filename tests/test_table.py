@@ -1102,7 +1102,7 @@ def test_tr_shortcut_with_escaped_colon():
         :table:
 
         :thead:
-        :tr: : foo : bar : baz ::
+        :tr: foo : bar : baz ::
         ::
         :tbody:
         :tr: a\: : a2 : a3 ::
@@ -1130,13 +1130,11 @@ def test_tr_shortcut_with_escaped_colon():
 
         <tr class="tablerow">
 
-        <td class="tabledatum"></td>
+        <td class="tabledatum"> foo </td>
 
-        <td class="tabledatum">foo</td>
+        <td class="tabledatum"> bar </td>
 
-        <td class="tabledatum">bar</td>
-
-        <td class="tabledatum">baz</td>
+        <td class="tabledatum"> baz </td>
 
         </tr>
 
@@ -1146,21 +1144,21 @@ def test_tr_shortcut_with_escaped_colon():
 
         <tr class="tablerow">
 
-        <td class="tabledatum">a: </td>
+        <td class="tabledatum"> a: </td>
 
-        <td class="tabledatum">a2</td>
+        <td class="tabledatum"> a2 </td>
 
-        <td class="tabledatum">a3</td>
+        <td class="tabledatum"> a3 </td>
 
         </tr>
 
         <tr class="tablerow">
 
-        <td class="tabledatum">b1 </td>
+        <td class="tabledatum"> b1  </td>
 
-        <td class="tabledatum">b2</td>
+        <td class="tabledatum"> b2 </td>
 
-        <td class="tabledatum">b3</td>
+        <td class="tabledatum"> b3 </td>
 
         </tr>
 

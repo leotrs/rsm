@@ -8,7 +8,7 @@ def test_succeeding_blankline():
         have="""\
         :manuscript:
 
-        This is a paragraph.
+        Foo.
         ::
         """,
         want="""\
@@ -22,7 +22,7 @@ def test_succeeding_blankline():
 
         <h1></h1>
 
-        <p class="paragraph">This is a paragraph.</p>
+        <p class="paragraph">Foo.</p>
 
         </section>
 
@@ -40,7 +40,7 @@ def test_succeeding_blankline_with_tag():
         have="""\
         :manuscript:
 
-        :paragraph: This is a paragraph.
+        :paragraph: {:types: foo}This is a paragraph.
         ::
         """,
         want="""
@@ -54,7 +54,7 @@ def test_succeeding_blankline_with_tag():
 
         <h1></h1>
 
-        <p class="paragraph">This is a paragraph.</p>
+        <p class="paragraph foo">This is a paragraph.</p>
 
         </section>
 

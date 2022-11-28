@@ -49,6 +49,7 @@ DONT_PUSH_THESE_TYPES = {
     'manuscript',  # the root node is of type source_file, not manuscript
     'mathblock',
     'math',
+    'previous',
     'ref',
     'section',
     'spanstrong',
@@ -125,6 +126,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'math': nodes.Math,
     'mathblock': nodes.MathBlock,
     'paragraph': nodes.Paragraph,
+    'previous': nodes.PendingPrev,
     'proof': nodes.Proof,
     'ref': nodes.PendingReference,
     'section': nodes.Section,
@@ -284,7 +286,7 @@ def make_ast(cst):
             ast_node.title = text_node.text.decode('utf-8')
             dont_push_these_ids.add(id(text_node))
 
-        if ast_node_type in ['ref', 'cite', 'url']:
+        if ast_node_type in ['ref', 'previous', 'cite', 'url']:
             target_node = cst_node.named_children[1]
             ast_node.target = target_node.text.decode('utf-8')
             dont_push_these_ids.add(id(target_node))

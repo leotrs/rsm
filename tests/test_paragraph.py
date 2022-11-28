@@ -4,27 +4,67 @@ import rsm
 
 
 def test_succeeding_blankline():
-    with pytest.raises(rsm.parser.RSMParserError):
-        compare_have_want(
-            have="""\
-            :manuscript:
+    compare_have_want(
+        have="""\
+        :manuscript:
 
-            This is a paragraph.
-            ::
-            """,
-            want='XXX',
-        )
+        This is a paragraph.
+        ::
+        """,
+        want="""\
+        <body>
 
-    with pytest.raises(rsm.parser.RSMParserError):
-        compare_have_want(
-            have="""\
-            :manuscript:
+        <div class="manuscriptwrapper">
 
-            :paragraph: This is a paragraph.
-            ::
-            """,
-            want='XXX',
-        )
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">This is a paragraph.</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_succeeding_blankline_with_tag():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        :paragraph: This is a paragraph.
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">This is a paragraph.</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
 
 
 def test_start_with_tag():

@@ -10,7 +10,7 @@ def test_ignore_single_char():
 
 
 def test_simple_not_escaped():
-    with pytest.raises(ValueError):
+    with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(
             have="""
             :manuscript:

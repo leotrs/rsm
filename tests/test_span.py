@@ -128,7 +128,8 @@ def test_span_with_multiline_meta():
 
         <h1></h1>
 
-        <p class="paragraph">This is a<span class="span"><strong>paragraph with a span </strong></span>and it is multi line.</p>
+        <p class="paragraph">This is a
+        <span class="span"><strong>paragraph with a span </strong></span>and it is multi line.</p>
 
         </section>
 
@@ -165,7 +166,8 @@ def test_multiline_span():
 
         <h1></h1>
 
-        <p class="paragraph">This is a<span class="span"><strong>paragraph with
+        <p class="paragraph">This is a
+        <span class="span"><strong>paragraph with
         a span</strong></span> and it is multi line.</p>
 
         </section>

@@ -123,7 +123,7 @@ def test_no_halmos():
             have="""\
             :manuscript:
 
-            Lorem ipsum.
+            Foo.
 
             """,
             want='XXX',

@@ -9,7 +9,7 @@ import tree_sitter
 from rsm import nodes, translator, transformer
 from itertools import groupby
 from icecream import ic
-from typing import cast
+from typing import cast, Callable
 
 from .parser import RSMParserError
 from .util import EscapedString
@@ -44,6 +44,8 @@ DO_NOT_PROCESS = {
     'code',
     'inlinemeta',
     'inlinetag',
+    'spanstrong',
+    'spanemphas',
     'manuscript',  # the root node is of type source_file, not manuscript
 }
 
@@ -100,7 +102,7 @@ def traverse(tree, named_only=True):
     print()
 
 
-CST_TYPE_TO_AST_TYPE = {
+CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'abstract': nodes.Abstract,
     'author': nodes.Author,
     'enumerate': nodes.Enumerate,
@@ -117,6 +119,7 @@ CST_TYPE_TO_AST_TYPE = {
     'sketch': nodes.Sketch,
     'source_file': nodes.Manuscript,
     'step': nodes.Step,
+    'spanstrong': lambda: nodes.Span(strong=True),
     'subsection': nodes.Subsection,
     'subsubsection': nodes.Subsubsection,
     'span': nodes.Span,

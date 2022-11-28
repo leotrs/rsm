@@ -7,7 +7,7 @@ def test_one_strong():
         :manuscript:
           :title: My Title
 
-        This paragraph has a **shortcut** for strong span.
+        This paragraph has a *shortcut* for strong span.
 
         ::
         """,
@@ -41,7 +41,7 @@ def test_two_strong():
         :manuscript:
           :title: My Title
 
-        This paragraph has two **shortcuts** for strong **spans**.
+        This paragraph has two *shortcuts* for strong *spans*.
 
         ::
         """,
@@ -75,7 +75,7 @@ def test_one_emphas():
         :manuscript:
           :title: My Title
 
-        This paragraph has a *shortcut* for emphasis span.
+        This paragraph has a /shortcut/ for emphasis span.
 
         ::
         """,
@@ -177,6 +177,7 @@ def test_mathblock():
         :manuscript:
 
         This paragraph is followed by display math
+
         $$2 + 2 = 4.$$
 
         ::
@@ -192,8 +193,7 @@ def test_mathblock():
 
         <h1></h1>
 
-        <p class="paragraph">This paragraph is followed by display math
-        </p>
+        <p class="paragraph">This paragraph is followed by display math</p>
 
         <div class="mathblock">
         $$

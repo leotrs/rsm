@@ -53,14 +53,14 @@ def test_paragraph_ends_at_block():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This paragraph will terminate before the section starts </p>
+        <p class="paragraph">This paragraph will terminate before the section starts</p>
 
         <section class="section level-2">
 
         <h2>1. </h2>
 
         <p class="paragraph">And this
-        is inside the section. </p>
+        is inside the section.</p>
 
         </section>
 

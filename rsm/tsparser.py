@@ -124,6 +124,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'section': nodes.Section,
     'sketch': nodes.Sketch,
     'source_file': nodes.Manuscript,
+    'spanemphas': lambda: nodes.Span(emphas=True),
     'spanstrong': lambda: nodes.Span(strong=True),
     'step': nodes.Step,
     'subproof': nodes.Subproof,

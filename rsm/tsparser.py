@@ -268,6 +268,11 @@ def make_ast(cst):
             ast_node.target = target_node.text.decode('utf-8')
             dont_push_these_ids.add(id(target_node))
 
+            if len(cst_node.named_children) > 2:
+                reftext_node = cst_node.named_children[2]
+                ast_node.overwrite_reftext = reftext_node.text.decode('utf-8')
+                dont_push_these_ids.add(id(reftext_node))
+
         # ic()
         # ic(ast_node.parent)
 

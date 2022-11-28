@@ -127,104 +127,6 @@ def test_inline_no_meta_start_with_tag():
     )
 
 
-def test_paragraph_accepts_both_block_and_inline():
-    compare_have_want(
-        have="""\
-        :manuscript:
-
-        :paragraph: {:label: par-1} Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
-            ipsum dolor sit amet.
-
-        :paragraph:
-            :label: par-2
-        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
-        ipsum dolor sit amet.
-
-        ::
-        """,
-        want="""\
-        <body>
-
-        <div class="manuscriptwrapper">
-
-        <div id="manuscript" class="manuscript">
-
-        <section class="level-1">
-
-        <h1></h1>
-
-        <p id="par-1" class="paragraph">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
-            ipsum dolor sit amet.</p>
-
-        <p id="par-2" class="paragraph">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
-        ipsum dolor sit amet.</p>
-
-        </section>
-
-        </div>
-
-        </div>
-
-        </body>
-        """,
-    )
-
-
-def test_item_accepts_both_block_and_inline():
-    compare_have_want(
-        have="""\
-        :manuscript:
-
-        :enumerate:
-
-          :item: {:label: itm-5} Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
-              ipsum dolor sit amet.
-
-          :item:
-              :label: itm-6
-          Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
-          ipsum dolor sit amet.
-
-        ::
-
-        ::
-        """,
-        want="""\
-        <body>
-
-        <div class="manuscriptwrapper">
-
-        <div id="manuscript" class="manuscript">
-
-        <section class="level-1">
-
-        <h1></h1>
-
-        <ol class="enumerate">
-
-        <li id="itm-5" class="item">
-        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
-              ipsum dolor sit amet.
-        </li>
-
-        <li id="itm-6" class="item">
-        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem
-          ipsum dolor sit amet.
-        </li>
-
-        </ol>
-
-        </section>
-
-        </div>
-
-        </div>
-
-        </body>
-        """,
-    )
-
-
 def test_list_within_inline():
     compare_have_want(
         have="""\
@@ -245,7 +147,7 @@ def test_list_within_inline():
 
         <h1></h1>
 
-        <p class="paragraph">Foo <span class="span t1 t2">bar </span> baz.</p>
+        <p class="paragraph">Foo <span class="span t1 t2"> bar </span> baz.</p>
 
         </section>
 

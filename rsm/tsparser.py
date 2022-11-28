@@ -57,6 +57,7 @@ DONT_PUSH_THESE_TYPES = {
     'spanemphas',
     'subsection',
     'subsubsection',
+    'url',
 }
 
 
@@ -148,6 +149,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'theorem': nodes.Theorem,
     'td': nodes.TableDatum,
     'tr': nodes.TableRow,
+    'url': nodes.URL,
 }
 
 

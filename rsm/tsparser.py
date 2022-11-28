@@ -15,7 +15,7 @@ from .parser import RSMParserError
 from .util import EscapedString
 
 
-DELIMS = ':%$`*{'
+DELIMS = ':%$`*{#'
 
 TAGS_WITH_META = [
     'block',
@@ -27,9 +27,12 @@ TAGS_WITH_META = [
     'inline',
     'item',
     'paragraph',
+    'section',
     'specialblock',
     'specialinline',
     'source_file',
+    'subsection',
+    'subsubsection',
 ]
 
 # Nodes of these types are purely syntactical; their content is usually processed when
@@ -38,17 +41,19 @@ DONT_PUSH_THESE_TYPES = {
     'asis_text',
     'blockmeta',
     'blocktag',
-    'codeblock',
-    'mathblock',
-    'math',
     'code',
+    'codeblock',
     'inlinemeta',
     'inlinetag',
+    'manuscript',  # the root node is of type source_file, not manuscript
+    'mathblock',
+    'math',
     'ref',
     'section',
     'spanstrong',
     'spanemphas',
-    'manuscript',  # the root node is of type source_file, not manuscript
+    'subsection',
+    'subsubsection',
 }
 
 

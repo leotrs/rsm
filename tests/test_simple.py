@@ -120,12 +120,7 @@ def test_manuscript_meta():
 def test_no_halmos():
     with pytest.raises(rsm.parser.RSMParserError):
         compare_have_want(
-            have="""\
-            :manuscript:
-
-            Foo.
-
-            """,
+            have=""":manuscript:\n\nFoo.\n""",
             want='XXX',
         )
 

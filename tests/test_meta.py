@@ -162,15 +162,13 @@ def test_list_within_inline():
 
 def test_inline_start_with_brace():
     compare_have_want(
-        have="""\
-        :manuscript:
+        have=r"""        :manuscript:
 
         This span starts with a brace :span: \{ ::.
 
         ::
         """,
-        want="""\
-        <body>
+        want=r"""        <body>
 
         <div class="manuscriptwrapper">
 
@@ -180,7 +178,7 @@ def test_inline_start_with_brace():
 
         <h1></h1>
 
-        <p class="paragraph">This span starts with a brace <span class="span">\{ </span>.</p>
+        <p class="paragraph">This span starts with a brace <span class="span"> { </span>.</p>
 
         </section>
 
@@ -213,7 +211,7 @@ def test_inline_meta_with_no_space():
 
         <h1></h1>
 
-        <p class="paragraph">Foo <span class="span"><strong>bar </strong></span>.</p>
+        <p class="paragraph">Foo <span class="span"><strong> bar </strong></span>.</p>
 
         </section>
 
@@ -246,7 +244,7 @@ def test_inline_meta_with_space_in_between_braces():
 
         <h1></h1>
 
-        <p class="paragraph">Foo <span class="span"><strong>bar </strong></span>.</p>
+        <p class="paragraph">Foo <span class="span"><strong> bar </strong></span>.</p>
 
         </section>
 

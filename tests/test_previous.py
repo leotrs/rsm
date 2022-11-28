@@ -10,7 +10,10 @@ def test_works_with_no_reftext_and_label():
 
         :proof:
 
-          :step: {:label: lbl} Foo.::
+          :step:
+            :label: lbl
+          Foo.
+          ::
 
           :step: Bar :previous:1::.::
 
@@ -148,7 +151,9 @@ def test_works_with_reftext_and_label():
 
         :proof:
 
-          :step: {:label: lbl} Foo.::
+          :step:
+            :label: lbl
+          Foo.::
 
           :step: Bar :previous:1,bar::.::
 

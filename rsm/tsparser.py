@@ -34,7 +34,7 @@ TAGS_WITH_META = [
 
 # Nodes of these types are purely syntactical; their content is usually processed when
 # processing their parent node.
-DO_NOT_PROCESS = {
+DONT_PUSH_THESE_TYPES = {
     'asis_text',
     'blockmeta',
     'blocktag',
@@ -44,6 +44,8 @@ DO_NOT_PROCESS = {
     'code',
     'inlinemeta',
     'inlinetag',
+    'ref',
+    'section',
     'spanstrong',
     'spanemphas',
     'manuscript',  # the root node is of type source_file, not manuscript
@@ -118,6 +120,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'mathblock': nodes.MathBlock,
     'paragraph': nodes.Paragraph,
     'proof': nodes.Proof,
+    'ref': nodes.PendingReference,
     'section': nodes.Section,
     'sketch': nodes.Sketch,
     'source_file': nodes.Manuscript,
@@ -200,6 +203,7 @@ def make_ast(cst):
     stack = [(None, cst.root_node)]
     while stack:
         parent, cst_node = stack.pop()
+        dont_push_these_ids = set()
 
         # After this if statement, cst_node is the node that actually contains the
         # interesting stuff, and ast_node_type is a string with the type of syntax node
@@ -217,7 +221,7 @@ def make_ast(cst):
         if not ast_node_type:
             ast_node_type = cst_node.type
 
-        ic(ast_node_type, cst_node)
+        # ic(ast_node_type, cst_node)
 
         # make the correct type of AST node
         if ast_node_type in CST_TYPE_TO_AST_TYPE:
@@ -242,21 +246,44 @@ def make_ast(cst):
 
         # process some special tags
         if ast_node_type in ['math', 'code', 'mathblock', 'codeblock']:
+            # "asis_text" is not pushed to the stack for further processing so must
+            # handle it here
             asis = cst_node.named_children[-1]
             assert asis.type == 'asis_text'
             text = asis.text.decode('utf-8').strip()
             ast_node.append(nodes.Text(text))
 
+        if ast_node_type.endswith('section') and cst_node.type == 'specialblock':
+            # Sections with a hastag shurtcut ("# Section Title") have the title as a
+            # text child node, so must extract that here.  Sections with a tag
+            # (":section:") have the title as a meta key, so that is handled elsewhere.
+            # Sections of the former kind have cst_node type of 'specialblock' while the
+            # latter have type 'block'.
+            text_node = cst_node.named_children[1]
+            ast_node.title = text_node.text.decode('utf-8')
+            dont_push_these_ids.add(id(text_node))
+
+        if ast_node_type in ['ref', 'cite', 'url']:
+            target_node = cst_node.named_children[1]
+            ast_node.target = target_node.text.decode('utf-8')
+            dont_push_these_ids.add(id(target_node))
+
+        # ic()
+        # ic(ast_node.parent)
+
         # add the AST node to the correct place
         if parent and not isinstance(parent, nodes.Text):
             parent.append(ast_node)
+
+        # ic(ast_node.parent)
 
         # push the children that need to be processed
         stack += reversed(
             [
                 (ast_node, c)
                 for c in cst_node.named_children
-                if c.type not in DO_NOT_PROCESS
+                if c.type not in DONT_PUSH_THESE_TYPES
+                and id(c) not in dont_push_these_ids
             ]
         )
 

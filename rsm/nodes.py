@@ -197,8 +197,9 @@ class Node:
             raise RSMNodeError('Can only call replace_self on a node with parent')
         ids = [id(c) for c in self.parent.children]
         index = ids.index(id(self))
+        parent = self.parent
         self.parent.remove(self)
-        self.parent._children.insert(index, replacement)
+        parent._children.insert(index, replacement)
         replacement.parent = self.parent
         self.parent = None
 

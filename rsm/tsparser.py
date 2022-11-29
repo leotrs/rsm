@@ -270,7 +270,6 @@ def normalize_text(root):
         # care about is the outer whitespace of Text children.  Suppose we have a Text
         # node followed by a Span.  We want to give the user two options: either no
         # whitespace between them, or exactly one space.
-        ic(node.children)
         for idx, child in enumerate(node.children):
             if not isinstance(child, nodes.Text):
                 continue

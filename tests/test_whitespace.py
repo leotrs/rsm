@@ -684,7 +684,7 @@ def test_consecutive_lines_should_be_joined_by_spaces():
 
         <p class="paragraph">Consecutive lines should be <span class="span"><strong>joined</strong></span> by spaces.</p>
 
-        <p class="paragraph">Consecutive lines should be<span class="span"><strong>joined</strong></span> by spaces.</p>
+        <p class="paragraph">Consecutive lines should be <span class="span"><strong>joined</strong></span> by spaces.</p>
 
         </section>
 

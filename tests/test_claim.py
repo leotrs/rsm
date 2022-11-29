@@ -84,6 +84,7 @@ def test_claim_within_list():
         :manuscript:
 
         We now make a bunch of claims.
+
         :enumerate:
 
         :item: {:label: one} :claim: :math:2+2=4:: ::.

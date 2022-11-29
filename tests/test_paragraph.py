@@ -120,7 +120,7 @@ def test_start_with_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="claim"><span class="keyword">⊢ </span>A claim.</p>
+        <p class="paragraph"><span class="claim"><span class="keyword">⊢ </span> A claim</span>.</p>
 
         </section>
 

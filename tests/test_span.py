@@ -109,11 +109,9 @@ def test_span_with_multiline_meta():
         have="""\
         :manuscript:
 
-        This is a
-        :span:
-          {:strong:}
-        paragraph with a span ::
-        and it is multi line.
+        This is a paragraph
+        with :span: {:strong:} a
+        span :: and it is multi line.
 
         ::
         """,
@@ -128,8 +126,9 @@ def test_span_with_multiline_meta():
 
         <h1></h1>
 
-        <p class="paragraph">This is a
-        <span class="span"><strong>paragraph with a span </strong></span>and it is multi line.</p>
+        <p class="paragraph">This is a paragraph
+        with<span class="span"><strong>a
+        span</strong></span> and it is multi line.</p>
 
         </section>
 
@@ -142,16 +141,15 @@ def test_span_with_multiline_meta():
     )
 
 
-def test_multiline_span():
+def test_span_with_multiline_meta():
     compare_have_want(
         have="""\
         :manuscript:
 
-        This is a
-        :span:
-          {:strong:}
-        paragraph with
-        a span :: and it is multi line.
+        This is a paragraph
+        with :span: {:strong:,
+        :label: lbl} a
+        span :: and it is multi line.
 
         ::
         """,
@@ -166,9 +164,9 @@ def test_multiline_span():
 
         <h1></h1>
 
-        <p class="paragraph">This is a
-        <span class="span"><strong>paragraph with
-        a span</strong></span> and it is multi line.</p>
+        <p class="paragraph">This is a paragraph
+        with<span id="lbl" class="span"><strong>a
+        span</strong></span> and it is multi line.</p>
 
         </section>
 

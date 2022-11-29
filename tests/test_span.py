@@ -21,7 +21,7 @@ def test_one_span():
 
         <h1></h1>
 
-        <p class="paragraph">This is a <span class="span"><strong> boring </strong></span> paragraph.</p>
+        <p class="paragraph">This is a <span class="span"><strong>boring</strong></span> paragraph.</p>
 
         </section>
 
@@ -55,7 +55,7 @@ def test_two_spans():
 
         <h1></h1>
 
-        <p class="paragraph">This is a <span class="span"><strong> boring </strong></span> paragraph, though it has two <span class="span"><em> spans </em></span> so it's less boring.</p>
+        <p class="paragraph">This is a <span class="span"><strong>boring</strong></span> paragraph, though it has two <span class="span"><em>spans</em></span> so it's less boring.</p>
 
         </section>
 
@@ -90,42 +90,7 @@ def test_nested():
 
         <h1></h1>
 
-        <p class="paragraph">This is a <span class="span"><strong> paragraph with a <span class="span"><em> span within a span </em></span></strong></span> so that makes it really cool.  BTW it also has a Halmos at the start of a  line!</p>
-
-        </section>
-
-        </div>
-
-        </div>
-
-        </body>
-        """,
-    )
-
-
-def test_span_with_multiline_content():
-    compare_have_want(
-        have="""\
-        :manuscript:
-
-        This is a paragraph
-        with :span: {:strong:} a
-        span :: and it is multi line.
-
-        ::
-        """,
-        want="""\
-        <body>
-
-        <div class="manuscriptwrapper">
-
-        <div id="manuscript" class="manuscript">
-
-        <section class="level-1">
-
-        <h1></h1>
-
-        <p class="paragraph">This is a paragraph  with <span class="span"><strong> a  span </strong></span> and it is multi line.</p>
+        <p class="paragraph">This is a <span class="span"><strong>paragraph with a <span class="span"><em>span within a span</em></span></strong></span> so that makes it really cool.  BTW it also has a Halmos at the start of a line!</p>
 
         </section>
 
@@ -161,7 +126,7 @@ def test_span_with_multiline_meta():
 
         <h1></h1>
 
-        <p class="paragraph">This is a paragraph  with <span id="lbl" class="span"><strong> a  span </strong></span> and it is multi line.</p>
+        <p class="paragraph">This is a paragraph with <span id="lbl" class="span"><strong>a span</strong></span> and it is multi line.</p>
 
         </section>
 
@@ -194,7 +159,7 @@ def test_span_with_label():
 
         <h1></h1>
 
-        <p class="paragraph">This is a <span id="myspn" class="span"><strong> boring </strong></span> paragraph.</p>
+        <p class="paragraph">This is a <span id="myspn" class="span"><strong>boring</strong></span> paragraph.</p>
 
         </section>
 
@@ -227,7 +192,7 @@ def test_span_part_of_word():
 
         <h1></h1>
 
-        <p class="paragraph">This word is half bold <span class="span"><strong> bo</strong></span>ring.</p>
+        <p class="paragraph">This word is half bold <span class="span"><strong>bo</strong></span>ring.</p>
 
         </section>
 

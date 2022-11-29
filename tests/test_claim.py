@@ -9,7 +9,7 @@ def test_simple():
         :section:
           :title: Section
 
-        This paragraph contains a claim :claim: {:label: clm-lbl}all $X$ are $Y$ ::.
+          This paragraph contains a claim :claim: {:label: clm-lbl}all $X$ are $Y$ ::.
 
         ::
 

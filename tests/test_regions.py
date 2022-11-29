@@ -59,7 +59,7 @@ def test_paragraph_ends_at_block():
 
         <h2>1. </h2>
 
-        <p class="paragraph">And this  is inside the section.</p>
+        <p class="paragraph">And this is inside the section.</p>
 
         </section>
 

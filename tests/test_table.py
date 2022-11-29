@@ -200,9 +200,9 @@ def test_with_header():
 
         <tr class="tablerow">
 
-        <td class="tabledatum"> head1 </td>
+        <td class="tabledatum">head1</td>
 
-        <td class="tabledatum"> head2 </td>
+        <td class="tabledatum">head2</td>
 
         </tr>
 
@@ -249,7 +249,7 @@ def test_math_in_header():
 
         :thead:
 
-        :tr: :td: $H^{\eta}$ :: :td: $H^{star}$ :: :td: $H^{c}$ :: ::
+        :tr: :td: $H^{\eta}$ :: :td: $H^{*}$ :: :td: $H^{c}$ :: ::
 
         ::
 
@@ -275,7 +275,7 @@ def test_math_in_header():
 
         <td class="tabledatum"><span class="math">\(H^{\eta}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{star}\)</span></td>
+        <td class="tabledatum"><span class="math">\(H^{*}\)</span></td>
 
         <td class="tabledatum"><span class="math">\(H^{c}\)</span></td>
 
@@ -877,11 +877,11 @@ def test_tr_shortcut():
 
         <tr class="tablerow">
 
-        <td class="tabledatum"> foo </td>
+        <td class="tabledatum">foo</td>
 
-        <td class="tabledatum"> bar </td>
+        <td class="tabledatum">bar</td>
 
-        <td class="tabledatum"> baz </td>
+        <td class="tabledatum">baz</td>
 
         </tr>
 
@@ -891,21 +891,21 @@ def test_tr_shortcut():
 
         <tr class="tablerow">
 
-        <td class="tabledatum"> a1 </td>
+        <td class="tabledatum">a1</td>
 
-        <td class="tabledatum"> a2 </td>
+        <td class="tabledatum">a2</td>
 
-        <td class="tabledatum"> a3 </td>
+        <td class="tabledatum">a3</td>
 
         </tr>
 
         <tr class="tablerow">
 
-        <td class="tabledatum"> b1 </td>
+        <td class="tabledatum">b1</td>
 
-        <td class="tabledatum"> b2 </td>
+        <td class="tabledatum">b2</td>
 
-        <td class="tabledatum"> b3 </td>
+        <td class="tabledatum">b3</td>
 
         </tr>
 
@@ -1047,11 +1047,11 @@ def test_tr_shortcut_with_newlines():
 
         <tr class="tablerow">
 
-        <td class="tabledatum">foo </td>
+        <td class="tabledatum">foo</td>
 
-        <td class="tabledatum"> bar </td>
+        <td class="tabledatum">bar</td>
 
-        <td class="tabledatum"> baz</td>
+        <td class="tabledatum">baz</td>
 
         </tr>
 
@@ -1061,21 +1061,21 @@ def test_tr_shortcut_with_newlines():
 
         <tr class="tablerow">
 
-        <td class="tabledatum">a1 </td>
+        <td class="tabledatum">a1</td>
 
-        <td class="tabledatum"> a2 </td>
+        <td class="tabledatum">a2</td>
 
-        <td class="tabledatum"> a3</td>
+        <td class="tabledatum">a3</td>
 
         </tr>
 
         <tr class="tablerow">
 
-        <td class="tabledatum">b1 </td>
+        <td class="tabledatum">b1</td>
 
-        <td class="tabledatum"> b2 </td>
+        <td class="tabledatum">b2</td>
 
-        <td class="tabledatum"> b3</td>
+        <td class="tabledatum">b3</td>
 
         </tr>
 
@@ -1130,11 +1130,11 @@ def test_tr_shortcut_with_escaped_colon():
 
         <tr class="tablerow">
 
-        <td class="tabledatum"> foo </td>
+        <td class="tabledatum">foo</td>
 
-        <td class="tabledatum"> bar </td>
+        <td class="tabledatum">bar</td>
 
-        <td class="tabledatum"> baz </td>
+        <td class="tabledatum">baz</td>
 
         </tr>
 
@@ -1144,21 +1144,21 @@ def test_tr_shortcut_with_escaped_colon():
 
         <tr class="tablerow">
 
-        <td class="tabledatum"> a: </td>
+        <td class="tabledatum">a:</td>
 
-        <td class="tabledatum"> a2 </td>
+        <td class="tabledatum">a2</td>
 
-        <td class="tabledatum"> a3 </td>
+        <td class="tabledatum">a3</td>
 
         </tr>
 
         <tr class="tablerow">
 
-        <td class="tabledatum"> b1  </td>
+        <td class="tabledatum">b1</td>
 
-        <td class="tabledatum"> b2 </td>
+        <td class="tabledatum">b2</td>
 
-        <td class="tabledatum"> b3 </td>
+        <td class="tabledatum">b3</td>
 
         </tr>
 

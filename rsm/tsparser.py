@@ -11,6 +11,7 @@ from itertools import groupby
 from icecream import ic
 from typing import cast, Callable
 import string
+import re
 
 from .parser import RSMParserError
 from .util import EscapedString
@@ -217,8 +218,7 @@ def normalize_text(root):
     for node in root.traverse():
         # Merge consecutive text nodes (each text node ends at a newline, so consecutive
         # text nodes are just adjacent lines of text and can always be merged).  Also,
-        # pad all text with spaces.  Spurious spaces added in this phase are removed
-        # later.
+        # pad all text with spaces.  Spurious spaces added here are removed later.
         for run_is_text, run in groupby(
             node.children, key=lambda c: isinstance(c, nodes.Text)
         ):
@@ -226,32 +226,56 @@ def normalize_text(root):
                 continue
             run = list(run)
 
-            if len(run) < 2:
-                text = run[0].text
-                if text[0] not in string.whitespace:
-                    run[0].text = ' ' + text
-                if text[-1] not in string.whitespace:
-                    run[0].text = text + ' '
-                continue
+            if len(run) == 2:
+                first, last = run
+                first.text = first.text.rstrip() + ' ' + last.text.lstrip()
+                last.remove_self()
 
-            first, rest = run[0], run[1:]
-            # Watch the use of rstrip, strip, and lstrip here.
-            first.text = (
-                first.text.rstrip()
-                + ' '
-                + ' '.join([t.text.strip() for t in run[1:-1]])
-                + ' '
-                + run[-1].text.lstrip()
-            )
-            for t in rest:
-                t.remove_self()
+            elif len(run) > 2:
+                # Watch the use of rstrip, strip, and lstrip here.
+                first, rest = run[0], run[1:]
+                first.text = (
+                    first.text.rstrip()
+                    + ' '
+                    + ' '.join([t.text.strip() for t in run[1:-1]])
+                    + ' '
+                    + run[-1].text.lstrip()
+                )
+                for t in rest:
+                    t.remove_self()
+
+        if not isinstance(node, nodes.Paragraph) and node.children:
+            if isinstance((first := node.children[0]), nodes.Text):
+                first.text = first.text.lstrip()
+            if isinstance((last := node.children[-1]), nodes.Text):
+                last.text = last.text.rstrip()
 
         # Strip both ends of a paragraph's text content.
         if isinstance(node, nodes.Paragraph):
-            if (first := node.first_of_type(nodes.Text)) and not first.prev_sibling():
+            if (first := node.first_of_type(nodes.Text)) and not first.prev_sibling(
+                object
+            ):
                 first.text = first.text.lstrip()
-            if (last := node.last_of_type(nodes.Text)) and not last.next_sibling():
+            if (last := node.last_of_type(nodes.Text)) and not last.next_sibling(
+                object
+            ):
                 last.text = last.text.rstrip()
+
+        # At this point, the whitespace within non-paragraphs (e.g. Span, Claim) has
+        # been dealt with, as has the leading and trailing whitespace of Paragraphs.
+        # Since the text nodes have been merged, now every Paragraph's children look
+        # like [..., Span, Text, Claim, Text, Span, ...].  We need to deal with the
+        # whitespace at the boundaries between the Text and non-Text nodes in this list.
+        # Since the inner whitespace of non-Texts has been dealt with, all we need to
+        # care about is the outer whitespace of Text children.  Suppose we have a Text
+        # node followed by a Span.  We want to give the user two options: either no
+        # whitespace between them, or exactly one space.
+        ic(node.children)
+        for idx, child in enumerate(node.children):
+            if not isinstance(child, nodes.Text):
+                continue
+            child.text = re.sub(r'(.*?)\s+$', r'\1 ', child.text)
+            child.text = re.sub(r'^\s+(.*?)', r' \1', child.text)
 
         # Manage escaped characters.
         if isinstance(node, nodes.Text):

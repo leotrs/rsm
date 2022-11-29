@@ -76,7 +76,7 @@ def test_colon_inside_bold():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="span"><strong> Warning: </strong></span>this is a warning.</p>
+        <p class="paragraph"><span class="span"><strong>Warning:</strong></span> this is a warning.</p>
 
         </section>
 
@@ -109,7 +109,7 @@ def test_colon_inside_bold_no_space():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="span"><strong> Warning:</strong></span>this is a warning.</p>
+        <p class="paragraph"><span class="span"><strong>Warning:</strong></span> this is a warning.</p>
 
         </section>
 
@@ -142,7 +142,7 @@ def test_colon_inside_bold_with_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="span"><strong>Warning: </strong></span>this is a warning.</p>
+        <p class="paragraph"><span class="span"><strong>Warning:</strong></span>this is a warning.</p>
 
         </section>
 

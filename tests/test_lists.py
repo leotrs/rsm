@@ -53,15 +53,15 @@ def test_simple():
         <ol id="enm-foo" class="enumerate">
 
         <li id="itm-1" class="item">
-         Foo bar.
+        Foo bar.
         </li>
 
         <li id="itm-2" class="item">
-         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem  ipsum dolor sit amet.
+        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
         </li>
 
         <li id="itm-3" class="item">
-          Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem  ipsum dolor sit amet.
+        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
         </li>
 
         </ol>
@@ -69,15 +69,15 @@ def test_simple():
         <ul id="itm-foo" class="itemize">
 
         <li id="itm-4" class="item">
-         Foo bar.
+        Foo bar.
         </li>
 
         <li id="itm-5" class="item">
-         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem  ipsum dolor sit amet.
+        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
         </li>
 
         <li id="itm-6" class="item">
-          Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem  ipsum dolor sit amet.
+        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
         </li>
 
         </ul>

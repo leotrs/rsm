@@ -25,7 +25,7 @@ def test_duplicate_label_warning(caplog):
 
         <h1>Title</h1>
 
-        <p class="paragraph">There are <span id="mylbl" class="span"> two </span> spans with the <span class="span">same </span> label in this paragraph.</p>
+        <p class="paragraph">There are <span id="mylbl" class="span">two</span> spans with the <span class="span">same</span> label in this paragraph.</p>
 
         </section>
 

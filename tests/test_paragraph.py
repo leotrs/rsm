@@ -87,7 +87,7 @@ def test_start_with_tag():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="span"><strong> this tag </strong></span>starts the paragraph.</p>
+        <p class="paragraph"><span class="span"><strong>this tag</strong></span> starts the paragraph.</p>
 
         </section>
 
@@ -120,7 +120,7 @@ def test_start_with_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="claim"><span class="keyword">⊢ </span> A claim</span>.</p>
+        <p class="paragraph"><span class="claim"><span class="keyword">⊢ </span>A claim</span>.</p>
 
         </section>
 

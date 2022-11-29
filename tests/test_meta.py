@@ -59,7 +59,7 @@ def test_list_with_one_element_before_key():
 
         <h1>My Title</h1>
 
-        <p id="lbl" class="paragraph mytype">This paragraph has only one type,  that appears before another key.</p>
+        <p id="lbl" class="paragraph mytype">This paragraph has only one type, that appears before another key.</p>
 
         </section>
 
@@ -112,7 +112,7 @@ def test_inline_no_meta_start_with_tag():
 
         <p id="lbl" class="paragraph">Foo bar.</p>
 
-        <p class="paragraph">This span starts with a tag that is not a meta key, <span class="span"><a class="reference" href="#lbl">some paragraph</a>, instead  it starts with a ref</span>.</p>
+        <p class="paragraph">This span starts with a tag that is not a meta key, <span class="span"><a class="reference" href="#lbl">some paragraph</a>, instead it starts with a ref</span>.</p>
 
         </section>
 
@@ -145,7 +145,7 @@ def test_list_within_inline():
 
         <h1></h1>
 
-        <p class="paragraph">Foo <span class="span t1 t2"> bar </span> baz.</p>
+        <p class="paragraph">Foo <span class="span t1 t2">bar</span> baz.</p>
 
         </section>
 
@@ -176,7 +176,7 @@ def test_inline_start_with_brace():
 
         <h1></h1>
 
-        <p class="paragraph">This span starts with a brace <span class="span"> { </span>.</p>
+        <p class="paragraph">This span starts with a brace <span class="span">{</span>.</p>
 
         </section>
 
@@ -209,7 +209,7 @@ def test_inline_meta_with_no_space():
 
         <h1></h1>
 
-        <p class="paragraph">Foo <span class="span"><strong> bar </strong></span>.</p>
+        <p class="paragraph">Foo <span class="span"><strong>bar</strong></span>.</p>
 
         </section>
 
@@ -242,7 +242,7 @@ def test_inline_meta_with_space_in_between_braces():
 
         <h1></h1>
 
-        <p class="paragraph">Foo <span class="span"><strong> bar </strong></span>.</p>
+        <p class="paragraph">Foo <span class="span"><strong>bar</strong></span>.</p>
 
         </section>
 

@@ -169,7 +169,8 @@ class Node:
         if cls is None:
             cls = self.__class__
 
-        index = self.parent.children.index(self)
+        ids = [id(c) for c in self.parent.children]
+        index = ids.index(id(self))
         prev_sibs = self.parent.children[:index]
         for node in reversed(prev_sibs):
             if isinstance(node, cls):
@@ -182,7 +183,8 @@ class Node:
         if cls is None:
             cls = self.__class__
 
-        index = self.parent.children.index(self)
+        ids = [id(c) for c in self.parent.children]
+        index = ids.index(id(self))
         next_sibs = self.parent.children[index + 1 :]
         for node in reversed(next_sibs):
             if isinstance(node, cls):

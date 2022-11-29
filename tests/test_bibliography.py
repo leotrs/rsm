@@ -37,7 +37,7 @@ def test_single():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end.[<a class="reference" href="#knuth">1</a>]</p>
+        <p class="paragraph">This has a citation at the end. [<a class="reference" href="#knuth">1</a>]</p>
 
         <section class="level-2">
 
@@ -99,7 +99,7 @@ def test_with_shortcuts():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a <span class="span"><strong>citation</strong></span> at the end.[<a class="reference" href="#knuth">1</a>]</p>
+        <p class="paragraph">This has a <span class="span"><strong>citation</strong></span> at the end. [<a class="reference" href="#knuth">1</a>]</p>
 
         <section class="level-2">
 
@@ -170,7 +170,7 @@ def test_many():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end.[<a class="reference" href="#torres2020">1</a>, <a class="reference" href="#knuth">2</a>]</p>
+        <p class="paragraph">This has a citation at the end. [<a class="reference" href="#torres2020">1</a>, <a class="reference" href="#knuth">2</a>]</p>
 
         <section class="level-2">
 
@@ -245,7 +245,7 @@ def test_order():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end.[<a class="reference" href="#knuth">2</a>, <a class="reference" href="#torres2020">1</a>]</p>
+        <p class="paragraph">This has a citation at the end. [<a class="reference" href="#knuth">2</a>, <a class="reference" href="#torres2020">1</a>]</p>
 
         <section class="level-2">
 

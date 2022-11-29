@@ -351,7 +351,7 @@ def test_claim_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph">This paragraph contains a <span class="claim"><span class="keyword">⊢ </span> claim with a turnstile</span>. And also another one <span class="claim"><span class="keyword">⊢ </span> but it takes  multiple lines</span>.</p>
+        <p class="paragraph">This paragraph contains a <span class="claim"><span class="keyword">⊢ </span>claim with a turnstile</span>. And also another one <span class="claim"><span class="keyword">⊢ </span>but it takes multiple lines</span>.</p>
 
         </section>
 
@@ -834,7 +834,7 @@ def test_escaped_colon_behind_halmos():
 
         <h1></h1>
 
-        <p class="paragraph">Shortcut right beside an escaped colon<span class="span"><em> foo:</em></span></p>
+        <p class="paragraph">Shortcut right beside an escaped colon <span class="span"><em>foo:</em></span></p>
 
         </section>
 
@@ -866,7 +866,7 @@ def test_escaped_colon_behind_halmos_after_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph">Shortcut right beside an escaped colon<span class="span"><strong>foo:</strong></span></p>
+        <p class="paragraph">Shortcut right beside an escaped colon <span class="span"><strong>foo:</strong></span></p>
 
         </section>
 
@@ -918,6 +918,7 @@ def test_turnstile_and_math_within_list():
         :manuscript:
 
         We now make a bunch of claims
+
         :enumerate:
 
         :item: {:label: one} ⊢ $2+2=4$.
@@ -928,8 +929,7 @@ def test_turnstile_and_math_within_list():
 
         ::
         """,
-        want="""\
-        <body>
+        want=r"""        <body>
 
         <div class="manuscriptwrapper">
 

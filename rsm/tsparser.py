@@ -10,6 +10,7 @@ from rsm import nodes, translator, transformer
 from itertools import groupby
 from icecream import ic
 from typing import cast, Callable
+import string
 
 from .parser import RSMParserError
 from .util import EscapedString
@@ -215,18 +216,26 @@ def parse_meta_into_dict(node):
 def normalize_text(root):
     for node in root.traverse():
         # Merge consecutive text nodes (each text node ends at a newline, so consecutive
-        # text nodes are just adjacent lines of text and can always be merged).
+        # text nodes are just adjacent lines of text and can always be merged).  Also,
+        # pad all text with spaces.  Spurious spaces added in this phase are removed
+        # later.
         for run_is_text, run in groupby(
             node.children, key=lambda c: isinstance(c, nodes.Text)
         ):
             if not run_is_text:
                 continue
             run = list(run)
-            if len(run) < 2:
-                continue
-            first, rest = run[0], run[1:]
 
-            # important: watch the use of rstrip, strip, and lstrip here
+            if len(run) < 2:
+                text = run[0].text
+                if text[0] not in string.whitespace:
+                    run[0].text = ' ' + text
+                if text[-1] not in string.whitespace:
+                    run[0].text = text + ' '
+                continue
+
+            first, rest = run[0], run[1:]
+            # Watch the use of rstrip, strip, and lstrip here.
             first.text = (
                 first.text.rstrip()
                 + ' '
@@ -239,13 +248,12 @@ def normalize_text(root):
 
         # Strip both ends of a paragraph's text content.
         if isinstance(node, nodes.Paragraph):
-            first, last = node.first_of_type(nodes.Text), node.last_of_type(nodes.Text)
-            if first:
+            if (first := node.first_of_type(nodes.Text)) and not first.prev_sibling():
                 first.text = first.text.lstrip()
-            if last:
+            if (last := node.last_of_type(nodes.Text)) and not last.next_sibling():
                 last.text = last.text.rstrip()
 
-        # Manage escaped characters
+        # Manage escaped characters.
         if isinstance(node, nodes.Text):
             node.text = EscapedString(node.text, DELIMS).escape()
         if isinstance(node, nodes.Section):

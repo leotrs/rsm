@@ -176,6 +176,19 @@ class Node:
                 return node
         return None
 
+    def next_sibling(self, cls: Optional[Type['Node']] = None) -> Optional['Node']:
+        if self.parent is None:
+            return None
+        if cls is None:
+            cls = self.__class__
+
+        index = self.parent.children.index(self)
+        next_sibs = self.parent.children[index + 1 :]
+        for node in reversed(next_sibs):
+            if isinstance(node, cls):
+                return node
+        return None
+
     def first_ancestor_of_type(
         self, cls: Type['Node'] | tuple[Type['Node']]
     ) -> Optional['Node']:

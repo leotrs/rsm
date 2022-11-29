@@ -62,12 +62,9 @@ def test_simple():
 
         <h3>Abstract</h3>
 
-        <p class="paragraph">first
-        second
-        third</p>
+        <p class="paragraph">first second third</p>
 
-        <p class="paragraph">fourth
-        fifth</p>
+        <p class="paragraph">fourth  fifth</p>
 
         <p class="keywords">Keywords: spectral graph theory, non-backtracking, interlacing</p>
 

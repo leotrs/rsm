@@ -86,7 +86,7 @@ def test_simple_with_multi_line_caption():
         """,
         want=SIMPLE_WANT.replace(
             'This is the figure caption.',
-            'This is the figure caption.\nAnd it spans multiple lines.',
+            'This is the figure caption.  And it spans multiple lines.',
         ),
     )
 

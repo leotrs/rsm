@@ -90,8 +90,7 @@ def test_nested():
 
         <h1></h1>
 
-        <p class="paragraph">This is a <span class="span"><strong> paragraph with a <span class="span"><em> span within a span </em></span></strong></span>so that makes it really cool.  BTW it also has a Halmos at the start of a
-        line!</p>
+        <p class="paragraph">This is a <span class="span"><strong> paragraph with a <span class="span"><em> span within a span </em></span></strong></span> so that makes it really cool.  BTW it also has a Halmos at the start of a  line!</p>
 
         </section>
 
@@ -104,7 +103,7 @@ def test_nested():
     )
 
 
-def test_span_with_multiline_meta():
+def test_span_with_multiline_content():
     compare_have_want(
         have="""\
         :manuscript:
@@ -126,9 +125,7 @@ def test_span_with_multiline_meta():
 
         <h1></h1>
 
-        <p class="paragraph">This is a paragraph
-        with<span class="span"><strong>a
-        span</strong></span> and it is multi line.</p>
+        <p class="paragraph">This is a paragraph  with <span class="span"><strong> a  span </strong></span> and it is multi line.</p>
 
         </section>
 
@@ -164,9 +161,7 @@ def test_span_with_multiline_meta():
 
         <h1></h1>
 
-        <p class="paragraph">This is a paragraph
-        with<span id="lbl" class="span"><strong>a
-        span</strong></span> and it is multi line.</p>
+        <p class="paragraph">This is a paragraph  with <span id="lbl" class="span"><strong> a  span </strong></span> and it is multi line.</p>
 
         </section>
 

@@ -214,7 +214,8 @@ def parse_meta_into_dict(node):
 
 def normalize_text(root):
     for node in root.traverse():
-        # Merge consecutive text nodes.
+        # Merge consecutive text nodes (each text node ends at a newline, so consecutive
+        # text nodes are just adjacent lines of text and can always be merged).
         for run_is_text, run in groupby(
             node.children, key=lambda c: isinstance(c, nodes.Text)
         ):
@@ -224,7 +225,15 @@ def normalize_text(root):
             if len(run) < 2:
                 continue
             first, rest = run[0], run[1:]
-            first.text = '\n'.join([t.text.strip() for t in run])
+
+            # important: watch the use of rstrip, strip, and lstrip here
+            first.text = (
+                first.text.rstrip()
+                + ' '
+                + ' '.join([t.text.strip() for t in run[1:-1]])
+                + ' '
+                + run[-1].text.lstrip()
+            )
             for t in rest:
                 t.remove_self()
 

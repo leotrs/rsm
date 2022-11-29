@@ -183,17 +183,11 @@ def test_simple():
 
         <p class="paragraph">Lorem ipsum.</p>
 
-        <p id="par1" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines
-        of text. It has several lines of text. It has several lines of text. It has several
-        lines of text.</p>
+        <p id="par1" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
 
-        <p id="par2" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines
-        of text. It has several lines of text. It has several lines of text. It has several
-        lines of text.</p>
+        <p id="par2" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
 
-        <p id="par3" class="paragraph a b c">This is a paragraph with meta data. It
-        has several lines of text. It has several lines of text. It has several lines of
-        text. It has several lines of text. It has several lines of text.</p>
+        <p id="par3" class="paragraph a b c">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
 
         </section>
 

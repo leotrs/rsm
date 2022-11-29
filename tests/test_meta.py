@@ -59,8 +59,7 @@ def test_list_with_one_element_before_key():
 
         <h1>My Title</h1>
 
-        <p id="lbl" class="paragraph mytype">This paragraph has only one type,
-        that appears before another key.</p>
+        <p id="lbl" class="paragraph mytype">This paragraph has only one type,  that appears before another key.</p>
 
         </section>
 
@@ -113,8 +112,7 @@ def test_inline_no_meta_start_with_tag():
 
         <p id="lbl" class="paragraph">Foo bar.</p>
 
-        <p class="paragraph">This span starts with a tag that is not a meta key, <span class="span"><a class="reference" href="#lbl">some paragraph</a>, instead
-        it starts with a ref</span>.</p>
+        <p class="paragraph">This span starts with a tag that is not a meta key, <span class="span"><a class="reference" href="#lbl">some paragraph</a>, instead  it starts with a ref</span>.</p>
 
         </section>
 

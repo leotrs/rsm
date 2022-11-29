@@ -13,7 +13,9 @@ from typing import cast, Callable
 
 from .parser import RSMParserError
 from .util import EscapedString
+import logging
 
+logger = logging.getLogger('RSM').getChild('parse')
 
 DELIMS = ':%$`*{#'
 
@@ -86,10 +88,18 @@ class TSParser:
         self.ast = None
 
     def parse(self, src: str, abstractify: bool = True):
+        logger.info('Parsing...')
         self.cst = self._parser.parse(bytes(str(src), 'utf-8'))
-        traverse(self.cst)
+
+        # allow traverse() to print to stdout rather than use logger because it will
+        # look better this way
+        if logger.getEffectiveLevel() <= logging.DEBUG:
+            traverse(self.cst)
+
         if not abstractify:
             return self.cst
+
+        logger.info('Abstractifying...')
         self.ast = make_ast(self.cst)
         return self.ast
 
@@ -125,6 +135,8 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'cite': nodes.PendingCite,
     'code': nodes.Code,
     'codeblock': nodes.CodeBlock,
+    'definition': nodes.Definition,
+    'draft': nodes.Draft,
     'item': nodes.Item,
     'itemize': nodes.Itemize,
     'caption': nodes.Caption,
@@ -132,12 +144,15 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'lemma': nodes.Lemma,
     'math': nodes.Math,
     'mathblock': nodes.MathBlock,
+    'note': nodes.Note,
     'paragraph': nodes.Paragraph,
     'prev': nodes.PendingPrev,
     'prev2': nodes.PendingPrev,
     'previous': nodes.PendingPrev,
     'proof': nodes.Proof,
+    'proposition': nodes.Proposition,
     'ref': nodes.PendingReference,
+    'remark': nodes.Remark,
     'section': nodes.Section,
     'sketch': nodes.Sketch,
     'source_file': nodes.Manuscript,
@@ -224,6 +239,8 @@ def normalize_text(root):
         # Manage escaped characters
         if isinstance(node, nodes.Text):
             node.text = EscapedString(node.text, DELIMS).escape()
+        if isinstance(node, nodes.Section):
+            node.title = EscapedString(node.title, DELIMS).escape()
 
 
 def make_ast(cst):
@@ -248,7 +265,9 @@ def make_ast(cst):
 
         if cst_node.type == 'bibtex':
             if bibliography_node is None:
-                raise RSMParserError(msg='Found bibtex but no bibliography node')
+                logger.warning(msg='Found bibtex but no bibliography node')
+                continue
+
             stack += reversed(
                 [
                     (bibliography_node, c)
@@ -256,6 +275,10 @@ def make_ast(cst):
                     if c.type == 'bibitem'
                 ]
             )
+
+            for c in [c for c in cst_node.named_children if c.type == 'ERROR']:
+                logger.warning(msg=f'Bibitem at {(c.start_point)} has an error')
+
             continue
 
         if cst_node.type == 'bibitem':
@@ -360,9 +383,9 @@ def make_ast(cst):
 
         if ast_node_type == 'cite':
             target_node = cst_node.named_children[1]
-            ast_node.targetlabels = target_node.text.decode('utf-8').split(',')
+            labels = target_node.text.decode('utf-8').split(',')
+            ast_node.targetlabels = [l.strip() for l in labels]
             dont_push_these_ids.add(id(target_node))
-            ic(ast_node, ast_node.targetlabels, parent)
 
         # add the AST node to the correct place
         if parent and not isinstance(parent, nodes.Text):

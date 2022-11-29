@@ -118,12 +118,12 @@ class Node:
         ancestor = self.first_ancestor_of_type(self.number_within)
         if not ancestor:
             logger.warning(
-                f'{self.__class__.__name__} node set to be numbered within '
+                f'{self.__class__.__name__} numbered within '
                 f'{self.number_within.__name__} but no such ancestor was found; '
                 'using root node instead'
             )
             ancestor = self.first_ancestor_of_type(Manuscript)
-        if ancestor.full_number:
+        if ancestor and ancestor.full_number:
             return f'{ancestor.full_number}.{self.number}'
         return f'{self.number}' if self.number else ''
 

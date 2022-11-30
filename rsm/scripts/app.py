@@ -88,7 +88,7 @@ class ParserApplication(Pipeline):
         srcpath: Path | None = None,
         plain: str = '',
         verbosity: int = 0,
-        treesitter: bool = False,
+        treesitter: bool = True,
     ):
         validate(srcpath, plain)
         configure(verbosity)
@@ -130,7 +130,7 @@ class RSMProcessorApplication(ParserApplication):
         verbosity: int = 0,
         handrails: bool = False,
         run_linter: bool = False,
-        treesitter: bool = False,
+        treesitter: bool = True,
     ):
         super().__init__(srcpath, plain, verbosity, treesitter)
         if run_linter:
@@ -150,7 +150,7 @@ class FullBuildApplication(RSMProcessorApplication):
         verbosity: int = 0,
         handrails: bool = True,
         run_linter: bool = False,
-        treesitter: bool = False,
+        treesitter: bool = True,
     ):
         super().__init__(srcpath, plain, verbosity, handrails, run_linter, treesitter)
         if run_linter:

@@ -13,12 +13,8 @@ import sys
 import livereload
 
 
-def make(
-    file: str, lint: bool = True, treesitter: bool = False, verbose: int = 0
-) -> str:
-    app = FullBuildApplication(
-        srcpath=Path(file), run_linter=lint, verbosity=verbose, treesitter=treesitter
-    )
+def make(file: str, lint: bool = True, verbose: int = 0) -> str:
+    app = FullBuildApplication(srcpath=Path(file), run_linter=lint, verbosity=verbose)
     return app.run()
 
 
@@ -28,12 +24,6 @@ def parse_args() -> Namespace:
     parser.add_argument('--serve', help='serve and autoreload', action='store_true')
     parser.add_argument('--lint', help='activate the linter', action='store_true')
     parser.add_argument('-v', '--verbose', help='verbosity', action='count', default=0)
-    parser.add_argument(
-        '-t',
-        '--treesitter',
-        help='use the tree-sitter parser',
-        action='store_true',
-    )
     args = parser.parse_args()
     return args
 
@@ -47,7 +37,7 @@ def main() -> int:
         server.watch(args.file, livereload.shell(cmd))
         server.serve(root='.')
     else:
-        make(args.file, args.lint, args.treesitter, args.verbose)
+        make(args.file, args.lint, args.verbose)
     return 0
 
 

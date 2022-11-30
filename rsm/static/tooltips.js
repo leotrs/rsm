@@ -51,6 +51,9 @@ export function createTooltips() {
                 case classes.contains("mathblock"):
                     content = $(target).find('mjx-container').clone();
                     break;
+		case classes.contains("algorithm"):
+                    content = $(target).html();
+                    break;
                 case true:
                     console.log("tooltip target DIV with unknown class: ")
                     console.log(classes);

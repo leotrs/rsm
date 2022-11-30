@@ -46,7 +46,9 @@ def test_real_life_example():
 
         <h1></h1>
 
-        <pre class="algorithm pseudocode">
+        <div class="algorithm">
+
+        <pre class="pseudocode">
         \begin{algorithm}
         \caption{Quicksort}
         \begin{algorithmic}
@@ -72,6 +74,8 @@ def test_real_life_example():
         \end{algorithmic}
         \end{algorithm}
         </pre>
+
+        </div>
 
         </section>
 
@@ -111,7 +115,9 @@ def test_label():
 
         <h1></h1>
 
-        <pre id="alg" class="algorithm pseudocode">
+        <div id="alg" class="algorithm">
+
+        <pre class="pseudocode">
         \begin{algorithm}
         \caption{Quicksort}
         \begin{algorithmic}
@@ -119,6 +125,8 @@ def test_label():
         \end{algorithmic}
         \end{algorithm}
         </pre>
+
+        </div>
 
         </section>
 

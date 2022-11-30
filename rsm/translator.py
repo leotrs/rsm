@@ -586,14 +586,11 @@ class Translator:
         return AppendNodeTag(node, 'div', newline_inner=True, newline_outer=True)
 
     def visit_algorithm(self, node: nodes.Algorithm) -> EditCommand:
-        ic(node, node.children)
-        # <pre id="quicksort" class="pseudocode" style="display:hidden;">
-        return AppendNodeTag(
-            node,
-            'pre',
-            additional_classes=['pseudocode'],
-            newline_inner=True,
-            newline_outer=True,
+        return AppendBatchAndDefer(
+            [
+                AppendOpenTag(id=node.label, classes=['algorithm']),
+                AppendOpenTag('pre', classes=['pseudocode']),
+            ]
         )
 
     def visit_text(self, node: nodes.Text) -> EditCommand:

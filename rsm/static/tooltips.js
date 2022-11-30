@@ -46,9 +46,6 @@ export function createTooltips() {
 		case classes.contains("theorem"):
 		    content = $(target).find(".theorem-contents").html();
 		    break;
-                // case classes.contains("definition"):
-		//     content = $(target).find(".definition-contents").html();
-		//     break;
                 case classes.contains("math"):
                     content = $(target).html();
                     break;
@@ -72,29 +69,6 @@ export function createTooltips() {
         functionInit: function(instance, helper) {
             let content = $(helper.origin).parent().next().html();
             content = `<div>${content}</div>`;
-
-            // if (tag == "P") {
-            //     content = $(target).html();
-            //     content = `<div>${content}</div>`;
-            // } else if (tag == "LI") {
-            //     content = $(target).html();
-            //     content = `<div>${content}</div>`;
-	    // } else if (tag == "SPAN") {
-            //     content = $(target).parent().html();
-	    // } else if (tag == "DT") {
-	    //     content = $(target).next().html();
-            // } else if (tag == "FIGURE") {
-            //     content = $(target).html();
-            // } else if (tag == "SECTION") {
-            //     let clone = $(target).clone();
-            //     clone.children().slice(2).remove();
-            //     clone.children().each(function () {$(this).css('transform', 'scale(0.75)');});
-            //     clone.css('transform', 'scale(0.75)');
-            //     content = clone.html();
-            // } else {
-	    //     console.log('lolwut');
-	    // }
-
             instance.content($(content));
         }
     });
@@ -107,28 +81,25 @@ export function createTooltips() {
     }
 }
 
+window.MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+    }
+}
+
 // Modified from https://stackoverflow.com/a/53744331
 export function loadMathJax() {
-    let loadmjx = function() {
-        const script = document.createElement('script');
-        script.type = "text/javascript";
-        script.id = "MathJax-script";
-        script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
-        document.body.appendChild(script);
+    const script = document.createElement('script');
+    script.type = "text/javascript";
+    script.id = "MathJax-script";
+    script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+    document.body.appendChild(script);
 
-        return new Promise((res, rej) => {
+    return new Promise((res, rej) => {
 	    script.onload = res;
 	    script.onerror = rej;
-        });
-    };
-
-    loadmjx()
-        .then(() => {
-	    console.log('Script loaded!');
-	    createTooltips();
-        })
-        .catch((err) => {
-	    console.error('Script loading failed! Handle this error');
-            console.error(err);
-        });
+    });
 }

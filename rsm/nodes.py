@@ -439,6 +439,10 @@ class CodeBlock(NodeWithChildren):
     classreftext: ClassVar[str] = 'Code Listing {number}'
 
 
+class Algorithm(NodeWithChildren):
+    pass
+
+
 class BaseReference(Node):
     def __init__(
         self,

@@ -93,3 +93,36 @@ def test_end_of_line_comment():
         </body>
         """,
     )
+
+
+def test_percent_within_math_is_not_a_comment():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+        $10\%$ this is not a comment
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph"><span class="math">\(10\%\)</span> this is not a comment</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

@@ -22,6 +22,7 @@ logger = logging.getLogger('RSM').getChild('parse')
 DELIMS = ':%$`*{#'
 
 TAGS_WITH_META = [
+    "algorithm",
     'block',
     'caption',
     'codeblock',
@@ -43,6 +44,7 @@ TAGS_WITH_META = [
 # Nodes of these types are purely syntactical; their content is usually processed when
 # processing their parent node.
 DONT_PUSH_THESE_TYPES = {
+    'algorithm',
     'asis_text',
     'blockmeta',
     'blocktag',
@@ -130,6 +132,7 @@ def traverse(tree, named_only=True):
 
 CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'abstract': nodes.Abstract,
+    'algorithm': nodes.Algorithm,
     'author': nodes.Author,
     'enumerate': nodes.Enumerate,
     'claim': nodes.Claim,
@@ -386,7 +389,7 @@ def make_ast(cst):
                 ast_node.ingest_dict_as_meta(parse_meta_into_dict(meta))
 
         # process some special tags
-        if ast_node_type in ['math', 'code', 'mathblock', 'codeblock']:
+        if ast_node_type in ['math', 'code', 'mathblock', 'codeblock', 'algorithm']:
             # "asis_text" is not pushed to the stack for further processing so must
             # handle it here
             asis = cst_node.named_children[-1]

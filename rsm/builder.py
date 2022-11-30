@@ -99,7 +99,7 @@ class SingleFileBuilder(BaseBuilder):
                     console.log('MathJax loaded!');
                     loadPseudocode().then(() => {
                         console.log('pseudocode loaded!');
-                        pseudocode.renderElement($("pre.algorithm.pseudocode")[0], {lineNumber: true});
+                        pseudocode.renderElement($("pre.algorithm.pseudocode")[0], {lineNumber: true, noEnd: true});
                     }).catch((err) => {
                         console.error('Loading pseudocode FAILED!');
                         console.error(err);

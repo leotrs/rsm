@@ -440,7 +440,7 @@ class CodeBlock(NodeWithChildren):
 
 
 class Algorithm(NodeWithChildren):
-    pass
+    autonumber = True
 
 
 class BaseReference(Node):

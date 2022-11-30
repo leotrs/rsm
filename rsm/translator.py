@@ -32,7 +32,7 @@ def make_tag(tag: str, id_: str, classes: Iterable, **kwargs: Any) -> str:
         text += f' class="{classes}"'
     if kwargs:
         text += ' '
-    text += ' '.join(f'{k}="{v}"' for k, v in kwargs.items())
+    text += ' '.join(f'{k}="{v}"' for k, v in kwargs.items() if v)
     text += '>'
     return text
 
@@ -769,6 +769,9 @@ class Translator:
                         classes=[],
                         src=node.path,
                         alt=f'{node.__class__.__name__} {node.full_number}.',
+                        onload=''
+                        if node.scale == 1.0
+                        else f'this.width*={node.scale};',
                     )
                 ),
             ]
@@ -898,13 +901,6 @@ class HandrailsTranslator(Translator):
         ]
         batch.items[-1].root.types.append("do-not-hide")
         return batch
-
-    # def visit_definition(self, node: nodes.Definition) -> EditCommand:
-    #     batch = super().visit_definition(node)
-    #     batch.items[1].classes.append('handrail__collapsible')
-    #     batch = self._replace_batch_with_handrails(1, batch, include_content=True)
-    #     batch.items[-1].root.types.append("do-not-hide")
-    #     return batch
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         batch = super().visit_proof(node)

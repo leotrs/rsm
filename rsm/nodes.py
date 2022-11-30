@@ -386,11 +386,13 @@ class Section(Heading):
 class Subsection(Section):
     _number_within = Section
     level: ClassVar[int] = 3
+    classreftext: ClassVar[str] = 'Section {number}'
 
 
 class Subsubsection(Section):
     _number_within = Subsection
     level: ClassVar[int] = 4
+    classreftext: ClassVar[str] = 'Section {number}'
 
 
 class BaseParagraph(Heading):
@@ -432,7 +434,7 @@ class Code(NodeWithChildren):
 class MathBlock(NodeWithChildren):
     autonumber = True
     _number_within = Section
-    classreftext: ClassVar[str] = 'Equation ({number})'
+    classreftext: ClassVar[str] = '({number})'
 
 
 class CodeBlock(NodeWithChildren):
@@ -611,11 +613,14 @@ class UnknownBibitem(Bibitem):
 class Figure(NodeWithChildren):
     autonumber = True
     _number_within = Section
-    _newmetakeys: ClassVar[set] = {'path'}
+    _newmetakeys: ClassVar[set] = {'path', 'scale'}
 
-    def __init__(self, path: Path | str = '', **kwargs: Any) -> None:
+    def __init__(
+        self, path: Path | str = '', scale: float = 1.0, **kwargs: Any
+    ) -> None:
         super().__init__(**kwargs)
         self.path = Path(path)
+        self.scale = scale
 
 
 class Draft(NodeWithChildren):

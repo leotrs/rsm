@@ -59,7 +59,7 @@
     margin: 0;
 }
 
-p {
+p, ol.enumerate, ul.itemize {
     margin-block-end: 1em;
 }
 
@@ -522,8 +522,6 @@ table caption {
 }
 
 
-
-
 /* State */
 /******************************************************************************************/
 
@@ -597,6 +595,37 @@ a:hover, a.note__link:hover {
 
 /* Theming */
 /******************************************************************************************/
+
+.tiny {
+    font-size: 0.5rem;
+}
+.smallest {
+    font-size: 0.7rem;
+}
+.smaller {
+    font-size: 0.8rem;
+}
+.small {
+    font-size: 0.9rem;
+}
+.normal {
+    font-size: 1rem;
+}
+.large {
+    font-size: 1.2rem;
+}
+.larger {
+    font-size: 14.4rem;
+}
+.largest {
+    font-size: 17.281rem;
+}
+.huge {
+    font-size: 20.741rem;
+}
+.huger {
+    font-size: 24.88rem;
+}
 
 .draft{
     color: blue;

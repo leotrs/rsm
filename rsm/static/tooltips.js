@@ -23,8 +23,12 @@ export function createTooltips() {
             } else if (tag == "LI") {
                 content = $(target).html();
                 content = `<div>${content}</div>`;
+	    } else if (tag == "SPAN" && classes.contains("math")) {
+                content = $(target).html();
+                content = `<div>${content}</div>`;
 	    } else if (tag == "SPAN") {
                 content = $(target).parent().html();
+                content = `<div>${content}</div>`;
 	    } else if (tag == "DT") {
 		content = $(target).next().html();
             } else if (tag == "FIGURE") {
@@ -34,8 +38,11 @@ export function createTooltips() {
             } else if (tag == "SECTION") {
                 let clone = $(target).clone();
                 clone.children().slice(2).remove();
-                clone.children().each(function () {$(this).css('transform', 'scale(0.75)');});
-                clone.css('transform', 'scale(0.75)');
+                // clone.children().each(function () {$(this).css('transform', 'scale(0.75)');});
+                // clone.children().each(function () {$(this).attr('onload', 'this.width*=0.25;');});
+                // clone.css('transform', 'scale(0.75)');
+                // clone.attr('onload', 'this.width*=0.25;')
+                clone.css('font-size', '0.7rem');
                 content = clone.html();
             } else if (tag == "DIV") {
                 switch(true) {

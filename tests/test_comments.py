@@ -124,3 +124,38 @@ def test_percent_within_math_is_not_a_comment():
         </body>
         """,
     )
+
+
+def test_broken_paragraph():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+        This is a paragraph
+        % with a comment
+        in the middle
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph">This is a paragraph in the middle</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

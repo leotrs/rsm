@@ -80,26 +80,3 @@ export function createTooltips() {
         console.log('updated but did not find Mathjax.typeset');
     }
 }
-
-window.MathJax = {
-    tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']],
-        processEscapes: true,
-        processEnvironments: true,
-    }
-}
-
-// Modified from https://stackoverflow.com/a/53744331
-export function loadMathJax() {
-    const script = document.createElement('script');
-    script.type = "text/javascript";
-    script.id = "MathJax-script";
-    script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
-    document.body.appendChild(script);
-
-    return new Promise((res, rej) => {
-	    script.onload = res;
-	    script.onerror = rej;
-    });
-}

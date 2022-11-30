@@ -284,9 +284,10 @@ class NodeWithChildren(Node):
 
 
 class Text(Node):
-    def __init__(self, text: str = '', **kwargs: Any) -> None:
+    def __init__(self, text: str = '', asis: bool = False, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.text = text
+        self.asis = asis
 
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({textwrap.shorten(self.text, 60)})'

@@ -277,7 +277,7 @@ def normalize_text(root):
             child.text = re.sub(r'^\s+(.*?)', r' \1', child.text)
 
         # Manage escaped characters.
-        if isinstance(node, nodes.Text):
+        if isinstance(node, nodes.Text) and not node.asis:
             node.text = EscapedString(node.text, DELIMS).escape()
         if isinstance(node, nodes.Section):
             node.title = EscapedString(node.title, DELIMS).escape()
@@ -392,7 +392,7 @@ def make_ast(cst):
             asis = cst_node.named_children[-1]
             assert asis.type == 'asis_text'
             text = asis.text.decode('utf-8').strip()
-            ast_node.append(nodes.Text(text))
+            ast_node.append(nodes.Text(text, asis=True))
 
         if ast_node_type.endswith('section') and cst_node.type == 'specialblock':
             # Sections with a hastag shurtcut ("# Section Title") have the title as a

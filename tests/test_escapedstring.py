@@ -153,3 +153,34 @@ def test_colon_inside_bold_with_shortcut():
         </body>
         """,
     )
+
+
+def test_backslash_brace_within_math():
+    compare_have_want(
+        have=r"""        :manuscript:
+
+        $[k]:= \{1,\ldots,k\}$
+
+        ::
+        """,
+        want=r"""        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph"><span class="math">\([k]:= \{1,\ldots,k\}\)</span></p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

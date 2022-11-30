@@ -81,11 +81,11 @@ export function setupClassInteractions() {
         let show = null;
         let hide = null;
         if ($(this).hasClass('sketch')) {
-            show = contents.find('.sketch');
-            hide = contents.find(':not(.sketch)');
+            show = contents.children('.sketch');
+            hide = contents.children(':not(.sketch)');
         } else if ($(this).hasClass('full')) {
-            show = contents.find(':not(.sketch)');
-            hide = contents.find('.sketch');
+            show = contents.children(':not(.sketch)');
+            hide = contents.children('.sketch');
         };
         hide.children().each(function(){
             $(this).addClass("hide")
@@ -94,7 +94,6 @@ export function setupClassInteractions() {
             $(this).removeClass("hide")
         })
     });
-
 
     $(".option__steps").click(function() {
         let proof_container = $(this).closest(".proof").find(".proof-container");

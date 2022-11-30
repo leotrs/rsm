@@ -9,7 +9,9 @@ Apply transforms to the nodes.Manuscript.
 from icecream import ic
 
 from collections import defaultdict
-from typing import Type
+from typing import Type, Generator
+from itertools import count
+from string import ascii_uppercase
 from . import nodes
 
 import logging
@@ -135,10 +137,14 @@ class Transformer:
             step.append([statement, subproof])
 
     def autonumber_nodes(self) -> None:
-        counts: dict[Type[nodes.Node], dict[Type[nodes.Node], int]] = defaultdict(
-            lambda: defaultdict(int)
+        counts: dict[Type[nodes.Node], dict[Type[nodes.Node], Generator]] = defaultdict(
+            lambda: defaultdict(lambda: count(start=1))
         )
         for node in self.tree.traverse():
+
+            if isinstance(node, nodes.Appendix):
+                counts[nodes.Manuscript] = defaultdict(lambda: iter(ascii_uppercase))
+                continue
             if isinstance(node, (nodes.Proof, nodes.Subproof)):
                 self._autonumber_steps(node)
                 continue
@@ -146,10 +152,9 @@ class Transformer:
                 continue
 
             if node.autonumber and not node.nonum:
-                counts[type(node)] = defaultdict(int)
-                num = counts[node.number_within][node.number_as]
-                node.number = num + 1
-                counts[node.number_within][node.number_as] = num + 1
+                counts[type(node)] = defaultdict(lambda: count(start=1))
+                num = next(counts[node.number_within][node.number_as])
+                node.number = num
 
     def _autonumber_steps(self, proof: nodes.Proof) -> None:
         step_gen = (s for s in proof.children if isinstance(s, nodes.Step))

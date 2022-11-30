@@ -790,6 +790,11 @@ class Translator:
             ]
         )
 
+    def visit_appendix(self, node: nodes.Appendix) -> EditCommand:
+        # Appendix nodes are used during the transform phase, but do not apear in the
+        # output in any way.
+        return AppendText('')
+
     def visit_table(self, node: nodes.Table) -> EditCommand:
         return AppendNodeTag(node, 'table')
 

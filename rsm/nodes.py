@@ -443,6 +443,10 @@ class Algorithm(NodeWithChildren):
     autonumber = True
 
 
+class Appendix(Node):
+    pass
+
+
 class BaseReference(Node):
     def __init__(
         self,

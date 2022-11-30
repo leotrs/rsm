@@ -45,6 +45,7 @@ TAGS_WITH_META = [
 # processing their parent node.
 DONT_PUSH_THESE_TYPES = {
     'algorithm',
+    'appendix',
     'asis_text',
     'blockmeta',
     'blocktag',
@@ -132,6 +133,7 @@ def traverse(tree, named_only=True):
 
 CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'abstract': nodes.Abstract,
+    'appendix': nodes.Appendix,
     'algorithm': nodes.Algorithm,
     'author': nodes.Author,
     'enumerate': nodes.Enumerate,

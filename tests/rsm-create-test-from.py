@@ -33,7 +33,7 @@ def main(file_path, test_path, test_name, handrails=False):
 
     with open(file_path, encoding='utf-8') as file:
         source = file.read()
-    target = rsm.render(source, handrails=handrails, treesitter=True)
+    target = rsm.render(source, handrails=handrails)
 
     with open(out_path, 'a', encoding='utf-8') as file:
         file.write(

@@ -97,15 +97,13 @@ def test_end_of_line_comment():
 
 def test_percent_within_math_is_not_a_comment():
     compare_have_want(
-        have="""
-        :manuscript:
+        have=r"""        :manuscript:
 
         $10\%$ this is not a comment
 
         ::
         """,
-        want="""
-        <body>
+        want=r"""        <body>
 
         <div class="manuscriptwrapper">
 

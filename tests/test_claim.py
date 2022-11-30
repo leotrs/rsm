@@ -95,8 +95,7 @@ def test_claim_within_list():
 
         ::
         """,
-        want="""\
-        <body>
+        want=r"""        <body>
 
         <div class="manuscriptwrapper">
 

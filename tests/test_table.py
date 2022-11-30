@@ -1096,8 +1096,7 @@ def test_tr_shortcut_with_newlines():
 
 def test_tr_shortcut_with_escaped_colon():
     compare_have_want(
-        have="""
-        :manuscript:
+        have=r"""        :manuscript:
 
         :table:
 

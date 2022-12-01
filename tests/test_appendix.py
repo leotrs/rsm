@@ -203,3 +203,48 @@ def test_theorem():
         </body>
         """,
     )
+
+
+def test_section_reftext():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+        :ref:app::
+
+        :appendix:
+
+        # Foo bar
+        :label: app
+        ::
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph"><a class="reference" href="#app">Appendix A</a></p>
+
+        <section id="app" class="section level-2">
+
+        <h2>A. Foo bar</h2>
+
+        </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

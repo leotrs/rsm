@@ -22,8 +22,9 @@ logger = logging.getLogger('RSM').getChild('parse')
 DELIMS = ':%$`*{#'
 
 TAGS_WITH_META = [
-    "algorithm",
+    'algorithm',
     'block',
+    'bibliography',
     'caption',
     'codeblock',
     'mathblock',
@@ -39,6 +40,7 @@ TAGS_WITH_META = [
     'subsection',
     'subsubsection',
     'table',
+    'toc',
 ]
 
 # Nodes of these types are purely syntactical; their content is usually processed when
@@ -68,6 +70,7 @@ DONT_PUSH_THESE_TYPES = {
     'spanemphas',
     'subsection',
     'subsubsection',
+    'toc',
     'url',
 }
 
@@ -179,6 +182,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'theorem': nodes.Theorem,
     'td': nodes.TableDatum,
     'tdcontent': nodes.TableDatum,
+    'toc': nodes.Contents,
     'tr': nodes.TableRow,
     'trshort': nodes.TableRow,
     'url': nodes.URL,

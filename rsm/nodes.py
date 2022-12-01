@@ -37,13 +37,13 @@ class Node:
         types: list[str] | None = None,
         number: int | None = None,
         nonum: bool = False,
-        customreftext: str = '',
+        reftext_template: str = '',
     ) -> None:
         self.label = label
         self.types = types or []
         self.nonum = nonum
         self.number = number
-        self.reftext = customreftext or self.classreftext
+        self.reftext_template = reftext_template or self.classreftext
         self._parent: 'NodeWithChildren' | None = None
 
     def _attrs_for_repr_and_eq(self) -> list[str]:
@@ -126,6 +126,12 @@ class Node:
         if ancestor and ancestor.full_number:
             return f'{ancestor.full_number}.{self.number}'
         return f'{self.number}' if self.number else ''
+
+    @property
+    def reftext(self) -> str:
+        return self.reftext_template.format(
+            nodeclass=self.__class__.__name__, number=self.full_number
+        )
 
     def traverse(
         self,
@@ -223,6 +229,9 @@ class Node:
         self.parent = None
 
     def ingest_dict_as_meta(self, meta: dict) -> None:
+        if 'reftext' in meta:
+            meta['reftext_template'] = meta['reftext']
+            del meta['reftext']
         for key, value in meta.items():
             setattr(self, str(key), value)
 
@@ -413,10 +422,6 @@ class Enumerate(NodeWithChildren):
 
 class Itemize(NodeWithChildren):
     pass
-
-
-class Item(BaseParagraph):
-    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Itemize, Enumerate}
 
 
 class Keyword(Span):
@@ -649,3 +654,15 @@ class TableDatum(NodeWithChildren):
 
 class Caption(Paragraph):
     possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Figure, Table}
+
+
+class Contents(Itemize):
+    pass
+
+
+class Item(BaseParagraph):
+    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {
+        Itemize,
+        Enumerate,
+        Contents,
+    }

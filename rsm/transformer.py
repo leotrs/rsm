@@ -36,6 +36,7 @@ class Transformer:
         self.resolve_pending_references()
         self.add_necessary_subproofs()
         self.autonumber_nodes()
+        self.make_toc()
 
         return tree
 
@@ -140,10 +141,12 @@ class Transformer:
         counts: dict[Type[nodes.Node], dict[Type[nodes.Node], Generator]] = defaultdict(
             lambda: defaultdict(lambda: count(start=1))
         )
+        within_appendix = False
         for node in self.tree.traverse():
 
             if isinstance(node, nodes.Appendix):
                 counts[nodes.Manuscript] = defaultdict(lambda: iter(ascii_uppercase))
+                within_appendix = True
                 continue
             if isinstance(node, (nodes.Proof, nodes.Subproof)):
                 self._autonumber_steps(node)
@@ -155,8 +158,43 @@ class Transformer:
                 counts[type(node)] = defaultdict(lambda: count(start=1))
                 num = next(counts[node.number_within][node.number_as])
                 node.number = num
+                if within_appendix and isinstance(node, nodes.Section):
+                    node.reftext_template = node.reftext_template.replace(
+                        '{nodeclass}', 'Appendix'
+                    )
 
     def _autonumber_steps(self, proof: nodes.Proof) -> None:
         step_gen = (s for s in proof.children if isinstance(s, nodes.Step))
         for idx, step in enumerate(step_gen, start=1):
             step.number = idx
+
+    def make_toc(self) -> None:
+        toc = None
+        for node in self.tree.traverse(nodeclass=nodes.Contents):
+            if toc is None:
+                toc = node
+            else:
+                logger.warning('Multiple Tables of Content found, using only first one')
+                node.remove_self()
+        if toc is None:
+            return
+
+        current_parent = toc
+        for sec in self.tree.traverse(nodeclass=nodes.Section):
+            item = nodes.Item()
+            reftext = f'{sec.full_number}. {sec.title}'
+            item.append(nodes.Reference(target=sec, overwrite_reftext=reftext))
+            if type(sec) is nodes.Section:
+                toc.append(item)
+                if sec.first_of_type(nodes.Subsection):
+                    itemize = nodes.Itemize()
+                    item.append(itemize)
+                    current_parent = itemize
+            elif type(sec) is nodes.Subsection:
+                current_parent.append(item)
+                if sec.first_of_type(nodes.Subsubsection):
+                    itemize = nodes.Itemize()
+                    item.append(itemize)
+                    current_parent = itemize
+            else:
+                current_parent.append(item)

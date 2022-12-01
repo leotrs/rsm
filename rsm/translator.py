@@ -538,6 +538,11 @@ class Translator:
     def visit_item(self, node: nodes.Item) -> EditCommand:
         return AppendNodeTag(node, 'li')
 
+    def visit_contents(self, node: nodes.Contents) -> EditCommand:
+        return AppendBatchAndDefer(
+            [AppendHeading(3, 'Table of Contents'), AppendNodeTag(node, 'ul')]
+        )
+
     def visit_note(self, node: nodes.Note) -> EditCommand:
         return AppendBatchAndDefer(
             [
@@ -901,6 +906,10 @@ class HandrailsTranslator(Translator):
     def visit_abstract(self, node: nodes.Abstract) -> EditCommand:
         batch = super().visit_abstract(node)
         return self._replace_batch_with_handrails(1, batch)
+
+    def visit_contents(self, node: nodes.Abstract) -> EditCommand:
+        batch = super().visit_contents(node)
+        return self._replace_batch_with_handrails(0, batch)
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
         batch = super().visit_bibliography(node)

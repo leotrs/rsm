@@ -319,6 +319,9 @@ section.level-5 > .handrail > .handrail__btn-container {
     margin-block: 0 0;
     padding-inline-start: 1.5rem; }
 
+.author > p {
+  margin: 0; }
+
 .topic#abstract dl,
 .topic#author dl {
   display: grid;

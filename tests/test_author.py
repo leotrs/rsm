@@ -30,9 +30,11 @@ def test_simple():
 
         <div class="author">
 
-        <p>Leo Torres
-        Max Planck Institute for Mathematics in the Sciences
-        leo@leotrs.com</p>
+        <p>Leo Torres</p>
+
+        <p>Max Planck Institute for Mathematics in the Sciences</p>
+
+        <p><a href="mailto:leo@leotrs.com">leo@leotrs.com</a></p>
 
         </div>
 

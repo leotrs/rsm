@@ -463,10 +463,25 @@ class Translator:
         )
 
     def visit_author(self, node: nodes.Author) -> EditCommand:
-        lines = [str(x) for x in [node.name, node.affiliation, node.email] if x]
-        line = '\n'.join(lines)
-        if line:
-            return AppendBatchAndDefer([AppendNodeTag(node), AppendParagraph(line)])
+        if [node.name, node.affiliation, node.email]:
+            if node.email:
+                email = tag = (
+                    make_tag('a', id_='', classes='', href=f'mailto:{node.email}')
+                    + node.email
+                    + '</a>'
+                )
+            else:
+                email = ''
+            return AppendBatchAndDefer(
+                [
+                    AppendNodeTag(node),
+                    *[
+                        AppendParagraph(str(x))
+                        for x in [node.name, node.affiliation, email]
+                        if x
+                    ],
+                ]
+            )
         else:
             return AppendNodeTag(node)
 

@@ -63,6 +63,10 @@ p, ol.enumerate, ul.itemize {
     margin-block-end: 1em;
 }
 
+p:has(+ .mathblock) {
+    margin-block-end: 0;
+}
+
 div.statement p {
     margin-block-end: 0;
 }

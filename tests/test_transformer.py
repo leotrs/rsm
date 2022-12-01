@@ -89,7 +89,7 @@ def test_duplicate_bibtex_item_warning(caplog):
         </li>
 
         <li class="bibitem">
-        Bar. "Foo". . Bug.
+        Bar. "Foo". Bug.
         </li>
 
         </ol>

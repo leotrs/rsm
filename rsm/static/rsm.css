@@ -576,7 +576,9 @@ span.code {
 @media (min-width: 70em) {
   .manuscriptwrapper {
     box-shadow: 0 0 8px 10px #eee;
-    margin: 2.5em auto; } }
+    margin: 2.5em auto; }
+  a.bibitem-doi {
+    float: right; } }
 
 @media (max-width: 48em) {
   :root {

@@ -584,6 +584,7 @@ class Bibitem(Node):
         'volume',
         'number',
         'publisher',
+        'doi',
     }
 
     def __init__(
@@ -596,6 +597,7 @@ class Bibitem(Node):
         volume: int = -1,
         number: int = -1,
         publisher: str = '',
+        doi: str = '',
         **kwargs: Any,
     ):
         super().__init__(**kwargs)
@@ -607,6 +609,7 @@ class Bibitem(Node):
         self.volume = volume
         self.number = number
         self.publisher = publisher
+        self.doi = doi
 
 
 class UnknownBibitem(Bibitem):

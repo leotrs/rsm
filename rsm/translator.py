@@ -760,12 +760,34 @@ class Translator:
         )
 
     def visit_bibitem(self, node: nodes.Bibitem) -> EditCommand:
-        text = f'{node.author}. "{node.title}".'
+        items = [node.author, f'"{node.title}"']
         if node.kind == 'article':
-            text += f' {node.journal}.'
+            if node.journal:
+                items.append(node.journal)
+            else:
+                logger.warning(f'Bibitem {node.label} has no journal')
         elif node.kind == 'book':
-            text += f' {node.publisher}.'
-        text += f' {node.year}.'
+            if node.publisher:
+                items.append(node.publisher)
+            else:
+                logger.warning(f'Bibitem {node.label} has no publisher')
+        if node.year:
+            items.append(node.year)
+        else:
+            logger.warning(f'Bibitem {node.label} has no year')
+        text = '. '.join(items) + '.'
+        if node.doi:
+            a_tag = make_tag(
+                'a',
+                id_=f'{node.label}-doi',
+                classes=['bibitem-doi'],
+                href=f'https://doi.org/{node.doi}',
+                target='_blank',
+            )
+            text = f'{text} {a_tag}[link]</a>'
+
+        else:
+            logger.warning(f'Bibitem {node.label} has no DOI')
         return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])
 
     def visit_draft(self, node: nodes.Draft) -> EditCommand:

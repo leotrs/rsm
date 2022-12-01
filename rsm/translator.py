@@ -644,12 +644,7 @@ class Translator:
         if hasattr(node, 'overwrite_reftext') and node.overwrite_reftext:
             reftext = node.overwrite_reftext
         else:
-            if hasattr(tgt, 'reftext'):
-                reftext = tgt.reftext.format(
-                    nodeclass=tgt.__class__.__name__, number=tgt.full_number
-                )
-            else:
-                reftext = tgt
+            reftext = getattr(tgt, 'reftext', tgt)
         classes = node.types
         if not isinstance(node, nodes.URL) and 'reference' not in classes:
             classes.insert(0, 'reference')

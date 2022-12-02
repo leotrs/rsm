@@ -17,7 +17,6 @@ from pathlib import Path
 from icecream import ic
 
 from .manuscript import WebManuscript
-from .parser import ManuscriptParser
 
 import logging
 

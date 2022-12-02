@@ -6,7 +6,7 @@ Nodes that make up the Manuscript tree.
 
 """
 
-from typing import Any, Type, Optional, Callable, ClassVar, TypeVar, cast
+from typing import Any, Type, Optional, Callable, ClassVar, TypeVar, cast, Union
 from collections.abc import Iterable
 from datetime import datetime
 from icecream import ic
@@ -213,15 +213,20 @@ class Node:
             ancestor = ancestor.parent
         return ancestor  # the root node has parent None
 
-    def replace_self(self, replacement: 'Node') -> None:
+    def replace_self(self, replacement: Union['Node', Iterable['Node']]) -> None:
         if not self.parent:
             raise RSMNodeError('Can only call replace_self on a node with parent')
         ids = [id(c) for c in self.parent.children]
         index = ids.index(id(self))
         parent = self.parent
         self.parent.remove(self)
-        parent._children.insert(index, replacement)
-        replacement.parent = self.parent
+        if not isinstance(replacement, Node):
+            for idx, rep in enumerate(replacement):
+                parent._children.insert(index + idx, rep)
+                rep.parent = self.parent
+        else:
+            parent._children.insert(index, replacement)
+            replacement.parent = self.parent
         self.parent = None
 
     def remove_self(self) -> None:
@@ -333,7 +338,7 @@ class Claim(NodeWithChildren):
     pass
 
 
-class BlockClaim(Claim):
+class ClaimBlock(Claim):
     pass
 
 

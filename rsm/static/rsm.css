@@ -421,6 +421,14 @@ table caption {
   caption-side: bottom;
   margin-block: 0.5rem; }
 
+p:has(+ .claimblock) {
+  display: inline; }
+
+.claimblock {
+  display: inline; }
+  .claimblock p {
+    display: inherit; }
+
 /* State */
 /******************************************************************************************/
 a:link, a:visited, a:active, a.note__link {
@@ -572,6 +580,9 @@ span.code {
   white-space: pre;
   margin: 1em 0;
   background: var(--gray-100); }
+
+li.bibitem:hover {
+  text-decoration: underline; }
 
 @media (min-width: 70em) {
   .manuscriptwrapper {

@@ -37,6 +37,7 @@ class Transformer:
         self.add_necessary_subproofs()
         self.autonumber_nodes()
         self.make_toc()
+        self.add_turnstile_to_claims()
 
         return tree
 
@@ -182,7 +183,13 @@ class Transformer:
         current_parent = toc
         for sec in self.tree.traverse(nodeclass=nodes.Section):
             item = nodes.Item()
-            reftext = f'{sec.full_number}. {sec.title}'
+
+            # Sections with no number are still displayed in the TOC, while sub- or
+            # subsubsections are simply ignored
+            if sec.nonum and isinstance(node, nodes.Subsection):
+                continue
+            reftext = f'{sec.title}' if sec.nonum else f'{sec.full_number}. {sec.title}'
+
             item.append(nodes.Reference(target=sec, overwrite_reftext=reftext))
             if type(sec) is nodes.Section:
                 toc.append(item)
@@ -198,3 +205,16 @@ class Transformer:
                     current_parent = itemize
             else:
                 current_parent.append(item)
+
+    def add_turnstile_to_claims(self) -> None:
+        for claim in self.tree.traverse(nodeclass=nodes.Claim):
+            try:
+                first = next(claim.traverse(nodeclass=nodes.Text))
+            except StopIteration:
+                continue
+
+            if first.asis:
+                first = first.parent
+            keyword = nodes.Keyword()
+            keyword.append(nodes.Text('⊢ '))
+            first.replace_self([keyword, first])

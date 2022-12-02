@@ -13,11 +13,18 @@ from typing import cast, Callable
 import string
 import re
 
-from .parser import RSMParserError
 from .util import EscapedString
 import logging
 
 logger = logging.getLogger('RSM').getChild('parse')
+
+
+class RSMParserError(Exception):
+    def __init__(self, pos: int | None = None, msg: str | None = None) -> None:
+        self.pos = pos
+        self.msg = f'Parser error at position {self.pos}' if msg is None else msg
+        super().__init__(self.msg)
+
 
 DELIMS = ':%$`*{#'
 
@@ -26,6 +33,7 @@ TAGS_WITH_META = [
     'block',
     'bibliography',
     'caption',
+    'claimblock',
     'codeblock',
     'mathblock',
     'code',
@@ -142,6 +150,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'author': nodes.Author,
     'enumerate': nodes.Enumerate,
     'claim': nodes.Claim,
+    'claimblock': nodes.ClaimBlock,
     'claimshort': nodes.Claim,
     'cite': nodes.PendingCite,
     'code': nodes.Code,

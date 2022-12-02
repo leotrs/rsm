@@ -667,7 +667,15 @@ class Translator:
                 AppendNodeTag(
                     node, tag='span', newline_inner=False, newline_outer=False
                 ),
-                AppendKeyword('⊢ '),
+                # AppendKeyword('⊢ '),
+            ]
+        )
+
+    def visit_claimblock(self, node: nodes.ClaimBlock) -> EditCommand:
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node),
+                # AppendKeyword('⊢ '),
             ]
         )
 

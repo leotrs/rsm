@@ -541,6 +541,18 @@ table caption {
     margin-block: 0.5rem;
 }
 
+// claimblocks should look like they are part of the preceding paragraph, if any
+p:has(+.claimblock) {
+    display: inline;
+}
+.claimblock {
+    display: inline;
+
+    & p {
+	display: inherit;
+    }
+}
+
 
 /* State */
 /******************************************************************************************/
@@ -755,6 +767,10 @@ span.code {
     white-space: pre;
     margin: 1em 0;
     background: var(--gray-100);
+}
+
+li.bibitem:hover {
+    text-decoration: underline;
 }
 
 @media (min-width: 70em) {

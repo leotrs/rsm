@@ -70,7 +70,7 @@ def test_custom_reftext():
 
 
 def test_no_target():
-    with pytest.raises(rsm.parser.RSMParserError):
+    with pytest.raises(rsm.tsparser.RSMParserError):
         compare_have_want(
             have="""\
         :manuscript:
@@ -82,7 +82,7 @@ def test_no_target():
             want='XXX',
         )
 
-    with pytest.raises(rsm.parser.RSMParserError):
+    with pytest.raises(rsm.tsparser.RSMParserError):
         compare_have_want(
             have="""\
         :manuscript:

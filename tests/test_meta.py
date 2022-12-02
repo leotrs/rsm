@@ -73,7 +73,7 @@ def test_list_with_one_element_before_key():
 
 
 def test_list_no_braces():
-    with pytest.raises(rsm.parser.RSMParserError):
+    with pytest.raises(rsm.tsparser.RSMParserError):
         compare_have_want(
             have="""\
             :manuscript:

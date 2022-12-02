@@ -7,7 +7,6 @@ RSM Application: take a file path and output its contents as HTML.
 """
 
 from .. import reader
-from .. import parser
 from .. import tsparser
 from .. import transformer
 from .. import linter
@@ -100,7 +99,7 @@ class ParserApplication(Pipeline):
         else:
             tasks.append(Task("dummy", None, lambda: plain))
 
-        p = tsparser.TSParser() if treesitter else parser.MainParser()
+        p = tsparser.TSParser()  # if treesitter else parser.MainParser()
         tasks += [
             Task("parser", p, p.parse),
             Task("transformer", t := transformer.Transformer(), t.transform),

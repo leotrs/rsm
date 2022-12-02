@@ -120,7 +120,7 @@ def test_item_with_wrong_parent():
             want="XXX",
         )
 
-    with pytest.raises(rsm.parser.RSMParserError):
+    with pytest.raises(rsm.tsparser.RSMParserError):
         compare_have_want(
             have="""\
             :manuscript:

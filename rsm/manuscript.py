@@ -11,12 +11,11 @@ from pathlib import Path
 from fs.mountfs import MountFS
 from . import util
 from . import nodes
-from . import tags
 
 
 class PlainTextManuscript(util.EscapedString):
     def __init__(self, src: str = '') -> None:
-        super().__init__(src, chars=tags.Tag.delim + '%')
+        super().__init__(src, chars=':%')
 
 
 class WebManuscript(MountFS):

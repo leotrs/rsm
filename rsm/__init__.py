@@ -3,7 +3,7 @@ from . import rsmlogger
 from . import nodes
 from . import manuscript
 from . import reader
-from . import parser
+from . import tsparser
 from . import transformer
 from . import linter
 from . import translator

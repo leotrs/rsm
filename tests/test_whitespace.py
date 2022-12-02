@@ -329,7 +329,7 @@ def test_span_multiline_content_beginning_of_line_with_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph">This is a paragraph with<span class="span"><strong>a span</strong></span> that takes multiple lines</p>
+        <p class="paragraph">This is a paragraph with <span class="span"><strong>a span</strong></span> that takes multiple lines</p>
 
         </section>
 
@@ -430,7 +430,7 @@ def test_math_start_of_line_with_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph">This is a paragraph with<span class="math">\(2+2=4\)</span> at the start of a line.</p>
+        <p class="paragraph">This is a paragraph with <span class="math">\(2+2=4\)</span> at the start of a line.</p>
 
         </section>
 

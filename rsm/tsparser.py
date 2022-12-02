@@ -322,7 +322,6 @@ def make_ast(cst):
             bibliography_node = nodes.Bibliography()
             ast_root_node.append(bibliography_node)
             continue
-
         if cst_node.type == 'bibtex':
             if bibliography_node is None:
                 logger.warning(msg='Found bibtex but no bibliography node')
@@ -340,7 +339,6 @@ def make_ast(cst):
                 logger.warning(msg=f'Bibitem at {(c.start_point)} has an error')
 
             continue
-
         if cst_node.type == 'bibitem':
             ast_node = nodes.Bibitem()
             ast_node.kind = cst_node.child_by_field_name('kind').text.decode('utf-8')
@@ -446,6 +444,18 @@ def make_ast(cst):
             labels = target_node.text.decode('utf-8').split(',')
             ast_node.targetlabels = [l.strip() for l in labels]
             dont_push_these_ids.add(id(target_node))
+
+        # If a text node ends in a newline (i.e. if the next sibling is in a new row),
+        # then we assume the user means to leave a space in between them...
+        if ast_node_type == 'text' and (sibling := cst_node.next_sibling):
+            thisrow, nextrow = (cst_node.end_point[0], sibling.start_point[0])
+            if nextrow > thisrow:
+                ast_node.text = ast_node.text + ' '
+        # ...and same thing for text that starts one line after the previous sibling.
+        # if (sibling := cst_node.next_sibling) and sibling.type == 'text':
+        #     thisrow, nextrow = (cst_node.end_point[0], sibling.start_point[0])
+        #     if nextrow > thisrow:
+        #         ast_node.text = ' ' + ast_node.text
 
         # add the AST node to the correct place
         if parent and not isinstance(parent, nodes.Text):

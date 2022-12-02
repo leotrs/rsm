@@ -55,15 +55,18 @@ def test_replace_self():
     para.append(Text('foo'))
     para.append(pending)
     para.append(Text('bar'))
+
     assert pending is para.children[1]
     assert pending == para.children[1]
     assert pending != para.children[0]
     assert pending != para.children[2]
 
     ref = Reference(target=target)
+    assert pending.parent is para
+    assert ref.parent is None
     pending.replace_self(ref)
     assert pending.parent is None
-    assert ref.parent is None
+    assert ref.parent is para
     assert pending not in para.children
     assert ref is para.children[1]
     assert ref == para.children[1]

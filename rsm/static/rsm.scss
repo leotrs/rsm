@@ -769,7 +769,7 @@ span.code {
     background: var(--gray-100);
 }
 
-li.bibitem:hover {
+li.bibitem:hover > a.bibitem-doi {
     text-decoration: underline;
 }
 

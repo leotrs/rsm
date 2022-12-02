@@ -637,6 +637,7 @@ class Translator:
         target: nodes.Node,
         href_text: str,
         label: str = '',
+        id_: str = '',
     ) -> str:
         if not target:
             raise RSMTranslatorError(f'Found a {node.__class__} without a target')
@@ -648,7 +649,7 @@ class Translator:
         classes = node.types
         if not isinstance(node, nodes.URL) and 'reference' not in classes:
             classes.insert(0, 'reference')
-        tag = make_tag('a', id_='', classes=classes, href=href_text) + reftext + '</a>'
+        tag = make_tag('a', id_=id_, classes=classes, href=href_text) + reftext + '</a>'
         return tag
 
     def visit_reference(self, node: nodes.Reference) -> EditCommand:
@@ -754,7 +755,10 @@ class Translator:
         return batch
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
-        tags = [self._make_ahref_tag_text(node, t, f'#{t.label}') for t in node.targets]
+        tags = [
+            self._make_ahref_tag_text(node, t, f'#{t.label}', id_=node.label)
+            for t in node.targets
+        ]
         text = ', '.join(tags)
         return AppendText(f'[{text}]')
 
@@ -768,6 +772,7 @@ class Translator:
         )
 
     def visit_bibitem(self, node: nodes.Bibitem) -> EditCommand:
+        ic(node.backlinks)
         items = [node.author, f'"{node.title}"']
         if node.kind == 'article':
             if node.journal:
@@ -783,7 +788,7 @@ class Translator:
             items.append(node.year)
         else:
             logger.warning(f'Bibitem {node.label} has no year')
-        text = '. '.join(items) + '.'
+        text = '. '.join([i.strip('.') for i in items]) + '.'
         if node.doi:
             a_tag = make_tag(
                 'a',
@@ -793,9 +798,24 @@ class Translator:
                 target='_blank',
             )
             text = f'{text} {a_tag}[link]</a>'
-
         else:
             logger.warning(f'Bibitem {node.label} has no DOI')
+
+        if node.backlinks:
+            text += '<br />'
+            backs = [
+                make_tag(
+                    'a',
+                    id_="",
+                    classes=["reference", "backlink"],
+                    href=f'#{link_lbl}',
+                )
+                + f'^{idx}'
+                + '</a>'
+                for idx, link_lbl in enumerate(node.backlinks, start=1)
+            ]
+            text += '[' + ','.join(backs) + ']'
+
         return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])
 
     def visit_draft(self, node: nodes.Draft) -> EditCommand:

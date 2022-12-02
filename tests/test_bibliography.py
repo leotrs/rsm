@@ -37,7 +37,7 @@ def test_single():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<a class="reference" href="#knuth">1</a>]</p>
+        <p class="paragraph">This has a citation at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
 
         <section class="level-2">
 
@@ -46,7 +46,7 @@ def test_single():
         <ol class="bibliography">
 
         <li id="knuth" class="bibitem">
-        Knuth, Donald E. "Art of computer programming, volume 2, Seminumerical algorithms". Addison-Wesley Professional. 2014.
+        Knuth, Donald E. "Art of computer programming, volume 2, Seminumerical algorithms". Addison-Wesley Professional. 2014.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
         </ol>
@@ -99,7 +99,7 @@ def test_with_shortcuts():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a <span class="span"><strong>citation</strong></span> at the end. [<a class="reference" href="#knuth">1</a>]</p>
+        <p class="paragraph">This has a <span class="span"><strong>citation</strong></span> at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
 
         <section class="level-2">
 
@@ -108,7 +108,7 @@ def test_with_shortcuts():
         <ol class="bibliography">
 
         <li id="knuth" class="bibitem">
-        Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.
+        Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
         </ol>
@@ -170,7 +170,7 @@ def test_many():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<a class="reference" href="#torres2020">1</a>, <a class="reference" href="#knuth">2</a>]</p>
+        <p class="paragraph">This has a citation at the end. [<a id="cite-0" class="reference" href="#torres2020">1</a>, <a id="cite-0" class="reference" href="#knuth">2</a>]</p>
 
         <section class="level-2">
 
@@ -179,11 +179,11 @@ def test_many():
         <ol class="bibliography">
 
         <li id="torres2020" class="bibitem">
-        Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.
+        Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
         <li id="knuth" class="bibitem">
-        Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.
+        Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
         </ol>
@@ -245,7 +245,7 @@ def test_order():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<a class="reference" href="#knuth">2</a>, <a class="reference" href="#torres2020">1</a>]</p>
+        <p class="paragraph">This has a citation at the end. [<a id="cite-0" class="reference" href="#knuth">2</a>, <a id="cite-0" class="reference" href="#torres2020">1</a>]</p>
 
         <section class="level-2">
 
@@ -254,11 +254,11 @@ def test_order():
         <ol class="bibliography">
 
         <li id="torres2020" class="bibitem">
-        Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.
+        Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
         <li id="knuth" class="bibitem">
-        Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.
+        Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
         </ol>

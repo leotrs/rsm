@@ -223,10 +223,10 @@ class Node:
         if not isinstance(replacement, Node):
             for idx, rep in enumerate(replacement):
                 parent._children.insert(index + idx, rep)
-                rep.parent = self.parent
+                rep.parent = parent
         else:
             parent._children.insert(index, replacement)
-            replacement.parent = self.parent
+            replacement.parent = parent
         self.parent = None
 
     def remove_self(self) -> None:
@@ -615,6 +615,7 @@ class Bibitem(Node):
         self.number = number
         self.publisher = publisher
         self.doi = doi
+        self.backlinks = []
 
 
 class UnknownBibitem(Bibitem):

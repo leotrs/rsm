@@ -44,6 +44,9 @@ export function createTooltips() {
                 // clone.attr('onload', 'this.width*=0.25;')
                 clone.css('font-size', '0.7rem');
                 content = clone.html();
+            } else if (tag == "A") {
+		content = $(target).parent().html();
+                content = `<div>${content}</div>`;
             } else if (tag == "DIV") {
                 switch(true) {
                 case classes.contains("step"):

@@ -68,6 +68,7 @@ class Transformer:
             nodes.PendingPrev,
         ]
 
+        counter = count()
         for pending in self.tree.traverse(condition=lambda n: type(n) in classes):
             if isinstance(pending, nodes.PendingReference):
                 target = self._label_to_node(pending.target)
@@ -82,7 +83,11 @@ class Transformer:
                     self._label_to_node(label, nodes.UnknownBibitem)
                     for label in pending.targetlabels
                 ]
-                pending.replace_self(nodes.Cite(targets=targets))
+                cite = nodes.Cite(targets=targets)
+                cite.label = f'cite-{next(counter)}'
+                pending.replace_self(cite)
+                for tgt in targets:
+                    tgt.backlinks.append(cite.label)
             elif isinstance(pending, nodes.PendingPrev):
                 try:
                     step = pending.first_ancestor_of_type(nodes.Step)

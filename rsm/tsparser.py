@@ -448,14 +448,14 @@ def make_ast(cst):
         # If a text node ends in a newline (i.e. if the next sibling is in a new row),
         # then we assume the user means to leave a space in between them...
         if ast_node_type == 'text' and (sibling := cst_node.next_sibling):
-            thisrow, nextrow = (cst_node.end_point[0], sibling.start_point[0])
-            if nextrow > thisrow:
+            my_row, sib_row = cst_node.end_point[0], sibling.start_point[0]
+            if sib_row > my_row:
                 ast_node.text = ast_node.text + ' '
         # ...and same thing for text that starts one line after the previous sibling.
-        # if (sibling := cst_node.next_sibling) and sibling.type == 'text':
-        #     thisrow, nextrow = (cst_node.end_point[0], sibling.start_point[0])
-        #     if nextrow > thisrow:
-        #         ast_node.text = ' ' + ast_node.text
+        if ast_node_type == 'text' and (sibling := cst_node.prev_sibling):
+            my_row, sib_row = cst_node.start_point[0], sibling.end_point[0]
+            if my_row > sib_row:
+                ast_node.text = ' ' + ast_node.text
 
         # add the AST node to the correct place
         if parent and not isinstance(parent, nodes.Text):

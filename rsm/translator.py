@@ -755,10 +755,16 @@ class Translator:
         return batch
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
-        tags = [
-            self._make_ahref_tag_text(node, t, f'#{t.label}', id_=node.label)
-            for t in node.targets
-        ]
+        if len(node.targets) == 1:
+            t = node.targets[0]
+            tags = [self._make_ahref_tag_text(node, t, f'#{t.label}', id_=node.label)]
+        else:
+            tags = [
+                self._make_ahref_tag_text(
+                    node, t, f'#{t.label}', id_=f'{node.label}-{idx}'
+                )
+                for idx, t in enumerate(node.targets)
+            ]
         text = ', '.join(tags)
         return AppendText(f'[{text}]')
 

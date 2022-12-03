@@ -170,7 +170,7 @@ def test_many():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<a id="cite-0" class="reference" href="#torres2020">1</a>, <a id="cite-0" class="reference" href="#knuth">2</a>]</p>
+        <p class="paragraph">This has a citation at the end. [<a id="cite-0-0" class="reference" href="#torres2020">1</a>, <a id="cite-0-1" class="reference" href="#knuth">2</a>]</p>
 
         <section class="level-2">
 
@@ -245,7 +245,7 @@ def test_order():
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<a id="cite-0" class="reference" href="#knuth">2</a>, <a id="cite-0" class="reference" href="#torres2020">1</a>]</p>
+        <p class="paragraph">This has a citation at the end. [<a id="cite-0-0" class="reference" href="#knuth">2</a>, <a id="cite-0-1" class="reference" href="#torres2020">1</a>]</p>
 
         <section class="level-2">
 

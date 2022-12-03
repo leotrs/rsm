@@ -757,7 +757,7 @@ class Translator:
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
         if len(node.targets) == 1:
             t = node.targets[0]
-            tags = [self._make_ahref_tag_text(node, t, f'#{t.label}', id_=node.label)]
+            text = self._make_ahref_tag_text(node, t, f'#{t.label}', id_=node.label)
         else:
             tags = [
                 self._make_ahref_tag_text(
@@ -765,7 +765,8 @@ class Translator:
                 )
                 for idx, t in enumerate(node.targets)
             ]
-        text = ', '.join(tags)
+            text = ', '.join(tags)
+            text = f'<span id="{node.label}">{text}</span>'
         return AppendText(f'[{text}]')
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:

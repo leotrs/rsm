@@ -778,7 +778,6 @@ class Translator:
         )
 
     def visit_bibitem(self, node: nodes.Bibitem) -> EditCommand:
-        ic(node.backlinks)
         items = [node.author, f'"{node.title}"']
         if node.kind == 'article':
             if node.journal:

@@ -227,7 +227,6 @@ class Node:
         else:
             parent._children.insert(index, replacement)
             replacement.parent = parent
-        self.parent = None
 
     def remove_self(self) -> None:
         self.parent.remove(self)

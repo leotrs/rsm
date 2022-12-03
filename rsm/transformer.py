@@ -157,7 +157,7 @@ class Transformer:
             if isinstance(node, (nodes.Proof, nodes.Subproof)):
                 self._autonumber_steps(node)
                 continue
-            if isinstance(node, (nodes.Step, nodes.Subproof)):
+            if isinstance(node, nodes.Step):
                 continue
 
             if node.autonumber and not node.nonum:

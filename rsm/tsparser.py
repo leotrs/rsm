@@ -98,7 +98,7 @@ class TSParser:
         tree_sitter.Language.build_library(
             'languages.so', ['/home/leo/code/tree-sitter-rsm']
         )
-        self._lang = tree_sitter.Language('languages.so', 'RSM')
+        self._lang = tree_sitter.Language('languages.so', 'rsm')
         self._parser = tree_sitter.Parser()
         self._parser.set_language(self._lang)
         self.cst = None

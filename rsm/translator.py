@@ -405,10 +405,11 @@ class Translator:
     def push_leave(self, stack, node: nodes.Node) -> None:
         stack.append(Action(node, 'leave', self.get_action_method(node, 'leave')))
 
-    def translate(self, tree: nodes.Manuscript) -> str:
+    def translate(self, tree: nodes.Manuscript, new: bool = True) -> str:
         if not self.quiet:
             logger.info('Translating...')
-        # ic.enable()
+        if new:
+            self.body = ""
         self.tree = tree
 
         if self.deferred:

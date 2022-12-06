@@ -33,7 +33,6 @@ TAGS_WITH_META = [
     'block',
     'bibliography',
     'caption',
-    'claimblock',
     'codeblock',
     'mathblock',
     'code',
@@ -150,7 +149,6 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'author': nodes.Author,
     'enumerate': nodes.Enumerate,
     'claim': nodes.Claim,
-    'claimblock': nodes.ClaimBlock,
     'claimshort': nodes.Claim,
     'cite': nodes.PendingCite,
     'code': nodes.Code,
@@ -411,6 +409,12 @@ def make_ast(cst):
             assert asis.type == 'asis_text'
             text = asis.text.decode('utf-8').strip()
             ast_node.append(nodes.Text(text, asis=True))
+
+        # mathblocks that are marked as claims must be enclosed within a ClaimBlock
+        if ast_node_type == 'mathblock' and ast_node.isclaim:
+            claimblock = nodes.ClaimBlock()
+            claimblock.append(ast_node)
+            ast_node = claimblock
 
         if ast_node_type.endswith('section') and cst_node.type == 'specialblock':
             # Sections with a hastag shurtcut ("# Section Title") have the title as a

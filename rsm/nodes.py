@@ -444,6 +444,11 @@ class MathBlock(NodeWithChildren):
     autonumber = True
     _number_within = Section
     classreftext: ClassVar[str] = '({number})'
+    _newmetakeys: ClassVar[set] = {'isclaim'}
+
+    def __init__(self, isclaim: bool = False, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.isclaim = isclaim
 
 
 class CodeBlock(NodeWithChildren):

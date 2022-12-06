@@ -665,21 +665,11 @@ class Translator:
 
     def visit_claim(self, node: nodes.Claim) -> EditCommand:
         return AppendBatchAndDefer(
-            [
-                AppendNodeTag(
-                    node, tag='span', newline_inner=False, newline_outer=False
-                ),
-                # AppendKeyword('⊢ '),
-            ]
+            [AppendNodeTag(node, tag='span', newline_inner=False, newline_outer=False)]
         )
 
     def visit_claimblock(self, node: nodes.ClaimBlock) -> EditCommand:
-        return AppendBatchAndDefer(
-            [
-                AppendNodeTag(node),
-                # AppendKeyword('⊢ '),
-            ]
-        )
+        return AppendNodeTag(node)
 
     def _make_title_node(
         self, text: str, types: list, paragraph: bool = True
@@ -1054,15 +1044,13 @@ class HandrailsTranslator(Translator):
         return batch
 
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
-        # the strings '$$' and '$$' are MathJax's delimiters for inline math
-        return AppendBatchAndDefer(
-            [
-                AppendNodeTag(node, 'div'),
-                AppendOpenCloseTag(
-                    content=f'({node.full_number})',
-                    classes=['mathblock__number mathblock__number--phantom'],
-                    newline_inner=False,
-                ),
-                AppendTextAndDefer('$$\n', '$$'),
-            ]
+        batch = super().visit_mathblock(node)
+        batch.items.insert(
+            -1,
+            AppendOpenCloseTag(
+                content=f'({node.full_number})',
+                classes=['mathblock__number mathblock__number--phantom'],
+                newline_inner=False,
+            ),
         )
+        return batch

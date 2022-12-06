@@ -438,10 +438,6 @@ dd > p, dt > p {
     margin-block-end: 0.25em;
 }
 
-.blockclaim p:first-of-type {
-    display: contents;
-}
-
 .proof__header {
     display: flex;
     justify-content: space-between;
@@ -549,7 +545,7 @@ p:has(+.claimblock) {
     display: inline;
 
     & p {
-	display: inherit;
+    display: inherit;
     }
 }
 

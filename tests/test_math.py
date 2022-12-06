@@ -309,3 +309,66 @@ def test_unclosed_dollar_sign():
             """,
             want="X",
         )
+
+
+def test_mathblock_isclaim():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+        $$
+        :isclaim:
+          2+2 = 4
+        $$
+
+        :mathblock:
+        :isclaim:
+          2+2 = 4
+        ::
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <div class="claimblock">
+        <span class="keyword">⊢ </span>
+        <div class="mathblock">
+        $$
+        2+2 = 4
+        $$
+        <div class="mathblock__number">(1)</div>
+
+        </div>
+
+        </div>
+
+        <div class="claimblock">
+        <span class="keyword">⊢ </span>
+        <div class="mathblock">
+        $$
+        2+2 = 4
+        $$
+        <div class="mathblock__number">(2)</div>
+
+        </div>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

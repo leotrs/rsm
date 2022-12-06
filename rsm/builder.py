@@ -98,7 +98,10 @@ class SingleFileBuilder(BaseBuilder):
                     console.log('MathJax loaded!');
                     loadPseudocode().then(() => {
                         console.log('pseudocode loaded!');
-                        pseudocode.renderElement($("pre.pseudocode")[0], {lineNumber: true, noEnd: true});
+                        const elements = $("pre.pseudocode");
+                        if (elements.length) {
+                            pseudocode.renderElement(elements[0], {lineNumber: true, noEnd: true});
+                        }
                         createTooltips();
                     }).catch((err) => {
                         console.error('Loading pseudocode FAILED!');

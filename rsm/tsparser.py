@@ -16,69 +16,35 @@ import re
 from .util import EscapedString
 import logging
 
-logger = logging.getLogger('RSM').getChild('parse')
+logger = logging.getLogger("RSM").getChild("parse")
 
 
 class RSMParserError(Exception):
     def __init__(self, pos: int | None = None, msg: str | None = None) -> None:
         self.pos = pos
-        self.msg = f'Parser error at position {self.pos}' if msg is None else msg
+        self.msg = f"Parser error at position {self.pos}" if msg is None else msg
         super().__init__(self.msg)
 
 
-DELIMS = ':%$`*{#'
-
-TAGS_WITH_META = [
-    'algorithm',
-    'block',
-    'bibliography',
-    'caption',
-    'codeblock',
-    'mathblock',
-    'code',
-    'math',
-    'inline',
-    'item',
-    'paragraph',
-    'section',
-    'specialblock',
-    'specialinline',
-    'source_file',
-    'subsection',
-    'subsubsection',
-    'table',
-    'toc',
-]
-
-# Nodes of these types are purely syntactical; their content is usually processed when
-# processing their parent node.
-DONT_PUSH_THESE_TYPES = {
-    'algorithm',
-    'appendix',
-    'asis_text',
-    'blockmeta',
-    'blocktag',
-    'cite',
-    'claimshort',
-    'code',
-    'codeblock',
-    'inlinemeta',
-    'inlinetag',
-    'manuscript',  # the root node is of type source_file, not manuscript
-    'mathblock',
-    'math',
-    'prev',
-    'prev2',
-    'prev3',
-    'previous',
-    'ref',
-    'section',
-    'spanstrong',
-    'spanemphas',
-    'subsection',
-    'subsubsection',
-    'toc',
-    'url',
+DELIMS = ":%$`*{#"
+PUSH_THESE_TYPES = {
+    "block",
+    "inline",
+    "specialblock",
+    "specialinline",
+    "paragraph",
+    "text",
+    "bibitem",
+    "bibtex",
+    "table",
+    "tbody",
+    "thead",
+    "td",
+    "tr",
+    "trshort",
+    "tdcontent",
+    "caption",
+    "ERROR",
 }
 
 
@@ -196,7 +162,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
 }
 
 
-def parse_metatag_list(cst_key, cst_val):
+def parse_metakey_list(cst_key, cst_val):
     key = cst_key.named_children[0].type
     if cst_val.named_children:
         val = [c.text.decode('utf-8').strip() for c in cst_val.named_children]
@@ -205,24 +171,24 @@ def parse_metatag_list(cst_key, cst_val):
     return key, val
 
 
-def parse_metatag_text(cst_key, cst_val):
+def parse_metakey_text(cst_key, cst_val):
     key = cst_key.named_children[0].type
     val = cst_val.text.decode('utf-8').strip()
     return key, val
 
 
-def parse_metatag_any(cst_key, cst_val):
-    return parse_metatag_text(cst_key, cst_val)
+def parse_metakey_any(cst_key, cst_val):
+    return parse_metakey_text(cst_key, cst_val)
 
 
-def parse_metatag_bool(cst_key, _):
+def parse_metakey_bool(cst_key, _):
     key = cst_key.named_children[0].type
     return key, True
 
 
 def parse_meta_into_dict(node):
     pairs = {}
-    for pair in [c for c in node.named_children if c.type.endswith('metapair')]:
+    for pair in [c for c in node.named_children if c.type.endswith('pair')]:
         if len(pair.named_children) == 1:  # bool meta key
             cst_key, cst_val = pair.named_children[0], None
         else:
@@ -366,7 +332,7 @@ def make_ast(cst):
                 stack.append((parent, cst_node.named_children[0]))
                 continue
 
-        if cst_node.type == 'td':
+        elif cst_node.type == 'td':
             # td tags are special because the entire contents are in the first children,
             # so we might as well add that with the current parent and ignore the
             # current node
@@ -377,7 +343,12 @@ def make_ast(cst):
             first = cst_node.named_children[0]
             if first.type in ['item', 'caption']:
                 cst_node = first
-        if not ast_node_type:
+            ast_node_type = cst_node.type
+        elif cst_node.type in ['block', 'inline']:
+            tag = cst_node.child_by_field_name("tag")
+            ast_node_type = tag.type
+            dont_push_these_ids.add(id(tag))
+        else:
             ast_node_type = cst_node.type
 
         # make the correct type of AST node
@@ -387,19 +358,15 @@ def make_ast(cst):
                 ast_root_node = ast_node
             elif isinstance(ast_node, nodes.Text):
                 ast_node.text = cst_node.text.decode('utf-8')
-        elif ast_node_type in ['inline', 'block']:
-            ast_node = CST_TYPE_TO_AST_TYPE[cst_node.children[0].children[0].type]()
         elif ast_node_type == 'ERROR':
             raise RSMParserError(msg='The CST contains errors.')
         else:
-            print(f'not found {ast_node_type}')
-            exit(1)
+            raise RSMParserError(msg=f'not found {ast_node_type}')
 
         # process meta
-        if ast_node_type in TAGS_WITH_META:
-            meta = cst_node.child_by_field_name('meta')
-            if meta:
-                ast_node.ingest_dict_as_meta(parse_meta_into_dict(meta))
+        meta = cst_node.child_by_field_name('meta')
+        if meta:
+            ast_node.ingest_dict_as_meta(parse_meta_into_dict(meta))
 
         # process some special tags
         if ast_node_type in ['math', 'code', 'mathblock', 'codeblock', 'algorithm']:
@@ -462,7 +429,7 @@ def make_ast(cst):
                 ast_node.text = ' ' + ast_node.text
 
         # add the AST node to the correct place
-        if parent and not isinstance(parent, nodes.Text):
+        if parent:
             parent.append(ast_node)
 
         # push the children that need to be processed
@@ -470,8 +437,7 @@ def make_ast(cst):
             [
                 (ast_node, c)
                 for c in cst_node.named_children
-                if c.type not in DONT_PUSH_THESE_TYPES
-                and id(c) not in dont_push_these_ids
+                if c.type in PUSH_THESE_TYPES and id(c) not in dont_push_these_ids
             ]
         )
 

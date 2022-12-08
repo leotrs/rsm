@@ -215,5 +215,8 @@ class Transformer:
             keyword.append(nodes.Text(f"{construct.keyword} "))
             construct.prepend(keyword)
 
-            if (kind := construct.kind) and kind not in {"then", "suffices", "claim"}:
-                construct.types += ["assumption", kind]
+            kind = construct.kind
+            assert kind
+            construct.types.append(kind)
+            if kind not in {"then", "suffices", "claim", "claimblock"}:
+                construct.types.append("assumption")

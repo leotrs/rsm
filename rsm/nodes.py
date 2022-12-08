@@ -435,6 +435,7 @@ class Construct(NodeWithChildren):
         "assume": "ASSUME",
         "prove": "PROVE",
         "claim": "⊢",
+        "claimblock": "⊢",
     }
 
     def __init__(self, kind: str = "", **kwargs: Any):
@@ -446,13 +447,9 @@ class Construct(NodeWithChildren):
         return self.kind_to_keyword[self.kind]
 
 
-class Claim(Construct):
+class ClaimBlock(Construct):
     def __init__(self, **kwargs: Any):
-        super().__init__(kind="claim", **kwargs)
-
-
-class ClaimBlock(Claim):
-    pass
+        super().__init__(kind="claimblock", **kwargs)
 
 
 class Math(NodeWithChildren):

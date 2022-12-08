@@ -110,7 +110,7 @@ def test_period_after():
 
         <p class="paragraph">Period after code <span class="code">k=v</span>.</p>
 
-        <p class="paragraph">Period after claim <span class="claim"><span class="keyword">⊢ </span>foo</span>.</p>
+        <p class="paragraph">Period after claim <span class="construct claim"><span class="keyword">⊢ </span>foo</span>.</p>
 
         </section>
 
@@ -132,7 +132,7 @@ def test_period_after_with_shortcut():
 
         Period after code `k=v`.
 
-        Period after claim |-foo.
+        Period after claim :|-:foo::.
 
         ::
         """,
@@ -150,7 +150,7 @@ def test_period_after_with_shortcut():
 
         <p class="paragraph">Period after code <span class="code">k=v</span>.</p>
 
-        <p class="paragraph">Period after claim <span class="claim"><span class="keyword">⊢ </span>foo</span>.</p>
+        <p class="paragraph">Period after claim <span class="construct claim"><span class="keyword">⊢ </span>foo</span>.</p>
 
         </section>
 
@@ -583,9 +583,9 @@ def test_ignore_space_within_inline():
 
         <p class="paragraph">Ignore space <span class="span"><strong>within</strong></span> inline.</p>
 
-        <p class="paragraph">Ignore space <span class="claim"><span class="keyword">⊢ </span>within</span> inline.</p>
+        <p class="paragraph">Ignore space <span class="construct claim"><span class="keyword">⊢ </span>within</span> inline.</p>
 
-        <p class="paragraph">Ignore space <span class="claim"><span class="keyword">⊢ </span>within</span> inline.</p>
+        <p class="paragraph">Ignore space <span class="construct claim"><span class="keyword">⊢ </span>within</span> inline.</p>
 
         </section>
 
@@ -607,9 +607,9 @@ def test_ignore_space_within_inline_with_shortcut():
 
         Ignore space *   within   * inline.
 
-        Ignore space |- within . inline.
+        Ignore space :|-: within ::. inline.
 
-        Ignore space |-   within   . inline.
+        Ignore space :|-:   within   ::. inline.
 
         ::
         """,
@@ -628,9 +628,9 @@ def test_ignore_space_within_inline_with_shortcut():
 
         <p class="paragraph">Ignore space <span class="span"><strong>within</strong></span> inline.</p>
 
-        <p class="paragraph">Ignore space <span class="claim"><span class="keyword">⊢ </span>within</span>. inline.</p>
+        <p class="paragraph">Ignore space <span class="construct claim"><span class="keyword">⊢ </span>within</span>. inline.</p>
 
-        <p class="paragraph">Ignore space <span class="claim"><span class="keyword">⊢ </span>within</span>. inline.</p>
+        <p class="paragraph">Ignore space <span class="construct claim"><span class="keyword">⊢ </span>within</span>. inline.</p>
 
         </section>
 

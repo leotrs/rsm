@@ -105,7 +105,7 @@ def test_start_with_shortcut():
         have="""\
         :manuscript:
 
-        |- A claim.
+        :|-: A claim::.
 
         ::
         """,
@@ -120,7 +120,7 @@ def test_start_with_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph"><span class="claim"><span class="keyword">⊢ </span>A claim</span>.</p>
+        <p class="paragraph"><span class="construct claim"><span class="keyword">⊢ </span>A claim</span>.</p>
 
         </section>
 

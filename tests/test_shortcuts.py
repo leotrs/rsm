@@ -335,8 +335,8 @@ def test_claim_shortcut():
         have="""\
         :manuscript:
 
-        This paragraph contains a |- claim with a turnstile. And also another one ⊢ but it takes
-        multiple lines.
+        This paragraph contains a :|-: claim with a turnstile::. And also another one :⊢: but it takes
+        multiple lines::.
 
         ::
         """,
@@ -351,7 +351,7 @@ def test_claim_shortcut():
 
         <h1></h1>
 
-        <p class="paragraph">This paragraph contains a <span class="claim"><span class="keyword">⊢ </span>claim with a turnstile</span>. And also another one <span class="claim"><span class="keyword">⊢ </span>but it takes multiple lines</span>.</p>
+        <p class="paragraph">This paragraph contains a <span class="construct claim"><span class="keyword">⊢ </span>claim with a turnstile</span>. And also another one <span class="construct claim"><span class="keyword">⊢ </span>but it takes multiple lines</span>.</p>
 
         </section>
 
@@ -884,7 +884,7 @@ def test_math_after_turnstile():
         have="""\
         :manuscript:
 
-        This paragraph has math inside a claim ⊢ $2+2=4$.
+        This paragraph has math inside a claim :⊢: $2+2=4$::.
 
         ::
         """,
@@ -899,7 +899,7 @@ def test_math_after_turnstile():
 
         <h1></h1>
 
-        <p class="paragraph">This paragraph has math inside a claim <span class="claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.</p>
+        <p class="paragraph">This paragraph has math inside a claim <span class="construct claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.</p>
 
         </section>
 
@@ -921,9 +921,9 @@ def test_turnstile_and_math_within_list():
 
         :enumerate:
 
-        :item: {:label: one} ⊢ $2+2=4$.
+        :item: {:label: one} :⊢: $2+2=4$::.
 
-        :item: {:label: two} ⊢ $3+3=6$.
+        :item: {:label: two} :⊢: $3+3=6$::.
 
         ::
 
@@ -945,11 +945,11 @@ def test_turnstile_and_math_within_list():
         <ol class="enumerate">
 
         <li id="one" class="item">
-        <span class="claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.
+        <span class="construct claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.
         </li>
 
         <li id="two" class="item">
-        <span class="claim"><span class="keyword">⊢ </span><span class="math">\(3+3=6\)</span></span>.
+        <span class="construct claim"><span class="keyword">⊢ </span><span class="math">\(3+3=6\)</span></span>.
         </li>
 
         </ol>

@@ -666,11 +666,6 @@ class Translator:
             self._make_ahref_tag_text(node, node.target, f"{node.target}")
         )
 
-    def visit_claim(self, node: nodes.Claim) -> EditCommand:
-        return AppendBatchAndDefer(
-            [AppendNodeTag(node, tag="span", newline_inner=False, newline_outer=False)]
-        )
-
     def visit_claimblock(self, node: nodes.ClaimBlock) -> EditCommand:
         return AppendNodeTag(node)
 

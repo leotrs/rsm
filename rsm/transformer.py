@@ -37,7 +37,6 @@ class Transformer:
         self.add_necessary_subproofs()
         self.autonumber_nodes()
         self.make_toc()
-        self.add_turnstile_to_claims()
         self.add_keywords_to_constructs()
         return tree
 
@@ -211,17 +210,11 @@ class Transformer:
             else:
                 current_parent.append(item)
 
-    def add_turnstile_to_claims(self) -> None:
-        for claim in self.tree.traverse(nodeclass=nodes.Claim):
-            keyword = nodes.Keyword()
-            keyword.append(nodes.Text("⊢ "))
-            claim.prepend(keyword)
-
     def add_keywords_to_constructs(self) -> None:
         for construct in self.tree.traverse(nodeclass=nodes.Construct):
             keyword = nodes.Keyword()
             keyword.append(nodes.Text(f"{construct.keyword} "))
             construct.prepend(keyword)
 
-            if (kind := construct.kind) and kind not in {"then", "suffices"}:
+            if (kind := construct.kind) and kind not in {"then", "suffices", "claim"}:
                 construct.types += ["assumption", kind]

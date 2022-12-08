@@ -333,14 +333,6 @@ class Span(NodeWithChildren):
         self.delete = delete
 
 
-class Claim(NodeWithChildren):
-    pass
-
-
-class ClaimBlock(Claim):
-    pass
-
-
 class Heading(NodeWithChildren):
     _newmetakeys: ClassVar[set] = {"title"}
 
@@ -432,8 +424,7 @@ class Keyword(Span):
     pass
 
 
-class Construct(Span):
-
+class Construct(NodeWithChildren):
     kind_to_keyword: dict[str, str] = {
         "let": "LET",
         "define": "DEFINE",
@@ -443,6 +434,7 @@ class Construct(Span):
         "new": "NEW",
         "assume": "ASSUME",
         "prove": "PROVE",
+        "claim": "⊢",
     }
 
     def __init__(self, kind: str = "", **kwargs: Any):
@@ -452,6 +444,15 @@ class Construct(Span):
     @property
     def keyword(self):
         return self.kind_to_keyword[self.kind]
+
+
+class Claim(Construct):
+    def __init__(self, **kwargs: Any):
+        super().__init__(kind="claim", **kwargs)
+
+
+class ClaimBlock(Claim):
+    pass
 
 
 class Math(NodeWithChildren):

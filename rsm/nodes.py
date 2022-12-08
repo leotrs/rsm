@@ -14,9 +14,9 @@ import textwrap
 from pathlib import Path
 import logging
 
-logger = logging.getLogger('RSM').getChild('nodes')
+logger = logging.getLogger("RSM").getChild("nodes")
 
-NodeSubType = TypeVar('NodeSubType', bound='Node')
+NodeSubType = TypeVar("NodeSubType", bound="Node")
 
 
 class RSMNodeError(Exception):
@@ -24,43 +24,43 @@ class RSMNodeError(Exception):
 
 
 class Node:
-    classreftext: ClassVar[str] = '{nodeclass} {number}'
-    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = set()
+    classreftext: ClassVar[str] = "{nodeclass} {number}"
+    possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = set()
     autonumber: ClassVar[bool] = False
-    _number_within: ClassVar[Type['Node'] | None] = None
-    _number_as: ClassVar[Type['Node'] | None] = None
-    _newmetakeys: ClassVar[set] = {'label', 'types', 'nonum', 'reftext'}
+    _number_within: ClassVar[Type["Node"] | None] = None
+    _number_as: ClassVar[Type["Node"] | None] = None
+    _newmetakeys: ClassVar[set] = {"label", "types", "nonum", "reftext"}
 
     def __init__(
         self,
-        label: str = '',
+        label: str = "",
         types: list[str] | None = None,
         number: int | None = None,
         nonum: bool = False,
-        reftext_template: str = '',
+        reftext_template: str = "",
     ) -> None:
         self.label = label
         self.types = types or []
         self.nonum = nonum
         self.number = number
         self.reftext_template = reftext_template or self.classreftext
-        self._parent: 'NodeWithChildren' | None = None
+        self._parent: "NodeWithChildren" | None = None
 
     def _attrs_for_repr_and_eq(self) -> list[str]:
-        return ['label', 'types', 'nonum', 'number', 'parent']
+        return ["label", "types", "nonum", "number", "parent"]
 
     def __repr__(self) -> str:
         cls = self.__class__.__name__
         d = {
             att: getattr(self, att)
             for att in self._attrs_for_repr_and_eq()
-            if att != 'children'
+            if att != "children"
         }
-        d['parent'] = (
-            'None' if self.parent is None else f'{self.parent.__class__.__name__}'
+        d["parent"] = (
+            "None" if self.parent is None else f"{self.parent.__class__.__name__}"
         )
-        d_str = ', '.join(f'{k}={v}' for k, v in d.items() if v)
-        return f'{cls}({d_str})'
+        d_str = ", ".join(f"{k}={v}" for k, v in d.items() if v)
+        return f"{cls}({d_str})"
 
     def __eq__(self, other: Any) -> bool:
         attrs = self._attrs_for_repr_and_eq()
@@ -75,17 +75,17 @@ class Node:
             return False
 
     @classmethod
-    def metakeys(cls: Type['Node']) -> set:
+    def metakeys(cls: Type["Node"]) -> set:
         return cls._newmetakeys.union(
-            *[b.metakeys() for b in cls.__bases__ if hasattr(b, 'metakeys')]
+            *[b.metakeys() for b in cls.__bases__ if hasattr(b, "metakeys")]
         )
 
     @property
-    def parent(self) -> Optional['NodeWithChildren']:
+    def parent(self) -> Optional["NodeWithChildren"]:
         return self._parent
 
     @parent.setter
-    def parent(self, node: Optional['NodeWithChildren']) -> None:
+    def parent(self, node: Optional["NodeWithChildren"]) -> None:
         if node is None:
             self._parent = None
         elif not self.__class__.possible_parents:
@@ -94,7 +94,7 @@ class Node:
             possible_parents = self.__class__.possible_parents
             if possible_parents and type(node) not in possible_parents:
                 raise RSMNodeError(
-                    f'Node of type {type(self)} cannot have parent of type {type(node)}'
+                    f"Node of type {type(self)} cannot have parent of type {type(node)}"
                 )
             self._parent = node
 
@@ -104,11 +104,11 @@ class Node:
         return tuple()
 
     @property
-    def number_within(self) -> Type['Node']:
+    def number_within(self) -> Type["Node"]:
         return self.__class__._number_within or Manuscript
 
     @property
-    def number_as(self) -> Type['Node']:
+    def number_as(self) -> Type["Node"]:
         return self._number_as or self.__class__
 
     @property
@@ -118,14 +118,14 @@ class Node:
         ancestor = self.first_ancestor_of_type(self.number_within)
         if not ancestor:
             logger.warning(
-                f'{self.__class__.__name__} numbered within '
-                f'{self.number_within.__name__} but no such ancestor was found; '
-                'using root node instead'
+                f"{self.__class__.__name__} numbered within "
+                f"{self.number_within.__name__} but no such ancestor was found; "
+                "using root node instead"
             )
             ancestor = self.first_ancestor_of_type(Manuscript)
         if ancestor and ancestor.full_number:
-            return f'{ancestor.full_number}.{self.number}'
-        return f'{self.number}' if self.number else ''
+            return f"{ancestor.full_number}.{self.number}"
+        return f"{self.number}" if self.number else ""
 
     @property
     def reftext(self) -> str:
@@ -143,7 +143,7 @@ class Node:
             if issubclass(nodeclass, Node):
                 condition = lambda n: isinstance(n, nodeclass)
             else:
-                raise RSMNodeError('nodeclass must inherit from Node')
+                raise RSMNodeError("nodeclass must inherit from Node")
 
         stack = [self]
         while stack:
@@ -153,23 +153,23 @@ class Node:
             stack += node.children[::-1]
 
     def first_of_type(
-        self, cls: Type['Node'] | tuple[Type['Node']], return_idx: bool = False
-    ) -> Optional['Node']:
+        self, cls: Type["Node"] | tuple[Type["Node"]], return_idx: bool = False
+    ) -> Optional["Node"]:
         for idx, child in enumerate(self.children):
             if isinstance(child, cls):
                 return (child, idx) if return_idx else child
         return (None, None) if return_idx else None
 
     def last_of_type(
-        self, cls: Type['Node'] | tuple[Type['Node']], return_idx: bool = False
-    ) -> Optional['Node'] | tuple[Optional['Node'], int | None]:
+        self, cls: Type["Node"] | tuple[Type["Node"]], return_idx: bool = False
+    ) -> Optional["Node"] | tuple[Optional["Node"], int | None]:
         last = (None, None) if return_idx else None
         for idx, child in enumerate(self.children):
             if isinstance(child, cls):
                 last = (child, idx) if return_idx else child
         return last
 
-    def prev_sibling(self, cls: Optional[Type['Node']] = None) -> Optional['Node']:
+    def prev_sibling(self, cls: Optional[Type["Node"]] = None) -> Optional["Node"]:
         if self.parent is None:
             return None
         if cls is None:
@@ -183,7 +183,7 @@ class Node:
                 return node
         return None
 
-    def next_sibling(self, cls: Optional[Type['Node']] = None) -> Optional['Node']:
+    def next_sibling(self, cls: Optional[Type["Node"]] = None) -> Optional["Node"]:
         if self.parent is None:
             return None
         if cls is None:
@@ -198,8 +198,8 @@ class Node:
         return None
 
     def first_ancestor_of_type(
-        self, cls: Type['Node'] | tuple[Type['Node']]
-    ) -> Optional['Node']:
+        self, cls: Type["Node"] | tuple[Type["Node"]]
+    ) -> Optional["Node"]:
         ancestor = self.parent
         # We use type is not cls instead of the recommended isinstance() because we are
         # looking for an exact type, not a subtype.  For example, we may want to find
@@ -213,9 +213,9 @@ class Node:
             ancestor = ancestor.parent
         return ancestor  # the root node has parent None
 
-    def replace_self(self, replacement: Union['Node', Iterable['Node']]) -> None:
+    def replace_self(self, replacement: Union["Node", Iterable["Node"]]) -> None:
         if not self.parent:
-            raise RSMNodeError('Can only call replace_self on a node with parent')
+            raise RSMNodeError("Can only call replace_self on a node with parent")
         ids = [id(c) for c in self.parent.children]
         index = ids.index(id(self))
         parent = self.parent
@@ -233,9 +233,9 @@ class Node:
         self.parent = None
 
     def ingest_dict_as_meta(self, meta: dict) -> None:
-        if 'reftext' in meta:
-            meta['reftext_template'] = meta['reftext']
-            del meta['reftext']
+        if "reftext" in meta:
+            meta["reftext_template"] = meta["reftext"]
+            del meta["reftext"]
         for key, value in meta.items():
             setattr(self, str(key), value)
 
@@ -246,15 +246,15 @@ class NodeWithChildren(Node):
         self._children: list[Node] = []
 
     def _attrs_for_repr_and_eq(self) -> list[str]:
-        return super()._attrs_for_repr_and_eq() + ['children']
+        return super()._attrs_for_repr_and_eq() + ["children"]
 
     def __repr__(self) -> str:
         if not self._children:
             return super().__repr__()
-        children_repr = ', '.join(f'{c.__class__.__name__}' for c in self._children)
-        children_repr = '[' + children_repr + ']'
+        children_repr = ", ".join(f"{c.__class__.__name__}" for c in self._children)
+        children_repr = "[" + children_repr + "]"
         ret = super().__repr__()
-        return ret[:-1] + ', ' + children_repr + ')'
+        return ret[:-1] + ", " + children_repr + ")"
 
     @property
     def children(self) -> tuple:
@@ -271,11 +271,11 @@ class NodeWithChildren(Node):
                 self.append(c)
         elif isinstance(child, Node):
             if child.parent and child.parent is not self:
-                raise RSMNodeError('Attempting to append child to a different parent')
+                raise RSMNodeError("Attempting to append child to a different parent")
             self._children.append(child)
             child.parent = self
         else:
-            raise TypeError('Can only append a Node or iterable of Nodes as children')
+            raise TypeError("Can only append a Node or iterable of Nodes as children")
 
     def prepend(self, child: Node | list) -> None:
         if isinstance(child, list):
@@ -283,13 +283,13 @@ class NodeWithChildren(Node):
                 self.prepend(c)
         elif isinstance(child, Node):
             if child.parent and child.parent is not self:
-                raise RSMNodeError('Attempting to prepend child to a different parent')
+                raise RSMNodeError("Attempting to prepend child to a different parent")
             self._children.insert(0, child)
             child.parent = self
         else:
-            raise TypeError('Can only prepend a Node or iterable of Nodes as children')
+            raise TypeError("Can only prepend a Node or iterable of Nodes as children")
 
-    def remove(self, child: 'Node') -> None:
+    def remove(self, child: "Node") -> None:
         ids = [id(c) for c in self._children]
         index = ids.index(id(child))
         del self._children[index]
@@ -297,23 +297,23 @@ class NodeWithChildren(Node):
 
 
 class Text(Node):
-    def __init__(self, text: str = '', asis: bool = False, **kwargs: Any) -> None:
+    def __init__(self, text: str = "", asis: bool = False, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.text = text
         self.asis = asis
 
     def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({textwrap.shorten(self.text, 60)})'
+        return f"{self.__class__.__name__}({textwrap.shorten(self.text, 60)})"
 
 
 class Span(NodeWithChildren):
-    _newmetakeys: ClassVar[set] = {'strong', 'emphas', 'little', 'insert', 'delete'}
+    _newmetakeys: ClassVar[set] = {"strong", "emphas", "little", "insert", "delete"}
     attr_to_tag: ClassVar[dict] = {
-        'strong': 'strong',
-        'emphas': 'em',
-        'little': 'small',
-        'insert': 'ins',
-        'delete': 'del',
+        "strong": "strong",
+        "emphas": "em",
+        "little": "small",
+        "insert": "ins",
+        "delete": "del",
     }
 
     def __init__(
@@ -342,19 +342,19 @@ class ClaimBlock(Claim):
 
 
 class Heading(NodeWithChildren):
-    _newmetakeys: ClassVar[set] = {'title'}
+    _newmetakeys: ClassVar[set] = {"title"}
 
-    def __init__(self, title: str = '', **kwargs: Any) -> None:
+    def __init__(self, title: str = "", **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.title = title
 
 
 class Manuscript(Heading):
-    _newmetakeys: ClassVar[set] = {'date'}
+    _newmetakeys: ClassVar[set] = {"date"}
     nonum = True
 
     def __init__(
-        self, src: str = '', date: datetime | None = None, **kwargs: Any
+        self, src: str = "", date: datetime | None = None, **kwargs: Any
     ) -> None:
         super().__init__(**kwargs)
         self.src = src
@@ -362,14 +362,14 @@ class Manuscript(Heading):
 
     @property
     def full_number(self) -> str:
-        return ''
+        return ""
 
 
 class Author(Node):
-    _newmetakeys: ClassVar[set] = {'name', 'affiliation', 'email'}
+    _newmetakeys: ClassVar[set] = {"name", "affiliation", "email"}
 
     def __init__(
-        self, name: str = '', affiliation: str = '', email: str = '', **kwargs: Any
+        self, name: str = "", affiliation: str = "", email: str = "", **kwargs: Any
     ) -> None:
         super().__init__(**kwargs)
         self.name = name
@@ -378,7 +378,7 @@ class Author(Node):
 
 
 class Abstract(NodeWithChildren):
-    _newmetakeys: ClassVar[set] = {'keywords', 'MSC'}
+    _newmetakeys: ClassVar[set] = {"keywords", "MSC"}
 
     def __init__(
         self,
@@ -399,13 +399,13 @@ class Section(Heading):
 class Subsection(Section):
     _number_within = Section
     level: ClassVar[int] = 3
-    classreftext: ClassVar[str] = 'Section {number}'
+    classreftext: ClassVar[str] = "Section {number}"
 
 
 class Subsubsection(Section):
     _number_within = Subsection
     level: ClassVar[int] = 4
-    classreftext: ClassVar[str] = 'Section {number}'
+    classreftext: ClassVar[str] = "Section {number}"
 
 
 class BaseParagraph(Heading):
@@ -445,7 +445,7 @@ class Construct(Span):
         "prove": "PROVE",
     }
 
-    def __init__(self, kind: str = '', **kwargs: Any):
+    def __init__(self, kind: str = "", **kwargs: Any):
         super().__init__(**kwargs)
         self.kind = kind
 
@@ -465,8 +465,8 @@ class Code(NodeWithChildren):
 class MathBlock(NodeWithChildren):
     autonumber = True
     _number_within = Section
-    classreftext: ClassVar[str] = '({number})'
-    _newmetakeys: ClassVar[set] = {'isclaim'}
+    classreftext: ClassVar[str] = "({number})"
+    _newmetakeys: ClassVar[set] = {"isclaim"}
 
     def __init__(self, isclaim: bool = False, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -474,7 +474,7 @@ class MathBlock(NodeWithChildren):
 
 
 class CodeBlock(NodeWithChildren):
-    classreftext: ClassVar[str] = 'Code Listing {number}'
+    classreftext: ClassVar[str] = "Code Listing {number}"
 
 
 class Algorithm(NodeWithChildren):
@@ -489,7 +489,7 @@ class BaseReference(Node):
     def __init__(
         self,
         target: str | Node | None = None,
-        overwrite_reftext: str = '',
+        overwrite_reftext: str = "",
         **kwargs: Any,
     ) -> None:
         super().__init__(**kwargs)
@@ -497,11 +497,11 @@ class BaseReference(Node):
         self.target = target
 
     def _attrs_for_repr_and_eq(self) -> list[str]:
-        return super()._attrs_for_repr_and_eq() + ['target', 'overwrite_reftext']
+        return super()._attrs_for_repr_and_eq() + ["target", "overwrite_reftext"]
 
 
 class PendingReference(BaseReference):
-    def __init__(self, target: str = '', **kwargs: Any) -> None:
+    def __init__(self, target: str = "", **kwargs: Any) -> None:
         super().__init__(target, **kwargs)
 
 
@@ -511,12 +511,12 @@ class Reference(BaseReference):
 
 
 class PendingPrev(BaseReference):
-    def __init__(self, target: str = '', **kwargs: Any) -> None:
+    def __init__(self, target: str = "", **kwargs: Any) -> None:
         super().__init__(target, **kwargs)
 
 
 class URL(BaseReference):
-    def __init__(self, target: str = '', **kwargs: Any) -> None:
+    def __init__(self, target: str = "", **kwargs: Any) -> None:
         super().__init__(target, **kwargs)
 
 
@@ -545,12 +545,12 @@ class Subproof(NodeWithChildren):  # importantly, NOT a subclass of Proof!
 
 
 class Sketch(NodeWithChildren):
-    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Proof}
+    possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = {Proof}
 
 
 class Step(Paragraph):
     autonumber = True
-    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Proof, Subproof}
+    possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = {Proof, Subproof}
 
 
 Step.possible_parents.add(Step)
@@ -559,13 +559,13 @@ Step._number_within = (Step, Proof)
 
 class Theorem(Heading):
     autonumber = True
-    title = ''
+    title = ""
     _number_within = Section
-    _newmetakeys: ClassVar[set] = {'title', 'goals', 'stars', 'clocks'}
+    _newmetakeys: ClassVar[set] = {"title", "goals", "stars", "clocks"}
 
     def __init__(
         self,
-        title: str = '',
+        title: str = "",
         goals: list[BaseReference] | None = None,
         stars: int = 0,
         clocks: int = 0,
@@ -604,30 +604,30 @@ class Bibliography(NodeWithChildren):
 
 class Bibitem(Node):
     autonumber = True
-    classreftext: ClassVar[str] = '{number}'
+    classreftext: ClassVar[str] = "{number}"
     _newmetakeys: ClassVar[set] = {
-        'kind',
-        'author',
-        'title',
-        'year',
-        'journal',
-        'volume',
-        'number',
-        'publisher',
-        'doi',
+        "kind",
+        "author",
+        "title",
+        "year",
+        "journal",
+        "volume",
+        "number",
+        "publisher",
+        "doi",
     }
 
     def __init__(
         self,
-        kind: str = '',
-        author: str = '',
-        title: str = '',
+        kind: str = "",
+        author: str = "",
+        title: str = "",
         year: int = -1,
-        journal: str = '',
+        journal: str = "",
         volume: int = -1,
         number: int = -1,
-        publisher: str = '',
-        doi: str = '',
+        publisher: str = "",
+        doi: str = "",
         **kwargs: Any,
     ):
         super().__init__(**kwargs)
@@ -644,7 +644,7 @@ class Bibitem(Node):
 
 
 class UnknownBibitem(Bibitem):
-    def __init__(self, number: str | int = '?', **kwargs: Any) -> None:
+    def __init__(self, number: str | int = "?", **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.number = number
 
@@ -652,10 +652,10 @@ class UnknownBibitem(Bibitem):
 class Figure(NodeWithChildren):
     autonumber = True
     _number_within = Section
-    _newmetakeys: ClassVar[set] = {'path', 'scale'}
+    _newmetakeys: ClassVar[set] = {"path", "scale"}
 
     def __init__(
-        self, path: Path | str = '', scale: float = 1.0, **kwargs: Any
+        self, path: Path | str = "", scale: float = 1.0, **kwargs: Any
     ) -> None:
         super().__init__(**kwargs)
         self.path = Path(path)
@@ -687,7 +687,7 @@ class TableDatum(NodeWithChildren):
 
 
 class Caption(Paragraph):
-    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {Figure, Table}
+    possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = {Figure, Table}
 
 
 class Contents(Itemize):
@@ -695,7 +695,7 @@ class Contents(Itemize):
 
 
 class Item(BaseParagraph):
-    possible_parents: ClassVar[set[Type['NodeWithChildren']]] = {
+    possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = {
         Itemize,
         Enumerate,
         Contents,

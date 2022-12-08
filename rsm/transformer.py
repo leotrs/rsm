@@ -55,10 +55,9 @@ class Transformer:
             if default is None:
                 raise RSMTransformerError(
                     f'Reference to nonexistent label "{label}" and no default given'
-                )
-            else:
-                logger.warning(f'Reference to nonexistent label "{label}"')
-                return default()
+                ) from e
+            logger.warning(f'Reference to nonexistent label "{label}"')
+            return default()
 
     def resolve_pending_references(self) -> None:
         classes = [

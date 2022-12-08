@@ -83,6 +83,8 @@ def test_simple_with_handrails():
 
         <span class="option option__source">source</span>
 
+        <span class="option option__assumptions">assumptions</span>
+
         </div>
         </div>
 
@@ -108,6 +110,8 @@ def test_simple_with_handrails():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>

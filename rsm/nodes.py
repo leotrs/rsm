@@ -432,6 +432,28 @@ class Keyword(Span):
     pass
 
 
+class Construct(Span):
+
+    kind_to_keyword: dict[str, str] = {
+        "let": "LET",
+        "define": "DEFINE",
+        "write": "WRITE",
+        "case": "CASE",
+        "then": "THEN",
+        "new": "NEW",
+        "assume": "ASSUME",
+        "prove": "PROVE",
+    }
+
+    def __init__(self, kind: str = '', **kwargs: Any):
+        super().__init__(**kwargs)
+        self.kind = kind
+
+    @property
+    def keyword(self):
+        return self.kind_to_keyword[self.kind]
+
+
 class Math(NodeWithChildren):
     pass
 
@@ -583,7 +605,6 @@ class Bibliography(NodeWithChildren):
 class Bibitem(Node):
     autonumber = True
     classreftext: ClassVar[str] = '{number}'
-
     _newmetakeys: ClassVar[set] = {
         'kind',
         'author',

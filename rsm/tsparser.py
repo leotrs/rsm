@@ -44,6 +44,8 @@ PUSH_THESE_TYPES = {
     "trshort",
     "tdcontent",
     "caption",
+    "keyword",
+    "construct",
     "ERROR",
 }
 
@@ -125,6 +127,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     'itemize': nodes.Itemize,
     'caption': nodes.Caption,
     'figure': nodes.Figure,
+    'construct': nodes.Construct,
     'lemma': nodes.Lemma,
     'math': nodes.Math,
     'mathblock': nodes.MathBlock,
@@ -382,6 +385,10 @@ def make_ast(cst):
             claimblock = nodes.ClaimBlock()
             claimblock.append(ast_node)
             ast_node = claimblock
+
+        # set construct kind
+        if ast_node_type == 'construct':
+            ast_node.kind = cst_node.child_by_field_name("tag").type
 
         if ast_node_type.endswith('section') and cst_node.type == 'specialblock':
             # Sections with a hastag shurtcut ("# Section Title") have the title as a

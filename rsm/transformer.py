@@ -213,13 +213,15 @@ class Transformer:
 
     def add_turnstile_to_claims(self) -> None:
         for claim in self.tree.traverse(nodeclass=nodes.Claim):
-            try:
-                first = next(claim.traverse(nodeclass=nodes.Text))
-            except StopIteration:
-                continue
-
-            if first.asis:
-                first = first.parent
             keyword = nodes.Keyword()
-            keyword.append(nodes.Text('⊢ '))
-            first.replace_self([keyword, first])
+            keyword.append(nodes.Text("⊢ "))
+            claim.prepend(keyword)
+
+    def add_keywords_to_constructs(self) -> None:
+        for construct in self.tree.traverse(nodeclass=nodes.Construct):
+            keyword = nodes.Keyword()
+            keyword.append(nodes.Text(f"{construct.keyword} "))
+            construct.prepend(keyword)
+
+            if (kind := construct.kind) and kind not in {"then", "suffices"}:
+                construct.types += ["assumption", kind]

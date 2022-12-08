@@ -903,7 +903,10 @@ class HandrailsTranslator(Translator):
         opt_tag = AppendOpenTagManualClose(
             classes=["options", "hide"], newline_inner=True, newline_outer=True
         )
-        options = [self._make_option_tag(opt) for opt in ['link', 'tree', 'source']]
+        options = [
+            self._make_option_tag(opt)
+            for opt in ["link", "tree", "source", "assumptions"]
+        ]
         newitems = [
             handrail,
             btn_cont,

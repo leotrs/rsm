@@ -33,6 +33,8 @@ def test_manuscript():
 
         <span class="option option__source">source</span>
 
+        <span class="option option__assumptions">assumptions</span>
+
         </div>
         </div>
 
@@ -92,6 +94,8 @@ def test_section():
 
         <span class="option option__source">source</span>
 
+        <span class="option option__assumptions">assumptions</span>
+
         </div>
         </div>
 
@@ -117,6 +121,8 @@ def test_section():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -182,6 +188,8 @@ def test_abstract():
 
         <span class="option option__source">source</span>
 
+        <span class="option option__assumptions">assumptions</span>
+
         </div>
         </div>
 
@@ -207,6 +215,8 @@ def test_abstract():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -270,6 +280,8 @@ def test_theorem():
 
         <span class="option option__source">source</span>
 
+        <span class="option option__assumptions">assumptions</span>
+
         </div>
         </div>
 
@@ -295,6 +307,8 @@ def test_theorem():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -361,6 +375,8 @@ def test_proof():
 
         <span class="option option__source">source</span>
 
+        <span class="option option__assumptions">assumptions</span>
+
         </div>
         </div>
 
@@ -386,6 +402,8 @@ def test_proof():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -414,6 +432,8 @@ def test_proof():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -492,6 +512,8 @@ def test_proof_with_sketch():
 
         <span class="option option__source">source</span>
 
+        <span class="option option__assumptions">assumptions</span>
+
         </div>
         </div>
 
@@ -517,6 +539,8 @@ def test_proof_with_sketch():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -559,6 +583,8 @@ def test_proof_with_sketch():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -642,6 +668,8 @@ def test_sub_step():
 
         <span class="option option__source">source</span>
 
+        <span class="option option__assumptions">assumptions</span>
+
         </div>
         </div>
 
@@ -667,6 +695,8 @@ def test_sub_step():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -695,6 +725,8 @@ def test_sub_step():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -727,6 +759,8 @@ def test_sub_step():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -825,6 +859,8 @@ def test_two_steps():
 
         <span class="option option__source">source</span>
 
+        <span class="option option__assumptions">assumptions</span>
+
         </div>
         </div>
 
@@ -850,6 +886,8 @@ def test_two_steps():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -878,6 +916,8 @@ def test_two_steps():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>
@@ -912,6 +952,8 @@ def test_two_steps():
         <span class="option option__tree">tree</span>
 
         <span class="option option__source">source</span>
+
+        <span class="option option__assumptions">assumptions</span>
 
         </div>
         </div>

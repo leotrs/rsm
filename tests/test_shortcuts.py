@@ -939,8 +939,7 @@ def test_turnstile_and_math_within_list():
 
         <h1></h1>
 
-        <p class="paragraph">We now make a bunch of claims
-        </p>
+        <p class="paragraph">We now make a bunch of claims</p>
 
         <ol class="enumerate">
 

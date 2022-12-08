@@ -117,7 +117,6 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     "algorithm": nodes.Algorithm,
     "author": nodes.Author,
     "enumerate": nodes.Enumerate,
-    # "claim": nodes.Claim,
     "cite": nodes.PendingCite,
     "code": nodes.Code,
     "codeblock": nodes.CodeBlock,
@@ -390,10 +389,8 @@ def make_ast(cst):
         # set construct type and kind
         if ast_node_type in ["construct", "specialconstruct"]:
             ic(cst_node)
-            cst_type = cst_node.child_by_field_name("tag").type
-            # if cst_type == "claim":
-            #     ast_node = nodes.Claim()
-            ast_node.kind = cst_type
+            if tag := cst_node.child_by_field_name("tag"):
+                ast_node.kind = tag.type
 
         if ast_node_type.endswith("section") and cst_node.type == "specialblock":
             # Sections with a hastag shurtcut ("# Section Title") have the title as a

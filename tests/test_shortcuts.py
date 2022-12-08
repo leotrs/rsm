@@ -382,7 +382,7 @@ def test_prev_shortcut():
           All $X$ are $Z$ and all $Z$ are $Y$.
         ::
 
-        :step: QED.
+        :step: :qed:.
 
            :p: Due to :prev:.::
 
@@ -434,7 +434,7 @@ def test_prev_shortcut():
 
         <div class="statement">
 
-        <p class="paragraph"><span class="keyword">QED </span>.</p>
+        <p class="paragraph"><span class="construct qed"><span class="keyword">QED </span></span>.</p>
 
         </div>
 
@@ -490,7 +490,7 @@ def test_prev2_shortcut():
           Something inconsequential here.
         ::
 
-        :step: QED.
+        :step: :qed:.
 
            :p: Due to :prev2:.::
 
@@ -552,7 +552,7 @@ def test_prev2_shortcut():
 
         <div class="statement">
 
-        <p class="paragraph"><span class="keyword">QED </span>.</p>
+        <p class="paragraph"><span class="construct qed"><span class="keyword">QED </span></span>.</p>
 
         </div>
 
@@ -608,7 +608,7 @@ def test_prev_and_prev2_shortcut():
           All $Z$ are $Y$.
         ::
 
-        :step: QED.
+        :step: :qed:.
 
            :p: Due to :prev: and :prev2:.::
 
@@ -670,7 +670,7 @@ def test_prev_and_prev2_shortcut():
 
         <div class="statement">
 
-        <p class="paragraph"><span class="keyword">QED </span>.</p>
+        <p class="paragraph"><span class="construct qed"><span class="keyword">QED </span></span>.</p>
 
         </div>
 

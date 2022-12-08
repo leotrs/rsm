@@ -11,7 +11,7 @@ def test_render():
 
     ::
     """
-    result = subprocess.run(['rsm-render', have], stdout=subprocess.PIPE, check=True)
+    result = subprocess.run(["rsm-render", have], stdout=subprocess.PIPE, check=True)
 
     compare_have_want(
         have=have,
@@ -39,9 +39,10 @@ def test_render():
     )
 
 
+@pytest.mark.slow
 def test_invalid_rsm():
     have = "test_file.rsm"
     with pytest.raises(subprocess.CalledProcessError):
         result = subprocess.run(
-            ['rsm-render', have], stdout=subprocess.PIPE, check=True
+            ["rsm-render", have], stdout=subprocess.PIPE, check=True
         )

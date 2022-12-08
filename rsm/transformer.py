@@ -218,5 +218,5 @@ class Transformer:
             kind = construct.kind
             assert kind
             construct.types.append(kind)
-            if kind not in {"then", "suffices", "claim", "claimblock"}:
+            if kind not in {"then", "suffices", "claim", "claimblock", "qed"}:
                 construct.types.append("assumption")

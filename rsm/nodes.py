@@ -436,6 +436,7 @@ class Construct(NodeWithChildren):
         "prove": "PROVE",
         "claim": "⊢",
         "claimblock": "⊢",
+        "qed": "QED",
     }
 
     def __init__(self, kind: str = "", **kwargs: Any):

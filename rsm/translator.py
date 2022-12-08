@@ -16,7 +16,7 @@ import textwrap
 
 from . import nodes
 
-logger = logging.getLogger('RSM').getChild('tlate')
+logger = logging.getLogger("RSM").getChild("tlate")
 
 
 class RSMTranslatorError(Exception):
@@ -24,16 +24,16 @@ class RSMTranslatorError(Exception):
 
 
 def make_tag(tag: str, id_: str, classes: Iterable, **kwargs: Any) -> str:
-    text = f'<{tag}'
+    text = f"<{tag}"
     if id_:
         text += f' id="{id_}"'
     if classes:
-        classes = ' '.join(classes)
+        classes = " ".join(classes)
         text += f' class="{classes}"'
     if kwargs:
-        text += ' '
-    text += ' '.join(f'{k}="{v}"' for k, v in kwargs.items() if v)
-    text += '>'
+        text += " "
+    text += " ".join(f'{k}="{v}"' for k, v in kwargs.items() if v)
+    text += ">"
     return text
 
 
@@ -49,21 +49,21 @@ class EditCommand(ABC):
         pass
 
     @abstractmethod
-    def execute(self, translator: 'Translator') -> None:
+    def execute(self, translator: "Translator") -> None:
         pass
 
     def _edit_command_repr(self, members: Iterable[str]) -> str:
-        start = f'{self.__class__.__name__}('
+        start = f"{self.__class__.__name__}("
         middles = []
         for key in members:
-            s = f'{key}='
+            s = f"{key}="
             value = getattr(self, key)
             if isinstance(value, str):
                 value = repr(textwrap.shorten(value.strip(), 60))
-            s += f'{value}'
+            s += f"{value}"
             middles.append(s)
-        middle = ', '.join(middles)
-        end = ')'
+        middle = ", ".join(middles)
+        end = ")"
         return start + middle + end
 
     def __repr__(self) -> str:
@@ -73,14 +73,14 @@ class EditCommand(ABC):
 class AppendTextAndDefer(EditCommand):
     defers = True
 
-    def __init__(self, text: str = '', deferred_text: str = ''):
+    def __init__(self, text: str = "", deferred_text: str = ""):
         self._text = text
         self._deferred_text = deferred_text
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['text', 'deferred_text'])
+        return self._edit_command_repr(["text", "deferred_text"])
 
-    def execute(self, translator: 'Translator') -> None:
+    def execute(self, translator: "Translator") -> None:
         translator.body += self.make_text()
         translator.deferred.append(AppendText(self.make_deferred_text()))
 
@@ -92,13 +92,13 @@ class AppendTextAndDefer(EditCommand):
 
 
 class AppendText(EditCommand):
-    def __init__(self, text: str = ''):
+    def __init__(self, text: str = ""):
         self._text = text
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['text'])
+        return self._edit_command_repr(["text"])
 
-    def execute(self, translator: 'Translator') -> None:
+    def execute(self, translator: "Translator") -> None:
         translator.body += self.make_text()
 
     def make_text(self) -> str:
@@ -108,10 +108,10 @@ class AppendText(EditCommand):
 class AppendOpenCloseTag(AppendText):
     def __init__(
         self,
-        tag: str = 'div',
-        content: str = '',
+        tag: str = "div",
+        content: str = "",
         *,
-        id: str = '',
+        id: str = "",
         classes: list = None,
         newline_inner: bool = True,
         newline_outer: bool = True,
@@ -126,26 +126,26 @@ class AppendOpenCloseTag(AppendText):
 
     def make_text(self) -> str:
         return (
-            ('\n' if self.newline_outer else '')
+            ("\n" if self.newline_outer else "")
             + make_tag(self.tag, self.id, self.classes)
-            + ('\n' if self.newline_inner else '')
+            + ("\n" if self.newline_inner else "")
             + self.content
-            + ('\n' if self.newline_inner else '')
-            + f'</{self.tag}>'
-            + ('\n' if self.newline_outer else '')
+            + ("\n" if self.newline_inner else "")
+            + f"</{self.tag}>"
+            + ("\n" if self.newline_outer else "")
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['tag', 'content', 'id', 'classes'])
+        return self._edit_command_repr(["tag", "content", "id", "classes"])
 
 
 class AppendOpenTagManualClose(AppendText):
     def __init__(
         self,
-        tag: str = 'div',
-        content: str = '',
+        tag: str = "div",
+        content: str = "",
         *,
-        id: str = '',
+        id: str = "",
         classes: list = None,
         newline_inner: bool = True,
         newline_outer: bool = True,
@@ -161,29 +161,29 @@ class AppendOpenTagManualClose(AppendText):
 
     def make_text(self) -> str:
         return (
-            ('\n' if self.newline_outer else '')
+            ("\n" if self.newline_outer else "")
             + make_tag(self.tag, self.id, self.classes)
-            + ('\n' if self.newline_inner else '')
+            + ("\n" if self.newline_inner else "")
             + self.content
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['tag', 'content', 'id', 'classes'])
+        return self._edit_command_repr(["tag", "content", "id", "classes"])
 
     def close_command(self):
         return AppendText(
-            ('\n' if self.newline_inner else '')
-            + f'</{self.tag}>'
-            + ('\n' if self.newline_outer else '')
+            ("\n" if self.newline_inner else "")
+            + f"</{self.tag}>"
+            + ("\n" if self.newline_outer else "")
         )
 
 
 class AppendOpenTag(AppendTextAndDefer):
     def __init__(
         self,
-        tag: str = 'div',
+        tag: str = "div",
         *,
-        id: str = '',
+        id: str = "",
         classes: list = None,
         newline_inner: bool = True,
         newline_outer: bool = True,
@@ -197,27 +197,27 @@ class AppendOpenTag(AppendTextAndDefer):
 
     def make_text(self) -> str:
         return (
-            ('\n' if self.newline_outer else '')
+            ("\n" if self.newline_outer else "")
             + make_tag(self.tag, self.id, self.classes)
-            + ('\n' if self.newline_inner else '')
+            + ("\n" if self.newline_inner else "")
         )
 
     def make_deferred_text(self) -> str:
         return (
-            ('\n' if self.newline_inner else '')
-            + f'</{self.tag}>'
-            + ('\n' if self.newline_outer else '')
+            ("\n" if self.newline_inner else "")
+            + f"</{self.tag}>"
+            + ("\n" if self.newline_outer else "")
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['tag', 'id', 'classes', 'newline_inner'])
+        return self._edit_command_repr(["tag", "id", "classes", "newline_inner"])
 
 
 class AppendNodeTag(AppendOpenTag):
     def __init__(
         self,
         node: nodes.Node,
-        tag: str = 'div',
+        tag: str = "div",
         *,
         additional_classes: list[str] | None = None,
         newline_inner: bool = True,
@@ -235,21 +235,21 @@ class AppendNodeTag(AppendOpenTag):
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['tag', 'node'])
+        return self._edit_command_repr(["tag", "node"])
 
 
 class AppendParagraph(AppendOpenCloseTag):
     def __init__(
         self,
-        content: str = '',
+        content: str = "",
         *,
-        id: str = '',
+        id: str = "",
         classes: list = None,
         newline_inner: bool = False,
         newline_outer: bool = True,
     ):
         super().__init__(
-            tag='p',
+            tag="p",
             content=content,
             id=id,
             classes=classes,
@@ -258,23 +258,23 @@ class AppendParagraph(AppendOpenCloseTag):
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['content', 'id', 'classes'])
+        return self._edit_command_repr(["content", "id", "classes"])
 
 
 class AppendHeading(AppendOpenCloseTag):
     def __init__(
         self,
         level: int,
-        content: str = '',
+        content: str = "",
         *,
-        id: str = '',
+        id: str = "",
         classes: list = None,
         newline_inner: bool = False,
         newline_outer: bool = True,
     ):
         self.level = level
         super().__init__(
-            tag=f'h{self.level}',
+            tag=f"h{self.level}",
             content=content,
             id=id,
             classes=classes,
@@ -283,7 +283,7 @@ class AppendHeading(AppendOpenCloseTag):
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['level', 'content', 'id', 'classes'])
+        return self._edit_command_repr(["level", "content", "id", "classes"])
 
 
 class AppendKeyword(AppendOpenCloseTag):
@@ -291,14 +291,14 @@ class AppendKeyword(AppendOpenCloseTag):
         self,
         keyword: str,
         *,
-        id: str = '',
+        id: str = "",
         classes: list = None,
         newline_inner: bool = False,
         newline_outer: bool = False,
     ):
-        classes = ['keyword'] + (classes or [])
+        classes = ["keyword"] + (classes or [])
         super().__init__(
-            tag='span',
+            tag="span",
             content=keyword,
             id=id,
             classes=classes,
@@ -307,27 +307,27 @@ class AppendKeyword(AppendOpenCloseTag):
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['level', 'content', 'id', 'classes'])
+        return self._edit_command_repr(["level", "content", "id", "classes"])
 
 
 class AppendHalmos(AppendOpenCloseTag):
     def __init__(
         self,
         *,
-        id: str = '',
+        id: str = "",
         classes: list = None,
     ):
         super().__init__(
-            tag='div',
-            content='',
+            tag="div",
+            content="",
             id=id,
-            classes=['halmos'] + (classes or []),
+            classes=["halmos"] + (classes or []),
             newline_inner=False,
             newline_outer=True,
         )
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(['classes'])
+        return self._edit_command_repr(["classes"])
 
 
 class AppendExternalTree(AppendText):
@@ -348,16 +348,16 @@ class EditCommandBatch(EditCommand):
 
     def __repr__(self) -> str:
         classname = self.__class__.__name__
-        return f'{classname}({repr(self.items)})'
+        return f"{classname}({repr(self.items)})"
 
     def make_text(self) -> str:
-        raise RSMTranslatorError('Why are we here?')
+        raise RSMTranslatorError("Why are we here?")
 
 
 class AppendBatchAndDefer(EditCommandBatch):
     defers = True
 
-    def execute(self, translator: 'Translator') -> None:
+    def execute(self, translator: "Translator") -> None:
         deferred: list[EditCommand] = []
         for item in self.items:
             if isinstance(item, AppendTextAndDefer):
@@ -369,12 +369,12 @@ class AppendBatchAndDefer(EditCommandBatch):
 
 
 class AppendBatch(EditCommandBatch):
-    def execute(self, translator: 'Translator') -> None:
+    def execute(self, translator: "Translator") -> None:
         for item in self.items:
             item.execute(translator)
 
 
-class Action(namedtuple('Action', 'node action method')):
+class Action(namedtuple("Action", "node action method")):
     def __repr__(self) -> str:
         classname = self.node.__class__.__name__
         return f'Action(node={classname}(), action="{self.action}")'
@@ -383,7 +383,7 @@ class Action(namedtuple('Action', 'node action method')):
 class Translator:
     def __init__(self, quiet: bool = False):
         self.tree: nodes.Manuscript = None
-        self.body: str = ''
+        self.body: str = ""
         self.deferred: list[EditCommand] = []
         self.quiet = quiet
 
@@ -391,36 +391,36 @@ class Translator:
     def get_action_method(cls, node: nodes.Node, action: str) -> Callable:
         ogclass = node.__class__
         nodeclass = node.__class__
-        method = f'{action}_{nodeclass.__name__.lower()}'
+        method = f"{action}_{nodeclass.__name__.lower()}"
         while not hasattr(cls, method):
             nodeclass = nodeclass.__bases__[0]
-            method = f'{action}_{nodeclass.__name__.lower()}'
-        if action == 'visit' and ogclass is not nodeclass:
-            logger.debug(f'Using {method} for node of class {ogclass}')
+            method = f"{action}_{nodeclass.__name__.lower()}"
+        if action == "visit" and ogclass is not nodeclass:
+            logger.debug(f"Using {method} for node of class {ogclass}")
         return getattr(cls, method)
 
     def push_visit(self, stack, node: nodes.Node) -> None:
-        stack.append(Action(node, 'visit', self.get_action_method(node, 'visit')))
+        stack.append(Action(node, "visit", self.get_action_method(node, "visit")))
 
     def push_leave(self, stack, node: nodes.Node) -> None:
-        stack.append(Action(node, 'leave', self.get_action_method(node, 'leave')))
+        stack.append(Action(node, "leave", self.get_action_method(node, "leave")))
 
     def translate(self, tree: nodes.Manuscript, new: bool = True) -> str:
         if not self.quiet:
-            logger.info('Translating...')
+            logger.info("Translating...")
         if new:
             self.body = ""
         self.tree = tree
 
         if self.deferred:
-            raise RSMTranslatorError('Something went wrong')
+            raise RSMTranslatorError("Something went wrong")
 
         stack = []
         self.push_visit(stack, tree)
         while stack:
             node, action, method = stack.pop()
             command = method(self, node)
-            if action == 'visit':
+            if action == "visit":
                 if command.defers:
                     self.push_leave(stack, node)
                 for child in reversed(node.children):
@@ -428,15 +428,15 @@ class Translator:
             command.execute(self)
 
         if self.deferred:
-            raise RSMTranslatorError('Something went wrong')
+            raise RSMTranslatorError("Something went wrong")
 
         return self.body
 
     def visit_node(self, node: nodes.Node) -> EditCommand:
         return AppendBatchAndDefer(
             [
-                AppendOpenTag(classes=['node-with-no-class']),
-                AppendText(str(node) + '\n'),
+                AppendOpenTag(classes=["node-with-no-class"]),
+                AppendText(str(node) + "\n"),
             ]
         )
 
@@ -446,19 +446,19 @@ class Translator:
         except IndexError as e:
             classname = node.__class__.__name__
             raise RSMTranslatorError(
-                'Cannot finish translation; did you forget to write '
-                'a visit_* or leave_* method?'
+                "Cannot finish translation; did you forget to write "
+                "a visit_* or leave_* method?"
             ) from e
 
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         if not node.label:
-            node.label = 'manuscript'
+            node.label = "manuscript"
         return AppendBatchAndDefer(
             [
-                AppendOpenTag('body'),
-                AppendOpenTag(classes=['manuscriptwrapper']),
+                AppendOpenTag("body"),
+                AppendOpenTag(classes=["manuscriptwrapper"]),
                 AppendNodeTag(node),
-                AppendOpenTag('section', classes=['level-1']),
+                AppendOpenTag("section", classes=["level-1"]),
                 AppendHeading(1, node.title),
             ]
         )
@@ -467,12 +467,12 @@ class Translator:
         if [node.name, node.affiliation, node.email]:
             if node.email:
                 email = tag = (
-                    make_tag('a', id_='', classes='', href=f'mailto:{node.email}')
+                    make_tag("a", id_="", classes="", href=f"mailto:{node.email}")
                     + node.email
-                    + '</a>'
+                    + "</a>"
                 )
             else:
-                email = ''
+                email = ""
             return AppendBatchAndDefer(
                 [
                     AppendNodeTag(node),
@@ -490,7 +490,7 @@ class Translator:
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
-                AppendHeading(3, 'Abstract'),
+                AppendHeading(3, "Abstract"),
             ]
         )
 
@@ -498,13 +498,13 @@ class Translator:
         batch = AppendBatch([])
 
         if node.keywords:
-            text = ', '.join(node.keywords)
+            text = ", ".join(node.keywords)
             batch.items.append(
-                AppendParagraph(f'Keywords: {text}', classes=['keywords'])
+                AppendParagraph(f"Keywords: {text}", classes=["keywords"])
             )
         if node.MSC:
-            text = ', '.join(node.MSC)
-            batch.items.append(AppendParagraph(f'MSC: {text}', classes=['MSC']))
+            text = ", ".join(node.MSC)
+            batch.items.append(AppendParagraph(f"MSC: {text}", classes=["MSC"]))
 
         # For documentation: if a visit_* method returns a command with defers = True,
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
@@ -513,51 +513,51 @@ class Translator:
         return batch
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
-        return AppendNodeTag(node, tag='p', newline_inner=False)
+        return AppendNodeTag(node, tag="p", newline_inner=False)
 
     def visit_step(self, node: nodes.Step) -> EditCommand:
         return AppendNodeTag(node)
 
     def visit_section(self, node: nodes.Section) -> EditCommand:
-        node.types.insert(0, f'level-{node.level}')
+        node.types.insert(0, f"level-{node.level}")
         heading = (
-            f'{node.full_number}. {node.title}' if not node.nonum else f'{node.title}'
+            f"{node.full_number}. {node.title}" if not node.nonum else f"{node.title}"
         )
         return AppendBatchAndDefer(
             [
-                AppendNodeTag(node, 'section'),
+                AppendNodeTag(node, "section"),
                 AppendHeading(node.level, heading),
             ]
         )
 
     def visit_enumerate(self, node: nodes.Enumerate) -> EditCommand:
-        return AppendNodeTag(node, 'ol')
+        return AppendNodeTag(node, "ol")
 
     def visit_itemize(self, node: nodes.Itemize) -> EditCommand:
-        return AppendNodeTag(node, 'ul')
+        return AppendNodeTag(node, "ul")
 
     def visit_item(self, node: nodes.Item) -> EditCommand:
-        return AppendNodeTag(node, 'li')
+        return AppendNodeTag(node, "li")
 
     def visit_contents(self, node: nodes.Contents) -> EditCommand:
         return AppendBatchAndDefer(
-            [AppendHeading(3, 'Table of Contents'), AppendNodeTag(node, 'ul')]
+            [AppendHeading(3, "Table of Contents"), AppendNodeTag(node, "ul")]
         )
 
     def visit_note(self, node: nodes.Note) -> EditCommand:
         return AppendBatchAndDefer(
             [
-                AppendOpenTag('span', classes=['note']),
+                AppendOpenTag("span", classes=["note"]),
                 AppendOpenCloseTag(
-                    'sup',
+                    "sup",
                     content=f'<a class="note__link">{node.full_number}</a>',
-                    classes=['note__number'],
+                    classes=["note__number"],
                     newline_inner=False,
                 ),
                 AppendOpenTag(
-                    'span',
+                    "span",
                     id=node.label,
-                    classes=['note__content'],
+                    classes=["note__content"],
                     newline_inner=False,
                 ),
             ]
@@ -567,8 +567,8 @@ class Translator:
         # the strings r'\(' and r'\)' are MathJax's delimiters for inline math
         return AppendBatchAndDefer(
             [
-                AppendNodeTag(node, 'span', newline_inner=False, newline_outer=False),
-                AppendTextAndDefer(r'\(', r'\)'),
+                AppendNodeTag(node, "span", newline_inner=False, newline_outer=False),
+                AppendTextAndDefer(r"\(", r"\)"),
             ]
         )
 
@@ -576,8 +576,8 @@ class Translator:
         # the strings '$$' and '$$' are MathJax's delimiters for inline math
         return AppendBatchAndDefer(
             [
-                AppendNodeTag(node, 'div'),
-                AppendTextAndDefer('$$\n', '\n$$'),
+                AppendNodeTag(node, "div"),
+                AppendTextAndDefer("$$\n", "\n$$"),
             ]
         )
 
@@ -592,8 +592,8 @@ class Translator:
         batch.items.insert(
             1,
             AppendOpenCloseTag(
-                content=f'({node.full_number})',
-                classes=['mathblock__number'],
+                content=f"({node.full_number})",
+                classes=["mathblock__number"],
                 newline_inner=False,
             ),
         )
@@ -601,16 +601,16 @@ class Translator:
         return batch
 
     def visit_code(self, node: nodes.Code) -> EditCommand:
-        return AppendNodeTag(node, 'span', newline_inner=False, newline_outer=False)
+        return AppendNodeTag(node, "span", newline_inner=False, newline_outer=False)
 
     def visit_codeblock(self, node: nodes.Code) -> EditCommand:
-        return AppendNodeTag(node, 'div', newline_inner=True, newline_outer=True)
+        return AppendNodeTag(node, "div", newline_inner=True, newline_outer=True)
 
     def visit_algorithm(self, node: nodes.Algorithm) -> EditCommand:
         return AppendBatchAndDefer(
             [
-                AppendOpenTag(id=node.label, classes=['algorithm']),
-                AppendOpenTag('pre', classes=['pseudocode']),
+                AppendOpenTag(id=node.label, classes=["algorithm"]),
+                AppendOpenTag("pre", classes=["pseudocode"]),
             ]
         )
 
@@ -626,31 +626,34 @@ class Translator:
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(
-                    node, tag='span', newline_inner=False, newline_outer=False
+                    node, tag="span", newline_inner=False, newline_outer=False
                 ),
                 *commands,
             ]
         )
+
+    def visit_construct(self, node: nodes.Construct) -> EditCommand:
+        return AppendNodeTag(node, tag="span", newline_inner=False, newline_outer=False)
 
     def _make_ahref_tag_text(
         self,
         node: nodes.BaseReference,
         target: nodes.Node,
         href_text: str,
-        label: str = '',
-        id_: str = '',
+        label: str = "",
+        id_: str = "",
     ) -> str:
         if not target:
-            raise RSMTranslatorError(f'Found a {node.__class__} without a target')
+            raise RSMTranslatorError(f"Found a {node.__class__} without a target")
         tgt = target
-        if hasattr(node, 'overwrite_reftext') and node.overwrite_reftext:
+        if hasattr(node, "overwrite_reftext") and node.overwrite_reftext:
             reftext = node.overwrite_reftext
         else:
-            reftext = getattr(tgt, 'reftext', tgt)
+            reftext = getattr(tgt, "reftext", tgt)
         classes = node.types
-        if not isinstance(node, nodes.URL) and 'reference' not in classes:
-            classes.insert(0, 'reference')
-        tag = make_tag('a', id_=id_, classes=classes, href=href_text) + reftext + '</a>'
+        if not isinstance(node, nodes.URL) and "reference" not in classes:
+            classes.insert(0, "reference")
+        tag = make_tag("a", id_=id_, classes=classes, href=href_text) + reftext + "</a>"
         return tag
 
     def visit_reference(self, node: nodes.Reference) -> EditCommand:
@@ -665,7 +668,7 @@ class Translator:
 
     def visit_claim(self, node: nodes.Claim) -> EditCommand:
         return AppendBatchAndDefer(
-            [AppendNodeTag(node, tag='span', newline_inner=False, newline_outer=False)]
+            [AppendNodeTag(node, tag="span", newline_inner=False, newline_outer=False)]
         )
 
     def visit_claimblock(self, node: nodes.ClaimBlock) -> EditCommand:
@@ -688,17 +691,17 @@ class Translator:
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         classname = node.__class__.__name__.lower()
         title = self._make_title_node(
-            f'{classname.capitalize()}'
-            + (f' {node.full_number}' if not node.nonum and node.number else '')
-            + (f': {node.title}.' if node.title else '.'),
-            ['theorem__title', f'{classname}__title'],
+            f"{classname.capitalize()}"
+            + (f" {node.full_number}" if not node.nonum and node.number else "")
+            + (f": {node.title}." if node.title else "."),
+            ["theorem__title", f"{classname}__title"],
         )
-        classes = ['theorem-contents']
-        if classname != 'theorem':
-            classes.append(f'{classname}-contents')
+        classes = ["theorem-contents"]
+        if classname != "theorem":
+            classes.append(f"{classname}-contents")
         return AppendBatchAndDefer(
             [
-                AppendNodeTag(node, additional_classes=['theorem']),
+                AppendNodeTag(node, additional_classes=["theorem"]),
                 AppendOpenTag(classes=classes),
                 AppendExternalTree(title),
             ]
@@ -712,24 +715,24 @@ class Translator:
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
-                AppendOpenTag(classes=[f'{classname}-contents']),
+                AppendOpenTag(classes=[f"{classname}-contents"]),
             ]
         )
 
     def visit_proof(self, node: nodes.Proof) -> EditCommandBatch:
         last = node.last_of_type(nodes.Step)
         if last:
-            last.types.append('last')
+            last.types.append("last")
 
         classname = node.__class__.__name__.lower()
         title = self._make_title_node(
-            f'{classname.capitalize()}. ', [f'{classname}__title']
+            f"{classname.capitalize()}. ", [f"{classname}__title"]
         )
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
                 AppendExternalTree(title),
-                AppendOpenTag(classes=[f'{classname}-contents']),
+                AppendOpenTag(classes=[f"{classname}-contents"]),
             ]
         )
 
@@ -748,92 +751,92 @@ class Translator:
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
         if len(node.targets) == 1:
             t = node.targets[0]
-            text = self._make_ahref_tag_text(node, t, f'#{t.label}', id_=node.label)
+            text = self._make_ahref_tag_text(node, t, f"#{t.label}", id_=node.label)
         else:
             tags = [
                 self._make_ahref_tag_text(
-                    node, t, f'#{t.label}', id_=f'{node.label}-{idx}'
+                    node, t, f"#{t.label}", id_=f"{node.label}-{idx}"
                 )
                 for idx, t in enumerate(node.targets)
             ]
-            text = ', '.join(tags)
+            text = ", ".join(tags)
             text = f'<span id="{node.label}">{text}</span>'
-        return AppendText(f'[{text}]')
+        return AppendText(f"[{text}]")
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
         return AppendBatchAndDefer(
             [
-                AppendOpenTag('section', classes=['level-2']),
-                AppendHeading(2, 'References'),
-                AppendNodeTag(node, 'ol'),
+                AppendOpenTag("section", classes=["level-2"]),
+                AppendHeading(2, "References"),
+                AppendNodeTag(node, "ol"),
             ]
         )
 
     def visit_bibitem(self, node: nodes.Bibitem) -> EditCommand:
         items = [node.author, f'"{node.title}"']
-        if node.kind == 'article':
+        if node.kind == "article":
             if node.journal:
                 items.append(node.journal)
             else:
-                logger.warning(f'Bibitem {node.label} has no journal')
-        elif node.kind == 'book':
+                logger.warning(f"Bibitem {node.label} has no journal")
+        elif node.kind == "book":
             if node.publisher:
                 items.append(node.publisher)
             else:
-                logger.warning(f'Bibitem {node.label} has no publisher')
+                logger.warning(f"Bibitem {node.label} has no publisher")
         if node.year:
             items.append(node.year)
         else:
-            logger.warning(f'Bibitem {node.label} has no year')
-        text = '. '.join([i.strip('.') for i in items]) + '.'
+            logger.warning(f"Bibitem {node.label} has no year")
+        text = ". ".join([i.strip(".") for i in items]) + "."
         if node.doi:
             a_tag = make_tag(
-                'a',
-                id_=f'{node.label}-doi',
-                classes=['bibitem-doi'],
-                href=f'https://doi.org/{node.doi}',
-                target='_blank',
+                "a",
+                id_=f"{node.label}-doi",
+                classes=["bibitem-doi"],
+                href=f"https://doi.org/{node.doi}",
+                target="_blank",
             )
-            text = f'{text} {a_tag}[link]</a>'
+            text = f"{text} {a_tag}[link]</a>"
         else:
-            logger.warning(f'Bibitem {node.label} has no DOI')
+            logger.warning(f"Bibitem {node.label} has no DOI")
 
         if node.backlinks:
-            text += '<br />'
+            text += "<br />"
             backs = [
                 make_tag(
-                    'a',
+                    "a",
                     id_="",
                     classes=["reference", "backlink"],
-                    href=f'#{link_lbl}',
+                    href=f"#{link_lbl}",
                 )
-                + f'^{idx}'
-                + '</a>'
+                + f"^{idx}"
+                + "</a>"
                 for idx, link_lbl in enumerate(node.backlinks, start=1)
             ]
-            text += '[' + ','.join(backs) + ']'
+            text += "[" + ",".join(backs) + "]"
 
-        return AppendBatchAndDefer([AppendNodeTag(node, 'li'), AppendText(text)])
+        return AppendBatchAndDefer([AppendNodeTag(node, "li"), AppendText(text)])
 
     def visit_draft(self, node: nodes.Draft) -> EditCommand:
         return AppendBatchAndDefer(
-            [AppendNodeTag(node, 'span'), AppendTextAndDefer('[ ', ' ]')]
+            [AppendNodeTag(node, "span"), AppendTextAndDefer("[ ", " ]")]
         )
 
     def visit_figure(self, node: nodes.Figure) -> EditCommand:
         return AppendBatchAndDefer(
             [
-                AppendNodeTag(node, 'figure'),
+                AppendNodeTag(node, "figure"),
                 AppendText(
                     make_tag(
-                        'img',
+                        "img",
                         id_=node.label,
                         classes=[],
                         src=node.path,
-                        alt=f'{node.__class__.__name__} {node.full_number}.',
-                        onload=''
+                        alt=f"{node.__class__.__name__} {node.full_number}.",
+                        onload=""
                         if node.scale == 1.0
-                        else f'this.width*={node.scale};',
+                        else f"this.width*={node.scale};",
                     )
                 ),
             ]
@@ -842,14 +845,14 @@ class Translator:
     def visit_caption(self, node: nodes.Caption) -> EditCommand:
         parent = node.parent
         title = self._make_title_node(
-            f'{parent.__class__.__name__} {parent.full_number}. ',
+            f"{parent.__class__.__name__} {parent.full_number}. ",
             types=[],
             paragraph=False,
         )
         return AppendBatchAndDefer(
             [
                 AppendOpenTag(
-                    'figcaption' if isinstance(parent, nodes.Figure) else 'caption'
+                    "figcaption" if isinstance(parent, nodes.Figure) else "caption"
                 ),
                 AppendExternalTree(title),
             ]
@@ -858,41 +861,41 @@ class Translator:
     def visit_appendix(self, node: nodes.Appendix) -> EditCommand:
         # Appendix nodes are used during the transform phase, but do not apear in the
         # output in any way.
-        return AppendText('')
+        return AppendText("")
 
     def visit_table(self, node: nodes.Table) -> EditCommand:
-        return AppendNodeTag(node, 'table')
+        return AppendNodeTag(node, "table")
 
     def visit_tablehead(self, node: nodes.TableHead) -> EditCommand:
-        return AppendNodeTag(node, 'thead')
+        return AppendNodeTag(node, "thead")
 
     def visit_tablebody(self, node: nodes.TableBody) -> EditCommand:
-        return AppendNodeTag(node, 'tbody')
+        return AppendNodeTag(node, "tbody")
 
     def visit_tablerow(self, node: nodes.TableRow) -> EditCommand:
-        return AppendNodeTag(node, 'tr')
+        return AppendNodeTag(node, "tr")
 
     def visit_tabledatum(self, node: nodes.TableDatum) -> EditCommand:
-        return AppendNodeTag(node, 'td', newline_inner=False)
+        return AppendNodeTag(node, "td", newline_inner=False)
 
 
 class HandrailsTranslator(Translator):
     @staticmethod
     def _make_option_tag(opt):
         return AppendOpenCloseTag(
-            'span',
+            "span",
             opt,
-            classes=['option', f'option__{opt}'],
+            classes=["option", f"option__{opt}"],
             newline_inner=False,
         )
 
     def _replace_items_with_handrails(self, index, items, cls, include_content=False):
-        classes = ['handrail', 'handrail--offset']
+        classes = ["handrail", "handrail--offset"]
         if include_content:
             handrail = AppendOpenTag(classes=classes)
         else:
             handrail = AppendOpenTagManualClose(classes=classes)
-        btn_cont = AppendOpenTagManualClose(classes=['handrail__btn-container'])
+        btn_cont = AppendOpenTagManualClose(classes=["handrail__btn-container"])
         btn_menu = AppendOpenTagManualClose(
             classes=["handrail__btn", "handrail__btn-menu", "handrail__btn--relative"],
             newline_inner=False,
@@ -911,13 +914,13 @@ class HandrailsTranslator(Translator):
             handrail,
             btn_cont,
             btn_menu,
-            AppendOpenCloseTag('span', '⋮', newline_inner=False, newline_outer=False),
+            AppendOpenCloseTag("span", "⋮", newline_inner=False, newline_outer=False),
             opt_tag,
             *options,
             opt_tag.close_command(),
             btn_menu.close_command(),
             btn_togg,
-            AppendOpenCloseTag('span', '〉', newline_inner=False, newline_outer=False),
+            AppendOpenCloseTag("span", "〉", newline_inner=False, newline_outer=False),
             btn_togg.close_command(),
             btn_cont.close_command(),
             items[index],
@@ -962,30 +965,30 @@ class HandrailsTranslator(Translator):
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         batch = super().visit_theorem(node)
-        batch.items[1].classes.append('handrail__collapsible')
+        batch.items[1].classes.append("handrail__collapsible")
         batch = self._replace_batch_with_handrails(1, batch, include_content=True)
         batch.items[1].classes += [
-            f'stars-{node.stars}',
-            f'clocks-{node.clocks}',
+            f"stars-{node.stars}",
+            f"clocks-{node.clocks}",
         ]
         batch.items[-1].root.types.append("do-not-hide")
         return batch
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         batch = super().visit_proof(node)
-        batch.items[2].classes.append('handrail__collapsible')
+        batch.items[2].classes.append("handrail__collapsible")
 
         # the last element is the proof title, we pop it as it will be inserted into the
         # proof header div
         tree = batch.items[1]
         batch.items = [batch.items[0], batch.items[2]]
-        tree.root.types.append('do-not-hide')
+        tree.root.types.append("do-not-hide")
 
         if any(type(c) is nodes.Sketch for c in node.children):
             self._add_proof_header_with_sketch(batch, tree, node)
             for c in node.children:
                 if type(c) is not nodes.Sketch:
-                    c.types.append('hide')
+                    c.types.append("hide")
         else:
             self._add_proof_header_no_sketch(batch, tree, node)
         return self._replace_batch_with_handrails(1, batch, include_content=True)
@@ -993,20 +996,20 @@ class HandrailsTranslator(Translator):
     def _add_proof_header_with_sketch(
         self, batch: EditCommandBatch, tree: nodes.Node, node: nodes.Proof
     ) -> None:
-        header = AppendOpenTagManualClose(classes=['proof__header'])
-        tabs = AppendOpenTagManualClose(classes=['proof__tabs'])
+        header = AppendOpenTagManualClose(classes=["proof__header"])
+        tabs = AppendOpenTagManualClose(classes=["proof__tabs"])
         batch.items[1:1] = [
             header,
             tree,
             tabs,
             AppendOpenCloseTag(
-                'button',
+                "button",
                 content="sketch",
                 classes=["sketch", "active"],
                 newline_inner=False,
             ),
             AppendOpenCloseTag(
-                'button', content="full", classes=['full'], newline_inner=False
+                "button", content="full", classes=["full"], newline_inner=False
             ),
             tabs.close_command(),
             header.close_command(),
@@ -1015,12 +1018,12 @@ class HandrailsTranslator(Translator):
     def _add_proof_header_no_sketch(
         self, batch: EditCommandBatch, tree: nodes.Node, node: nodes.Proof
     ) -> None:
-        header = AppendOpenTagManualClose(classes=['proof__header'])
+        header = AppendOpenTagManualClose(classes=["proof__header"])
         batch.items[1:1] = [header, tree, header.close_command()]
 
     def visit_subproof(self, node: nodes.Subproof) -> EditCommand:
         batch = super().visit_subproof(node)
-        batch.items[1].classes += ['handrail', 'handrail--hug', 'handrail__collapsible']
+        batch.items[1].classes += ["handrail", "handrail--hug", "handrail__collapsible"]
         return batch
 
     def visit_step(self, node: nodes.Step) -> EditCommand:
@@ -1029,8 +1032,8 @@ class HandrailsTranslator(Translator):
         batch.items.insert(
             -1,
             AppendOpenCloseTag(
-                classes=['step__number'],
-                content=f'({node.full_number})',
+                classes=["step__number"],
+                content=f"({node.full_number})",
                 newline_inner=False,
                 newline_outer=False,
             ),
@@ -1042,7 +1045,7 @@ class HandrailsTranslator(Translator):
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
         # add it to the returned batch!!!
         batch = self.leave_node(node)
-        batch.items.insert(1, AppendHalmos(classes=['hide']))
+        batch.items.insert(1, AppendHalmos(classes=["hide"]))
         batch = AppendBatch(batch.items)
         return batch
 
@@ -1051,8 +1054,8 @@ class HandrailsTranslator(Translator):
         batch.items.insert(
             -1,
             AppendOpenCloseTag(
-                content=f'({node.full_number})',
-                classes=['mathblock__number mathblock__number--phantom'],
+                content=f"({node.full_number})",
+                classes=["mathblock__number mathblock__number--phantom"],
                 newline_inner=False,
             ),
         )

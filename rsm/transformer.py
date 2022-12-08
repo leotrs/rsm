@@ -16,7 +16,7 @@ from . import nodes
 
 import logging
 
-logger = logging.getLogger('RSM').getChild('tform')
+logger = logging.getLogger("RSM").getChild("tform")
 
 
 class RSMTransformerError(Exception):
@@ -38,14 +38,14 @@ class Transformer:
         self.autonumber_nodes()
         self.make_toc()
         self.add_turnstile_to_claims()
-
+        self.add_keywords_to_constructs()
         return tree
 
     def collect_labels(self) -> None:
         for node in self.tree.traverse(condition=lambda n: n.label):
             if node.label in self.labels_to_nodes:
-                logger.warning(f'Duplicate label {node.label}, using first encountered')
-                node.label = ''
+                logger.warning(f"Duplicate label {node.label}, using first encountered")
+                node.label = ""
                 continue
             self.labels_to_nodes[node.label] = node
 
@@ -84,7 +84,7 @@ class Transformer:
                     for label in pending.targetlabels
                 ]
                 cite = nodes.Cite(targets=targets)
-                cite.label = f'cite-{next(counter)}'
+                cite.label = f"cite-{next(counter)}"
                 pending.replace_self(cite)
                 for tgt in targets:
                     tgt.backlinks.append(cite.label)
@@ -94,14 +94,14 @@ class Transformer:
                 except AttributeError:
                     step = None
                 if step is None:
-                    raise RSMTransformerError('Found :prev: tag outside proof step')
+                    raise RSMTransformerError("Found :prev: tag outside proof step")
 
                 target = step
                 for _ in range(int(str(pending.target))):
                     target = target.prev_sibling(nodes.Step)
                     if target is None:
                         raise RSMTransformerError(
-                            f'Did not find previous {pending.target} step(s)'
+                            f"Did not find previous {pending.target} step(s)"
                         )
                 pending.replace_self(
                     nodes.Reference(
@@ -110,7 +110,7 @@ class Transformer:
                 )
 
         for pending in self.tree.traverse(condition=lambda n: type(n) in classes):
-            raise RSMTransformerError('Found unresolved pending reference')
+            raise RSMTransformerError("Found unresolved pending reference")
 
     def add_necessary_subproofs(self) -> None:
         for step in self.tree.traverse(nodeclass=nodes.Step):
@@ -140,7 +140,7 @@ class Transformer:
                 assert split_at_idx == len(children) - 1
                 subproof = children[split_at_idx]
             else:
-                raise RSMTransformerError('How did we get here?')
+                raise RSMTransformerError("How did we get here?")
             step.append([statement, subproof])
 
     def autonumber_nodes(self) -> None:
@@ -166,7 +166,7 @@ class Transformer:
                 node.number = num
                 if within_appendix and isinstance(node, nodes.Section):
                     node.reftext_template = node.reftext_template.replace(
-                        '{nodeclass}', 'Appendix'
+                        "{nodeclass}", "Appendix"
                     )
 
     def _autonumber_steps(self, proof: nodes.Proof) -> None:
@@ -180,7 +180,7 @@ class Transformer:
             if toc is None:
                 toc = node
             else:
-                logger.warning('Multiple Tables of Content found, using only first one')
+                logger.warning("Multiple Tables of Content found, using only first one")
                 node.remove_self()
         if toc is None:
             return
@@ -193,7 +193,7 @@ class Transformer:
             # subsubsections are simply ignored
             if sec.nonum and isinstance(node, nodes.Subsection):
                 continue
-            reftext = f'{sec.title}' if sec.nonum else f'{sec.full_number}. {sec.title}'
+            reftext = f"{sec.title}" if sec.nonum else f"{sec.full_number}. {sec.title}"
 
             item.append(nodes.Reference(target=sec, overwrite_reftext=reftext))
             if type(sec) is nodes.Section:

@@ -13,11 +13,6 @@ from . import util
 from . import nodes
 
 
-class PlainTextManuscript(util.EscapedString):
-    def __init__(self, src: str = '') -> None:
-        super().__init__(src, chars=':%')
-
-
 class WebManuscript(MountFS):
     def __init__(self, src: Path = None) -> None:
         super().__init__()

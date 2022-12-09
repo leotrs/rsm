@@ -1,7 +1,6 @@
 # global pytest configuration and fixtures
 import rsm
 import pytest
-from rsm.manuscript import PlainTextManuscript
 from textwrap import dedent
 import sys
 from icecream import ic
@@ -31,7 +30,7 @@ EMPTY_WANT = """\
 
 def compare_have_want(have, want, handrails=False):
     want = dedent(want).lstrip()
-    have = PlainTextManuscript(dedent(have).lstrip())
+    have = dedent(have).lstrip()
     have = rsm.render(have, handrails=handrails).lstrip()
 
     try:

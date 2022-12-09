@@ -24,11 +24,9 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="theorem">
 
@@ -98,11 +96,9 @@ def test_empty_proof():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="theorem">
 
@@ -164,11 +160,9 @@ def test_sub_step():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="proof">
 
@@ -251,11 +245,9 @@ def test_two_steps():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="proof">
 

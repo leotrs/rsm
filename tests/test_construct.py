@@ -117,7 +117,7 @@ def test_real_life_example():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 

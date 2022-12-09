@@ -25,11 +25,9 @@ def test_reftext():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section id="sec-lbl" class="section level-2">
 
@@ -74,11 +72,9 @@ def test_overwrite_reftext():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section id="sec-lbl" class="section level-2">
 
@@ -115,11 +111,9 @@ def test_ref_to_unknown_label(caplog):
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="error">[unknown label "foo"]</span></p>
 

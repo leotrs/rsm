@@ -33,11 +33,9 @@ def test_no_manuscript_title():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Lorem ipsum.</p>
 
@@ -67,7 +65,7 @@ def test_manuscript_title():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -121,7 +119,7 @@ def test_no_halmos():
     with pytest.raises(rsm.tsparser.RSMParserError):
         compare_have_want(
             have=""":manuscript:\n\nFoo.\n""",
-            want='XXX',
+            want="XXX",
         )
 
 
@@ -146,11 +144,9 @@ def test_section_header():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Lorem ipsum.</p>
 

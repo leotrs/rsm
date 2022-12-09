@@ -19,7 +19,7 @@ def test_duplicate_label_warning(caplog):
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -72,11 +72,9 @@ def test_duplicate_bibtex_item_warning(caplog):
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="level-2">
 
@@ -128,11 +126,9 @@ def test_theorem_within_section():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -185,11 +181,9 @@ def test_two_theorems_same_section():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -256,11 +250,9 @@ def test_two_theorems_different_sections():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -330,11 +322,9 @@ def test_two_theorems_same_section_nonum():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -394,11 +384,9 @@ def test_theorem_inside_section_with_nonum():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -451,11 +439,9 @@ def test_theorem_inside_subsection():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -488,37 +474,3 @@ def test_theorem_inside_subsection():
         </body>
         """,
     )
-
-
-def test_ref_to_unknown_label(caplog):
-    compare_have_want(
-        have="""\
-        :manuscript:
-
-        :ref:foo::
-
-        ::
-        """,
-        want="""\
-        <body>
-
-        <div class="manuscriptwrapper">
-
-        <div id="manuscript" class="manuscript">
-
-        <section class="level-1">
-
-        <h1></h1>
-
-        <p class="paragraph"><span class="error">[unknown label "foo"]</span></p>
-
-        </section>
-
-        </div>
-
-        </div>
-
-        </body>
-        """,
-    )
-    assert "Reference to nonexistent label" in caplog.text

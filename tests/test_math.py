@@ -22,11 +22,9 @@ def test_display_alone():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div id="eqn-plus" class="mathblock smallequation">
         $$
@@ -60,11 +58,9 @@ def test_inline_no_meta():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This paragraph contains inline math <span class="math">\(2 + 2 = 4\)</span>.</p>
 
@@ -93,11 +89,9 @@ def test_inline_with_meta():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This paragraph contains inline math <span id="bar" class="math smallequation">\(2 + 2
         = 4\)</span>.</p>
@@ -131,11 +125,9 @@ def test_math_with_shortcuts():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -187,11 +179,9 @@ def test_math_ref():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -237,11 +227,9 @@ def test_mathblock_nonum():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="mathblock">
         $$
@@ -275,11 +263,9 @@ def test_mathblock_nonum_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="mathblock">
         $$
@@ -333,11 +319,9 @@ def test_mathblock_isclaim():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="claimblock">
         <span class="keyword">⊢ </span>

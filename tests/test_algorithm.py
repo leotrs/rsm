@@ -40,11 +40,9 @@ def test_real_life_example():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="algorithm">
 
@@ -109,11 +107,9 @@ def test_label():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div id="alg" class="algorithm">
 

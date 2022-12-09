@@ -451,17 +451,21 @@ class Translator:
             ) from e
 
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
-        if not node.label:
-            node.label = "manuscript"
-        return AppendBatchAndDefer(
+        batch = AppendBatchAndDefer(
             [
                 AppendOpenTag("body"),
                 AppendOpenTag(classes=["manuscriptwrapper"]),
                 AppendNodeTag(node),
                 AppendOpenTag("section", classes=["level-1"]),
-                AppendHeading(1, node.title),
             ]
         )
+
+        if node.title:
+            batch.items.append(AppendHeading(1, node.title))
+        else:
+            logger.warning(f"Manuscript with no title")
+
+        return batch
 
     def visit_author(self, node: nodes.Author) -> EditCommand:
         if [node.name, node.affiliation, node.email]:
@@ -948,7 +952,10 @@ class HandrailsTranslator(Translator):
 
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         batch = super().visit_manuscript(node)
-        return self._replace_batch_with_handrails(4, batch)
+        if node.title:
+            return self._replace_batch_with_handrails(4, batch)
+        else:
+            return batch
 
     def visit_section(self, node: nodes.Section) -> EditCommand:
         batch = super().visit_section(node)

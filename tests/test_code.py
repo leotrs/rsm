@@ -21,11 +21,9 @@ def test_codeblock():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div id="some-code" class="codeblock python">
         comp = [abs(x) for x in range(10)]
@@ -68,11 +66,9 @@ def test_meta():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span id="1" class="code">k=v</span></p>
 

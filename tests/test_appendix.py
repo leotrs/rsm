@@ -21,11 +21,9 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -74,11 +72,9 @@ def test_subsection():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -144,11 +140,9 @@ def test_theorem():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -225,11 +219,9 @@ def test_section_reftext():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><a class="reference" href="#app">Appendix A</a></p>
 

@@ -26,11 +26,9 @@ def test_works_with_no_reftext_and_label():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="proof">
 
@@ -95,11 +93,9 @@ def test_works_with_no_reftext_and_no_label():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="proof">
 
@@ -166,11 +162,9 @@ def test_works_with_reftext_and_label():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="proof">
 
@@ -235,11 +229,9 @@ def test_works_with_reftext_and_no_label():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="proof">
 

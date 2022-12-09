@@ -17,11 +17,9 @@ def test_empty_table():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -60,11 +58,9 @@ def test_one_row_no_header():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -117,11 +113,9 @@ def test_two_rows_no_header():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -188,11 +182,9 @@ def test_with_header():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -261,11 +253,9 @@ def test_math_in_header():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -318,11 +308,9 @@ def test_shortcuts_in_header():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -376,11 +364,9 @@ def test_simple_caption():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -437,11 +423,9 @@ def test_simple_caption_with_shortcuts():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -499,11 +483,9 @@ def test_reference_to_table():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table id="lbl" class="table">
 
@@ -559,11 +541,9 @@ def test_reference_to_table_with_reftext():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table id="lbl" class="table">
 
@@ -619,11 +599,9 @@ def test_extra_space_within_tr():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -679,11 +657,9 @@ def test_real_life_example():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table id="lbl" class="table">
 
@@ -778,11 +754,9 @@ def test_real_life_example_different_spacing():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table id="lbl" class="table">
 
@@ -865,11 +839,9 @@ def test_tr_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -946,11 +918,9 @@ def test_tr_shortcut_with_math():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -1035,11 +1005,9 @@ def test_tr_shortcut_with_newlines():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -1117,11 +1085,9 @@ def test_tr_shortcut_with_escaped_colon():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 

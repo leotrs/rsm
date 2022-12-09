@@ -20,11 +20,9 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -59,11 +57,9 @@ def test_with_math():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This paragraph has math inside a claim <span class="construct claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.</p>
 
@@ -99,11 +95,9 @@ def test_claim_within_list():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">We now make a bunch of claims.</p>
 

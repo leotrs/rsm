@@ -17,7 +17,7 @@ def test_one_strong():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -51,7 +51,7 @@ def test_two_strong():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -85,7 +85,7 @@ def test_one_emphas():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -118,7 +118,7 @@ def test_one_math():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -152,7 +152,7 @@ def test_two_math():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -188,11 +188,9 @@ def test_mathblock():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This paragraph is followed by display math</p>
 
@@ -234,11 +232,9 @@ def test_section_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section id="my-sec" class="section level-2">
 
@@ -289,11 +285,9 @@ def test_subsubsection_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -345,11 +339,9 @@ def test_claim_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This paragraph contains a <span class="construct claim"><span class="keyword">⊢ </span>claim with a turnstile</span>. And also another one <span class="construct claim"><span class="keyword">⊢ </span>but it takes multiple lines</span>.</p>
 
@@ -396,11 +388,9 @@ def test_prev_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="theorem">
 
@@ -504,11 +494,9 @@ def test_prev2_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="theorem">
 
@@ -622,11 +610,9 @@ def test_prev_and_prev2_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="theorem">
 
@@ -717,11 +703,9 @@ def test_code_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is inline code <span class="code">comp = [abs(x) for x in range(10)]</span>.</p>
 
@@ -752,11 +736,9 @@ def test_codeblock_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="codeblock">
         comp = [abs(x) for x in range(10)]
@@ -790,11 +772,9 @@ def test_hashtag_not_at_the_start_of_line():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <section class="section level-2">
 
@@ -828,11 +808,9 @@ def test_escaped_colon_behind_halmos():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Shortcut right beside an escaped colon <span class="span"><em>foo:</em></span></p>
 
@@ -860,11 +838,9 @@ def test_escaped_colon_behind_halmos_after_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Shortcut right beside an escaped colon <span class="span"><strong>foo:</strong></span></p>
 
@@ -893,11 +869,9 @@ def test_math_after_turnstile():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This paragraph has math inside a claim <span class="construct claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.</p>
 
@@ -933,11 +907,9 @@ def test_turnstile_and_math_within_list():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">We now make a bunch of claims</p>
 
@@ -977,11 +949,9 @@ def test_asterisk_inside_math():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="math">\(2*2 = 4*1\)</span></p>
 
@@ -1009,11 +979,9 @@ def test_asterisk_inside_code():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="code">[x**2 for x in range(10)]</span></p>
 
@@ -1043,11 +1011,9 @@ def test_asterisk_inside_mathblock():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="mathblock">
         $$
@@ -1083,11 +1049,9 @@ def test_asterisk_inside_codeblock():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="codeblock">
         2*2 = 4*1

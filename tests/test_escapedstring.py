@@ -5,8 +5,8 @@ from conftest import compare_have_want
 
 
 def test_ignore_single_char():
-    esc = EscapedString(r'\:', ':')
-    assert esc.find(':') == -1
+    esc = EscapedString(r"\:", ":")
+    assert esc.find(":") == -1
 
 
 def test_simple_not_escaped():
@@ -37,11 +37,9 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Warning: this is a warning.</p>
 
@@ -70,11 +68,9 @@ def test_colon_inside_bold():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="span"><strong>Warning:</strong></span> this is a warning.</p>
 
@@ -103,11 +99,9 @@ def test_colon_inside_bold_no_space():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="span"><strong>Warning:</strong></span> this is a warning.</p>
 
@@ -136,11 +130,9 @@ def test_colon_inside_bold_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="span"><strong>Warning:</strong></span>this is a warning.</p>
 
@@ -167,11 +159,9 @@ def test_backslash_brace_within_math():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="math">\([k]:= \{1,\ldots,k\}\)</span></p>
 

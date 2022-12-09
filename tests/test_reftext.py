@@ -47,11 +47,9 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div id="eqn" class="mathblock">
         $$

@@ -15,11 +15,9 @@ EMPTY_WANT = """\
 
 <div class="manuscriptwrapper">
 
-<div id="manuscript" class="manuscript">
+<div class="manuscript">
 
 <section class="level-1">
-
-<h1></h1>
 
 </section>
 
@@ -40,10 +38,10 @@ def compare_have_want(have, want, handrails=False):
         assert have == want
     except AssertionError as with_space:
         try:
-            assert ''.join(have.split()) == ''.join(want.split())
+            assert "".join(have.split()) == "".join(want.split())
         except AssertionError:
-            raise AssertionError('Difference in content') from with_space
-        raise AssertionError('Difference in whitespace only') from with_space
+            raise AssertionError("Difference in content") from with_space
+        raise AssertionError("Difference in whitespace only") from with_space
 
 
 def compare_have_want_handrails(have, want):

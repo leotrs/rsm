@@ -14,7 +14,7 @@ def test_inline_cannot_contain_block():
 
             ::
             """,
-            want='XXX',
+            want="XXX",
         )
 
     with pytest.raises(rsm.tsparser.RSMParserError):
@@ -27,7 +27,7 @@ def test_inline_cannot_contain_block():
 
             ::
             """,
-            want='XXX',
+            want="XXX",
         )
 
 
@@ -47,7 +47,7 @@ def test_paragraph_ends_at_block():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 

@@ -16,11 +16,9 @@ def test_succeeding_blankline():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Foo.</p>
 
@@ -48,11 +46,9 @@ def test_succeeding_blankline_with_tag():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph foo">This is a paragraph.</p>
 
@@ -81,11 +77,9 @@ def test_start_with_tag():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="span"><strong>this tag</strong></span> starts the paragraph.</p>
 
@@ -114,11 +108,9 @@ def test_start_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="construct claim"><span class="keyword">⊢ </span>A claim</span>.</p>
 

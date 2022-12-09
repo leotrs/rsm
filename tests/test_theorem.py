@@ -19,11 +19,9 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="theorem">
 
@@ -52,6 +50,7 @@ def test_simple_with_handrails():
     compare_have_want_handrails(
         have="""\
         :manuscript:
+        :title: Some Title
 
         :theorem:
 
@@ -66,7 +65,7 @@ def test_simple_with_handrails():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -92,7 +91,7 @@ def test_simple_with_handrails():
 
         </div>
 
-        <h1></h1>
+        <h1>Some Title</h1>
 
         </div>
 
@@ -173,11 +172,9 @@ def test_multiple():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="theorem">
 

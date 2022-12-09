@@ -18,7 +18,7 @@ def test_list_with_only_one_element():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -53,7 +53,7 @@ def test_list_with_one_element_before_key():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -104,11 +104,9 @@ def test_inline_no_meta_start_with_tag():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p id="lbl" class="paragraph">Foo bar.</p>
 
@@ -139,11 +137,9 @@ def test_list_within_inline():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Foo <span class="span t1 t2">bar</span> baz.</p>
 
@@ -170,11 +166,9 @@ def test_inline_start_with_brace():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This span starts with a brace <span class="span">{</span>.</p>
 
@@ -203,11 +197,9 @@ def test_inline_meta_with_no_space():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Foo <span class="span"><strong>bar</strong></span>.</p>
 
@@ -236,11 +228,9 @@ def test_inline_meta_with_space_in_between_braces():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Foo <span class="span"><strong>bar</strong></span>.</p>
 

@@ -6,11 +6,9 @@ SIMPLE_WANT = """\
 
 <div class="manuscriptwrapper">
 
-<div id="manuscript" class="manuscript">
+<div class="manuscript">
 
 <section class="level-1">
-
-<h1></h1>
 
 <figure class="figure">
 <img src="assets/example.png" alt="Figure 1.">
@@ -85,8 +83,8 @@ def test_simple_with_multi_line_caption():
         ::
         """,
         want=SIMPLE_WANT.replace(
-            'This is the figure caption.',
-            'This is the figure caption. And it spans multiple lines.',
+            "This is the figure caption.",
+            "This is the figure caption. And it spans multiple lines.",
         ),
     )
 
@@ -110,11 +108,9 @@ def test_caption_with_inline_tags():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <figure class="figure">
         <img src="assets/example.png" alt="Figure 1.">

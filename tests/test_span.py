@@ -15,11 +15,9 @@ def test_one_span():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a <span class="span"><strong>boring</strong></span> paragraph.</p>
 
@@ -49,11 +47,9 @@ def test_two_spans():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a <span class="span"><strong>boring</strong></span> paragraph, though it has two <span class="span"><em>spans</em></span> so it's less boring.</p>
 
@@ -84,11 +80,9 @@ def test_nested():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a <span class="span"><strong>paragraph with a <span class="span"><em>span within a span</em></span></strong></span> so that makes it really cool.  BTW it also has a Halmos at the start of a line!</p>
 
@@ -120,11 +114,9 @@ def test_span_with_multiline_meta():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a paragraph with <span id="lbl" class="span"><strong>a span</strong></span> and it is multi line.</p>
 
@@ -153,11 +145,9 @@ def test_span_with_label():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a <span id="myspn" class="span"><strong>boring</strong></span> paragraph.</p>
 
@@ -186,11 +176,9 @@ def test_span_part_of_word():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This word is half bold <span class="span"><strong>bo</strong></span>ring.</p>
 
@@ -219,11 +207,9 @@ def test_span_part_of_word_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This word is half bold <span class="span"><strong>bo</strong></span>ring.</p>
 

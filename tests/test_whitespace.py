@@ -19,11 +19,9 @@ def test_one_word():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This should be a single wo<span class="span"><strong>rd</strong></span>.</p>
 
@@ -60,11 +58,9 @@ def test_one_word_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This should be a single wo<span class="span"><strong>rd</strong></span>.</p>
 
@@ -100,11 +96,9 @@ def test_period_after():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Period after math <span class="math">\(2+2=4\)</span>.</p>
 
@@ -140,11 +134,9 @@ def test_period_after_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Period after math <span class="math">\(2+2=4\)</span>.</p>
 
@@ -179,11 +171,9 @@ def test_separate_words():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="span"><strong>Separate</strong></span> words.</p>
 
@@ -216,11 +206,9 @@ def test_separate_words_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph"><span class="span"><strong>Separate</strong></span> words.</p>
 
@@ -253,11 +241,9 @@ def test_span_multiline_content_middle_of_line():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a paragraph with <span class="span"><strong>a span</strong></span> that takes multiple lines</p>
 
@@ -288,11 +274,9 @@ def test_span_multiline_content_beginning_of_line():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a paragraph with <span class="span"><strong>a span</strong></span> that takes multiple lines</p>
 
@@ -323,11 +307,9 @@ def test_span_multiline_content_beginning_of_line_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a paragraph with <span class="span"><strong>a span</strong></span> that takes multiple lines</p>
 
@@ -358,11 +340,9 @@ def test_span_multiline_content_middle_of_line_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a paragraph with <span class="span"><strong>a span</strong></span> that takes multiple lines</p>
 
@@ -391,11 +371,9 @@ def test_math_start_of_line():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a paragraph with <span class="math">\(2+2=4\)</span> at the start of a line.</p>
 
@@ -424,11 +402,9 @@ def test_math_start_of_line_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">This is a paragraph with <span class="math">\(2+2=4\)</span> at the start of a line.</p>
 
@@ -465,11 +441,9 @@ def test_table_tr():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -520,11 +494,9 @@ def test_table_trshort():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <table class="table">
 
@@ -573,11 +545,9 @@ def test_ignore_space_within_inline():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Ignore space <span class="span"><strong>within</strong></span> inline.</p>
 
@@ -618,11 +588,9 @@ def test_ignore_space_within_inline_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Ignore space <span class="span"><strong>within</strong></span> inline.</p>
 
@@ -673,11 +641,9 @@ def test_consecutive_lines_should_be_joined_by_spaces():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <p class="paragraph">Consecutive lines should be joined by spaces.</p>
 

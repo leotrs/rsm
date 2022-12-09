@@ -21,11 +21,9 @@ def test_simple_no_handrails():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <h1></h1>
 
         <div class="proof">
 
@@ -86,35 +84,9 @@ def test_simple_with_handrails():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
-
-        <div class="handrail handrail--offset">
-
-        <div class="handrail__btn-container">
-
-        <div class="handrail__btn handrail__btn-menu handrail__btn--relative"><span>⋮</span>
-        <div class="options hide">
-
-        <span class="option option__link">link</span>
-
-        <span class="option option__tree">tree</span>
-
-        <span class="option option__source">source</span>
-
-        <span class="option option__assumptions">assumptions</span>
-
-        </div>
-        </div>
-
-        <div class="handrail__btn handrail__btn-toggle"><span>〉</span></div>
-
-        </div>
-
-        <h1></h1>
-
-        </div>
 
         <div class="proof">
 

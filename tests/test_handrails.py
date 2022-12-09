@@ -6,6 +6,7 @@ def test_manuscript():
     compare_have_want_handrails(
         have="""\
         :manuscript:
+        :title: Some Title
 
         Hello.
 
@@ -16,7 +17,7 @@ def test_manuscript():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -42,7 +43,7 @@ def test_manuscript():
 
         </div>
 
-        <h1></h1>
+        <h1>Some Title</h1>
 
         </div>
 
@@ -63,6 +64,7 @@ def test_section():
     compare_have_want_handrails(
         have="""\
         :manuscript:
+        :title: Some Title
 
         # Title
 
@@ -77,7 +79,7 @@ def test_section():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -103,7 +105,7 @@ def test_section():
 
         </div>
 
-        <h1></h1>
+        <h1>Some Title</h1>
 
         </div>
 
@@ -154,6 +156,7 @@ def test_abstract():
     compare_have_want_handrails(
         have="""\
         :manuscript:
+        :title: Some Title
 
         :abstract:
 
@@ -171,7 +174,7 @@ def test_abstract():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -197,7 +200,7 @@ def test_abstract():
 
         </div>
 
-        <h1></h1>
+        <h1>Some Title</h1>
 
         </div>
 
@@ -250,6 +253,7 @@ def test_theorem():
     compare_have_want_handrails(
         have="""\
         :manuscript:
+        :title: Some Title
 
         :theorem:
 
@@ -263,7 +267,7 @@ def test_theorem():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -289,7 +293,7 @@ def test_theorem():
 
         </div>
 
-        <h1></h1>
+        <h1>Some Title</h1>
 
         </div>
 
@@ -344,6 +348,7 @@ def test_proof():
     compare_have_want_handrails(
         have="""\
         :manuscript:
+        :title: Some Title
 
         :proof:
 
@@ -358,7 +363,7 @@ def test_proof():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -384,7 +389,7 @@ def test_proof():
 
         </div>
 
-        <h1></h1>
+        <h1>Some Title</h1>
 
         </div>
 
@@ -479,6 +484,7 @@ def test_proof_with_sketch():
     compare_have_want_handrails(
         have="""\
         :manuscript:
+        :title: Some Title
 
         :proof:
 
@@ -495,7 +501,7 @@ def test_proof_with_sketch():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -521,7 +527,7 @@ def test_proof_with_sketch():
 
         </div>
 
-        <h1></h1>
+        <h1>Some Title</h1>
 
         </div>
 
@@ -630,6 +636,7 @@ def test_sub_step():
     compare_have_want_handrails(
         have="""\
         :manuscript:
+        :title: Some Title
 
         :proof:
 
@@ -651,7 +658,7 @@ def test_sub_step():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -677,7 +684,7 @@ def test_sub_step():
 
         </div>
 
-        <h1></h1>
+        <h1>Some Title</h1>
 
         </div>
 
@@ -826,6 +833,7 @@ def test_two_steps():
     compare_have_want_handrails(
         have="""\
         :manuscript:
+        :title: Some Title
 
         :proof:
 
@@ -842,7 +850,7 @@ def test_two_steps():
 
         <div class="manuscriptwrapper">
 
-        <div id="manuscript" class="manuscript">
+        <div class="manuscript">
 
         <section class="level-1">
 
@@ -868,7 +876,7 @@ def test_two_steps():
 
         </div>
 
-        <h1></h1>
+        <h1>Some Title</h1>
 
         </div>
 

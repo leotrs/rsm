@@ -95,6 +95,14 @@ export function setupClassInteractions() {
         })
     });
 
+    $(".option__assumptions").click(function() {
+	let parents = $(this).parentsUntil("body");
+	let step = $(this).closest(".handrail");
+	let next_steps = $(step).nextAll();
+	parents.find(".construct.assumption").addClass("hilite");
+	next_steps.find(".construct.assumption").removeClass("hilite");
+    });
+
     $(".option__steps").click(function() {
         let proof_container = $(this).closest(".proof").find(".proof-container");
         let steps = $(proof_container).children(".step");

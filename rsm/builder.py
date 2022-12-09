@@ -20,7 +20,7 @@ from .manuscript import WebManuscript
 
 import logging
 
-logger = logging.getLogger('RSM').getChild('build')
+logger = logging.getLogger("RSM").getChild("build")
 
 
 class BaseBuilder(ABC):
@@ -28,7 +28,7 @@ class BaseBuilder(ABC):
         self.body: str | None = None
         self.html: str | None = None
         self.web: WebManuscript | None = None
-        self.outname: str = 'index.html'
+        self.outname: str = "index.html"
 
     def build(self, body: str, src: Path = None) -> WebManuscript:
         logger.info("Building...")
@@ -60,13 +60,13 @@ class SingleFileBuilder(BaseBuilder):
 
     def make_main_file(self) -> None:
         html = str(
-            '<html>\n\n'
+            "<html>\n\n"
             + self.make_html_header()
-            + '\n'
+            + "\n"
             + self.body.strip()
-            + '\n\n'
+            + "\n\n"
             + self.make_html_footer()
-            + '</html>\n'
+            + "</html>\n"
         )
         self.web.writetext(self.outname, html)
         self.web.html = html
@@ -87,7 +87,7 @@ class SingleFileBuilder(BaseBuilder):
           <script src="static/tooltipster.bundle.js"></script>
           <script type="module">
             import { onload } from '/static/onload.js';
-            onload();
+            window.addEventListener('load', onload);
           </script>
 
           <title>{some_title}</title>
@@ -96,7 +96,7 @@ class SingleFileBuilder(BaseBuilder):
         )
 
     def make_html_footer(self) -> str:
-        return ''
+        return ""
 
 
 class FullBuilder(SingleFileBuilder):
@@ -111,15 +111,17 @@ class FullBuilder(SingleFileBuilder):
 
     def mount_static(self) -> None:
         working_path = Path(__file__).parent.absolute()
-        source_path = (working_path / 'static').resolve()
+        source_path = (working_path / "static").resolve()
         source = open_fs(str(source_path))
 
-        self.web.makedir('static')
-        for fn in [fn for fn in source.listdir(".") if Path(fn).suffix in {".js", ".css"}]:
-            copy_file(source, fn, self.web, f'static/{fn}')
+        self.web.makedir("static")
+        for fn in [
+            fn for fn in source.listdir(".") if Path(fn).suffix in {".js", ".css"}
+        ]:
+            copy_file(source, fn, self.web, f"static/{fn}")
 
     def mount_required_assets(self) -> None:
         source = open_fs(str(Path().resolve()))
 
         for fn in self.required_assets:
-            copy_file(source, str(fn), self.web, f'static/{fn.name}')
+            copy_file(source, str(fn), self.web, f"static/{fn.name}")

@@ -388,7 +388,6 @@ def make_ast(cst):
 
         # set construct type and kind
         if ast_node_type in ["construct", "specialconstruct"]:
-            ic(cst_node)
             if tag := cst_node.child_by_field_name("tag"):
                 ast_node.kind = tag.type
 

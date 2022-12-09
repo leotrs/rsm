@@ -7,24 +7,24 @@ def test_mechanism():
     node = cls()
     assert node.classreftext == cls.classreftext
     assert node.reftext_template == cls.classreftext
-    assert node.reftext == 'Section '
+    assert node.reftext == "Section "
 
-    node.reftext_template = 'foobar'
+    node.reftext_template = "foobar"
     assert node.classreftext == cls.classreftext
-    assert node.reftext_template == 'foobar'
-    assert node.reftext == 'foobar'
-    node.reftext_template = '{number}'
-    assert node.reftext == ''
+    assert node.reftext_template == "foobar"
+    assert node.reftext == "foobar"
+    node.reftext_template = "{number}"
+    assert node.reftext == ""
     node.number = 1
-    assert node.reftext == '1'
+    assert node.reftext == "1"
 
-    node = cls(reftext_template='foobar')
+    node = cls(reftext_template="foobar")
     assert node.classreftext == cls.classreftext
-    assert node.reftext_template == 'foobar'
-    node.reftext_template = '{number}'
-    assert node.reftext == ''
+    assert node.reftext_template == "foobar"
+    node.reftext_template = "{number}"
+    assert node.reftext == ""
     node.number = 1
-    assert node.reftext == '1'
+    assert node.reftext == "1"
 
 
 def test_simple():

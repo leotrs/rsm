@@ -615,6 +615,10 @@ a:hover, a.note__link:hover {
     content: "...";
 }
 
+.error {
+    background-color: pink;
+}
+
 // nodes that have been translated using the default visit_node have this class
 .node-with-no-class {
     background-color: pink;

@@ -48,16 +48,12 @@ class Transformer:
                 continue
             self.labels_to_nodes[node.label] = node
 
-    def _label_to_node(self, label: str, default=None) -> nodes.Node:
+    def _label_to_node(self, label: str, default=nodes.Error) -> nodes.Node:
         try:
             return self.labels_to_nodes[label]
         except KeyError as e:
-            if default is None:
-                raise RSMTransformerError(
-                    f'Reference to nonexistent label "{label}" and no default given'
-                ) from e
             logger.warning(f'Reference to nonexistent label "{label}"')
-            return default()
+            return default(f'[unknown label "{label}"]')
 
     def resolve_pending_references(self) -> None:
         classes = [
@@ -70,12 +66,15 @@ class Transformer:
         for pending in self.tree.traverse(condition=lambda n: type(n) in classes):
             if isinstance(pending, nodes.PendingReference):
                 target = self._label_to_node(pending.target)
-                pending.replace_self(
-                    nodes.Reference(
-                        target=target,
-                        overwrite_reftext=pending.overwrite_reftext,
+                if isinstance(target, nodes.Error):
+                    pending.replace_self(target)
+                else:
+                    pending.replace_self(
+                        nodes.Reference(
+                            target=target,
+                            overwrite_reftext=pending.overwrite_reftext,
+                        )
                     )
-                )
             elif isinstance(pending, nodes.PendingCite):
                 targets = [
                     self._label_to_node(label, nodes.UnknownBibitem)

@@ -101,15 +101,35 @@ def test_overwrite_reftext():
     )
 
 
-def test_no_target():
-    with pytest.raises(rsm.transformer.RSMTransformerError):
-        compare_have_want(
-            have="""\
+def test_ref_to_unknown_label(caplog):
+    compare_have_want(
+        have="""\
         :manuscript:
 
-        This is a paragraph that refers to :ref:sec-lbl::.
+        :ref:foo::
 
         ::
         """,
-            want='XXX',
-        )
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph"><span class="error">[unknown label "foo"]</span></p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+    assert "Reference to nonexistent label" in caplog.text

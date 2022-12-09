@@ -36,7 +36,7 @@ def test_duplicate_label_warning(caplog):
         </body>
         """,
     )
-    assert 'Duplicate label mylbl' in caplog.text
+    assert "Duplicate label mylbl" in caplog.text
 
 
 def test_duplicate_bibtex_item_warning(caplog):
@@ -105,7 +105,7 @@ def test_duplicate_bibtex_item_warning(caplog):
         </body>
         """,
     )
-    assert 'Duplicate label torres2020' in caplog.text
+    assert "Duplicate label torres2020" in caplog.text
 
 
 def test_theorem_within_section():
@@ -488,3 +488,37 @@ def test_theorem_inside_subsection():
         </body>
         """,
     )
+
+
+def test_ref_to_unknown_label(caplog):
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        :ref:foo::
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div id="manuscript" class="manuscript">
+
+        <section class="level-1">
+
+        <h1></h1>
+
+        <p class="paragraph"><span class="error">[unknown label "foo"]</span></p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+    assert "Reference to nonexistent label" in caplog.text

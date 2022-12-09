@@ -306,6 +306,10 @@ class Text(Node):
         return f"{self.__class__.__name__}({textwrap.shorten(self.text, 60)})"
 
 
+class Error(Text):
+    pass
+
+
 class Span(NodeWithChildren):
     _newmetakeys: ClassVar[set] = {"strong", "emphas", "little", "insert", "delete"}
     attr_to_tag: ClassVar[dict] = {

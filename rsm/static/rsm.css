@@ -472,6 +472,9 @@ a:hover, a.note__link:hover {
 .step.narrow-after::after {
   content: "..."; }
 
+.error {
+  background-color: pink; }
+
 .node-with-no-class {
   background-color: pink; }
 

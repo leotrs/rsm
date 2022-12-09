@@ -617,6 +617,14 @@ class Translator:
     def visit_text(self, node: nodes.Text) -> EditCommand:
         return AppendText(node.text)
 
+    def visit_error(self, node: nodes.Error) -> EditCommand:
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node, "span", newline_inner=False, newline_outer=False),
+                AppendText(node.text),
+            ]
+        )
+
     def visit_span(self, node: nodes.Span) -> EditCommand:
         commands = [
             AppendOpenTag(tag, newline_inner=False, newline_outer=False)

@@ -66,26 +66,60 @@ def test_custom_reftext():
 
 
 def test_no_target():
-    with pytest.raises(rsm.tsparser.RSMParserError):
-        compare_have_want(
-            have="""\
+    compare_have_want(
+        have="""\
         :manuscript:
 
         This is a malformed url :url:::.
 
         ::
         """,
-            want="XXX",
-        )
+        want="""\
+        <body>
 
-    with pytest.raises(rsm.tsparser.RSMParserError):
-        compare_have_want(
-            have="""\
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript">
+
+        <section class="level-1">
+
+        <p class="paragraph">This is a malformed url [CST error at ((2, 24), (2, 31))] .</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+    compare_have_want(
+        have="""\
         :manuscript:
 
         This is a malformed url with a space :url: ::.
 
         ::
         """,
-            want="XXX",
-        )
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript">
+
+        <section class="level-1">
+
+        <p class="paragraph">This is a malformed url with a space [CST error at ((2, 37), (2, 45))] .</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

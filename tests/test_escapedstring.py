@@ -10,17 +10,34 @@ def test_ignore_single_char():
 
 
 def test_simple_not_escaped():
-    with pytest.raises(rsm.tsparser.RSMParserError):
-        compare_have_want(
-            have="""
-            :manuscript:
+    compare_have_want(
+        have="""
+        :manuscript:
 
-            Warning: this is a warning.
+        Warning: this is a warning.
 
-            ::
-            """,
-            want="XXX",
-        )
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript">
+
+        <section class="level-1">
+
+        <p class="paragraph">Warning [CST error at ((2, 7), (2, 8))] this is a warning.</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
 
 
 def test_simple():

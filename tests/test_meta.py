@@ -73,18 +73,37 @@ def test_list_with_one_element_before_key():
 
 
 def test_list_no_braces():
-    with pytest.raises(rsm.tsparser.RSMParserError):
-        compare_have_want(
-            have="""\
-            :manuscript:
-              :title: My Title
+    compare_have_want(
+        have="""\
+        :manuscript:
+          :title: My Title
 
-            :paragraph: {:types: t1, t2} This paragraph has only one type
+        :paragraph: {:types: t1, t2} This paragraph has only one type
 
-            ::
-            """,
-            want="XXX",
-        )
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript">
+
+        <section class="level-1">
+
+        <h1>My Title</h1>
+        <span class="error">[CST error at ((3, 0), (3, 28))]</span>
+        <p class="paragraph">This paragraph has only one type</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
 
 
 def test_inline_no_meta_start_with_tag():

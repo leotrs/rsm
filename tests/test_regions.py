@@ -4,31 +4,35 @@ import rsm
 
 
 def test_inline_cannot_contain_block():
-    with pytest.raises(rsm.tsparser.RSMParserError):
-        compare_have_want(
-            have="""\
-            :manuscript:
-              :title: My Title
+    compare_have_want(
+        have="""\
+        :manuscript:
+          :title: My Title
 
-            This is a paragraph :span: with an inline :section: with a block. :: ::
+        This is a paragraph :span: with an inline :section: with a block. :: ::
 
-            ::
-            """,
-            want="XXX",
-        )
+        ::
+        """,
+        want="""
+        <body>
 
-    with pytest.raises(rsm.tsparser.RSMParserError):
-        compare_have_want(
-            have="""\
-            :manuscript:
-              :title: My Title
+        <div class="manuscriptwrapper">
 
-            This is a paragraph :claim: with an inline :theorem: with a block. :: ::
+        <div class="manuscript">
 
-            ::
-            """,
-            want="XXX",
-        )
+        <section class="level-1">
+
+        <h1>My Title</h1>
+        <span class="error">[CST error at ((3, 0), (3, 71))]</span>
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
 
 
 def test_paragraph_ends_at_block():

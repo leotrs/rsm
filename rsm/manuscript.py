@@ -22,8 +22,8 @@ class WebManuscript(MountFS):
     def __init__(self, src: Path = None) -> None:
         super().__init__()
         self.src = Path(src) if src else None
-        self.body: str = ''
-        self.html: str = ''
+        self.body: str = ""
+        self.html: str = ""
 
     def __str__(self) -> str:
         return self.__repr__()

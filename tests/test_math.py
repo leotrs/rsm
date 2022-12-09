@@ -285,16 +285,32 @@ def test_mathblock_nonum_with_shortcut():
 
 
 def test_unclosed_dollar_sign():
-    with pytest.raises(rsm.tsparser.RSMParserError):
-        compare_have_want(
-            have=r"""        :manuscript:
+    compare_have_want(
+        have=r"""        :manuscript:
 
-            There are three dollar signs here $2+2 $= 0$.
+        There are three dollar signs here $2+2 $= 0$.
 
-            ::
-            """,
-            want="X",
-        )
+        ::
+        """,
+        want=r"""        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript">
+
+        <section class="level-1">
+
+        <p class="paragraph">There are three dollar signs here <span class="math">\(2+2\)</span>= 0 [CST error at ((2, 43), (2, 44))] .</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
 
 
 def test_mathblock_isclaim():

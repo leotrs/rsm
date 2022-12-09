@@ -120,16 +120,39 @@ def test_item_with_wrong_parent():
             want="XXX",
         )
 
-    with pytest.raises(rsm.tsparser.RSMParserError):
-        compare_have_want(
-            have="""\
-            :manuscript:
+    compare_have_want(
+        have="""\
+        :manuscript:
 
-            # Some section
+        # Some section
 
-            Lorem ipsum :item: Foo bar.
+        Lorem ipsum :item: Foo bar.
 
-            ::
-            """,
-            want="XXX",
-        )
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript">
+
+        <section class="level-1">
+
+        <section class="section level-2">
+
+        <h2>1. Some section</h2>
+
+        <p class="paragraph">Lorem ipsum [CST error at ((4, 12), (4, 18))] Foo bar.</p>
+
+        </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

@@ -76,8 +76,6 @@ class TSParser:
         logger.info("Parsing...")
         self.cst = self._parser.parse(bytes(str(src), "utf-8"))
 
-        # allow traverse() to print to stdout rather than use logger because it will
-        # look better this way
         if logger.getEffectiveLevel() <= logging.DEBUG:
             traverse(self.cst)
 
@@ -85,11 +83,18 @@ class TSParser:
             return self.cst
 
         logger.info("Abstractifying...")
-        self.ast = make_ast(self.cst)
+        try:
+            self.ast = make_ast(self.cst)
+        except AttributeError as e:
+            raise RSMParserError(msg="Error abstractifying.") from e
+        print(self.ast.sexp())
         return self.ast
 
 
 def traverse(tree, named_only=True):
+    # allow traverse() to print to stdout rather than use logger because it will
+    # look better this way
+
     # children_att = 'named_children' if named_only else 'children'
     children_att = "children"
     stack = [(0, tree.root_node)]
@@ -437,7 +442,7 @@ def make_ast(cst):
                 ast_node.text = " " + ast_node.text
 
         # add the AST node to the correct place
-        if parent:
+        if parent and isinstance(parent, nodes.NodeWithChildren):
             parent.append(ast_node)
 
         # push the children that need to be processed

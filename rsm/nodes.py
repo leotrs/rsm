@@ -74,6 +74,38 @@ class Node:
         except AttributeError:
             return False
 
+    def sexp(
+        self, tab_width: int = 2, meta: bool = True, ignore_meta_keys: set | None = None
+    ) -> str:
+        ignore_meta_keys = set() if ignore_meta_keys is None else set(ignore_meta_keys)
+        exp = ""
+        stack = [(0, self)]
+        while stack:
+            indent, node = stack.pop()
+            if node is None:
+                exp += ")"
+                continue
+            spaces = " " * indent
+            exp += f"\n{spaces}({node.__class__.__name__}"
+            if meta:
+                meta_str = (
+                    "{ "
+                    + ", ".join(
+                        [
+                            f":{key}: {val}"
+                            for key in sorted(node.metakeys())
+                            if key not in ignore_meta_keys
+                            and (val := getattr(node, key))
+                        ]
+                    )
+                    + " }"
+                )
+                exp += f" {meta_str}"
+            stack.append((None, None))
+            if node.children:
+                stack += [(indent + tab_width, c) for c in reversed(node.children)]
+        return exp[1:]  # get rid of an extra newline at the start
+
     @classmethod
     def metakeys(cls: Type["Node"]) -> set:
         return cls._newmetakeys.union(

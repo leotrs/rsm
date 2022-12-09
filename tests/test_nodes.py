@@ -44,17 +44,17 @@ def test_equality_different_parent():
 
 
 def test_equal_to_self():
-    pending = PendingReference(target='lbl')
+    pending = PendingReference(target="lbl")
     assert pending == pending
 
 
 def test_replace_self():
-    target = Paragraph(label='lbl')
+    target = Paragraph(label="lbl")
     para = Paragraph()
-    pending = PendingReference(target='lbl')
-    para.append(Text('foo'))
+    pending = PendingReference(target="lbl")
+    para.append(Text("foo"))
     para.append(pending)
-    para.append(Text('bar'))
+    para.append(Text("bar"))
 
     assert pending is para.children[1]
     assert pending == para.children[1]
@@ -74,14 +74,14 @@ def test_replace_self():
 
 def test_append_order():
     parent = rsm.nodes.NodeWithChildren()
-    parent.append([rsm.nodes.Text('1'), rsm.nodes.Text('2'), rsm.nodes.Text('3')])
-    assert str(parent.children) == '(Text(1), Text(2), Text(3))'
+    parent.append([rsm.nodes.Text("1"), rsm.nodes.Text("2"), rsm.nodes.Text("3")])
+    assert str(parent.children) == "(Text(1), Text(2), Text(3))"
 
 
 def test_prepend_order():
     parent = rsm.nodes.NodeWithChildren()
-    parent.prepend([rsm.nodes.Text('1'), rsm.nodes.Text('2'), rsm.nodes.Text('3')])
-    assert str(parent.children) == '(Text(1), Text(2), Text(3))'
+    parent.prepend([rsm.nodes.Text("1"), rsm.nodes.Text("2"), rsm.nodes.Text("3")])
+    assert str(parent.children) == "(Text(1), Text(2), Text(3))"
 
 
 def test_set_parent_to_none():

@@ -85,35 +85,9 @@ class SingleFileBuilder(BaseBuilder):
 
           <script src="static/jquery-3.6.0.js"></script>
           <script src="static/tooltipster.bundle.js"></script>
-          <script type="module" src="static/tooltips.js"></script>
-          <script type="module" src="static/classes.js"></script>
-          <script type="module" src="static/libraries.js"></script>
           <script type="module">
-            import { loadMathJax, loadPseudocode } from '/static/libraries.js';
-            import { createTooltips } from '/static/tooltips.js';
-            import { setupClassInteractions } from '/static/classes.js';
-
-            window.addEventListener('load', function () {
-                loadMathJax().then(() => {
-                    console.log('MathJax loaded!');
-                    loadPseudocode().then(() => {
-                        console.log('pseudocode loaded!');
-                        const elements = $("pre.pseudocode");
-                        if (elements.length) {
-                            pseudocode.renderElement(elements[0], {lineNumber: true, noEnd: true});
-                        }
-                        createTooltips();
-                    }).catch((err) => {
-                        console.error('Loading pseudocode FAILED!');
-                        console.error(err);
-                    })
-                    setupClassInteractions();
-                }).catch((err) => {
-                    console.error('Loading MathJax FAILED!');
-                    console.error(err);
-                })
-            })
-
+            import { onload } from '/static/onload.js';
+            onload();
           </script>
 
           <title>{some_title}</title>
@@ -140,17 +114,8 @@ class FullBuilder(SingleFileBuilder):
         source_path = (working_path / 'static').resolve()
         source = open_fs(str(source_path))
 
-        filenames = [
-            'jquery-3.6.0.js',
-            'tooltips.js',
-            'classes.js',
-            'tooltipster.bundle.js',
-            'tooltipster.bundle.css',
-            'rsm.css',
-            'libraries.js',
-        ]
         self.web.makedir('static')
-        for fn in filenames:
+        for fn in [fn for fn in source.listdir(".") if Path(fn).suffix in {".js", ".css"}]:
             copy_file(source, fn, self.web, f'static/{fn}')
 
     def mount_required_assets(self) -> None:

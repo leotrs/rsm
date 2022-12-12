@@ -74,8 +74,9 @@ class TSParser:
         logger.info("Parsing...")
         self.cst = self._parser.parse(bytes(str(src), "utf-8"))
 
-        if logger.getEffectiveLevel() <= logging.DEBUG:
-            traverse(self.cst)
+        traverse(self.cst)
+        # if logger.getEffectiveLevel() <= logging.DEBUG:
+        #     traverse(self.cst)
 
         if not abstractify:
             return self.cst

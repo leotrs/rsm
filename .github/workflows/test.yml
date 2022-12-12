@@ -21,6 +21,8 @@ jobs:
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v3
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
@@ -50,4 +52,4 @@ jobs:
         cd docs && poetry run make doctest
 
     - name: Upload coverage
-      uses: codecov/codecov-action@v3        
+      uses: codecov/codecov-action@v3

@@ -2,6 +2,12 @@
 line-length = 88
 target-version = ['py310']
 
+[tool.pylint]
+max-line-length = 8
+
+[tool.isort]
+profile = black
+
 [tool.pytest.ini_options]
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",

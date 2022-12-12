@@ -43,6 +43,11 @@ jobs:
       run: echo "$LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/leo/.tree-sitter/bin" >> $GITHUB_ENV
       shell: bash
 
+
+    - name: check
+      run: echo $LD_LIBRARY_PATH
+
+
     - name: Run unit tests
       run: |
         poetry run pytest -vv -x

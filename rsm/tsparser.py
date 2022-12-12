@@ -63,9 +63,7 @@ class TSParser:
         #
         # from the console BEFORE running this file.
         #
-        tree_sitter.Language.build_library(
-            "languages.so", ["/home/leo/code/tree-sitter-rsm"]
-        )
+        tree_sitter.Language.build_library("languages.so", ["tree-sitter-rsm"])
         self._lang = tree_sitter.Language("languages.so", "rsm")
         self._parser = tree_sitter.Parser()
         self._parser.set_language(self._lang)

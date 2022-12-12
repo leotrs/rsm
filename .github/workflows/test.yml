@@ -29,8 +29,8 @@ jobs:
 
     - name: Install poetry
       run: |
-      pipx install poetry
-      poetry config virtualenvs.prefer-active-python true
+        pipx install poetry
+        poetry config virtualenvs.prefer-active-python true
 
     - name: Install rsm
       run: |
@@ -48,3 +48,6 @@ jobs:
     - name: Run doctests in doc files
       run: |
         cd docs && poetry run make doctest
+
+    - name: Upload coverage
+      uses: codecov/codecov-action@v3        

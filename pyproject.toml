@@ -1,15 +1,101 @@
+# Packgaing
+
+
+[project]
+name = "rsm-markup"
+version = "0.1.0"
+description = "ReStructured Manuscript (RSM) markup language"
+readme = "README.md"
+authors = [{ name = "Leo Torres", email = "leo@leotrs.com" }]
+license = { file = "LICENSE.md" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["markup", "science", "publishing", "static site generator"]
+dependencies = [
+    "fs >= 2.4.15",
+    "icecream >= 2.1.2",
+    "livereload >= 2.6.3",
+    "tree-sitter >= 0.20.1",
+]
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+doc = ["Sphinx>=5.3.0", "sphinx-autobuild >= 2021.3.14", "pydata-sphinx-theme >= 0.12.0"]
+dev = [
+    "black >= 22.3.0",
+    "fastapi >= 0.86.0",
+    "isort >= 5.10.1",
+    "libsass >= 0.21.0",
+    "mypy >= 0.942",
+    "mypy-extensions >= 0.4.3",
+    "uvicorn >= 0.19.0",
+    "pytest>=7.1.1",
+]
+
+[project.urls]
+Homepage = "https://write-rsm.org/"
+
+[project.scripts]
+rsm-make = 'rsm.scripts.make:main'
+rsm-render = 'rsm.scripts.render:main'
+rsm-lint = 'rsm.scripts.lint:main'
+
+
+# Tools
+
 [tool.black]
 line-length = 88
 target-version = ['py310']
 
 [tool.pylint]
-max-line-length = 8
+max-line-length = 88
 
 [tool.isort]
-profile = black
+profile = "black"
 
 [tool.pytest.ini_options]
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
     "serial",
 ]
+
+[tool.poetry]
+name = "rsm-markup"
+version = "0.1.0"
+description = "ReStructured Manuscript (RSM) markup language"
+authors = ["leotrs <leo@leotrs.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    {include = "rsm"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+tree-sitter = "^0.20.1"
+icecream = "^2.1.3"
+livereload = "^2.6.3"
+fs = "^2.4.16"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+fastapi = "^0.88.0"
+isort = "^5.10.1"
+libsass = "^0.22.0"
+mypy = "^0.991"
+mypy-extensions = "^0.4.3"
+uvicorn = "^0.20.0"
+pytest = "^7.2.0"
+
+[tool.poetry.scripts]
+rsm-make = 'rsm.scripts.make:main'
+rsm-render = 'rsm.scripts.render:main'
+rsm-lint = 'rsm.scripts.lint:main'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+

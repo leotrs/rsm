@@ -1,5 +1,4 @@
-# Packgaing
-
+# Project metadata
 
 [project]
 name = "rsm-markup"
@@ -39,16 +38,32 @@ dev = [
 Homepage = "https://write-rsm.org/"
 
 [project.scripts]
-rsm-make = 'rsm.scripts.make:main'
-rsm-render = 'rsm.scripts.render:main'
-rsm-lint = 'rsm.scripts.lint:main'
+rsm-make = "rsm.scripts.make:main"
+rsm-render = "rsm.scripts.render:main"
+rsm-lint = "rsm.scripts.lint:main"
 
 
-# Tools
+# Mypy
+
+[tool.mypy]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_redundant_casts = true
+
+[[tool.mypy.overrides]]
+module = ["icecream.*", "livereload.*", "sass.*"]
+ignore_missing_imports = true
+
+
+# Misc. tools
 
 [tool.black]
 line-length = 88
-target-version = ['py310']
+target-version = ["py310"]
 
 [tool.pylint]
 max-line-length = 88
@@ -58,9 +73,12 @@ profile = "black"
 
 [tool.pytest.ini_options]
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "slow: marks tests as slow (deselect with "-m \"not slow\"")",
     "serial",
 ]
+
+
+# Build stuff
 
 [tool.poetry]
 name = "rsm-markup"
@@ -91,9 +109,9 @@ uvicorn = "^0.20.0"
 pytest = "^7.2.0"
 
 [tool.poetry.scripts]
-rsm-make = 'rsm.scripts.make:main'
-rsm-render = 'rsm.scripts.render:main'
-rsm-lint = 'rsm.scripts.lint:main'
+rsm-make = "rsm.scripts.make:main"
+rsm-render = "rsm.scripts.render:main"
+rsm-lint = "rsm.scripts.lint:main"
 
 [build-system]
 requires = ["poetry-core"]

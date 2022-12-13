@@ -1,6 +1,7 @@
 import pytest
 import subprocess
 from textwrap import dedent
+from importlib.metadata import version
 
 
 @pytest.mark.slow
@@ -44,3 +45,12 @@ def test_invalid_rsm():
         result = subprocess.run(
             ["rsm-render", have], stdout=subprocess.PIPE, check=True
         )
+
+
+@pytest.mark.slow
+def test_render_version():
+    result = subprocess.run(
+        ["rsm-render", "--version"], stdout=subprocess.PIPE, check=True
+    )
+    result = result.stdout.decode("utf-8").strip()
+    assert result == f"rsm-markup v{version('rsm')}"

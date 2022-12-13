@@ -42,7 +42,9 @@ jobs:
 
     - name: Build tree-sitter-rsm grammar
       run: |
-        ./node_modules/.bin/tree-sitter generate
+        pwd
+        ls -a node_modules/.bin
+        node_modules/.bin/tree-sitter generate
 
     - name: Test tree-sitter grammar
       run: |

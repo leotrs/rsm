@@ -36,7 +36,7 @@ jobs:
 
     - name: Install tree-sitter-rsm
       run: |
-        cd tree-sitter-rsm && npm install
+        cd tree-sitter-rsm && npm install && npm list
 
     - name: Build tree-sitter-rsm grammar
       run: |
@@ -60,7 +60,6 @@ jobs:
       run: echo $LD_LIBRARY_PATH
     - name: check2
       run: env
-
 
     - name: Run unit tests
       run: |

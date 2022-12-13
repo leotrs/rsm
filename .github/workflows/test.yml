@@ -53,7 +53,9 @@ jobs:
         poetry show
 
     - name: Make sure we can find tree-sitter shared libraries
-      run: echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.tree-sitter/bin" >> $GITHUB_ENV
+      run: |
+        echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.tree-sitter/bin" >> $GITHUB_ENV
+        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.tree-sitter/bin
       shell: bash
 
     - name: check

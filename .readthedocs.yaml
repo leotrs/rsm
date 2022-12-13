@@ -2,3 +2,8 @@ version: 2
 
 submodules:
   exclude: all
+
+python:
+  install:
+    - method: pip
+      path: .  

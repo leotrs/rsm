@@ -1,6 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Source+Sans+Pro&family=Inconsolata:wdth,wght@75,300&display=swap");
-/* Base */
-/******************************************************************************************/
 :root {
   --handrail-offset: 1.25rem;
   --side-padding: 6.5em;
@@ -16,6 +14,7 @@
   --gray-300: #B3BFC6;
   --gray-200: #CED5DA;
   --gray-100: #E8EBED;
+  --white: #FFFFFF;
   --lgt-gray: #B3BFC6;
   --med-gray: #7F929F;
   --drk-gray: #2C343A;
@@ -43,11 +42,15 @@
   --border-med: 4px;
   --border-thin: 2px; }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0; }
 
-p, ol.enumerate, ul.itemize {
+p,
+ol.enumerate,
+ul.itemize {
   margin-block-end: 1em; }
 
 ul.contents {
@@ -64,34 +67,38 @@ p:has(+ .mathblock) {
 div.statement p {
   margin-block-end: 0; }
 
-h1, h2, h3, h4, h5, p.topic-title {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: 'Montserrat', sans-serif;
   line-height: var(--header-line-height); }
 
 h1 {
   font-size: var(--h1-size);
-  margin: var(--h1-size) 0 var(--h1-size) 0;
-  font-weight: var(--bold); }
+  font-weight: var(--bold);
+  margin: var(--h1-size) 0 var(--h1-size) 0; }
 
 h2 {
   font-size: var(--h2-size);
-  margin: var(--h2-size) 0 var(--h2-size) 0;
-  font-weight: var(--semi); }
+  font-weight: var(--semi);
+  margin: var(--h2-size) 0 var(--h2-size) 0; }
 
 h3, p.topic-title {
   font-size: var(--h3-size);
-  margin: var(--h3-size) 0 var(--h3-size) 0;
-  font-weight: var(--medium); }
+  font-weight: var(--medium);
+  margin: var(--h3-size) 0 var(--h3-size) 0; }
 
 h4 {
   font-size: var(--h4-size);
-  margin: var(--h4-size) 0 var(--h4-size) 0;
-  font-weight: var(--medium); }
+  font-weight: var(--medium);
+  margin: var(--h4-size) 0 var(--h4-size) 0; }
 
 h5 {
   font-size: var(--h5-size);
-  margin: var(--h5-size) 0 var(--h5-size) 0;
-  font-weight: var(--regular); }
+  font-weight: var(--regular);
+  margin: var(--h5-size) 0 var(--h5-size) 0; }
 
 section.level-1 {
   margin-block: calc(var(--h1-size)); }
@@ -112,11 +119,11 @@ div.topic {
   margin-block: calc(var(--h3-size) * 1.5); }
 
 body {
+  color: var(--drk-gray);
   font-family: 'Source Sans Pro', sans-serif;
-  font-weight: var(--regular);
   font-size: var(--font-size);
-  line-height: var(--body-line-height);
-  color: var(--drk-gray); }
+  font-weight: var(--regular);
+  line-height: var(--body-line-height); }
 
 .hide {
   display: none !important; }
@@ -124,40 +131,40 @@ body {
 /* Layout */
 /******************************************************************************************/
 .manuscriptwrapper {
-  max-width: 960px;
-  margin: 0 auto;
   border-radius: 8px;
-  padding: 0 var(--side-padding) 0 var(--side-padding);
-  overflow: hidden; }
+  margin: 0 auto;
+  max-width: 960px;
+  overflow: hidden;
+  padding: 0 var(--side-padding) 0 var(--side-padding); }
 
 figure {
-  text-align: center;
-  margin-block: var(--h2-size); }
+  margin-block: var(--h2-size);
+  text-align: center; }
 
 figcaption {
-  margin-block: var(--h4-size);
-  text-align: center; }
+  text-align: center;
+  margin-block: var(--h4-size); }
 
 img, svg {
   max-width: 100%; }
 
 .handrail {
+  border-bottom-left-radius: 5px;
   border-width: 0 0 0 var(--border-thin);
   border-color: var(--lgt-gray);
   border-style: solid;
-  border-bottom-left-radius: 5px;
   padding: 0 0 0 var(--handrail-offset);
   margin-block: var(--handrail-margin-block) var(--handrail-margin-block);
   position: relative; }
   .handrail__icons {
+    align-items: flex-end;
     display: none;
-    position: absolute;
-    left: 0;
-    top: 0.5rem;
-    font-size: 0.8rem;
-    transform: translateX(calc(-100% - 1.5*var(--handrail-offset)));
     flex-direction: column;
-    align-items: flex-end; }
+    font-size: .8rem;
+    left: 0;
+    position: absolute;
+    top: .5rem;
+    transform: translateX(calc(-100% - 1.5*var(--handrail-offset))); }
   .handrail__icons--stars {
     color: var(--star-color); }
   .handrail__icons--clocks {
@@ -357,7 +364,7 @@ dd > p, dt > p {
 
 .proof__tabs > button {
   border: none;
-  background: white;
+  background: var(--white);
   padding-inline: 1rem;
   font-size: 16px;
   color: var(--med-gray); }
@@ -567,10 +574,10 @@ a:hover, a.note__link:hover {
     border-color: var(--star-color); }
 
 .tooltipster-sidetip .tooltipster-box {
-  background: white !important; }
+  background: var(--white) !important; }
 
 .tooltipster-sidetip .tooltipster-arrow-background {
-  border-top-color: white !important; }
+  border-top-color: var(--white) !important; }
 
 .tooltipster-sidetip .tooltipster-content {
   color: var(--drk-gray) !important; }

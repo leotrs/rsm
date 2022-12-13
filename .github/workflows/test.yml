@@ -52,9 +52,18 @@ jobs:
         poetry install
         poetry show
 
+
     - name: Make sure we can find tree-sitter shared libraries
+      if: runner.os == 'ubuntu'
       run: |
         cp ~/.tree-sitter/bin/rsm.so $LD_LIBRARY_PATH
+
+    - name: Make sure we can find tree-sitter shared libraries
+      if: runner.os == 'macOS'
+      run: |
+        ls ~/.tree-sitter
+        ls ~/Library/Caches/tree-sitter
+
 
     - name: Run unit tests
       run: |

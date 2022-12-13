@@ -54,22 +54,7 @@ jobs:
 
     - name: Make sure we can find tree-sitter shared libraries
       run: |
-        ls $LD_LIBRARY_PATH
         cp ~/.tree-sitter/bin/rsm.so $LD_LIBRARY_PATH
-        ls $LD_LIBRARY_PATH
-        echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.tree-sitter/bin" >> $GITHUB_ENV
-        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.tree-sitter/bin
-      shell: bash
-
-    - name: check
-      run: echo $LD_LIBRARY_PATH
-
-    - name: check2
-      run: env
-
-    - name: check3
-      run: |
-        ls ~/.tree-sitter/bin
 
     - name: Run unit tests
       run: |
@@ -77,11 +62,8 @@ jobs:
 
     - name: Run doctests in source files
       run: |
-       poetry run pytest -vv --cov-append --doctest-modules rsm
+       poetry run pytest -vv --doctest-modules rsm
 
     - name: Run doctests in doc files
       run: |
         cd docs && poetry run make doctest
-
-    - name: Upload coverage
-      uses: codecov/codecov-action@v3

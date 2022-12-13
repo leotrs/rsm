@@ -16,7 +16,7 @@ jobs:
       PYTEST_ADDOPTS: "--color=yes"
     strategy:
       matrix:
-        os: [ubuntu, macos, windows]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ['3.10', '3.11']
     steps:
     - name: Checkout the repository and submodules
@@ -53,13 +53,19 @@ jobs:
         poetry show
 
 
-    - name: Make sure we can find tree-sitter shared libraries
-      if: runner.os == 'ubuntu'
+    - name: Make sure we can find tree-sitter shared libraries (Ubuntu)
+      if: runner.os == 'Ubuntu'
       run: |
         cp ~/.tree-sitter/bin/rsm.so $LD_LIBRARY_PATH
 
-    - name: Make sure we can find tree-sitter shared libraries
+    - name: Make sure we can find tree-sitter shared libraries (MacOS)
       if: runner.os == 'macOS'
+      run: |
+        ls ~/.tree-sitter
+        ls ~/Library/Caches/tree-sitter
+
+    - name: Make sure we can find tree-sitter shared libraries (Windows)
+      if: runner.os == 'Windows'
       run: |
         ls ~/.tree-sitter
         ls ~/Library/Caches/tree-sitter

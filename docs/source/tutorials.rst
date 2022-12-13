@@ -97,10 +97,6 @@ is stored and execute
 This will create a new file called :code:`index.html` in the same directory.  Open this
 file with your web browser to see the web manuscript created by RSM.
 
-
-Adding some flare
-*****************
-
 When running the last command, you probably saw the following message (or something similar):
 
 .. code-block:: bash

@@ -53,20 +53,27 @@ PUSH_THESE_TYPES = {
 
 class TSParser:
     def __init__(self):
+        # Execute these two lines only if we need to compile the parser on the fly.
+        # Otherwise, just use the next line.
+        #
+        # tree_sitter.Language.build_library("languages.so", ["tree-sitter-rsm"])
+        # self._lang = tree_sitter.Language("languages.so", "rsm")
+        #
+
         # !!!IMPORTANT!!!
         #
-        # The Language class will look for its first argument (the .so file) inside the path
-        # defined by $LD_LIBRARY_PATH.  This means that when installing RSM, we need to move the
-        # language library there.  For now, for local dev, need to execute
+        # The Language class will look for its first argument (the .so file) inside the
+        # path defined by $LD_LIBRARY_PATH.  This means that when installing RSM, we
+        # need to move the language library there, OR add a custom path to
+        # LD_LIBRARY_PATH:
         #
-        # $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./
+        # $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:some/path/to/*.so
         #
-        # from the console BEFORE running this file.
+        # This needs to happen BEFORE we run this file.  Trying to set this env variable
+        # from this interpreter session will not work.
         #
-        tree_sitter.Language.build_library(
-            "languages.so", ["/home/leo/code/tree-sitter-rsm"]
-        )
-        self._lang = tree_sitter.Language("languages.so", "rsm")
+        self._lang = tree_sitter.Language("rsm.so", "rsm")
+
         self._parser = tree_sitter.Parser()
         self._parser.set_language(self._lang)
         self.cst = None
@@ -76,8 +83,9 @@ class TSParser:
         logger.info("Parsing...")
         self.cst = self._parser.parse(bytes(str(src), "utf-8"))
 
-        if logger.getEffectiveLevel() <= logging.DEBUG:
-            traverse(self.cst)
+        traverse(self.cst)
+        # if logger.getEffectiveLevel() <= logging.DEBUG:
+        #     traverse(self.cst)
 
         if not abstractify:
             return self.cst

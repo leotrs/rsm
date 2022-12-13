@@ -381,6 +381,15 @@ class Action(namedtuple("Action", "node action method")):
 
 
 class Translator:
+    """This is an example doctest.
+
+    Examples
+    --------
+    >>> [1, 2, 3]
+    [1, 2, 3]
+
+    """
+
     def __init__(self, quiet: bool = False):
         self.tree: nodes.Manuscript = None
         self.body: str = ""

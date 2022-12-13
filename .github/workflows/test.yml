@@ -37,7 +37,7 @@ jobs:
     - name: Install tree-sitter grammar
       run: |
         cd tree-sitter-rsm
-        npm install tree-sitter-cli
+        npm install
         tree-sitter generate
 
     - name: Test tree-sitter grammar

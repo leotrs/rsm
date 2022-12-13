@@ -44,18 +44,16 @@ jobs:
 
     - name: Build tree-sitter-rsm grammar
       run: |
-        pwd
-        ls -a node_modules/.bin
+        cd tree-sitter-rsm
         node_modules/.bin/tree-sitter generate
 
     - name: Test tree-sitter grammar
       run: |
-        pwd
-        ./node_modules/.bin/tree-sitter test
+        cd tree-sitter-rsm
+        node_modules/.bin/tree-sitter test
 
     - name: Install rsm-markup
       run: |
-        cd ..
         poetry install
         poetry show
 

@@ -42,4 +42,3 @@ on a digital device:
    (i.e. HTML), this is always an extra step that must be done outside of the LaTeX
    ecosystem.  As a result, not all of the LaTeX features translate transparently to the
    final output and some post-processing is sometimes necessary.
-

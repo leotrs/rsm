@@ -1,5 +1,8 @@
 # RSM: (R)e-(S)tructured (M)anuscripts
 
+![Tests](https://github.com/leotrs/rsm/actions/workflows/test.yml/badge.svg)
+
+
 RSM is a suite of tools that aims to change the format of scientific publications using
 modern web technology. Currently, most scientific publications are made with LaTeX and
 published in PDF format. While the capabilities of LaTeX and related software are

@@ -166,39 +166,6 @@ This is the sub-section content
 ```
 
 
-## Getting started
-
-Currently, the easiest way of using RSM is as follows:
-
-1. Create a new folder in your file system. For this example, we will use
-   `project/`. This folder contains all files pertaining to your manuscript, both the
-   `.rsm` source files and the `.html` output files.
-
-2. Create a new text file in your project folder, for example
-   `project/manuscript.rsm`. This file contains your source code. It is the equivalent
-   of the `.tex` files if you are using LaTeX.
-
-3. Write some RSM in your `project/manuscript.rsm` file using your favorite text
-   editor. Save your changes.
-
-4. Run the `rsm-make` command line utility from your project folder: 
-   ```bash
-   ~$ cd project/ 
-   project/$ rsm-make manuscript.rsm
-   Building RSM...
-   Done.
-   project/$
-   ```
-   
-   This will create, among other things, a new file `project/index.html`. This is the
-   equivalent of the PDF file if you are using LaTeX.
-
-5. To see your rendered manuscript, simply open the `project/index.html` file with any
-   web browser. For example, in Firefox, you can click on the File menu, click Open, and
-   navigate to your file.
-
-
-
 <!-- ## Design philosophy -->
 
 <!-- The RSM project follows a set of principles. Features are designed with these principles -->

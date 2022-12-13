@@ -36,7 +36,9 @@ jobs:
 
     - name: Install tree-sitter-rsm
       run: |
+        pwd
         cd tree-sitter-rsm
+        pwd
         npm install
         ls -a node_modules/.bin
 
@@ -48,6 +50,7 @@ jobs:
 
     - name: Test tree-sitter grammar
       run: |
+        pwd
         ./node_modules/.bin/tree-sitter test
 
     - name: Install rsm-markup

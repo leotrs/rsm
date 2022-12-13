@@ -38,7 +38,7 @@ jobs:
       run: |
         cd tree-sitter-rsm
         npm install
-        tree-sitter generate
+        .node_modules/.bin/tree-sitter generate
 
     - name: Test tree-sitter grammar
       run: |

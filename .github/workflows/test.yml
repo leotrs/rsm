@@ -52,7 +52,6 @@ jobs:
         poetry install
         poetry show
 
-
     - name: Make sure we can find tree-sitter shared libraries (Ubuntu)
       if: runner.os == 'Ubuntu'
       run: |

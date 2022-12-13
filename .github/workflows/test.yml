@@ -73,7 +73,7 @@ jobs:
 
     - name: Run unit tests
       run: |
-        poetry run pytest -vv -x
+        poetry run pytest -vv
 
     - name: Run doctests in source files
       run: |

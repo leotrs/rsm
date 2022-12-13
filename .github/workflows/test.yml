@@ -58,8 +58,13 @@ jobs:
 
     - name: check
       run: echo $LD_LIBRARY_PATH
+
     - name: check2
       run: env
+
+    - name: check3
+      run: |
+        ls ~/.tree-sitter/bin
 
     - name: Run unit tests
       run: |

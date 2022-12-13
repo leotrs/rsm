@@ -15,10 +15,10 @@ through the necessary steps to install and use RSM locally on your machine.
 
       .. toctree::
          :maxdepth: 1
-         
-         installation
-         first-manuscript
-	 cli-commands	 
+
+         tutorials/installation
+         tutorials/first-manuscript
+	 tutorials/cli-commands
 
 
    .. grid-item-card:: Main RSM features
@@ -26,5 +26,5 @@ through the necessary steps to install and use RSM locally on your machine.
       .. toctree::
          :maxdepth: 1
 
-	 quickstart
-	 pipeline		    
+	 tutorials/quickstart
+	 tutorials/pipeline

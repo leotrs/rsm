@@ -6,20 +6,39 @@ Sphinx configuration.
 
 """
 
+#################
+# General options
+#################
+
+# project definition
 project = "rsm"
 copyright = "2022, leotrs"
 author = "leotrs"
-
-# Extensions
-extensions = [
-    "sphinx_design",  # for cards and tabs; https://sphinx-design.readthedocs.io/en/latest/get_started.html
-    "sphinx.ext.doctest",  # test snippets in docs
-]
 
 # options for HTML output
 html_theme = "pydata_sphinx_theme"
 html_static_path = ["_static"]
 html_logo = "_static/rsm-tag.png"
+
+# templates
+templates_path = ["_templates"]
+exclude_patterns = []
+
+
+#######################
+# Per-extension options
+#######################
+
+# extensions
+extensions = [
+    "sphinx_design",  # for cards and tabs; https://sphinx-design.readthedocs.io/en/latest/get_started.html
+    "sphinx.ext.doctest",  # test snippets in docs
+    "sphinx.ext.autosummary",  # generate nice tables and stub files
+    "sphinx.ext.autodoc",  # autogenerate pages from docstrings
+]
+
+# autosummary
+autosummary_generate = True
 
 # PyData sphinx theme configuration
 html_theme_options = {
@@ -45,15 +64,10 @@ html_theme_options = {
     # page options
     "use_edit_page_button": True,
 }
-
-# required for "Edit this page button"; see also "use_edit_page_button"
 html_context = {
+    # required for "Edit this page button"; see also "use_edit_page_button"
     "github_user": "<your-github-org>",
     "github_repo": "<your-github-repo>",
     "github_version": "<your-branch>",
     "doc_path": "<path-from-root-to-your-docs>",
 }
-
-# Templates
-templates_path = ["_templates"]
-exclude_patterns = []

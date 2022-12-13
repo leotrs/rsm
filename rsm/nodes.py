@@ -24,6 +24,8 @@ class RSMNodeError(Exception):
 
 
 class Node:
+    """Base Node class."""
+
     classreftext: ClassVar[str] = "{nodeclass} {number}"
     possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = set()
     autonumber: ClassVar[bool] = False

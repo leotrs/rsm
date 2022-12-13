@@ -3,16 +3,32 @@
 Reference manual
 ================
 
-Blurb.
+For users
+*********
+
+.. toctree::
+   :maxdepth: 2
+
+   reference/tags
+   reference/steps
 
 
-User reference
-==============
+For developers
+**************
 
-For users.
+All modules inside the :code:`rsm` package.
+
+.. currentmodule:: rsm
 
 
-Developer reference
-===================
+.. autosummary::
+   :toctree: reference
+   :caption: Modules
 
-For developers.
+   nodes
+   reader
+   tsparser
+   transformer
+   translator
+   builder
+   writer

@@ -54,6 +54,7 @@ jobs:
 
     - name: Make sure we can find tree-sitter shared libraries
       run: |
+        cp ~/.tree-sitter/bin/rsm.so $LD_LIBRARY_PATH
         echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.tree-sitter/bin" >> $GITHUB_ENV
         export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.tree-sitter/bin
       shell: bash
@@ -67,6 +68,10 @@ jobs:
     - name: check3
       run: |
         ls ~/.tree-sitter/bin
+
+    - name: check4
+      run: |
+        ls $LD_LIBRARY_PATH
 
     - name: Run unit tests
       run: |

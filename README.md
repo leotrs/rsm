@@ -1,6 +1,8 @@
 # RSM: (R)e-(S)tructured (M)anuscripts
 
-![Tests](https://github.com/leotrs/rsm/actions/workflows/test.yml/badge.svg)
+![tests](https://github.com/leotrs/rsm/actions/workflows/test.yml/badge.svg)
+[![docs](https://readthedocs.org/projects/rsm-markup/badge/?version=latest)](https://rsm-markup.readthedocs.io/en/latest/?badge=latest)
+
 
 
 RSM is a suite of tools that aims to change the format of scientific publications using

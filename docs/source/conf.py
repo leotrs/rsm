@@ -12,8 +12,8 @@ author = "leotrs"
 
 # Extensions
 extensions = [
-    # for cards and tabs; https://sphinx-design.readthedocs.io/en/latest/get_started.html
-    "sphinx_design",
+    "sphinx_design",  # for cards and tabs; https://sphinx-design.readthedocs.io/en/latest/get_started.html
+    "sphinx.ext.doctest",  # test snippets in docs
 ]
 
 # options for HTML output

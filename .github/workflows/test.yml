@@ -78,3 +78,7 @@ jobs:
     - name: Run doctests in source files
       run: |
        poetry run pytest -vv --doctest-modules rsm
+
+    - name: Run doctests in doc files
+      run: |
+       cd docs && poetry run make doctest

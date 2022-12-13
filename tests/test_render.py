@@ -1,21 +1,13 @@
 import pytest
 import subprocess
-from conftest import compare_have_want
+from textwrap import dedent
 
 
 @pytest.mark.slow
 def test_render():
-    have = """:manuscript:
-
-    Lorem ipsum.
-
-    ::
-    """
-    result = subprocess.run(["rsm-render", have], stdout=subprocess.PIPE, check=True)
-
-    compare_have_want(
-        have=have,
-        want="""
+    src = ":manuscript:\n\nFoo.\n\nBar.\n\nBaz.\n\n::\n"
+    want = dedent(
+        """
         <body>
 
         <div class="manuscriptwrapper">
@@ -24,7 +16,11 @@ def test_render():
 
         <section class="level-1">
 
-        <p class="paragraph">Lorem ipsum.</p>
+        <p class="paragraph">Foo.</p>
+
+        <p class="paragraph">Bar.</p>
+
+        <p class="paragraph">Baz.</p>
 
         </section>
 
@@ -33,8 +29,12 @@ def test_render():
         </div>
 
         </body>
-        """,
+        """
     )
+
+    result = subprocess.run(["rsm-render", src], stdout=subprocess.PIPE, check=True)
+    output = result.stdout[result.stdout.find(b"<body>") :].decode("utf-8")
+    assert output.strip() == want.strip()
 
 
 @pytest.mark.slow

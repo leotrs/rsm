@@ -5,7 +5,7 @@ Your first manuscript
 
 Create a new file called :code:`manuscript.rsm` and add the following contents
 
-.. code-block::
+.. code-block:: text
    :caption: manuscript.rsm
 
    :manuscript:
@@ -33,7 +33,7 @@ When running the last command, you probably saw the following warning (or someth
 Here, RSM is telling us that our manuscript is missing a title.  We can rectify that by
 editing :code:`manuscript.rsm` as follows
 
-.. code-block::
+.. code-block:: text
    :caption: manuscript.rsm
 
    :manuscript:
@@ -58,7 +58,7 @@ title of your manuscript displayed.
    The word "tlate" in the warning
 
    .. code-block:: bash
-   
+
       RSM.tlate WRN | Manuscript with no title
 
    stands for "translate".  This means that the warning was issued during the

@@ -138,7 +138,24 @@ class Node:
         return exp[1:]  # get rid of an extra newline at the start
 
     @classmethod
-    def metakeys(cls: Type["Node"]) -> set:
+    def metakeys(cls: Type["Node"]) -> set[str]:
+        """The valid meta keys of the given class.
+
+        Returns
+        -------
+        The valid meta keys.
+
+        Examples
+        --------
+        >>> all_nodes_meta = {"label", "types", "nonum", "reftext"}
+        >>> nodes.Node.metakeys() == all_nodes_meta
+        True
+        >>> nodes.Span.metakeys() - all_nodes_meta == {"strong", "emphas", "little", "insert", "delete"}
+        True
+        >>> nodes.Author.metakeys()  - all_nodes_meta == {"name", "affiliation", "email"}
+        True
+
+        """
         return cls._newmetakeys.union(
             *[b.metakeys() for b in cls.__bases__ if hasattr(b, "metakeys")]
         )
@@ -242,18 +259,18 @@ class Node:
 
         Examples
         --------
-        >>> p = nodes.Paragraph().append([nodes.Text('one'), nodes.Text('two')])
+        >>> p = nodes.Paragraph().append([nodes.Text("one"), nodes.Text("two")])
         >>> p.first_of_type(nodes.Text)
-        Text('one')
+        Text("one")
         >>> p.first_of_type(nodes.Text, return_idx=True)
-        (Text('one'), 0)
+        (Text("one"), 0)
 
         The index counts all existing children.
 
         >>> p.prepend(nodes.Span())
         Paragraph(parent=None, [Span, Text, Text])
         >>> p.first_of_type(nodes.Text, return_idx=True)
-        (Text('one'), 1)
+        (Text("one"), 1)
 
         """
         for idx, child in enumerate(self.children):
@@ -270,9 +287,9 @@ class Node:
 
         Examples
         --------
-        >>> p = nodes.Paragraph().append([nodes.Span(), nodes.Text('one'), nodes.Text('two')])
+        >>> p = nodes.Paragraph().append([nodes.Span(), nodes.Text("one"), nodes.Text("two")])
         >>> p.last_of_type(nodes.Text, return_idx=True)
-        (Text('two'), 2)
+        (Text("two"), 2)
 
         """
         for idx, child in enumerate(reversed(self.children)):
@@ -384,10 +401,10 @@ class Node:
 
         Examples
         --------
-        >>> t = nodes.Text('remove me')
+        >>> t = nodes.Text("remove me")
         >>> p = nodes.Paragraph().append(t)
         >>> p.children
-        (Text('remove me'),)
+        (Text("remove me"),)
         >>> t.remove_self()
         >>> p.children
         ()
@@ -470,7 +487,7 @@ class Text(Node):
         self.asis = asis
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}('{textwrap.shorten(self.text, 60)}')"
+        return f'{self.__class__.__name__}("{textwrap.shorten(self.text, 60)}")'
 
 
 class Error(Text):

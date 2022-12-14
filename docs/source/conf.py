@@ -35,11 +35,32 @@ extensions = [
     "sphinx_design",  # for cards and tabs; https://sphinx-design.readthedocs.io/en/latest/get_started.html
     "sphinx.ext.doctest",  # test snippets in docs
     "sphinx.ext.autosummary",  # generate nice tables and stub files
+    "sphinx.ext.napoleon",  # support for numpy style docstrings
     "sphinx.ext.autodoc",  # autogenerate pages from docstrings
+    "sphinx_autodoc_typehints",  # use type hints to put type information in the generated docs
     "sphinx.ext.linkcode",  # 'source' links for each class and method
     "sphinx_copybutton",  # copy button on code blocks
 ]
 
+
+# doctest
+doctest_global_setup = """
+import rsm
+from rsm import nodes
+"""
+
+
+# napoleon
+napoleon_numpy_docstring = True
+
+
+# sphinx_autodoc_typehints
+#
+# WARNING: For this extension to play nicely with napoleon, it MUST appear BEFORE
+# napoleon in the extensions list above.  See
+# https://github.com/tox-dev/sphinx-autodoc-typehints/issues/15
+#
+typehints_defaults = "braces-after"
 
 # autosummary
 autosummary_generate = True

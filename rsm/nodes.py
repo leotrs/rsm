@@ -1,4 +1,12 @@
-"""Nodes that make up the abstract syntax tree."""
+"""Nodes that make up the manuscript tree.
+
+The manuscript tree semantically represents each element in the manuscript such as
+sections, paragraphs, special regions, figures, etc.
+
+This is opposed to the syntax tree output by tree-sitter whose nodes represent elements
+with syntactic meaning such as tags, delimiters, etc.
+
+"""
 
 from typing import Any, Type, Optional, Callable, ClassVar, TypeVar, cast, Union
 from collections.abc import Iterable
@@ -18,9 +26,33 @@ class RSMNodeError(Exception):
 
 
 class Node:
-    """Base Node class."""
+    """A node in the manuscript tree.
+
+    A node represents a semantically meaningful element of the manuscript.
+
+    Parameters
+    ----------
+
+    label
+        Unique identifier for this node.
+    types
+        Types of this node.
+    number
+        Node number.
+    nonum
+        Whether this node should be automatically given a number.
+    reftext_template
+        If not empty, replaces :attr:`classreftext`.
+
+    See Also
+    --------
+    :class:`Manuscript` : The class of the root node of a manuscript tree.
+
+    """
 
     classreftext: ClassVar[str] = "{nodeclass} {number}"
+    """foobar"""
+
     possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = set()
     autonumber: ClassVar[bool] = False
     _number_within: ClassVar[Type["Node"] | None] = None
@@ -228,11 +260,48 @@ class Node:
     def first_ancestor_of_type(
         self, cls: Type["Node"] | tuple[Type["Node"]]
     ) -> Optional["Node"]:
+        """First ancestor of the specified type.
+
+        Parameters
+        ----------
+        cls
+            Desired class of the ancestor.
+
+        Returns
+        -------
+        The first ancestor of the specified type, or None.
+
+        See Also
+        --------
+        :meth:`first_of_type` : First child of specified type.
+
+        Examples
+        --------
+        Given the tree
+
+        >>> p = nodes.Paragraph()
+        >>> s = nodes.Span()
+        >>> t = nodes.Text('Hello.')
+        >>> s.append(t); p.append(s)
+
+        Find an ancestor of a desired type.
+
+        >>> t.parent
+        Span(parent=Paragraph, [Text])
+        >>> t.first_ancestor_of_type(nodes.Paragraph)
+        Paragraph(parent=None, [Span])
+
+        Always check the return value against `None`.
+
+        >>> t.first_ancestor_of_type(nodes.Manuscript) is None
+        True
+
+        """
         ancestor = self.parent
-        # We use type is not cls instead of the recommended isinstance() because we are
-        # looking for an exact type, not a subtype.  For example, we may want to find
-        # the enclosing Section of a Theorem, bypassing any Subsections that may lie in
-        # between.
+        # We use `type is not cls` instead of the recommended `isinstance()` because we
+        # are looking for an exact type, not a subtype.  For example, we may want to
+        # find the enclosing Section of a Theorem, bypassing any Subsections that may
+        # lie in between.
         while ancestor and (
             all(type(ancestor) is not c for c in cls)
             if isinstance(cls, tuple)

@@ -16,3 +16,4 @@ def add_rsm_to_doctest_namespace(doctest_namespace):
     """Ensure doctests have access to rsm."""
     # without this, each doctest would have to import rsm
     doctest_namespace["rsm"] = rsm
+    doctest_namespace["nodes"] = rsm.nodes

@@ -1,30 +1,27 @@
-rsm.translator.AppendText
-=========================
+﻿AppendText
+==========
+
+Qualified name: ``rsm.translator.AppendText``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendText
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendText.__init__
+      :nosignatures:
+      
       ~AppendText.execute
       ~AppendText.make_text
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendText.defers
-   
+     
+     ~AppendText.defers
    

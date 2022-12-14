@@ -1,30 +1,26 @@
-rsm.translator.AppendBatch
-==========================
+﻿AppendBatch
+===========
+
+Qualified name: ``rsm.translator.AppendBatch``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendBatch
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendBatch.__init__
+      :nosignatures:
+      
       ~AppendBatch.execute
-      ~AppendBatch.make_text
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendBatch.defers
-   
+     
+     ~AppendBatch.defers
    

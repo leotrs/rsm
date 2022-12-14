@@ -1,23 +1,21 @@
-rsm.reader.Reader
-=================
+﻿Reader
+======
+
+Qualified name: ``rsm.reader.Reader``
 
 .. currentmodule:: rsm.reader
 
 .. autoclass:: Reader
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~Reader.__init__
+      :nosignatures:
+      
       ~Reader.read
-   
-   
 
-   
    
    

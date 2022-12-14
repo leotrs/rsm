@@ -1,30 +1,25 @@
-rsm.translator.AppendHalmos
-===========================
+﻿AppendHalmos
+============
+
+Qualified name: ``rsm.translator.AppendHalmos``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendHalmos
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendHalmos.__init__
-      ~AppendHalmos.execute
-      ~AppendHalmos.make_text
-   
-   
+      :nosignatures:
+      
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendHalmos.defers
-   
+     
+     ~AppendHalmos.defers
    

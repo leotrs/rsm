@@ -1,30 +1,25 @@
-rsm.translator.AppendHeading
-============================
+﻿AppendHeading
+=============
+
+Qualified name: ``rsm.translator.AppendHeading``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendHeading
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendHeading.__init__
-      ~AppendHeading.execute
-      ~AppendHeading.make_text
-   
-   
+      :nosignatures:
+      
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendHeading.defers
-   
+     
+     ~AppendHeading.defers
    

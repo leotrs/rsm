@@ -1,23 +1,21 @@
-rsm.writer.Writer
-=================
+﻿Writer
+======
+
+Qualified name: ``rsm.writer.Writer``
 
 .. currentmodule:: rsm.writer
 
 .. autoclass:: Writer
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~Writer.__init__
+      :nosignatures:
+      
       ~Writer.write
-   
-   
 
-   
    
    

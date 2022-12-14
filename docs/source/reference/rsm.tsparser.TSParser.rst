@@ -1,23 +1,21 @@
-rsm.tsparser.TSParser
-=====================
+﻿TSParser
+========
+
+Qualified name: ``rsm.tsparser.TSParser``
 
 .. currentmodule:: rsm.tsparser
 
 .. autoclass:: TSParser
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~TSParser.__init__
+      :nosignatures:
+      
       ~TSParser.parse
-   
-   
 
-   
    
    

@@ -1,19 +1,20 @@
-rsm.translator.Translator
-=========================
+﻿Translator
+==========
+
+Qualified name: ``rsm.translator.Translator``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: Translator
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~Translator.__init__
+      :nosignatures:
+      
       ~Translator.get_action_method
       ~Translator.leave_abstract
       ~Translator.leave_mathblock
@@ -63,9 +64,6 @@ rsm.translator.Translator
       ~Translator.visit_text
       ~Translator.visit_theorem
       ~Translator.visit_url
-   
-   
 
-   
    
    

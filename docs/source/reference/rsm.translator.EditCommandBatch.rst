@@ -1,30 +1,26 @@
-rsm.translator.EditCommandBatch
-===============================
+﻿EditCommandBatch
+================
+
+Qualified name: ``rsm.translator.EditCommandBatch``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: EditCommandBatch
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~EditCommandBatch.__init__
-      ~EditCommandBatch.execute
+      :nosignatures:
+      
       ~EditCommandBatch.make_text
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~EditCommandBatch.defers
-   
+     
+     ~EditCommandBatch.defers
    

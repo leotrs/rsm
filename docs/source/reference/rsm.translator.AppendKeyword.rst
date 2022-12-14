@@ -1,30 +1,25 @@
-rsm.translator.AppendKeyword
-============================
+﻿AppendKeyword
+=============
+
+Qualified name: ``rsm.translator.AppendKeyword``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendKeyword
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendKeyword.__init__
-      ~AppendKeyword.execute
-      ~AppendKeyword.make_text
-   
-   
+      :nosignatures:
+      
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendKeyword.defers
-   
+     
+     ~AppendKeyword.defers
    

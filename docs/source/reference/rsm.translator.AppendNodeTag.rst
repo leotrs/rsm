@@ -1,31 +1,25 @@
-rsm.translator.AppendNodeTag
-============================
+﻿AppendNodeTag
+=============
+
+Qualified name: ``rsm.translator.AppendNodeTag``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendNodeTag
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendNodeTag.__init__
-      ~AppendNodeTag.execute
-      ~AppendNodeTag.make_deferred_text
-      ~AppendNodeTag.make_text
-   
-   
+      :nosignatures:
+      
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendNodeTag.defers
-   
+     
+     ~AppendNodeTag.defers
    

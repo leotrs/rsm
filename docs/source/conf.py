@@ -29,17 +29,21 @@ exclude_patterns = []
 # Per-extension options
 #######################
 
+
 # extensions
 extensions = [
     "sphinx_design",  # for cards and tabs; https://sphinx-design.readthedocs.io/en/latest/get_started.html
     "sphinx.ext.doctest",  # test snippets in docs
     "sphinx.ext.autosummary",  # generate nice tables and stub files
     "sphinx.ext.autodoc",  # autogenerate pages from docstrings
+    "sphinx.ext.linkcode",  # 'source' links for each class and method
     "sphinx_copybutton",  # copy button on code blocks
 ]
 
+
 # autosummary
 autosummary_generate = True
+
 
 # PyData sphinx theme configuration
 html_theme_options = {
@@ -72,3 +76,13 @@ html_context = {
     "github_version": "<your-branch>",
     "doc_path": "<path-from-root-to-your-docs>",
 }
+
+
+# linkcode needs a function that tells it where to link to
+def linkcode_resolve(domain, info):
+    if domain != "py":
+        return None
+    if not info["module"]:
+        return None
+    filename = info["module"].replace(".", "/")
+    return f"https://github.com/leotrs/rsm/tree/main/{filename}.py"

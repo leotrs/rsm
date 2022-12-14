@@ -1,31 +1,28 @@
-rsm.translator.AppendTextAndDefer
-=================================
+﻿AppendTextAndDefer
+==================
+
+Qualified name: ``rsm.translator.AppendTextAndDefer``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendTextAndDefer
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendTextAndDefer.__init__
+      :nosignatures:
+      
       ~AppendTextAndDefer.execute
       ~AppendTextAndDefer.make_deferred_text
       ~AppendTextAndDefer.make_text
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendTextAndDefer.defers
-   
+     
+     ~AppendTextAndDefer.defers
    

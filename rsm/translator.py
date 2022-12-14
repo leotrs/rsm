@@ -1,10 +1,4 @@
-"""
-translator.py
--------------
-
-RSM Translator: take a Manuscript and return a HTML string.
-
-"""
+"""Input: abstract syntax tree -- Output: HTML body."""
 
 import logging
 from typing import Iterable, Callable, Any
@@ -381,10 +375,12 @@ class Action(namedtuple("Action", "node action method")):
 
 
 class Translator:
-    """This is an example doctest.
+    """Translate an abstract syntax tree into HTML.
 
     Examples
     --------
+    This is an example doctest.
+
     >>> [1, 2, 3]
     [1, 2, 3]
 

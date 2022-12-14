@@ -1,10 +1,4 @@
-"""
-tspaser.py
-----------
-
-Parse the concrete syntax tree output by tree-sitter into an abstract syntax tree.
-
-"""
+"""Input: RSM source string -- Output: abstract syntax tree."""
 import tree_sitter
 from rsm import nodes, translator, transformer
 from itertools import groupby
@@ -52,6 +46,8 @@ PUSH_THESE_TYPES = {
 
 
 class TSParser:
+    """Parse the concrete syntax tree output by tree-sitter into an abstract syntax tree."""
+
     def __init__(self):
         # Execute these two lines only if we need to compile the parser on the fly.
         # Otherwise, just use the next line.

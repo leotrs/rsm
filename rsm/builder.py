@@ -1,10 +1,4 @@
-"""
-builder.py
-----------
-
-RSM Builder: take a complete source string and output a Manuscript.
-
-"""
+"""Input: HTML body -- Output: WebManuscript."""
 
 from fs import open_fs
 from fs.mountfs import MountFS
@@ -24,6 +18,8 @@ logger = logging.getLogger("RSM").getChild("build")
 
 
 class BaseBuilder(ABC):
+    """Use HTML body as a string and create a WebManuscript."""
+
     def __init__(self) -> None:
         self.body: str | None = None
         self.html: str | None = None

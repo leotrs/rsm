@@ -1,30 +1,26 @@
-rsm.translator.AppendBatchAndDefer
-==================================
+﻿AppendBatchAndDefer
+===================
+
+Qualified name: ``rsm.translator.AppendBatchAndDefer``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendBatchAndDefer
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendBatchAndDefer.__init__
+      :nosignatures:
+      
       ~AppendBatchAndDefer.execute
-      ~AppendBatchAndDefer.make_text
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendBatchAndDefer.defers
-   
+     
+     ~AppendBatchAndDefer.defers
    

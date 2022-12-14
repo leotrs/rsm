@@ -1,30 +1,25 @@
-rsm.translator.AppendParagraph
-==============================
+﻿AppendParagraph
+===============
+
+Qualified name: ``rsm.translator.AppendParagraph``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendParagraph
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendParagraph.__init__
-      ~AppendParagraph.execute
-      ~AppendParagraph.make_text
-   
-   
+      :nosignatures:
+      
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendParagraph.defers
-   
+     
+     ~AppendParagraph.defers
    

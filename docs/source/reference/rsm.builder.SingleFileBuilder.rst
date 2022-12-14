@@ -1,34 +1,29 @@
-rsm.builder.SingleFileBuilder
-=============================
+﻿SingleFileBuilder
+=================
+
+Qualified name: ``rsm.builder.SingleFileBuilder``
 
 .. currentmodule:: rsm.builder
 
 .. autoclass:: SingleFileBuilder
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~SingleFileBuilder.__init__
-      ~SingleFileBuilder.build
-      ~SingleFileBuilder.find_required_assets
+      :nosignatures:
+      
       ~SingleFileBuilder.make_html_footer
       ~SingleFileBuilder.make_html_header
       ~SingleFileBuilder.make_main_file
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~SingleFileBuilder.body
-      ~SingleFileBuilder.web
-   
+     
+     ~SingleFileBuilder.body
+     ~SingleFileBuilder.web
    

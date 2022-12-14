@@ -1,30 +1,26 @@
-rsm.translator.AppendExternalTree
-=================================
+﻿AppendExternalTree
+==================
+
+Qualified name: ``rsm.translator.AppendExternalTree``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendExternalTree
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendExternalTree.__init__
-      ~AppendExternalTree.execute
+      :nosignatures:
+      
       ~AppendExternalTree.make_text
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendExternalTree.defers
-   
+     
+     ~AppendExternalTree.defers
    

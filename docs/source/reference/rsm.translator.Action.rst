@@ -1,32 +1,27 @@
-rsm.translator.Action
-=====================
+﻿Action
+======
+
+Qualified name: ``rsm.translator.Action``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: Action
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~Action.__init__
-      ~Action.count
-      ~Action.index
-   
-   
+      :nosignatures:
+      
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~Action.action
-      ~Action.method
-      ~Action.node
-   
+     
+     ~Action.action
+     ~Action.method
+     ~Action.node
    

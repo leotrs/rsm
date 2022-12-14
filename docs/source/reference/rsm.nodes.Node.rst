@@ -1,19 +1,20 @@
-rsm.nodes.Node
-==============
+﻿Node
+====
+
+Qualified name: ``rsm.nodes.Node``
 
 .. currentmodule:: rsm.nodes
 
 .. autoclass:: Node
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~Node.__init__
+      :nosignatures:
+      
       ~Node.first_ancestor_of_type
       ~Node.first_of_type
       ~Node.ingest_dict_as_meta
@@ -25,23 +26,19 @@ rsm.nodes.Node
       ~Node.replace_self
       ~Node.sexp
       ~Node.traverse
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~Node.autonumber
-      ~Node.children
-      ~Node.classreftext
-      ~Node.full_number
-      ~Node.number_as
-      ~Node.number_within
-      ~Node.parent
-      ~Node.possible_parents
-      ~Node.reftext
-   
+     
+     ~Node.autonumber
+     ~Node.children
+     ~Node.classreftext
+     ~Node.full_number
+     ~Node.number_as
+     ~Node.number_within
+     ~Node.parent
+     ~Node.possible_parents
+     ~Node.reftext
    

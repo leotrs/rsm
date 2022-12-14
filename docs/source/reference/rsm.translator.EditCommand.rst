@@ -1,30 +1,27 @@
-rsm.translator.EditCommand
-==========================
+﻿EditCommand
+===========
+
+Qualified name: ``rsm.translator.EditCommand``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: EditCommand
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~EditCommand.__init__
+      :nosignatures:
+      
       ~EditCommand.execute
       ~EditCommand.make_text
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~EditCommand.defers
-   
+     
+     ~EditCommand.defers
    

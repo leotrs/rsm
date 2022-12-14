@@ -1,19 +1,20 @@
-rsm.transformer.Transformer
-===========================
+﻿Transformer
+===========
+
+Qualified name: ``rsm.transformer.Transformer``
 
 .. currentmodule:: rsm.transformer
 
 .. autoclass:: Transformer
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~Transformer.__init__
+      :nosignatures:
+      
       ~Transformer.add_keywords_to_constructs
       ~Transformer.add_necessary_subproofs
       ~Transformer.autonumber_nodes
@@ -21,9 +22,6 @@ rsm.transformer.Transformer
       ~Transformer.make_toc
       ~Transformer.resolve_pending_references
       ~Transformer.transform
-   
-   
 
-   
    
    

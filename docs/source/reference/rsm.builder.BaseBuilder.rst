@@ -1,25 +1,23 @@
-rsm.builder.BaseBuilder
-=======================
+﻿BaseBuilder
+===========
+
+Qualified name: ``rsm.builder.BaseBuilder``
 
 .. currentmodule:: rsm.builder
 
 .. autoclass:: BaseBuilder
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~BaseBuilder.__init__
+      :nosignatures:
+      
       ~BaseBuilder.build
       ~BaseBuilder.find_required_assets
       ~BaseBuilder.make_main_file
-   
-   
 
-   
    
    

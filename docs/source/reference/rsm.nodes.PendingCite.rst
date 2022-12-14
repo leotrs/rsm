@@ -1,47 +1,33 @@
-rsm.nodes.PendingCite
-=====================
+﻿PendingCite
+===========
+
+Qualified name: ``rsm.nodes.PendingCite``
 
 .. currentmodule:: rsm.nodes
 
 .. autoclass:: PendingCite
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~PendingCite.__init__
-      ~PendingCite.first_ancestor_of_type
-      ~PendingCite.first_of_type
-      ~PendingCite.ingest_dict_as_meta
-      ~PendingCite.last_of_type
-      ~PendingCite.metakeys
-      ~PendingCite.next_sibling
-      ~PendingCite.prev_sibling
-      ~PendingCite.remove_self
-      ~PendingCite.replace_self
-      ~PendingCite.sexp
-      ~PendingCite.traverse
-   
-   
+      :nosignatures:
+      
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~PendingCite.autonumber
-      ~PendingCite.children
-      ~PendingCite.classreftext
-      ~PendingCite.full_number
-      ~PendingCite.number_as
-      ~PendingCite.number_within
-      ~PendingCite.parent
-      ~PendingCite.possible_parents
-      ~PendingCite.reftext
-   
+     
+     ~PendingCite.autonumber
+     ~PendingCite.children
+     ~PendingCite.classreftext
+     ~PendingCite.full_number
+     ~PendingCite.number_as
+     ~PendingCite.number_within
+     ~PendingCite.parent
+     ~PendingCite.possible_parents
+     ~PendingCite.reftext
    

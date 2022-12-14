@@ -1,13 +1,6 @@
-"""
-transformer.py
---------------
-
-Apply transforms to the nodes.Manuscript.
-
-"""
+"""Input: abstract syntax tree -- Output: (transformed) abstract syntax tree."""
 
 from icecream import ic
-
 from collections import defaultdict
 from typing import Type, Generator
 from itertools import count
@@ -24,6 +17,8 @@ class RSMTransformerError(Exception):
 
 
 class Transformer:
+    """Apply transformations to the abstract syntax tree."""
+
     def __init__(self) -> None:
         self.tree: nodes.Manuscript | None = None
         self.labels_to_nodes: dict[str, nodes.Node] = {}

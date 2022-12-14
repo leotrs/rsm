@@ -1,30 +1,26 @@
-rsm.translator.AppendOpenCloseTag
-=================================
+﻿AppendOpenCloseTag
+==================
+
+Qualified name: ``rsm.translator.AppendOpenCloseTag``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendOpenCloseTag
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendOpenCloseTag.__init__
-      ~AppendOpenCloseTag.execute
+      :nosignatures:
+      
       ~AppendOpenCloseTag.make_text
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendOpenCloseTag.defers
-   
+     
+     ~AppendOpenCloseTag.defers
    

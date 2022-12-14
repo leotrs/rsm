@@ -1,31 +1,27 @@
-rsm.translator.AppendOpenTagManualClose
-=======================================
+﻿AppendOpenTagManualClose
+========================
+
+Qualified name: ``rsm.translator.AppendOpenTagManualClose``
 
 .. currentmodule:: rsm.translator
 
 .. autoclass:: AppendOpenTagManualClose
-
-   
-   .. automethod:: __init__
+   :show-inheritance:
+   :members:
 
    
    .. rubric:: Methods
 
    .. autosummary::
-   
-      ~AppendOpenTagManualClose.__init__
+      :nosignatures:
+      
       ~AppendOpenTagManualClose.close_command
-      ~AppendOpenTagManualClose.execute
       ~AppendOpenTagManualClose.make_text
-   
-   
 
-   
    
    .. rubric:: Attributes
 
    .. autosummary::
-   
-      ~AppendOpenTagManualClose.defers
-   
+     
+     ~AppendOpenTagManualClose.defers
    

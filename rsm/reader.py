@@ -1,4 +1,4 @@
-"""Read the contents of a file containing RSM markup."""
+"""Input: Path to .rsm file -- Output: file contents."""
 
 from pathlib import Path
 
@@ -8,6 +8,8 @@ logger = logging.getLogger("RSM").getChild("read ")
 
 
 class Reader:
+    """Read the contents of a .rsm file."""
+
     def __init__(self) -> None:
         self.path: Path = Path()
         self.src: str = ""

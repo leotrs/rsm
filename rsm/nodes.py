@@ -555,6 +555,7 @@ class NodeWithChildren(Node):
         return self
 
     def remove(self, child: "Node") -> None:
+        """Remove child."""
         ids = [id(c) for c in self._children]
         index = ids.index(id(child))
         del self._children[index]

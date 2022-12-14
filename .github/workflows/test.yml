@@ -53,18 +53,18 @@ jobs:
         poetry show
 
     - name: Make sure we can find tree-sitter shared libraries (Ubuntu)
-      if: runner.os == 'Ubuntu'
+      if: matrix.os == 'ubuntu'
       run: |
         cp ~/.tree-sitter/bin/rsm.so $LD_LIBRARY_PATH
 
     - name: Make sure we can find tree-sitter shared libraries (MacOS)
-      if: runner.os == 'macOS'
+      if: matrix.os == 'macos'
       run: |
         ls ~/.tree-sitter
         ls ~/Library/Caches/tree-sitter
 
     - name: Make sure we can find tree-sitter shared libraries (Windows)
-      if: runner.os == 'Windows'
+      if: matrix.os == 'windows'
       run: |
         ls ~/.tree-sitter
         ls ~/Library/Caches/tree-sitter

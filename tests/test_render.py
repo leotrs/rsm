@@ -36,9 +36,11 @@ def test_render():
 
     cmd = " ".join(["rsm-render", f"'{src}'"])
     result = subprocess.run(cmd, stdout=subprocess.PIPE, check=True, shell=True)
-    if sys.platform == "win32":
-        result = result.replace("\r", "")
+
+    # get rid of any logs appearing before the html body, and decode
     output = result.stdout[result.stdout.find(b"<body>") :].decode("utf-8")
+    if sys.platform == "win32":
+        output = output.replace("\r", "")
     assert output.strip() == want.strip()
 
 

@@ -226,8 +226,10 @@ class Node:
 
         Returns
         -------
-        The first child of the specified type, or None.  If `return_idx` is True, return
-        (child, index), or (None, None).
+        Node
+            The first child of the specified type, or None.
+        Node, int
+            If `return_idx` is True, return (child, index), or (None, None).
 
 
         See Also
@@ -237,8 +239,7 @@ class Node:
         Examples
         --------
         >>> p = nodes.Paragraph()
-        >>> t1, t2 = nodes.Text('one'), nodes.Text('two')
-        >>> p.append([t1, t2])
+        >>> p.append([nodes.Text('one'), nodes.Text('two')])
         >>> p.first_of_type(nodes.Text)
         Text(one)
         >>> p.first_of_type(nodes.Text, return_idx=True)

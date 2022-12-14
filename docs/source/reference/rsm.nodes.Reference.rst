@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Reference``
      ~Reference.children
      ~Reference.classreftext
      ~Reference.full_number
+     ~Reference.newmetakeys
      ~Reference.number_as
      ~Reference.number_within
      ~Reference.parent

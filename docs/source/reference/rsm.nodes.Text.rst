@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Text``
      ~Text.children
      ~Text.classreftext
      ~Text.full_number
+     ~Text.newmetakeys
      ~Text.number_as
      ~Text.number_within
      ~Text.parent

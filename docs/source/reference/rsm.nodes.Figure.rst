@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Figure``
      ~Figure.children
      ~Figure.classreftext
      ~Figure.full_number
+     ~Figure.newmetakeys
      ~Figure.number_as
      ~Figure.number_within
      ~Figure.parent

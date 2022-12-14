@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Math``
      ~Math.children
      ~Math.classreftext
      ~Math.full_number
+     ~Math.newmetakeys
      ~Math.number_as
      ~Math.number_within
      ~Math.parent

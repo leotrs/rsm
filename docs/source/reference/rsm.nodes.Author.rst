@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Author``
      ~Author.children
      ~Author.classreftext
      ~Author.full_number
+     ~Author.newmetakeys
      ~Author.number_as
      ~Author.number_within
      ~Author.parent

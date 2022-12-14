@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Error``
      ~Error.children
      ~Error.classreftext
      ~Error.full_number
+     ~Error.newmetakeys
      ~Error.number_as
      ~Error.number_within
      ~Error.parent

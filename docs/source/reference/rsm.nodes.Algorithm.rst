@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Algorithm``
      ~Algorithm.children
      ~Algorithm.classreftext
      ~Algorithm.full_number
+     ~Algorithm.newmetakeys
      ~Algorithm.number_as
      ~Algorithm.number_within
      ~Algorithm.parent

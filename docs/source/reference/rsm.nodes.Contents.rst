@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Contents``
      ~Contents.children
      ~Contents.classreftext
      ~Contents.full_number
+     ~Contents.newmetakeys
      ~Contents.number_as
      ~Contents.number_within
      ~Contents.parent

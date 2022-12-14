@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.TableDatum``
      ~TableDatum.children
      ~TableDatum.classreftext
      ~TableDatum.full_number
+     ~TableDatum.newmetakeys
      ~TableDatum.number_as
      ~TableDatum.number_within
      ~TableDatum.parent

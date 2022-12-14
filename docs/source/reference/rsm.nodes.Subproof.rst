@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Subproof``
      ~Subproof.children
      ~Subproof.classreftext
      ~Subproof.full_number
+     ~Subproof.newmetakeys
      ~Subproof.number_as
      ~Subproof.number_within
      ~Subproof.parent

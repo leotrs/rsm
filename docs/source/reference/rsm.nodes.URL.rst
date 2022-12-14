@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.URL``
      ~URL.children
      ~URL.classreftext
      ~URL.full_number
+     ~URL.newmetakeys
      ~URL.number_as
      ~URL.number_within
      ~URL.parent

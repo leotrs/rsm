@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.UnknownBibitem``
      ~UnknownBibitem.children
      ~UnknownBibitem.classreftext
      ~UnknownBibitem.full_number
+     ~UnknownBibitem.newmetakeys
      ~UnknownBibitem.number_as
      ~UnknownBibitem.number_within
      ~UnknownBibitem.parent

@@ -26,6 +26,7 @@ Qualified name: ``rsm.nodes.Keyword``
      ~Keyword.children
      ~Keyword.classreftext
      ~Keyword.full_number
+     ~Keyword.newmetakeys
      ~Keyword.number_as
      ~Keyword.number_within
      ~Keyword.parent

@@ -26,6 +26,7 @@ Qualified name: ``rsm.nodes.Section``
      ~Section.classreftext
      ~Section.full_number
      ~Section.level
+     ~Section.newmetakeys
      ~Section.number_as
      ~Section.number_within
      ~Section.parent

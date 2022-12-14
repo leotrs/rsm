@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Item``
      ~Item.children
      ~Item.classreftext
      ~Item.full_number
+     ~Item.newmetakeys
      ~Item.number_as
      ~Item.number_within
      ~Item.parent

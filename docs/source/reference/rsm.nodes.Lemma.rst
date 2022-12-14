@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Lemma``
      ~Lemma.children
      ~Lemma.classreftext
      ~Lemma.full_number
+     ~Lemma.newmetakeys
      ~Lemma.number_as
      ~Lemma.number_within
      ~Lemma.parent

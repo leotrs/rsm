@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Sketch``
      ~Sketch.children
      ~Sketch.classreftext
      ~Sketch.full_number
+     ~Sketch.newmetakeys
      ~Sketch.number_as
      ~Sketch.number_within
      ~Sketch.parent

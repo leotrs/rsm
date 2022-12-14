@@ -27,6 +27,7 @@ Qualified name: ``rsm.nodes.Construct``
      ~Construct.full_number
      ~Construct.keyword
      ~Construct.kind_to_keyword
+     ~Construct.newmetakeys
      ~Construct.number_as
      ~Construct.number_within
      ~Construct.parent

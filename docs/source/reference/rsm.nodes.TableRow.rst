@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.TableRow``
      ~TableRow.children
      ~TableRow.classreftext
      ~TableRow.full_number
+     ~TableRow.newmetakeys
      ~TableRow.number_as
      ~TableRow.number_within
      ~TableRow.parent

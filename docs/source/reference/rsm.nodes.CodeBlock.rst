@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.CodeBlock``
      ~CodeBlock.children
      ~CodeBlock.classreftext
      ~CodeBlock.full_number
+     ~CodeBlock.newmetakeys
      ~CodeBlock.number_as
      ~CodeBlock.number_within
      ~CodeBlock.parent

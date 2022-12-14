@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Abstract``
      ~Abstract.children
      ~Abstract.classreftext
      ~Abstract.full_number
+     ~Abstract.newmetakeys
      ~Abstract.number_as
      ~Abstract.number_within
      ~Abstract.parent

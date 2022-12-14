@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Enumerate``
      ~Enumerate.children
      ~Enumerate.classreftext
      ~Enumerate.full_number
+     ~Enumerate.newmetakeys
      ~Enumerate.number_as
      ~Enumerate.number_within
      ~Enumerate.parent

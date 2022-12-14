@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Proposition``
      ~Proposition.children
      ~Proposition.classreftext
      ~Proposition.full_number
+     ~Proposition.newmetakeys
      ~Proposition.number_as
      ~Proposition.number_within
      ~Proposition.parent

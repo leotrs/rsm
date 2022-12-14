@@ -99,19 +99,42 @@ class Node:
 
     Examples
     --------
-    >>> msc, thm = nodes.Manuscript(), nodes.Theorem()
-    >>> thm.number is None
+    >>> msc, thm1, thm2 = nodes.Manuscript(), nodes.Theorem(), nodes.Theorem()
+    >>> (thm1.number, thm2.number) == (None, None)
     True
     >>> tform = rsm.transformer.Transformer()
-    >>> tform.transform(msc.append(thm))  # doctest: +IGNORE_RESULT
-    >>> thm.number
-    1
+    >>> tform.transform(msc.append([thm1, thm2]))  # doctest: +IGNORE_RESULT
+    >>> thm1.number, thm2.number
+    (1, 2)
 
     """
 
     _number_within: ClassVar[Type["Node"] | None] = None
+    # see property number_within for documentation
+
     _number_as: ClassVar[Type["Node"] | None] = None
-    _newmetakeys: ClassVar[set] = {"label", "types", "nonum", "reftext"}
+    # see property number_as for documentation
+
+    newmetakeys: ClassVar[set] = {"label", "types", "nonum", "reftext"}
+    """Meta keys to add to those of the parent class.
+
+    .. important::
+       Only use this when defining a new Node subclass.  When dealing with Node
+       isntances, do not access this attribute directly neither for reading nor writing.
+       Always use :meth:`metakeys` in that case.
+
+    See Also
+    --------
+    :meth:`metakeys`
+
+    Examples
+    --------
+    >>> nodes.Heading.newmetakeys
+    {'title'}
+    >>> nodes.Heading.metakeys() == nodes.Node.metakeys() | {"title"}
+    True
+
+    """
 
     def __init__(
         self,
@@ -210,7 +233,7 @@ class Node:
         True
 
         """
-        return cls._newmetakeys.union(
+        return cls.newmetakeys.union(
             *[b.metakeys() for b in cls.__bases__ if hasattr(b, "metakeys")]
         )
 
@@ -478,6 +501,8 @@ class Node:
 
 
 class NodeWithChildren(Node):
+    """A :class:`Node` that may have children Nodes."""
+
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self._children: list[Node] = []
@@ -498,6 +523,7 @@ class NodeWithChildren(Node):
         return tuple(self._children)
 
     def clear(self) -> None:
+        """Remove all children."""
         for c in self._children:
             c.parent = None
         self._children = []
@@ -550,7 +576,7 @@ class Error(Text):
 
 
 class Span(NodeWithChildren):
-    _newmetakeys: ClassVar[set] = {"strong", "emphas", "little", "insert", "delete"}
+    newmetakeys: ClassVar[set] = {"strong", "emphas", "little", "insert", "delete"}
     attr_to_tag: ClassVar[dict] = {
         "strong": "strong",
         "emphas": "em",
@@ -577,7 +603,7 @@ class Span(NodeWithChildren):
 
 
 class Heading(NodeWithChildren):
-    _newmetakeys: ClassVar[set] = {"title"}
+    newmetakeys: ClassVar[set] = {"title"}
 
     def __init__(self, title: str = "", **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -585,7 +611,7 @@ class Heading(NodeWithChildren):
 
 
 class Manuscript(Heading):
-    _newmetakeys: ClassVar[set] = {"date"}
+    newmetakeys: ClassVar[set] = {"date"}
     nonum = True
 
     def __init__(
@@ -601,7 +627,7 @@ class Manuscript(Heading):
 
 
 class Author(Node):
-    _newmetakeys: ClassVar[set] = {"name", "affiliation", "email"}
+    newmetakeys: ClassVar[set] = {"name", "affiliation", "email"}
 
     def __init__(
         self, name: str = "", affiliation: str = "", email: str = "", **kwargs: Any
@@ -613,7 +639,7 @@ class Author(Node):
 
 
 class Abstract(NodeWithChildren):
-    _newmetakeys: ClassVar[set] = {"keywords", "MSC"}
+    newmetakeys: ClassVar[set] = {"keywords", "MSC"}
 
     def __init__(
         self,
@@ -708,7 +734,7 @@ class MathBlock(NodeWithChildren):
     autonumber = True
     _number_within = Section
     classreftext: ClassVar[str] = "({number})"
-    _newmetakeys: ClassVar[set] = {"isclaim"}
+    newmetakeys: ClassVar[set] = {"isclaim"}
 
     def __init__(self, isclaim: bool = False, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -775,15 +801,15 @@ class Cite(Node):
 
 
 class Statement(NodeWithChildren):
-    _newmetakeys: ClassVar[set] = set()
+    newmetakeys: ClassVar[set] = set()
 
 
 class Proof(NodeWithChildren):
-    _newmetakeys: ClassVar[set] = set()
+    newmetakeys: ClassVar[set] = set()
 
 
 class Subproof(NodeWithChildren):  # importantly, NOT a subclass of Proof!
-    _newmetakeys: ClassVar[set] = set()
+    newmetakeys: ClassVar[set] = set()
 
 
 class Sketch(NodeWithChildren):
@@ -803,7 +829,7 @@ class Theorem(Heading):
     autonumber = True
     title = ""
     _number_within = Section
-    _newmetakeys: ClassVar[set] = {"title", "goals", "stars", "clocks"}
+    newmetakeys: ClassVar[set] = {"title", "goals", "stars", "clocks"}
 
     def __init__(
         self,
@@ -822,22 +848,22 @@ class Theorem(Heading):
 
 class Lemma(Theorem):
     _number_as = Theorem
-    _newmetakeys: ClassVar[set] = set()
+    newmetakeys: ClassVar[set] = set()
 
 
 class Proposition(Theorem):
     _number_as = Theorem
-    _newmetakeys: ClassVar[set] = set()
+    newmetakeys: ClassVar[set] = set()
 
 
 class Remark(Theorem):
     _number_as = Theorem
-    _newmetakeys: ClassVar[set] = set()
+    newmetakeys: ClassVar[set] = set()
 
 
 class Definition(Theorem):
     _number_as = Theorem
-    _newmetakeys: ClassVar[set] = set()
+    newmetakeys: ClassVar[set] = set()
 
 
 class Bibliography(NodeWithChildren):
@@ -847,7 +873,7 @@ class Bibliography(NodeWithChildren):
 class Bibitem(Node):
     autonumber = True
     classreftext: ClassVar[str] = "{number}"
-    _newmetakeys: ClassVar[set] = {
+    newmetakeys: ClassVar[set] = {
         "kind",
         "author",
         "title",
@@ -894,7 +920,7 @@ class UnknownBibitem(Bibitem):
 class Figure(NodeWithChildren):
     autonumber = True
     _number_within = Section
-    _newmetakeys: ClassVar[set] = {"path", "scale"}
+    newmetakeys: ClassVar[set] = {"path", "scale"}
 
     def __init__(
         self, path: Path | str = "", scale: float = 1.0, **kwargs: Any

@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Caption``
      ~Caption.children
      ~Caption.classreftext
      ~Caption.full_number
+     ~Caption.newmetakeys
      ~Caption.number_as
      ~Caption.number_within
      ~Caption.parent

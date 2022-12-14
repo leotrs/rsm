@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.PendingReference``
      ~PendingReference.children
      ~PendingReference.classreftext
      ~PendingReference.full_number
+     ~PendingReference.newmetakeys
      ~PendingReference.number_as
      ~PendingReference.number_within
      ~PendingReference.parent

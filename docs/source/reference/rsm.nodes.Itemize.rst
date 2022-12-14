@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Itemize``
      ~Itemize.children
      ~Itemize.classreftext
      ~Itemize.full_number
+     ~Itemize.newmetakeys
      ~Itemize.number_as
      ~Itemize.number_within
      ~Itemize.parent

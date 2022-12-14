@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Remark``
      ~Remark.children
      ~Remark.classreftext
      ~Remark.full_number
+     ~Remark.newmetakeys
      ~Remark.number_as
      ~Remark.number_within
      ~Remark.parent

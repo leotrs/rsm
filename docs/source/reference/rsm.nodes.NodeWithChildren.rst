@@ -29,6 +29,7 @@ Qualified name: ``rsm.nodes.NodeWithChildren``
      ~NodeWithChildren.children
      ~NodeWithChildren.classreftext
      ~NodeWithChildren.full_number
+     ~NodeWithChildren.newmetakeys
      ~NodeWithChildren.number_as
      ~NodeWithChildren.number_within
      ~NodeWithChildren.parent

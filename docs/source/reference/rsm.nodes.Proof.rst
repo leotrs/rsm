@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Proof``
      ~Proof.children
      ~Proof.classreftext
      ~Proof.full_number
+     ~Proof.newmetakeys
      ~Proof.number_as
      ~Proof.number_within
      ~Proof.parent

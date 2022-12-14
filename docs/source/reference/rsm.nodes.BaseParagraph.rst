@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.BaseParagraph``
      ~BaseParagraph.children
      ~BaseParagraph.classreftext
      ~BaseParagraph.full_number
+     ~BaseParagraph.newmetakeys
      ~BaseParagraph.number_as
      ~BaseParagraph.number_within
      ~BaseParagraph.parent

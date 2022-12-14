@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Paragraph``
      ~Paragraph.children
      ~Paragraph.classreftext
      ~Paragraph.full_number
+     ~Paragraph.newmetakeys
      ~Paragraph.number_as
      ~Paragraph.number_within
      ~Paragraph.parent

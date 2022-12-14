@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.BaseReference``
      ~BaseReference.children
      ~BaseReference.classreftext
      ~BaseReference.full_number
+     ~BaseReference.newmetakeys
      ~BaseReference.number_as
      ~BaseReference.number_within
      ~BaseReference.parent

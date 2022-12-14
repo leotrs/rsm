@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.PendingCite``
      ~PendingCite.children
      ~PendingCite.classreftext
      ~PendingCite.full_number
+     ~PendingCite.newmetakeys
      ~PendingCite.number_as
      ~PendingCite.number_within
      ~PendingCite.parent

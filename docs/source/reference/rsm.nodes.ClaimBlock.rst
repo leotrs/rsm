@@ -27,6 +27,7 @@ Qualified name: ``rsm.nodes.ClaimBlock``
      ~ClaimBlock.full_number
      ~ClaimBlock.keyword
      ~ClaimBlock.kind_to_keyword
+     ~ClaimBlock.newmetakeys
      ~ClaimBlock.number_as
      ~ClaimBlock.number_within
      ~ClaimBlock.parent

@@ -26,6 +26,7 @@ Qualified name: ``rsm.nodes.Span``
      ~Span.children
      ~Span.classreftext
      ~Span.full_number
+     ~Span.newmetakeys
      ~Span.number_as
      ~Span.number_within
      ~Span.parent

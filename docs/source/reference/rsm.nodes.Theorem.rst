@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Theorem``
      ~Theorem.children
      ~Theorem.classreftext
      ~Theorem.full_number
+     ~Theorem.newmetakeys
      ~Theorem.number_as
      ~Theorem.number_within
      ~Theorem.parent

@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Heading``
      ~Heading.children
      ~Heading.classreftext
      ~Heading.full_number
+     ~Heading.newmetakeys
      ~Heading.number_as
      ~Heading.number_within
      ~Heading.parent

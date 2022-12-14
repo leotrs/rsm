@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Draft``
      ~Draft.children
      ~Draft.classreftext
      ~Draft.full_number
+     ~Draft.newmetakeys
      ~Draft.number_as
      ~Draft.number_within
      ~Draft.parent

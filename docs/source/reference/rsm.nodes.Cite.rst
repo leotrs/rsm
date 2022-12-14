@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Cite``
      ~Cite.children
      ~Cite.classreftext
      ~Cite.full_number
+     ~Cite.newmetakeys
      ~Cite.number_as
      ~Cite.number_within
      ~Cite.parent

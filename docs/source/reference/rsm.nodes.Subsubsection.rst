@@ -26,6 +26,7 @@ Qualified name: ``rsm.nodes.Subsubsection``
      ~Subsubsection.classreftext
      ~Subsubsection.full_number
      ~Subsubsection.level
+     ~Subsubsection.newmetakeys
      ~Subsubsection.number_as
      ~Subsubsection.number_within
      ~Subsubsection.parent

@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Step``
      ~Step.children
      ~Step.classreftext
      ~Step.full_number
+     ~Step.newmetakeys
      ~Step.number_as
      ~Step.number_within
      ~Step.parent

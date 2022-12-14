@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Code``
      ~Code.children
      ~Code.classreftext
      ~Code.full_number
+     ~Code.newmetakeys
      ~Code.number_as
      ~Code.number_within
      ~Code.parent

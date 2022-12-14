@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Note``
      ~Note.children
      ~Note.classreftext
      ~Note.full_number
+     ~Note.newmetakeys
      ~Note.number_as
      ~Note.number_within
      ~Note.parent

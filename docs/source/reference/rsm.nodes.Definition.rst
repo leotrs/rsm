@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Definition``
      ~Definition.children
      ~Definition.classreftext
      ~Definition.full_number
+     ~Definition.newmetakeys
      ~Definition.number_as
      ~Definition.number_within
      ~Definition.parent

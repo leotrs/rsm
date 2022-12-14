@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.MathBlock``
      ~MathBlock.children
      ~MathBlock.classreftext
      ~MathBlock.full_number
+     ~MathBlock.newmetakeys
      ~MathBlock.number_as
      ~MathBlock.number_within
      ~MathBlock.parent

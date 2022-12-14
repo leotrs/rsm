@@ -60,13 +60,13 @@ jobs:
     - name: Make sure we can find tree-sitter shared libraries (MacOS)
       if: matrix.os == 'macos'
       run: |
-        ls ~/.tree-sitter
-        ls ~/Library/Caches/tree-sitter
+        ls -R ~/.tree-sitter/
+        ls -R ~/Library/Caches/
+        cp ~/.tree-sitter/bin/rsm.so $LD_LIBRARY_PATH
 
     - name: Make sure we can find tree-sitter shared libraries (Windows)
       if: matrix.os == 'windows'
       run: |
-        ls ~/.tree-sitter
         ls ~/Library/Caches/tree-sitter
 
 

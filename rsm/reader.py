@@ -1,4 +1,4 @@
-"""Read the contents of a *.rsm file."""
+"""Read the contents of a file containing RSM markup."""
 
 from pathlib import Path
 

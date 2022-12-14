@@ -234,6 +234,7 @@ class Node:
 
         See Also
         --------
+        :meth:`last_of_type`
         :meth:`first_ancestor_of_type`
 
         Examples
@@ -262,11 +263,28 @@ class Node:
     def last_of_type(
         self, cls: Type["Node"] | tuple[Type["Node"]], return_idx: bool = False
     ) -> Optional["Node"] | tuple[Optional["Node"], int | None]:
-        last = (None, None) if return_idx else None
-        for idx, child in enumerate(self.children):
+        """Last child of the specified type.
+
+        For details, see :meth:`first_of_type`.
+
+        Examples
+        --------
+        >>> p = nodes.Paragraph()
+        >>> p.append([nodes.Text('one'), nodes.Text('two')])
+        >>> p.last_of_type(nodes.Text)
+        Text(two)
+        >>> p.last_of_type(nodes.Text, return_idx=True)
+        (Text(two), 1)
+        >>> p.prepend(nodes.Span())
+        >>> p.children
+        (Span(parent=Paragraph), Text(one), Text(two))
+        >>> p.last_of_type(nodes.Text, return_idx=True)
+        (Text(two), 2)
+
+        """
+        for idx, child in enumerate(reversed(self.children)):
             if isinstance(child, cls):
-                last = (child, idx) if return_idx else child
-        return last
+                return (child, len(self.children) - idx - 1) if return_idx else child
 
     def prev_sibling(self, cls: Optional[Type["Node"]] = None) -> Optional["Node"]:
         if self.parent is None:

@@ -4,6 +4,7 @@ from rsm.nodes import (
     PendingReference,
     Reference,
     Text,
+    Span,
     Step,
     Proof,
     Subproof,
@@ -87,3 +88,25 @@ def test_prepend_order():
 def test_set_parent_to_none():
     node = rsm.nodes.Step()
     node.parent = None
+
+
+def test_first_of_type():
+    p = Paragraph()
+    t1, t2 = Text("one"), Text("two")
+    p.append([t1, t2])
+    assert t1 == p.first_of_type(Text)
+    assert (t1, 0) == p.first_of_type(Text, return_idx=True)
+    p.prepend(Span())
+    assert t1 == p.first_of_type(Text)
+    assert (t1, 1) == p.first_of_type(Text, return_idx=True)
+
+
+def test_last_of_type():
+    p = Paragraph()
+    t1, t2 = Text("one"), Text("two")
+    p.append([t1, t2])
+    assert t2 == p.last_of_type(Text)
+    assert (t2, 1) == p.last_of_type(Text, return_idx=True)
+    p.prepend(Span())
+    assert t2 == p.last_of_type(Text)
+    assert (t1, 2) == p.last_of_type(Text, return_idx=True)

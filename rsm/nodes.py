@@ -162,6 +162,7 @@ class Node:
 
     @property
     def parent(self) -> Optional["NodeWithChildren"]:
+        """The parent of this Node, or None."""
         return self._parent
 
     @parent.setter
@@ -180,8 +181,8 @@ class Node:
 
     @property
     def children(self) -> tuple:
-        # necessary for methods such as Nodes.traverse
-        return tuple()
+        """Tuple with this Node's children."""
+        return tuple()  # necessary for methods such as Nodes.traverse
 
     @property
     def number_within(self) -> Type["Node"]:

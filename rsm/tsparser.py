@@ -6,6 +6,7 @@ from icecream import ic
 from typing import cast, Callable
 import string
 import re
+import sys
 
 from .util import EscapedString
 import logging
@@ -68,7 +69,8 @@ class TSParser:
         # This needs to happen BEFORE we run this file.  Trying to set this env variable
         # from this interpreter session will not work.
         #
-        self._lang = tree_sitter.Language("rsm.so", "rsm")
+        library_fn = "rsm.dll" if sys.platform == "win32" else "rsm.so"
+        self._lang = tree_sitter.Language(library_fn, "rsm")
 
         self._parser = tree_sitter.Parser()
         self._parser.set_language(self._lang)

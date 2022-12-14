@@ -49,6 +49,7 @@ jobs:
 
     - name: Install rsm-markup
       run: |
+        poetry update
         poetry install --with dev
         poetry show
 

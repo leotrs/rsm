@@ -37,7 +37,6 @@ extensions = [
     "sphinx.ext.autosummary",  # generate nice tables and stub files
     "sphinx.ext.napoleon",  # support for numpy style docstrings
     "sphinx.ext.autodoc",  # autogenerate pages from docstrings
-    "sphinx_autodoc_typehints",  # use type hints to put type information in the generated docs
     "sphinx.ext.linkcode",  # 'source' links for each class and method
     "sphinx_copybutton",  # copy button on code blocks
 ]
@@ -50,17 +49,14 @@ from rsm import nodes
 """
 
 
+# autodoc
+autodoc_typehints = "description"
+
+
 # napoleon
 napoleon_numpy_docstring = True
+napoleon_use_rtype = False
 
-
-# sphinx_autodoc_typehints
-#
-# WARNING: For this extension to play nicely with napoleon, it MUST appear BEFORE
-# napoleon in the extensions list above.  See
-# https://github.com/tox-dev/sphinx-autodoc-typehints/issues/15
-#
-typehints_defaults = "braces-after"
 
 # autosummary
 autosummary_generate = True

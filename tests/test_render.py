@@ -1,3 +1,4 @@
+import sys
 import pytest
 import subprocess
 from textwrap import dedent
@@ -35,6 +36,8 @@ def test_render():
 
     cmd = " ".join(["rsm-render", f"'{src}'"])
     result = subprocess.run(cmd, stdout=subprocess.PIPE, check=True, shell=True)
+    if sys.platform == "win32":
+        result = result.replace("\r", "")
     output = result.stdout[result.stdout.find(b"<body>") :].decode("utf-8")
     assert output.strip() == want.strip()
 

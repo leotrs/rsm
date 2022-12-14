@@ -70,6 +70,8 @@ class TSParser:
         # from this interpreter session will not work.
         #
         if sys.platform == "win32":
+            import os
+
             os.add_dll_directory(str("~/.tree-sitter/bin"))
             library_fn = "rsm.dll"
         else:

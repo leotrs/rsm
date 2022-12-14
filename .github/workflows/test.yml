@@ -69,6 +69,7 @@ jobs:
       run: |
         ls -R ~/.tree-sitter
         cp ~/.tree-sitter/bin/rsm.dll .
+        ls .
 
 
     - name: Run unit tests

@@ -47,14 +47,68 @@ class Node:
     See Also
     --------
     :class:`Manuscript` : The class of the root node of a manuscript tree.
+    :class:`NodeWithChildren` : Subclass that implements methods to handle children.
+
+    Notes
+    -----
+    An instance of Node cannot have children.  Only instances of (subclasses) of
+    :class:`NodeWithChildren` may have them.  However, for the sake of having a uniform
+    API, Node implements the property :attr:`children`, which always returns an empty
+    tuple.
 
     """
 
     classreftext: ClassVar[str] = "{nodeclass} {number}"
-    """foobar"""
 
     possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = set()
+    """Allowed types of parent Nodes.
+
+    When setting the parent of a Node, this attribute is checked to see whether the
+    intended parent has an admissible type.
+
+    Examples
+    --------
+    This is a class variable
+
+    >>> nodes.Item.possible_parents == {nodes.Itemize, nodes.Enumerate, nodes.Contents}
+    True
+
+    This variable is checked when setting the parent directly.
+
+    >>> it = nodes.Item()
+    >>> it.parent = nodes.Paragraph()
+    Traceback (most recent call last):
+    rsm.nodes.RSMNodeError: Node of type <class 'rsm.nodes.Item'> cannot have parent of type <class 'rsm.nodes.Paragraph'>
+
+    This is also used when setting the parent in some other indirect way, for example
+    when calling :meth:`~NodeWithChildren.append` on the desired parent.
+
+    >>> nodes.Paragraph().append(it)
+    Traceback (most recent call last):
+    rsm.nodes.RSMNodeError: Node of type <class 'rsm.nodes.Item'> cannot have parent of type <class 'rsm.nodes.Paragraph'>
+
+    Allowed parents proceed without raising.
+
+    >>> nodes.Itemize().append(it)
+    Itemize(parent=None, [Item])
+
+    """
+
     autonumber: ClassVar[bool] = False
+    """Whether to automatically assign a number to this node during transform step.
+
+    Examples
+    --------
+    >>> msc, thm = nodes.Manuscript(), nodes.Theorem()
+    >>> thm.number is None
+    True
+    >>> tform = rsm.transformer.Transformer()
+    >>> tform.transform(msc.append(thm))  # doctest: +IGNORE_RESULT
+    >>> thm.number
+    1
+
+    """
+
     _number_within: ClassVar[Type["Node"] | None] = None
     _number_as: ClassVar[Type["Node"] | None] = None
     _newmetakeys: ClassVar[set] = {"label", "types", "nonum", "reftext"}

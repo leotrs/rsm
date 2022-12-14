@@ -6,6 +6,7 @@ Your first manuscript
 Create a new file called :code:`manuscript.rsm` and add the following contents
 
 .. code-block::
+   :caption: manuscript.rsm
 
    :manuscript:
 
@@ -33,6 +34,7 @@ Here, RSM is telling us that our manuscript is missing a title.  We can rectify 
 editing :code:`manuscript.rsm` as follows
 
 .. code-block::
+   :caption: manuscript.rsm
 
    :manuscript:
      :title: ReStructured Manuscripts

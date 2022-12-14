@@ -35,6 +35,7 @@ extensions = [
     "sphinx.ext.doctest",  # test snippets in docs
     "sphinx.ext.autosummary",  # generate nice tables and stub files
     "sphinx.ext.autodoc",  # autogenerate pages from docstrings
+    "sphinx_copybutton",  # copy button on code blocks
 ]
 
 # autosummary

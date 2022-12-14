@@ -1,5 +1,7 @@
-﻿rsm.tsparser
-============
+﻿tsparser
+========
+
+.. currentmodule:: rsm.tsparser
 
 .. automodule:: rsm.tsparser
 
@@ -9,28 +11,30 @@
 
    
    
-   .. rubric:: Functions
-
-   .. autosummary::
-   
-      make_ast
-      normalize_text
-      parse_meta_into_dict
-      parse_metakey_any
-      parse_metakey_bool
-      parse_metakey_list
-      parse_metakey_text
-      traverse
-   
-   
-
-   
-   
    .. rubric:: Classes
 
    .. autosummary::
+      :toctree: .
+      :nosignatures:
+      
+        TSParser
+      
    
-      TSParser
+   
+
+   
+   
+   .. rubric:: Functions
+
+   
+   .. autofunction:: make_ast
+   .. autofunction:: normalize_text
+   .. autofunction:: parse_meta_into_dict
+   .. autofunction:: parse_metakey_any
+   .. autofunction:: parse_metakey_bool
+   .. autofunction:: parse_metakey_list
+   .. autofunction:: parse_metakey_text
+   .. autofunction:: traverse
    
    
 

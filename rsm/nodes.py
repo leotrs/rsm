@@ -1,10 +1,4 @@
-"""
-nodes.py
---------
-
-Nodes that make up the Manuscript tree.
-
-"""
+"""Nodes that make up the Manuscript tree."""
 
 from typing import Any, Type, Optional, Callable, ClassVar, TypeVar, cast, Union
 from collections.abc import Iterable

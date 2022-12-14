@@ -1001,6 +1001,25 @@ sphinx = "*"
 test = ["pytest", "pytest-cov"]
 
 [[package]]
+name = "sphinx-copybutton"
+version = "0.5.1"
+description = "Add a copy button to each of your code cells."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "sphinx-copybutton-0.5.1.tar.gz", hash = "sha256:366251e28a6f6041514bfb5439425210418d6c750e98d3a695b73e56866a677a"},
+    {file = "sphinx_copybutton-0.5.1-py3-none-any.whl", hash = "sha256:0842851b5955087a7ec7fc870b622cb168618ad408dee42692e9a5c97d071da8"},
+]
+
+[package.dependencies]
+sphinx = ">=1.8"
+
+[package.extras]
+code-style = ["pre-commit (==2.12.1)"]
+rtd = ["ipython", "myst-nb", "sphinx", "sphinx-book-theme", "sphinx-examples"]
+
+[[package]]
 name = "sphinx-design"
 version = "0.3.0"
 description = "A sphinx extension for designing beautiful, view size responsive web components."
@@ -1266,4 +1285,4 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "3b52a32a45bf7691f9c6df6a6de7e88095e5b33bf19d59ff46ab5ae8f12dbab7"
+content-hash = "383c8f4ce40558dda4be7190849fe51e1990bd9411619da60ade73ab749f8be6"

@@ -5,6 +5,10 @@ from textwrap import dedent
 from importlib.metadata import version
 
 
+def cmd(src):
+    return " ".join(["rsm-render", f"'{src}'"])
+
+
 @pytest.mark.slow
 def test_render():
     src = ":manuscript:\n\nFoo.\n\nBar.\n\nBaz.\n\n::\n"
@@ -34,8 +38,7 @@ def test_render():
         """
     )
 
-    cmd = " ".join(["rsm-render", f"'{src}'"])
-    result = subprocess.run(cmd, stdout=subprocess.PIPE, check=True, shell=True)
+    result = subprocess.run(cmd(src), stdout=subprocess.PIPE, check=True, shell=True)
 
     # get rid of any logs appearing before the html body, and decode
     output = result.stdout[result.stdout.find(b"<body>") :].decode("utf-8")
@@ -49,14 +52,14 @@ def test_invalid_rsm():
     have = "test_file.rsm"
     with pytest.raises(subprocess.CalledProcessError):
         result = subprocess.run(
-            ["rsm-render", have], stdout=subprocess.PIPE, check=True
+            cmd(have), stdout=subprocess.PIPE, check=True, shell=True
         )
 
 
 @pytest.mark.slow
 def test_render_version():
     result = subprocess.run(
-        ["rsm-render", "--version"], stdout=subprocess.PIPE, check=True
+        "rsm-render --version", stdout=subprocess.PIPE, check=True, shell=True
     )
-    result = result.stdout.decode("utf-8").strip()
-    assert result == f"rsm-markup v{version('rsm-markup')}"
+    output = result.stdout.decode("utf-8").strip()
+    assert output == f"rsm-markup v{version('rsm-markup')}"

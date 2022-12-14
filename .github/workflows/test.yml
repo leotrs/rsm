@@ -67,6 +67,7 @@ jobs:
       if: matrix.os == 'windows'
       run: |
         ls -R ~/.tree-sitter
+        cp ~/.tree-sitter/bin/rsm.dll .
 
 
     - name: Run unit tests

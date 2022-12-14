@@ -11,7 +11,6 @@ def cmd(src):
 
 @pytest.mark.slow
 def test_render():
-    src = ":manuscript:\n\nFoo.\n\nBar.\n\nBaz.\n\n::\n"
     want = dedent(
         """
         <body>
@@ -37,6 +36,10 @@ def test_render():
         </body>
         """
     )
+    # In this source code, we use the \r\n line ending typical in Windows systems.  When
+    # running this test on a UNIX machine, they will simply be ignored.  When running on
+    # a Windows machine, the test will fail if they are not present.
+    src = ":manuscript:\r\n\r\nFoo.\r\n\r\nBar.\r\n\r\nBaz.\r\n\r\n::\r\n"
 
     result = subprocess.run(cmd(src), stdout=subprocess.PIPE, check=True, shell=True)
 

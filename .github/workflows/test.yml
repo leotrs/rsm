@@ -49,7 +49,7 @@ jobs:
 
     - name: Install rsm-markup
       run: |
-        poetry install
+        poetry install --with dev
         poetry show
 
     - name: Make sure we can find tree-sitter shared libraries (Ubuntu)

@@ -71,8 +71,10 @@ class TSParser:
         #
         if sys.platform == "win32":
             import os
+            from pathlib import Path
 
-            os.add_dll_directory(str("~/.tree-sitter/bin"))
+            path = Path.home() / ".tree-sitter" / "bin"
+            os.add_dll_directory(str(path))
             library_fn = "rsm.dll"
         else:
             library_fn = "rsm.so"

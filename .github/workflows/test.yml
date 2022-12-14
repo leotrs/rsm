@@ -61,14 +61,13 @@ jobs:
     - name: Make sure we can find tree-sitter shared libraries (MacOS)
       if: matrix.os == 'macos'
       run: |
-        ls -R ~/.tree-sitter/
         cp ~/.tree-sitter/bin/rsm.so "$LD_LIBRARY_PATH"
 
     - name: Make sure we can find tree-sitter shared libraries (Windows)
       if: matrix.os == 'windows'
       run: |
+        # Nothing to do as rsm/parser.py will handle the Windows case directly
         ls -R ~/.tree-sitter
-
 
     - name: Run unit tests
       run: |

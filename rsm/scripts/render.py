@@ -49,7 +49,7 @@ def parse_args() -> Namespace:
         "--version",
         help="rsm-markup version",
         action="version",
-        version=f'rsm-markup v{version("rsm")}',
+        version=f'rsm-markup v{version("rsm-markup")}',
     )
 
     args = parser.parse_args()

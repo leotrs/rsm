@@ -1,10 +1,4 @@
-"""
-reader.py
----------
-
-RSM Reader: take a file path and return a string.
-
-"""
+"""take a file path and return a string."""
 
 from pathlib import Path
 

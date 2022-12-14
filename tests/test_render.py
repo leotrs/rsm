@@ -33,7 +33,8 @@ def test_render():
         """
     )
 
-    result = subprocess.run(["rsm-render", src], stdout=subprocess.PIPE, check=True)
+    cmd = " ".join(["rsm-render", f"'{src}'"])
+    result = subprocess.run(cmd, stdout=subprocess.PIPE, check=True, shell=True)
     output = result.stdout[result.stdout.find(b"<body>") :].decode("utf-8")
     assert output.strip() == want.strip()
 

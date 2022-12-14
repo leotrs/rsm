@@ -76,13 +76,13 @@ def test_replace_self():
 def test_append_order():
     parent = rsm.nodes.NodeWithChildren()
     parent.append([rsm.nodes.Text("1"), rsm.nodes.Text("2"), rsm.nodes.Text("3")])
-    assert str(parent.children) == "(Text(1), Text(2), Text(3))"
+    assert str(parent.children) == "(Text('1'), Text('2'), Text('3'))"
 
 
 def test_prepend_order():
     parent = rsm.nodes.NodeWithChildren()
     parent.prepend([rsm.nodes.Text("1"), rsm.nodes.Text("2"), rsm.nodes.Text("3")])
-    assert str(parent.children) == "(Text(1), Text(2), Text(3))"
+    assert str(parent.children) == "(Text('1'), Text('2'), Text('3'))"
 
 
 def test_set_parent_to_none():

@@ -244,16 +244,16 @@ class Node:
         --------
         >>> p = nodes.Paragraph().append([nodes.Text('one'), nodes.Text('two')])
         >>> p.first_of_type(nodes.Text)
-        Text(one)
+        Text('one')
         >>> p.first_of_type(nodes.Text, return_idx=True)
-        (Text(one), 0)
+        (Text('one'), 0)
 
         The index counts all existing children.
 
         >>> p.prepend(nodes.Span())
         Paragraph(parent=None, [Span, Text, Text])
         >>> p.first_of_type(nodes.Text, return_idx=True)
-        (Text(one), 1)
+        (Text('one'), 1)
 
         """
         for idx, child in enumerate(self.children):
@@ -272,7 +272,7 @@ class Node:
         --------
         >>> p = nodes.Paragraph().append([Span(), nodes.Text('one'), nodes.Text('two')])
         >>> p.last_of_type(nodes.Text, return_idx=True)
-        (Text(two), 2)
+        (Text('two'), 2)
 
         """
         for idx, child in enumerate(reversed(self.children)):
@@ -376,8 +376,26 @@ class Node:
             replacement.parent = parent
 
     def remove_self(self) -> None:
-        self.parent.remove(self)
-        self.parent = None
+        """Remove this Node from its parent's children.
+
+        See Also
+        --------
+        :meth:`replace_self`
+
+        Examples
+        --------
+        >>> t = nodes.Text('remove me')
+        >>> p = nodes.Paragraph().append(t)
+        >>> p.children
+        (Text('remove me'),)
+        >>> t.remove_self()
+        >>> p.children
+        ()
+
+        """
+        if self.parent is not None:
+            self.parent.remove(self)
+            self.parent = None
 
     def ingest_dict_as_meta(self, meta: dict) -> None:
         if "reftext" in meta:
@@ -452,7 +470,7 @@ class Text(Node):
         self.asis = asis
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({textwrap.shorten(self.text, 60)})"
+        return f"{self.__class__.__name__}('{textwrap.shorten(self.text, 60)}')"
 
 
 class Error(Text):

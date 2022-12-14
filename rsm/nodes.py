@@ -214,7 +214,45 @@ class Node:
 
     def first_of_type(
         self, cls: Type["Node"] | tuple[Type["Node"]], return_idx: bool = False
-    ) -> Optional["Node"]:
+    ) -> Optional["Node"] | tuple[Optional["Node"], Optional[int]]:
+        """First child of the specified type.
+
+        Parameters
+        ----------
+        cls
+            Desired class of the child.
+        return_idx
+            Whether to return the index of the child among this node's children.
+
+        Returns
+        -------
+        The first child of the specified type, or None.  If `return_idx` is True, return
+        (child, index), or (None, None).
+
+
+        See Also
+        --------
+        :meth:`first_ancestor_of_type`
+
+        Examples
+        --------
+        >>> p = nodes.Paragraph()
+        >>> t1, t2 = nodes.Text('one'), nodes.Text('two')
+        >>> p.append([t1, t2])
+        >>> p.first_of_type(nodes.Text)
+        Text(one)
+        >>> p.first_of_type(nodes.Text, return_idx=True)
+        (Text(one), 0)
+
+        The index counts all existing children.
+
+        >>> p.prepend(nodes.Span())
+        >>> p.children
+        (Span(parent=Paragraph), Text(one), Text(two))
+        >>> p.first_of_type(nodes.Text, return_idx=True)
+        (Text(one), 1)
+
+        """
         for idx, child in enumerate(self.children):
             if isinstance(child, cls):
                 return (child, idx) if return_idx else child
@@ -273,7 +311,7 @@ class Node:
 
         See Also
         --------
-        :meth:`first_of_type` : First child of specified type.
+        :meth:`first_of_type`
 
         Examples
         --------
@@ -291,7 +329,7 @@ class Node:
         >>> t.first_ancestor_of_type(nodes.Paragraph)
         Paragraph(parent=None, [Span])
 
-        Always check the return value against `None`.
+        Always check the return value against ``None``.
 
         >>> t.first_ancestor_of_type(nodes.Manuscript) is None
         True

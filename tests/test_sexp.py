@@ -53,7 +53,7 @@ def test_with_meta():
     app = RSMProcessorApplication(plain=src)
     app.run()
     tree = app.transformer.tree
-    have = tree.sexp().strip()
+    have = tree.sexp(meta=True).strip()
     want = """
     (Manuscript { :reftext: Manuscript , :title: My Title }
       (Section { :reftext: Section 1, :title: My Section, :types: ['level-2'] }
@@ -77,7 +77,7 @@ def test_with_meta_ignore_reftext():
     app = RSMProcessorApplication(plain=src)
     app.run()
     tree = app.transformer.tree
-    have = tree.sexp(ignore_meta_keys=["reftext"]).strip()
+    have = tree.sexp(meta=True, ignore_meta_keys=["reftext"]).strip()
     want = """
     (Manuscript { :title: My Title }
       (Section { :title: My Section, :types: ['level-2'] }

@@ -103,7 +103,10 @@ class Node:
             return False
 
     def sexp(
-        self, tab_width: int = 2, meta: bool = True, ignore_meta_keys: set | None = None
+        self,
+        tab_width: int = 2,
+        meta: bool = False,
+        ignore_meta_keys: set | None = None,
     ) -> str:
         ignore_meta_keys = set() if ignore_meta_keys is None else set(ignore_meta_keys)
         exp = ""
@@ -239,8 +242,7 @@ class Node:
 
         Examples
         --------
-        >>> p = nodes.Paragraph()
-        >>> p.append([nodes.Text('one'), nodes.Text('two')])
+        >>> p = nodes.Paragraph().append([nodes.Text('one'), nodes.Text('two')])
         >>> p.first_of_type(nodes.Text)
         Text(one)
         >>> p.first_of_type(nodes.Text, return_idx=True)
@@ -249,8 +251,7 @@ class Node:
         The index counts all existing children.
 
         >>> p.prepend(nodes.Span())
-        >>> p.children
-        (Span(parent=Paragraph), Text(one), Text(two))
+        Paragraph(parent=None, [Span, Text, Text])
         >>> p.first_of_type(nodes.Text, return_idx=True)
         (Text(one), 1)
 
@@ -269,15 +270,7 @@ class Node:
 
         Examples
         --------
-        >>> p = nodes.Paragraph()
-        >>> p.append([nodes.Text('one'), nodes.Text('two')])
-        >>> p.last_of_type(nodes.Text)
-        Text(two)
-        >>> p.last_of_type(nodes.Text, return_idx=True)
-        (Text(two), 1)
-        >>> p.prepend(nodes.Span())
-        >>> p.children
-        (Span(parent=Paragraph), Text(one), Text(two))
+        >>> p = nodes.Paragraph().append([Span(), nodes.Text('one'), nodes.Text('two')])
         >>> p.last_of_type(nodes.Text, return_idx=True)
         (Text(two), 2)
 
@@ -336,15 +329,15 @@ class Node:
         --------
         Given the tree
 
-        >>> p = nodes.Paragraph()
-        >>> s = nodes.Span()
-        >>> t = nodes.Text('Hello.')
-        >>> s.append(t); p.append(s)
+        >>> t = nodes.Text('Hello')
+        >>> p = nodes.Paragraph().append(nodes.Span().append(t))
+        >>> print(p.sexp())
+        (Paragraph
+          (Span
+            (Text)))
 
         Find an ancestor of a desired type.
 
-        >>> t.parent
-        Span(parent=Paragraph, [Text])
         >>> t.first_ancestor_of_type(nodes.Paragraph)
         Paragraph(parent=None, [Span])
 
@@ -430,6 +423,7 @@ class NodeWithChildren(Node):
             child.parent = self
         else:
             raise TypeError("Can only append a Node or iterable of Nodes as children")
+        return self
 
     def prepend(self, child: Node | list) -> None:
         if isinstance(child, list):
@@ -442,6 +436,7 @@ class NodeWithChildren(Node):
             child.parent = self
         else:
             raise TypeError("Can only prepend a Node or iterable of Nodes as children")
+        return self
 
     def remove(self, child: "Node") -> None:
         ids = [id(c) for c in self._children]

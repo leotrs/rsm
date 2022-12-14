@@ -50,7 +50,10 @@ from rsm import nodes
 
 
 # autodoc
+# add typehints in description, not signature
 autodoc_typehints = "description"
+# only show typehints for parameters that are documented in the docstring
+autodoc_typehints_description_target = "documented"
 
 
 # napoleon

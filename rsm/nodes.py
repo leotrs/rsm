@@ -270,7 +270,7 @@ class Node:
 
         Examples
         --------
-        >>> p = nodes.Paragraph().append([Span(), nodes.Text('one'), nodes.Text('two')])
+        >>> p = nodes.Paragraph().append([nodes.Span(), nodes.Text('one'), nodes.Text('two')])
         >>> p.last_of_type(nodes.Text, return_idx=True)
         (Text('two'), 2)
 

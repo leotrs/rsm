@@ -1,4 +1,4 @@
-"""take a file path and return a string."""
+"""Read the contents of a *.rsm file."""
 
 from pathlib import Path
 
@@ -13,12 +13,10 @@ class Reader:
         self.src: str = ""
 
     def read(self, path: Path | None) -> str:
-        print("READING READING READING READING READING READING ")
         logger.info("Reading...")
         if not path:
             raise TypeError("Expected path, got None")
         self.path = Path(path)
         with open(path) as file:
             self.src = file.read()
-        # return PlainTextManuscript(self.src)
         return self.src

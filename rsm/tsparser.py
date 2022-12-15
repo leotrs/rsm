@@ -257,13 +257,9 @@ def normalize_text(root):
 
         # Strip both ends of a paragraph's text content.
         if isinstance(node, nodes.Paragraph):
-            if (first := node.first_of_type(nodes.Text)) and not first.prev_sibling(
-                object
-            ):
+            if (first := node.first_of_type(nodes.Text)) and not first.prev_sibling():
                 first.text = first.text.lstrip()
-            if (last := node.last_of_type(nodes.Text)) and not last.next_sibling(
-                object
-            ):
+            if (last := node.last_of_type(nodes.Text)) and not last.next_sibling():
                 last.text = last.text.rstrip()
 
         # At this point, the whitespace within non-paragraphs (e.g. Span, Claim) has

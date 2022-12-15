@@ -392,9 +392,9 @@ class Node:
         Parameters
         ----------
         cls
-            The type of the desired sibling.  If "self", search for the previous sibling
-            with the same type as this node.  If None, return the immediately preceding
-            sibling, regardless of its type.
+            The type of the desired sibling.  If ``"self"``, search for the previous
+            sibling with the same type as this node.  If ``None``, return the
+            immediately preceding sibling, regardless of its type.
 
         Returns
         -------
@@ -416,14 +416,30 @@ class Node:
         >>> t1.prev_sibling() is None
         True
 
+        Use ``"self"`` to find nodes of the same type.
+
+        >>> s2 = nodes.Span()
+        >>> p.append(s2)
+        Paragraph(parent=None, [Text, Span, Text, Span])
+        >>> s2.prev_sibling() is t2
+        True
+        >>> s2.prev_sibling("self") is s
+        True
+
         """
         if self.parent is None:
             return None
-        if cls is None:
-            cls = self.__class__
 
         ids = [id(c) for c in self.parent.children]
         index = ids.index(id(self))
+
+        if cls is None and index:
+            return self.parent.children[index - 1]
+
+        if cls == "self":
+            cls = self.__class__
+        cls = cast(Type["Node"], cls)
+
         prev_sibs = self.parent.children[:index]
         for node in reversed(prev_sibs):
             if isinstance(node, cls):
@@ -431,15 +447,30 @@ class Node:
         return None
 
     def next_sibling(self, cls: Optional[Type["Node"]] = None) -> Optional["Node"]:
+        """The next sibling, optionally of a specified type.
+
+        For details, see :meth:`prev_sibling`.
+
+        See Also
+        --------
+        :meth:`prev_sibling`
+
+        """
         if self.parent is None:
             return None
-        if cls is None:
-            cls = self.__class__
 
         ids = [id(c) for c in self.parent.children]
         index = ids.index(id(self))
+
+        if cls is None and index < len(self.parent.children) - 1:
+            return self.parent.children[index + 1]
+
+        if cls == "self":
+            cls = self.__class__
+        cls = cast(Type["Node"], cls)
+
         next_sibs = self.parent.children[index + 1 :]
-        for node in reversed(next_sibs):
+        for node in next_sibs:
             if isinstance(node, cls):
                 return node
         return None

@@ -110,3 +110,11 @@ def test_last_of_type():
     p.prepend(Span())
     assert t2 == p.last_of_type(Text)
     assert (t1, 2) == p.last_of_type(Text, return_idx=True)
+
+
+def test_prev_sibling():
+    p, s, t1, t2 = Paragraph(), Span(), Text("one"), Text("two")
+    p.append([t1, s, t2])
+    assert t2.prev_sibling() is s
+    assert t2.prev_sibling(Text) is t1
+    assert t1.prev_sibling() is None

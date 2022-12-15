@@ -797,6 +797,23 @@ tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
+name = "pytest-sugar"
+version = "0.9.6"
+description = "pytest-sugar is a plugin for pytest that changes the default look and feel of pytest (e.g. progressbar, show tests that fail instantly)."
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pytest-sugar-0.9.6.tar.gz", hash = "sha256:c4793495f3c32e114f0f5416290946c316eb96ad5a3684dcdadda9267e59b2b8"},
+    {file = "pytest_sugar-0.9.6-py2.py3-none-any.whl", hash = "sha256:30e5225ed2b3cc988a8a672f8bda0fc37bcd92d62e9273937f061112b3f2186d"},
+]
+
+[package.dependencies]
+packaging = ">=14.1"
+pytest = ">=2.9"
+termcolor = ">=1.1.0"
+
+[[package]]
 name = "pytz"
 version = "2022.6"
 description = "World timezone definitions, modern and historical"
@@ -1177,6 +1194,21 @@ anyio = ">=3.4.0,<5"
 full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart", "pyyaml"]
 
 [[package]]
+name = "termcolor"
+version = "2.1.1"
+description = "ANSI color formatting for output in terminal"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "termcolor-2.1.1-py3-none-any.whl", hash = "sha256:fa852e957f97252205e105dd55bbc23b419a70fec0085708fc0515e399f304fd"},
+    {file = "termcolor-2.1.1.tar.gz", hash = "sha256:67cee2009adc6449c650f6bcf3bdeed00c8ba53a8cda5362733c53e0a39fb70b"},
+]
+
+[package.extras]
+tests = ["pytest", "pytest-cov"]
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -1305,4 +1337,4 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "717075cbeaec2f5d89f9ce16438e4838f1b0f28bd768dec8303b5aa603b8a787"
+content-hash = "cb0654b2deb638d422b6f7380a975913c3737519b277225579941d52d1ba8f72"

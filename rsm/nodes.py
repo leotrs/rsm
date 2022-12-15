@@ -195,6 +195,109 @@ class Node:
         meta: bool = False,
         ignore_meta_keys: set | None = None,
     ) -> str:
+        """Represent this node as an S expression.
+
+        Parameters
+        ----------
+        tab_width
+            How many spaces of indentation at each depth level.
+        meta
+            Whether to include meta in the output.
+        ignore_meta_keys
+            When `meta` is ``True``, this controls which meta keys to include.
+
+        Returns
+        -------
+        A string representation of the Node and its descendents.
+
+        See Also
+        --------
+        :meth:`traverse`
+
+        Examples
+        --------
+        >>> p1, p2, p3, p4 = [nodes.Paragraph().append(nodes.Text()) for _ in range(4)]
+        >>> msc = nodes.Manuscript().append(
+        ...     [
+        ...         nodes.Section().append(p1),
+        ...         nodes.Section().append([nodes.Subsection().append([p2, p3])]),
+        ...         nodes.Section().append(p4),
+        ...     ]
+        ... )
+
+        By default, meta keys are not included in the output.
+
+        >>> print(msc.sexp())
+        (Manuscript
+          (Section
+            (Paragraph
+              (Text)))
+          (Section
+            (Subsection
+              (Paragraph
+                (Text))
+              (Paragraph
+                (Text))))
+          (Section
+            (Paragraph
+              (Text))))
+
+        :meth:`sexp` is useful when transforming the tree.
+
+        >>> p3.replace_self(nodes.Paragraph().append(nodes.Span(strong=True).append(nodes.Text())))
+        >>> print(msc.sexp())
+        (Manuscript
+          (Section
+            (Paragraph
+              (Text)))
+          (Section
+            (Subsection
+              (Paragraph
+                (Text))
+              (Paragraph
+                (Span
+                  (Text)))))
+          (Section
+            (Paragraph
+              (Text))))
+
+        Output meta for even more debugging information.
+
+        >>> print(msc.sexp(meta=True))
+        (Manuscript { :reftext: Manuscript  }
+          (Section { :reftext: Section  }
+            (Paragraph { :reftext: Paragraph  }
+              (Text { :reftext: Text  })))
+          (Section { :reftext: Section  }
+            (Subsection { :reftext: Section  }
+              (Paragraph { :reftext: Paragraph  }
+                (Text { :reftext: Text  }))
+              (Paragraph { :reftext: Paragraph  }
+                (Span { :reftext: Span , :strong: True }
+                  (Text { :reftext: Text  })))))
+          (Section { :reftext: Section  }
+            (Paragraph { :reftext: Paragraph  }
+              (Text { :reftext: Text  }))))
+
+        Use `ignore_meta_keys` for a less verbose output.
+
+        >>> print(msc.sexp(meta=True, ignore_meta_keys={"reftext"}))
+        (Manuscript {  }
+          (Section {  }
+            (Paragraph {  }
+              (Text {  })))
+          (Section {  }
+            (Subsection {  }
+              (Paragraph {  }
+                (Text {  }))
+              (Paragraph {  }
+                (Span { :strong: True }
+                  (Text {  })))))
+          (Section {  }
+            (Paragraph {  }
+              (Text {  }))))
+
+        """
         ignore_meta_keys = set() if ignore_meta_keys is None else set(ignore_meta_keys)
         exp = ""
         stack = [(0, self)]
@@ -498,7 +601,7 @@ class Node:
         --------
         Given the tree
 
-        >>> t = nodes.Text('Hello')
+        >>> t = nodes.Text("Hello")
         >>> p = nodes.Paragraph().append(nodes.Span().append(t))
         >>> print(p.sexp())
         (Paragraph
@@ -530,6 +633,53 @@ class Node:
         return ancestor  # the root node has parent None
 
     def replace_self(self, replacement: Union["Node", Iterable["Node"]]) -> None:
+        """Replace this node in its parent's children.
+
+        This is mostly useful during the transform step.
+
+        Parameters
+        ----------
+        replacement
+            The Node or Nodes to replace this with.
+
+        Raises
+        ------
+        RSMNodeError
+            If this Node's parent is None.
+
+        See Also
+        --------
+        :meth:`remove_self`
+
+        Examples
+        --------
+        Wrap a Text in a strong Span to render it in bold face.
+
+        >>> p, t = nodes.Paragraph(), nodes.Text("one")
+        >>> p.append(t)         # doctest: +IGNORE_RESULT
+        >>> p.children
+        (Text("one"),)
+        >>> s = nodes.Span(strong=True)
+        >>> t.replace_self(s)
+        >>> s.append(t)         # doctest: +IGNORE_RESULT
+        >>> p.children
+        (Span(parent=Paragraph, [Text]),)
+
+        Note the call to :meth:`replace_self` must happen *before* the Text is added to
+        the Span.
+
+        The following recipe uses the above example to wrap every Text within ``root``
+        in a strong Span.  Note this is done to each Text descendent of ``root``,
+        regardless of depth, and without any reference to their original immediate
+        parents.
+
+        >>> root = nodes.Manuscript().append(...)    # doctest: +SKIP
+        >>> for t in root.traverse(nodeclass=Text):  # doctest: +SKIP
+        ...     s = nodes.Span(strong=True)
+        ...     t.replace_self(s)
+        ...     s.append(t)
+
+        """
         if not self.parent:
             raise RSMNodeError("Can only call replace_self on a node with parent")
         ids = [id(c) for c in self.parent.children]

@@ -19,6 +19,9 @@ author = "leotrs"
 html_theme = "pydata_sphinx_theme"
 html_static_path = ["_static"]
 html_logo = "_static/rsm-tag.png"
+html_css_files = [
+    "custom.css",
+]
 
 # templates
 templates_path = ["_templates"]
@@ -90,7 +93,7 @@ html_theme_options = {
     # navbar options
     "navbar_start": ["navbar-logo"],
     "navbar_center": ["navbar-nav"],
-    "navbar_end": ["navbar-icon-links"],
+    "navbar_end": ["theme-switcher", "navbar-icon-links"],
     "navbar_persistent": ["search-button"],
     "icon_links": [
         {
@@ -116,6 +119,7 @@ html_context = {
     "github_repo": "<your-github-repo>",
     "github_version": "<your-branch>",
     "doc_path": "<path-from-root-to-your-docs>",
+    "default_mode": "auto",
 }
 
 

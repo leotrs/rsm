@@ -6,6 +6,10 @@ sections, paragraphs, special regions, figures, etc.
 This is opposed to the syntax tree output by tree-sitter whose nodes represent elements
 with syntactic meaning such as tags, delimiters, etc.
 
+There are two main classes of interest: :class:`Node` and :class:`NodeWithChildren`.
+They implement 95% of the entire API of this module.  Other classes are mostly dummy
+subclasses whose only purpose is to differentiate themselves from others via their type.
+
 """
 
 import logging

@@ -24,3 +24,9 @@ repos:
     rev: v4.4.0
     hooks:
     -   id: check-yaml
+
+-   repo: https://github.com/pycqa/isort
+    rev: 5.11.2
+    hooks:
+      - id: isort
+        name: isort (python)

@@ -8,13 +8,24 @@ with syntactic meaning such as tags, delimiters, etc.
 
 """
 
-from typing import Any, Type, Optional, Callable, ClassVar, TypeVar, cast, Union
+import logging
+import textwrap
 from collections.abc import Iterable
 from datetime import datetime
-from icecream import ic
-import textwrap
 from pathlib import Path
-import logging
+from typing import (
+    Any,
+    Callable,
+    ClassVar,
+    Generator,
+    Optional,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
+
+from icecream import ic
 
 logger = logging.getLogger("RSM").getChild("nodes")
 
@@ -407,9 +418,84 @@ class Node:
     def traverse(
         self,
         *,
-        condition: Callable = lambda n: True,
+        condition: Callable[["Node"], bool] | None = None,
         nodeclass: NodeSubType | None = None,
-    ) -> Iterable[NodeSubType]:
+    ) -> Generator[NodeSubType, None, None]:
+        """Generate the descendents of this Node in depth-first order.
+
+        By default, yield this node and then every descendent in depth-first order.  If
+        `condition` is given, yield only those Nodes that satisfy the condition.  If
+        `nodeclass` is given, it overrides `condition` and only those descendents of the
+        specified type are yielded.
+
+        Parameters
+        ----------
+        condition
+            Callable that receives a single argument, a descendent Node, and returns
+            whether it should be yielded.
+        nodeclass
+            A Node subclass of the desired yielded descendent Nodes.  If not None,
+            `condition` is ignored.
+
+        Yields
+        -------
+        :class:`Node`
+
+        See Also
+        --------
+        :meth:`sexp`
+
+        Notes
+        -----
+        Passing ``nodeclass=<NodeSubType>`` is equivalent to passing ``condition=lambda
+        n: isinstance(n, <NodeSubType>)``.
+
+        Examples
+        --------
+        >>> p1, p2, p3, p4 = [nodes.Paragraph().append(nodes.Text()) for _ in range(4)]
+        >>> msc = nodes.Manuscript().append(
+        ...     [
+        ...         nodes.Section().append(p1),
+        ...         nodes.Section().append([nodes.Subsection().append([p2, p3])]),
+        ...         nodes.Section().append(p4),
+        ...     ]
+        ... )
+
+        Visit every descendent, including self.
+
+        >>> for n in msc.traverse(): print(n)
+        Manuscript(parent=None, [Section, Section, Section])
+        Section(parent=Manuscript, [Paragraph])
+        Paragraph(parent=Section, [Text])
+        Text("")
+        Section(parent=Manuscript, [Subsection])
+        Subsection(parent=Section, [Paragraph, Paragraph])
+        Paragraph(parent=Subsection, [Text])
+        Text("")
+        Paragraph(parent=Subsection, [Text])
+        Text("")
+        Section(parent=Manuscript, [Paragraph])
+        Paragraph(parent=Section, [Text])
+        Text("")
+
+        Use `nodeclass` to yield only nodes of a specified type.  Note that subclasses
+        are also yielded.
+
+        >>> for n in msc.traverse(nodeclass=nodes.Section): print(n)
+        Section(parent=Manuscript, [Paragraph])
+        Section(parent=Manuscript, [Subsection])
+        Subsection(parent=Section, [Paragraph, Paragraph])
+        Section(parent=Manuscript, [Paragraph])
+
+        Yield only nodes satisfying an arbitrary condition
+
+        >>> msc.children[1].nonum = True
+        >>> for n in msc.traverse(condition=lambda n: n.nonum): print(n)
+        Section(nonum=True, parent=Manuscript, [Subsection])
+
+        """
+        if condition is None:
+            condition = lambda n: True
         if nodeclass is not None:
             if issubclass(nodeclass, Node):
                 condition = lambda n: isinstance(n, nodeclass)
@@ -657,16 +743,28 @@ class Node:
 
         >>> p, t = nodes.Paragraph(), nodes.Text("one")
         >>> p.append(t)         # doctest: +IGNORE_RESULT
-        >>> p.children
-        (Text("one"),)
+        >>> print(p.sexp())
+        (Paragraph
+          (Text))
         >>> s = nodes.Span(strong=True)
         >>> t.replace_self(s)
         >>> s.append(t)         # doctest: +IGNORE_RESULT
-        >>> p.children
-        (Span(parent=Paragraph, [Text]),)
+        >>> print(p.sexp())
+        (Paragraph
+          (Span
+            (Text)))
 
         Note the call to :meth:`replace_self` must happen *before* the Text is added to
         the Span.
+
+        May also replace with a list of Nodes.
+
+        >>> t.replace_self([nodes.Text("new one"), nodes.Text("two")])
+        >>> print(p.sexp())
+        (Paragraph
+          (Span
+            (Text)
+            (Text)))
 
         The following recipe uses the above example to wrap every Text within ``root``
         in a strong Span.  Note this is done to each Text descendent of ``root``,

@@ -22,13 +22,4 @@ Qualified name: ``rsm.nodes.Table``
    .. autosummary::
      
      ~Table.autonumber
-     ~Table.children
-     ~Table.classreftext
-     ~Table.full_number
-     ~Table.newmetakeys
-     ~Table.number_as
-     ~Table.number_within
-     ~Table.parent
-     ~Table.possible_parents
-     ~Table.reftext
    

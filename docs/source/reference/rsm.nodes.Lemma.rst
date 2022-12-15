@@ -21,15 +21,4 @@ Qualified name: ``rsm.nodes.Lemma``
 
    .. autosummary::
      
-     ~Lemma.autonumber
-     ~Lemma.children
-     ~Lemma.classreftext
-     ~Lemma.full_number
-     ~Lemma.newmetakeys
-     ~Lemma.number_as
-     ~Lemma.number_within
-     ~Lemma.parent
-     ~Lemma.possible_parents
-     ~Lemma.reftext
-     ~Lemma.title
    

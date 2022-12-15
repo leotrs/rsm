@@ -21,5 +21,4 @@ Qualified name: ``rsm.translator.AppendKeyword``
 
    .. autosummary::
      
-     ~AppendKeyword.defers
    

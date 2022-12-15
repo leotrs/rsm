@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Proof``
 
    .. autosummary::
      
-     ~Proof.autonumber
-     ~Proof.children
-     ~Proof.classreftext
-     ~Proof.full_number
-     ~Proof.newmetakeys
-     ~Proof.number_as
-     ~Proof.number_within
-     ~Proof.parent
-     ~Proof.possible_parents
-     ~Proof.reftext
    

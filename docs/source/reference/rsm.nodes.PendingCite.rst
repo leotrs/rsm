@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.PendingCite``
 
    .. autosummary::
      
-     ~PendingCite.autonumber
-     ~PendingCite.children
-     ~PendingCite.classreftext
-     ~PendingCite.full_number
-     ~PendingCite.newmetakeys
-     ~PendingCite.number_as
-     ~PendingCite.number_within
-     ~PendingCite.parent
-     ~PendingCite.possible_parents
-     ~PendingCite.reftext
    

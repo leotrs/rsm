@@ -22,5 +22,4 @@ Qualified name: ``rsm.translator.EditCommandBatch``
 
    .. autosummary::
      
-     ~EditCommandBatch.defers
    

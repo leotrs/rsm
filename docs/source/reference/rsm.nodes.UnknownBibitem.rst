@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.UnknownBibitem``
 
    .. autosummary::
      
-     ~UnknownBibitem.autonumber
-     ~UnknownBibitem.children
-     ~UnknownBibitem.classreftext
-     ~UnknownBibitem.full_number
-     ~UnknownBibitem.newmetakeys
-     ~UnknownBibitem.number_as
-     ~UnknownBibitem.number_within
-     ~UnknownBibitem.parent
-     ~UnknownBibitem.possible_parents
-     ~UnknownBibitem.reftext
    

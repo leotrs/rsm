@@ -21,14 +21,5 @@ Qualified name: ``rsm.nodes.Caption``
 
    .. autosummary::
      
-     ~Caption.autonumber
-     ~Caption.children
-     ~Caption.classreftext
-     ~Caption.full_number
-     ~Caption.newmetakeys
-     ~Caption.number_as
-     ~Caption.number_within
-     ~Caption.parent
      ~Caption.possible_parents
-     ~Caption.reftext
    

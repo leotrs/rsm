@@ -21,15 +21,4 @@ Qualified name: ``rsm.nodes.Proposition``
 
    .. autosummary::
      
-     ~Proposition.autonumber
-     ~Proposition.children
-     ~Proposition.classreftext
-     ~Proposition.full_number
-     ~Proposition.newmetakeys
-     ~Proposition.number_as
-     ~Proposition.number_within
-     ~Proposition.parent
-     ~Proposition.possible_parents
-     ~Proposition.reftext
-     ~Proposition.title
    

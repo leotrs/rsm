@@ -23,5 +23,4 @@ Qualified name: ``rsm.translator.AppendText``
 
    .. autosummary::
      
-     ~AppendText.defers
    

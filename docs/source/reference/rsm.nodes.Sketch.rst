@@ -21,14 +21,5 @@ Qualified name: ``rsm.nodes.Sketch``
 
    .. autosummary::
      
-     ~Sketch.autonumber
-     ~Sketch.children
-     ~Sketch.classreftext
-     ~Sketch.full_number
-     ~Sketch.newmetakeys
-     ~Sketch.number_as
-     ~Sketch.number_within
-     ~Sketch.parent
      ~Sketch.possible_parents
-     ~Sketch.reftext
    

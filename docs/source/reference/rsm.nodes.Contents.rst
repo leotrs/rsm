@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Contents``
 
    .. autosummary::
      
-     ~Contents.autonumber
-     ~Contents.children
-     ~Contents.classreftext
-     ~Contents.full_number
-     ~Contents.newmetakeys
-     ~Contents.number_as
-     ~Contents.number_within
-     ~Contents.parent
-     ~Contents.possible_parents
-     ~Contents.reftext
    

@@ -21,14 +21,5 @@ Qualified name: ``rsm.nodes.Abstract``
 
    .. autosummary::
      
-     ~Abstract.autonumber
-     ~Abstract.children
-     ~Abstract.classreftext
-     ~Abstract.full_number
      ~Abstract.newmetakeys
-     ~Abstract.number_as
-     ~Abstract.number_within
-     ~Abstract.parent
-     ~Abstract.possible_parents
-     ~Abstract.reftext
    

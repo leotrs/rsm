@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Draft``
 
    .. autosummary::
      
-     ~Draft.autonumber
-     ~Draft.children
-     ~Draft.classreftext
-     ~Draft.full_number
-     ~Draft.newmetakeys
-     ~Draft.number_as
-     ~Draft.number_within
-     ~Draft.parent
-     ~Draft.possible_parents
-     ~Draft.reftext
    

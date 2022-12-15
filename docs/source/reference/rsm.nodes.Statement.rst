@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Statement``
 
    .. autosummary::
      
-     ~Statement.autonumber
-     ~Statement.children
-     ~Statement.classreftext
-     ~Statement.full_number
-     ~Statement.newmetakeys
-     ~Statement.number_as
-     ~Statement.number_within
-     ~Statement.parent
-     ~Statement.possible_parents
-     ~Statement.reftext
    

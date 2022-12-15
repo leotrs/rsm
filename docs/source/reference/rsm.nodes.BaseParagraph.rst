@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.BaseParagraph``
 
    .. autosummary::
      
-     ~BaseParagraph.autonumber
-     ~BaseParagraph.children
-     ~BaseParagraph.classreftext
-     ~BaseParagraph.full_number
-     ~BaseParagraph.newmetakeys
-     ~BaseParagraph.number_as
-     ~BaseParagraph.number_within
-     ~BaseParagraph.parent
-     ~BaseParagraph.possible_parents
-     ~BaseParagraph.reftext
    

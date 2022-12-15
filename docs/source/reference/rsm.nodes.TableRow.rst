@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.TableRow``
 
    .. autosummary::
      
-     ~TableRow.autonumber
-     ~TableRow.children
-     ~TableRow.classreftext
-     ~TableRow.full_number
-     ~TableRow.newmetakeys
-     ~TableRow.number_as
-     ~TableRow.number_within
-     ~TableRow.parent
-     ~TableRow.possible_parents
-     ~TableRow.reftext
    

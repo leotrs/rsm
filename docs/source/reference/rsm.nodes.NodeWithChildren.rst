@@ -25,14 +25,5 @@ Qualified name: ``rsm.nodes.NodeWithChildren``
 
    .. autosummary::
      
-     ~NodeWithChildren.autonumber
      ~NodeWithChildren.children
-     ~NodeWithChildren.classreftext
-     ~NodeWithChildren.full_number
-     ~NodeWithChildren.newmetakeys
-     ~NodeWithChildren.number_as
-     ~NodeWithChildren.number_within
-     ~NodeWithChildren.parent
-     ~NodeWithChildren.possible_parents
-     ~NodeWithChildren.reftext
    

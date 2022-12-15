@@ -22,5 +22,4 @@ Qualified name: ``rsm.translator.AppendExternalTree``
 
    .. autosummary::
      
-     ~AppendExternalTree.defers
    

@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Itemize``
 
    .. autosummary::
      
-     ~Itemize.autonumber
-     ~Itemize.children
-     ~Itemize.classreftext
-     ~Itemize.full_number
-     ~Itemize.newmetakeys
-     ~Itemize.number_as
-     ~Itemize.number_within
-     ~Itemize.parent
-     ~Itemize.possible_parents
-     ~Itemize.reftext
    

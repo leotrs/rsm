@@ -25,7 +25,7 @@ Qualified name: ``{{ fullname | escape }}``
    .. rubric:: {{ _('Attributes') }}
 
    .. autosummary::
-     {% for item in attributes %}
+     {% for item in attributes if item not in inherited_members %}
      ~{{ name }}.{{ item }}
      {%- endfor %}
    {%- endif %}

@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Paragraph``
 
    .. autosummary::
      
-     ~Paragraph.autonumber
-     ~Paragraph.children
-     ~Paragraph.classreftext
-     ~Paragraph.full_number
-     ~Paragraph.newmetakeys
-     ~Paragraph.number_as
-     ~Paragraph.number_within
-     ~Paragraph.parent
-     ~Paragraph.possible_parents
-     ~Paragraph.reftext
    

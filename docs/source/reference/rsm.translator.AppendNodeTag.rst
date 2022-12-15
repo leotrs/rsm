@@ -21,5 +21,4 @@ Qualified name: ``rsm.translator.AppendNodeTag``
 
    .. autosummary::
      
-     ~AppendNodeTag.defers
    

@@ -21,5 +21,4 @@ Qualified name: ``rsm.translator.AppendHalmos``
 
    .. autosummary::
      
-     ~AppendHalmos.defers
    

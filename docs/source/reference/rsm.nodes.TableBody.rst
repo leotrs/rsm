@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.TableBody``
 
    .. autosummary::
      
-     ~TableBody.autonumber
-     ~TableBody.children
-     ~TableBody.classreftext
-     ~TableBody.full_number
-     ~TableBody.newmetakeys
-     ~TableBody.number_as
-     ~TableBody.number_within
-     ~TableBody.parent
-     ~TableBody.possible_parents
-     ~TableBody.reftext
    

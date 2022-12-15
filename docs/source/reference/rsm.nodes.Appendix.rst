@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Appendix``
 
    .. autosummary::
      
-     ~Appendix.autonumber
-     ~Appendix.children
-     ~Appendix.classreftext
-     ~Appendix.full_number
-     ~Appendix.newmetakeys
-     ~Appendix.number_as
-     ~Appendix.number_within
-     ~Appendix.parent
-     ~Appendix.possible_parents
-     ~Appendix.reftext
    

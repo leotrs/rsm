@@ -22,14 +22,5 @@ Qualified name: ``rsm.nodes.Span``
    .. autosummary::
      
      ~Span.attr_to_tag
-     ~Span.autonumber
-     ~Span.children
-     ~Span.classreftext
-     ~Span.full_number
      ~Span.newmetakeys
-     ~Span.number_as
-     ~Span.number_within
-     ~Span.parent
-     ~Span.possible_parents
-     ~Span.reftext
    

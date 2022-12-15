@@ -23,5 +23,4 @@ Qualified name: ``rsm.translator.AppendOpenTagManualClose``
 
    .. autosummary::
      
-     ~AppendOpenTagManualClose.defers
    

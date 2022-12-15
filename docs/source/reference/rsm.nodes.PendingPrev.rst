@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.PendingPrev``
 
    .. autosummary::
      
-     ~PendingPrev.autonumber
-     ~PendingPrev.children
-     ~PendingPrev.classreftext
-     ~PendingPrev.full_number
-     ~PendingPrev.newmetakeys
-     ~PendingPrev.number_as
-     ~PendingPrev.number_within
-     ~PendingPrev.parent
-     ~PendingPrev.possible_parents
-     ~PendingPrev.reftext
    

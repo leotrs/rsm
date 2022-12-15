@@ -129,9 +129,19 @@ class Node:
 
     Examples
     --------
+    The keys in `newmetakeys` are added to the meta keys of the parent class.
+
     >>> nodes.Heading.newmetakeys
     {'title'}
     >>> nodes.Heading.metakeys() == nodes.Node.metakeys() | {"title"}
+    True
+
+    The intended use, and only supported use, of `newmetakeys` is at the time of class
+    definition.
+
+    >>> class NewNode(nodes.Node):
+    ...     newmetakeys = {"newkey"}
+    >>> NewNode.metakeys() == nodes.Node.metakeys() | {"newkey"}
     True
 
     """
@@ -374,7 +384,39 @@ class Node:
             if isinstance(child, cls):
                 return (child, len(self.children) - idx - 1) if return_idx else child
 
-    def prev_sibling(self, cls: Optional[Type["Node"]] = None) -> Optional["Node"]:
+    def prev_sibling(
+        self, cls: Union[Type["Node"], str, None] = None
+    ) -> Optional["Node"]:
+        """The previous sibling, optionally of a specified type.
+
+        Parameters
+        ----------
+        cls
+            The type of the desired sibling.  If "self", search for the previous sibling
+            with the same type as this node.  If None, return the immediately preceding
+            sibling, regardless of its type.
+
+        Returns
+        -------
+            The desired sibling, or None.
+
+        See Also
+        --------
+        :meth:`first_ancestor_of_type`
+        :meth:`next_sibling`
+
+        Examples
+        --------
+        >>> p, s, t1, t2 = nodes.Paragraph(), nodes.Span(), nodes.Text("one"), nodes.Text("two")
+        >>> p.append([t1, s, t2])  # doctest: +IGNORE_RESULT
+        >>> t2.prev_sibling()
+        Span(parent=Paragraph)
+        >>> t2.prev_sibling(nodes.Text)
+        Text("one")
+        >>> t1.prev_sibling() is None
+        True
+
+        """
         if self.parent is None:
             return None
         if cls is None:
@@ -418,6 +460,7 @@ class Node:
 
         See Also
         --------
+        :attr:`parent`
         :meth:`first_of_type`
 
         Examples
@@ -519,7 +562,8 @@ class NodeWithChildren(Node):
         return ret[:-1] + ", " + children_repr + ")"
 
     @property
-    def children(self) -> tuple:
+    def children(self) -> tuple[Node, ...]:
+        """Tuple with this Node's children."""
         return tuple(self._children)
 
     def clear(self) -> None:
@@ -528,20 +572,83 @@ class NodeWithChildren(Node):
             c.parent = None
         self._children = []
 
-    def append(self, child: Node | list) -> None:
+    def append(self, child: Node | Iterable[Node]) -> "NodeWithChildren":
+        """Add a child or children after all current children.
+
+        Parameters
+        ----------
+        child
+            Node or iterable or nodes to append.
+
+        Returns
+        -------
+        self
+
+        Raises
+        ------
+        RSMNodeError
+            When attempting to add as a child a node that already has a parent.
+
+        See Also
+        --------
+        :meth:`prepend`
+
+        Examples
+        --------
+
+        Append one or many children.
+
+        >>> p, t1, t2, t3 = nodes.Paragraph(), nodes.Text("one"), nodes.Text("two"), nodes.Text("three")
+        >>> p.append(t1)        # doctest: +IGNORE_RESULT
+        >>> p.append([t2, t3])  # doctest: +IGNORE_RESULT
+        >>> p.children
+        (Text("one"), Text("two"), Text("three"))
+
+        Calls can be chained.
+
+        >>> p, t1, t2, t3 = nodes.Paragraph(), nodes.Text("one"), nodes.Text("two"), nodes.Text("three")
+        >>> p.append(t1).append([t2, t3])  # doctest: +IGNORE_RESULT
+        >>> p.children
+        (Text("one"), Text("two"), Text("three"))
+
+        Will raise when trying to append a node that already has a parent.
+
+        >>> p2 = nodes.Paragraph()
+        >>> p2.append(t1)
+        Traceback (most recent call last):
+        rsm.nodes.RSMNodeError: Attempting to append child to a new parent
+
+        This is the case even when appending to the same parent.
+
+        >>> t4 = nodes.Text("four")
+        >>> p2.append(t4)       # doctest: +IGNORE_RESULT
+        >>> p2.append(t4)
+        Traceback (most recent call last):
+        rsm.nodes.RSMNodeError: Attempting to append child to a new parent
+
+        """
         if isinstance(child, Iterable):
             for c in child:
                 self.append(c)
         elif isinstance(child, Node):
-            if child.parent and child.parent is not self:
-                raise RSMNodeError("Attempting to append child to a different parent")
+            if child.parent:
+                raise RSMNodeError("Attempting to append child to a new parent")
             self._children.append(child)
             child.parent = self
         else:
             raise TypeError("Can only append a Node or iterable of Nodes as children")
         return self
 
-    def prepend(self, child: Node | list) -> None:
+    def prepend(self, child: Node | Iterable[Node]) -> None:
+        """Add a child or children before all current children.
+
+        For details, see :meth:`append`.
+
+        See Also
+        --------
+        :meth:`append`
+
+        """
         if isinstance(child, list):
             for c in reversed(child):
                 self.prepend(c)
@@ -802,15 +909,15 @@ class Cite(Node):
 
 
 class Statement(NodeWithChildren):
-    newmetakeys: ClassVar[set] = set()
+    pass
 
 
 class Proof(NodeWithChildren):
-    newmetakeys: ClassVar[set] = set()
+    pass
 
 
 class Subproof(NodeWithChildren):  # importantly, NOT a subclass of Proof!
-    newmetakeys: ClassVar[set] = set()
+    pass
 
 
 class Sketch(NodeWithChildren):
@@ -849,22 +956,18 @@ class Theorem(Heading):
 
 class Lemma(Theorem):
     _number_as = Theorem
-    newmetakeys: ClassVar[set] = set()
 
 
 class Proposition(Theorem):
     _number_as = Theorem
-    newmetakeys: ClassVar[set] = set()
 
 
 class Remark(Theorem):
     _number_as = Theorem
-    newmetakeys: ClassVar[set] = set()
 
 
 class Definition(Theorem):
     _number_as = Theorem
-    newmetakeys: ClassVar[set] = set()
 
 
 class Bibliography(NodeWithChildren):

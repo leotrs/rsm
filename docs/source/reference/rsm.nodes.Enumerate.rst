@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Enumerate``
 
    .. autosummary::
      
-     ~Enumerate.autonumber
-     ~Enumerate.children
-     ~Enumerate.classreftext
-     ~Enumerate.full_number
-     ~Enumerate.newmetakeys
-     ~Enumerate.number_as
-     ~Enumerate.number_within
-     ~Enumerate.parent
-     ~Enumerate.possible_parents
-     ~Enumerate.reftext
    

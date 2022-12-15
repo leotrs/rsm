@@ -22,5 +22,4 @@ Qualified name: ``rsm.translator.AppendBatch``
 
    .. autosummary::
      
-     ~AppendBatch.defers
    

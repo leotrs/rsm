@@ -21,5 +21,4 @@ Qualified name: ``rsm.translator.AppendHeading``
 
    .. autosummary::
      
-     ~AppendHeading.defers
    

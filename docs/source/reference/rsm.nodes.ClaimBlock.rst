@@ -21,16 +21,4 @@ Qualified name: ``rsm.nodes.ClaimBlock``
 
    .. autosummary::
      
-     ~ClaimBlock.autonumber
-     ~ClaimBlock.children
-     ~ClaimBlock.classreftext
-     ~ClaimBlock.full_number
-     ~ClaimBlock.keyword
-     ~ClaimBlock.kind_to_keyword
-     ~ClaimBlock.newmetakeys
-     ~ClaimBlock.number_as
-     ~ClaimBlock.number_within
-     ~ClaimBlock.parent
-     ~ClaimBlock.possible_parents
-     ~ClaimBlock.reftext
    

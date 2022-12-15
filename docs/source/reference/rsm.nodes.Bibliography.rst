@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Bibliography``
 
    .. autosummary::
      
-     ~Bibliography.autonumber
-     ~Bibliography.children
-     ~Bibliography.classreftext
-     ~Bibliography.full_number
-     ~Bibliography.newmetakeys
-     ~Bibliography.number_as
-     ~Bibliography.number_within
-     ~Bibliography.parent
-     ~Bibliography.possible_parents
-     ~Bibliography.reftext
    

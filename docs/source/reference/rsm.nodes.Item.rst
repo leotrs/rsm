@@ -21,14 +21,5 @@ Qualified name: ``rsm.nodes.Item``
 
    .. autosummary::
      
-     ~Item.autonumber
-     ~Item.children
-     ~Item.classreftext
-     ~Item.full_number
-     ~Item.newmetakeys
-     ~Item.number_as
-     ~Item.number_within
-     ~Item.parent
      ~Item.possible_parents
-     ~Item.reftext
    

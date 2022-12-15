@@ -22,13 +22,5 @@ Qualified name: ``rsm.nodes.Step``
    .. autosummary::
      
      ~Step.autonumber
-     ~Step.children
-     ~Step.classreftext
-     ~Step.full_number
-     ~Step.newmetakeys
-     ~Step.number_as
-     ~Step.number_within
-     ~Step.parent
      ~Step.possible_parents
-     ~Step.reftext
    

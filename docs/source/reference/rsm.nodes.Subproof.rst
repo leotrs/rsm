@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Subproof``
 
    .. autosummary::
      
-     ~Subproof.autonumber
-     ~Subproof.children
-     ~Subproof.classreftext
-     ~Subproof.full_number
-     ~Subproof.newmetakeys
-     ~Subproof.number_as
-     ~Subproof.number_within
-     ~Subproof.parent
-     ~Subproof.possible_parents
-     ~Subproof.reftext
    

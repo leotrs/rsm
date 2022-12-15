@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.TableDatum``
 
    .. autosummary::
      
-     ~TableDatum.autonumber
-     ~TableDatum.children
-     ~TableDatum.classreftext
-     ~TableDatum.full_number
-     ~TableDatum.newmetakeys
-     ~TableDatum.number_as
-     ~TableDatum.number_within
-     ~TableDatum.parent
-     ~TableDatum.possible_parents
-     ~TableDatum.reftext
    

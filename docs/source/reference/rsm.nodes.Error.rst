@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Error``
 
    .. autosummary::
      
-     ~Error.autonumber
-     ~Error.children
-     ~Error.classreftext
-     ~Error.full_number
-     ~Error.newmetakeys
-     ~Error.number_as
-     ~Error.number_within
-     ~Error.parent
-     ~Error.possible_parents
-     ~Error.reftext
    

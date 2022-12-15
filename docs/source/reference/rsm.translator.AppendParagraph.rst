@@ -21,5 +21,4 @@ Qualified name: ``rsm.translator.AppendParagraph``
 
    .. autosummary::
      
-     ~AppendParagraph.defers
    

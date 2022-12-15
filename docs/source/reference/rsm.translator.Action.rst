@@ -21,7 +21,4 @@ Qualified name: ``rsm.translator.Action``
 
    .. autosummary::
      
-     ~Action.action
-     ~Action.method
-     ~Action.node
    

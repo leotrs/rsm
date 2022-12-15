@@ -21,15 +21,4 @@ Qualified name: ``rsm.nodes.Remark``
 
    .. autosummary::
      
-     ~Remark.autonumber
-     ~Remark.children
-     ~Remark.classreftext
-     ~Remark.full_number
-     ~Remark.newmetakeys
-     ~Remark.number_as
-     ~Remark.number_within
-     ~Remark.parent
-     ~Remark.possible_parents
-     ~Remark.reftext
-     ~Remark.title
    

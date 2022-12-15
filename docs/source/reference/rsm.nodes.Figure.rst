@@ -22,13 +22,5 @@ Qualified name: ``rsm.nodes.Figure``
    .. autosummary::
      
      ~Figure.autonumber
-     ~Figure.children
-     ~Figure.classreftext
-     ~Figure.full_number
      ~Figure.newmetakeys
-     ~Figure.number_as
-     ~Figure.number_within
-     ~Figure.parent
-     ~Figure.possible_parents
-     ~Figure.reftext
    

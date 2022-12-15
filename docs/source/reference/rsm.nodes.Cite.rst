@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.Cite``
 
    .. autosummary::
      
-     ~Cite.autonumber
-     ~Cite.children
-     ~Cite.classreftext
-     ~Cite.full_number
-     ~Cite.newmetakeys
-     ~Cite.number_as
-     ~Cite.number_within
-     ~Cite.parent
-     ~Cite.possible_parents
-     ~Cite.reftext
    

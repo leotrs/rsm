@@ -22,13 +22,6 @@ Qualified name: ``rsm.nodes.Bibitem``
    .. autosummary::
      
      ~Bibitem.autonumber
-     ~Bibitem.children
      ~Bibitem.classreftext
-     ~Bibitem.full_number
      ~Bibitem.newmetakeys
-     ~Bibitem.number_as
-     ~Bibitem.number_within
-     ~Bibitem.parent
-     ~Bibitem.possible_parents
-     ~Bibitem.reftext
    

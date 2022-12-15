@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.URL``
 
    .. autosummary::
      
-     ~URL.autonumber
-     ~URL.children
-     ~URL.classreftext
-     ~URL.full_number
-     ~URL.newmetakeys
-     ~URL.number_as
-     ~URL.number_within
-     ~URL.parent
-     ~URL.possible_parents
-     ~URL.reftext
    

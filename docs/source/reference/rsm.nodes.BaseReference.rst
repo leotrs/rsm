@@ -21,14 +21,4 @@ Qualified name: ``rsm.nodes.BaseReference``
 
    .. autosummary::
      
-     ~BaseReference.autonumber
-     ~BaseReference.children
-     ~BaseReference.classreftext
-     ~BaseReference.full_number
-     ~BaseReference.newmetakeys
-     ~BaseReference.number_as
-     ~BaseReference.number_within
-     ~BaseReference.parent
-     ~BaseReference.possible_parents
-     ~BaseReference.reftext
    

@@ -22,13 +22,6 @@ Qualified name: ``rsm.nodes.MathBlock``
    .. autosummary::
      
      ~MathBlock.autonumber
-     ~MathBlock.children
      ~MathBlock.classreftext
-     ~MathBlock.full_number
      ~MathBlock.newmetakeys
-     ~MathBlock.number_as
-     ~MathBlock.number_within
-     ~MathBlock.parent
-     ~MathBlock.possible_parents
-     ~MathBlock.reftext
    

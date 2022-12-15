@@ -23,5 +23,4 @@ Qualified name: ``rsm.translator.AppendOpenTag``
 
    .. autosummary::
      
-     ~AppendOpenTag.defers
    

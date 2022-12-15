@@ -21,14 +21,5 @@ Qualified name: ``rsm.nodes.Heading``
 
    .. autosummary::
      
-     ~Heading.autonumber
-     ~Heading.children
-     ~Heading.classreftext
-     ~Heading.full_number
      ~Heading.newmetakeys
-     ~Heading.number_as
-     ~Heading.number_within
-     ~Heading.parent
-     ~Heading.possible_parents
-     ~Heading.reftext
    

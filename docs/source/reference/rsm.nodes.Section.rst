@@ -22,14 +22,5 @@ Qualified name: ``rsm.nodes.Section``
    .. autosummary::
      
      ~Section.autonumber
-     ~Section.children
-     ~Section.classreftext
-     ~Section.full_number
      ~Section.level
-     ~Section.newmetakeys
-     ~Section.number_as
-     ~Section.number_within
-     ~Section.parent
-     ~Section.possible_parents
-     ~Section.reftext
    

@@ -1032,10 +1032,26 @@ class Manuscript(Heading):
 
 
 class Author(Node):
-    """The author of the manuscript.
+    """An author of the manuscript.
 
-    Information is stored as meta.  Note a manuscript may have more than one Author
-    Node.
+    Notes
+    -----
+    A Manuscript may have more than one Author node.
+
+    Examples
+    --------
+
+    .. code-block:: text
+
+       :manuscript:
+
+          :author:
+            :name: Melvin J. Noir
+            :affiliation: ACME University
+            :email: mel@acme.edu
+          ::
+
+       ::
 
     """
 
@@ -1054,7 +1070,26 @@ class Author(Node):
 
 
 class Abstract(NodeWithChildren):
-    """Manuscript abstract."""
+    """Manuscript abstract.
+
+    Notes
+    -----
+    By convention, abstracts contain only paragraphs and not other blocks.  This
+    convention is not enforced, but it may be assumed to be the case during the
+    translation step.
+
+    Examples
+    --------
+    .. code-block:: text
+
+       :abstract:
+         :keywords: {spectral graph theory, non-backtracking, interlacing}
+         :MSC: {05C50, 05C82, 15A18, 15B99}
+
+         Abstract body goes here.
+
+       ::
+    """
 
     newmetakeys: ClassVar[set] = {"keywords", "MSC"}
 
@@ -1163,11 +1198,128 @@ class CodeBlock(NodeWithChildren):
 
 
 class Algorithm(NodeWithChildren):
+    r"""Algorithm pseudocode.
+
+    Notes
+    -----
+    The contents of an Algorithm node are not RSM markup.  They must be written in
+    LaTeX-style notation using the `algorithmic` [1]_ environment.
+
+
+    RSM uses `pseudocode.js` [2]_ to render algorithms in the frontend.
+
+    References
+    ----------
+    .. [1] https://www.overleaf.com/learn/latex/Algorithms#The_algpseudocode_and_algorithm_packages
+    .. [2] https://saswat.padhi.me/pseudocode.js/
+
+    Examples
+    --------
+    .. code-block:: text
+
+       :algorithm:
+         \begin{algorithm}
+         \caption{Quicksort}
+         \begin{algorithmic}
+         \PROCEDURE{Quicksort}{$A, p, r$}
+             \IF{$p < r$}
+                 \STATE $q = $ \CALL{Partition}{$A, p, r$}
+                 \STATE \CALL{Quicksort}{$A, p, q - 1$}
+                 \STATE \CALL{Quicksort}{$A, q + 1, r$}
+             \ENDIF
+         \ENDPROCEDURE
+         \PROCEDURE{Partition}{$A, p, r$}
+             \STATE $x = A[r]$
+             \STATE $i = p - 1$
+             \FOR{$j = p$ \TO $r - 1$}
+                 \IF{$A[j] < x$}
+                     \STATE $i = i + 1$
+                     \STATE exchange
+                     $A[i]$ with $A[j]$
+                 \ENDIF
+                 \STATE exchange $A[i]$ with $A[r]$
+             \ENDFOR
+         \ENDPROCEDURE
+         \end{algorithmic}
+         \end{algorithm}
+       ::
+    """
+
     autonumber = True
 
 
 class Appendix(Node):
-    pass
+    """Mark the start of the Appendix sections.
+
+    The Appendix node currently has no visible output in the manuscript.  Instead, it
+    affects how subsequent sections are numbered.
+
+    Notes
+    -----
+    The Appendix must not contain children.  In fact, its parent subclass is
+    :class:`Node`, not :class:`NodeWithChildren`.  Sections "in" the Appendix should
+    simply appear after an Appendix node.
+
+    Examples
+    --------
+    In RSM markup, the Appendix is a stamp, i.e. it does not need a closing Halmos.
+
+    .. code-block:: text
+
+       :manuscript:
+
+       # Before Appendix
+       ::
+
+       # Before Appendix
+
+       ## Subsec
+       ::
+
+       ::
+
+       :appendix:
+
+       # After Appendix
+       ::
+
+       ::
+
+
+    The above source is parsed into a Manuscript tree equivalent to the following.
+
+    >>> msc = nodes.Manuscript().append(
+    ...     [
+    ...         nodes.Section(title="Before Appendix"),
+    ...         nodes.Section(title="Before Appendix").append(nodes.Subsection(title="Subsec")),
+    ...         nodes.Appendix(),
+    ...         nodes.Section(title="After Appendix"),
+    ...     ]
+    ... )
+    >>> print(msc.sexp())
+    (Manuscript
+      (Section)
+      (Section
+        (Subsection))
+      (Appendix)
+      (Section))
+
+    Run the transform step on this Manuscript so the Sections will be autonumbered.
+
+    >>> tform = rsm.transformer.Transformer()
+    >>> tform.transform(msc)
+    Manuscript(parent=None, [Section, Section, Appendix, Section])
+
+    By default, Sections appearing after the Appendix receive letter numerals.
+
+    >>> for sec in msc.traverse(nodeclass=nodes.Section):
+    ...     print(f'{sec.full_number}. {sec.title}')
+    1. Before Appendix
+    2. Before Appendix
+    2.1. Subsec
+    A. After Appendix
+
+    """
 
 
 class BaseReference(Node):

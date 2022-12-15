@@ -1,12 +1,12 @@
 """Input: abstract syntax tree -- Output: HTML body."""
 
 import logging
-from typing import Iterable, Callable, Any
-from collections import namedtuple
-from abc import ABC, abstractmethod
-from typing import Iterable
-from icecream import ic
 import textwrap
+from abc import ABC, abstractmethod
+from collections import namedtuple
+from typing import Any, Callable, Iterable
+
+from icecream import ic
 
 from . import nodes
 
@@ -893,7 +893,7 @@ class Translator:
 
 class HandrailsTranslator(Translator):
     @staticmethod
-    def _make_option_tag(opt):
+    def _make_option_tag(opt: str) -> AppendOpenCloseTag:
         return AppendOpenCloseTag(
             "span",
             opt,
@@ -970,7 +970,7 @@ class HandrailsTranslator(Translator):
         batch = super().visit_abstract(node)
         return self._replace_batch_with_handrails(1, batch)
 
-    def visit_contents(self, node: nodes.Abstract) -> EditCommand:
+    def visit_contents(self, node: nodes.Contents) -> EditCommand:
         batch = super().visit_contents(node)
         return self._replace_batch_with_handrails(0, batch)
 

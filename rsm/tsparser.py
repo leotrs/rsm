@@ -1,15 +1,19 @@
 """Input: RSM source string -- Output: abstract syntax tree."""
-import tree_sitter
-from rsm import nodes, translator, transformer
-from itertools import groupby
-from icecream import ic
-from typing import cast, Callable
-import string
+import logging
 import re
+import string
 import sys
+from itertools import groupby
+from typing import Callable, cast
+
+import tree_sitter
+from icecream import ic
+from tree_sitter import Node as TSNode
+from tree_sitter import Tree as TSTree
+
+from rsm import nodes, transformer, translator
 
 from .util import EscapedString
-import logging
 
 logger = logging.getLogger("RSM").getChild("parse")
 
@@ -88,9 +92,8 @@ class TSParser:
         logger.info("Parsing...")
         self.cst = self._parser.parse(bytes(str(src), "utf-8"))
 
-        traverse(self.cst)
-        # if logger.getEffectiveLevel() <= logging.DEBUG:
-        #     traverse(self.cst)
+        if logger.getEffectiveLevel() <= logging.DEBUG:
+            traverse(self.cst)
 
         if not abstractify:
             return self.cst
@@ -104,7 +107,7 @@ class TSParser:
         return self.ast
 
 
-def traverse(tree, named_only=True):
+def traverse(tree: TSTree, named_only: bool = True):
     # allow traverse() to print to stdout rather than use logger because it will
     # look better this way
 
@@ -183,7 +186,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
 }
 
 
-def parse_metakey_list(cst_key, cst_val):
+def parse_metakey_list(cst_key: TSNode, cst_val: TSNode):
     key = cst_key.named_children[0].type
     if cst_val.named_children:
         val = [c.text.decode("utf-8").strip() for c in cst_val.named_children]
@@ -192,17 +195,17 @@ def parse_metakey_list(cst_key, cst_val):
     return key, val
 
 
-def parse_metakey_text(cst_key, cst_val):
+def parse_metakey_text(cst_key: TSNode, cst_val: TSNode):
     key = cst_key.named_children[0].type
     val = cst_val.text.decode("utf-8").strip()
     return key, val
 
 
-def parse_metakey_any(cst_key, cst_val):
+def parse_metakey_any(cst_key: TSNode, cst_val: TSNode):
     return parse_metakey_text(cst_key, cst_val)
 
 
-def parse_metakey_bool(cst_key, _):
+def parse_metakey_bool(cst_key: TSNode, _):
     key = cst_key.named_children[0].type
     return key, True
 
@@ -224,12 +227,12 @@ def normalize_text(root):
         # Merge consecutive text nodes (each text node ends at a newline, so consecutive
         # text nodes are just adjacent lines of text and can always be merged).  Also,
         # pad all text with spaces.  Spurious spaces added here are removed later.
-        for run_is_text, run in groupby(
+        for run_is_text, run_generator in groupby(
             node.children, key=lambda c: isinstance(c, nodes.Text)
         ):
             if not run_is_text:
                 continue
-            run = list(run)
+            run = list(run_generator)
 
             if len(run) == 2:
                 first, last = run
@@ -321,15 +324,15 @@ def make_ast(cst):
 
             continue
         if cst_node.type == "bibitem":
-            ast_node = nodes.Bibitem()
-            ast_node.kind = cst_node.child_by_field_name("kind").text.decode("utf-8")
-            ast_node.label = cst_node.child_by_field_name("label").text.decode("utf-8")
+            bib_node = nodes.Bibitem()
+            bib_node.kind = cst_node.child_by_field_name("kind").text.decode("utf-8")
+            bib_node.label = cst_node.child_by_field_name("label").text.decode("utf-8")
             for pair in [c for c in cst_node.named_children if c.type == "bibitempair"]:
                 key, value = pair.named_children
                 key, value = key.text.decode("utf-8"), value.text.decode("utf-8")
-                setattr(ast_node, key, value)
+                setattr(bib_node, key, value)
 
-            parent.append(ast_node)
+            parent.append(bib_node)
             continue
 
         # After this if statement, cst_node is the node that actually contains the

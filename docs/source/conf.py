@@ -46,28 +46,18 @@ extensions = [
 #
 # doctest
 #
+
+# this flag is specific to sphinx, not doctest
 doctest_global_setup = """
 import rsm
 from rsm import nodes
 """
 
-# Add a new IGNORE_RESULT flag to skip checking a single line within a doctest.
-# Taken from https://stackoverflow.com/a/69780437.
-import doctest
+# the contents of this module are specific to doctest, not sphinx
+import sys
 
-IGNORE_RESULT = doctest.register_optionflag("IGNORE_RESULT")
-OutputChecker = doctest.OutputChecker
-
-
-class CustomOutputChecker(OutputChecker):
-    def check_output(self, want, got, optionflags):
-        if IGNORE_RESULT & optionflags:
-            return True
-        return OutputChecker.check_output(self, want, got, optionflags)
-
-
-doctest.OutputChecker = CustomOutputChecker
-
+sys.path.append(".")
+import doctest_setup
 
 #
 # autodoc

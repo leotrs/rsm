@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Definition``
 
    .. autosummary::
      
+     ~Definition.label
+     ~Definition.types
+     ~Definition.number
+     ~Definition.nonum
+     ~Definition.reftext_template
    

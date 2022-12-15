@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Appendix``
 
    .. autosummary::
      
+     ~Appendix.label
+     ~Appendix.types
+     ~Appendix.number
+     ~Appendix.nonum
+     ~Appendix.reftext_template
    

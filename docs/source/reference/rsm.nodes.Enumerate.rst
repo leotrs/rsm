@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Enumerate``
 
    .. autosummary::
      
+     ~Enumerate.label
+     ~Enumerate.types
+     ~Enumerate.number
+     ~Enumerate.nonum
+     ~Enumerate.reftext_template
    

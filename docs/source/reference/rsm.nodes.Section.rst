@@ -23,4 +23,9 @@ Qualified name: ``rsm.nodes.Section``
      
      ~Section.autonumber
      ~Section.level
+     ~Section.label
+     ~Section.types
+     ~Section.number
+     ~Section.nonum
+     ~Section.reftext_template
    

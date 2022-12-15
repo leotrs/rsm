@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.URL``
 
    .. autosummary::
      
+     ~URL.label
+     ~URL.types
+     ~URL.number
+     ~URL.nonum
+     ~URL.reftext_template
    

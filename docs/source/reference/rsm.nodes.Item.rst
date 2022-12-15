@@ -22,4 +22,9 @@ Qualified name: ``rsm.nodes.Item``
    .. autosummary::
      
      ~Item.possible_parents
+     ~Item.label
+     ~Item.types
+     ~Item.number
+     ~Item.nonum
+     ~Item.reftext_template
    

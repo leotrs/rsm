@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Itemize``
 
    .. autosummary::
      
+     ~Itemize.label
+     ~Itemize.types
+     ~Itemize.number
+     ~Itemize.nonum
+     ~Itemize.reftext_template
    

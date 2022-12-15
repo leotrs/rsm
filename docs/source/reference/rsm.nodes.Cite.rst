@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Cite``
 
    .. autosummary::
      
+     ~Cite.label
+     ~Cite.types
+     ~Cite.number
+     ~Cite.nonum
+     ~Cite.reftext_template
    

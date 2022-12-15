@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Text``
 
    .. autosummary::
      
+     ~Text.label
+     ~Text.types
+     ~Text.number
+     ~Text.nonum
+     ~Text.reftext_template
    

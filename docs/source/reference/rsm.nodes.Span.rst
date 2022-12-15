@@ -23,4 +23,9 @@ Qualified name: ``rsm.nodes.Span``
      
      ~Span.attr_to_tag
      ~Span.newmetakeys
+     ~Span.label
+     ~Span.types
+     ~Span.number
+     ~Span.nonum
+     ~Span.reftext_template
    

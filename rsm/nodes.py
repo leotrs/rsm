@@ -43,7 +43,6 @@ class Node:
 
     Parameters
     ----------
-
     label
         Unique identifier for this node.
     types
@@ -165,11 +164,16 @@ class Node:
         nonum: bool = False,
         reftext_template: str = "",
     ) -> None:
-        self.label = label
-        self.types = types or []
-        self.nonum = nonum
-        self.number = number
-        self.reftext_template = reftext_template or self.classreftext
+        self.label: str = label
+        """Unique identifier."""
+        self.types: list[str] = types or []
+        """Types of this node."""
+        self.number: int = number
+        """Node number."""
+        self.nonum: bool = nonum
+        """Whether this node should be automatically given a number."""
+        self.reftext_template: str = reftext_template or self.classreftext
+        """Reftext template, or "" to use :attr:`classreftext`."""
         self._parent: "NodeWithChildren" | None = None
 
     def _attrs_for_repr_and_eq(self) -> list[str]:
@@ -949,6 +953,8 @@ class NodeWithChildren(Node):
 
 
 class Text(Node):
+    """Plain text node.  Cannot contain children."""
+
     def __init__(self, text: str = "", asis: bool = False, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.text = text
@@ -959,7 +965,15 @@ class Text(Node):
 
 
 class Error(Text):
-    pass
+    """Error node.
+
+    Notes
+    -----
+    When the parser encounters an error, this node is created at the location where the
+    error is found.  Note this inherits from :class:`Text`; the text contents of this
+    Node should indicate where in the source file the error occurred.
+
+    """
 
 
 class Span(NodeWithChildren):
@@ -1014,18 +1028,30 @@ class Manuscript(Heading):
 
 
 class Author(Node):
+    """The author of the manuscript.
+
+    Information is stored as meta.  Note a manuscript may have more than one Author
+    Node.
+
+    """
+
     newmetakeys: ClassVar[set] = {"name", "affiliation", "email"}
 
     def __init__(
         self, name: str = "", affiliation: str = "", email: str = "", **kwargs: Any
     ) -> None:
         super().__init__(**kwargs)
-        self.name = name
-        self.affiliation = affiliation
-        self.email = email
+        self.name: str = name
+        """Full name of the author."""
+        self.affiliation: str = affiliation
+        """Institutional affiliation."""
+        self.email: str = email
+        """Contact information."""
 
 
 class Abstract(NodeWithChildren):
+    """Manuscript abstract."""
+
     newmetakeys: ClassVar[set] = {"keywords", "MSC"}
 
     def __init__(

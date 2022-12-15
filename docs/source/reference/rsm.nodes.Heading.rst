@@ -22,4 +22,9 @@ Qualified name: ``rsm.nodes.Heading``
    .. autosummary::
      
      ~Heading.newmetakeys
+     ~Heading.label
+     ~Heading.types
+     ~Heading.number
+     ~Heading.nonum
+     ~Heading.reftext_template
    

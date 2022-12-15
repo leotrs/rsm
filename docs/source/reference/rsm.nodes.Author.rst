@@ -22,4 +22,12 @@ Qualified name: ``rsm.nodes.Author``
    .. autosummary::
      
      ~Author.newmetakeys
+     ~Author.name
+     ~Author.affiliation
+     ~Author.email
+     ~Author.label
+     ~Author.types
+     ~Author.number
+     ~Author.nonum
+     ~Author.reftext_template
    

@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.TableRow``
 
    .. autosummary::
      
+     ~TableRow.label
+     ~TableRow.types
+     ~TableRow.number
+     ~TableRow.nonum
+     ~TableRow.reftext_template
    

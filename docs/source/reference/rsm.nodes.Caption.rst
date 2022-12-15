@@ -22,4 +22,9 @@ Qualified name: ``rsm.nodes.Caption``
    .. autosummary::
      
      ~Caption.possible_parents
+     ~Caption.label
+     ~Caption.types
+     ~Caption.number
+     ~Caption.nonum
+     ~Caption.reftext_template
    

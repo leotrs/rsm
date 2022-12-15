@@ -7,8 +7,14 @@
 # tests directory (../tests/), there needs to be a different conftest.py file in that
 # directory.
 
-import rsm
+import sys
+
 import pytest
+
+import rsm
+
+sys.path.append("docs/source/")
+import doctest_setup
 
 
 @pytest.fixture(autouse=True)

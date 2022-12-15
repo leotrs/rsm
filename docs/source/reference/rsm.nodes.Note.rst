@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Note``
 
    .. autosummary::
      
+     ~Note.label
+     ~Note.types
+     ~Note.number
+     ~Note.nonum
+     ~Note.reftext_template
    

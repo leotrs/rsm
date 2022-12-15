@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Bibliography``
 
    .. autosummary::
      
+     ~Bibliography.label
+     ~Bibliography.types
+     ~Bibliography.number
+     ~Bibliography.nonum
+     ~Bibliography.reftext_template
    

@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.PendingPrev``
 
    .. autosummary::
      
+     ~PendingPrev.label
+     ~PendingPrev.types
+     ~PendingPrev.number
+     ~PendingPrev.nonum
+     ~PendingPrev.reftext_template
    

@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Proposition``
 
    .. autosummary::
      
+     ~Proposition.label
+     ~Proposition.types
+     ~Proposition.number
+     ~Proposition.nonum
+     ~Proposition.reftext_template
    

@@ -23,4 +23,9 @@ Qualified name: ``rsm.nodes.Construct``
      
      ~Construct.keyword
      ~Construct.kind_to_keyword
+     ~Construct.label
+     ~Construct.types
+     ~Construct.number
+     ~Construct.nonum
+     ~Construct.reftext_template
    

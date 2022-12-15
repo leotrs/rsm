@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.BaseParagraph``
 
    .. autosummary::
      
+     ~BaseParagraph.label
+     ~BaseParagraph.types
+     ~BaseParagraph.number
+     ~BaseParagraph.nonum
+     ~BaseParagraph.reftext_template
    

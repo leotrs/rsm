@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Subproof``
 
    .. autosummary::
      
+     ~Subproof.label
+     ~Subproof.types
+     ~Subproof.number
+     ~Subproof.nonum
+     ~Subproof.reftext_template
    

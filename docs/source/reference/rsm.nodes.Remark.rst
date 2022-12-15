@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Remark``
 
    .. autosummary::
      
+     ~Remark.label
+     ~Remark.types
+     ~Remark.number
+     ~Remark.nonum
+     ~Remark.reftext_template
    

@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Draft``
 
    .. autosummary::
      
+     ~Draft.label
+     ~Draft.types
+     ~Draft.number
+     ~Draft.nonum
+     ~Draft.reftext_template
    

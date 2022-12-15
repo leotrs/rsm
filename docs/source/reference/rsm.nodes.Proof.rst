@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Proof``
 
    .. autosummary::
      
+     ~Proof.label
+     ~Proof.types
+     ~Proof.number
+     ~Proof.nonum
+     ~Proof.reftext_template
    

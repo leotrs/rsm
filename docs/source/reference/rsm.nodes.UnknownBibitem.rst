@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.UnknownBibitem``
 
    .. autosummary::
      
+     ~UnknownBibitem.label
+     ~UnknownBibitem.types
+     ~UnknownBibitem.number
+     ~UnknownBibitem.nonum
+     ~UnknownBibitem.reftext_template
    

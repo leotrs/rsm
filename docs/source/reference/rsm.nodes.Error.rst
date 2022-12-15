@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Error``
 
    .. autosummary::
      
+     ~Error.label
+     ~Error.types
+     ~Error.number
+     ~Error.nonum
+     ~Error.reftext_template
    

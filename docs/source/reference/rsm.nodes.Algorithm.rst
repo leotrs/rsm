@@ -22,4 +22,9 @@ Qualified name: ``rsm.nodes.Algorithm``
    .. autosummary::
      
      ~Algorithm.autonumber
+     ~Algorithm.label
+     ~Algorithm.types
+     ~Algorithm.number
+     ~Algorithm.nonum
+     ~Algorithm.reftext_template
    

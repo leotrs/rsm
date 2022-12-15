@@ -26,4 +26,9 @@ Qualified name: ``rsm.nodes.NodeWithChildren``
    .. autosummary::
      
      ~NodeWithChildren.children
+     ~NodeWithChildren.label
+     ~NodeWithChildren.types
+     ~NodeWithChildren.number
+     ~NodeWithChildren.nonum
+     ~NodeWithChildren.reftext_template
    

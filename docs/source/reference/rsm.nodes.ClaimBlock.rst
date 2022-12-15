@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.ClaimBlock``
 
    .. autosummary::
      
+     ~ClaimBlock.label
+     ~ClaimBlock.types
+     ~ClaimBlock.number
+     ~ClaimBlock.nonum
+     ~ClaimBlock.reftext_template
    

@@ -22,4 +22,9 @@ Qualified name: ``rsm.nodes.Table``
    .. autosummary::
      
      ~Table.autonumber
+     ~Table.label
+     ~Table.types
+     ~Table.number
+     ~Table.nonum
+     ~Table.reftext_template
    

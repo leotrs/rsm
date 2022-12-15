@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.TableDatum``
 
    .. autosummary::
      
+     ~TableDatum.label
+     ~TableDatum.types
+     ~TableDatum.number
+     ~TableDatum.nonum
+     ~TableDatum.reftext_template
    

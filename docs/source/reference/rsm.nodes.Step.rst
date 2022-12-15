@@ -23,4 +23,9 @@ Qualified name: ``rsm.nodes.Step``
      
      ~Step.autonumber
      ~Step.possible_parents
+     ~Step.label
+     ~Step.types
+     ~Step.number
+     ~Step.nonum
+     ~Step.reftext_template
    

@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Keyword``
 
    .. autosummary::
      
+     ~Keyword.label
+     ~Keyword.types
+     ~Keyword.number
+     ~Keyword.nonum
+     ~Keyword.reftext_template
    

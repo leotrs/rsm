@@ -23,4 +23,9 @@ Qualified name: ``rsm.nodes.Figure``
      
      ~Figure.autonumber
      ~Figure.newmetakeys
+     ~Figure.label
+     ~Figure.types
+     ~Figure.number
+     ~Figure.nonum
+     ~Figure.reftext_template
    

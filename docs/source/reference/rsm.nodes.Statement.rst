@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Statement``
 
    .. autosummary::
      
+     ~Statement.label
+     ~Statement.types
+     ~Statement.number
+     ~Statement.nonum
+     ~Statement.reftext_template
    

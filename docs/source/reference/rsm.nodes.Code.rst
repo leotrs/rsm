@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Code``
 
    .. autosummary::
      
+     ~Code.label
+     ~Code.types
+     ~Code.number
+     ~Code.nonum
+     ~Code.reftext_template
    

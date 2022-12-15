@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Lemma``
 
    .. autosummary::
      
+     ~Lemma.label
+     ~Lemma.types
+     ~Lemma.number
+     ~Lemma.nonum
+     ~Lemma.reftext_template
    

@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.PendingCite``
 
    .. autosummary::
      
+     ~PendingCite.label
+     ~PendingCite.types
+     ~PendingCite.number
+     ~PendingCite.nonum
+     ~PendingCite.reftext_template
    

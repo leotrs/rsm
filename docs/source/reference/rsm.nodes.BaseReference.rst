@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.BaseReference``
 
    .. autosummary::
      
+     ~BaseReference.label
+     ~BaseReference.types
+     ~BaseReference.number
+     ~BaseReference.nonum
+     ~BaseReference.reftext_template
    

@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Paragraph``
 
    .. autosummary::
      
+     ~Paragraph.label
+     ~Paragraph.types
+     ~Paragraph.number
+     ~Paragraph.nonum
+     ~Paragraph.reftext_template
    

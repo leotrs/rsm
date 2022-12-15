@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.PendingReference``
 
    .. autosummary::
      
+     ~PendingReference.label
+     ~PendingReference.types
+     ~PendingReference.number
+     ~PendingReference.nonum
+     ~PendingReference.reftext_template
    

@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Contents``
 
    .. autosummary::
      
+     ~Contents.label
+     ~Contents.types
+     ~Contents.number
+     ~Contents.nonum
+     ~Contents.reftext_template
    

@@ -23,4 +23,9 @@ Qualified name: ``rsm.nodes.Subsubsection``
      
      ~Subsubsection.classreftext
      ~Subsubsection.level
+     ~Subsubsection.label
+     ~Subsubsection.types
+     ~Subsubsection.number
+     ~Subsubsection.nonum
+     ~Subsubsection.reftext_template
    

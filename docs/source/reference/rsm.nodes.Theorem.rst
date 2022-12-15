@@ -24,4 +24,9 @@ Qualified name: ``rsm.nodes.Theorem``
      ~Theorem.autonumber
      ~Theorem.newmetakeys
      ~Theorem.title
+     ~Theorem.label
+     ~Theorem.types
+     ~Theorem.number
+     ~Theorem.nonum
+     ~Theorem.reftext_template
    

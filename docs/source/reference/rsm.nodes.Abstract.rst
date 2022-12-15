@@ -22,4 +22,9 @@ Qualified name: ``rsm.nodes.Abstract``
    .. autosummary::
      
      ~Abstract.newmetakeys
+     ~Abstract.label
+     ~Abstract.types
+     ~Abstract.number
+     ~Abstract.nonum
+     ~Abstract.reftext_template
    

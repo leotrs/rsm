@@ -24,4 +24,8 @@ Qualified name: ``rsm.nodes.Manuscript``
      ~Manuscript.full_number
      ~Manuscript.newmetakeys
      ~Manuscript.nonum
+     ~Manuscript.label
+     ~Manuscript.types
+     ~Manuscript.number
+     ~Manuscript.reftext_template
    

@@ -22,4 +22,9 @@ Qualified name: ``rsm.nodes.Sketch``
    .. autosummary::
      
      ~Sketch.possible_parents
+     ~Sketch.label
+     ~Sketch.types
+     ~Sketch.number
+     ~Sketch.nonum
+     ~Sketch.reftext_template
    

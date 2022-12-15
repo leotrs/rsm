@@ -24,4 +24,9 @@ Qualified name: ``rsm.nodes.MathBlock``
      ~MathBlock.autonumber
      ~MathBlock.classreftext
      ~MathBlock.newmetakeys
+     ~MathBlock.label
+     ~MathBlock.types
+     ~MathBlock.number
+     ~MathBlock.nonum
+     ~MathBlock.reftext_template
    

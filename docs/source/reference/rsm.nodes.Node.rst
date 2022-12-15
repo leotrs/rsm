@@ -42,4 +42,9 @@ Qualified name: ``rsm.nodes.Node``
      ~Node.parent
      ~Node.possible_parents
      ~Node.reftext
+     ~Node.label
+     ~Node.types
+     ~Node.number
+     ~Node.nonum
+     ~Node.reftext_template
    

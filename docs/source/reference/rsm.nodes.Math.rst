@@ -21,4 +21,9 @@ Qualified name: ``rsm.nodes.Math``
 
    .. autosummary::
      
+     ~Math.label
+     ~Math.types
+     ~Math.number
+     ~Math.nonum
+     ~Math.reftext_template
    

@@ -1,7 +1,12 @@
 html[data-theme="light"] {
-    --pst-color-primary: #005187;
+  --pst-color-primary: #005187;
 }
 
 html[data-theme="dark"] {
-    --pst-color-primary: #459db9;
+  --pst-color-primary: #459db9;
+}
+
+
+.navbar-brand img {
+  padding: 0.5rem;
 }

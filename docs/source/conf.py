@@ -98,13 +98,13 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/<your-org>/<your-repo>",
+            "url": "https://github.com/leotrs/rsm",
             "icon": "fa-brands fa-square-github",
             "type": "fontawesome",
         },
         {
             "name": "Home",
-            "url": "https://github.com/<your-org>/<your-repo>",
+            "url": "https://www.write-rsm.org",
             "icon": "fa-solid fa-house",
             "type": "fontawesome",
         },
@@ -115,10 +115,10 @@ html_theme_options = {
 
 # required for "Edit this page button"; see also "use_edit_page_button"
 html_context = {
-    "github_user": "<your-github-org>",
-    "github_repo": "<your-github-repo>",
-    "github_version": "<your-branch>",
-    "doc_path": "<path-from-root-to-your-docs>",
+    "github_user": "leotrs",
+    "github_repo": "rsm",
+    "github_version": "main/",
+    "doc_path": "docs/source/",
     "default_mode": "auto",
 }
 

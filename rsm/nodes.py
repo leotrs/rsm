@@ -123,10 +123,10 @@ class Node:
 
     """
 
-    _number_within: ClassVar[Type["Node"] | None] = None
+    _number_within: ClassVar[Optional[Type["Node"]]] = None
     # see property number_within for documentation
 
-    _number_as: ClassVar[Type["Node"] | None] = None
+    _number_as: ClassVar[Optional[Type["Node"]]] = None
     # see property number_as for documentation
 
     newmetakeys: ClassVar[set] = {"label", "types", "nonum", "reftext"}
@@ -163,8 +163,8 @@ class Node:
     def __init__(
         self,
         label: str = "",
-        types: list[str] | None = None,
-        number: int | None = None,
+        types: Optional[list[str]] = None,
+        number: Optional[int] = None,
         nonum: bool = False,
         reftext_template: str = "",
     ) -> None:
@@ -178,7 +178,7 @@ class Node:
         """Whether this node should be automatically given a number."""
         self.reftext_template: str = reftext_template or self.classreftext
         """Reftext template, or "" to use :attr:`classreftext`."""
-        self._parent: "NodeWithChildren" | None = None
+        self._parent: Optional["NodeWithChildren"] = None
 
     def _attrs_for_repr_and_eq(self) -> list[str]:
         return ["label", "types", "nonum", "number", "parent"]
@@ -212,7 +212,7 @@ class Node:
         self,
         tab_width: int = 2,
         meta: bool = False,
-        ignore_meta_keys: set | None = None,
+        ignore_meta_keys: Optional[set] = None,
     ) -> str:
         """Represent this node as an S expression.
 
@@ -426,8 +426,8 @@ class Node:
     def traverse(
         self,
         *,
-        condition: Callable[["Node"], bool] | None = None,
-        nodeclass: NodeSubType | None = None,
+        condition: Optional[Callable[["Node"], bool]] = None,
+        nodeclass: Optional[NodeSubType] = None,
     ) -> Generator[NodeSubType, None, None]:
         """Generate the descendents of this Node in depth-first order.
 
@@ -565,7 +565,7 @@ class Node:
 
     def last_of_type(
         self, cls: Type["Node"] | tuple[Type["Node"]], return_idx: bool = False
-    ) -> Optional["Node"] | tuple[Optional["Node"], int | None]:
+    ) -> Optional["Node"] | tuple[Optional["Node"], Optional[int]]:
         """Last child of the specified type.
 
         For details, see :meth:`first_of_type`.
@@ -1020,7 +1020,7 @@ class Manuscript(Heading):
     nonum = True
 
     def __init__(
-        self, src: str = "", date: datetime | None = None, **kwargs: Any
+        self, src: str = "", date: Optional[datetime] = None, **kwargs: Any
     ) -> None:
         super().__init__(**kwargs)
         self.src = src
@@ -1095,8 +1095,8 @@ class Abstract(NodeWithChildren):
 
     def __init__(
         self,
-        keywords: list[str] | None = None,
-        MSC: list[str] | None = None,
+        keywords: Optional[list[str]] = None,
+        MSC: Optional[list[str]] = None,
         **kwargs: Any,
     ) -> None:
         super().__init__(**kwargs)
@@ -1325,7 +1325,7 @@ class Appendix(Node):
 class BaseReference(Node):
     def __init__(
         self,
-        target: str | Node | None = None,
+        target: Union[str, Node, None] = None,
         overwrite_reftext: str = "",
         **kwargs: Any,
     ) -> None:
@@ -1343,7 +1343,7 @@ class PendingReference(BaseReference):
 
 
 class Reference(BaseReference):
-    def __init__(self, target: Node | None = None, **kwargs: Any) -> None:
+    def __init__(self, target: Optional[Node] = None, **kwargs: Any) -> None:
         super().__init__(target, **kwargs)
 
 
@@ -1364,7 +1364,7 @@ class PendingCite(Node):
 
 
 class Cite(Node):
-    def __init__(self, targets: list[Node] | None = None, **kwargs: Any) -> None:
+    def __init__(self, targets: Optional[list[Node]] = None, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.targets = targets or []
 
@@ -1403,7 +1403,7 @@ class Theorem(Heading):
     def __init__(
         self,
         title: str = "",
-        goals: list[BaseReference] | None = None,
+        goals: Optional[list[BaseReference]] = None,
         stars: int = 0,
         clocks: int = 0,
         **kwargs: Any,

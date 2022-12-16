@@ -1,18 +1,18 @@
 """Input: HTML body -- Output: WebManuscript."""
 
-from fs import open_fs
-from fs.mountfs import MountFS
-from fs.copy import copy_file
-
+import logging
 import re
 from abc import ABC, abstractmethod
-from textwrap import dedent
 from pathlib import Path
+from textwrap import dedent
+from typing import Optional
+
+from fs import open_fs
+from fs.copy import copy_file
+from fs.mountfs import MountFS
 from icecream import ic
 
 from .manuscript import WebManuscript
-
-import logging
 
 logger = logging.getLogger("RSM").getChild("build")
 
@@ -21,9 +21,9 @@ class BaseBuilder(ABC):
     """Use HTML body as a string and create a WebManuscript."""
 
     def __init__(self) -> None:
-        self.body: str | None = None
-        self.html: str | None = None
-        self.web: WebManuscript | None = None
+        self.body: Optional[str] = None
+        self.html: Optional[str] = None
+        self.web: Optional[WebManuscript] = None
         self.outname: str = "index.html"
 
     def build(self, body: str, src: Path = None) -> WebManuscript:

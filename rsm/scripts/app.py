@@ -6,21 +6,15 @@ RSM Application: take a file path and output its contents as HTML.
 
 """
 
-from .. import reader
-from .. import tsparser
-from .. import transformer
-from .. import linter
-from .. import translator
-from .. import builder
-from .. import writer
-
-from pathlib import Path
-from icecream import ic
-from typing import NamedTuple, Any, Callable
 import logging
+from pathlib import Path
+from typing import Any, Callable, NamedTuple, Optional, Union
 
+from icecream import ic
 
-logger = logging.getLogger('RSM')
+from .. import builder, linter, reader, transformer, translator, tsparser, writer
+
+logger = logging.getLogger("RSM")
 
 
 class RSMApplicationError(Exception):
@@ -62,11 +56,11 @@ class Pipeline:
         return res
 
 
-def validate(srcpath: Path | str | None, plain: str) -> None:
+def validate(srcpath: Union[Path, str, None], plain: str) -> None:
     if not srcpath and not plain:
-        raise RSMApplicationError('Must specify exactly one of srcpath, plain')
+        raise RSMApplicationError("Must specify exactly one of srcpath, plain")
     if srcpath and plain:
-        raise RSMApplicationError('Must specify exactly one of srcpath, plain')
+        raise RSMApplicationError("Must specify exactly one of srcpath, plain")
 
 
 def configure(verbosity: int) -> None:
@@ -76,16 +70,16 @@ def configure(verbosity: int) -> None:
     for handler in logger.handlers:
         if handler.level > level:
             handler.setLevel(level)
-    logger.info('Application started')
-    logger.info('Configuring...')
+    logger.info("Application started")
+    logger.info("Configuring...")
     # self.config = self.config.configure()
 
 
 class ParserApplication(Pipeline):
     def __init__(
         self,
-        srcpath: Path | None = None,
-        plain: str = '',
+        srcpath: Optional[Path] = None,
+        plain: str = "",
         verbosity: int = 0,
         treesitter: bool = True,
     ):
@@ -110,8 +104,8 @@ class ParserApplication(Pipeline):
 class LinterApplication(ParserApplication):
     def __init__(
         self,
-        srcpath: Path | None = None,
-        plain: str = '',
+        srcpath: Optional[Path] = None,
+        plain: str = "",
         verbosity: int = 0,
     ):
         super().__init__(srcpath, plain, verbosity)
@@ -124,8 +118,8 @@ class LinterApplication(ParserApplication):
 class RSMProcessorApplication(ParserApplication):
     def __init__(
         self,
-        srcpath: Path | None = None,
-        plain: str = '',
+        srcpath: Optional[Path] = None,
+        plain: str = "",
         verbosity: int = 0,
         handrails: bool = False,
         run_linter: bool = False,
@@ -144,8 +138,8 @@ class RSMProcessorApplication(ParserApplication):
 class FullBuildApplication(RSMProcessorApplication):
     def __init__(
         self,
-        srcpath: Path | None = None,
-        plain: str = '',
+        srcpath: Optional[Path] = None,
+        plain: str = "",
         verbosity: int = 0,
         handrails: bool = True,
         run_linter: bool = False,

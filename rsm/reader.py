@@ -1,8 +1,8 @@
 """Input: Path to .rsm file -- Output: file contents."""
 
-from pathlib import Path
-
 import logging
+from pathlib import Path
+from typing import Optional
 
 logger = logging.getLogger("RSM").getChild("read ")
 
@@ -14,7 +14,7 @@ class Reader:
         self.path: Path = Path()
         self.src: str = ""
 
-    def read(self, path: Path | None) -> str:
+    def read(self, path: Optional[Path]) -> str:
         logger.info("Reading...")
         if not path:
             raise TypeError("Expected path, got None")

@@ -1,13 +1,14 @@
 """Input: abstract syntax tree -- Output: (transformed) abstract syntax tree."""
 
-from icecream import ic
+import logging
 from collections import defaultdict
-from typing import Type, Generator
 from itertools import count
 from string import ascii_uppercase
-from . import nodes
+from typing import Generator, Optional, Type
 
-import logging
+from icecream import ic
+
+from . import nodes
 
 logger = logging.getLogger("RSM").getChild("tform")
 
@@ -20,7 +21,7 @@ class Transformer:
     """Apply transformations to the abstract syntax tree."""
 
     def __init__(self) -> None:
-        self.tree: nodes.Manuscript | None = None
+        self.tree: Optional[nodes.Manuscript] = None
         self.labels_to_nodes: dict[str, nodes.Node] = {}
 
     def transform(self, tree: nodes.Manuscript) -> nodes.Manuscript:

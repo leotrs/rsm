@@ -6,12 +6,12 @@ Utilities.
 
 """
 
-from typing import Any
 import textwrap
+from typing import Any, Optional
 
 
 class EscapedString:
-    def __init__(self, src: str = '', chars: str | None = None):
+    def __init__(self, src: str = "", chars: Optional[str] = None):
         self.escape_chars = set() if chars is None else set(chars)
         self._src = str(src)
 
@@ -22,7 +22,7 @@ class EscapedString:
         return len(self._src)
 
     def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({self.escape_chars}, {textwrap.shorten(self._src, 60)})'
+        return f"{self.__class__.__name__}({self.escape_chars}, {textwrap.shorten(self._src, 60)})"
 
     def __str__(self) -> str:
         return self._src
@@ -30,10 +30,10 @@ class EscapedString:
     def escape(self) -> str:
         ret = self._src
         for char in self.escape_chars:
-            ret = ret.replace(f'\\{char}', char)
+            ret = ret.replace(f"\\{char}", char)
         return ret
 
-    def __getitem__(self, _slice: int | slice) -> 'EscapedString':
+    def __getitem__(self, _slice: int | slice) -> "EscapedString":
         return self.__class__(self._src[_slice])
 
     def __add__(self, other: str) -> str:
@@ -51,20 +51,20 @@ class EscapedString:
     def format(self, *args: Any, **kwargs: Any) -> str:
         return self._src.format(*args, **kwargs)
 
-    def strip(self, chars: str | None = None, /) -> 'EscapedString':
+    def strip(self, chars: Optional[str] = None, /) -> "EscapedString":
         return self.__class__(self._src.strip(chars))
 
-    def lstrip(self, chars: str | None = None, /) -> 'EscapedString':
+    def lstrip(self, chars: Optional[str] = None, /) -> "EscapedString":
         return self.__class__(self._src.lstrip(chars))
 
-    def rstrip(self, chars: str | None = None, /) -> 'EscapedString':
+    def rstrip(self, chars: Optional[str] = None, /) -> "EscapedString":
         return self.__class__(self._src.rstrip(chars))
 
     def find(
         self,
         sub: str,
         start: int = 0,
-        end: int | None = None,
+        end: Optional[int] = None,
         skip_escaped: bool = True,
     ) -> int:
         if end is None:
@@ -77,7 +77,7 @@ class EscapedString:
             # nothing behind it!  If the index was negative, it was not found.  Either
             # way, we are done.
             return index
-        while self._src[index - 1] == '\\':
+        while self._src[index - 1] == "\\":
             index = self._src.find(sub, index + 1, end)
             if index < 0:
                 return index
@@ -87,7 +87,7 @@ class EscapedString:
         self,
         sub: str,
         start: int = 0,
-        end: int | None = None,
+        end: Optional[int] = None,
         skip_escaped: bool = True,
     ) -> int:
         if end is None:
@@ -100,7 +100,7 @@ class EscapedString:
         self,
         sub: str,
         start: int = 0,
-        end: int | None = None,
+        end: Optional[int] = None,
         skip_escaped: bool = True,
     ) -> int:
         if end is None:
@@ -113,7 +113,7 @@ class EscapedString:
             # nothing behind it!  Unlike find(), index() never returns -1 (it raises an
             # exception instead), so no need to check for that.
             return index
-        while self._src[index - 1] == '\\':
+        while self._src[index - 1] == "\\":
             index = self._src.find(sub, index + 1, end)
         return index
 
@@ -121,7 +121,7 @@ class EscapedString:
         self,
         sub: str,
         start: int = 0,
-        end: int | None = None,
+        end: Optional[int] = None,
         skip_escaped: bool = True,
     ) -> int:
         if end is None:
@@ -132,7 +132,7 @@ class EscapedString:
 
     def replace(
         self, old: str, new: str, count: int = -1, /, skip_escaped: bool = True
-    ) -> 'EscapedString':
+    ) -> "EscapedString":
         if not skip_escaped or old not in self.escape_chars:
             return self.__class__(self._src.replace(old, new, count))
         raise Exception("Leo should have implemented this but didn't")
@@ -141,7 +141,7 @@ class EscapedString:
         self,
         prefix: str,
         start: int = 0,
-        end: int | None = None,
+        end: Optional[int] = None,
         skip_escaped: bool = True,
     ) -> bool:
         if end == -1:
@@ -156,7 +156,7 @@ class EscapedString:
         self,
         prefix: str,
         start: int = 0,
-        end: int | None = None,
+        end: Optional[int] = None,
         skip_escaped: bool = True,
     ) -> bool:
         if end is None:
@@ -166,7 +166,11 @@ class EscapedString:
         raise Exception("Leo should have implemented this but didn't")
 
     def split(
-        self, /, sep: str | None = None, maxsplit: int = -1, skip_escaped: bool = True
+        self,
+        /,
+        sep: Optional[str] = None,
+        maxsplit: int = -1,
+        skip_escaped: bool = True,
     ) -> list[str]:
         if not skip_escaped or sep not in self.escape_chars:
             return self._src.split(sep, maxsplit)
@@ -175,7 +179,7 @@ class EscapedString:
         curr = 0
         while curr < len(self._src):
             if self._src[curr] in self.escape_chars and (
-                curr > 0 and self._src[curr - 1] != '\\'
+                curr > 0 and self._src[curr - 1] != "\\"
             ):
                 runs.append(self._src[prev + 1 : curr - 1])
                 prev = curr

@@ -4,7 +4,7 @@ import logging
 import textwrap
 from abc import ABC, abstractmethod
 from collections import namedtuple
-from typing import Any, Callable, Iterable
+from typing import Any, Callable, Iterable, Optional
 
 from icecream import ic
 
@@ -213,7 +213,7 @@ class AppendNodeTag(AppendOpenTag):
         node: nodes.Node,
         tag: str = "div",
         *,
-        additional_classes: list[str] | None = None,
+        additional_classes: Optional[list[str]] = None,
         newline_inner: bool = True,
         newline_outer: bool = True,
     ):

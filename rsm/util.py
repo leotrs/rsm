@@ -7,7 +7,7 @@ Utilities.
 """
 
 import textwrap
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 
 class EscapedString:
@@ -33,7 +33,7 @@ class EscapedString:
             ret = ret.replace(f"\\{char}", char)
         return ret
 
-    def __getitem__(self, _slice: int | slice) -> "EscapedString":
+    def __getitem__(self, _slice: Union[int, slice]) -> "EscapedString":
         return self.__class__(self._src[_slice])
 
     def __add__(self, other: str) -> str:

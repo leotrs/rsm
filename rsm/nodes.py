@@ -518,8 +518,8 @@ class Node:
             stack += node.children[::-1]
 
     def first_of_type(
-        self, cls: Type["Node"] | tuple[Type["Node"]], return_idx: bool = False
-    ) -> Optional["Node"] | tuple[Optional["Node"], Optional[int]]:
+        self, cls: Union[Type["Node"], tuple[Type["Node"]]], return_idx: bool = False
+    ) -> Union[Optional["Node"], tuple[Optional["Node"], Optional[int]]]:
         """First child of the specified type.
 
         Parameters
@@ -564,8 +564,8 @@ class Node:
         return (None, None) if return_idx else None
 
     def last_of_type(
-        self, cls: Type["Node"] | tuple[Type["Node"]], return_idx: bool = False
-    ) -> Optional["Node"] | tuple[Optional["Node"], Optional[int]]:
+        self, cls: Union[Type["Node"], tuple[Type["Node"]]], return_idx: bool = False
+    ) -> Union[Optional["Node"], tuple[Optional["Node"], Optional[int]]]:
         """Last child of the specified type.
 
         For details, see :meth:`first_of_type`.
@@ -673,7 +673,7 @@ class Node:
         return None
 
     def first_ancestor_of_type(
-        self, cls: Type["Node"] | tuple[Type["Node"]]
+        self, cls: Union[Type["Node"], tuple[Type["Node"]]]
     ) -> Optional["Node"]:
         """First ancestor of the specified type.
 
@@ -859,7 +859,7 @@ class NodeWithChildren(Node):
             c.parent = None
         self._children = []
 
-    def append(self, child: Node | Iterable[Node]) -> "NodeWithChildren":
+    def append(self, child: Union[Node, Iterable[Node]]) -> "NodeWithChildren":
         """Add a child or children after all current children.
 
         Parameters
@@ -926,7 +926,7 @@ class NodeWithChildren(Node):
             raise TypeError("Can only append a Node or iterable of Nodes as children")
         return self
 
-    def prepend(self, child: Node | Iterable[Node]) -> None:
+    def prepend(self, child: Union[Node, Iterable[Node]]) -> None:
         """Add a child or children before all current children.
 
         For details, see :meth:`append`.
@@ -1477,7 +1477,7 @@ class Bibitem(Node):
 
 
 class UnknownBibitem(Bibitem):
-    def __init__(self, number: str | int = "?", **kwargs: Any) -> None:
+    def __init__(self, number: Union[str, int] = "?", **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.number = number
 
@@ -1488,7 +1488,7 @@ class Figure(NodeWithChildren):
     newmetakeys: ClassVar[set] = {"path", "scale"}
 
     def __init__(
-        self, path: Path | str = "", scale: float = 1.0, **kwargs: Any
+        self, path: Union[Path, str] = "", scale: float = 1.0, **kwargs: Any
     ) -> None:
         super().__init__(**kwargs)
         self.path = Path(path)

@@ -78,6 +78,14 @@ markers = [
 ]
 
 
+# Poe the poet
+
+[tool.poe.tasks]
+test   = "pytest -vv -k 'not slow'"
+doctest = { shell = "cd docs/ && make doctest && cd .. && pytest -vv --doctest-modules rsm" }
+serve-docs  = { shell = "sphinx-autobuild docs/source/ docs/build/ --port 7001" }
+
+
 # Build stuff
 
 [tool.poetry]
@@ -111,6 +119,7 @@ uvicorn = "^0.20.0"
 pytest = "^7.2.0"
 pytest-sugar = "^0.9.6"
 pylint = "^2.15.8"
+poethepoet = "^0.16.5"
 
 [tool.poetry.group.doc.dependencies]
 Sphinx = "^5.3.0"

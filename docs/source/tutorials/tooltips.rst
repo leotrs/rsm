@@ -1,0 +1,6 @@
+.. _tooltips:
+
+Tooltips
+========
+
+Foo.

@@ -1,7 +1,7 @@
 .. _contributing:
 
-Contributing to RSM
-===================
+Contributing
+============
 
 RSM is built by scientists for scientists.  We accept any and all contributions.  No
 contribution is too small.

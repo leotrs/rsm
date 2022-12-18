@@ -1122,7 +1122,7 @@ class Subsubsection(Section):
 
 
 class BaseParagraph(Heading):
-    pass
+    """Foo."""
 
 
 class Paragraph(BaseParagraph):

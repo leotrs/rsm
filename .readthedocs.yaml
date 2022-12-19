@@ -8,12 +8,12 @@ build:
   tools:
     python: "3.10"
     nodejs: "16"
+  jobs:
+    post_install:
+      - python build.py
 
 python:
   install:
     - requirements: docs/requirements-doc.txt
     - method: pip
       path: .
-  jobs:
-    post_install:
-      - python build.py

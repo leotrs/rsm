@@ -63,52 +63,59 @@ class Pipeline:
         return res
 
 
-def _validate_srcpath_and_plain(srcpath: Union[Path, str, None], plain: str) -> None:
-    if not srcpath and not plain:
-        raise RSMApplicationError("Must specify exactly one of srcpath, plain")
-    if srcpath and plain:
-        raise RSMApplicationError("Must specify exactly one of srcpath, plain")
+class RSMApp(Pipeline):
+    def __init__(self, tasks: Optional[list[Task]] = None, verbosity: int = 0):
+        self._config_logger(verbosity)
+        logger.info("Application started")
+        logger.info("Configuring...")
+        # self.config = self.config.configure()
+        super().__init__(tasks or [])
+
+    def run(self, initial_args: Any = None) -> Optional[str]:
+        result = super().run(initial_args)
+        logger.info("Done.")
+        return result
+
+    @staticmethod
+    def _config_logger(verbosity: int):
+        level = logging.WARNING - verbosity * 10
+        level = max(level, logging.DEBUG)
+        logger.level = min(logger.level, level)
+        for handler in logger.handlers:
+            if handler.level > level:
+                handler.setLevel(level)
 
 
-def configure(verbosity: int) -> None:
-    level = logging.WARNING - verbosity * 10
-    level = max(level, logging.DEBUG)
-    logger.level = min(logger.level, level)
-    for handler in logger.handlers:
-        if handler.level > level:
-            handler.setLevel(level)
-    logger.info("Application started")
-    logger.info("Configuring...")
-    # self.config = self.config.configure()
-
-
-class ParserApplication(Pipeline):
+class ParserApp(RSMApp):
     def __init__(
         self,
         srcpath: Optional[Path] = None,
         plain: str = "",
         verbosity: int = 0,
-        treesitter: bool = True,
     ):
-        _validate_srcpath_and_plain(srcpath, plain)
-        configure(verbosity)
+        self._validate_srcpath_and_plain(srcpath, plain)
 
         tasks = []
         if not plain:
-            r = reader.Reader()
-            tasks.append(Task("reader", r, lambda: r.read(srcpath)))
+            tasks.append(Task("reader", r := reader.Reader(), lambda: r.read(srcpath)))
         else:
             tasks.append(Task("dummy", None, lambda: plain))
 
-        p = tsparser.TSParser()  # if treesitter else parser.MainParser()
         tasks += [
-            Task("parser", p, p.parse),
+            Task("parser", p := tsparser.TSParser(), p.parse),
             Task("transformer", t := transformer.Transformer(), t.transform),
         ]
-        super().__init__(tasks)
+        super().__init__(tasks, verbosity=verbosity)
+
+    @staticmethod
+    def _validate_srcpath_and_plain(
+        srcpath: Union[Path, str, None], plain: str
+    ) -> None:
+        if (not srcpath and not plain) or (srcpath and plain):
+            raise RSMApplicationError("Must specify exactly one of srcpath, plain")
 
 
-class LinterApplication(ParserApplication):
+class LinterApp(ParserApp):
     def __init__(
         self,
         srcpath: Optional[Path] = None,
@@ -118,11 +125,10 @@ class LinterApplication(ParserApplication):
         super().__init__(srcpath, plain, verbosity)
         mylinter = linter.Linter()
         self.add_task(Task("linter", mylinter, mylinter.lint))
-        self.add_task(Task("linter", mylinter, mylinter.flush))
-        self.add_task(Task("linter", mylinter, lambda: mylinter.flush))
+        self.add_task(Task("linter", mylinter, lambda _: mylinter.flush()))
 
 
-class RSMProcessorApplication(ParserApplication):
+class ProcessorApp(ParserApp):
     def __init__(
         self,
         srcpath: Optional[Path] = None,
@@ -130,9 +136,8 @@ class RSMProcessorApplication(ParserApplication):
         verbosity: int = 0,
         handrails: bool = False,
         run_linter: bool = False,
-        treesitter: bool = True,
     ):
-        super().__init__(srcpath, plain, verbosity, treesitter)
+        super().__init__(srcpath, plain, verbosity)
         if run_linter:
             self.add_task(Task("linter", l := linter.Linter(), l.lint))
 
@@ -142,7 +147,7 @@ class RSMProcessorApplication(ParserApplication):
             self.add_task(Task("linter", l, l.flush))
 
 
-class FullBuildApplication(RSMProcessorApplication):
+class FullBuildApp(ProcessorApp):
     def __init__(
         self,
         srcpath: Optional[Path] = None,
@@ -150,12 +155,23 @@ class FullBuildApplication(RSMProcessorApplication):
         verbosity: int = 0,
         handrails: bool = True,
         run_linter: bool = False,
-        treesitter: bool = True,
     ):
-        super().__init__(srcpath, plain, verbosity, handrails, run_linter, treesitter)
+        super().__init__(srcpath, plain, verbosity, handrails, run_linter)
         if run_linter:
             wrapup = self.pop_task()
         self.add_task(Task("builder", b := builder.FullBuilder(), b.build))
         self.add_task(Task("writer", w := writer.Writer(), w.write))
         if run_linter:
             self.add_task(wrapup)
+
+
+def render(source: str, handrails: bool = False, verbosity: int = 0) -> str:
+    return ProcessorApp(plain=source, handrails=handrails, verbosity=verbosity).run()
+
+
+def lint(source: str, handrails: bool = False, verbosity: int = 0):
+    return LinterApp(plain=source, verbosity=verbosity).run()
+
+
+def make(source: str, lint: bool = True, verbose: int = 0) -> str:
+    return FullBuildApp(plain=source, run_linter=lint, verbosity=verbose).run()

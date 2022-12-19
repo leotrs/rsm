@@ -1,8 +1,9 @@
-import sys
-import pytest
 import subprocess
-from textwrap import dedent
+import sys
 from importlib.metadata import version
+from textwrap import dedent
+
+import pytest
 
 
 def cmd(src):
@@ -42,9 +43,8 @@ def test_render(tmp_path):
     src = ":manuscript:\r\n\r\nFoo.\r\n\r\nBar.\r\n\r\nBaz.\r\n\r\n::\r\n"
     file = tmp_path / "test.rsm"
     file.write_text(src)
-    # result = subprocess.run(cmd(src), stdout=subprocess.PIPE, check=True, shell=True)
     result = subprocess.run(
-        f"rsm-render -f {str(file.resolve())}",
+        f"rsm-render {str(file.resolve())}",
         stdout=subprocess.PIPE,
         check=True,
         shell=True,

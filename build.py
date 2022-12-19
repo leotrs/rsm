@@ -29,6 +29,8 @@ def build(setup_kwargs):
 
     fn = "rsm.dll" if sys.platform == "win32" else "rsm.so"
     run(f"cp ~/.tree-sitter/bin/{fn} rsm/", cwd=".")
+    run("ls ~/.tree-sitter/bin/", cwd=".", print_output=True)
+    run("ls rsm/", cwd=".", print_output=True)
 
 
 if __name__ == "__main__":

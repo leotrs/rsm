@@ -9,7 +9,7 @@ build:
     python: "3.10"
     nodejs: "16"
   jobs:
-    post_install:
+    pre_install:
       - python build.py
 
 python:

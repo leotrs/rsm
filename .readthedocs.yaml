@@ -1,7 +1,7 @@
 version: 2
 
 submodules:
-  exclude: all
+  include: all
 
 build:
   os: "ubuntu-22.04"

@@ -1,6 +1,6 @@
 # RSM: (R)e-(S)tructured (M)anuscripts
 
-![tests](https://github.com/leotrs/rsm/actions/workflows/test.yml/badge.svg)
+[![tests](https://github.com/leotrs/rsm/actions/workflows/test.yml/badge.svg)](https://github.com/leotrs/rsm/actions/workflows/test.yml)
 [![docs](https://readthedocs.org/projects/rsm-markup/badge/?version=latest)](https://rsm-markup.readthedocs.io/en/latest/?badge=latest)
 
 

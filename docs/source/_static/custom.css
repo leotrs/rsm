@@ -10,3 +10,41 @@ html[data-theme="dark"] {
 .navbar-brand img {
   padding: 0.5rem;
 }
+
+.rsm-example {
+  display: flex;
+  gap: 2%;
+}
+
+.rsm-example-code {
+  width: 49% !important;
+  margin-top: 0 !important;
+}
+
+.rsm-example-code .highlight {
+  height: 100%;
+}
+
+.rsm-example-code .highlight pre {
+  height: 100%;
+}
+
+.rsm-example .manuscriptwrapper.embedded {
+  width: 49%;
+  border-radius: 0.25rem;
+  border: 1px solid var(--pst-color-border);
+  padding-block: 1rem;
+  margin-bottom: 1em;
+}
+
+.manuscriptwrapper.embedded section.level-1 {
+  margin-block: calc(var(--h1-size) // 2);
+}
+
+h1 {
+  margin-block: calc(var(--h1-size) * 0.65) !important;
+}
+
+.bd-sidebar-primary {
+  max-width: 20%;
+}

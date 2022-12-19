@@ -165,6 +165,13 @@ body {
   padding: 0 var(--side-padding) 0 var(--side-padding);
 }
 
+.manuscriptwrapper.embedded {
+  margin: 0;
+  padding-inline: 2.5rem 2.5rem;
+  box-shadow: unset;
+  border-radius: 0;
+}
+
 figure {
   margin-block: var(--h2-size);
   text-align: center;

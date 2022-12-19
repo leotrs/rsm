@@ -21,6 +21,7 @@ html_static_path = ["_static"]
 html_logo = "_static/logo.svg"
 html_css_files = [
     "custom.css",
+    "rsm.css",
 ]
 
 # templates
@@ -43,6 +44,7 @@ extensions = [
     "sphinx.ext.autodoc",  # autogenerate pages from docstrings
     "sphinx.ext.linkcode",  # 'source' links for each class and method
     "sphinx_copybutton",  # copy button on code blocks
+    "rsm_directive",  # highlight and render rsm code blocks
 ]
 
 

@@ -13,7 +13,7 @@ Base language
 Every RSM manuscript starts with the string ``:manuscript:`` and ends with a double
 colon ``::``.  The entire contents of the manuscript are placed within these delimiters.
 
-.. code-block:: text
+.. rsm::
 
    :manuscript:
    Hello, RSM!
@@ -23,7 +23,7 @@ The string ``:manuscript:`` is called a *tag*.  Tags are used in RSM to annotate
 contents.  For example, here we use two new tags ``:abstract:`` and ``:section:`` to
 mark where the corresponding parts of the manuscript start and end.
 
-.. code-block:: text
+.. rsm::
 
    :manuscript:
 
@@ -32,6 +32,7 @@ mark where the corresponding parts of the manuscript start and end.
    ::
 
    :section:
+     :title: First Section
      And this is the contents of a section.
    ::
 
@@ -79,10 +80,10 @@ Block and inline tags are meant to carry content.  The content may be text or ot
 tags.  Meta tags are special in that they associate metadata to the immediately
 enclosing tag.  Consider this example
 
-.. code-block:: text
+.. rsm::
 
    :manuscript:
-      :title: Three types of tags.
+      :title: Three types of tags
 
    Hello, RSM!
 
@@ -99,10 +100,10 @@ In the previous example, the ``:title:`` meta tag had a visible effect on the ou
 manuscript, namely it made the main title appear in the output.  Some meta tags do not
 have a visible output.  For example,
 
-.. code-block:: text
+.. rsm::
 
    :manuscript:
-      :title: Three types of tags.
+      :title: Three types of tags
 
    :section:
      :title: First section
@@ -121,10 +122,10 @@ visible effect on the output, but it has huge importance to the internal structu
 the manuscript.  In particular, the label of a tag is a unique identifier that allows
 you to refer to it later on.  For example,
 
-.. code-block:: text
+.. rsm::
 
    :manuscript:
-      :title: Three types of tags.
+      :title: Three types of tags
 
    :section:
      :title: First section

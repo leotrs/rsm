@@ -22,27 +22,34 @@ class RSMApplicationError(Exception):
 
 
 class Task(NamedTuple):
+    """A step in a :class:`Pipeline`."""
+
     name: str
     obj: Any
     run: Callable
 
 
 class Pipeline:
+    """A sequence of :class:`Task`s."""
+
     def __init__(self, tasks: list[Task]):
         self.tasks: list[Task] = []
         for t in tasks:
             self.add_task(t)
 
     def add_task(self, task: Task) -> None:
+        """Add a task at the end of the current pipeline."""
         self.tasks.append(task)
         setattr(self, task.name, task.obj)
 
     def pop_task(self) -> Task:
+        """Remove and return the last task."""
         task = self.tasks.pop()
         delattr(self, task.name)
         return task
 
     def run(self, initial_args: Any = None) -> Any:
+        """Execute every task in the pipeline serially."""
         res = initial_args
         for _, _, call in self.tasks:
             if isinstance(res, dict):
@@ -56,7 +63,7 @@ class Pipeline:
         return res
 
 
-def validate(srcpath: Union[Path, str, None], plain: str) -> None:
+def _validate_srcpath_and_plain(srcpath: Union[Path, str, None], plain: str) -> None:
     if not srcpath and not plain:
         raise RSMApplicationError("Must specify exactly one of srcpath, plain")
     if srcpath and plain:
@@ -83,7 +90,7 @@ class ParserApplication(Pipeline):
         verbosity: int = 0,
         treesitter: bool = True,
     ):
-        validate(srcpath, plain)
+        _validate_srcpath_and_plain(srcpath, plain)
         configure(verbosity)
 
         tasks = []

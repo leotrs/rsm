@@ -9,7 +9,6 @@ from typing import Optional
 
 from fs import open_fs
 from fs.copy import copy_file
-from fs.mountfs import MountFS
 from icecream import ic
 
 from .manuscript import WebManuscript

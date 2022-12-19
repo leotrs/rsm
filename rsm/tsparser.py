@@ -4,6 +4,7 @@ import re
 import string
 import sys
 from itertools import groupby
+from pathlib import Path
 from typing import Callable, Optional, cast
 
 import tree_sitter
@@ -75,14 +76,14 @@ class TSParser:
         #
         if sys.platform == "win32":
             import os
-            from pathlib import Path
 
             path = Path.home() / ".tree-sitter" / "bin"
             os.add_dll_directory(str(path))
             library_fn = "rsm.dll"
         else:
             library_fn = "rsm.so"
-        self._lang = tree_sitter.Language(library_fn, "rsm")
+        library_path = str(Path(__file__).parent / library_fn)
+        self._lang = tree_sitter.Language(library_path, "rsm")
         self._parser = tree_sitter.Parser()
         self._parser.set_language(self._lang)
         self.cst = None

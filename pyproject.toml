@@ -102,6 +102,9 @@ readme = "README.md"
 packages = [
     {include = "rsm"}
 ]
+include = [
+    {path = "rsm/*.so", format = "wheel"}
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"

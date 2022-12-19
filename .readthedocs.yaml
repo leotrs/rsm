@@ -7,7 +7,7 @@ build:
   os: "ubuntu-22.04"
   tools:
     python: "3.10"
-    nodejs: "17"
+    nodejs: "16"
 
 python:
   install:

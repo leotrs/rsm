@@ -10,7 +10,7 @@ class RSMFormatter(logging.Formatter):
     red = "\x1b[31;20m"
     boldred = "\x1b[31;1m"
     reset = "\x1b[0m"
-    prefix = grey + '%(asctime)s ' + reset + blue + '%(name)s ' + reset
+    prefix = grey + "%(asctime)s " + reset + blue + "%(name)s " + reset
     msgformat = "%(levelname)-3s | %(message)s"
     suffix = reset + grey + " (%(filename)s:%(lineno)d)" + reset
 
@@ -29,18 +29,18 @@ class RSMFormatter(logging.Formatter):
             + self.msgformat
             + self.suffix
         )
-        formatter = logging.Formatter(fmt, datefmt='%H:%M:%S')
+        formatter = logging.Formatter(fmt, datefmt="%H:%M:%S")
         return formatter.format(record)
 
 
 # Shorten level names for nicer output
-logging.addLevelName(logging.DEBUG, 'DBG')
-logging.addLevelName(logging.INFO, 'INF')
-logging.addLevelName(logging.WARN, 'WRN')
-logging.addLevelName(logging.ERROR, 'ERROR')
-logging.addLevelName(logging.CRITICAL, 'CRITICAL')
+logging.addLevelName(logging.DEBUG, "DBG")
+logging.addLevelName(logging.INFO, "INF")
+logging.addLevelName(logging.WARN, "WRN")
+logging.addLevelName(logging.ERROR, "ERROR")
+logging.addLevelName(logging.CRITICAL, "CRITICAL")
 
-logger = logging.getLogger('RSM')
+logger = logging.getLogger("RSM")
 logger.setLevel(logging.WARN)
 handler = logging.StreamHandler()
 handler.setLevel(logging.WARN)

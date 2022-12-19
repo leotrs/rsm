@@ -106,6 +106,10 @@ include = [
     {path = "rsm/*.so", format = "wheel"}
 ]
 
+[tool.poetry.build]
+script = "build.py"
+generate-setup-file = false
+
 [tool.poetry.dependencies]
 python = "^3.9"
 tree-sitter = "^0.20.1"

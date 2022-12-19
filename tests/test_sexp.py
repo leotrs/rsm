@@ -1,6 +1,7 @@
-import rsm
-from rsm.scripts.app import RSMProcessorApplication
 from textwrap import dedent
+
+import rsm
+from rsm.scripts.app import ProcessorApp
 
 src = """:manuscript:
 :title: My Title
@@ -26,7 +27,7 @@ $2+2=4$
 
 
 def test_no_meta():
-    app = RSMProcessorApplication(plain=src)
+    app = ProcessorApp(plain=src)
     app.run()
     tree = app.transformer.tree
     have = tree.sexp(meta=False).strip()
@@ -50,7 +51,7 @@ def test_no_meta():
 
 
 def test_with_meta():
-    app = RSMProcessorApplication(plain=src)
+    app = ProcessorApp(plain=src)
     app.run()
     tree = app.transformer.tree
     have = tree.sexp(meta=True).strip()
@@ -74,7 +75,7 @@ def test_with_meta():
 
 
 def test_with_meta_ignore_reftext():
-    app = RSMProcessorApplication(plain=src)
+    app = ProcessorApp(plain=src)
     app.run()
     tree = app.transformer.tree
     have = tree.sexp(meta=True, ignore_meta_keys=["reftext"]).strip()

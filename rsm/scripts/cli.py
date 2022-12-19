@@ -17,13 +17,6 @@ from ..tsparser import RSMParserError
 def init_parser() -> ArgumentParser:
     parser = ArgumentParser()
     parser.add_argument("path", help="source file")
-    # parser.add_argument(
-    #     "-c",
-    #     "--source",
-    #     help="source string",
-    #     action="store_true",
-    #     default=False,
-    # )
     parser.add_argument(
         "-r",
         "--handrails",

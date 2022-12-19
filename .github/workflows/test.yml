@@ -34,18 +34,22 @@ jobs:
         pipx install poetry
         poetry config virtualenvs.prefer-active-python true
 
-    - name: Install tree-sitter-rsm
+    - name: Build rsm-markup
       run: |
-        cd tree-sitter-rsm && npm install && npm list
+        poetry build
 
-    - name: Build tree-sitter-rsm grammar
-      run: |
-        cd tree-sitter-rsm && node_modules/.bin/tree-sitter generate
+    # - name: Install tree-sitter-rsm
+    #   run: |
+    #     cd tree-sitter-rsm && npm install && npm list
 
-    - name: Test tree-sitter grammar
-      run: |
-        cd tree-sitter-rsm && node_modules/.bin/tree-sitter test
-      continue-on-error: true
+    # - name: Build tree-sitter-rsm grammar
+    #   run: |
+    #     cd tree-sitter-rsm && node_modules/.bin/tree-sitter generate
+
+    # - name: Test tree-sitter grammar
+    #   run: |
+    #     cd tree-sitter-rsm && node_modules/.bin/tree-sitter test
+    #   continue-on-error: true
 
     - name: Install rsm-markup
       run: |
@@ -53,21 +57,21 @@ jobs:
         poetry install --with dev
         poetry show
 
-    - name: Make sure we can find tree-sitter shared libraries (Ubuntu)
-      if: matrix.os == 'ubuntu'
-      run: |
-        cp ~/.tree-sitter/bin/rsm.so $LD_LIBRARY_PATH
+    # - name: Make sure we can find tree-sitter shared libraries (Ubuntu)
+    #   if: matrix.os == 'ubuntu'
+    #   run: |
+    #     cp ~/.tree-sitter/bin/rsm.so $LD_LIBRARY_PATH
 
-    - name: Make sure we can find tree-sitter shared libraries (MacOS)
-      if: matrix.os == 'macos'
-      run: |
-        cp ~/.tree-sitter/bin/rsm.so "$LD_LIBRARY_PATH"
+    # - name: Make sure we can find tree-sitter shared libraries (MacOS)
+    #   if: matrix.os == 'macos'
+    #   run: |
+    #     cp ~/.tree-sitter/bin/rsm.so "$LD_LIBRARY_PATH"
 
-    - name: Make sure we can find tree-sitter shared libraries (Windows)
-      if: matrix.os == 'windows'
-      run: |
-        # Nothing to do as rsm/parser.py will handle the Windows case directly
-        ls -R ~/.tree-sitter
+    # - name: Make sure we can find tree-sitter shared libraries (Windows)
+    #   if: matrix.os == 'windows'
+    #   run: |
+    #     # Nothing to do as rsm/parser.py will handle the Windows case directly
+    #     ls -R ~/.tree-sitter
 
     - name: Run unit tests
       run: |

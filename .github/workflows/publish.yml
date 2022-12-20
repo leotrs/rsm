@@ -51,23 +51,30 @@ jobs:
       run: |
         ls -R dist/
 
+    # The following steps have continue-on-error set to True because in some cases the
+    # command will try to copy a file to itself, this causes an error and the entire
+    # workflow will stop.  We want to simply ignore that error as in that case the file
+    # will already have the correct name.
     - name: Fix name (Ubuntu)
       if: matrix.os == 'ubuntu'
       run: |
         cd dist/
-        cp rsm_markup-0.1.4-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-manylinux_2_35_x86_64.whl 2> /dev/null
+        cp rsm_markup-0.1.4-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-manylinux_2_35_x86_64.whl
+        continue-on-error: true
 
     - name: Fix name (MacOS)
       if: matrix.os == 'macos'
       run: |
         cd dist/
-        cp rsm_markup-0.1.4-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-macosx_12_0_x86_64.whl 2> /dev/null
+        cp rsm_markup-0.1.4-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-macosx_12_0_x86_64.whl
+        continue-on-error: true
 
     - name: Fix name (Windows)
       if: matrix.os == 'windows'
       run: |
-        echo "hi"
-
+        cd dist/
+        continue-on-error: true
+        
     - name: Double check wheel name
       run: |
         ls -R dist/

@@ -73,6 +73,7 @@ jobs:
       if: matrix.os == 'windows'
       run: |
         cd dist/
+        cp rsm_markup-0.1.4-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-macosx_12_0_x86_64.whl
       continue-on-error: true
         
     - name: Double check wheel name
@@ -83,4 +84,4 @@ jobs:
 
     - name: Publish
       run: |
-        poetry publish --dry-run --skip-existing
+        poetry publish --skip-existing

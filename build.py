@@ -2,8 +2,7 @@
 
 import subprocess
 import sys
-
-from typin import Any
+from typing import Any
 
 # All shell commands below run from this directory by default; see the cwd parameter
 DEFAULT_CMD_DIR = "tree-sitter-rsm"

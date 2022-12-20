@@ -74,14 +74,7 @@ class TSParser:
         # This needs to happen BEFORE we run this file.  Trying to set this env variable
         # from this interpreter session will not work.
         #
-        if sys.platform == "win32":
-            import os
-
-            path = Path.home() / ".tree-sitter" / "bin"
-            os.add_dll_directory(str(path))
-            library_fn = "rsm.dll"
-        else:
-            library_fn = "rsm.so"
+        library_fn = "rsm.dll" if sys.platform == "win32" else "rsm.so"
         library_path = str(Path(__file__).parent / library_fn)
         self._lang = tree_sitter.Language(library_path, "rsm")
         self._parser = tree_sitter.Parser()

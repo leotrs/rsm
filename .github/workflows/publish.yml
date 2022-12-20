@@ -84,4 +84,4 @@ jobs:
 
     - name: Publish
       run: |
-        poetry publish --skip-existing
+        poetry publish --skip-existing -u __token__ -p ${{ secrets.PYPI_API_TOKEN }}

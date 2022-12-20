@@ -34,22 +34,20 @@ jobs:
 
     - name: Install rsm-markup
       run: |
-        poetry update
         poetry install --with dev
         poetry show
-
-    - name: Build
-      run: |
-        poetry build
 
     - name: Run test suite
       run: |
         poetry run pytest -vv && poetry run pytest -vv --doctest-modules rsm && cd docs && poetry run make doctest
+        
+    - name: Build wheels
+      run: |
+        poetry build
 
 
 
-
-    - name: Fix name before publishing (see https://github.com/python-poetry/poetry/issues/3509)
+    - name: Fix wheel name (see https://github.com/python-poetry/poetry/issues/3509)
       run: |
         ls -R dist/
 
@@ -57,19 +55,22 @@ jobs:
       if: matrix.os == 'ubuntu'
       run: |
         cd dist/
-        cp rsm_markup-0.1.4-*-manylinux_2_35_x86_64.whl rsm_markup-0.1.4-`echo ${{ matrix.python-version }} | tr -d '.'`-manylinux_2_35_x86_64.whl
+        cp rsm_markup-0.1.4-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-manylinux_2_35_x86_64.whl
 
     - name: Fix name (MacOS)
       if: matrix.os == 'macos'
       run: |
-        echo "hi"
+        cd dist/
+        cp rsm_markup-0.1.4-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-macosx_12_0_x86_64.whl
 
     - name: Fix name (Windows)
       if: matrix.os == 'windows'
       run: |
         echo "hi"
 
-
+    - name: Double check wheel name
+      run: |
+        ls -R dist/
 
 
 

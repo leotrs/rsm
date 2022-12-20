@@ -7,12 +7,15 @@ jobs:
 
   publish:
     runs-on: ${{ matrix.os }}-latest
+
     env:
       PYTEST_ADDOPTS: "--color=yes"
+
     strategy:
       matrix:
         os: [ubuntu, macos, windows]
-        python-version: ['3.10']
+        python-version: ['3.9', '3.10', '3.11']
+
     steps:
     - name: Checkout the repository and submodules
       uses: actions/checkout@v3
@@ -27,7 +30,7 @@ jobs:
     - name: Install poetry
       run: |
         pipx install poetry
-        poetry config virtualenvs.prefer-active-python true
+        # poetry config virtualenvs.prefer-active-python true
 
     - name: Install rsm-markup
       run: |
@@ -42,6 +45,33 @@ jobs:
     - name: Run test suite
       run: |
         poetry run pytest -vv && poetry run pytest -vv --doctest-modules rsm && cd docs && poetry run make doctest
+
+
+
+
+    - name: Fix name before publishing (see https://github.com/python-poetry/poetry/issues/3509)
+      run: |
+        ls -R dist/
+
+    - name: Fix name (Ubuntu)
+      if: matrix.os == 'ubuntu'
+      run: |
+        cd dist/
+        cp rsm_markup-0.1.4-*-manylinux_2_35_x86_64.whl rsm_markup-0.1.4-`echo ${{ matrix.python-version }} | tr -d '.'`-manylinux_2_35_x86_64.whl
+
+    - name: Fix name (MacOS)
+      if: matrix.os == 'macos'
+      run: |
+        echo "hi"
+
+    - name: Fix name (Windows)
+      if: matrix.os == 'windows'
+      run: |
+        echo "hi"
+
+
+
+
 
     - name: Publish
       run: |

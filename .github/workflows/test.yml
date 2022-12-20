@@ -12,12 +12,15 @@ jobs:
 
   pytest:
     runs-on: ${{ matrix.os }}-latest
+
     env:
       PYTEST_ADDOPTS: "--color=yes"
+
     strategy:
       matrix:
         os: [ubuntu, macos, windows]
         python-version: ['3.9', '3.10', '3.11']
+
     steps:
     - name: Checkout the repository and submodules
       uses: actions/checkout@v3
@@ -32,45 +35,12 @@ jobs:
     - name: Install poetry
       run: |
         pipx install poetry
-        poetry config virtualenvs.prefer-active-python true
-
-
-
-    # - name: Install tree-sitter-rsm
-    #   run: |
-    #     cd tree-sitter-rsm && npm install && npm list
-
-    # - name: Build tree-sitter-rsm grammar
-    #   run: |
-    #     cd tree-sitter-rsm && node_modules/.bin/tree-sitter generate
-
-    # - name: Test tree-sitter grammar
-    #   run: |
-    #     cd tree-sitter-rsm && node_modules/.bin/tree-sitter test
-    #   continue-on-error: true
 
     - name: Install rsm-markup
       run: |
-        poetry update
-        poetry build
         poetry install --with dev
-        poetry show
-
-    # - name: Make sure we can find tree-sitter shared libraries (Ubuntu)
-    #   if: matrix.os == 'ubuntu'
-    #   run: |
-    #     cp ~/.tree-sitter/bin/rsm.so $LD_LIBRARY_PATH
-
-    # - name: Make sure we can find tree-sitter shared libraries (MacOS)
-    #   if: matrix.os == 'macos'
-    #   run: |
-    #     cp ~/.tree-sitter/bin/rsm.so "$LD_LIBRARY_PATH"
-
-    # - name: Make sure we can find tree-sitter shared libraries (Windows)
-    #   if: matrix.os == 'windows'
-    #   run: |
-    #     # Nothing to do as rsm/parser.py will handle the Windows case directly
-    #     ls -R ~/.tree-sitter
+        poetry show        
+        # python build.py
 
     - name: Run unit tests
       run: |

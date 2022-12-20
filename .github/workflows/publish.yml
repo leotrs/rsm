@@ -40,7 +40,7 @@ jobs:
     - name: Run test suite
       run: |
         poetry run pytest -vv && poetry run pytest -vv --doctest-modules rsm && cd docs && poetry run make doctest
-        
+
     - name: Build wheels
       run: |
         poetry build
@@ -59,23 +59,23 @@ jobs:
       if: matrix.os == 'ubuntu'
       run: |
         cd dist/
-        mv rsm_markup-0.1.4-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-manylinux_2_35_x86_64.whl
+        mv rsm_markup-0.2.0-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-manylinux_2_35_x86_64.whl
       continue-on-error: true
 
     - name: Fix name (MacOS)
       if: matrix.os == 'macos'
       run: |
         cd dist/
-        mv rsm_markup-0.1.4-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-macosx_12_0_x86_64.whl
+        mv rsm_markup-0.2.0-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-macosx_12_0_x86_64.whl
       continue-on-error: true
 
     - name: Fix name (Windows)
       if: matrix.os == 'windows'
       run: |
         cd dist/
-        mv rsm_markup-0.1.4-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-win_amd64.whl
+        mv rsm_markup-0.2.0-{*,cp`echo ${{ matrix.python-version }} | tr -d '.'`-cp`echo ${{ matrix.python-version }} | tr -d '.'`}-win_amd64.whl
       continue-on-error: true
-        
+
     - name: Double check wheel name
       run: |
         ls -R dist/

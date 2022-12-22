@@ -3,4 +3,4 @@
 List of all tags in rsm-markup
 ==============================
 
-Bar.
+And their shorthand notation, if any.

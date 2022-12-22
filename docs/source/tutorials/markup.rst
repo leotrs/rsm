@@ -19,9 +19,12 @@ colon ``::``.  The entire contents of the manuscript are placed within these del
    Hello, RSM!
    ::
 
-The string ``:manuscript:`` is called a *tag*.  Tags are used in RSM to annotate their
-contents.  For example, here we use two new tags ``:abstract:`` and ``:section:`` to
-mark where the corresponding parts of the manuscript start and end.
+The string ``:manuscript:`` is called a *tag*.  The double colon is called a `Halmos
+<https://en.wikipedia.org/wiki/Tombstone_(typography)>`_ and acts as closing delimiter
+for the corresponding tag.  Everything in between the tag and the Halmos is the tag's
+*content*.
+
+Tags may be embedded within the content of other tags.
 
 .. rsm::
 
@@ -38,109 +41,217 @@ mark where the corresponding parts of the manuscript start and end.
 
    ::
 
-Every one of these tags ends with a double colon ``::``.  The double colon is referred
-to as `Halmos <https://en.wikipedia.org/wiki/Tombstone_(typography)>`_.
+Some tags are *blocks*, meant to delimit a new section, part, or any other single
+cohesive unit of content, while other tags are *inline*, meant to be embedded within
+other tags.
 
-Tags may contain other tags:
+.. rsm::
+
+   :manuscript:
+
+   :section:
+     :title: Sections are blocks
+
+   And notes are inline.:note:yay tooltips!::
+
+   ::
+
+   ::
+
+The third type of tag is *meta* tags.  Meta tags modify their parent tag.  The
+``:title:`` tag we used in the previous example is a meta tag that modifies the parent
+``:section:`` tag.
 
 
+Meta tags for blocks appear directly underneath the block tag, before the content, one
+per line.  Meta tags for inlines appear within braces, separated by commas.
 
-.. info::
+.. rsm::
+
+   :manuscript:
+
+   :section:
+     :title: Fun with meta
+     :nonum:
+
+   Spans tags are fun because they can be
+   be :span: {:strong:} bold and heavy ::
+   or :span: {:emphas:} slanted and classy ::
+   or :span: {:strong:, :emphas:} even both!::
+
+   ::
+
+   ::
+
+In this example, the ``:section:`` tag has two meta tags: ``:title:`` and ``:nonum:``.
+The second one of these determines that this section should not be numbered.  The
+ensuing paragraph contains three ``:span:`` tags.  The ``:span:`` tag is a general
+purpose inline tag that annotates its contents with special attributes, specified as
+meta tags.  In this case, we show how to make some text bold, italic, or both.
+
+And that's it!  What we have illustrated up to now covers 90% of the RSM markup
+language.
+
+.. admonition:: Summary
+
    The base language is comprised of
-   1. One special character, the colon, used to delimit tags and Halmos
+
+   1. A special character, the colon ``:``, used to delimit tags and Halmos.
    2. Tags which semantically annotate content.
-   3.
+   3. Tags may be blocks, inlines, or meta.
+   4. Blocks are standalone units, inlines are embedded within the content of other
+      tags, and meta modify or annotate other tags.
+   5. Two other special characters, the braces ``{``, ``}``, used to enclose meta tags
+      for inlines.
 
 
-Tags
-----
-
-One of the main goals of RSM is to separate your manuscript's content from the look and
-feel.  Accordingly, RSM provides *semantic tags* that annotate the contents of your
-manuscript.  A tag has the form ``:tag-name: <contents> ::``.  As mentioned above, every
-RSM manuscript starts with the ``:manuscript:`` tag and ends with the Halmos ``::``.
-The entire contents of your manuscript are the contents of the ``:manuscript:`` tag.
-
-Tags being semantic means that a tag determines what its contents *are*, not what they
-should look like.  Two parts of your manuscript may be annotated with the same tag but
-end up looking differently in the final output.  Later on we will see examples of this.
-
-You can think of the Halmos ``::`` as the *empty* tag.  With few exceptions, every
-region of text annotated with a tag always ends with a Halmos.
 
 
-Types of tags
--------------
 
-There are three different types of tags in RSM: block, inline, and meta.  If you are
-familiar with HTML, blocks and inlines work in RSM much the same way as block and inline
-elements in HTML, whereas meta tags are similar in some respects to HTML attributes.
+The base RSM language is comprised of tags, which may be blocks,
+inlines, or meta.
 
-Block and inline tags are meant to carry content.  The content may be text or other
-tags.  Meta tags are special in that they associate metadata to the immediately
-enclosing tag.  Consider this example
+
+Similarly to HTML, tags in RSM are used to indicate the type of their contents.  For
+example, here we use two new tags ``:abstract:`` and ``:section:`` to mark where the
+corresponding parts of the manuscript start and end.  Note each of these tags also ends
+with a Halmos.
+
+
+
+Tags may contain other tags.
 
 .. rsm::
 
    :manuscript:
-      :title: Three types of tags
-
-   Hello, RSM!
-
-   ::
-
-Here the role of the ``:title:`` tag is to associate the title ``Three types of tags``
-to the enclosing ``:manuscript:`` tag.  This tells RSM that the given title is a
-property of the contents of the ``:manuscript:`` tag, i.e. a property of the entire
-manuscript.  We say the ``:title:`` is a *meta key* for the enclosing ``:manuscript:``
-tag, while the title ``Three types of tags`` is the *meta value* of said key.  Meta tags
-always come in key-values pairs.
-
-In the previous example, the ``:title:`` meta tag had a visible effect on the output
-manuscript, namely it made the main title appear in the output.  Some meta tags do not
-have a visible output.  For example,
-
-.. rsm::
-
-   :manuscript:
-      :title: Three types of tags
 
    :section:
-     :title: First section
-     :label: first-sec
+     :title: First Section
 
-   This section has a label.
+   :enumerate:
 
+     :item: First.
+
+     :item: Second.
+
+     :item: Third.
+
+   ::
    ::
 
    ::
 
-We have added a section within the manuscript, using the block tag ``:section:``.  This
-tag has two meta tags: ``:title:``, which works in much the same way as the manuscript's
-title, and a new meta tag ``:label:``, whose value is ``first-sec``.  This tag has no
-visible effect on the output, but it has huge importance to the internal structure of
-the manuscript.  In particular, the label of a tag is a unique identifier that allows
-you to refer to it later on.  For example,
+
+Shorthand
+---------
+
+In the previous section we illustrated how to generate bold and italic text in base RSM.
 
 .. rsm::
 
    :manuscript:
-      :title: Three types of tags
+   This text is :span: {:strong:} black ::
+   and :span: {:emphas:} classy ::.
+   ::
 
-   :section:
-     :title: First section
-     :label: first-sec
+That's a lot of characters for something this simple.  RSM supports shorthand notation
+for some common formulas.  In particular, the previous manuscript is identical to the
+following.
 
-   This section has a label.
+.. rsm::
+
+   :manuscript:
+   This text is *black* and /classy/.
+   ::
+
+Other tags that support shorthand notation are the tags that introduce mathematical
+content (using LaTeX notation).
+
+.. rsm::
+
+   :manuscript:
+
+   Some math is about to happen, :math: 2+2 = 4::.
+   And even more now, but centered,
+
+   :mathblock:
+   3+3 = 6
+   ::
 
    ::
 
-   We can now refer back to the :ref:first-sec::.
+The following is the shorthand version.
+
+.. rsm::
+
+   :manuscript:
+
+   Some math is about to happen, $2+2 = 4$.
+   And even more now, but centered,
+
+   $$
+   3+3 = 6
+   $$
 
    ::
+
+
 
 
 Syntax rules
 ------------
 
 Foo bar
+
+
+
+
+
+Some tags are special in that they do not have content and therefore don't need a
+Halmos.  A special example of tags of this kind are *meta* tags which are used to
+annotate an enclosing tag.  For example, sections are usually numbered automatically:
+
+.. rsm::
+
+   :manuscript:
+
+   :section:
+     :title: First
+   ::
+
+   :section:
+     :title: Second
+   ::
+
+   :section:
+     :title: Third
+   ::
+
+   ::
+
+However, the meta tag ``:nonum:`` may be used to prevent a section from being numbered:
+
+.. rsm::
+
+   :manuscript:
+
+   :section:
+     :title: First
+   ::
+
+   :section:
+     :title: Second
+     :nonum:
+   ::
+
+   :section:
+     :title: Third (with number 2!)
+   ::
+
+   ::
+
+
+Escaping
+--------
+
+Since

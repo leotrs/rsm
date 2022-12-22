@@ -84,10 +84,11 @@ markers = [
 [tool.poe.tasks]
 test   = "pytest -vv -k 'not slow'"
 test-all   = "pytest -vv"
-doctest = { shell = "cd docs/ && make doctest && cd .. && pytest -vv --doctest-modules rsm/" }
+test-docs = { shell = "cd docs/ && make doctest && cd .. && pytest -vv --doctest-modules rsm/" }
 docs = "sphinx-build docs/source/ docs/build/"
-clean-docs = { shell= "cd docs && make clean" }
-serve-docs  = { shell = "sphinx-autobuild docs/source/ docs/build/ --port 7001 --watch rsm/" }
+docs-clean = { shell= "cd docs && make clean" }
+docs-serve  = { shell = "sphinx-autobuild docs/source/ docs/build/ --port 7001 --watch rsm/" }
+css = { shell = "pysassc rsm/static/rsm.scss rsm/static/rsm.css && cp rsm/static/rsm.css docs/source/_static/" }
 
 
 # Build stuff

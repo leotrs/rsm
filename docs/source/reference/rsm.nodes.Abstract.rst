@@ -22,6 +22,8 @@ Qualified name: ``rsm.nodes.Abstract``
    .. autosummary::
      
      ~Abstract.newmetakeys
+     ~Abstract.keywords
+     ~Abstract.MSC
      ~Abstract.label
      ~Abstract.types
      ~Abstract.number

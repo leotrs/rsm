@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Source+Sans+Pro&family=Inconsolata:wdth,wght@75,300&display=swap");
+
+html {
+  --pst-font-family-heading: 'Montserrat', sans-serif;
+  --pst-font-family-base: 'Source Sans Pro', sans-serif;
+}
+
 html[data-theme="light"] {
   --pst-color-primary: #005187;
 }
@@ -37,14 +44,14 @@ html[data-theme="dark"] {
   margin-bottom: 1em;
 }
 
-.manuscriptwrapper.embedded section.level-1 {
-  margin-block: calc(var(--h1-size) // 2);
-}
-
-h1 {
-  margin-block: calc(var(--h1-size) * 0.65) !important;
-}
-
 .bd-sidebar-primary {
   max-width: 20%;
+}
+
+h1, h2, h3, h4, h5 {
+  line-height: var(--header-line-height);
+}
+
+h1, h2 {
+  font-weight: bold;
 }

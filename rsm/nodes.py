@@ -1040,8 +1040,7 @@ class Author(Node):
 
     Examples
     --------
-
-    .. code-block:: text
+    .. rsm::
 
        :manuscript:
 
@@ -1080,15 +1079,19 @@ class Abstract(NodeWithChildren):
 
     Examples
     --------
-    .. code-block:: text
+    .. rsm::
+
+       :manuscript:
 
        :abstract:
-         :keywords: {spectral graph theory, non-backtracking, interlacing}
-         :MSC: {05C50, 05C82, 15A18, 15B99}
+         :keywords: {cosmology, general relativity, black holes}
 
-         Abstract body goes here.
+         Black holes emit radiation.
 
        ::
+
+       ::
+
     """
 
     newmetakeys: ClassVar[set] = {"keywords", "MSC"}
@@ -1101,7 +1104,9 @@ class Abstract(NodeWithChildren):
     ) -> None:
         super().__init__(**kwargs)
         self.keywords = keywords or []
+        """Manuscript keywords."""
         self.MSC = MSC or []
+        """Mathematics Subject Classification (MSC) codes."""
 
 
 class Section(Heading):
@@ -1215,7 +1220,9 @@ class Algorithm(NodeWithChildren):
 
     Examples
     --------
-    .. code-block:: text
+    .. rsm::
+
+       :manuscript:
 
        :algorithm:
          \begin{algorithm}
@@ -1242,6 +1249,8 @@ class Algorithm(NodeWithChildren):
          \ENDPROCEDURE
          \end{algorithmic}
          \end{algorithm}
+       ::
+
        ::
     """
 

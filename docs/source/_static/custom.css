@@ -48,10 +48,6 @@ html[data-theme="dark"] {
   max-width: 20%;
 }
 
-h1, h2, h3, h4, h5 {
-  line-height: var(--header-line-height);
-}
-
 h1, h2 {
-  font-weight: bold;
+  font-weight: var(--semi);
 }

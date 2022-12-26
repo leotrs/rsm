@@ -112,3 +112,37 @@ Syntax rules
 ------------
 
 Foo bar
+
+
+Tags can be one of two main types: *blocks* or *inlines*.  They are differentiated by
+the syntax used to introduce them:
+
+.. grid:: 1 2 2 2
+
+  .. grid-item-card:: Blocks
+  
+     .. code-block:: text
+  
+        :tag-name:
+          :key: val
+          ...
+        
+        <contents>
+        
+        ::
+
+
+  .. grid-item-card:: Inlines
+  
+     .. code-block:: text
+  
+        :tag-name: {:key: val, ...}
+	<contents> ::
+
+Here the ellipsis denote an arbitrary number of additional key-value pairs.  In general,
+blocks introduce a part of the manuscript that should be regarded as completely separate
+from all other parts, while inlines denote a region of text that is part of the
+enclosing part.
+
+The third type of tag is *meta* tags.  They are the tags used above to modify their
+parent tags via key-value pairs.

@@ -4,7 +4,8 @@ RSM markup
 ==========
 
 At the core of ReStructured Manuscripts is the RSM markup language. Inspired by popular
-languages such as Markdown, ReST, and LaTeX, RSM strives for simplicity and power.
+languages such as Markdown, ReST, and LaTeX, RSM strives for simplicity, flexibility,
+and functionality.
 
 Every RSM manuscript starts with the string ``:manuscript:`` and ends with a double
 colon ``::``.  The entire contents of the manuscript are placed within these delimiters.
@@ -12,30 +13,39 @@ colon ``::``.  The entire contents of the manuscript are placed within these del
 .. rsm::
 
    :manuscript:
+
    Hello, RSM!
+
    ::
 
-Tags are used to annotate regions of text, for example to delimit sections and other parts of a manuscript.
+Strings such as ``:manuscript:`` are called *tags*.  Tags are used to annotate regions
+of text, for example to delimit sections and other parts of a manuscript.  The tag
+functions as open delimiter, and the empty tag ``::``, a.k.a. *Halmos*, is the closing
+delimiter.
 
 .. rsm::
 
    :manuscript:
 
    :abstract:
+
      This is the manuscript's abstract.
+
    ::
 
    :section:
      :title: First Section
+
      And this is the contents of a section.
+
    ::
 
    ::
-      
+
 Some tags are used to add meta-data to the annotated regions.  For example, the
 ``:section:`` tag in the previous example introduces a new region of the manuscript,
 while the ``:title:`` tag directly below it modifies the parent ``:section:`` tag by
-specifying its title.  
+specifying its title.
 
 Tags such as ``:manuscript:``, ``:abstract:``, and ``:section:`` introduce parts of the
 manuscript that are clearly separated from other parts.  In contrast, the ``:span:`` tag
@@ -56,16 +66,16 @@ tag, which is in turn part of the surrounding paragraph of text.  Note the use o
 to introduce the ``:strong:`` tag and the use of the Halmos ``::`` as closing delimiter
 of ``:span:``.
 
-The notation ``:span: {:strong:} text ::`` to introduce bold text allows a shorthand
-notation using asterisks `*`.  Similarly, the ``#`` symbol can be used as shorthand to
-introduce a section with a title.
+The notation ``:span: {:strong:} text ::`` to introduce bold text allows an alternative
+*shorthand* notation using asterisks (``*``).  Similarly, the hashtag (``#``) symbol can
+be used as shorthand to introduce a section with a title.
 
 .. rsm::
 
    :manuscript:
 
    # Awesome section
-   
+
    Span tags do not introduce new parts, but
    *live within* their parents.
 
@@ -87,7 +97,9 @@ Here is a complete example using all the basic features of RSM markup.
    ::
 
    :abstract:
+
      Web-first scientific manuscripts.
+
    ::
 
    # Awesome Section
@@ -110,3 +122,7 @@ The features on this page cover 90% of what can be done with RSM.
    as using asterisks ``*`` to introduce bold text.  Tags can be nested within the
    contents of other tags.
 
+.. tip::
+
+   Whitespace is ignored essentially everywhere in RSM.  It is recommended to leave
+   generous whitespace where desired to improve readability.

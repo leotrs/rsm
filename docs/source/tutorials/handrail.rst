@@ -27,7 +27,9 @@ the manuscript, such as sections and remarks.
    # Sections have handrails
 
    :remark:
-     And special parts have handrails too.
+
+     Other special parts have handrails too.
+
    ::
 
    ::
@@ -37,3 +39,9 @@ the manuscript, such as sections and remarks.
 In general, any part of the manuscript that shows a gray border to the left admits
 interaction via a handrail.
 
+.. tip::
+
+   If you are familiar with notebook interfaces such as Jupyter Notebooks, you may think
+   of handrails in RSM as marking individual "cells" in a notebook.  The main difference
+   is that in RSM, handrails may be nested within each other, while cells in a notebook
+   are always consecutive.

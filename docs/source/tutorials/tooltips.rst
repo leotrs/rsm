@@ -69,10 +69,8 @@ notation.
 
 .. admonition:: Summary
 
-   Use ``:label:`` to define a unique label to a region of the manuscript.  Use
-   ``:ref:`` to reference a region via its label.  Override the displayed text globally
-   by using ``:reftext:`` at the location where the label is defined, or by using a
-   comma at the location where ``:ref:`` is used.  Regardless of the displayed text, a
-   reference always displays a tooltip.
-
-      
+   Use ``:label: <label>`` to define a unique label to a region of the manuscript.  Use
+   ``:ref:<label>::`` to reference a region via its label.  Override the displayed text
+   globally by using ``:reftext: <text>`` at the location where the label is defined, or
+   by using ``:ref:<label>,<text>::`` where the reference is used.  Regardless of the
+   displayed text, a reference will display with a tooltip.

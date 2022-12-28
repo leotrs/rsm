@@ -8,30 +8,26 @@ ReStructured Manuscripts authoring system.
 .. grid:: 1 2 2 2
 
    .. grid-item-card:: Tutorials
-      :link: tutorials
-      :link-type: ref
+      :link: tutorials.html
 
       Writing your first manuscript with RSM and other tutorials.
 
 
    .. grid-item-card:: Reference manual
-      :link: reference
-      :link-type: ref
+      :link: reference.html
 
       Complete reference of every feature and configuration option.
 
 
    .. grid-item-card:: Contribution guide
-      :link: contributing
-      :link-type: ref
+      :link: contributing.html
 
       Contribute by reporting a bug or requesting a feature.  Get involved by submitting
       a PR.
 
 
    .. grid-item-card:: FAQ
-      :link: faq
-      :link-type: ref
+      :link: faq.html
 
       Frequently asked questions.
 

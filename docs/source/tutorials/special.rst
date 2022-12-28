@@ -33,16 +33,20 @@ inline or block.
    .. grid-item-card:: Inline math
 
      .. rsm::
-	
+
 	:manuscript:
-	Either :math:2 + 2 = 4:: or $2 + 2 = 4$.
+
+	Either :math:2 + 2 = 4::
+	or $2 + 2 = 4$.
+
 	::
 
    .. grid-item-card:: Block math
 
      .. rsm::
-	
+
 	:manuscript:
+
 	Either
 
 	:mathblock:
@@ -54,21 +58,27 @@ inline or block.
 	$$
 	2 + 2 = 4.
 	$$
+
 	::
 
    .. grid-item-card:: Inline code
 
      .. rsm::
-	
+
 	:manuscript:
-	Either :code: var = "value":: or `2 + 2 = 4`.
+
+	Either :code:
+	var = "value"::
+	or `2 + 2 = 4`.
+
 	::
 
    .. grid-item-card:: Block code
 
      .. rsm::
-	
+
 	:manuscript:
+
 	Either
 
 	:codeblock:
@@ -80,22 +90,23 @@ inline or block.
 	```
 	2 + 2 = 4.
 	```
+
 	::
-	   
+
 .. tip::
-   
+
    Either standard or shorthand notation allow meta tags.  For example, to assign a
-   label to an inline math region, you may use either ``:math:{:label:some-lbl}
-   2+2=4::`` or ``${:label:some-lbl} 2+2=4$``.
+   label to an inline math region, you may use either ``:math:{:label:some-lbl} 2+2=4
+   ::`` or ``${:label:some-lbl} 2+2=4 $``.
 
 
 Stamps
 ******
 
-Some tags deviate from the standard ``:tag-name: <contents> ::`` in that they do not
-allow contents nor need a closing Halmos.  These are called *stamp* tags.  One example
-is the ``:appendix:`` tag, whose role is to mark the place in the manuscript where the
-Appendix starts.
+Some tags deviate from the standard ``:tag-name: <contents> ::`` syntax in that they do
+not allow contents nor need a closing Halmos.  These are called *stamp* tags.  One
+example is the ``:appendix:`` tag, whose role is to mark the place in the manuscript
+where the Appendix starts.
 
 .. rsm::
 

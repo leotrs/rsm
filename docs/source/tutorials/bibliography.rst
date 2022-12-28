@@ -16,6 +16,11 @@ where in the manuscript the list of references will appear.
 
    ::
 
+.. tip::
+
+   Even though the ``:bibliography:`` tag does not accept content, it is *not* a stamp.
+   It may accept meta tags such as ``:label:``.
+
 Use the ``:bibtex:`` tag to supply the necessary references in BibTex notation.
 
 .. code-block:: text
@@ -31,14 +36,8 @@ Use the ``:bibtex:`` tag to supply the necessary references in BibTex notation.
 
    ::
 
-.. important::
-
-   The ``:bibtex:`` tag is located outside, and immediately after the closing Halmos of
-   the ``:manuscript:`` tag.
-
 Within the manuscript contents, use ``:cite:`` to refer to a bibliography item.  Here is
 a complete example of the bibliography system.
-
 
 .. rsm::
 
@@ -60,3 +59,12 @@ a complete example of the bibliography system.
         }
 
    ::
+
+Much like references, citations always display with a tooltip.  Similarly, each
+bibliography item in the generated reference list contains backlinks, also with
+tooltips, to those places in the manuscript where the item has been cited.
+
+.. important::
+
+   The ``:bibtex:`` tag is located outside, and immediately after, the closing Halmos of
+   the ``:manuscript:`` tag.

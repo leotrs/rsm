@@ -3,4 +3,4 @@
 Structured proofs
 =================
 
-Foo.
+WIP.

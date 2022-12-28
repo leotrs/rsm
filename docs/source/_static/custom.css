@@ -3,6 +3,7 @@
 html {
   --pst-font-family-heading: 'Montserrat', sans-serif;
   --pst-font-family-base: 'Source Sans Pro', sans-serif;
+  --pst-sidebar-secondary: 15rem;
 }
 
 html[data-theme="light"] {
@@ -12,7 +13,6 @@ html[data-theme="light"] {
 html[data-theme="dark"] {
   --pst-color-primary: #459db9;
 }
-
 
 .navbar-brand img {
   padding: 0.5rem;
@@ -50,4 +50,14 @@ html[data-theme="dark"] {
 
 h1, h2 {
   font-weight: var(--semi);
+}
+
+.footer-item {
+  display: inline-block;
+}
+
+.footer-item:not(:last-child) {
+  border-right: 1px solid var(--pst-color-text-base);
+  margin-right: .5em;
+  padding-right: .5em;
 }

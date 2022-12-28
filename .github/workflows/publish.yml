@@ -29,7 +29,8 @@ jobs:
 
     - name: Install poetry
       run: |
-        pipx install poetry
+        # pipx install poetry
+        python -m pip install --upgrade poetry
         # poetry config virtualenvs.prefer-active-python true
 
     - name: Install rsm-markup

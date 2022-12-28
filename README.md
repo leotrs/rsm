@@ -3,8 +3,6 @@
 [![tests](https://github.com/leotrs/rsm/actions/workflows/test.yml/badge.svg)](https://github.com/leotrs/rsm/actions/workflows/test.yml)
 [![docs](https://readthedocs.org/projects/rsm-markup/badge/?version=latest)](https://rsm-markup.readthedocs.io/en/latest/?badge=latest)
 
-
-
 RSM is a suite of tools that aims to change the format of scientific publications using
 modern web technology. Currently, most scientific publications are made with LaTeX and
 published in PDF format. While the capabilities of LaTeX and related software are
@@ -94,46 +92,6 @@ possible. Specifically, there should be cloud versions of both tools where all t
 necessary is an internet connection.
 
 
-## Examples
-
-The following is a short `.rsm` file:
-
-```rst
-.. default-role:: math
-
-
-##########################
-This is the document title
-##########################
-
-This is some content, with inline math like `G` or `2m\times2m` matrix,
-and display-style equations
-
-.. math::
-   :label: eqn-nbm
-
-   B_{k \to l,i \to j} := \delta_{jk}\left(1-\delta_{il}\right).
-
-
-.. _sec-zero-one:
-
-******************************
-This is a section title
-******************************
-
-This is the section's content.
-
-.. _sec-trees:
-
-Sub-section title
-=================
-
-This is the sub-section content
-
-
-```
-
-
 <!-- ## Design philosophy -->
 
 <!-- The RSM project follows a set of principles. Features are designed with these principles -->
@@ -145,16 +103,10 @@ This is the sub-section content
 
 <!-- 2. RSM documents should ship with the source code that generated them. -->
 
-<!-- 3. WHAT ELSE? -->
-
-
 
 <!-- ## Under the hood -->
 
-<!-- + .rst extensions implemented in sphinx -->
-<!-- + WHAT ELSE? -->
-
-<!-- -> Only show what the writer intended to show, unlews the writer asks for more via -->
+<!-- -> Only show what the writer intended to show, unless the writer asks for more via -->
 <!-- "details on demand" interactions. For example don't show menus, buttons, other things -->
 <!-- unless the reader is hovering or selecting somehow -->
 

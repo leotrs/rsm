@@ -2,7 +2,7 @@
 
 [project]
 name = "rsm-markup"
-version = "0.2.0"
+version = "0.2.1"
 description = "ReStructured Manuscripts (RSM) markup language"
 readme = "README.md"
 authors = [{ name = "Leo Torres", email = "leo@leotrs.com" }]
@@ -95,7 +95,7 @@ css = { shell = "pysassc rsm/static/rsm.scss rsm/static/rsm.css && cp rsm/static
 
 [tool.poetry]
 name = "rsm-markup"
-version = "0.2.0"
+version = "0.2.1"
 description = "ReStructured Manuscript (RSM) markup language"
 authors = ["leotrs <leo@leotrs.com>"]
 license = "MIT"

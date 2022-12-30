@@ -29,9 +29,7 @@ jobs:
 
     - name: Install poetry
       run: |
-        # pipx install poetry
         python -m pip install --upgrade poetry
-        # poetry config virtualenvs.prefer-active-python true
 
     - name: Install rsm-markup
       run: |
@@ -44,8 +42,9 @@ jobs:
 
     - name: Build wheels
       run: |
+        python -m build.py
         poetry build
-        ls -R dist/        
+        ls -R dist/
 
     - name: Publish
       run: |

@@ -104,7 +104,8 @@ packages = [
     {include = "rsm"}
 ]
 include = [
-    {path = "rsm/*.so", format = "wheel"}
+    {path = "rsm/*.so", format = "wheel"},
+    {path = "tree-sitter-rsm", format = "sdist"}
 ]
 
 [tool.poetry.build]

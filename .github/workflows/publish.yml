@@ -42,7 +42,7 @@ jobs:
 
     - name: Build wheels
       run: |
-        python -m build.py
+        poetry run python -m build
         poetry build
         ls -R dist/
 

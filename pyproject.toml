@@ -43,6 +43,14 @@ rsm-render = "rsm.scripts.render:main"
 rsm-lint = "rsm.scripts.lint:main"
 
 
+# cibuildwheel
+
+[tool.cibuildwheel]
+build = ["cp310-manylinux_x86_64", "cp311-manylinux_x86_64"]
+before-all = "ldd --version && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt install -y nodejs"
+manylinux-x86_64-image = "manylinux_2_24"
+
+
 # Mypy
 
 [tool.mypy]
@@ -104,7 +112,8 @@ packages = [
     {include = "rsm"}
 ]
 include = [
-    {path = "rsm/*.so", format = "wheel"}
+    {path = "rsm/*.so", format = "wheel"},
+    {path = "tree-sitter-rsm/", format = "sdist"}
 ]
 
 [tool.poetry.build]
@@ -132,6 +141,7 @@ pytest = "^7.2.0"
 pytest-sugar = "^0.9.6"
 pylint = "^2.15.8"
 poethepoet = "^0.16.5"
+cibuildwheel = "^2.11.4"
 
 [tool.poetry.group.doc.dependencies]
 Sphinx = "^5.3.0"

@@ -1,3 +1,5 @@
+--extra-index-url https://test.pypi.org/simple
+
 appdirs==1.4.4 ; python_version >= "3.9" and python_version < "4.0"
 asttokens==2.2.1 ; python_version >= "3.9" and python_version < "4.0"
 cfgv==3.3.1 ; python_version >= "3.9" and python_version < "4.0"
@@ -20,6 +22,6 @@ setuptools==65.6.3 ; python_version >= "3.9" and python_version < "4.0"
 six==1.16.0 ; python_version >= "3.9" and python_version < "4.0"
 tomli==2.0.1 ; python_version >= "3.9" and python_version < "3.11"
 tornado==6.2 ; python_version >= "3.9" and python_version < "4.0"
-tree-sitter==0.20.1 ; python_version >= "3.9" and python_version < "4.0"
+tree-sitter-test==0.20.2 ; python_version >= "3.9" and python_version < "4.0"
 typing-extensions==4.4.0 ; python_version >= "3.9" and python_version < "4.0"
 virtualenv==20.17.1 ; python_version >= "3.9" and python_version < "4.0"

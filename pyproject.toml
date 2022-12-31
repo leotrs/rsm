@@ -106,7 +106,7 @@ css = { shell = "pysassc rsm/static/rsm.scss rsm/static/rsm.css && cp rsm/static
 
 [tool.poetry]
 name = "rsm-markup"
-version = "0.2.2"
+version = "0.2.3"
 description = "ReStructured Manuscript (RSM) markup language"
 authors = ["leotrs <leo@leotrs.com>"]
 license = "MIT"

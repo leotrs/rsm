@@ -1,8 +1,18 @@
-# Modified from https://stackoverflow.com/a/56944256/14157230
+"""Configure the logging module for RSM apps."""
 import logging
 
+# Official documentation recommends that library code does not setup logging - it is the
+# responsibility of client application code.
+# https://docs.python.org/3/howto/logging-cookbook.html#adding-handlers-other-than-nullhandler-to-a-logger-in-a-library
+logger = logging.getLogger("RSM")
+logger.addHandler(logging.NullHandler())
 
+
+# The rest of this module defines classes and functions that are meant to be used by
+# client application code.
 class RSMFormatter(logging.Formatter):
+    """Default logging formatter for RSM apps."""
+
     grey = "\x1b[37;2m"
     blue = "\x1b[34;1m"
     white = "\x1b[37;10m"
@@ -33,16 +43,35 @@ class RSMFormatter(logging.Formatter):
         return formatter.format(record)
 
 
-# Shorten level names for nicer output
-logging.addLevelName(logging.DEBUG, "DBG")
-logging.addLevelName(logging.INFO, "INF")
-logging.addLevelName(logging.WARN, "WRN")
-logging.addLevelName(logging.ERROR, "ERROR")
-logging.addLevelName(logging.CRITICAL, "CRITICAL")
+def config_rsm_logger(verbosity: int = 0):
+    """Configure logging for RSM applications.
 
-logger = logging.getLogger("RSM")
-logger.setLevel(logging.WARN)
-handler = logging.StreamHandler()
-handler.setLevel(logging.WARN)
-handler.setFormatter(RSMFormatter())
-logger.addHandler(handler)
+    By default, the RSM libray creates a logger instance with name "RSM" but it does not
+    add any handlers or formatters to it.  Instead, it is the responsibility of client
+    application code to setup logging.  This function configures the "RSM" logger in the
+    way recommended by library author.  In particular, scripts such as rsm-make and
+    rsm-lint use this configuration.
+
+    """
+    logger = logging.getLogger("RSM")
+
+    # Shorten level names for nicer output
+    logging.addLevelName(logging.DEBUG, "DBG")
+    logging.addLevelName(logging.INFO, "INF")
+    logging.addLevelName(logging.WARN, "WRN")
+    logging.addLevelName(logging.ERROR, "ERROR")
+    logging.addLevelName(logging.CRITICAL, "CRITICAL")
+
+    # Setup default handlers
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.WARN)
+    handler.setFormatter(RSMFormatter())
+    logger.addHandler(handler)
+
+    # Set level
+    level = logging.WARNING - verbosity * 10
+    level = max(level, logging.DEBUG)
+    logger.setLevel(level)
+    for h in logger.handlers:
+        if h.level > level:
+            h.setLevel(level)

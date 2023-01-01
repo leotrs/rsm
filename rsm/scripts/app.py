@@ -12,7 +12,16 @@ from typing import Any, Callable, NamedTuple, Optional, Union
 
 from icecream import ic
 
-from .. import builder, linter, reader, transformer, translator, tsparser, writer
+from .. import (
+    builder,
+    linter,
+    reader,
+    rsmlogger,
+    transformer,
+    translator,
+    tsparser,
+    writer,
+)
 
 logger = logging.getLogger("RSM")
 
@@ -65,7 +74,7 @@ class Pipeline:
 
 class RSMApp(Pipeline):
     def __init__(self, tasks: Optional[list[Task]] = None, verbosity: int = 0):
-        self._config_logger(verbosity)
+        rsmlogger.config_rsm_logger(verbosity)
         logger.info("Application started")
         logger.info("Configuring...")
         # self.config = self.config.configure()
@@ -75,15 +84,6 @@ class RSMApp(Pipeline):
         result = super().run(initial_args)
         logger.info("Done.")
         return result
-
-    @staticmethod
-    def _config_logger(verbosity: int):
-        level = logging.WARNING - verbosity * 10
-        level = max(level, logging.DEBUG)
-        logger.level = min(logger.level, level)
-        for handler in logger.handlers:
-            if handler.level > level:
-                handler.setLevel(level)
 
 
 class ParserApp(RSMApp):

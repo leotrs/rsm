@@ -12,7 +12,7 @@ from typing import Any, Callable, NamedTuple, Optional, Union
 
 from icecream import ic
 
-from .. import (
+from rsm import (
     builder,
     linter,
     reader,

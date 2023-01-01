@@ -1,7 +1,7 @@
 from textwrap import dedent
 
 import rsm
-from rsm.scripts.app import ProcessorApp
+from rsm.app import ProcessorApp
 
 src = """:manuscript:
 :title: My Title

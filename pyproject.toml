@@ -38,9 +38,9 @@ dev = [
 Homepage = "https://write-rsm.org/"
 
 [project.scripts]
-rsm-make = "rsm.scripts.make:main"
-rsm-render = "rsm.scripts.render:main"
-rsm-lint = "rsm.scripts.lint:main"
+rsm-make = "rsm.cli:make"
+rsm-render = "rsm.cli:render"
+rsm-lint = "rsm.cli:lint"
 
 
 # cibuildwheel
@@ -161,9 +161,9 @@ sphinx-copybutton = "^0.5.1"
 sphinx-autodoc-typehints = "^1.19.5"
 
 [tool.poetry.scripts]
-rsm-make = "rsm.scripts.make:main"
-rsm-render = "rsm.scripts.render:main"
-rsm-lint = "rsm.scripts.lint:main"
+rsm-make = "rsm.cli:make"
+rsm-render = "rsm.cli:render"
+rsm-lint = "rsm.cli:lint"
 
 [build-system]
 requires = ["poetry-core"]

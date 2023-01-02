@@ -23,6 +23,8 @@ from rsm import (
     writer,
 )
 
+from .rsmlogger import GatherHandler
+
 logger = logging.getLogger("RSM")
 
 
@@ -73,8 +75,14 @@ class Pipeline:
 
 
 class RSMApp(Pipeline):
-    def __init__(self, tasks: Optional[list[Task]] = None, verbosity: int = 0):
-        rsmlogger.config_rsm_logger(verbosity)
+    def __init__(
+        self,
+        tasks: Optional[list[Task]] = None,
+        verbosity: int = 0,
+        log_format: str = "rsm",
+        log_time: bool = True,
+    ):
+        rsmlogger.config_rsm_logger(verbosity, log_format, log_time)
         logger.info("Application started")
         logger.info("Configuring...")
         # self.config = self.config.configure()
@@ -85,6 +93,16 @@ class RSMApp(Pipeline):
         logger.info("Done.")
         return result
 
+    def _setup_handler(self) -> None:
+        target = logging.StreamHandler()
+        target.setLevel(logging.WARNING)
+        handler = GatherHandler([logging.WARNING], target)
+        logger.addHandler(handler)
+
+    @property
+    def logs(self) -> list:
+        return []
+
 
 class ParserApp(RSMApp):
     def __init__(
@@ -92,6 +110,8 @@ class ParserApp(RSMApp):
         srcpath: Optional[Path] = None,
         plain: str = "",
         verbosity: int = 0,
+        log_format: str = "rsm",
+        log_time: bool = True,
     ):
         self._validate_srcpath_and_plain(srcpath, plain)
 
@@ -105,7 +125,7 @@ class ParserApp(RSMApp):
             Task("parser", p := tsparser.TSParser(), p.parse),
             Task("transformer", t := transformer.Transformer(), t.transform),
         ]
-        super().__init__(tasks, verbosity=verbosity)
+        super().__init__(tasks, verbosity, log_format, log_time)
 
     @staticmethod
     def _validate_srcpath_and_plain(
@@ -121,8 +141,10 @@ class LinterApp(ParserApp):
         srcpath: Optional[Path] = None,
         plain: str = "",
         verbosity: int = 0,
+        log_format: str = "rsm",
+        log_time: bool = True,
     ):
-        super().__init__(srcpath, plain, verbosity)
+        super().__init__(srcpath, plain, verbosity, log_format, log_time)
         mylinter = linter.Linter()
         self.add_task(Task("linter", mylinter, mylinter.lint))
         self.add_task(Task("linter", mylinter, lambda _: mylinter.flush()))
@@ -134,10 +156,12 @@ class ProcessorApp(ParserApp):
         srcpath: Optional[Path] = None,
         plain: str = "",
         verbosity: int = 0,
+        log_format: str = "rsm",
+        log_time: bool = True,
         handrails: bool = False,
         run_linter: bool = False,
     ):
-        super().__init__(srcpath, plain, verbosity)
+        super().__init__(srcpath, plain, verbosity, log_format, log_time)
         if run_linter:
             self.add_task(Task("linter", l := linter.Linter(), l.lint))
 
@@ -153,10 +177,14 @@ class FullBuildApp(ProcessorApp):
         srcpath: Optional[Path] = None,
         plain: str = "",
         verbosity: int = 0,
+        log_format: str = "rsm",
+        log_time: bool = True,
         handrails: bool = True,
         run_linter: bool = False,
     ):
-        super().__init__(srcpath, plain, verbosity, handrails, run_linter)
+        super().__init__(
+            srcpath, plain, verbosity, log_format, log_time, handrails, run_linter
+        )
         if run_linter:
             wrapup = self.pop_task()
         self.add_task(Task("builder", b := builder.FullBuilder(), b.build))
@@ -165,13 +193,54 @@ class FullBuildApp(ProcessorApp):
             self.add_task(wrapup)
 
 
-def render(source: str, handrails: bool = False, verbosity: int = 0) -> str:
-    return ProcessorApp(plain=source, handrails=handrails, verbosity=verbosity).run()
+def render(
+    source: str = "",
+    path: str = "",
+    handrails: bool = False,
+    verbosity: int = 0,
+    log_format: str = "rsm",
+    log_time: bool = True,
+) -> str:
+    return ProcessorApp(
+        srcpath=path,
+        plain=source,
+        handrails=handrails,
+        verbosity=verbosity,
+        log_format=log_format,
+        log_time=log_time,
+    ).run()
 
 
-def lint(source: str, handrails: bool = False, verbosity: int = 0):
-    return LinterApp(plain=source, verbosity=verbosity).run()
+def lint(
+    source: str = "",
+    path: str = "",
+    handrails: bool = False,
+    verbosity: int = 0,
+    log_format: str = "rsm",
+    log_time: bool = True,
+):
+    return LinterApp(
+        srcpath=path,
+        plain=source,
+        verbosity=verbosity,
+        log_format=log_format,
+        log_time=log_time,
+    ).run()
 
 
-def make(source: str, lint: bool = True, verbose: int = 0) -> str:
-    return FullBuildApp(plain=source, run_linter=lint, verbosity=verbose).run()
+def make(
+    source: str = "",
+    path: str = "",
+    lint: bool = True,
+    verbose: int = 0,
+    log_format: str = "rsm",
+    log_time: bool = True,
+) -> str:
+    return FullBuildApp(
+        srchpath=path,
+        plain=source,
+        run_linter=lint,
+        verbosity=verbose,
+        log_format=log_format,
+        log_time=log_time,
+    ).run()

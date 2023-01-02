@@ -1,5 +1,6 @@
 import pytest
 from conftest import compare_have_want
+
 import rsm
 
 
@@ -92,7 +93,7 @@ def test_list_no_braces():
         <section class="level-1">
 
         <h1>My Title</h1>
-        <span class="error">[CST error at ((3, 0), (3, 28))]</span>
+        <span class="error">[CST error at (3, 0) - (3, 28)]</span>
         <p class="paragraph">This paragraph has only one type</p>
 
         </section>

@@ -1,6 +1,7 @@
 import pytest
-import rsm
 from conftest import compare_have_want
+
+import rsm
 
 
 def test_simple():
@@ -143,7 +144,7 @@ def test_item_with_wrong_parent():
 
         <h2>1. Some section</h2>
 
-        <p class="paragraph">Lorem ipsum [CST error at ((4, 12), (4, 18))] Foo bar.</p>
+        <p class="paragraph">Lorem ipsum [CST error at (4, 12) - (4, 18)] Foo bar.</p>
 
         </section>
 

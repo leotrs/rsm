@@ -376,9 +376,19 @@ def make_ast(cst):
             elif isinstance(ast_node, nodes.Text):
                 ast_node.text = cst_node.text.decode("utf-8")
         elif ast_node_type == "ERROR":
-            logger.warning("The CST contains errors.")
+            start_row, start_col = cst_node.start_point
+            end_row, end_col = cst_node.end_point
+            logger.warning(
+                "The CST contains errors.",
+                extra=dict(
+                    start_row=start_row,
+                    start_col=start_col,
+                    end_row=end_row,
+                    end_col=end_col,
+                ),
+            )
             ast_node = nodes.Error(
-                f"[CST error at ({cst_node.start_point}, {cst_node.end_point})]"
+                f"[CST error at ({start_row}, {start_col}) - ({end_row}, {end_col})]"
             )
         else:
             raise RSMParserError(msg=f"not found {ast_node_type}")

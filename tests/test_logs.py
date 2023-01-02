@@ -168,6 +168,7 @@ def test_json_logs_of_empty_file():
 @pytest.mark.slow
 def test_json_logs_of_empty_file_verbose():
     output = run(EMPTY_MANUSCRIPT, "json", verbose=1, replace=True)
+    print(output)
     have = json.loads(f"[{output}]")
     assert have == EMPTY_MANUSCRIPT_LOGS_V
 
@@ -194,6 +195,7 @@ def test_json_logs_of_wrong_file():
 @pytest.mark.slow
 def test_json_logs_of_wrong_file_verbose():
     output = run(WRONG_MANUSCRIPT, "json", verbose=1, replace=True)
+    print(output)
     have = json.loads(f"[{output}]")
     assert have == WRONG_MANUSCRIPT_LOGS_V
 

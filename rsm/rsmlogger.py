@@ -71,6 +71,27 @@ class JSONFormatter(logging.Formatter):
         return json.dumps(output)
 
 
+class LintFormatter:
+
+    fmt_with_point = "src:%(start_row)d:%(start_col)d: %(levelname)s: %(message)s"
+    fmt_sans_point = "src:0:0: %(levelname)s: %(message)s"
+
+    def __init__(self, log_time: bool = True, *args, **kwargs):
+        self._formatter_with_point = logging.Formatter(
+            self.fmt_with_point, *args, **kwargs
+        )
+        self._formatter_sans_point = logging.Formatter(
+            self.fmt_sans_point, *args, **kwargs
+        )
+        self.log_time = log_time
+
+    def format(self, record: logging.LogRecord) -> str:
+        if hasattr(record, "start_row"):
+            return self._formatter_with_point.format(record)
+        else:
+            return self._formatter_sans_point.format(record)
+
+
 class GatherHandler(BufferingHandler):
     def __init__(
         self, levels: list[int], target: Optional[logging.Handler] = None
@@ -96,7 +117,7 @@ class GatherHandler(BufferingHandler):
 
 
 def config_rsm_logger(
-    verbosity: int = 0,
+    level: int = logging.WARNING,
     fmt: str = "rsm",
     log_time: bool = True,
 ) -> None:
@@ -109,34 +130,25 @@ def config_rsm_logger(
     rsm-lint use this configuration.
 
     """
-    logger = logging.getLogger("RSM")
-    logger.handlers.clear()
+    logging.getLogger("RSM").handlers.clear()
     _config_rsm_logger(fmt, log_time)
-    _set_level(verbosity)
+    _set_level(level)
 
 
 def _config_rsm_logger(fmt: str = "rsm", log_time: bool = True) -> None:
-    # Shorten level names for nicer output
-    logging.addLevelName(logging.DEBUG, "DBG")
-    logging.addLevelName(logging.INFO, "INF")
-    logging.addLevelName(logging.WARN, "WRN")
-    logging.addLevelName(logging.ERROR, "ERROR")
-    logging.addLevelName(logging.CRITICAL, "CRITICAL")
-
-    # Setup default handlers
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARN)
     formatter = {
         "json": JSONFormatter,
         "rsm": RSMFormatter,
-        "plain": logging.Formatter,
+        "lint": LintFormatter,
+        "plain": lambda x: logging.Formatter(),
     }[fmt]
     handler.setFormatter(formatter(log_time))
     logger.addHandler(handler)
 
 
-def _set_level(verbosity: int) -> None:
-    level = logging.WARNING - verbosity * 10
+def _set_level(level: int) -> None:
     level = max(level, logging.DEBUG)
     logger.setLevel(level)
     for h in logger.handlers:

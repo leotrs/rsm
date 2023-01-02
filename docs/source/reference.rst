@@ -16,14 +16,14 @@ For users
 For developers
 **************
 
-All modules inside the :code:`rsm` package.
-
 .. currentmodule:: rsm
 
+The :code:`rsm` package contains core modules, implementing each of the steps in the
+file processing pipeline:
 
 .. autosummary::
    :toctree: reference
-   :caption: Modules
+   :caption: Core Modules
 
    nodes
    reader
@@ -32,3 +32,12 @@ All modules inside the :code:`rsm` package.
    translator
    builder
    writer
+
+And user-facing modules, which use the modules above to actually process a file:
+
+.. autosummary::
+   :toctree: reference
+   :caption: User-facing modules
+
+   app
+   cli

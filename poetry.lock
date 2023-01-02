@@ -1541,6 +1541,18 @@ url = "https://test.pypi.org/simple"
 reference = "test"
 
 [[package]]
+name = "types-ujson"
+version = "5.6.0.0"
+description = "Typing stubs for ujson"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "types-ujson-5.6.0.0.tar.gz", hash = "sha256:1a20cf7946772756736582612e0da5656d2dbeccd24be4c1e97d1e66b072b97e"},
+    {file = "types_ujson-5.6.0.0-py3-none-any.whl", hash = "sha256:010b221260c24a915c6e713a83f366b91390766850ec110304de5b20c86b4b11"},
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -1777,4 +1789,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "843698c24b3e1030b7fc7d6a8a0091024da54401607deb69299d43bcc80a1afe"
+content-hash = "3f0e4d33fd56bee9b3f620a15da005bfe12d1eaa882134dcf2a823c445ded265"

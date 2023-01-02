@@ -150,7 +150,6 @@ class LinterApp(ParserApp):
         super().__init__(srcpath, plain, linter.Linter.LINT_LVL, log_format, log_time)
         mylinter = linter.Linter()
         self.add_task(Task("linter", mylinter, mylinter.lint))
-        # self.add_task(Task("linter", mylinter, lambda _: mylinter.flush()))
 
 
 class ProcessorApp(ParserApp):

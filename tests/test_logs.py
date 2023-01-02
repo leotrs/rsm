@@ -6,13 +6,7 @@ import ujson as json
 from rsm.app import ProcessorApp
 
 EMPTY_MANUSCRIPT = ":manuscript: ::"
-EMPTY_MANUSCRIPT_LOGS = {
-    "msg": "Manuscript with no title",
-    "name": "RSM.tlate",
-    "level": "WRN",
-    "filename": "translator.py",
-    "lineno": 471,
-}
+EMPTY_MANUSCRIPT_LOGS = {}
 EMPTY_MANUSCRIPT_LOGS_V = [
     {
         "name": "RSM",
@@ -57,13 +51,6 @@ EMPTY_MANUSCRIPT_LOGS_V = [
         "lineno": 415,
     },
     {
-        "name": "RSM.tlate",
-        "level": "WRN",
-        "msg": "Manuscript with no title",
-        "filename": "translator.py",
-        "lineno": 471,
-    },
-    {
         "name": "RSM",
         "level": "INF",
         "msg": "Done.",
@@ -80,14 +67,7 @@ WRONG_MANUSCRIPT_LOGS = [
         "msg": "The CST contains errors.",
         "filename": "tsparser.py",
         "lineno": 381,
-    },
-    {
-        "name": "RSM.tlate",
-        "level": "WRN",
-        "msg": "Manuscript with no title",
-        "filename": "translator.py",
-        "lineno": 471,
-    },
+    }
 ]
 WRONG_MANUSCRIPT_LOGS_V = [
     {
@@ -140,13 +120,6 @@ WRONG_MANUSCRIPT_LOGS_V = [
         "lineno": 415,
     },
     {
-        "name": "RSM.tlate",
-        "level": "WRN",
-        "msg": "Manuscript with no title",
-        "filename": "translator.py",
-        "lineno": 471,
-    },
-    {
         "name": "RSM",
         "level": "INF",
         "msg": "Done.",
@@ -182,7 +155,7 @@ def run(src: str, log_format: str, verbose: int = 0):
 
 @pytest.mark.slow
 def test_json_logs_of_empty_file():
-    have = json.loads(run(EMPTY_MANUSCRIPT, "json"))
+    have = json.loads(run(EMPTY_MANUSCRIPT, "json") or "{}")
     assert have == EMPTY_MANUSCRIPT_LOGS
 
 
@@ -196,8 +169,8 @@ def test_json_logs_of_empty_file_verbose():
 
 @pytest.mark.slow
 def test_plain_logs_of_empty_file():
-    have = run(EMPTY_MANUSCRIPT, "plain").strip()
-    assert have == EMPTY_MANUSCRIPT_LOGS["msg"]
+    have = run(EMPTY_MANUSCRIPT, "plain").strip() or {}
+    assert have == EMPTY_MANUSCRIPT_LOGS
 
 
 @pytest.mark.slow

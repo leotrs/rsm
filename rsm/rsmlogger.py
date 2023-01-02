@@ -97,7 +97,7 @@ class JSONFormatter(logging.Formatter):
 class LintFormatter:
 
     fmt_with_point = "src:%(start_row)d:%(start_col)d: %(levelname)s: %(message)s"
-    fmt_sans_point = "src:0:0: %(levelname)s: %(message)s"
+    fmt_sans_point = "src:1:1: %(levelname)s: %(message)s"
 
     def __init__(self, log_time: bool = True, *args, **kwargs):
         self._formatter_with_point = logging.Formatter(

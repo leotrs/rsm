@@ -117,7 +117,10 @@ This is a list of other projects or ideas that have inspired RSM or are somehow 
 
 + https://lamport.azurewebsites.net/pubs/proof.pdf
 + https://github.com/Mathpix/mathpix-markdown-it
-+ distill.pub
++ https://distill.pub
+- https://www.authorea.com/
+- https://quarto.org/
+- https://runestone.academy
 
 
 

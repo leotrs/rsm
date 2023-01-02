@@ -5,6 +5,27 @@ from typing import Optional
 
 import ujson as json
 
+# Shorten level names for nicer output
+logging.addLevelName(logging.DEBUG, "DBG")
+logging.addLevelName(logging.INFO, "INF")
+logging.addLevelName(logging.WARN, "WRN")
+logging.addLevelName(logging.ERROR, "ERROR")
+logging.addLevelName(logging.CRITICAL, "CRITICAL")
+
+# # Use a log record factory that understands a few extra attributes
+# # fmt: off
+# old_factory = logging.getLogRecordFactory()
+# def rsm_record_factory(*args, **kwargs):
+#     record = old_factory(*args, **kwargs)
+#     if not hasattr(record, "start_point"):
+#         record.start_point = None
+#     if not hasattr(record, "end_point"):
+#         record.end_point = None
+#     return record
+# logging.setLogRecordFactory(rsm_record_factory)
+# # fmt: on
+
+
 # Official documentation recommends that library code does not setup logging - it is the
 # responsibility of client application code.
 # https://docs.python.org/3/howto/logging-cookbook.html#adding-handlers-other-than-nullhandler-to-a-logger-in-a-library
@@ -26,8 +47,9 @@ class RSMFormatter(logging.Formatter):
     reset = "\x1b[0m"
     time = grey + "%(asctime)s " + reset
     name = blue + "%(name)s " + reset
-    msgformat = "%(levelname)-3s | %(message)s"
-    suffix = reset + grey + " (%(filename)s:%(lineno)d)" + reset
+    msgformat = "%(levelname)-3s | %(message)s" + reset
+    point = " | (%(start_row)d, %(start_col)d) - (%(end_row)d, %(end_col)d) | " + reset
+    suffix = grey + " (%(filename)s:%(lineno)d)" + reset
 
     COLORS = {
         logging.DEBUG: grey,
@@ -47,6 +69,7 @@ class RSMFormatter(logging.Formatter):
             + self.name
             + self.COLORS.get(record.levelno, self.grey)
             + self.msgformat
+            + (self.point if hasattr(record, "start_row") else "")
             + self.suffix
         )
         formatter = logging.Formatter(fmt, datefmt="%H:%M:%S")

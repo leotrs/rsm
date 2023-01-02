@@ -3,9 +3,9 @@
 Tutorials
 =========
 
-The easiest way to try out RSM and all its features is to use the online live editor.
-In it, you will be able to use a complete implementation of RSM, including all of the
-features showcased in the feature tour.
+The easiest way to try out RSM and all its features is to use the `online live editor
+<https://lets.write-rsm.org>`_.  In it, you will be able to use a complete
+implementation of RSM, including all of the features showcased in the feature tour.
 
 .. card::
 

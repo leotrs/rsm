@@ -51,7 +51,7 @@ def init_parser() -> ArgumentParser:
     parser.add_argument(
         "--log-format",
         help="format for logs",
-        choices=["plain", "rsm", "json"],
+        choices=["plain", "rsm", "json", "lint"],
         default="rsm",
     )
     parser.add_argument(
@@ -99,6 +99,8 @@ def render() -> int:
 
 def lint() -> int:
     parser = init_parser()
+    parser.set_defaults(log_format="lint")
+    parser.set_defaults(suppress_output=True)
     return main(parser, app.lint)
 
 

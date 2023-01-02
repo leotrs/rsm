@@ -12,8 +12,7 @@ from typing import Optional
 from . import nodes
 from .rsmlogger import GatherHandler
 
-main_logger = logging.getLogger("RSM")
-logger = logging.getLogger("RSM").getChild("Linter")
+logger = logging.getLogger("RSM")
 
 
 class Linter:
@@ -23,14 +22,18 @@ class Linter:
         self.tree: Optional[nodes.Manuscript] = None
         logging.LINT = self.LINT_LVL
         logging.addLevelName(self.LINT_LVL, "LINT")
-        main_logger.lint = lambda msg, *args, **kwargs: main_logger.log(
+        logger.lint = lambda msg, *args, **kwargs: logger.log(
             self.LINT_LVL, msg, *args, **kwargs
         )
-        if main_logger.level > self.LINT_LVL:
-            main_logger.level = self.LINT_LVL
+        if logger.level > self.LINT_LVL:
+            logger.level = self.LINT_LVL
 
     def lint(self, tree: nodes.Manuscript) -> nodes.Manuscript:
-        main_logger.info("Linting...")
+        logger.info("Linting...")
         self.tree = tree
-        main_logger.lint("this is a lint message")
+        if not tree.title:
+            logger.lint(
+                "Manuscript with no title",
+                extra=dict(start_row=1, start_col=12),
+            )
         return self.tree

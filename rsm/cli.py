@@ -19,20 +19,27 @@ from rsm.tsparser import RSMParserError
 
 def init_parser() -> ArgumentParser:
     parser = ArgumentParser()
-    parser.add_argument("path", help="source file")
+    parser.add_argument(
+        "src",
+        help="RSM source path",
+    )
+    parser.add_argument(
+        "-c",
+        "--string",
+        help="interpret src as a source string, not a path",
+        action="store_true",
+    )
     parser.add_argument(
         "-r",
         "--handrails",
         help="output handrails",
         action="store_true",
-        default=False,
     )
     parser.add_argument(
         "-s",
         "--supress-output",
         help="do not show output, only the logs",
         action="store_true",
-        default=False,
     )
     parser.add_argument(
         "-v",
@@ -40,6 +47,18 @@ def init_parser() -> ArgumentParser:
         help="verbosity",
         action="count",
         default=0,
+    )
+    parser.add_argument(
+        "--log-format",
+        help="format for logs",
+        choices=["plain", "rsm", "json"],
+        default="rsm",
+    )
+    parser.add_argument(
+        "--log-exclude-time",
+        dest="log_time",
+        help="exclude timestamp in logs",
+        action="store_false",
     )
     parser.add_argument(
         "-V",
@@ -57,9 +76,17 @@ def main(
 ) -> int:
     if args is None:
         args = parser.parse_args()
-    with open(args.path, encoding="utf-8") as file:
-        src = file.read()
-    output = func(src, args.handrails, args.verbose)
+    kwargs = dict(
+        handrails=args.handrails,
+        verbosity=args.verbose,
+        log_format=args.log_format,
+        log_time=args.log_time,
+    )
+    if args.string:
+        kwargs["source"] = args.src
+    else:
+        kwargs["path"] = args.src
+    output = func(**kwargs)
     if not args.supress_output and output:
         print(output)
     return 0

@@ -1,5 +1,9 @@
 """Configure the logging module for RSM apps."""
 import logging
+from logging.handlers import BufferingHandler
+from typing import Optional
+
+import ujson as json
 
 # Official documentation recommends that library code does not setup logging - it is the
 # responsibility of client application code.
@@ -20,7 +24,8 @@ class RSMFormatter(logging.Formatter):
     red = "\x1b[31;20m"
     boldred = "\x1b[31;1m"
     reset = "\x1b[0m"
-    prefix = grey + "%(asctime)s " + reset + blue + "%(name)s " + reset
+    time = grey + "%(asctime)s " + reset
+    name = blue + "%(name)s " + reset
     msgformat = "%(levelname)-3s | %(message)s"
     suffix = reset + grey + " (%(filename)s:%(lineno)d)" + reset
 
@@ -32,9 +37,14 @@ class RSMFormatter(logging.Formatter):
         logging.CRITICAL: boldred,
     }
 
+    def __init__(self, log_time: bool = True, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.log_time = log_time
+
     def format(self, record: logging.LogRecord) -> str:
         fmt = (
-            self.prefix
+            (self.time if self.log_time else "")
+            + self.name
             + self.COLORS.get(record.levelno, self.grey)
             + self.msgformat
             + self.suffix
@@ -43,7 +53,53 @@ class RSMFormatter(logging.Formatter):
         return formatter.format(record)
 
 
-def config_rsm_logger(verbosity: int = 0):
+class JSONFormatter(logging.Formatter):
+    def __init__(self, log_time: bool = True, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.log_time = log_time
+
+    def format(self, record: logging.LogRecord) -> str:
+        output = {
+            "msg": record.getMessage(),
+            "name": record.name,
+            "level": record.levelname,
+            "filename": record.filename,
+            "lineno": record.lineno,
+        }
+        if self.log_time:
+            output["time"] = self.formatTime(record, self.datefmt)
+        return json.dumps(output)
+
+
+class GatherHandler(BufferingHandler):
+    def __init__(
+        self, levels: list[int], target: Optional[logging.Handler] = None
+    ) -> None:
+        super().__init__(capacity=1000000)
+        self.gatherlevels = set(levels)
+        self.buffer = []
+        self.target = target
+
+    def emit(self, record: logging.LogRecord) -> None:
+        if record.levelno in self.gatherlevels:
+            self.buffer.append(record)
+
+    def flush(self) -> None:
+        self.acquire()
+        try:
+            if self.target:
+                for record in self.buffer:
+                    self.target.handle(record)
+                self.buffer.clear()
+        finally:
+            self.release()
+
+
+def config_rsm_logger(
+    verbosity: int = 0,
+    fmt: str = "rsm",
+    log_time: bool = True,
+) -> None:
     """Configure logging for RSM applications.
 
     By default, the RSM libray creates a logger instance with name "RSM" but it does not
@@ -54,7 +110,12 @@ def config_rsm_logger(verbosity: int = 0):
 
     """
     logger = logging.getLogger("RSM")
+    logger.handlers.clear()
+    _config_rsm_logger(fmt, log_time)
+    _set_level(verbosity)
 
+
+def _config_rsm_logger(fmt: str = "rsm", log_time: bool = True) -> None:
     # Shorten level names for nicer output
     logging.addLevelName(logging.DEBUG, "DBG")
     logging.addLevelName(logging.INFO, "INF")
@@ -65,10 +126,16 @@ def config_rsm_logger(verbosity: int = 0):
     # Setup default handlers
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARN)
-    handler.setFormatter(RSMFormatter())
+    formatter = {
+        "json": JSONFormatter,
+        "rsm": RSMFormatter,
+        "plain": logging.Formatter,
+    }[fmt]
+    handler.setFormatter(formatter(log_time))
     logger.addHandler(handler)
 
-    # Set level
+
+def _set_level(verbosity: int) -> None:
     level = logging.WARNING - verbosity * 10
     level = max(level, logging.DEBUG)
     logger.setLevel(level)

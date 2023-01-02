@@ -7,38 +7,16 @@ RSM Linter: analyze the manuscript tree and log linting messages.
 """
 
 import logging
-from logging.handlers import BufferingHandler
 from typing import Optional
 
 from . import nodes
+from .rsmlogger import GatherHandler
 
 main_logger = logging.getLogger("RSM")
 logger = logging.getLogger("RSM").getChild("Linter")
 
 
 LINT_LVL = 25
-
-
-class GatherHandler(BufferingHandler):
-    def __init__(self, levels: list[int], target: logging.Handler = None) -> None:
-        super().__init__(capacity=1000000)
-        self.gatherlevels = set(levels)
-        self.buffer = []
-        self.target = target
-
-    def emit(self, record: logging.LogRecord) -> None:
-        if record.levelno in self.gatherlevels:
-            self.buffer.append(record)
-
-    def flush(self) -> None:
-        self.acquire()
-        try:
-            if self.target:
-                for record in self.buffer:
-                    self.target.handle(record)
-                self.buffer.clear()
-        finally:
-            self.release()
 
 
 class Linter:

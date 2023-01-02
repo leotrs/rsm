@@ -1,6 +1,7 @@
 import pytest
-import rsm
 from conftest import compare_have_want
+
+import rsm
 
 
 def test_no_reftext():
@@ -83,7 +84,7 @@ def test_no_target():
 
         <section class="level-1">
 
-        <p class="paragraph">This is a malformed url [CST error at ((2, 24), (2, 31))] .</p>
+        <p class="paragraph">This is a malformed url [CST error at (2, 24) - (2, 31)] .</p>
 
         </section>
 
@@ -112,7 +113,7 @@ def test_no_target():
 
         <section class="level-1">
 
-        <p class="paragraph">This is a malformed url with a space [CST error at ((2, 37), (2, 45))] .</p>
+        <p class="paragraph">This is a malformed url with a space [CST error at (2, 37) - (2, 45)] .</p>
 
         </section>
 

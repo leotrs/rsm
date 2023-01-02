@@ -1,5 +1,6 @@
 import pytest
 from conftest import compare_have_want
+
 import rsm
 
 
@@ -23,7 +24,7 @@ def test_inline_cannot_contain_block():
         <section class="level-1">
 
         <h1>My Title</h1>
-        <span class="error">[CST error at ((3, 0), (3, 71))]</span>
+        <span class="error">[CST error at (3, 0) - (3, 71)]</span>
         </section>
 
         </div>

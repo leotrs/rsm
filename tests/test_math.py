@@ -1,6 +1,7 @@
 import pytest
-import rsm
 from conftest import compare_have_want
+
+import rsm
 
 
 def test_display_alone():
@@ -300,7 +301,7 @@ def test_unclosed_dollar_sign():
 
         <section class="level-1">
 
-        <p class="paragraph">There are three dollar signs here <span class="math">\(2+2\)</span>= 0 [CST error at ((2, 43), (2, 44))] .</p>
+        <p class="paragraph">There are three dollar signs here <span class="math">\(2+2\)</span>= 0 [CST error at (2, 43) - (2, 44)] .</p>
 
         </section>
 

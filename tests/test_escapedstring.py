@@ -1,7 +1,8 @@
 import pytest
+from conftest import compare_have_want
+
 import rsm
 from rsm.util import EscapedString
-from conftest import compare_have_want
 
 
 def test_ignore_single_char():
@@ -27,7 +28,7 @@ def test_simple_not_escaped():
 
         <section class="level-1">
 
-        <p class="paragraph">Warning [CST error at ((2, 7), (2, 8))] this is a warning.</p>
+        <p class="paragraph">Warning [CST error at (2, 7) - (2, 8)] this is a warning.</p>
 
         </section>
 

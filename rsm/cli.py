@@ -37,7 +37,7 @@ def init_parser() -> ArgumentParser:
     )
     parser.add_argument(
         "-s",
-        "--supress-output",
+        "--suppress-output",
         help="do not show output, only the logs",
         action="store_true",
     )
@@ -78,7 +78,7 @@ def main(
         args = parser.parse_args()
     kwargs = dict(
         handrails=args.handrails,
-        verbosity=args.verbose,
+        loglevel=app.RSMApp.default_log_level - args.verbose * 10,
         log_format=args.log_format,
         log_time=args.log_time,
     )
@@ -87,7 +87,7 @@ def main(
     else:
         kwargs["path"] = args.src
     output = func(**kwargs)
-    if not args.supress_output and output:
+    if not args.suppress_output and output:
         print(output)
     return 0
 

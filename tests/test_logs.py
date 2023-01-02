@@ -1,3 +1,4 @@
+import re
 import subprocess
 
 import pytest
@@ -143,14 +144,17 @@ def cmd(src: str, log_format: str, verbose: int = 0):
     return " ".join(args)
 
 
-def run(src: str, log_format: str, verbose: int = 0):
-    return subprocess.run(
+def run(src: str, log_format: str, verbose: int = 0, replace=False):
+    result = subprocess.run(
         cmd(src, log_format, verbose),
         check=True,
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
     ).stdout.decode("utf-8")
+    if replace:
+        result = re.sub(r"}\s{", "},{", result)
+    return result
 
 
 @pytest.mark.slow
@@ -161,8 +165,7 @@ def test_json_logs_of_empty_file():
 
 @pytest.mark.slow
 def test_json_logs_of_empty_file_verbose():
-    output = run(EMPTY_MANUSCRIPT, "json", verbose=1)
-    output = output.replace("}\n{", "},{")
+    output = run(EMPTY_MANUSCRIPT, "json", verbose=1, replace=True)
     have = json.loads(f"[{output}]")
     assert have == EMPTY_MANUSCRIPT_LOGS_V
 
@@ -181,16 +184,14 @@ def test_plain_logs_of_empty_file_verbose():
 
 @pytest.mark.slow
 def test_json_logs_of_wrong_file():
-    output = run(WRONG_MANUSCRIPT, "json")
-    output = output.replace("}\n{", "},{")
+    output = run(WRONG_MANUSCRIPT, "json", replace=True)
     have = json.loads(f"[{output}]")
     assert have == WRONG_MANUSCRIPT_LOGS
 
 
 @pytest.mark.slow
 def test_json_logs_of_wrong_file_verbose():
-    output = run(WRONG_MANUSCRIPT, "json", verbose=1)
-    output = output.replace("}\n{", "},{")
+    output = run(WRONG_MANUSCRIPT, "json", verbose=1, replace=True)
     have = json.loads(f"[{output}]")
     assert have == WRONG_MANUSCRIPT_LOGS_V
 

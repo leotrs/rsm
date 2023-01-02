@@ -75,14 +75,17 @@ class Pipeline:
 
 
 class RSMApp(Pipeline):
+
+    default_log_level = logging.WARNING
+
     def __init__(
         self,
         tasks: Optional[list[Task]] = None,
-        verbosity: int = 0,
+        loglevel: int = default_log_level,
         log_format: str = "rsm",
         log_time: bool = True,
     ):
-        rsmlogger.config_rsm_logger(verbosity, log_format, log_time)
+        rsmlogger.config_rsm_logger(loglevel, log_format, log_time)
         logger.info("Application started")
         logger.info("Configuring...")
         # self.config = self.config.configure()
@@ -109,7 +112,7 @@ class ParserApp(RSMApp):
         self,
         srcpath: Optional[Path] = None,
         plain: str = "",
-        verbosity: int = 0,
+        loglevel: int = RSMApp.default_log_level,
         log_format: str = "rsm",
         log_time: bool = True,
     ):
@@ -125,7 +128,7 @@ class ParserApp(RSMApp):
             Task("parser", p := tsparser.TSParser(), p.parse),
             Task("transformer", t := transformer.Transformer(), t.transform),
         ]
-        super().__init__(tasks, verbosity, log_format, log_time)
+        super().__init__(tasks, loglevel, log_format, log_time)
 
     @staticmethod
     def _validate_srcpath_and_plain(
@@ -140,14 +143,14 @@ class LinterApp(ParserApp):
         self,
         srcpath: Optional[Path] = None,
         plain: str = "",
-        verbosity: int = 0,
+        loglevel: int = RSMApp.default_log_level,
         log_format: str = "rsm",
         log_time: bool = True,
     ):
-        super().__init__(srcpath, plain, verbosity, log_format, log_time)
+        super().__init__(srcpath, plain, linter.Linter.LINT_LVL, log_format, log_time)
         mylinter = linter.Linter()
         self.add_task(Task("linter", mylinter, mylinter.lint))
-        self.add_task(Task("linter", mylinter, lambda _: mylinter.flush()))
+        # self.add_task(Task("linter", mylinter, lambda _: mylinter.flush()))
 
 
 class ProcessorApp(ParserApp):
@@ -155,13 +158,13 @@ class ProcessorApp(ParserApp):
         self,
         srcpath: Optional[Path] = None,
         plain: str = "",
-        verbosity: int = 0,
+        loglevel: int = RSMApp.default_log_level,
         log_format: str = "rsm",
         log_time: bool = True,
         handrails: bool = False,
         run_linter: bool = False,
     ):
-        super().__init__(srcpath, plain, verbosity, log_format, log_time)
+        super().__init__(srcpath, plain, loglevel, log_format, log_time)
         if run_linter:
             self.add_task(Task("linter", l := linter.Linter(), l.lint))
 
@@ -176,14 +179,14 @@ class FullBuildApp(ProcessorApp):
         self,
         srcpath: Optional[Path] = None,
         plain: str = "",
-        verbosity: int = 0,
+        loglevel: int = RSMApp.default_log_level,
         log_format: str = "rsm",
         log_time: bool = True,
         handrails: bool = True,
         run_linter: bool = False,
     ):
         super().__init__(
-            srcpath, plain, verbosity, log_format, log_time, handrails, run_linter
+            srcpath, plain, loglevel, log_format, log_time, handrails, run_linter
         )
         if run_linter:
             wrapup = self.pop_task()
@@ -197,7 +200,7 @@ def render(
     source: str = "",
     path: str = "",
     handrails: bool = False,
-    verbosity: int = 0,
+    loglevel: int = RSMApp.default_log_level,
     log_format: str = "rsm",
     log_time: bool = True,
 ) -> str:
@@ -205,7 +208,7 @@ def render(
         srcpath=path,
         plain=source,
         handrails=handrails,
-        verbosity=verbosity,
+        loglevel=loglevel,
         log_format=log_format,
         log_time=log_time,
     ).run()
@@ -215,14 +218,14 @@ def lint(
     source: str = "",
     path: str = "",
     handrails: bool = False,
-    verbosity: int = 0,
+    loglevel: int = RSMApp.default_log_level,
     log_format: str = "rsm",
     log_time: bool = True,
 ):
     return LinterApp(
         srcpath=path,
         plain=source,
-        verbosity=verbosity,
+        loglevel=loglevel,
         log_format=log_format,
         log_time=log_time,
     ).run()
@@ -232,7 +235,7 @@ def make(
     source: str = "",
     path: str = "",
     lint: bool = True,
-    verbose: int = 0,
+    loglevel: int = RSMApp.default_log_level,
     log_format: str = "rsm",
     log_time: bool = True,
 ) -> str:
@@ -240,7 +243,7 @@ def make(
         srchpath=path,
         plain=source,
         run_linter=lint,
-        verbosity=verbose,
+        loglevel=loglevel,
         log_format=log_format,
         log_time=log_time,
     ).run()

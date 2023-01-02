@@ -13,24 +13,77 @@ EMPTY_MANUSCRIPT_LOGS = {
     "filename": "translator.py",
     "lineno": 471,
 }
+EMPTY_MANUSCRIPT_LOGS_V = [
+    {
+        "name": "RSM",
+        "level": "INF",
+        "msg": "Application started",
+        "filename": "app.py",
+        "lineno": 86,
+    },
+    {
+        "name": "RSM",
+        "level": "INF",
+        "msg": "Configuring...",
+        "filename": "app.py",
+        "lineno": 87,
+    },
+    {
+        "name": "RSM.parse",
+        "level": "INF",
+        "msg": "Parsing...",
+        "filename": "tsparser.py",
+        "lineno": 86,
+    },
+    {
+        "name": "RSM.parse",
+        "level": "INF",
+        "msg": "Abstractifying...",
+        "filename": "tsparser.py",
+        "lineno": 96,
+    },
+    {
+        "name": "RSM.tform",
+        "level": "INF",
+        "msg": "Transforming...",
+        "filename": "transformer.py",
+        "lineno": 28,
+    },
+    {
+        "name": "RSM.tlate",
+        "level": "INF",
+        "msg": "Translating...",
+        "filename": "translator.py",
+        "lineno": 415,
+    },
+    {
+        "name": "RSM.tlate",
+        "level": "WRN",
+        "msg": "Manuscript with no title",
+        "filename": "translator.py",
+        "lineno": 471,
+    },
+    {"name": "RSM", "level": "INF", "msg": "Done.", "filename": "app.py", "lineno": 93},
+]
 
 
-def cmd(src, log_format):
-    return " ".join(
-        [
-            "rsm-render",
-            f'"{src}"',
-            "-c",  # interpret source as string, not path
-            "-s",  # silent, only output logs
-            f"--log-format {log_format}",  # log format
-            "--log-exclude-time",  # no timestamps
-        ]
-    )
+def cmd(src: str, log_format: str, verbose: int = 0):
+    args = [
+        "rsm-render",
+        f'"{src}"',
+        "-c",  # interpret source as string, not path
+        "-s",  # silent, only output logs
+        f"--log-format {log_format}",  # log format
+        "--log-exclude-time",  # no timestamps
+    ]
+    if verbose:
+        args.append("-" + ("v" * verbose))
+    return " ".join(args)
 
 
-def run(src, log_format):
+def run(src: str, log_format: str, verbose: int = 0):
     return subprocess.run(
-        cmd(src, log_format),
+        cmd(src, log_format, verbose),
         check=True,
         shell=True,
         stdout=subprocess.PIPE,
@@ -45,9 +98,23 @@ def test_json_logs_of_empty_file():
 
 
 @pytest.mark.slow
+def test_json_logs_of_empty_file_verbose():
+    output = run(EMPTY_MANUSCRIPT, "json", verbose=1)
+    output = output.replace("}\n{", "},{")
+    have = json.loads(f"[{output}]")
+    assert have == EMPTY_MANUSCRIPT_LOGS_V
+
+
+@pytest.mark.slow
 def test_plain_logs_of_empty_file():
     have = run(EMPTY_MANUSCRIPT, "plain").strip()
     assert have == EMPTY_MANUSCRIPT_LOGS["msg"]
+
+
+@pytest.mark.slow
+def test_plain_logs_of_empty_file_verbose():
+    have = run(EMPTY_MANUSCRIPT, "plain", verbose=1).strip().split("\n")
+    assert have == [r["msg"] for r in EMPTY_MANUSCRIPT_LOGS_V]
 
 
 # # we need to set (and later unset?) the logger at run()-time, not at instantiation time

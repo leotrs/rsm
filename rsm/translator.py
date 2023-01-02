@@ -464,12 +464,8 @@ class Translator:
                 AppendOpenTag("section", classes=["level-1"]),
             ]
         )
-
         if node.title:
             batch.items.append(AppendHeading(1, node.title))
-        else:
-            logger.warning(f"Manuscript with no title")
-
         return batch
 
     def visit_author(self, node: nodes.Author) -> EditCommand:

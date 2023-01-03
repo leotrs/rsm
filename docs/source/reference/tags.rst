@@ -1,99 +1,103 @@
-.. _tags:
+List of all tags
+================
 
-List of all tags in rsm-markup
-==============================
+.. note::
+   This list comes from module ``tags.py``.  This module is provided for documentation
+   purposes only.
 
-.. csv-table:: Block tags
-   :header: "Tag", "Description", "Shorthand"
-   :widths: 8, 32, 8
+.. currentmodule:: rsm.tags
 
-   abstract, Manuscript abstract,
-   algorithm, Algorithm listing,
-   appendix, Mark the start of appendix sections,
-   assume,,
-   author,,
-   bibliography,,
-   bibtex,,
-   caption,,
-   case,,
-   cite,,
-   claim,,
-   code,,
-   codeblock,,
-   date,,
-   define,,
-   definition,,
-   draft,,
-   email,,
-   emphas,,
-   enumerate,,
-   figure,,
-   goal,,
-   item,,
-   itemize,,
-   keywords,,
-   label,,
-   lemma,,
-   let,,
-   manuscript,,
-   math,,
-   mathblock, Math block, ``$$``
-   name,,
-   new,,
-   p,,
-   paragraph,,
-   path,,
-   pick,,
-   prev2,,
-   prev3,,
-   prev,,
-   previous,,
-   proof,,
-   proposition,,
-   prove,,
-   qed,,
-   ref,,
-   reftext,,
-   remark,,
-   scale,,
-   section,,
-   sketch,,
-   span,,
-   step,,
-   strong,,
-   subsection,,
-   subsubsection,,
-   subsubsubsection,,
-   suffices,,
-   suppose,,
-   table,,
-   tbody,,
-   td,,
-   thead,,
-   then,,
-   theorem,,
-   title,,
-   toc, Table of contents,
-   tr,,
-   types,,
-   url,,
-   wlog,,
-   write,,
+.. rubric:: Block Tags
+
+.. autoclass:: abstract
+.. autoclass:: algorithm
+.. autoclass:: appendix
+.. autoclass:: author
+.. autoclass:: bibliography
+.. autoclass:: bibtex
+.. autoclass:: codeblock
+.. autoclass:: definition
+.. autoclass:: enumerate
+.. autoclass:: figure
+.. autoclass:: itemize
+.. autoclass:: lemma
+.. autoclass:: manuscript
+.. autoclass:: mathblock
+.. autoclass:: proof
+.. autoclass:: proposition
+.. autoclass:: remark
+.. autoclass:: section
+.. autoclass:: sketch
+.. autoclass:: subsection
+.. autoclass:: subsubsection
+.. autoclass:: subsubsubsection
+.. autoclass:: theorem
+.. autoclass:: toc
 
 
-.. csv-table:: Inline tags
-   :header: "Tag", "Description", "Shorthand"
-   :widths: 8, 32, 8
+.. rubric:: Paragraph Tags
 
-   math, Inline math, ``$``
-   note,,
+.. autoclass:: item
+.. autoclass:: caption
+.. autoclass:: paragraph
 
 
-.. csv-table:: Meta tags
-   :header: "Tag", "Parent", "Type", "Description"
-   :widths: 8, 8, 8, 32
+.. rubric:: Inline Tags
 
-   MSC, abstract, list, Mathematics Subject Classification
-   affiliation, author, text, Institutional affiliation
-   isclaim, mathblock, bool, Whether the math block is a claim
-   nonum, mathblock, bool, Whether to number the math block
+.. autoclass:: code
+.. autoclass:: cite
+.. autoclass:: claim
+.. autoclass:: draft
+.. autoclass:: math
+.. autoclass:: ref
+.. autoclass:: span
+.. autoclass:: url
+
+
+.. rubric:: Meta Tags
+
+.. autoclass:: date
+.. autoclass:: email
+.. autoclass:: emphas
+.. autoclass:: goal
+.. autoclass:: keywords
+.. autoclass:: label
+.. autoclass:: name
+.. autoclass:: path
+.. autoclass:: reftext
+.. autoclass:: scale
+.. autoclass:: strong
+.. autoclass:: title
+.. autoclass:: types
+
+
+.. rubric:: Math Tags
+
+.. autoclass:: assume
+.. autoclass:: case
+.. autoclass:: define
+.. autoclass:: let
+.. autoclass:: new
+.. autoclass:: p
+.. autoclass:: pick
+.. autoclass:: prev
+.. autoclass:: prev2
+.. autoclass:: prev3
+.. autoclass:: previous
+.. autoclass:: prove
+.. autoclass:: qed
+.. autoclass:: step
+.. autoclass:: suffices
+.. autoclass:: suppose
+.. autoclass:: then
+.. autoclass:: wlog
+.. autoclass:: write
+
+
+.. rubric:: Table Tags
+
+.. autoclass:: table
+.. autoclass:: tbody
+.. autoclass:: td
+.. autoclass:: thead
+.. autoclass:: tr

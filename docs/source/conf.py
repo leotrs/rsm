@@ -125,3 +125,11 @@ def linkcode_resolve(domain, info):
         return None
     filename = info["module"].replace(".", "/")
     return f"https://github.com/leotrs/rsm/tree/main/{filename}.py"
+
+
+###############
+# RSM directive
+###############
+# rsm_static_path_dev = ""
+# rsm_static_path_prod = ""
+rsm_build_prod = False

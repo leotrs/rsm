@@ -63,24 +63,31 @@ def depart_rsm_example_node(self, node):
 
 
 def add_rsm_static_path(app):
+    cfg = app.config
     parent = Path(__file__).parent
     doc_static_dir = parent / "_static"
     rsm_static_dir = parent.parent.parent / "rsm" / "static"
-    app.config.html_static_path.append(str(doc_static_dir.absolute()))
-    app.config.html_static_path.append(str(rsm_static_dir.absolute()))
-
-
-def setup(app):
-    app.connect("builder-inited", add_rsm_static_path)
+    cfg.html_static_path.append(str(doc_static_dir.absolute()))
+    cfg.html_static_path.append(str(rsm_static_dir.absolute()))
     app.add_css_file("rsm.css")
     app.add_css_file("tooltipster.bundle.css")
     app.add_js_file("tooltipster.bundle.js")
     app.add_js_file(
         None,
         type="module",
-        body="import { onload } from '../_static/onload.js'; window.addEventListener('load', (ev)=>{onload(true)});",
+        body="""\
+        import { onload } from '../_static/onload.js';
+        window.addEventListener('load', (ev)=>{onload('"""
+        + (cfg.rsm_static_path_prod if cfg.rsm_build_prod else cfg.rsm_static_path_dev)
+        + "')});\n",
     )
 
+
+def setup(app):
+    app.connect("builder-inited", add_rsm_static_path)
+    app.add_config_value("rsm_static_path_dev", "/_static/", "html")
+    app.add_config_value("rsm_static_path_prod", "/en/latest/_static/", "html")
+    app.add_config_value("rsm_build_prod", False, "html")
     app.add_directive("rsm", RSMDirective)
     app.add_node(rsm_example, html=(visit_rsm_example_node, depart_rsm_example_node))
     app.add_node(rsm_body, html=(visit_rsm_body_node, depart_rsm_body_node))

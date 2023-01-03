@@ -2,7 +2,7 @@
 app.py
 ------
 
-RSM Application: take a file path and output its contents as HTML.
+RSM Application.  Take a file path and output its contents as HTML.
 
 """
 

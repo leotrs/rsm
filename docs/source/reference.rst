@@ -7,7 +7,7 @@ For users
 *********
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    reference/tags
    reference/steps

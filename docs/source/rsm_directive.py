@@ -60,7 +60,25 @@ def depart_rsm_example_node(self, node):
     self.body.append("</div>")
 
 
+def add_rsm_static_path(app):
+    parent = Path(__file__).parent
+    doc_static_dir = parent / "_static"
+    rsm_static_dir = parent.parent.parent / "rsm" / "static"
+    app.config.html_static_path.append(str(doc_static_dir.absolute()))
+    app.config.html_static_path.append(str(rsm_static_dir.absolute()))
+
+
 def setup(app):
+    app.connect("builder-inited", add_rsm_static_path)
+    app.add_css_file("rsm.css")
+    app.add_css_file("tooltipster.bundle.css")
+    app.add_js_file("tooltipster.bundle.js")
+    app.add_js_file(
+        None,
+        type="module",
+        body="import { onload } from '../_static/onload.js'; window.addEventListener('load', (ev)=>{onload(true)});",
+    )
+
     app.add_directive("rsm", RSMDirective)
     app.add_node(rsm_example, html=(visit_rsm_example_node, depart_rsm_example_node))
     app.add_node(rsm_body, html=(visit_rsm_body_node, depart_rsm_body_node))

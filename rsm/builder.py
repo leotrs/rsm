@@ -82,7 +82,7 @@ class SingleFileBuilder(BaseBuilder):
           <script src="static/tooltipster.bundle.js"></script>
           <script type="module">
             import { onload } from '/static/onload.js';
-            window.addEventListener('load', onload);
+            window.addEventListener('load', (ev) => {onload();});
           </script>
 
           <title>{some_title}</title>

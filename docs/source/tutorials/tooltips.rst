@@ -11,14 +11,14 @@ the ``:ref:`` tag to refer to it.
    :manuscript:
 
    :remark:
-     :label: some-lbl
+     :label: lbl1
 
    This remark can be referenced by using
    its label.
 
    ::
 
-   Refer to :ref:some-lbl:: above.
+   Refer to :ref:lbl1:: above.
 
    ::
 
@@ -33,7 +33,7 @@ can override this behavior when using the ``:reftext:`` tag.
    :manuscript:
 
    :remark:
-     :label: some-lbl
+     :label: lbl2
      :reftext: Awesome Remark
 
    This remark can be referenced by using
@@ -41,7 +41,7 @@ can override this behavior when using the ``:reftext:`` tag.
 
    ::
 
-   Refer to :ref:some-lbl:: above.
+   Refer to :ref:lbl2:: above.
 
    ::
 
@@ -55,15 +55,15 @@ notation.
    :manuscript:
 
    :remark:
-     :label: some-lbl
+     :label: lbl3
 
    This remark can be referenced by using
    its label.
 
    ::
 
-   Refer to :ref:some-lbl:: above, or call
-   it :ref:some-lbl, Awesome Remark::.
+   Refer to :ref:lbl3:: above, or call
+   it :ref:lbl3, Awesome Remark::.
 
    ::
 

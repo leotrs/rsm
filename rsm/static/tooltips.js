@@ -4,7 +4,7 @@
 //
 
 export function createTooltips() {
-    $("a.reference").tooltipster({
+    $(".manuscriptwrapper a.reference").tooltipster({
         theme: 'tooltipster-shadow',
         functionInit: function(instance, helper) {
             let target = $(helper.origin).attr("href");

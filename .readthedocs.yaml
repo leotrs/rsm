@@ -12,7 +12,7 @@ build:
     pre_install:
       - python build.py
       - tail docs/source/conf.py
-      - echo 'rsm_build_prod = True' >> docs/source/conf.py
+      - echo 'foobarbaz' >> docs/source/conf.py
       - tail docs/source/conf.py
 
 python:

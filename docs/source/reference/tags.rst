@@ -49,6 +49,7 @@ List of all tags
 .. autoclass:: claim
 .. autoclass:: draft
 .. autoclass:: math
+.. autoclass:: note
 .. autoclass:: ref
 .. autoclass:: span
 .. autoclass:: url
@@ -56,13 +57,17 @@ List of all tags
 
 .. rubric:: Meta Tags
 
+.. autoclass:: affiliation
 .. autoclass:: date
 .. autoclass:: email
 .. autoclass:: emphas
 .. autoclass:: goal
+.. autoclass:: isclaim
 .. autoclass:: keywords
 .. autoclass:: label
+.. autoclass:: msc
 .. autoclass:: name
+.. autoclass:: nonum
 .. autoclass:: path
 .. autoclass:: reftext
 .. autoclass:: scale

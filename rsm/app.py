@@ -169,8 +169,6 @@ class ProcessorApp(ParserApp):
 
         tr = translator.HandrailsTranslator() if handrails else translator.Translator()
         self.add_task(Task("translator", tr, tr.translate))
-        if run_linter:
-            self.add_task(Task("linter", l, l.flush))
 
 
 class FullBuildApp(ProcessorApp):
@@ -187,12 +185,8 @@ class FullBuildApp(ProcessorApp):
         super().__init__(
             srcpath, plain, loglevel, log_format, log_time, handrails, run_linter
         )
-        if run_linter:
-            wrapup = self.pop_task()
         self.add_task(Task("builder", b := builder.FullBuilder(), b.build))
         self.add_task(Task("writer", w := writer.Writer(), w.write))
-        if run_linter:
-            self.add_task(wrapup)
 
 
 def render(
@@ -233,13 +227,14 @@ def lint(
 def make(
     source: str = "",
     path: str = "",
+    handrails: bool = True,
     lint: bool = True,
     loglevel: int = RSMApp.default_log_level,
     log_format: str = "rsm",
     log_time: bool = True,
 ) -> str:
     return FullBuildApp(
-        srchpath=path,
+        srcpath=path,
         plain=source,
         run_linter=lint,
         loglevel=loglevel,

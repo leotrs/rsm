@@ -23,7 +23,7 @@ Qualified name: ``rsm.nodes.Abstract``
      
      ~Abstract.newmetakeys
      ~Abstract.keywords
-     ~Abstract.MSC
+     ~Abstract.msc
      ~Abstract.label
      ~Abstract.types
      ~Abstract.number

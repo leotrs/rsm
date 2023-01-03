@@ -17,3 +17,7 @@ python:
     - requirements: docs/requirements-doc.txt
     - method: pip
       path: .
+
+sphinx:
+  builder: html
+  configuration: prod_conf.py

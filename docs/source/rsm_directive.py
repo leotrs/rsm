@@ -6,6 +6,8 @@ Highlight and render RSM code blocks.
 
 """
 
+from pathlib import Path
+
 from docutils import nodes
 from docutils.parsers.rst import Directive
 

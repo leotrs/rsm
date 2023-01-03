@@ -71,7 +71,21 @@
   .manuscriptwrapper.embedded section.level-5 {
     margin-block: calc(var(--h5-size) * 0.75); }
 
+.tooltipster-sidetip .tooltipster-box {
+  background: var(--white) !important; }
+
+.tooltipster-sidetip .tooltipster-arrow-background {
+  border-top-color: var(--white) !important; }
+
+.tooltipster-sidetip .tooltipster-content {
+  color: var(--drk-gray) !important; }
+
 .manuscriptwrapper {
+  color: var(--drk-gray);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: var(--font-size);
+  font-weight: var(--regular);
+  line-height: var(--body-line-height);
   /* Layout */
   /******************************************************************************************/
   /* State */
@@ -130,12 +144,6 @@
     margin-block: calc(var(--h4-size) * 1.5); }
   .manuscriptwrapper section.level-5 {
     margin-block: calc(var(--h5-size) * 1.5); }
-  .manuscriptwrapper body {
-    color: var(--drk-gray);
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: var(--font-size);
-    font-weight: var(--regular);
-    line-height: var(--body-line-height); }
   .manuscriptwrapper .hide {
     display: none !important; }
   .manuscriptwrapper figure {
@@ -490,12 +498,6 @@
     border-color: var(--star-color); }
     .manuscriptwrapper .handrail.stars-3 .handrail__btn:last-of-type {
       border-color: var(--star-color); }
-  .manuscriptwrapper .tooltipster-sidetip .tooltipster-box {
-    background: var(--white) !important; }
-  .manuscriptwrapper .tooltipster-sidetip .tooltipster-arrow-background {
-    border-top-color: var(--white) !important; }
-  .manuscriptwrapper .tooltipster-sidetip .tooltipster-content {
-    color: var(--drk-gray) !important; }
   .manuscriptwrapper span.code {
     font-family: monospace;
     white-space: pre;

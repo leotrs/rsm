@@ -3,9 +3,8 @@
 // Function to run when the entire document finishes loading
 //
 
-export function onload(underscore = false) {
-    const dir = underscore ? '/_static/' : '/static/';
-    import(dir + 'libraries.js').then((libs) => {
+export function onload(path = "/static/") {
+    import(path + 'libraries.js').then((libs) => {
         libs.loadMathJax().then(() => {
             console.log('MathJax loaded!');
             libs.loadPseudocode().then(() => {
@@ -14,14 +13,14 @@ export function onload(underscore = false) {
 	        if (elements.length) {
                     pseudocode.renderElement(elements[0], {lineNumber: true, noEnd: true});
 	        }
-	        import(dir + 'tooltips.js').then((tips) => {
+	        import(path + 'tooltips.js').then((tips) => {
                     tips.createTooltips();
                 })
             }).catch((err) => {
 	        console.error('Loading pseudocode FAILED!');
 	        console.error(err);
             })
-            import(dir + 'classes.js').then((cls) => {
+            import(path + 'classes.js').then((cls) => {
                 cls.setupClassInteractions();
             })
         }).catch((err) => {

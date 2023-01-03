@@ -85,6 +85,8 @@ draft = InlineTagInfo(None)
 """A visible comment."""
 math = InlineTagInfo(None)
 """Inline math."""
+note = InlineTagInfo(None)
+"""Footnote."""
 ref = InlineTagInfo(None)
 """Link to internal label."""
 span = InlineTagInfo(None)
@@ -101,6 +103,8 @@ from pathlib import Path
 
 MetaTagInfo = namedtuple("MetaTagInfo", ["parent", "type"])
 
+affiliation = MetaTagInfo(None, datetime)
+"""Author institutional affiliation."""
 date = MetaTagInfo(None, datetime)
 """Manuscript date."""
 email = MetaTagInfo(None, str)
@@ -109,12 +113,18 @@ emphas = MetaTagInfo(None, bool)
 """Whether span is emphasized."""
 goal = MetaTagInfo(None, "?")
 """Theorem goal."""
+isclaim = MetaTagInfo(None, bool)
+"""Whether a math block is a claim."""
 keywords = MetaTagInfo(None, list)
 """Abstract keywords."""
 label = MetaTagInfo(None, str)
 """Tag label."""
+msc = MetaTagInfo(None, list)
+"""Mathematics Subject Classification."""
 name = MetaTagInfo(None, str)
 """Author name."""
+nonum = MetaTagInfo(None, bool)
+"""Whether to number the tag."""
 path = MetaTagInfo(None, Path)
 """Figure path."""
 reftext = MetaTagInfo(None, str)

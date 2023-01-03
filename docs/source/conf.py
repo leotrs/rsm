@@ -9,7 +9,6 @@ Sphinx configuration.
 #################
 # General options
 #################
-
 # project definition
 project = "rsm"
 copyright = "2022, leotrs"
@@ -26,13 +25,9 @@ templates_path = ["_templates"]
 exclude_patterns = []
 
 
-#######################
-# Per-extension options
-#######################
-
-#
+############
 # extensions
-#
+############
 extensions = [
     "sphinx_design",  # for cards and tabs; https://sphinx-design.readthedocs.io/en/latest/get_started.html
     "sphinx.ext.doctest",  # test snippets in docs
@@ -45,10 +40,9 @@ extensions = [
 ]
 
 
-#
+#########
 # doctest
-#
-
+#########
 # this flag is specific to sphinx, not doctest
 doctest_global_setup = """
 import rsm
@@ -61,10 +55,9 @@ import sys
 sys.path.append(".")
 import doctest_setup
 
-#
+#########
 # autodoc
-#
-
+#########
 # add typehints in description, not signature
 autodoc_typehints = "description"
 
@@ -72,22 +65,22 @@ autodoc_typehints = "description"
 autodoc_typehints_description_target = "documented"
 
 
-#
+##########
 # napoleon
-#
+##########
 napoleon_numpy_docstring = True
 napoleon_use_rtype = False
 
 
-#
+#############
 # autosummary
-#
+#############
 autosummary_generate = True
 
 
-#
-# PyData sphinx theme configuration
-#
+#####################
+# PyData sphinx theme
+#####################
 html_theme_options = {
     # navbar options
     "navbar_start": ["navbar-logo"],
@@ -122,9 +115,9 @@ html_context = {
 }
 
 
-#
-# linkcode needs a function that tells it where to link to
-#
+##########
+# linkcode
+##########
 def linkcode_resolve(domain, info):
     if domain != "py":
         return None

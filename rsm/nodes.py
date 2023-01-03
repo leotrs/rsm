@@ -1094,18 +1094,18 @@ class Abstract(NodeWithChildren):
 
     """
 
-    newmetakeys: ClassVar[set] = {"keywords", "MSC"}
+    newmetakeys: ClassVar[set] = {"keywords", "msc"}
 
     def __init__(
         self,
         keywords: Optional[list[str]] = None,
-        MSC: Optional[list[str]] = None,
+        msc: Optional[list[str]] = None,
         **kwargs: Any,
     ) -> None:
         super().__init__(**kwargs)
         self.keywords = keywords or []
         """Manuscript keywords."""
-        self.MSC = MSC or []
+        self.msc = msc or []
         """Mathematics Subject Classification (MSC) codes."""
 
 

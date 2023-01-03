@@ -507,9 +507,9 @@ class Translator:
             batch.items.append(
                 AppendParagraph(f"Keywords: {text}", classes=["keywords"])
             )
-        if node.MSC:
-            text = ", ".join(node.MSC)
-            batch.items.append(AppendParagraph(f"MSC: {text}", classes=["MSC"]))
+        if node.msc:
+            text = ", ".join(node.msc)
+            batch.items.append(AppendParagraph(f"MSC: {text}", classes=["msc"]))
 
         # For documentation: if a visit_* method returns a command with defers = True,
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and

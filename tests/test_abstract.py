@@ -17,7 +17,7 @@ def test_simple():
 
         :abstract:
           :keywords: {spectral graph theory, non-backtracking, interlacing}
-          :MSC: {05C50, 05C82, 15A18, 15B99}
+          :msc: {05C50, 05C82, 15A18, 15B99}
 
           first
           second
@@ -70,7 +70,7 @@ def test_simple():
 
         <p class="keywords">Keywords: spectral graph theory, non-backtracking, interlacing</p>
 
-        <p class="MSC">MSC: 05C50, 05C82, 15A18, 15B99</p>
+        <p class="msc">MSC: 05C50, 05C82, 15A18, 15B99</p>
 
         </div>
 

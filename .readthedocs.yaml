@@ -20,4 +20,4 @@ python:
 
 sphinx:
   builder: html
-  configuration: docs/rtd_conf/conf.py
+  configuration: docs/source/rtd_conf/conf.py

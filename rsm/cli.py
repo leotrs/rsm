@@ -107,14 +107,15 @@ def lint() -> int:
 def make() -> int:
     parser = init_parser()
     parser.add_argument("--serve", help="serve and autoreload", action="store_true")
+    parser.set_defaults(handrails=True)
     args = parser.parse_args()
 
     if args.serve:
         other_args = [a for a in sys.argv if a != "--serve"]
         cmd = " ".join(other_args)
         server = livereload.Server()
-        server.watch(args.path, livereload.shell(cmd))
+        server.watch(args.src, livereload.shell(cmd))
         server.serve(root=".")
     else:
-        main(parser, make, args)
+        main(parser, app.make, args)
     return 0

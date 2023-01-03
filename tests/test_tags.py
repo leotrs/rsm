@@ -1,11 +1,13 @@
 import re
+from pathlib import Path
 
 import pytest
 
 import rsm.tags
 
-GRAMMAR_FILE = "../tree-sitter-rsm/grammar.js"
-TAGS_FILE = "../rsm/tags.py"
+ROOT_DIR = Path(__file__).parent.parent
+GRAMMAR_FILE = ROOT_DIR / "tree-sitter-rsm/grammar.js"
+TAGS_FILE = ROOT_DIR / "rsm/tags.py"
 
 
 def extract_grammar_tags():

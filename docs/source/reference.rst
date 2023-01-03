@@ -41,3 +41,4 @@ And user-facing modules, which use the modules above to actually process a file:
 
    app
    cli
+   rsmlogger

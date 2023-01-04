@@ -10,12 +10,21 @@ svg_icon = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon
   <polyline points="15 4 20 4 20 9" />
 </svg>`
 
+editor_url = "https://lets.write-rsm.org/?src="
 
 const addbutton = () => {
     const elements = document.querySelectorAll(".rsm-example-code .highlight");
     elements.forEach((elem, index) => {
-        const btn = `<button class="openlive o-tooltip--left" data-tooltip="Edit online">${svg_icon}</button>`
-        elem.insertAdjacentHTML('beforeend', btn)
+        const btn = document.createElement("button");
+        btn.classList.add("openlive", "o-tooltip", "o-tooltip--left");
+        btn.dataset.tooltip = "Edit online";
+        btn.innerHTML = svg_icon;
+        btn.onclick = (ev) => {
+            // assumes jQuery
+            const code = $(elem).children("pre").text();
+            window.open(editor_url + encodeURIComponent(code), '_blank');
+        };
+        elem.insertAdjacentElement('beforeend', btn);
     })
 }
 

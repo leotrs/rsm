@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="15.824391mm"
+   height="13.125182mm"
+   viewBox="0 0 15.824391 13.125183"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="favicon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.313708"
+     inkscape:cx="27.356194"
+     inkscape:cy="17.36831"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     showguides="true"
+     showborder="true"
+     inkscape:window-width="1918"
+     inkscape:window-height="1168"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid24"
+       originx="-31.661398"
+       originy="-43.735799" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-31.6614,-43.735791)">
+    <g
+       id="g941"
+       transform="matrix(0.27499568,0,0,0.27499568,-212.1408,4.0498011)"
+       inkscape:export-filename="/tmp/rect1910.png"
+       inkscape:export-xdpi="150"
+       inkscape:export-ydpi="150"
+       style="font-size:121.416px;line-height:125%;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Normal';letter-spacing:0px;word-spacing:0px;display:inline;stroke:#000000;stroke-width:0.962135px">
+      <rect
+         style="opacity:1;fill:#005187;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0;stop-color:#000000"
+         id="rect1910"
+         width="57.544144"
+         height="47.728683"
+         x="886.56738"
+         y="144.31496"
+         ry="13.282001"
+         inkscape:export-filename="/tmp/rect1910.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <path
+         d="m 931.73405,176.63784 q 0,2.37812 -1.4593,3.62123 -1.4593,1.24311 -3.351,1.24311 -0.9729,0 -1.8377,-0.3243 -0.8647,-0.32428 -1.5673,-0.91881 -0.6486,-0.64858 -1.081,-1.51335 -0.3784,-0.91882 -0.3784,-2.10788 0,-1.13501 0.3784,-1.99978 0.4324,-0.91882 1.081,-1.51335 0.7026,-0.59453 1.5673,-0.91882 0.8648,-0.32429 1.8377,-0.32429 1.8917,0 3.351,1.24311 1.4593,1.24311 1.4593,3.51313 z m 0,-16.37659 q 0,2.37812 -1.4593,3.62122 -1.4593,1.24311 -3.351,1.24311 -0.9729,0 -1.8377,-0.32429 -0.8647,-0.32428 -1.5673,-0.91882 -0.6486,-0.64857 -1.081,-1.51334 -0.3784,-0.91882 -0.3784,-2.10788 0,-1.13501 0.3784,-1.99978 0.4324,-0.91882 1.081,-1.51335 0.7026,-0.59453 1.5673,-0.91882 0.8648,-0.32429 1.8377,-0.32429 1.8917,0 3.351,1.24311 1.4593,1.24311 1.4593,3.51313 z"
+         style="fill:#cccccc;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
+         id="path17228"
+         inkscape:export-filename="/home/leo/code/rsm-core/docs/source/_static/rsm-tag.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+      <path
+         d="m 908.60147,176.63784 q 0,2.37812 -1.4593,3.62123 -1.4593,1.24311 -3.35099,1.24311 -0.97287,0 -1.83764,-0.3243 -0.86477,-0.32428 -1.56739,-0.91881 -0.64858,-0.64858 -1.08097,-1.51335 -0.37833,-0.91882 -0.37833,-2.10788 0,-1.13501 0.37833,-1.99978 0.43239,-0.91882 1.08097,-1.51335 0.70262,-0.59453 1.56739,-0.91882 0.86477,-0.32429 1.83764,-0.32429 1.89169,0 3.35099,1.24311 1.4593,1.24311 1.4593,3.51313 z m 0,-16.37659 q 0,2.37812 -1.4593,3.62122 -1.4593,1.24311 -3.35099,1.24311 -0.97287,0 -1.83764,-0.32429 -0.86477,-0.32428 -1.56739,-0.91882 -0.64858,-0.64857 -1.08097,-1.51334 -0.37833,-0.91882 -0.37833,-2.10788 0,-1.13501 0.37833,-1.99978 0.43239,-0.91882 1.08097,-1.51335 0.70262,-0.59453 1.56739,-0.91882 0.86477,-0.32429 1.83764,-0.32429 1.89169,0 3.35099,1.24311 1.4593,1.24311 1.4593,3.51313 z"
+         style="fill:#cccccc;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
+         id="path17220"
+         inkscape:export-filename="/home/leo/code/rsm-core/docs/source/_static/rsm-tag.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+    </g>
+  </g>
+</svg>

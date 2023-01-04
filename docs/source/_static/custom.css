@@ -61,3 +61,89 @@ h1, h2 {
   margin-right: .5em;
   padding-right: .5em;
 }
+
+/* these are copied directly from sphinx_copybutton styles */
+/* and from pydata-sphinx overrides of sphinx_copybutton */
+.openlive {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;    
+  bottom: .3em;
+  right: .3em;
+  width: 1.7em;
+  height: 1.7em;
+  opacity: 0;
+  transition: opacity 0.3s, border .3s, background-color .3s;
+  user-select: none;
+  padding: 0;
+  outline: none;
+  border: none;  
+  border-radius: 0.4em;
+  background-color: unset;
+  background-color: var(--pst-color-surface);  
+  color: var(--pst-color-muted);
+}
+
+.openlive svg {
+  stroke: currentColor;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.1em;
+}
+
+.highlight:hover button.openlive {
+  opacity: 1;
+}
+
+.highlight button.openlive:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+.highlight button.openlive:active {
+  background-color: rgb(187, 187, 187);
+}
+
+/**
+ * A minimal CSS-only tooltip copied from copybutton, which coped it from:
+ *   https://codepen.io/mildrenben/pen/rVBrpK
+ *
+ * To use, write HTML like the following:
+ *
+ * <p class="o-tooltip--left" data-tooltip="Hey">Short</p>
+ */
+/* .o-tooltip--left { */
+/*   position: relative; */
+/* } */
+
+.o-tooltip--left:after {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  content: attr(data-tooltip);
+  padding: .2em;
+  font-size: .8em;
+  left: -.2em;
+  white-space: nowrap;
+  z-index: 2;
+  border-radius: 2px;
+  transform: translateX(-102%) translateY(0);
+  transition: opacity 0.2s cubic-bezier(0.64, 0.09, 0.08, 1), transform 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
+  background-color: var(--pst-color-surface);
+  color: var(--pst-color-text);  
+}
+
+.o-tooltip--left:hover:after {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-100%) translateY(0);
+  transition: opacity 0.2s cubic-bezier(0.64, 0.09, 0.08, 1), transform 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
+  transition-delay: .5s;
+}
+
+@media print {
+  button.openlive {
+    display: none;
+  }
+}

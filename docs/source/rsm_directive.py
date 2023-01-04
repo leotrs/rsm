@@ -62,16 +62,27 @@ def depart_rsm_example_node(self, node):
     self.body.append("</div>")
 
 
-def add_rsm_static_path(app):
+def add_rsm_static_files(app):
     cfg = app.config
+
+    # paths
     parent = Path(__file__).parent
     doc_static_dir = parent / "_static"
     rsm_static_dir = parent.parent.parent / "rsm" / "static"
     cfg.html_static_path.append(str(doc_static_dir.absolute()))
     cfg.html_static_path.append(str(rsm_static_dir.absolute()))
+
+    # main styles are applied to the manuscripts rendered by the .. rsm:: directive
     app.add_css_file("rsm.css")
+
+    # make sure tooltipster is available
     app.add_css_file("tooltipster.bundle.css")
     app.add_js_file("tooltipster.bundle.js")
+
+    # open in live editor button
+    app.add_js_file("openlive.js")
+
+    # this adds a <script type="module">...</script> tag to each page
     app.add_js_file(
         None,
         type="module",
@@ -84,7 +95,7 @@ def add_rsm_static_path(app):
 
 
 def setup(app):
-    app.connect("builder-inited", add_rsm_static_path)
+    app.connect("builder-inited", add_rsm_static_files)
     app.add_config_value("rsm_static_path_dev", "/_static/", "html")
     app.add_config_value("rsm_static_path_prod", "/en/latest/_static/", "html")
     app.add_config_value("rsm_build_prod", False, "html")

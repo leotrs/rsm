@@ -65,6 +65,7 @@ List of all tags
 .. autoclass:: isclaim
 .. autoclass:: keywords
 .. autoclass:: label
+.. autoclass:: lang
 .. autoclass:: msc
 .. autoclass:: name
 .. autoclass:: nonum

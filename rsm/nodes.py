@@ -1183,10 +1183,6 @@ class Math(NodeWithChildren):
     pass
 
 
-class Code(NodeWithChildren):
-    pass
-
-
 class MathBlock(NodeWithChildren):
     autonumber = True
     _number_within = Section
@@ -1198,8 +1194,33 @@ class MathBlock(NodeWithChildren):
         self.isclaim = isclaim
 
 
+class SourceCode(Text):
+    def __init__(self, text: str = "", lang: str = "", **kwargs: Any) -> None:
+        kwargs.pop("asis", None)
+        super().__init__(text, asis=True, **kwargs)
+        self.lang = lang
+
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}("{textwrap.shorten(self.text, 60)}", lang="{self.lang}")'
+
+
+class Code(NodeWithChildren):
+    newmetakeys: ClassVar[set] = {"lang"}
+
+    def __init__(self, source: str = "", lang: str = "", **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.lang = lang
+        self.source = SourceCode(source, lang)
+
+
 class CodeBlock(NodeWithChildren):
     classreftext: ClassVar[str] = "Code Listing {number}"
+    newmetakeys: ClassVar[set] = {"lang"}
+
+    def __init__(self, source: str = "", lang: str = "", **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.lang = lang
+        self.source = SourceCode(source, lang)
 
 
 class Algorithm(NodeWithChildren):

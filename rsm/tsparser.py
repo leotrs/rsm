@@ -405,7 +405,11 @@ def make_ast(cst):
             asis = cst_node.named_children[-1]
             assert asis.type == "asis_text"
             text = asis.text.decode("utf-8").strip()
-            ast_node.append(nodes.Text(text, asis=True))
+            if ast_node_type in ["code", "codeblock"]:
+                child = nodes.SourceCode(text, lang=ast_node.lang)
+            else:
+                child = nodes.Text(text, asis=True)
+            ast_node.append(child)
 
         # mathblocks that are marked as claims must be enclosed within a ClaimBlock
         if ast_node_type == "mathblock" and ast_node.isclaim:

@@ -9,6 +9,30 @@ Utilities.
 import textwrap
 from typing import Any, Optional, Union
 
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
+
+
+class RSMPygmentsFormatter(HtmlFormatter):
+    def wrap(self, source):
+        return self._wrap_code(source)
+
+    def _wrap_code(self, source):
+        yield from source
+
+    def _wrap_div(self, source):
+        yield from source
+
+
+def highlight_code(source, lang, classes=None):
+    highlighted = highlight(
+        source,
+        get_lexer_by_name(lang),
+        RSMPygmentsFormatter(),
+    )
+    return highlighted
+
 
 class EscapedString:
     def __init__(self, src: str = "", chars: Optional[str] = None):

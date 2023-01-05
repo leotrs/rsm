@@ -9,6 +9,7 @@ from typing import Any, Callable, Iterable, Optional
 from icecream import ic
 
 from . import nodes
+from .util import highlight_code
 
 logger = logging.getLogger("RSM").getChild("tlate")
 
@@ -605,11 +606,34 @@ class Translator:
         batch = AppendBatch(batch.items)
         return batch
 
-    def visit_code(self, node: nodes.Code) -> EditCommand:
-        return AppendNodeTag(node, "span", newline_inner=False, newline_outer=False)
+    def visit_sourcecode(self, node: nodes.SourceCode) -> EditCommand:
+        ic(node)
 
-    def visit_codeblock(self, node: nodes.Code) -> EditCommand:
-        return AppendNodeTag(node, "div", newline_inner=True, newline_outer=True)
+        classes = []
+        if node.lang:
+            classes = ["highlight", node.lang]
+            code = highlight_code(node.text, node.lang)
+        else:
+            code = node.text
+        return AppendBatchAndDefer(
+            [
+                AppendOpenTag(
+                    "code", classes=classes, newline_outer=False, newline_inner=False
+                ),
+                AppendText(code),
+            ]
+        )
+
+    def visit_code(self, node: nodes.Code) -> EditCommand:
+        return AppendNodeTag(node, tag="span", newline_inner=False)
+
+    def visit_codeblock(self, node: nodes.CodeBlock) -> EditCommand:
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node, "div", newline_inner=True, newline_outer=True),
+                AppendOpenTag("pre"),
+            ]
+        )
 
     def visit_algorithm(self, node: nodes.Algorithm) -> EditCommand:
         return AppendBatchAndDefer(

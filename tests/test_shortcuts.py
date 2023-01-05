@@ -745,9 +745,7 @@ def test_codeblock_shortcut():
         <div class="codeblock">
 
         <pre>
-        <code>
-        comp = [abs(x) for x in range(10)]
-        </code>
+        <code>comp = [abs(x) for x in range(10)]</code>
         </pre>
 
         </div>
@@ -1066,9 +1064,7 @@ def test_asterisk_inside_codeblock():
         <div class="codeblock">
 
         <pre>
-        <code>
-        2*2 = 4*1
-        </code>
+        <code>2*2 = 4*1</code>
         </pre>
 
         </div>

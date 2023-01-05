@@ -97,7 +97,7 @@ test-all   = "pytest -vv"
 test-docs = { shell = "cd docs/ && make doctest && cd .. && pytest -vv --doctest-modules rsm/" }
 docs = "sphinx-build docs/source/ docs/build/"
 docs-clean = { shell= "cd docs && make clean" }
-docs-serve  = { shell = "sphinx-autobuild docs/source/ docs/build/ --port 7001 --watch rsm/ -E" }
+docs-serve  = { shell = "sphinx-autobuild docs/source/ docs/build/ --port 7001 --watch rsm/" }
 css = { shell = "pysassc rsm/static/rsm.scss rsm/static/rsm.css" }
 
 

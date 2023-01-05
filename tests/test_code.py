@@ -162,9 +162,7 @@ def test_codeblock():
         <div class="codeblock">
 
         <pre>
-        <code>
-        comp = [abs(x) for x in range(10)]
-        </code>
+        <code>comp = [abs(x) for x in range(10)]</code>
         </pre>
 
         </div>
@@ -206,9 +204,7 @@ def test_codeblock_with_lang():
         <div class="codeblock">
 
         <pre>
-        <code class="highlight python">
-        <span class="n">comp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
-
+        <code class="highlight python"><span class="n">comp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
         </code>
         </pre>
 
@@ -248,9 +244,7 @@ def test_codeblock_with_shorthand():
         <div class="codeblock">
 
         <pre>
-        <code>
-        comp = [abs(x) for x in range(10)]
-        </code>
+        <code>comp = [abs(x) for x in range(10)]</code>
         </pre>
 
         </div>
@@ -292,9 +286,7 @@ def test_codeblock_with_shorthand_and_lang():
         <div class="codeblock">
 
         <pre>
-        <code class="highlight python">
-        <span class="n">comp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
-
+        <code class="highlight python"><span class="n">comp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
         </code>
         </pre>
 
@@ -352,9 +344,7 @@ def test_meta():
         <div id="3" class="codeblock">
 
         <pre>
-        <code>
-        k = v
-        </code>
+        <code>k = v</code>
         </pre>
 
         </div>
@@ -362,9 +352,7 @@ def test_meta():
         <div id="4" class="codeblock">
 
         <pre>
-        <code>
-        k = v
-        </code>
+        <code>k = v</code>
         </pre>
 
         </div>
@@ -425,9 +413,7 @@ def test_meta_and_lang():
         <div id="3" class="codeblock">
 
         <pre>
-        <code class="highlight js">
-        <span class="nx">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">v</span>
-
+        <code class="highlight js"><span class="nx">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">v</span>
         </code>
         </pre>
 
@@ -436,9 +422,7 @@ def test_meta_and_lang():
         <div id="4" class="codeblock">
 
         <pre>
-        <code class="highlight js">
-        <span class="nx">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">v</span>
-
+        <code class="highlight js"><span class="nx">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">v</span>
         </code>
         </pre>
 
@@ -481,10 +465,8 @@ def test_multiline_codeblock():
         <div class="codeblock">
 
         <pre>
-        <code>
-        import sys
-        print(sys.argv)
-        </code>
+        <code>import sys
+        print(sys.argv)</code>
         </pre>
 
         </div>
@@ -527,10 +509,8 @@ def test_multiline_codeblock_with_lang():
         <div class="codeblock">
 
         <pre>
-        <code class="highlight python">
-        <span class="kn">import</span> <span class="nn">sys</span>
+        <code class="highlight python"><span class="kn">import</span> <span class="nn">sys</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
-
         </code>
         </pre>
 
@@ -571,10 +551,8 @@ def test_multiline_codeblock_with_shorthand():
         <div class="codeblock">
 
         <pre>
-        <code>
-        import sys
-        print(sys.argv)
-        </code>
+        <code>import sys
+        print(sys.argv)</code>
         </pre>
 
         </div>
@@ -617,10 +595,8 @@ def test_multiline_codeblock_with_shorthand_and_lang():
         <div class="codeblock">
 
         <pre>
-        <code class="highlight python">
-        <span class="kn">import</span> <span class="nn">sys</span>
+        <code class="highlight python"><span class="kn">import</span> <span class="nn">sys</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
-
         </code>
         </pre>
 
@@ -668,10 +644,8 @@ def test_multiline_meta():
         <div id="3" class="codeblock">
 
         <pre>
-        <code>
-        k = v
-        key = val
-        </code>
+        <code>k = v
+        key = val</code>
         </pre>
 
         </div>
@@ -679,10 +653,8 @@ def test_multiline_meta():
         <div id="4" class="codeblock">
 
         <pre>
-        <code>
-        k = v
-        key = val
-        </code>
+        <code>k = v
+        key = val</code>
         </pre>
 
         </div>
@@ -737,13 +709,11 @@ def test_multiline_meta_and_lang():
         <div id="3" class="codeblock">
 
         <pre>
-        <code class="highlight lisp">
-        <span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">forall</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="nv">func</span><span class="p">)</span>
+        <code class="highlight lisp"><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">forall</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="nv">func</span><span class="p">)</span>
         <span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">null</span><span class="w"> </span><span class="nb">list</span><span class="p">)</span>
         <span class="w">   </span><span class="no">t</span>
         <span class="w">   </span><span class="p">(</span><span class="nb">and</span><span class="w"> </span><span class="p">(</span><span class="nb">funcall</span><span class="w"> </span><span class="nv">func</span><span class="w"> </span><span class="p">(</span><span class="nb">car</span><span class="w"> </span><span class="nb">list</span><span class="p">))</span>
         <span class="w">   </span><span class="p">(</span><span class="nv">forall</span><span class="w"> </span><span class="p">(</span><span class="nb">cdr</span><span class="w"> </span><span class="nb">list</span><span class="p">)</span><span class="w"> </span><span class="nv">func</span><span class="p">))))</span>
-
         </code>
         </pre>
 
@@ -752,13 +722,11 @@ def test_multiline_meta_and_lang():
         <div id="4" class="codeblock">
 
         <pre>
-        <code class="highlight lisp">
-        <span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">forall</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="nv">func</span><span class="p">)</span>
+        <code class="highlight lisp"><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">forall</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="nv">func</span><span class="p">)</span>
         <span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">null</span><span class="w"> </span><span class="nb">list</span><span class="p">)</span>
         <span class="w">   </span><span class="no">t</span>
         <span class="w">   </span><span class="p">(</span><span class="nb">and</span><span class="w"> </span><span class="p">(</span><span class="nb">funcall</span><span class="w"> </span><span class="nv">func</span><span class="w"> </span><span class="p">(</span><span class="nb">car</span><span class="w"> </span><span class="nb">list</span><span class="p">))</span>
         <span class="w">   </span><span class="p">(</span><span class="nv">forall</span><span class="w"> </span><span class="p">(</span><span class="nb">cdr</span><span class="w"> </span><span class="nb">list</span><span class="p">)</span><span class="w"> </span><span class="nv">func</span><span class="p">))))</span>
-
         </code>
         </pre>
 

@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Code``
 
    .. autosummary::
      
+     ~Code.newmetakeys
      ~Code.label
      ~Code.types
      ~Code.number

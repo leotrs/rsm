@@ -3,15 +3,17 @@
 Special tags
 ============
 
-All tags are introduced using the ``:tag-name: <contents> ::`` notation.  However, some
-tags deviate from this standard.
+All tags may be introduced using the ``:tag-name: <contents> ::`` notation.  However,
+some tags admit an alternative notation.
 
 
 Shorthand
 *********
 
-Some tags allow for *shorthand* notation.  For example, the following are two different
-ways for introducing bold text.
+Some tags allow for *shorthand* notation.  Shorthand notation does not need tag names or
+Halmoses to modify the contained text, it uses different delimiters instead.  For
+example, the following are two different ways for introducing bold text, one using the
+standard ``:span:`` tag and another using shorthand notation and asterisks ``*``.
 
 .. rsm::
 
@@ -20,84 +22,105 @@ ways for introducing bold text.
    is *this one*.
    ::
 
-.. tip::
+Similarly, italic text also has a shorthand version using slashes ``/``.
 
-   The standard notation using colons and Halmos as delimiters is easy to parse by
-   automated tools.  The shorthand notation is easy to read by humans.
+.. rsm::
+
+   :manuscript:
+   This text is :span: {:emphas:} italic ::, as
+   is /this one/.
+   ::
 
 Other tags that allow shorthand notation are math and code blocks.  These in turn may be
 inline or block.
 
-.. grid:: 1 2 2 2
+.. rsm::
 
-   .. grid-item-card:: Inline math
+   :manuscript:
 
-     .. rsm::
+   *Inline math.*
 
-	:manuscript:
+   Either :math:2 + 2 = 4:: or
+   $2 + 2 = 4$.
 
-	Either :math:2 + 2 = 4::
-	or $2 + 2 = 4$.
+   ::
 
-	::
+.. rsm::
 
-   .. grid-item-card:: Block math
+   :manuscript:
 
-     .. rsm::
+   *Math block.*
 
-	:manuscript:
+   Either
 
-	Either
+   :mathblock:
+   2 + 2 = 4
+   ::
 
-	:mathblock:
-	2 + 2 = 4
-	::
+   or
 
-	or
+   $$
+   2 + 2 = 4.
+   $$
 
-	$$
-	2 + 2 = 4.
-	$$
+   ::
 
-	::
+.. rsm::
 
-   .. grid-item-card:: Inline code
+   :manuscript:
 
-     .. rsm::
+   inline :code:var = "value":: inline
 
-	:manuscript:
+   this is inline :code: {:lang: python} var = "value":: inline
 
-	Either :code:
-	var = "value"::
-	or `2 + 2 = 4`.
+   *Inline code.*
 
-	::
+   Either :code:var = "value"::
 
-   .. grid-item-card:: Block code
+   Either :code: {:lang: python} var = "val" ::
+   or `{:lang: python} var = "val"`.
 
-     .. rsm::
+   ::
 
-	:manuscript:
+.. rsm::
 
-	Either
+   :manuscript:
 
-	:codeblock:
-	var = "value"
-	::
+   *Code block.*
 
-	or
+   Either
 
-	```
-	2 + 2 = 4.
-	```
+   :codeblock:
+     :lang: python
+   var = "value"
+   ::
 
-	::
+   or
 
-.. tip::
+   ```
+   :lang: python
+   2 + 2 = 4.
+   ```
 
-   Either standard or shorthand notation allow meta tags.  For example, to assign a
-   label to an inline math region, you may use either ``:math:{:label:some-lbl} 2+2=4
-   ::`` or ``${:label:some-lbl} 2+2=4 $``.
+   ::
+
+
+.. grid:: 1 1 1 2
+
+   .. grid-item::
+
+      .. tip::
+
+         Either standard or shorthand notation allow meta tags.  For example, to assign a
+         label to an inline math region, you may use either ``:math:{:label:some-lbl} 2+2=4
+         ::`` or ``${:label:some-lbl} 2+2=4 $``.
+
+   .. grid-item::
+
+      .. tip::
+
+         The standard notation using colons and Halmos as delimiters is easy to parse by
+         automated tools.  The shorthand notation is easy to read by humans.
 
 
 Stamps

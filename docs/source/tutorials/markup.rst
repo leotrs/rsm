@@ -18,10 +18,10 @@ colon ``::``.  The entire contents of the manuscript are placed within these del
 
    ::
 
-Strings such as ``:manuscript:`` are called *tags*.  Tags are used to annotate regions
-of text, for example to delimit sections and other parts of a manuscript.  The tag
-functions as open delimiter, and the empty tag ``::``, a.k.a. *Halmos*, is the closing
-delimiter.
+Strings such as ``:manuscript:`` are called *tags*.  In RSM, tags are used to annotate
+regions of text, for example to delimit sections and other parts of a manuscript.  The
+tag functions as open delimiter, and the empty tag ``::``, a.k.a. *Halmos*, is the
+closing delimiter.
 
 .. rsm::
 
@@ -111,7 +111,7 @@ Here is a complete example using all the basic features of RSM markup.
 
    ::
 
-The features on this page cover 90% of what can be done with RSM.
+The features illustrated on this page cover 90% of what can be done with RSM.
 
 .. admonition:: Summary
 
@@ -122,7 +122,16 @@ The features on this page cover 90% of what can be done with RSM.
    as using asterisks ``*`` to introduce bold text.  Tags can be nested within the
    contents of other tags.
 
-.. tip::
+.. grid:: 1 1 1 2
 
-   Whitespace is ignored essentially everywhere in RSM.  It is recommended to leave
-   generous whitespace where desired to improve readability.
+   .. grid-item::
+
+      .. tip::
+         Whitespace is ignored essentially everywhere in RSM.  It is recommended to leave
+         generous whitespace where desired to improve readability.
+
+   .. grid-item::
+
+      .. tip::
+         Each code block on this site has a button on the bottom right corner that opens
+         the code snippet in the online editor.

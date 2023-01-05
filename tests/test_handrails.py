@@ -1001,3 +1001,82 @@ def test_two_steps():
         </body>
         """,
     )
+
+
+def test_unnumbered_mathblock_no_phantom_number():
+    compare_have_want_handrails(
+        have="""
+        :manuscript:
+
+        $$
+        :nonum:
+        3 + 3 = 6
+        $$
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript">
+
+        <section class="level-1">
+
+        <div class="mathblock">
+        $$
+        3 + 3 = 6
+        $$
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_mathblock_phantom_number():
+    compare_have_want_handrails(
+        have="""
+        :manuscript:
+
+        $$
+        3 + 3 = 6
+        $$
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript">
+
+        <section class="level-1">
+
+        <div class="mathblock">
+
+        <div class="mathblock__number mathblock__number--phantom">(1)</div>
+        $$
+        3 + 3 = 6
+        $$
+        <div class="mathblock__number">(1)</div>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

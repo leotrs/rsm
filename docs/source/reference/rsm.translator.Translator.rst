@@ -52,6 +52,7 @@ Qualified name: ``rsm.translator.Translator``
       ~Translator.visit_reference
       ~Translator.visit_section
       ~Translator.visit_sketch
+      ~Translator.visit_sourcecode
       ~Translator.visit_span
       ~Translator.visit_statement
       ~Translator.visit_step

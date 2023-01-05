@@ -119,6 +119,8 @@ keywords = MetaTagInfo(None, list)
 """Abstract keywords."""
 label = MetaTagInfo(None, str)
 """Tag label."""
+lang = MetaTagInfo(None, str)
+"""Specify language in code and code blocks."""
 msc = MetaTagInfo(None, list)
 """Mathematics Subject Classification."""
 name = MetaTagInfo(None, str)

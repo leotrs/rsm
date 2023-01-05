@@ -473,6 +473,10 @@
     font-weight: var(--bold);
   }
 
+  .highlight.code {
+    display: inline-block;
+  }
+
   dd > p, dt > p {
     margin-block-end: 0.25em;
   }
@@ -782,13 +786,6 @@
       border-color: var(--star-color);
     }
 
-  }
-
-  span.code {
-    font-family: monospace;
-    white-space: pre;
-    margin: 1em 0;
-    background: var(--gray-100);
   }
 
   li.bibitem:hover > a.bibitem-doi {

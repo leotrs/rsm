@@ -330,6 +330,8 @@
   .manuscriptwrapper .topic#author dt {
     text-align: right;
     font-weight: var(--bold); }
+  .manuscriptwrapper .highlight.code {
+    display: inline-block; }
   .manuscriptwrapper dd > p, .manuscriptwrapper dt > p {
     margin-block-end: 0.25em; }
   .manuscriptwrapper .proof__header {
@@ -498,11 +500,6 @@
     border-color: var(--star-color); }
     .manuscriptwrapper .handrail.stars-3 .handrail__btn:last-of-type {
       border-color: var(--star-color); }
-  .manuscriptwrapper span.code {
-    font-family: monospace;
-    white-space: pre;
-    margin: 1em 0;
-    background: var(--gray-100); }
   .manuscriptwrapper li.bibitem:hover > a.bibitem-doi {
     text-decoration: underline; }
 

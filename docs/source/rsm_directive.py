@@ -94,8 +94,16 @@ def add_rsm_static_files(app):
     )
 
 
+def strip_object_from_bases(app, name, obj, options, bases):
+    if object in bases:
+        bases.remove(object)
+    if not bases:
+        bases.append(None)
+
+
 def setup(app):
     app.connect("builder-inited", add_rsm_static_files)
+    app.connect("autodoc-process-bases", strip_object_from_bases)
     app.add_config_value("rsm_static_path_dev", "/_static/", "html")
     app.add_config_value("rsm_static_path_prod", "/en/latest/_static/", "html")
     app.add_config_value("rsm_build_prod", False, "html")

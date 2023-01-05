@@ -18,4 +18,10 @@ Qualified name: ``rsm.reader.Reader``
       ~Reader.read
 
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+     
+     ~Reader.path
+     ~Reader.src
    

@@ -154,6 +154,8 @@ class TSParser:
     ) -> Union[TSTree, nodes.Manuscript]:
         """Parse RSM source into a syntax tree.
 
+        For examples see class docstring.
+
         Parameters
         ----------
         src

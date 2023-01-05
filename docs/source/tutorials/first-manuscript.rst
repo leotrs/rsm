@@ -23,14 +23,16 @@ is stored and execute
 This will create a new file called :code:`index.html` in the same directory.  Open this
 file with your web browser to see the web manuscript created by RSM.
 
-When running the last command, you probably saw the following warning (or something similar):
+RSM provides a linter as a command line utility.  Run the following command to see what
+the linter suggests.
 
 .. code-block:: bash
 
-   RSM.tlate WRN | Manuscript with no title
+   $ rsm-lint manuscript.rsm
+   src:1:12: LINT: Manuscript with no title
 
-Here, RSM is telling us that our manuscript is missing a title.  We can rectify that by
-editing :code:`manuscript.rsm` as follows
+Here, the linter is telling us that our manuscript is missing a title.  We can rectify
+that by editing :code:`manuscript.rsm` as follows
 
 .. code-block:: text
 
@@ -41,23 +43,6 @@ editing :code:`manuscript.rsm` as follows
 
    ::
 
-Run again the same command,
-
-.. code-block:: bash
-
-   $ rsm-make manuscript.rsm
-
-And the warning should have disappeared.  You can refresh your browser to see now the
-title of your manuscript displayed.
-
-
-.. note::
-
-   The word "tlate" in the warning
-
-   .. code-block:: bash
-
-      RSM.tlate WRN | Manuscript with no title
-
-   stands for "translate".  This means that the warning was issued during the
-   translation step of RSM manuscript processing pipeline. :ref:`Learn more <pipeline>`.
+Run again the ``rsm-lint`` command, and the warning should have disappeared.  You can
+now run ``rsm-make`` again and refresh your browser to see now the title of your
+manuscript displayed.

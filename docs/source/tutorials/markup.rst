@@ -45,11 +45,11 @@ closing delimiter.
 Some tags are used to add meta-data to the annotated regions.  For example, the
 ``:section:`` tag in the previous example introduces a new region of the manuscript,
 while the ``:title:`` tag directly below it modifies the parent ``:section:`` tag by
-specifying its title.
+specifying its title.  Tags such as this are called *meta* tags.
 
 Tags such as ``:manuscript:``, ``:abstract:``, and ``:section:`` introduce parts of the
-manuscript that are clearly separated from other parts.  In contrast, the ``:span:`` tag
-introduces a region of text that lies within some other, enclosing, parent part.
+manuscript that are clearly separated from other parts.  These are called *block* tags.
+In contrast, the following example illustrates the ``:span:`` tag.
 
 .. rsm::
 
@@ -61,10 +61,13 @@ introduces a region of text that lies within some other, enclosing, parent part.
 
    ::
 
-In this example, we have used the ``:strong:`` tag to modify the enclosing ``:span:``
-tag, which is in turn part of the surrounding paragraph of text.  Note the use of braces
-to introduce the ``:strong:`` tag and the use of the Halmos ``::`` as closing delimiter
-of ``:span:``.
+The ``:span:`` tag does not introduce a separate block, but a region of text that lives
+within its enclosing parent, in this case a paragraph.  Tags such as this are called
+*inline* tags.
+
+Furthermore, in this example we used the ``:strong:`` tag to modify the enclosing ``:span:`` tag,
+i.e. ``:strong:`` is a meta tag of ``:span:``.  Note the use of braces to introduce the
+``:strong:`` tag and the use of the Halmos ``::`` as closing delimiter of ``:span:``.
 
 The notation ``:span: {:strong:} text ::`` to introduce bold text allows an alternative
 *shorthand* notation using asterisks (``*``).  Similarly, the hashtag (``#``) symbol can
@@ -116,11 +119,12 @@ The features illustrated on this page cover 90% of what can be done with RSM.
 .. admonition:: Summary
 
    The base language is comprised of *tags*, which delimit or modify text.  Some tags
-   introduce new parts of the manuscript, while others simply annotate their content.
-   All tags are introduced by using their name surrounded by colons ``:tag-name:`` and
-   end at a Halmos, or empty tag, ``::``.  Some tags allow for shorthand notation, such
-   as using asterisks ``*`` to introduce bold text.  Tags can be nested within the
-   contents of other tags.
+   introduce new parts of the manuscript (block tags), while others simply annotate
+   their content (inline tags), or modify the enclosing tag (meta tags).  All tags are
+   introduced by using their name surrounded by colons ``:tag-name:`` and end at a
+   Halmos, or empty tag, ``::``.  Some tags allow for shorthand notation, such as using
+   asterisks ``*`` to introduce bold text.  Tags can be nested within the contents of
+   other tags.
 
 .. grid:: 1 1 1 2
 

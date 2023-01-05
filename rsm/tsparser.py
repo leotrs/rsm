@@ -404,7 +404,7 @@ def make_ast(cst):
             # handle it here
             asis = cst_node.named_children[-1]
             assert asis.type == "asis_text"
-            text = asis.text.decode("utf-8").strip()
+            text = asis.text.decode("utf-8")
             if ast_node_type in ["code", "codeblock"]:
                 child = nodes.SourceCode(text, lang=ast_node.lang)
             else:

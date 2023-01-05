@@ -1,5 +1,5 @@
 import pytest
-from conftest import compare_have_want, EMPTY_WANT
+from conftest import EMPTY_WANT, compare_have_want
 
 
 def test_one_strong():
@@ -694,7 +694,7 @@ def test_code_shortcut():
         have="""\
         :manuscript:
 
-        This is inline code `comp = [abs(x) for x in range(10)]`.
+        This is inline code`comp = [abs(x) for x in range(10)]`.
 
         ::
         """,
@@ -707,7 +707,9 @@ def test_code_shortcut():
 
         <section class="level-1">
 
-        <p class="paragraph">This is inline code <span class="code">comp = [abs(x) for x in range(10)]</span>.</p>
+        <p class="paragraph">This is inline code
+        <span class="code"><code>comp = [abs(x) for x in range(10)]</code></span>
+        .</p>
 
         </section>
 
@@ -726,7 +728,7 @@ def test_codeblock_shortcut():
         :manuscript:
 
         ```
-          comp = [abs(x) for x in range(10)]
+        comp = [abs(x) for x in range(10)]
         ```
 
         ::
@@ -741,7 +743,13 @@ def test_codeblock_shortcut():
         <section class="level-1">
 
         <div class="codeblock">
+
+        <pre>
+        <code>
         comp = [abs(x) for x in range(10)]
+        </code>
+        </pre>
+
         </div>
 
         </section>
@@ -983,7 +991,9 @@ def test_asterisk_inside_code():
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="code">[x**2 for x in range(10)]</span></p>
+        <p class="paragraph">
+        <span class="code"><code>[x**2 for x in range(10)]</code></span>
+        </p>
 
         </section>
 
@@ -1054,7 +1064,13 @@ def test_asterisk_inside_codeblock():
         <section class="level-1">
 
         <div class="codeblock">
+
+        <pre>
+        <code>
         2*2 = 4*1
+        </code>
+        </pre>
+
         </div>
 
         </section>

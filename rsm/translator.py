@@ -615,10 +615,14 @@ class Translator:
             code = highlight_code(node.text, node.lang)
         else:
             code = node.text
+        newline_inner = isinstance(node.parent, nodes.CodeBlock)
         return AppendBatchAndDefer(
             [
                 AppendOpenTag(
-                    "code", classes=classes, newline_outer=False, newline_inner=False
+                    "code",
+                    classes=classes,
+                    newline_outer=False,
+                    newline_inner=newline_inner,
                 ),
                 AppendText(code),
             ]

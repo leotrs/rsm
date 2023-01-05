@@ -69,7 +69,7 @@ notation.
 
 .. admonition:: Summary
 
-   Use ``:label: <label>`` to define a unique label to a region of the manuscript.  Use
+   Use ``:label: <label>`` to assign a unique label to a region of the manuscript.  Use
    ``:ref:<label>::`` to reference a region via its label.  Override the displayed text
    globally by using ``:reftext: <text>`` at the location where the label is defined, or
    by using ``:ref:<label>,<text>::`` where the reference is used.  Regardless of the

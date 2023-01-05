@@ -22,6 +22,7 @@ Qualified name: ``rsm.nodes.CodeBlock``
    .. autosummary::
      
      ~CodeBlock.classreftext
+     ~CodeBlock.newmetakeys
      ~CodeBlock.label
      ~CodeBlock.types
      ~CodeBlock.number

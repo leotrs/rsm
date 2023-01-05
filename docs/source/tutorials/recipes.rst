@@ -75,14 +75,15 @@ defining new commands inside a hidden math block with no number.
 
    :manuscript:
 
+   This is not valid math\: $\tr(X)$.
+
    $$
    :types: hide
    :nonum:
      \DeclareMathOperator{\tr}{Tr}
    $$
 
-   There is a hidden math block that defines
-   a new math operator, $\tr(X)$.
+   After the hidden block\: $\tr(X)$.
 
    ::
 

@@ -86,7 +86,7 @@ def test_period_after():
 
         Period after math :math:2+2=4::.
 
-        Period after code :code:k=v::.
+        Period after code:code:k=v::.
 
         Period after claim :claim:foo::.
 
@@ -102,7 +102,9 @@ def test_period_after():
 
         <p class="paragraph">Period after math <span class="math">\(2+2=4\)</span>.</p>
 
-        <p class="paragraph">Period after code <span class="code">k=v</span>.</p>
+        <p class="paragraph">Period after code
+        <span class="code"><code>k=v</code></span>
+        .</p>
 
         <p class="paragraph">Period after claim <span class="construct claim"><span class="keyword">⊢ </span>foo</span>.</p>
 
@@ -124,7 +126,7 @@ def test_period_after_with_shortcut():
 
         Period after math $2+2=4$.
 
-        Period after code `k=v`.
+        Period after code`k=v`.
 
         Period after claim :|-:foo::.
 
@@ -140,7 +142,9 @@ def test_period_after_with_shortcut():
 
         <p class="paragraph">Period after math <span class="math">\(2+2=4\)</span>.</p>
 
-        <p class="paragraph">Period after code <span class="code">k=v</span>.</p>
+        <p class="paragraph">Period after code
+        <span class="code"><code>k=v</code></span>
+        .</p>
 
         <p class="paragraph">Period after claim <span class="construct claim"><span class="keyword">⊢ </span>foo</span>.</p>
 

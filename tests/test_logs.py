@@ -49,7 +49,7 @@ EMPTY_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Translating...",
         "filename": "translator.py",
-        "lineno": 415,
+        "lineno": 416,
     },
     {
         "name": "RSM",
@@ -118,7 +118,7 @@ WRONG_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Translating...",
         "filename": "translator.py",
-        "lineno": 415,
+        "lineno": 416,
     },
     {
         "name": "RSM",

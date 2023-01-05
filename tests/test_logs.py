@@ -26,14 +26,14 @@ EMPTY_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Parsing...",
         "filename": "tsparser.py",
-        "lineno": 86,
+        "lineno": 176,
     },
     {
         "name": "RSM.parse",
         "level": "INF",
         "msg": "Abstractifying...",
         "filename": "tsparser.py",
-        "lineno": 96,
+        "lineno": 186,
     },
     {
         "name": "RSM.tform",
@@ -65,7 +65,7 @@ WRONG_MANUSCRIPT_LOGS = [
         "level": "WRN",
         "msg": "The CST contains errors.",
         "filename": "tsparser.py",
-        "lineno": 381,
+        "lineno": 486,
     }
 ]
 WRONG_MANUSCRIPT_LOGS_V = [
@@ -88,21 +88,21 @@ WRONG_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Parsing...",
         "filename": "tsparser.py",
-        "lineno": 86,
+        "lineno": 176,
     },
     {
         "name": "RSM.parse",
         "level": "INF",
         "msg": "Abstractifying...",
         "filename": "tsparser.py",
-        "lineno": 96,
+        "lineno": 186,
     },
     {
         "name": "RSM.parse",
         "level": "WRN",
         "msg": "The CST contains errors.",
         "filename": "tsparser.py",
-        "lineno": 381,
+        "lineno": 486,
     },
     {
         "name": "RSM.tform",

@@ -42,8 +42,10 @@ The manuscript tree is built in two parsing sub-steps.
    labels, and bibliography.
 
 The process of converting the concrete syntax tree into the (abstract) manuscript tree
-is called *abstractifying*, and is carried out in pure python.  The manuscript tree is
-made up of the nodes found in :mod:`~rsm.nodes`.
+is called *abstractifying*, and is carried out in pure python.  The concrete syntax tree
+is composed of nodes defined by the python bindings of tree-sitter, namely
+`py-tree-sitter <https://github.com/tree-sitter/py-tree-sitter>`_.  The manuscript tree
+is made up of the nodes found in :mod:`~rsm.nodes`.
 
 The concrete syntax tree is useful for syntax highlighting and code navigation.  Editor
 extensions and other code-oriented tools in the RSM ecosystem may stop their processing
@@ -74,8 +76,9 @@ the user, such as adding a turnstile ``⊢`` to mathematical claims.
 After the transform step, the abstract manuscript tree is considered finalized and
 should not be modified again by any later processing.  Some tools that only need an
 in-memory representation of the manuscript may end their processing here.  For example,
-the CLI utility ``rsm-lint`` does not carry out any of the following steps (though some
-other processing takes place, see next step).
+the CLI utility ``rsm-lint`` does not carry out any of the remaining steps in the
+standard processing pipeline (with the exception of the linting step itself, which is
+optional).
 
 - Input: abstract manuscript tree.
 - Output: (transformed) abstract manuscript tree.
@@ -83,8 +86,8 @@ other processing takes place, see next step).
 - Class responsible: :class:`~rsm.transformer.Transformer`.
 
 
-Linter
-------
+Lint
+----
 
 This is an optional step that only takes place when running a linter, for example with
 ``rsm-lint``.  The linter takes the finalized abstract manuscript tree and runs routines

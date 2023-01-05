@@ -1,18 +1,45 @@
-"""Input: RSM source string -- Output: abstract syntax tree."""
+"""Input: RSM source string -- Output: abstract syntax tree.
+
+Produce a manuscript tree (a.k.a. abstract manuscript tree, a.k.a. abstract syntax tree)
+from the RSM source string.
+
+The process occurs in two stages:
+
+1. Parsing: The first step parses the RSM source string into a *concrete syntax tree*
+   using the tree-sitter parser written in C.  The grammar and parser definitions can be
+   found in the `tree-sitter-rsm <https://github.com/leotrs/tree-sitter-rsm>`_
+   repository.  This step uses `py-tree-sitter
+   <https://github.com/tree-sitter/py-tree-sitter>`_, the python bindings of tree
+   sitter.  Thus, the concrete syntax tree is composed of nodes defined by
+   py-tree-sitter and the RSM package has little control over what these nodes look
+   like.  The concrete syntax tree contains a node for each *syntactically-relevant*
+   token in the source file, including but not limited to tags (``:tag-name:``),
+   delimiters (``{``, ``}``), Halmoses (``::``), and other special characters (``/``,
+   ``*``, ``$``, etc).
+
+2. Abstractifying: The second step takes the concrete syntax tree output by the
+   tree-sitter parser and builds an *abstract syntax tree*.  This latter tree contains a
+   node for each *semantically-relevant* piece of the manuscript, and no longer contains
+   nodes for delimiters or special characters.  This step is carried out by this module
+   in pure python.
+
+Both steps are handled by :class:`TSParser`.  The rest of this module contains auxiliary
+functions (mostly private ones) that are useful during the parsing process.
+
+"""
 import logging
 import re
-import string
 import sys
 from itertools import groupby
 from pathlib import Path
-from typing import Callable, Optional, cast
+from typing import Callable, Optional, Union
 
 import tree_sitter
 from icecream import ic
 from tree_sitter import Node as TSNode
 from tree_sitter import Tree as TSTree
 
-from rsm import nodes, transformer, translator
+from rsm import nodes
 
 from .util import EscapedString
 
@@ -20,6 +47,14 @@ logger = logging.getLogger("RSM").getChild("parse")
 
 
 class RSMParserError(Exception):
+    """Raised when there is an irrecoverable error during parser.
+
+    Note that the parser will try to generate an abstract manuscript tree even if there
+    are error nodes in the concrete syntax tree.  This is possible due to the excellent
+    error tolerance of tree-sitter parsers.
+
+    """
+
     def __init__(self, pos: Optional[int] = None, msg: Optional[str] = None) -> None:
         self.pos = pos
         self.msg = f"Parser error at position {self.pos}" if msg is None else msg
@@ -52,27 +87,57 @@ PUSH_THESE_TYPES = {
 
 
 class TSParser:
-    """Parse the concrete syntax tree output by tree-sitter into an abstract syntax tree."""
+    """Parse RSM source into an abstract syntax tree.
+
+    Examples
+    --------
+    >>> src = \"\"\"
+    ... :manuscript:
+    ... Hello, RSM!
+    ... ::
+    ... \"\"\"
+
+    The abstractify step is run by default.
+
+    >>> parser = rsm.tsparser.TSParser()
+    >>> ast = parser.parse(src)
+    >>> print(ast.sexp())
+    (Manuscript
+      (Paragraph
+        (Text)))
+
+    The concrete syntax tree is also available.
+
+    >>> cst = parser.parse(src, abstractify=False)
+    >>> rsm.tsparser.print_cst(cst)
+    (source_file (1, 0) - (4, 0)
+      (manuscript (1, 0) - (1, 12))
+      (paragraph (2, 0) - (3, 0)
+        (text (2, 0) - (2, 11) "Hello, RSM!")
+        (paragraph_end (3, 0) - (3, 0)))
+      (:: (3, 0) - (3, 2)))
+
+    """
 
     def __init__(self):
         # Execute these two lines only if we need to compile the parser on the fly.
-        # Otherwise, just use the next line.
         #
         # tree_sitter.Language.build_library("languages.so", ["tree-sitter-rsm"])
         # self._lang = tree_sitter.Language("languages.so", "rsm")
         #
 
-        # !!!IMPORTANT!!!
+        # The Language class receives an absolute path.  If given a single file name
+        # instead of a path, it will look for the file in the current directory and, if
+        # not found there, in the path given by the environment variable
+        # $LD_LIBRARY_PATH.  In this latter case, $LD_LIBRARY_PATH must be set BEFORE
+        # the current python interpreter session starts, i.e. it must be set at the
+        # command line.  At least on linux, trying to set $LD_LIBRARY_PATH
+        # programatically *will not work*.
         #
-        # The Language class will look for its first argument (the .so file) inside the
-        # path defined by $LD_LIBRARY_PATH.  This means that when installing RSM, we
-        # need to move the language library there, OR add a custom path to
-        # LD_LIBRARY_PATH:
-        #
-        # $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:some/path/to/*.so
-        #
-        # This needs to happen BEFORE we run this file.  Trying to set this env variable
-        # from this interpreter session will not work.
+        # The code below always gives an absolute path so the problem pointed out above
+        # should never happen in any platform.  However, it does assume that the build
+        # system has compiled the rsm.so (or rsm.dll) file and placed it in the
+        # directory where this module lies.
         #
         library_fn = "rsm.dll" if sys.platform == "win32" else "rsm.so"
         library_path = str(Path(__file__).parent / library_fn)
@@ -80,9 +145,34 @@ class TSParser:
         self._parser = tree_sitter.Parser()
         self._parser.set_language(self._lang)
         self.cst = None
+        """The concrete syntax tree generated from the source."""
         self.ast = None
+        """The abstract manuscript tree generated from the concrete syntax tree."""
 
-    def parse(self, src: str, abstractify: bool = True):
+    def parse(
+        self, src: str, abstractify: bool = True
+    ) -> Union[TSTree, nodes.Manuscript]:
+        """Parse RSM source into a syntax tree.
+
+        Parameters
+        ----------
+        src
+            String containing RSM source.
+        abstractify
+            Whether to run the abstractify step.
+
+        Returns
+        -------
+        tree
+            Either an abstract syntax tree (if *abstractify* is ``True``) or a concrete
+            syntax tree (if *abstractify* is ``False``).
+
+        Notes
+        -----
+        Populates the attributes :attr:`cst` and :attr:`ast` with the concrete and
+        abstract syntax trees, respectively.
+
+        """
         logger.info("Parsing...")
         self.cst = self._parser.parse(bytes(str(src), "utf-8"))
 
@@ -95,7 +185,7 @@ class TSParser:
 
         logger.info("Abstractifying...")
         try:
-            self.ast = make_ast(self.cst)
+            self.ast = _abstractify(self.cst)
         except AttributeError as e:
             raise RSMParserError(msg="Error abstractifying.") from e
         if logger.getEffectiveLevel() <= logging.DEBUG:
@@ -104,12 +194,27 @@ class TSParser:
         return self.ast
 
 
-def traverse(tree: TSTree, named_only: bool = True):
+def print_cst(tree: TSTree, named_only: bool = False):
+    """Print a tree-sitter concrete syntax tree.
+
+    This is executed by default when processing a manuscript with logging level DEBUG.
+
+    Parameters
+    ----------
+    tree
+        A concrete syntax tree parsed by tree-sitter.
+    named_only
+        Whether to print only named nodes.
+
+    Notes
+    -----
+    Named nodes are those that do not correspond to syntax-only nodes.
+
+    """
     # allow traverse() to print to stdout rather than use logger because it will
     # look better this way
 
-    # children_att = 'named_children' if named_only else 'children'
-    children_att = "children"
+    children_att = "named_children" if named_only else "children"
     stack = [(0, tree.root_node)]
     while stack:
         indent, node = stack.pop()
@@ -183,7 +288,7 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
 }
 
 
-def parse_metakey_list(cst_key: TSNode, cst_val: TSNode):
+def _parse_metakey_list(cst_key: TSNode, cst_val: TSNode):
     key = cst_key.named_children[0].type
     if cst_val.named_children:
         val = [c.text.decode("utf-8").strip() for c in cst_val.named_children]
@@ -192,34 +297,34 @@ def parse_metakey_list(cst_key: TSNode, cst_val: TSNode):
     return key, val
 
 
-def parse_metakey_text(cst_key: TSNode, cst_val: TSNode):
+def _parse_metakey_text(cst_key: TSNode, cst_val: TSNode):
     key = cst_key.named_children[0].type
     val = cst_val.text.decode("utf-8").strip()
     return key, val
 
 
-def parse_metakey_any(cst_key: TSNode, cst_val: TSNode):
-    return parse_metakey_text(cst_key, cst_val)
+def _parse_metakey_any(cst_key: TSNode, cst_val: TSNode):
+    return _parse_metakey_text(cst_key, cst_val)
 
 
-def parse_metakey_bool(cst_key: TSNode, _):
+def _parse_metakey_bool(cst_key: TSNode, _):
     key = cst_key.named_children[0].type
     return key, True
 
 
-def parse_meta_into_dict(node):
+def _parse_meta_into_dict(node):
     pairs = {}
     for pair in [c for c in node.named_children if c.type.endswith("pair")]:
         if len(pair.named_children) == 1:  # bool meta key
             cst_key, cst_val = pair.named_children[0], None
         else:
             cst_key, cst_val = pair.named_children
-        key, val = globals()[f"parse_{cst_key.type}"](cst_key, cst_val)
+        key, val = globals()[f"_parse_{cst_key.type}"](cst_key, cst_val)
         pairs[key] = val
     return pairs
 
 
-def normalize_text(root):
+def _normalize_text(root):
     for node in root.traverse():
         # Merge consecutive text nodes (each text node ends at a newline, so consecutive
         # text nodes are just adjacent lines of text and can always be merged).  Also,
@@ -284,7 +389,7 @@ def normalize_text(root):
             node.title = EscapedString(node.title, DELIMS).escape()
 
 
-def make_ast(cst):
+def _abstractify(cst):
     ast_root_node = None
     bibliography_node = None
     stack = [(None, cst.root_node)]
@@ -396,7 +501,7 @@ def make_ast(cst):
         # process meta
         meta = cst_node.child_by_field_name("meta")
         if meta:
-            ast_node.ingest_dict_as_meta(parse_meta_into_dict(meta))
+            ast_node.ingest_dict_as_meta(_parse_meta_into_dict(meta))
 
         # process some special tags
         if ast_node_type in ["math", "code", "mathblock", "codeblock", "algorithm"]:
@@ -480,5 +585,5 @@ def make_ast(cst):
             ]
         )
 
-    normalize_text(ast_root_node)
+    _normalize_text(ast_root_node)
     return ast_root_node

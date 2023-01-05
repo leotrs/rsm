@@ -22,7 +22,7 @@ WRONG_MANUSCRIPT_LOGS = [
         "level": "WRN",
         "msg": "The CST contains errors.",
         "filename": "tsparser.py",
-        "lineno": 381,
+        "lineno": 486,
     },
     {
         "name": "RSM",

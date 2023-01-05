@@ -18,4 +18,10 @@ Qualified name: ``rsm.tsparser.TSParser``
       ~TSParser.parse
 
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+     
+     ~TSParser.cst
+     ~TSParser.ast
    

@@ -132,6 +132,8 @@ defining new commands inside a hidden math block with no number.
 
    ::
 
+By adding ``hide`` to ``:types:``, we tell RSM to not show the entire block.
+
 Make sure to use ``:nonum:`` since otherwise the numbering of subsequent math blocks
 will be shifted.
 

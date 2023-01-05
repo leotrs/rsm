@@ -31,8 +31,8 @@ Similarly, italic text also has a shorthand version using slashes ``/``.
    is /this one/.
    ::
 
-Other tags that allow shorthand notation are math and code blocks.  These in turn may be
-inline or block.
+Math tags allow shorthand notation using one dollar sign ``$`` for inline and two ``$$``
+for blocks.
 
 .. rsm::
 
@@ -65,20 +65,17 @@ inline or block.
 
    ::
 
+
+Code allows shorthand notation using one backtick ````` for inline or three ``````` for blocks.
+
+
 .. rsm::
 
    :manuscript:
 
-   inline :code:var = "value":: inline
-
-   this is inline :code: {:lang: python} var = "value":: inline
-
    *Inline code.*
 
-   Either :code:var = "value"::
-
-   Either :code: {:lang: python} var = "val" ::
-   or `{:lang: python} var = "val"`.
+   Either :code:var = "value":: or `var = "value"`.
 
    ::
 
@@ -91,14 +88,12 @@ inline or block.
    Either
 
    :codeblock:
-     :lang: python
    var = "value"
    ::
 
    or
 
    ```
-   :lang: python
    2 + 2 = 4.
    ```
 

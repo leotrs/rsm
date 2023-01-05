@@ -607,22 +607,19 @@ class Translator:
         return batch
 
     def visit_sourcecode(self, node: nodes.SourceCode) -> EditCommand:
-        ic(node)
-
         classes = []
         if node.lang:
             classes = ["highlight", node.lang]
             code = highlight_code(node.text, node.lang)
         else:
             code = node.text
-        newline_inner = isinstance(node.parent, nodes.CodeBlock)
         return AppendBatchAndDefer(
             [
                 AppendOpenTag(
                     "code",
                     classes=classes,
                     newline_outer=False,
-                    newline_inner=newline_inner,
+                    newline_inner=False,
                 ),
                 AppendText(code),
             ]

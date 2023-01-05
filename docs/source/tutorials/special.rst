@@ -75,7 +75,8 @@ Code allows shorthand notation using one backtick ````` for inline or three ````
 
    *Inline code.*
 
-   Either :code:var = "value":: or `var = "value"`.
+   Either :code:var = "value":: or
+   `var = "value"`.
 
    ::
 

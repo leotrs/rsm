@@ -64,6 +64,51 @@ These work on blocks, inlines, paragraphs, or even math blocks.
    ::
 
 
+Prevent automatic numbering
+***************************
+
+By default, all sections (and subsections) are numbered.  Prevent numbering of a section
+by using ``:nonum:``.
+
+.. rsm::
+
+   :manuscript:
+
+   # First
+   ::
+
+   # Unnumbered
+   :nonum:
+   ::
+
+   # Second
+   ::
+
+   ::
+
+Other numbered blocks such as math blocks also accept ``:nonum:``.
+
+.. rsm::
+
+   :manuscript:
+
+   $$
+   2 + 2 = 4
+   $$
+
+   $$
+   :nonum:
+   3 + 3 = 6
+   $$
+
+   $$
+   4 + 4 = 8
+   $$
+
+   ::
+
+
+
 LaTeX preamble
 **************
 

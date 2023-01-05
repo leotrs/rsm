@@ -1087,6 +1087,9 @@ class HandrailsTranslator(Translator):
 
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         batch = super().visit_mathblock(node)
+        if node.nonum:
+            return batch
+
         batch.items.insert(
             -1,
             AppendOpenCloseTag(

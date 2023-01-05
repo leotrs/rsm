@@ -359,7 +359,7 @@
   .manuscriptwrapper .mathblock {
     display: flex;
     align-items: center;
-    justify-content: space-between; }
+    justify-content: space-around; }
     .manuscriptwrapper .mathblock__number {
       color: var(--lgt-gray); }
     .manuscriptwrapper .mathblock:hover .manuscriptwrapper .mathblock__number {

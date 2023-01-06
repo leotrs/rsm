@@ -35,7 +35,6 @@ guides, as well as installing RSM locally on your machine.
 
          tutorials/syntax
          tutorials/recipes
-         tutorials/pipeline
 
    .. grid-item-card::
 

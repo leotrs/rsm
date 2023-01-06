@@ -68,8 +68,8 @@ command.
 
    $ rsm-make manuscript.rsm --serve
    [server] Serving on http://127.0.0.1:5500
-   [handldrs]Start watching changes
-   [handldrs]Start detecting changes
+   [handlers]Start watching changes
+   [handlers]Start detecting changes
    ...
 
 

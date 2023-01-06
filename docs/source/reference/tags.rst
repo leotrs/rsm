@@ -3,7 +3,7 @@ List of all tags
 
 .. note::
 
-   This list comes from module :mod:`~rsm.tags`.  This module is provided for
+   This list comes from the module ``tags.py``.  This module is provided for
    documentation purposes only and is not actually involved in processing a manuscript.
    (In fact, it is not even imported into the main package.)
 

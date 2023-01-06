@@ -1021,16 +1021,16 @@ class HandrailsTranslator(Translator):
         tree.root.types.append("do-not-hide")
 
         if any(type(c) is nodes.Sketch for c in node.children):
-            self._add_proof_header_with_sketch(batch, tree, node)
+            self._add_proof_header_with_sketch(batch, tree)
             for c in node.children:
                 if type(c) is not nodes.Sketch:
                     c.types.append("hide")
         else:
-            self._add_proof_header_no_sketch(batch, tree, node)
+            self._add_proof_header_sans_sketch(batch, tree)
         return self._replace_batch_with_handrails(1, batch, include_content=True)
 
     def _add_proof_header_with_sketch(
-        self, batch: EditCommandBatch, tree: nodes.Node, node: nodes.Proof
+        self, batch: EditCommandBatch, tree: nodes.Node
     ) -> None:
         header = AppendOpenTagManualClose(classes=["proof__header"])
         tabs = AppendOpenTagManualClose(classes=["proof__tabs"])
@@ -1051,8 +1051,8 @@ class HandrailsTranslator(Translator):
             header.close_command(),
         ]
 
-    def _add_proof_header_no_sketch(
-        self, batch: EditCommandBatch, tree: nodes.Node, node: nodes.Proof
+    def _add_proof_header_sans_sketch(
+        self, batch: EditCommandBatch, tree: nodes.Node
     ) -> None:
         header = AppendOpenTagManualClose(classes=["proof__header"])
         batch.items[1:1] = [header, tree, header.close_command()]

@@ -200,6 +200,7 @@ def print_cst(tree: TSTree, named_only: bool = False):
     """Print a tree-sitter concrete syntax tree.
 
     This is executed by default when processing a manuscript with logging level DEBUG.
+    For examples, see :class:`TSParser` docstring.
 
     Parameters
     ----------

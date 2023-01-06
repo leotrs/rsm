@@ -100,6 +100,8 @@ flagged to the user.  The linter does not modify the tree or the file it came fr
 - Class responsible: :class:`~rsm.linter.Linter`.
 
 
+.. _translator:
+
 Translator
 ----------
 

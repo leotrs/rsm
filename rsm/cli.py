@@ -23,43 +23,50 @@ def init_parser() -> ArgumentParser:
         "src",
         help="RSM source path",
     )
-    parser.add_argument(
+
+    input_opts = parser.add_argument_group("input control")
+    input_opts.add_argument(
         "-c",
         "--string",
         help="interpret src as a source string, not a path",
         action="store_true",
     )
-    parser.add_argument(
+
+    output_opts = parser.add_argument_group("output control")
+    output_opts.add_argument(
         "-r",
         "--handrails",
         help="output handrails",
         action="store_true",
     )
-    parser.add_argument(
+    output_opts.add_argument(
         "-s",
-        "--suppress-output",
+        "--silent",
         help="do not show output, only the logs",
         action="store_true",
     )
-    parser.add_argument(
+
+    log_opts = parser.add_argument_group("logging control")
+    log_opts.add_argument(
         "-v",
         "--verbose",
         help="verbosity",
         action="count",
         default=0,
     )
-    parser.add_argument(
+    log_opts.add_argument(
+        "--log-no-timestamps",
+        dest="log_time",
+        help="exclude timestamp in logs",
+        action="store_false",
+    )
+    log_opts.add_argument(
         "--log-format",
         help="format for logs",
         choices=["plain", "rsm", "json", "lint"],
         default="rsm",
     )
-    parser.add_argument(
-        "--log-exclude-time",
-        dest="log_time",
-        help="exclude timestamp in logs",
-        action="store_false",
-    )
+
     parser.add_argument(
         "-V",
         "--version",
@@ -87,7 +94,7 @@ def main(
     else:
         kwargs["path"] = args.src
     output = func(**kwargs)
-    if not args.suppress_output and output:
+    if not args.silent and output:
         print(output)
     return 0
 
@@ -100,7 +107,7 @@ def render() -> int:
 def lint() -> int:
     parser = init_parser()
     parser.set_defaults(log_format="lint")
-    parser.set_defaults(suppress_output=True)
+    parser.set_defaults(silent=True)
     return main(parser, app.lint)
 
 

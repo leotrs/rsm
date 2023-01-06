@@ -22,7 +22,7 @@ WRONG_MANUSCRIPT_LOGS = [
         "level": "WRN",
         "msg": "The CST contains errors.",
         "filename": "tsparser.py",
-        "lineno": 486,
+        "lineno": 488,
     },
     {
         "name": "RSM",
@@ -38,9 +38,9 @@ def cmd(src: str, log_format: str, verbose: int = 0):
     args = [
         "rsm-lint",
         f'"{src}"',
-        "-c",  # interpret source as string, not path
-        f"--log-format {log_format}",  # log format
-        "--log-exclude-time",  # no timestamps
+        "--string",
+        f"--log-format {log_format}",
+        "--log-no-timestamps",
     ]
     if verbose:
         args.append("-" + ("v" * verbose))

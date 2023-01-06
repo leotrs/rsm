@@ -26,14 +26,14 @@ EMPTY_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Parsing...",
         "filename": "tsparser.py",
-        "lineno": 176,
+        "lineno": 178,
     },
     {
         "name": "RSM.parse",
         "level": "INF",
         "msg": "Abstractifying...",
         "filename": "tsparser.py",
-        "lineno": 186,
+        "lineno": 188,
     },
     {
         "name": "RSM.tform",
@@ -65,7 +65,7 @@ WRONG_MANUSCRIPT_LOGS = [
         "level": "WRN",
         "msg": "The CST contains errors.",
         "filename": "tsparser.py",
-        "lineno": 486,
+        "lineno": 488,
     }
 ]
 WRONG_MANUSCRIPT_LOGS_V = [
@@ -88,21 +88,21 @@ WRONG_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Parsing...",
         "filename": "tsparser.py",
-        "lineno": 176,
+        "lineno": 178,
     },
     {
         "name": "RSM.parse",
         "level": "INF",
         "msg": "Abstractifying...",
         "filename": "tsparser.py",
-        "lineno": 186,
+        "lineno": 188,
     },
     {
         "name": "RSM.parse",
         "level": "WRN",
         "msg": "The CST contains errors.",
         "filename": "tsparser.py",
-        "lineno": 486,
+        "lineno": 488,
     },
     {
         "name": "RSM.tform",
@@ -132,10 +132,10 @@ def cmd(src: str, log_format: str, verbose: int = 0):
     args = [
         "rsm-render",
         f'"{src}"',
-        "-c",  # interpret source as string, not path
-        "-s",  # silent, only output logs
-        f"--log-format {log_format}",  # log format
-        "--log-exclude-time",  # no timestamps
+        "--string",
+        "--silent",
+        f"--log-format {log_format}",
+        "--log-no-timestamps",
     ]
     if verbose:
         args.append("-" + ("v" * verbose))

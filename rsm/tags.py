@@ -1,6 +1,8 @@
 """All tags available in RSM markup."""
 
 from collections import namedtuple
+from datetime import datetime
+from pathlib import Path
 
 ############
 # Block tags
@@ -23,7 +25,7 @@ codeblock = BlockTagInfo(None)
 """Code listing."""
 definition = BlockTagInfo(None)
 """Definition."""
-enumerate = BlockTagInfo(None)
+enumerate = BlockTagInfo(None)  # pylint: disable=redefined-builtin
 """Numbered list."""
 figure = BlockTagInfo(None)
 """Figure float."""
@@ -98,8 +100,7 @@ url = InlineTagInfo(None)
 ###########
 # Meta tags
 ###########
-from datetime import datetime
-from pathlib import Path
+
 
 MetaTagInfo = namedtuple("MetaTagInfo", ["parent", "type"])
 

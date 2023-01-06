@@ -10,10 +10,11 @@ import textwrap
 from typing import Any, Optional, Union
 
 from pygments import highlight
-from pygments.formatters import HtmlFormatter
+from pygments.formatters import HtmlFormatter  # pylint: disable=no-name-in-module
 from pygments.lexers import get_lexer_by_name
 
 
+# pylint: disable-next=too-few-public-methods
 class RSMPygmentsFormatter(HtmlFormatter):
     def wrap(self, source):
         return self._wrap_code(source)
@@ -25,7 +26,7 @@ class RSMPygmentsFormatter(HtmlFormatter):
         yield from source
 
 
-def highlight_code(source, lang, classes=None):
+def highlight_code(source, lang):
     highlighted = highlight(
         source,
         get_lexer_by_name(lang),
@@ -46,7 +47,8 @@ class EscapedString:
         return len(self._src)
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.escape_chars}, {textwrap.shorten(self._src, 60)})"
+        cls = self.__class__.__name__
+        return f"{cls}({self.escape_chars}, {textwrap.shorten(self._src, 60)})"
 
     def __str__(self) -> str:
         return self._src

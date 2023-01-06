@@ -1,4 +1,28 @@
-"""Input: abstract syntax tree -- Output: (transformed) abstract syntax tree."""
+"""Input: abstract syntax tree -- Output: (transformed) abstract syntax tree.
+
+The transform step is essential for the processing of the manuscript.  For exmaple,
+references and citations are resolved during this time.
+
+The transform step is also responsible for 'fixing up' some syntactic sugar afforded by
+RSM markup to yield a sound manuscript.  For exmaple, for mathematical proofs, it is
+possible to have a sequence of ``:step:`` tags inside a parent ``:step:``.  However, in
+the final manuscript, those sub-steps will be wrapped by a :class:`rsm.nodes.SubProof`
+node, without the user having to manually create a ``:p:`` tag.  This wrapper node is
+created during the transform step.
+
+After the transform step, static analysis tools such as the linter may run over the
+manuscript.
+
+The convention is that the manuscript will not be modified for any reason after the
+transform step is done.  **This is currently not enforced**, but merely a convention,
+though it must at all times be followed.
+
+The transform step is carried out by :class:`Transformer`, which simply executes in
+sequence a number of routines that are all independent from each other.  Since the task
+of each such routine is to modify the manuscript tree, the order in which they take
+place is of utmost importance.
+
+"""
 
 import logging
 from collections import defaultdict
@@ -18,13 +42,97 @@ class RSMTransformerError(Exception):
 
 
 class Transformer:
-    """Apply transformations to the abstract syntax tree."""
+    """Apply transformations to the abstract syntax tree.
+
+    A transformation is any operation on the manuscript tree that modifies its
+    structure.  This class keeps a register of transformations and applies them in
+    sequence.  Order of application is of the utmost importance since each transform
+    modifies the tree in some way.
+
+    Notes
+    -----
+    If an operation is being carried out not to transform the tree, but merely to check
+    it in some way, consider implementing it as a linter operation instead.
+
+    Examples
+    --------
+    Consider the following manuscript.
+
+    >>> src = \"\"\"
+    ... :manuscript:
+    ... Here comes a :span:{:label:lbl} word :: with a label,
+    ... and a reference to the :ref:lbl,word::.
+    ... ::
+    ... \"\"\"
+
+    The transform step comes after the parsing step.  After parsing, the manuscript
+    looks as follows.
+
+    >>> parser = rsm.tsparser.TSParser()
+    >>> sans_transform = parser.parse(src)
+    >>> print(sans_transform.sexp())
+    (Manuscript
+      (Paragraph
+        (Text)
+        (Span
+          (Text))
+        (Text)
+        (PendingReference)
+        (Text)))
+
+    The :class:`rsm.nodes.PendingReference` node is created as a placeholder.  One can
+    inspect its desired target.
+
+    >>> sans_transform.children[0].children[3].target
+    'lbl'
+
+    The target is the string ``'lbl'``.  Note this is the label of the target node.
+
+    After the transform step, the tree is modified and the reference is resolved.
+
+    >>> tform = rsm.transformer.Transformer()
+    >>> with_transform = tform.transform(sans_transform)
+    >>> print(with_transform.sexp())
+    (Manuscript
+      (Paragraph
+        (Text)
+        (Span
+          (Text))
+        (Text)
+        (Reference)
+        (Text)))
+
+    Accordingly, its target is now no longer a string, but the actual node.
+
+    >>> with_transform.children[0].children[3].target
+    Span(label=lbl, parent=Paragraph, [Text])
+
+    """
 
     def __init__(self) -> None:
         self.tree: Optional[nodes.Manuscript] = None
         self.labels_to_nodes: dict[str, nodes.Node] = {}
 
     def transform(self, tree: nodes.Manuscript) -> nodes.Manuscript:
+        """Transform a manuscript tree.
+
+        For examples see class docstring.
+
+        Parameters
+        ----------
+        tree
+            Manuscript tree to be transformed.
+
+        Returns
+        -------
+        tree
+            The transformed tree.  All transformations occur in place.
+
+        Notes
+        -----
+        *tree* is stored as ``self.tree``.
+
+        """
         logger.info("Transforming...")
         self.tree = tree
 
@@ -37,6 +145,23 @@ class Transformer:
         return tree
 
     def collect_labels(self) -> None:
+        """Find all nodes with labels.
+
+        Find all nodes with a non-empty *label* attribute and build a label-to-node
+        mapping.  This mapping is later used by other transforms.
+
+        Warnings
+        --------
+        If two nodes with the same label are found, only the first node is assigned the
+        label and the second (and later, if any) nodes' labels are erased and ignored.
+
+        Notes
+        -----
+        This transform does not actually modify the tree, but is necessary for the
+        execution of other transforms that may modify it.  Therefore, this must be
+        executed before all other ones.
+
+        """
         for node in self.tree.traverse(condition=lambda n: n.label):
             if node.label in self.labels_to_nodes:
                 logger.warning(f"Duplicate label {node.label}, using first encountered")

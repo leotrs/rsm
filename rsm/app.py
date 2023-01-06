@@ -41,7 +41,7 @@ class Task(NamedTuple):
 
 
 class Pipeline:
-    """A sequence of :class:`Task`s."""
+    """A sequence of :class:`Task` instances executed one after the other."""
 
     def __init__(self, tasks: list[Task]):
         self.tasks: list[Task] = []

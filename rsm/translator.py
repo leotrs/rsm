@@ -558,12 +558,11 @@ class Translator:
     def leave_node(self, node: nodes.Node) -> EditCommand:
         try:
             return self.deferred.pop()
-        except IndexError as e:
-            classname = node.__class__.__name__
+        except IndexError as ex:
             raise RSMTranslatorError(
                 "Cannot finish translation; did you forget to write "
                 "a visit_* or leave_* method?"
-            ) from e
+            ) from ex
 
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         batch = AppendBatchAndDefer(
@@ -581,7 +580,7 @@ class Translator:
     def visit_author(self, node: nodes.Author) -> EditCommand:
         if [node.name, node.affiliation, node.email]:
             if node.email:
-                email = tag = (
+                email = (
                     make_tag("a", id_="", classes="", href=f"mailto:{node.email}")
                     + node.email
                     + "</a>"

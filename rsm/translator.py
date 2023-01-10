@@ -81,7 +81,7 @@ may implement a ``leave_*`` method such as
 .. code-block:: python
 
    def leave_newnodeclass(self, node: NewNodeClass) -> EditCommand:
-       return AppendText(f'{node.metadata}\\n\</div>')
+       return AppendText(f'{node.metadata}\\n</div>')
 
 Note the need to manually close the ``</div>`` tag that was left open.
 
@@ -127,7 +127,7 @@ class RSMTranslatorError(Exception):
     pass
 
 
-def make_tag(tag: str, id_: str, classes: Iterable, **kwargs: Any) -> str:
+def _make_tag(tag: str, id_: str, classes: Iterable, **kwargs: Any) -> str:
     text = f"<{tag}"
     if id_:
         text += f' id="{id_}"'
@@ -231,7 +231,7 @@ class AppendOpenCloseTag(AppendText):
     def make_text(self) -> str:
         return (
             ("\n" if self.newline_outer else "")
-            + make_tag(self.tag, self.id, self.classes)
+            + _make_tag(self.tag, self.id, self.classes)
             + ("\n" if self.newline_inner else "")
             + self.content
             + ("\n" if self.newline_inner else "")
@@ -266,7 +266,7 @@ class AppendOpenTagManualClose(AppendText):
     def make_text(self) -> str:
         return (
             ("\n" if self.newline_outer else "")
-            + make_tag(self.tag, self.id, self.classes)
+            + _make_tag(self.tag, self.id, self.classes)
             + ("\n" if self.newline_inner else "")
             + self.content
         )
@@ -302,7 +302,7 @@ class AppendOpenTag(AppendTextAndDefer):
     def make_text(self) -> str:
         return (
             ("\n" if self.newline_outer else "")
-            + make_tag(self.tag, self.id, self.classes)
+            + _make_tag(self.tag, self.id, self.classes)
             + ("\n" if self.newline_inner else "")
         )
 
@@ -478,12 +478,6 @@ class AppendBatch(EditCommandBatch):
             item.execute(translator)
 
 
-class Action(namedtuple("Action", "node action method")):
-    def __repr__(self) -> str:
-        classname = self.node.__class__.__name__
-        return f'Action(node={classname}(), action="{self.action}")'
-
-
 class Translator:
     """Translate an abstract syntax tree into HTML.
 
@@ -495,6 +489,11 @@ class Translator:
     [1, 2, 3]
 
     """
+
+    class Action(namedtuple("Action", "node action method")):
+        def __repr__(self) -> str:
+            classname = self.node.__class__.__name__
+            return f'Action(node={classname}(), action="{self.action}")'
 
     def __init__(self, quiet: bool = False):
         self.tree: nodes.Manuscript = None
@@ -515,10 +514,10 @@ class Translator:
         return getattr(cls, method)
 
     def push_visit(self, stack, node: nodes.Node) -> None:
-        stack.append(Action(node, "visit", self.get_action_method(node, "visit")))
+        stack.append(self.Action(node, "visit", self.get_action_method(node, "visit")))
 
     def push_leave(self, stack, node: nodes.Node) -> None:
-        stack.append(Action(node, "leave", self.get_action_method(node, "leave")))
+        stack.append(self.Action(node, "leave", self.get_action_method(node, "leave")))
 
     def translate(self, tree: nodes.Manuscript, new: bool = True) -> str:
         if not self.quiet:
@@ -581,7 +580,7 @@ class Translator:
         if [node.name, node.affiliation, node.email]:
             if node.email:
                 email = (
-                    make_tag("a", id_="", classes="", href=f"mailto:{node.email}")
+                    _make_tag("a", id_="", classes="", href=f"mailto:{node.email}")
                     + node.email
                     + "</a>"
                 )
@@ -799,7 +798,9 @@ class Translator:
         classes = node.types
         if not isinstance(node, nodes.URL) and "reference" not in classes:
             classes.insert(0, "reference")
-        tag = make_tag("a", id_=id_, classes=classes, href=href_text) + reftext + "</a>"
+        tag = (
+            _make_tag("a", id_=id_, classes=classes, href=href_text) + reftext + "</a>"
+        )
         return tag
 
     def visit_reference(self, node: nodes.Reference) -> EditCommand:
@@ -931,7 +932,7 @@ class Translator:
             logger.warning(f"Bibitem {node.label} has no year")
         text = ". ".join([i.strip(".") for i in items]) + "."
         if node.doi:
-            a_tag = make_tag(
+            a_tag = _make_tag(
                 "a",
                 id_=f"{node.label}-doi",
                 classes=["bibitem-doi"],
@@ -945,7 +946,7 @@ class Translator:
         if node.backlinks:
             text += "<br />"
             backs = [
-                make_tag(
+                _make_tag(
                     "a",
                     id_="",
                     classes=["reference", "backlink"],
@@ -969,7 +970,7 @@ class Translator:
             [
                 AppendNodeTag(node, "figure"),
                 AppendText(
-                    make_tag(
+                    _make_tag(
                         "img",
                         id_=node.label,
                         classes=[],

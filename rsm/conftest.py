@@ -1,11 +1,14 @@
-# conftest.py
-#
-# Global pytest configuration and fixtures.
-#
-# NOTE: the definitions here are only visible to tests within this directory and its
-# children dirs.  In particular, for pytest to run unit tests (or other tests) in the
-# tests directory (../tests/), there needs to be a different conftest.py file in that
-# directory.
+"""
+conftest.py
+-----------
+
+Pytest configuration and fixtures local to rsm/.  The definitions here are only visible
+to tests within this directory and its children dirs.  In particular, for pytest to run
+unit tests (or other tests) in the tests directory (../tests/), there needs to be a
+different conftest.py file in that directory.
+
+"""
+
 
 import sys
 

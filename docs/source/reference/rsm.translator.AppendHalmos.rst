@@ -1,4 +1,4 @@
-﻿AppendHalmos
+AppendHalmos
 ============
 
 Qualified name: ``rsm.translator.AppendHalmos``

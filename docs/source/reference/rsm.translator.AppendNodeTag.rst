@@ -1,4 +1,4 @@
-﻿AppendNodeTag
+AppendNodeTag
 =============
 
 Qualified name: ``rsm.translator.AppendNodeTag``

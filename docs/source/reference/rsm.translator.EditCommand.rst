@@ -1,4 +1,4 @@
-﻿EditCommand
+EditCommand
 ===========
 
 Qualified name: ``rsm.translator.EditCommand``

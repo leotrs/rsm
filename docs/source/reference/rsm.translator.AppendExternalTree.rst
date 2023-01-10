@@ -1,4 +1,4 @@
-﻿AppendExternalTree
+AppendExternalTree
 ==================
 
 Qualified name: ``rsm.translator.AppendExternalTree``

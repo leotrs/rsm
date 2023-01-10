@@ -1,4 +1,4 @@
-﻿AppendOpenCloseTag
+AppendOpenCloseTag
 ==================
 
 Qualified name: ``rsm.translator.AppendOpenCloseTag``

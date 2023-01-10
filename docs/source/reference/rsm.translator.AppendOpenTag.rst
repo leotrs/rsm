@@ -1,4 +1,4 @@
-﻿AppendOpenTag
+AppendOpenTag
 =============
 
 Qualified name: ``rsm.translator.AppendOpenTag``

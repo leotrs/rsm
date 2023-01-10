@@ -180,7 +180,7 @@ class TSParser:
 
         if logger.getEffectiveLevel() <= logging.DEBUG:
             logger.debug("concrete syntax tree:")
-            traverse(self.cst)
+            print_cst(self.cst)
 
         if not abstractify:
             return self.cst
@@ -188,8 +188,8 @@ class TSParser:
         logger.info("Abstractifying...")
         try:
             self.ast = _abstractify(self.cst)
-        except AttributeError as e:
-            raise RSMParserError(msg="Error abstractifying.") from e
+        except AttributeError as ex:
+            raise RSMParserError(msg="Error abstractifying.") from ex
         if logger.getEffectiveLevel() <= logging.DEBUG:
             logger.debug("abstract syntax tree:")
             print(self.ast.sexp())
@@ -378,7 +378,7 @@ def _normalize_text(root):
         # care about is the outer whitespace of Text children.  Suppose we have a Text
         # node followed by a Span.  We want to give the user two options: either no
         # whitespace between them, or exactly one space.
-        for idx, child in enumerate(node.children):
+        for child in node.children:
             if not isinstance(child, nodes.Text):
                 continue
             child.text = re.sub(r"(.*?)\s+$", r"\1 ", child.text)

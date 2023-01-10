@@ -40,14 +40,14 @@ EMPTY_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Transforming...",
         "filename": "transformer.py",
-        "lineno": 28,
+        "lineno": 136,
     },
     {
         "name": "RSM.tlate",
         "level": "INF",
         "msg": "Translating...",
         "filename": "translator.py",
-        "lineno": 416,
+        "lineno": 533,
     },
     {
         "name": "RSM",
@@ -109,14 +109,14 @@ WRONG_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Transforming...",
         "filename": "transformer.py",
-        "lineno": 28,
+        "lineno": 136,
     },
     {
         "name": "RSM.tlate",
         "level": "INF",
         "msg": "Translating...",
         "filename": "translator.py",
-        "lineno": 416,
+        "lineno": 533,
     },
     {
         "name": "RSM",

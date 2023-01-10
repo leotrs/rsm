@@ -17,8 +17,6 @@
       :toctree: .
       :nosignatures:
       
-        Action
-      
         AppendBatch
       
         AppendBatchAndDefer
@@ -57,11 +55,6 @@
    
 
    
-   
-   .. rubric:: Functions
-
-   
-   .. autofunction:: make_tag
    
    
 

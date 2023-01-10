@@ -1,4 +1,4 @@
-﻿AppendHeading
+AppendHeading
 =============
 
 Qualified name: ``rsm.translator.AppendHeading``

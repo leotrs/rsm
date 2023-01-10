@@ -1,4 +1,4 @@
-﻿AppendBatch
+AppendBatch
 ===========
 
 Qualified name: ``rsm.translator.AppendBatch``

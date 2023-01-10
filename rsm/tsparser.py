@@ -214,8 +214,7 @@ def print_cst(tree: TSTree, named_only: bool = False):
     Named nodes are those that do not correspond to syntax-only nodes.
 
     """
-    # allow traverse() to print to stdout rather than use logger because it will
-    # look better this way
+    # this function prints to stdout rather than use logger for nicer output
 
     children_att = "named_children" if named_only else "children"
     stack = [(0, tree.root_node)]

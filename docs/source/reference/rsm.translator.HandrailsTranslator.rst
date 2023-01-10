@@ -1,4 +1,4 @@
-﻿HandrailsTranslator
+HandrailsTranslator
 ===================
 
 Qualified name: ``rsm.translator.HandrailsTranslator``

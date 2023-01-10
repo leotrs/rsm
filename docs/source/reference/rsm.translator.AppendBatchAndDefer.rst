@@ -1,4 +1,4 @@
-﻿AppendBatchAndDefer
+AppendBatchAndDefer
 ===================
 
 Qualified name: ``rsm.translator.AppendBatchAndDefer``

@@ -1,4 +1,4 @@
-﻿AppendText
+AppendText
 ==========
 
 Qualified name: ``rsm.translator.AppendText``

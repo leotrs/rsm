@@ -1,4 +1,4 @@
-﻿Translator
+Translator
 ==========
 
 Qualified name: ``rsm.translator.Translator``

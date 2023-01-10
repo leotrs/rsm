@@ -1,4 +1,4 @@
-﻿Action
+Action
 ======
 
 Qualified name: ``rsm.translator.Action``

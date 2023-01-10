@@ -1,4 +1,4 @@
-﻿AppendParagraph
+AppendParagraph
 ===============
 
 Qualified name: ``rsm.translator.AppendParagraph``

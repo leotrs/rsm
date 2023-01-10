@@ -1,4 +1,4 @@
-﻿EditCommandBatch
+EditCommandBatch
 ================
 
 Qualified name: ``rsm.translator.EditCommandBatch``

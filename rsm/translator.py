@@ -1,4 +1,113 @@
-"""Input: abstract syntax tree -- Output: HTML body."""
+"""Input: abstract syntax tree -- Output: HTML body.
+
+The translator takes the finished abstract manuscript tree and translates its content to
+HTML.
+
+Two main classes handle this process: :class:`Translator` and :class:`EditCommand`.
+:class:`Translator` traverses the manuscript tree in depth-first order and implements a
+generic visitor pattern.  That is, when a node ``n`` of class ``cls`` is visited, the
+method ``visit_cls(n)`` is called.  Then, all of ``n``'s children are visited in order.
+Finally, the method ``leave_cls(n)`` is called.
+
+Each ``visit_*`` and ``leave_*`` method returns an object of type :class:`EditCommand`.
+This class implements a command pattern whose sole purpose is to append text to the
+underlying HTML string that is being built.  The simplest example is :class:`AppendText`
+which simply appends an arbitrary string to the underlying HTML.  For example,
+:meth:`~rsm.translator.Translator.visit_node` returns an :class:`AppendText` instance
+which adds some basic information about the node to the HTML output.
+
+The visit method ``visit_cls`` returns the HTML markup that needs to appear *before* the
+node's children's markup, while ``leave_cls`` returns the HTML markup that appears
+*after* all its children.
+
+Suppose a new kind of node is created, called ``NewNodeClass``.  To implement the
+translation step for this new class of node, implement a new method in
+:class:`Translator` with signature
+
+.. code-block:: python
+
+   def visit_newnodeclass(self, node: NewNodeClass) -> EditCommand: ...
+
+Optionally, also implement a leave method with signature
+
+.. code-block:: python
+
+   def leave_newnodeclass(self, node: NewNodeClass) -> EditCommand: ...
+
+If a method of the appropriate name is not found, :class:`Translator` will look up the
+inheritance tree of ``NewNodeClass`` until it finds a class with an existing method.
+For example, if ``NewNodeClass`` inherits directly from :class:`~rsm.nodes.Span`, and a
+``visit_newnodeclass`` method is not found, then ``visit_span`` will be called with the
+visited instance of ``NewNodeClass``.  Since all nodes must subclass
+:class:`~rsm.nodes.Node`, this process will ultimately end up calling
+:meth:`~rsm.translator.Translator.visit_node` if no other bases of ``NewNodeClass`` have
+a ``visit_*`` method.  The same is true for ``leave_*`` methods.
+
+Since HTML has both opening and closing tags, the vast majority of which must be kept
+balanced, care must be taken that the method ``leave_cls`` always closes any tags that
+were left open in the corresponding ``visit_cls`` method.  RSM handles this
+automatically in the following way.  Besides the basic :class:`AppendText` class, there
+are other :class:`EditCommand` subclasses that accept some text that should be
+*deferred* until the coresponding ``leave_*`` method is called on the same node.  This
+deferred text is then automatically appended to the generated HTML *unless this process
+is overridden* (see below).
+
+For example, suppose nodes of class ``NewNodeClass`` should be translated to HTML by
+wrapping their text contents in a ``div`` of class ``"wrapper"``.  We need only
+implement a single method, namely
+
+.. code-block:: python
+
+   def visit_newnodeclass(self, node: NewNodeClass) -> EditCommand:
+       content = f'<div class="wrapper">{node.text}'
+       return AppendTextAndDefer(content, "</div>")
+
+This tells the translator that when visiting a ``NewNodeClass`` node, the text ``"<div
+class="wrapper">"``, followed by the text contents of the node, should be appended to
+the generated HTML immediately, while the text ``"</div>"`` should be deferred and
+appended only when ``leave_newnodeclass`` is called on that same node.  This will, as
+usual, happen after the node's children have each been visited and exited.  Note there
+is no need to manually implement a ``leave_newnodeclass`` method that will close the
+``div`` tag.  In this way, all opening and closing HTMl tags may be specified in the
+same method, and there is no need to manually coordinate the ``visit_*`` and ``leave_*``
+methods of the same node class.  For this reason, most node classes do not implement a
+``leave_*`` class at all.
+
+If a ``leave_*`` method is implemented, this process will no longer work and manual
+coordination must take place.  In the example above, if the node has some extra metadata
+that needs to appear after its children's content, say in ``node.metadata``, then one
+may implement a ``leave_*`` method such as
+
+.. code-block:: python
+
+   def leave_newnodeclass(self, node: NewNodeClass) -> EditCommand:
+       return AppendText(f'{node.metadata}\\n\</div>')
+
+Note the need to manually close the ``</div>`` tag that was left open.
+
+This example which manually specifies the text to be deferred (``</div>``) is for
+illustration purposes only.  In reality, there exist subclasses of :class:`EditCommand`
+that handle this automatically.  In fact, the example above where only the wrapper div
+is necessary necessary (i.e. there is no ``node.text`` nor ``node.metadata``), could
+instead be implemented simply as
+
+.. code-block:: python
+
+   def visit_newnodeclass(self, node: NewNodeClass) -> EditCommand:
+       return AppendNodeTag(node, additional_classes="wrapper")
+
+with no need of a ``leave`` method.  :class:`AppendNodeTag` knows to use the node's
+attributes to generate the ``div``, as well as to defer its closing.  Indeed,
+:class:`AppendNodeTag` is a sublcass of :class:`AppendTextAndDefer`.
+
+There are two translator classes in this module.  The base translator
+:class:`Translator` implements the visit and leave methods necessary to generate a
+simple human-readable HTML output.  It is the translator class used by ``rsm-render``.
+:class:`HandrailsTranslator` is a subclass of :class:`Translator` and overrides some
+visit and leave methods to add handrails to the output.  It is the translator class used
+by ``rsm-make``.
+
+"""
 
 import logging
 import textwrap

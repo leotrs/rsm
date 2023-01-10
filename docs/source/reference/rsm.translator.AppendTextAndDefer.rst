@@ -1,4 +1,4 @@
-﻿AppendTextAndDefer
+AppendTextAndDefer
 ==================
 
 Qualified name: ``rsm.translator.AppendTextAndDefer``

@@ -1,4 +1,4 @@
-﻿AppendKeyword
+AppendKeyword
 =============
 
 Qualified name: ``rsm.translator.AppendKeyword``

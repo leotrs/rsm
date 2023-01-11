@@ -240,36 +240,33 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: var(--light);
     font-size: 0.75rem;
-    padding-block: .5em;
-    top: 2em;
+    top: 32px;
     right: 0;
     z-index: 1;
-    background: var(--gray-100);
+    background: var(--gray-200);
     color: var(--drk-gray); }
     .manuscriptwrapper .options .option {
       display: block;
-      padding-inline: .75em;
+      padding-inline: 0.25em;
+      padding-block: 0.5em;
       width: 100%;
       text-align: end; }
   .manuscriptwrapper .handrail__btn {
-    padding-inline: .1em; }
+    padding-block: 0.25em; }
     .manuscriptwrapper .handrail__btn.handrail__btn--relative {
       position: relative; }
     .manuscriptwrapper .handrail__btn-container {
-      position: absolute;
-      left: calc(-1.15em);
-      background: var(--gray-100);
+      background: var(--gray-200);
+      display: none;
       font-weight: var(--bold);
-      display: none; }
-      .manuscriptwrapper .handrail__btn-container .handrail__btn:last-of-type {
-        border-width: 0 0 0 var(--border-thin);
-        border-color: var(--lgt-gray);
-        border-style: solid; }
+      left: calc(-1 * var(--border-thin));
+      position: absolute;
+      transform: translateX(-100%); }
   .manuscriptwrapper .handrail.handrail--hug > .handrail__btn-container {
     top: 0; }
-  .manuscriptwrapper #abstract div.handrail > .handrail__btn-container,
-  .manuscriptwrapper #contents div.handrail > .handrail__btn-container {
-    top: calc((var(--header-line-height)*var(--h3-size) - var(--body-line-height)*1rem)/2); }
+  .manuscriptwrapper .abstract div.handrail > .handrail__btn-container,
+  .manuscriptwrapper .toc div.handrail > .handrail__btn-container {
+    top: calc(var(--h3-size)/2 + (var(--header-line-height)*var(--h3-size) - var(--body-line-height)*1rem)/2); }
   .manuscriptwrapper div.theorem > .handrail > .handrail__btn-container,
   .manuscriptwrapper div.proof > .handrail > .handrail__btn-container {
     top: 1rem; }
@@ -416,7 +413,8 @@
       text-shadow: 0 0 1px black; }
   .manuscriptwrapper .handrail:hover > .handrail__btn-container,
   .manuscriptwrapper .handrail:hover > .handrail__icons {
-    display: flex; }
+    display: flex;
+    flex-direction: row-reverse; }
   .manuscriptwrapper .handrail:hover > .step__number {
     display: block; }
   .manuscriptwrapper .proof:not(.collapsed) {

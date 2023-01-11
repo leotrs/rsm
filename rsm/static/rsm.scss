@@ -318,16 +318,16 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: var(--light);
     font-size: 0.75rem;
-    padding-block: .5em;
-    top: 2em;
+    top: 32px;
     right: 0;
     z-index: 1;
-    background: var(--gray-100);
+    background: var(--gray-200);
     color: var(--drk-gray);
 
     & .option {
       display: block;
-      padding-inline: .75em;
+      padding-inline: 0.25em;
+      padding-block: 0.5em;
       width: 100%;
       text-align: end;
     }
@@ -335,25 +335,20 @@
   }
 
   .handrail__btn {
-    padding-inline: .1em;
+
+    padding-block: 0.25em;
 
     &.handrail__btn--relative {
       position: relative;
     }
 
     &-container {
-      position: absolute;
-      left: calc(-1.15em);
-      background: var(--gray-100);
-      font-weight: var(--bold);
+      background: var(--gray-200);
       display: none;
-
-      & .handrail__btn:last-of-type  {
-	border-width: 0 0 0 var(--border-thin);
-	border-color: var(--lgt-gray);
-	border-style: solid;
-      }
-
+      font-weight: var(--bold);
+      left: calc(-1 * var(--border-thin));
+      position: absolute;
+      transform: translateX(-100%);
     }
 
   }
@@ -362,9 +357,9 @@
     top: 0;
   }
 
-  #abstract div.handrail > .handrail__btn-container,
-  #contents div.handrail > .handrail__btn-container {
-    top: calc((var(--header-line-height)*var(--h3-size) - var(--body-line-height)*1rem)/2);
+  .abstract div.handrail > .handrail__btn-container,
+  .toc div.handrail > .handrail__btn-container {
+    top: calc(var(--h3-size)/2 + (var(--header-line-height)*var(--h3-size) - var(--body-line-height)*1rem)/2);
   }
 
   div.theorem > .handrail > .handrail__btn-container,
@@ -628,6 +623,7 @@
   .handrail:hover > .handrail__btn-container,
   .handrail:hover > .handrail__icons {
     display: flex;
+    flex-direction: row-reverse;
   }
 
   .handrail:hover > .step__number {

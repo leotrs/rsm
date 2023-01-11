@@ -654,7 +654,11 @@ class Translator:
 
     def visit_contents(self, node: nodes.Contents) -> EditCommand:
         return AppendBatchAndDefer(
-            [AppendHeading(3, "Table of Contents"), AppendNodeTag(node, "ul")]
+            [
+                AppendOpenTag(classes=["toc"]),
+                AppendHeading(3, "Table of Contents"),
+                AppendNodeTag(node, "ul"),
+            ]
         )
 
     def visit_note(self, node: nodes.Note) -> EditCommand:
@@ -1022,12 +1026,49 @@ class Translator:
 
 
 class HandrailsTranslator(Translator):
+
+    svg = {
+        "rarrow": """<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <polyline points="9 6 15 12 9 18"></polyline>
+        </svg>""",
+        "vdots": """<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <circle cx="12" cy="12" r="1"></circle>
+        <circle cx="12" cy="19" r="1"></circle>
+        <circle cx="12" cy="5" r="1"></circle>
+        </svg>""",
+        "link": """<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path>
+        <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path>
+        </svg>""",
+        "tree": """<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-binary-tree" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M6 20a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
+        <path d="M16 4a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
+        <path d="M16 20a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
+        <path d="M11 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
+        <path d="M21 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z"></path>
+        <path d="M5.058 18.306l2.88 -4.606"></path>
+        <path d="M10.061 10.303l2.877 -4.604"></path>
+        <path d="M10.065 13.705l2.876 4.6"></path>
+        <path d="M15.063 5.7l2.881 4.61"></path>
+        </svg>""",
+        "source": """<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-source-code" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M14.5 4h2.5a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3v-5"></path>
+        <path d="M6 5l-2 2l2 2"></path>
+        <path d="M10 9l2 -2l-2 -2"></path>
+        </svg>""",
+    }
+
     @staticmethod
-    def _make_option_tag(opt: str) -> AppendOpenCloseTag:
+    def _make_option_tag(name: str, svg: str) -> AppendOpenCloseTag:
         return AppendOpenCloseTag(
             "span",
-            opt,
-            classes=["option", f"option__{opt}"],
+            svg,
+            classes=["option", f"option__{name}"],
             newline_inner=False,
         )
 
@@ -1038,32 +1079,42 @@ class HandrailsTranslator(Translator):
         else:
             handrail = AppendOpenTagManualClose(classes=classes)
         btn_cont = AppendOpenTagManualClose(classes=["handrail__btn-container"])
+        btn_togg = AppendOpenTagManualClose(
+            classes=["handrail__btn", "handrail__btn-toggle"], newline_inner=False
+        )
         btn_menu = AppendOpenTagManualClose(
             classes=["handrail__btn", "handrail__btn-menu", "handrail__btn--relative"],
             newline_inner=False,
-        )
-        btn_togg = AppendOpenTagManualClose(
-            classes=["handrail__btn", "handrail__btn-toggle"], newline_inner=False
         )
         opt_tag = AppendOpenTagManualClose(
             classes=["options", "hide"], newline_inner=True, newline_outer=True
         )
         options = [
-            self._make_option_tag(opt)
-            for opt in ["link", "tree", "source", "assumptions"]
+            self._make_option_tag(opt, self.svg[opt])
+            for opt in ["link", "tree", "source"]
         ]
         newitems = [
             handrail,
             btn_cont,
+            btn_togg,
+            AppendOpenCloseTag(
+                "span",
+                self.svg["rarrow"],
+                newline_inner=False,
+                newline_outer=False,
+            ),
+            btn_togg.close_command(),
             btn_menu,
-            AppendOpenCloseTag("span", "⋮", newline_inner=False, newline_outer=False),
+            AppendOpenCloseTag(
+                "span",
+                self.svg["vdots"],
+                newline_inner=False,
+                newline_outer=False,
+            ),
             opt_tag,
             *options,
             opt_tag.close_command(),
             btn_menu.close_command(),
-            btn_togg,
-            AppendOpenCloseTag("span", "〉", newline_inner=False, newline_outer=False),
-            btn_togg.close_command(),
             btn_cont.close_command(),
             items[index],
         ]
@@ -1102,7 +1153,7 @@ class HandrailsTranslator(Translator):
 
     def visit_contents(self, node: nodes.Contents) -> EditCommand:
         batch = super().visit_contents(node)
-        return self._replace_batch_with_handrails(0, batch)
+        return self._replace_batch_with_handrails(1, batch)
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
         batch = super().visit_bibliography(node)

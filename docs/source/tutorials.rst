@@ -18,8 +18,6 @@ implementation of RSM, including all of the features showcased in the feature to
      tutorials/tooltips
      tutorials/special
      tutorials/bibliography
-     tutorials/proofs
-     tutorials/example
 
 
 Once you are ready to use RSM for your manuscript, we recommend following the in-depth

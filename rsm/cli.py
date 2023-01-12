@@ -1,8 +1,7 @@
-"""
-cli.py
-------
+"""RSM command line utilities.
 
-RSM command line utility.
+The apps implemented in :mod:`rsm.app` are hereby exposed to the user as command line
+utilities.
 
 """
 
@@ -17,7 +16,7 @@ from rsm import app
 from rsm.tsparser import RSMParserError
 
 
-def init_parser() -> ArgumentParser:
+def _init_parser() -> ArgumentParser:
     parser = ArgumentParser()
     parser.add_argument(
         "src",
@@ -100,19 +99,19 @@ def main(
 
 
 def render() -> int:
-    parser = init_parser()
+    parser = _init_parser()
     return main(parser, app.render)
 
 
 def lint() -> int:
-    parser = init_parser()
+    parser = _init_parser()
     parser.set_defaults(log_format="lint")
     parser.set_defaults(silent=True)
     return main(parser, app.lint)
 
 
 def make() -> int:
-    parser = init_parser()
+    parser = _init_parser()
     parser.add_argument("--serve", help="serve and autoreload", action="store_true")
     parser.set_defaults(handrails=True)
     args = parser.parse_args()

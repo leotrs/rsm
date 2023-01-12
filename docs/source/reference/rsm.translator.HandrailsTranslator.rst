@@ -1,4 +1,4 @@
-HandrailsTranslator
+﻿HandrailsTranslator
 ===================
 
 Qualified name: ``rsm.translator.HandrailsTranslator``
@@ -28,4 +28,9 @@ Qualified name: ``rsm.translator.HandrailsTranslator``
       ~HandrailsTranslator.visit_theorem
 
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+     
+     ~HandrailsTranslator.svg
    

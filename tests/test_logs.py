@@ -12,14 +12,14 @@ EMPTY_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Application started",
         "filename": "app.py",
-        "lineno": 89,
+        "lineno": 130,
     },
     {
         "name": "RSM",
         "level": "INF",
         "msg": "Configuring...",
         "filename": "app.py",
-        "lineno": 90,
+        "lineno": 131,
     },
     {
         "name": "RSM.parse",
@@ -54,7 +54,7 @@ EMPTY_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Done.",
         "filename": "app.py",
-        "lineno": 96,
+        "lineno": 137,
     },
 ]
 
@@ -74,14 +74,14 @@ WRONG_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Application started",
         "filename": "app.py",
-        "lineno": 89,
+        "lineno": 130,
     },
     {
         "name": "RSM",
         "level": "INF",
         "msg": "Configuring...",
         "filename": "app.py",
-        "lineno": 90,
+        "lineno": 131,
     },
     {
         "name": "RSM.parse",
@@ -123,7 +123,7 @@ WRONG_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Done.",
         "filename": "app.py",
-        "lineno": 96,
+        "lineno": 137,
     },
 ]
 

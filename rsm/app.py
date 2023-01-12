@@ -18,13 +18,21 @@ appropriate class manually.  For example:
 
 .. code-block:: python
 
-   # This...
-   >>> html = rsm.make(src)
-   # is essentially equivalent to this.
-   >>> app = FullBuildApp(src)
+   This
+   >>> src = ":manuscript: Hello, RSM! ::"
+   >>> html = rsm.make(source=src)
+
+   Is essentially equivalent to the following.
+
+   >>> app = FullBuildApp(plain=src)
    >>> html = app.run()
-   # But now app can be inspected.
-   >>> print(app.tree.sexp())
+
+   Except that now, ``app`` can be inspected.
+
+   >>> print(app.parser.ast.sexp())
+   (Manuscript
+     (Paragraph
+       (Text)))
 
 The module :mod:`rsm.cli` exposes these apps as command line utilities.
 

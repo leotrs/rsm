@@ -18,7 +18,6 @@
    .. rubric:: Functions
 
    
-   .. autofunction:: init_parser
    .. autofunction:: lint
    .. autofunction:: main
    .. autofunction:: make

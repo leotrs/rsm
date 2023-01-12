@@ -1,8 +1,41 @@
-"""
-app.py
-------
+"""Applications that execute the steps of the RSM file processing pipeline.
 
-RSM Application.  Take a file path and output its contents as HTML.
+Classes in this module use the steps implemented elsewhere (:mod:`rsm.reader`,
+:mod:`rsm.tsparser`, etc) and actually execute those steps, feeding the output of one
+step into the next.  The base class for all of these is :class:`RSMApp`, which stores
+the sequence of steps and executes them all via a ``run()`` method.
+
+The three main applications provided currently are :func:`make`, :func:`render`, and
+:func:`lint`.  These simply instantiate an object of class :class:`FullBuildApp`,
+:class:`LinterApp`, :class:`ProcessorApp`, respectively, and call their ``run()``
+method.
+
+The functions :func:`make`, :func:`render`, and :func:`lint` can be called directly via
+``rsm.make()``, ``rsm.render()``, and ``rsm.lint()``.  They each receive RSM source
+(either a string or a path to a file), run the application, and return the result.  For
+more control over the execution, or post-execution inspection, instantiate the
+appropriate class manually.  For example:
+
+.. code-block:: python
+
+   # This...
+   >>> html = rsm.make(src)
+   # is essentially equivalent to this.
+   >>> app = FullBuildApp(src)
+   >>> html = app.run()
+   # But now app can be inspected.
+   >>> print(app.tree.sexp())
+
+The module :mod:`rsm.cli` exposes these apps as command line utilities.
+
+The RSM library code (i.e. all of the previous modules) does not itself set up any
+logging facilities.  This is at `recommendation
+<https://docs.python.org/3/howto/logging-cookbook.html#adding-handlers-other-than-nullhandler-to-a-logger-in-a-library>`_
+of the Python standard library.  Instead, this module uses the functions in
+:mod:`rsm.rsmlogger` before executing an application.  In other words, manually handling
+RSM source with classes such as :class:`rsm.tsparser.TSParser` or
+:class:`rsm.transformer.Transformer` will not issue any logging messages, while calling
+the ``run()`` method on an :class:`RSMApp` instance will.
 
 """
 

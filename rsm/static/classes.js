@@ -29,16 +29,16 @@ export function setupClassInteractions() {
 
     $(".handrail__btn-toggle").click(function() {
         let block = $(this).closest(".handrail");
-        let div = block.children(".handrail__collapsible");
+        let div = block.find(".handrail__collapsible");
         if (div.length == 0) {
-            div = block.siblings(".handrail__collapsible");
+            div = block.siblings();
         };
         let tomb = $(div).siblings(".halmos");
 
-        if (div.hasClass("children-hidden")) {
+        if (div.hasClass("hide")) {
 	    block.removeClass("collapsed");
 	    tomb.removeClass("with-ellipsis");
-            div.removeClass("children-hidden");
+            div.removeClass("hide");
             div.children().each(function() {
                 if (! $(this).hasClass("do-not-hide")) {
                     $(this).removeClass("hide");
@@ -47,7 +47,7 @@ export function setupClassInteractions() {
         } else {
 	    block.addClass("collapsed");
             tomb.addClass("with-ellipsis");
-            div.addClass("children-hidden");
+            div.addClass("hide");
             div.children().each(function() {
                 if (! $(this).hasClass("do-not-hide")) {
                     $(this).addClass("hide");

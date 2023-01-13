@@ -1225,6 +1225,7 @@ class HandrailsTranslator(Translator):
     def visit_step(self, node: nodes.Step) -> EditCommand:
         cmd = super().visit_step(node)
         batch = self._replace_cmd_with_handrails(cmd, include_content=True)
+        batch.items[0].classes.append("handrail__collapsible")
         batch.items.insert(
             -1,
             AppendOpenCloseTag(

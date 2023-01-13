@@ -659,7 +659,7 @@ def test_proof():
 
         <div class="proof-contents handrail__collapsible">
 
-        <div class="handrail handrail--offset">
+        <div class="handrail handrail--offset handrail__collapsible">
 
         <div class="handrail__btn-container">
 
@@ -889,7 +889,7 @@ def test_proof_with_sketch():
 
         </div>
 
-        <div class="handrail handrail--offset">
+        <div class="handrail handrail--offset handrail__collapsible">
 
         <div class="handrail__btn-container">
 
@@ -1110,7 +1110,7 @@ def test_sub_step():
 
         <div class="proof-contents handrail__collapsible">
 
-        <div class="handrail handrail--offset">
+        <div class="handrail handrail--offset handrail__collapsible">
 
         <div class="handrail__btn-container">
 
@@ -1170,7 +1170,7 @@ def test_sub_step():
 
         <div class="subproof-contents handrail handrail--hug handrail__collapsible">
 
-        <div class="handrail handrail--offset">
+        <div class="handrail handrail--offset handrail__collapsible">
 
         <div class="handrail__btn-container">
 
@@ -1406,7 +1406,7 @@ def test_two_steps():
 
         <div class="proof-contents handrail__collapsible">
 
-        <div class="handrail handrail--offset">
+        <div class="handrail handrail--offset handrail__collapsible">
 
         <div class="handrail__btn-container">
 
@@ -1468,7 +1468,7 @@ def test_two_steps():
 
         </div>
 
-        <div class="handrail handrail--offset">
+        <div class="handrail handrail--offset handrail__collapsible">
 
         <div class="handrail__btn-container">
 

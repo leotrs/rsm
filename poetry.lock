@@ -237,14 +237,14 @@ unicode-backport = ["unicodedata2"]
 
 [[package]]
 name = "cibuildwheel"
-version = "2.11.4"
+version = "2.12.1"
 description = "Build Python wheels on CI with minimal configuration."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "cibuildwheel-2.11.4-py3-none-any.whl", hash = "sha256:0252d41c0fb50d5e073c4c046582bc67b674ee0c6e3539e77d24af1fd779dffa"},
-    {file = "cibuildwheel-2.11.4.tar.gz", hash = "sha256:1df40e26e7097a69db6b4cb1b4e89f26f89b20ef6e4c48cf598444d0b8c4c079"},
+    {file = "cibuildwheel-2.12.1-py3-none-any.whl", hash = "sha256:e2f9d88dda9542b5773434d0278ead954c43234c0486067bf5c218a60854487d"},
+    {file = "cibuildwheel-2.12.1.tar.gz", hash = "sha256:ca0861f7c31c82c09daf4f80304341d93b0a2b35e6bde2f83c6ebde79a710f0d"},
 ]
 
 [package.dependencies]
@@ -607,6 +607,7 @@ category = "main"
 optional = false
 python-versions = "*"
 files = [
+    {file = "livereload-2.6.3-py2.py3-none-any.whl", hash = "sha256:ad4ac6f53b2d62bb6ce1a5e6e96f1f00976a32348afedcb4b6d68df2a1d346e4"},
     {file = "livereload-2.6.3.tar.gz", hash = "sha256:776f2f865e59fde56490a56bcc6773b6917366bce0c267c60ee8aaf1a0959869"},
 ]
 

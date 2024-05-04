@@ -1085,10 +1085,11 @@ class HandrailsTranslator(Translator):
         </svg>""",
     }
 
-    def __init__(self, quiet: bool = False, hidden_handrails: bool = True, sidebar: bool = True):
+    def __init__(self, quiet: bool = False, hidden_handrails: bool = True, sidebar: bool = True, add_source: bool = True):
         super().__init__(quiet)
         self.hidden_handrails = hidden_handrails
         self.sidebar = sidebar
+        self.add_source = add_source
 
     @staticmethod
     def _make_option_tag(name: str, svg: str) -> AppendOpenCloseTag:
@@ -1166,12 +1167,17 @@ class HandrailsTranslator(Translator):
     def _make_tools_sidebar(self):
         return AppendText(text=f'<div class="tools-sidebar">{self.svg["vars"]}</div>')
 
+    def _make_source_div(self):
+        return AppendText(text=f'<div class="rsm-source hide">{self.tree.src}</div>')
+
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         batch = super().visit_manuscript(node)
         if node.title:
             batch = self._replace_batch_with_handrails(4, batch)
         if self.sidebar:
             batch.items.insert(1, self._make_tools_sidebar())
+        if self.add_source:
+            batch.items.insert(1, self._make_source_div())
         return batch
 
     def visit_section(self, node: nodes.Section) -> EditCommand:

@@ -17,7 +17,8 @@ export function setupClassInteractions() {
     });
 
     $(".tools-sidebar").click(function() {
-        console.log("hi!");
+        const src = $("body").children(".rsm-source");
+        console.log(src.text());
     })
 
     $(".handrail").mouseleave(function () {

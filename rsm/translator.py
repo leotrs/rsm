@@ -1080,6 +1080,11 @@ class HandrailsTranslator(Translator):
         </svg>""",
     }
 
+    def __init__(self, quiet: bool = False, hidden_handrails: bool = True, sidebar: bool = True):
+        super().__init__(quiet)
+        self.hidden_handrails = hidden_handrails
+        self.sidebar = sidebar
+
     @staticmethod
     def _make_option_tag(name: str, svg: str) -> AppendOpenCloseTag:
         return AppendOpenCloseTag(
@@ -1178,9 +1183,12 @@ class HandrailsTranslator(Translator):
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
         cmd = super().visit_paragraph(node)
-        batch = self._replace_cmd_with_handrails(cmd, include_content=True)
-        batch.items[0].classes.append("handrail--hide")
-        return batch
+        if self.hidden_handrails:
+            batch = self._replace_cmd_with_handrails(cmd, include_content=True)
+            batch.items[0].classes.append("handrail--hide")
+            return batch
+        else:
+            return cmd
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         batch = super().visit_theorem(node)

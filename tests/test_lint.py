@@ -11,7 +11,6 @@ EMPTY_MANUSCRIPT_LOGS = [
         "level": "LINT",
         "msg": "Manuscript with no title",
         "filename": "linter.py",
-        "lineno": 25,
     }
 ]
 
@@ -22,14 +21,12 @@ WRONG_MANUSCRIPT_LOGS = [
         "level": "WRN",
         "msg": "The CST contains errors.",
         "filename": "tsparser.py",
-        "lineno": 488,
     },
     {
         "name": "RSM",
         "level": "LINT",
         "msg": "Manuscript with no title",
         "filename": "linter.py",
-        "lineno": 25,
     },
 ]
 
@@ -41,6 +38,7 @@ def cmd(src: str, log_format: str, verbose: int = 0):
         "--string",
         f"--log-format {log_format}",
         "--log-no-timestamps",
+        "--log-no-lineno",
     ]
     if verbose:
         args.append("-" + ("v" * verbose))

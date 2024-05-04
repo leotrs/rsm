@@ -60,12 +60,17 @@ def _init_parser() -> ArgumentParser:
         action="store_false",
     )
     log_opts.add_argument(
+        "--log-no-lineno",
+        dest="log_lineno",
+        help="exclude line numbers in logs",
+        action="store_false",
+    )
+    log_opts.add_argument(
         "--log-format",
         help="format for logs",
         choices=["plain", "rsm", "json", "lint"],
         default="rsm",
     )
-
     parser.add_argument(
         "-V",
         "--version",
@@ -87,6 +92,7 @@ def main(
         loglevel=app.RSMApp.default_log_level - args.verbose * 10,
         log_format=args.log_format,
         log_time=args.log_time,
+        log_lineno=args.log_lineno,
     )
     if args.string:
         kwargs["source"] = args.src

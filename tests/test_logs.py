@@ -12,49 +12,42 @@ EMPTY_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Application started",
         "filename": "app.py",
-        "lineno": 130,
     },
     {
         "name": "RSM",
         "level": "INF",
         "msg": "Configuring...",
         "filename": "app.py",
-        "lineno": 131,
     },
     {
         "name": "RSM.parse",
         "level": "INF",
         "msg": "Parsing...",
         "filename": "tsparser.py",
-        "lineno": 178,
     },
     {
         "name": "RSM.parse",
         "level": "INF",
         "msg": "Abstractifying...",
         "filename": "tsparser.py",
-        "lineno": 188,
     },
     {
         "name": "RSM.tform",
         "level": "INF",
         "msg": "Transforming...",
         "filename": "transformer.py",
-        "lineno": 136,
     },
     {
         "name": "RSM.tlate",
         "level": "INF",
         "msg": "Translating...",
         "filename": "translator.py",
-        "lineno": 541,
     },
     {
         "name": "RSM",
         "level": "INF",
         "msg": "Done.",
         "filename": "app.py",
-        "lineno": 137,
     },
 ]
 
@@ -65,7 +58,6 @@ WRONG_MANUSCRIPT_LOGS = [
         "level": "WRN",
         "msg": "The CST contains errors.",
         "filename": "tsparser.py",
-        "lineno": 488,
     }
 ]
 WRONG_MANUSCRIPT_LOGS_V = [
@@ -74,56 +66,48 @@ WRONG_MANUSCRIPT_LOGS_V = [
         "level": "INF",
         "msg": "Application started",
         "filename": "app.py",
-        "lineno": 130,
     },
     {
         "name": "RSM",
         "level": "INF",
         "msg": "Configuring...",
         "filename": "app.py",
-        "lineno": 131,
     },
     {
         "name": "RSM.parse",
         "level": "INF",
         "msg": "Parsing...",
         "filename": "tsparser.py",
-        "lineno": 178,
     },
     {
         "name": "RSM.parse",
         "level": "INF",
         "msg": "Abstractifying...",
         "filename": "tsparser.py",
-        "lineno": 188,
     },
     {
         "name": "RSM.parse",
         "level": "WRN",
         "msg": "The CST contains errors.",
         "filename": "tsparser.py",
-        "lineno": 488,
     },
     {
         "name": "RSM.tform",
         "level": "INF",
         "msg": "Transforming...",
         "filename": "transformer.py",
-        "lineno": 136,
     },
     {
         "name": "RSM.tlate",
         "level": "INF",
         "msg": "Translating...",
         "filename": "translator.py",
-        "lineno": 541,
     },
     {
         "name": "RSM",
         "level": "INF",
         "msg": "Done.",
         "filename": "app.py",
-        "lineno": 137,
     },
 ]
 
@@ -136,6 +120,7 @@ def cmd(src: str, log_format: str, verbose: int = 0):
         "--silent",
         f"--log-format {log_format}",
         "--log-no-timestamps",
+        "--log-no-lineno",
     ]
     if verbose:
         args.append("-" + ("v" * verbose))

@@ -176,7 +176,8 @@ class TSParser:
 
         """
         logger.info("Parsing...")
-        self.cst = self._parser.parse(bytes(str(src), "utf-8"))
+        encoding = "utf-8"
+        self.cst = self._parser.parse(bytes(str(src), encoding))
 
         if logger.getEffectiveLevel() <= logging.DEBUG:
             logger.debug("concrete syntax tree:")
@@ -190,9 +191,12 @@ class TSParser:
             self.ast = _abstractify(self.cst)
         except AttributeError as ex:
             raise RSMParserError(msg="Error abstractifying.") from ex
+
         if logger.getEffectiveLevel() <= logging.DEBUG:
             logger.debug("abstract syntax tree:")
             print(self.ast.sexp())
+
+        self.ast.src = self.cst.text.decode(encoding)
         return self.ast
 
 

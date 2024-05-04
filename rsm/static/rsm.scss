@@ -110,6 +110,10 @@
 
 }
 
+.hide {
+  display: none !important;
+}
+
 .manuscriptwrapper {
 
   color: var(--drk-gray);
@@ -191,10 +195,6 @@
     section.level-#{$i} {
       margin-block: calc(var(--h#{$i}-size) * 1.5);
     }
-  }
-
-  .hide {
-    display: none !important;
   }
 
 

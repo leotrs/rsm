@@ -85,6 +85,9 @@
 .tooltipster-sidetip .tooltipster-content {
   color: var(--drk-gray) !important; }
 
+.hide {
+  display: none !important; }
+
 .manuscriptwrapper {
   color: var(--drk-gray);
   font-family: 'Source Sans Pro', sans-serif;
@@ -149,8 +152,6 @@
     margin-block: calc(var(--h4-size) * 1.5); }
   .manuscriptwrapper section.level-5 {
     margin-block: calc(var(--h5-size) * 1.5); }
-  .manuscriptwrapper .hide {
-    display: none !important; }
   .manuscriptwrapper figure {
     margin-block: var(--h2-size);
     text-align: center; }

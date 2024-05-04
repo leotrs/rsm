@@ -41,7 +41,7 @@ def compare_have_want(have, want, handrails=False):
     """Compare obtained output (have) against the desired output (want)."""
     want = dedent(want).lstrip()
     have = dedent(have).lstrip()
-    have = rsm.render(have, handrails=handrails, hidden_handrails=False, sidebar=False).lstrip()
+    have = rsm.render(have, handrails=handrails, hidden_handrails=False, sidebar=False, add_source=False).lstrip()
 
     try:
         assert have == want

@@ -35,15 +35,16 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
     # 'tree-sitter test' creates the .so file; we don't care if the tests actually pass,
     if sys.platform == "win32":
         run("sh node_modules/.bin/tree-sitter generate")
-        run("sh node_modules/.bin/tree-sitter test", check=False)
+        run("sh node_modules/.bin/tree-sitter build -o build/rsm.so")
     else:
         run("node ./node_modules/.bin/tree-sitter generate")
-        run("node ./node_modules/.bin/tree-sitter test", check=False)
+        run("node ./node_modules/.bin/tree-sitter build -o build/rsm.so")
 
     fn = "rsm.dll" if sys.platform == "win32" else "rsm.so"
     # watch out: tree-sitter might change this dir inadvertently...
-    run(f"cp ~/.tree-sitter/bin/{fn} rsm/", cwd=".")
-    run("ls rsm/", cwd=".", print_output=True)
+    # run(f"cp ~/.tree-sitter/bin/{fn} rsm/", cwd=".")
+    run(f"cp build/{fn} ../rsm/")
+    run(f"cp build/{fn} /Users/leo.torres/.emacs.d/tree-sitter/libtree-sitter-rsm.so")  # for emacs
 
 
 if __name__ == "__main__":

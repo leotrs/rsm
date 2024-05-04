@@ -15,7 +15,18 @@ window.MathJax = {
 
 // Use MathJax for beautiful math
 export function loadMathJax() {
-    // Modified from https://stackoverflow.com/a/53744331
+    const config = document.createElement('script');
+    config.innerHTML = `window.MathJax = {
+      options: {
+        menuOptions: {
+          settings: {
+            inTabOrder: false
+          }
+        }
+      }
+    };`
+    document.body.appendChild(config);
+
     const script = document.createElement('script');
     script.type = "text/javascript";
     script.id = "MathJax-script";
@@ -23,8 +34,8 @@ export function loadMathJax() {
     document.body.appendChild(script);
 
     return new Promise((res, rej) => {
-	    script.onload = res;
-	    script.onerror = rej;
+	script.onload = res;
+	script.onerror = rej;
     });
 }
 

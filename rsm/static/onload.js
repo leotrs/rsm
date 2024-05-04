@@ -7,6 +7,12 @@ export function onload(path = "/static/") {
     import(path + 'libraries.js').then((libs) => {
         libs.loadMathJax().then(() => {
             console.log('MathJax loaded!');
+
+	    // window.MathJax = {
+	    //     loader: {load: ['[tex]/mathtools']},
+	    //     tex: {packages: {'[+]': ['mathtools']}}
+	    // };
+
             libs.loadPseudocode().then(() => {
 	        console.log('pseudocode loaded!');
 	        const elements = $("pre.pseudocode");

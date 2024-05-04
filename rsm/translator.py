@@ -1176,6 +1176,12 @@ class HandrailsTranslator(Translator):
         batch = super().visit_bibliography(node)
         return self._replace_batch_with_handrails(1, batch)
 
+    def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
+        cmd = super().visit_paragraph(node)
+        batch = self._replace_cmd_with_handrails(cmd, include_content=True)
+        batch.items[0].classes.append("handrail--hide")
+        return batch
+
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         batch = super().visit_theorem(node)
         batch.items[1].classes.append("handrail__collapsible")

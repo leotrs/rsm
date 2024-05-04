@@ -90,7 +90,7 @@ def test_simple_with_handrails():
 
         <div class="proof">
 
-        <div class="handrail handrail--offset">
+        <div class="handrail handrail--offset" tabindex=0>
 
         <div class="handrail__btn-container">
 
@@ -160,7 +160,7 @@ def test_simple_with_handrails():
 
         </div>
 
-        <div class="handrail handrail--offset handrail__collapsible">
+        <div class="handrail handrail--offset handrail__collapsible" tabindex=0>
 
         <div class="handrail__btn-container">
 

@@ -24,7 +24,15 @@ def test_inline_cannot_contain_block():
         <section class="level-1">
 
         <h1>My Title</h1>
-        <span class="error">[CST error at (3, 0) - (3, 71)]</span>
+        <span class="error">[CST error at (3, 0) - (3, 42)]</span>
+        <section class="section level-2">
+        
+        <h2>1. </h2>
+        
+        <p class="paragraph">with a block.</p>
+        
+        </section>
+        <span class="error">[CST error at (5, 0) - (5, 2)]</span>
         </section>
 
         </div>

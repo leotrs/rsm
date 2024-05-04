@@ -69,7 +69,7 @@ def test_simple_with_handrails():
 
         <section class="level-1">
 
-        <div class="handrail handrail--offset">
+        <div class="handrail handrail--offset" tabindex=0>
 
         <div class="handrail__btn-container">
 
@@ -123,7 +123,7 @@ def test_simple_with_handrails():
 
         <div class="theorem">
 
-        <div class="handrail handrail--offset stars-0 clocks-0">
+        <div class="handrail handrail--offset stars-0 clocks-0" tabindex=0>
 
         <div class="handrail__btn-container">
 

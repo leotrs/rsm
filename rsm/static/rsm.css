@@ -259,7 +259,7 @@
       background: var(--gray-200);
       display: none;
       font-weight: var(--bold);
-      left: calc(-1 * var(--border-thin));
+      left: 0;
       position: absolute;
       transform: translateX(-100%); }
   .manuscriptwrapper .handrail.handrail--hug > .handrail__btn-container {
@@ -417,6 +417,10 @@
     flex-direction: row-reverse; }
   .manuscriptwrapper .handrail:hover > .step__number {
     display: block; }
+  .manuscriptwrapper .handrail:focus {
+    border-width: 0 0 0 var(--border-med);
+    border-color: var(--clock-color);
+    outline: 0; }
   .manuscriptwrapper .proof:not(.collapsed) {
     padding-bottom: 0; }
   .manuscriptwrapper .proof.collapsed > .proof__title {

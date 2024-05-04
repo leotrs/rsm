@@ -16,6 +16,10 @@ export function setupClassInteractions() {
         };
     });
 
+    $(".tools-sidebar").click(function() {
+        console.log("hi!");
+    })
+
     $(".handrail").mouseleave(function () {
 	$(this).find(".options").addClass("hide");
     });

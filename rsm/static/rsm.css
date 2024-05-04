@@ -202,6 +202,8 @@
     .manuscriptwrapper .handrail > h5 {
       margin-block: calc(var(--h5-size) / 2);
       padding-block: calc(var(--h5-size) / 2); }
+  .manuscriptwrapper .handrail--hide {
+    border-color: transparent; }
   .manuscriptwrapper .proof > .handrail.collapsed .halmos:last-of-type {
     bottom: 0; }
   .manuscriptwrapper .halmos {

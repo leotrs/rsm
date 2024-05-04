@@ -268,6 +268,10 @@
 
   }
 
+  .handrail--hide {
+    border-color: transparent;
+  }
+
   .proof > .handrail.collapsed .halmos:last-of-type {
     bottom: 0;
   }
@@ -346,7 +350,8 @@
       background: var(--gray-200);
       display: none;
       font-weight: var(--bold);
-      left: calc(-1 * var(--border-thin));
+      // left: calc(-1 * var(--border-thin));
+      left: 0;
       position: absolute;
       transform: translateX(-100%);
     }
@@ -628,6 +633,12 @@
 
   .handrail:hover > .step__number {
     display: block;
+  }
+
+  .handrail:focus {
+    border-width: 0 0 0 var(--border-med);
+    border-color: var(--clock-color);
+    outline: 0;
   }
 
   .proof {

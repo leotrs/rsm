@@ -443,7 +443,7 @@ def _abstractify(cst):
         # interesting stuff, and ast_node_type is a string with the type of syntax node
         # that we are currently analyzing.  NOTE: It may be the case that cst_node is
         # redirected to point to one of its children; ast_node_type may or may not be
-        # equal to cst_node.type, or neither, or both!  For this reason ,from now on, DO
+        # equal to cst_node.type, or neither, or both!  For this reason, from now on, DO
         # NOT use cst_node.tpye, always use ast_node_type instead.
         ast_node_type = ""
         if cst_node.type in ["specialblock", "specialinline"]:

@@ -59,9 +59,10 @@ class RSMFormatter(logging.Formatter):
         logging.CRITICAL: boldred,
     }
 
-    def __init__(self, log_time: bool = True, *args, **kwargs):
+    def __init__(self, log_time: bool = True, log_lineno: bool = True, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.log_time = log_time
+        self.log_lineno = log_lineno
 
     def format(self, record: logging.LogRecord) -> str:
         fmt = (
@@ -77,9 +78,10 @@ class RSMFormatter(logging.Formatter):
 
 
 class JSONFormatter(logging.Formatter):
-    def __init__(self, log_time: bool = True, *args, **kwargs):
+    def __init__(self, log_time: bool = True, log_lineno: bool = True, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.log_time = log_time
+        self.log_lineno = log_lineno
 
     def format(self, record: logging.LogRecord) -> str:
         output = {
@@ -87,8 +89,9 @@ class JSONFormatter(logging.Formatter):
             "level": record.levelname,
             "msg": record.getMessage(),
             "filename": record.filename,
-            "lineno": record.lineno,
         }
+        if self.log_lineno:
+            output["lineno"] = record.lineno
         if self.log_time:
             output["time"] = self.formatTime(record, self.datefmt)
         return json.dumps(output)
@@ -99,7 +102,7 @@ class LintFormatter:
     fmt_with_point = "src:%(start_row)d:%(start_col)d: %(levelname)s: %(message)s"
     fmt_sans_point = "src:1:1: %(levelname)s: %(message)s"
 
-    def __init__(self, log_time: bool = True, *args, **kwargs):
+    def __init__(self, log_time: bool = True, log_lineno: bool = True, *args, **kwargs):
         self._formatter_with_point = logging.Formatter(
             self.fmt_with_point, *args, **kwargs
         )
@@ -143,6 +146,7 @@ def config_rsm_logger(
     level: int = logging.WARNING,
     fmt: str = "rsm",
     log_time: bool = True,
+    log_lineno: bool = True,
 ) -> None:
     """Configure logging for RSM applications.
 
@@ -154,20 +158,20 @@ def config_rsm_logger(
 
     """
     logging.getLogger("RSM").handlers.clear()
-    _config_rsm_logger(fmt, log_time)
+    _config_rsm_logger(fmt, log_time, log_lineno)
     _set_level(level)
 
 
-def _config_rsm_logger(fmt: str = "rsm", log_time: bool = True) -> None:
+def _config_rsm_logger(fmt: str = "rsm", log_time: bool = True, log_lineno: bool = True) -> None:
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARN)
     formatter = {
         "json": JSONFormatter,
         "rsm": RSMFormatter,
         "lint": LintFormatter,
-        "plain": lambda x: logging.Formatter(),
+        "plain": lambda *args: logging.Formatter(),
     }[fmt]
-    handler.setFormatter(formatter(log_time))
+    handler.setFormatter(formatter(log_time, log_lineno))
     logger.addHandler(handler)
 
 

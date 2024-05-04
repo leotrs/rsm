@@ -1160,9 +1160,12 @@ class Construct(NodeWithChildren):
         "new": "NEW",
         "assume": "ASSUME",
         "prove": "PROVE",
+        "pick": "PICK",
+        "suffices": "SUFFICES",
         "claim": "⊢",
         "claimblock": "⊢",
         "qed": "QED",
+        "st": "SUCH THAT",
     }
 
     def __init__(self, kind: str = "", **kwargs: Any):

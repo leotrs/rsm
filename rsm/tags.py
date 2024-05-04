@@ -160,7 +160,7 @@ new = MathTagInfo(None)
 p = MathTagInfo(None)
 """Sub-proof."""
 pick = MathTagInfo(None)
-"""Introduce a variable with a specific property."""
+"""Introduce a variable with a specific property (see 'st')."""
 prev = MathTagInfo(None)
 """Reference the previous step."""
 prev2 = MathTagInfo(None)
@@ -173,6 +173,8 @@ prove = MathTagInfo(None)
 """Set goal."""
 qed = MathTagInfo(None)
 """State the goal is proven."""
+st = MathTagInfo(None)
+"""'Such that', part of 'pick'."""
 step = MathTagInfo(None)
 """Proof step."""
 suffices = MathTagInfo(None)

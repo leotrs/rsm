@@ -16,10 +16,16 @@ export function setupClassInteractions() {
         };
     });
 
-    $(".tools-sidebar").click(function() {
+    $(".tools-sidebar").mousedown(function(e) {
+        // This element cannot receive focus via the mouse because it needs to access
+        // the currently focused element - and clicking it would normally change the
+        // focus to it.
+        e.stopImmediatePropagation(); //stops event bubbling
+        e.preventDefault();  //stops default browser action (focus)
+    }).click(function() {
         const src = $("body").children(".rsm-source");
-        console.log(src.text());
-    })
+        console.log(document.activeElement);
+    });
 
     $(".handrail").mouseleave(function () {
 	$(this).find(".options").addClass("hide");

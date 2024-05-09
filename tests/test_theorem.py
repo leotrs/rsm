@@ -19,17 +19,17 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="1">
 
         <div class="theorem-contents">
 
         <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
 
-        <p class="paragraph">Theorem contents.</p>
+        <p class="paragraph" data-nodeid="2">Theorem contents.</p>
 
         </div>
 
@@ -65,7 +65,7 @@ def test_simple_with_handrails():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
@@ -121,7 +121,7 @@ def test_simple_with_handrails():
 
         </div>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="1">
 
         <div class="handrail handrail--offset stars-0 clocks-0" tabindex=0>
 
@@ -175,7 +175,7 @@ def test_simple_with_handrails():
 
         <p class="paragraph theorem__title do-not-hide"><span class="span"><strong>Theorem 1.</strong></span></p>
 
-        <p class="paragraph">Theorem contents.</p>
+        <p class="paragraph" data-nodeid="2">Theorem contents.</p>
 
         </div>
 
@@ -224,41 +224,41 @@ def test_multiple():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="1">
 
         <div class="theorem-contents">
 
         <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
 
-        <p class="paragraph">Theorem contents.</p>
+        <p class="paragraph" data-nodeid="2">Theorem contents.</p>
 
         </div>
 
         </div>
 
-        <div class="lemma theorem">
+        <div class="lemma theorem" data-nodeid="4">
 
         <div class="theorem-contents lemma-contents">
 
         <p class="paragraph theorem__title lemma__title"><span class="span"><strong>Lemma 2.</strong></span></p>
 
-        <p class="paragraph">And a lemma.</p>
+        <p class="paragraph" data-nodeid="5">And a lemma.</p>
 
         </div>
 
         </div>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="7">
 
         <div class="theorem-contents">
 
         <p class="paragraph theorem__title"><span class="span"><strong>Theorem 3.</strong></span></p>
 
-        <p class="paragraph">Another theorem.</p>
+        <p class="paragraph" data-nodeid="8">Another theorem.</p>
 
         </div>
 

@@ -168,6 +168,8 @@ class Node:
         nonum: bool = False,
         reftext_template: str = "",
     ) -> None:
+        self.nodeid: str | None = None
+        """Node id - always exists (unlike label), automatically assigned, unique within the tree."""
         self.label: str = label
         """Unique identifier."""
         self.types: list[str] = types or []
@@ -725,6 +727,12 @@ class Node:
         ):
             ancestor = ancestor.parent
         return ancestor  # the root node has parent None
+
+    def get_child_by_id(self, nodeid: int) -> Optional["Node"]:
+        for node in self.traverse(condition=lambda n: n.nodeid == nodeid):
+            return node
+        else:
+            return None
 
     def replace_self(self, replacement: Union["Node", Iterable["Node"]]) -> None:
         """Replace this node in its parent's children.

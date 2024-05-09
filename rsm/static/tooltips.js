@@ -38,10 +38,6 @@ export function createTooltips() {
             } else if (tag == "SECTION") {
                 let clone = $(target).clone();
                 clone.children().slice(2).remove();
-                // clone.children().each(function () {$(this).css('transform', 'scale(0.75)');});
-                // clone.children().each(function () {$(this).attr('onload', 'this.width*=0.25;');});
-                // clone.css('transform', 'scale(0.75)');
-                // clone.attr('onload', 'this.width*=0.25;')
                 clone.css('font-size', '0.7rem');
                 content = clone.html();
             } else if (tag == "A") {

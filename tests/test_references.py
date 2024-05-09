@@ -25,19 +25,19 @@ def test_reftext():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section id="sec-lbl" class="section level-2">
+        <section id="sec-lbl" class="section level-2" data-nodeid="1">
 
         <h2>1. First</h2>
 
-        <p class="paragraph">Content of first.</p>
+        <p class="paragraph" data-nodeid="2">Content of first.</p>
 
         </section>
 
-        <p class="paragraph">This is a paragraph that refers to <a class="reference" href="#sec-lbl">Section 1</a>.</p>
+        <p class="paragraph" data-nodeid="4">This is a paragraph that refers to <a class="reference" href="#sec-lbl">Section 1</a>.</p>
 
         </section>
 
@@ -72,19 +72,19 @@ def test_overwrite_reftext():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section id="sec-lbl" class="section level-2">
+        <section id="sec-lbl" class="section level-2" data-nodeid="1">
 
         <h2>1. First</h2>
 
-        <p class="paragraph">Content of first.</p>
+        <p class="paragraph" data-nodeid="2">Content of first.</p>
 
         </section>
 
-        <p class="paragraph">This is a paragraph that refers to <a class="reference" href="#sec-lbl">The Section</a>.</p>
+        <p class="paragraph" data-nodeid="4">This is a paragraph that refers to <a class="reference" href="#sec-lbl">The Section</a>.</p>
 
         </section>
 
@@ -111,11 +111,11 @@ def test_ref_to_unknown_label(caplog):
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="error">[unknown label "foo"]</span></p>
+        <p class="paragraph" data-nodeid="1"><span class="error" data-nodeid="2">[unknown label "foo"]</span></p>
 
         </section>
 

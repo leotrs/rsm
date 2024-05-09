@@ -18,11 +18,11 @@ def test_no_reftext():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This paragraph has a hyperlink <a href="https://www.apache.com">https://www.apache.com</a>.</p>
+        <p class="paragraph" data-nodeid="1">This paragraph has a hyperlink <a href="https://www.apache.com">https://www.apache.com</a>.</p>
 
         </section>
 
@@ -49,11 +49,11 @@ def test_custom_reftext():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This is a link to <a href="https://www.apache.com"> Apache</a>.</p>
+        <p class="paragraph" data-nodeid="1">This is a link to <a href="https://www.apache.com"> Apache</a>.</p>
 
         </section>
 
@@ -80,11 +80,11 @@ def test_no_target():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This is a malformed url [CST error at (2, 24) - (2, 31)] .</p>
+        <p class="paragraph" data-nodeid="1">This is a malformed url [CST error at (2, 24) - (2, 31)] .</p>
 
         </section>
 
@@ -109,11 +109,11 @@ def test_no_target():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This is a malformed url with a space [CST error at (2, 37) - (2, 45)] .</p>
+        <p class="paragraph" data-nodeid="1">This is a malformed url with a space [CST error at (2, 37) - (2, 45)] .</p>
 
         </section>
 

@@ -24,33 +24,33 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="1">
 
         <div class="theorem-contents">
 
         <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
 
-        <p class="paragraph">All <span class="math">\(X\)</span> are <span class="math">\(Y\)</span>.</p>
+        <p class="paragraph" data-nodeid="2">All <span class="math" data-nodeid="4">\(X\)</span> are <span class="math" data-nodeid="7">\(Y\)</span>.</p>
 
         </div>
 
         </div>
 
-        <div class="proof">
+        <div class="proof" data-nodeid="10">
 
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="proof-contents">
 
-        <div class="step last">
+        <div class="step last" data-nodeid="11">
 
-        <div class="statement">
+        <div class="statement" data-nodeid="12">
 
-        <p class="paragraph">Axiom.</p>
+        <p class="paragraph" data-nodeid="13">Axiom.</p>
 
         </div>
 
@@ -96,23 +96,23 @@ def test_empty_proof():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="1">
 
         <div class="theorem-contents">
 
         <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
 
-        <p class="paragraph">Theorem contents.</p>
+        <p class="paragraph" data-nodeid="2">Theorem contents.</p>
 
         </div>
 
         </div>
 
-        <div class="proof">
+        <div class="proof" data-nodeid="4">
 
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
 
@@ -160,41 +160,41 @@ def test_sub_step():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="proof">
+        <div class="proof" data-nodeid="1">
 
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="proof-contents">
 
-        <div class="step last">
+        <div class="step last" data-nodeid="2">
 
-        <div class="statement">
+        <div class="statement" data-nodeid="3">
 
-        <p class="paragraph">Top level step.</p>
-
-        </div>
-
-        <div class="subproof">
-
-        <div class="subproof-contents">
-
-        <div class="step">
-
-        <div class="statement">
-
-        <p class="paragraph">Sub-step.</p>
+        <p class="paragraph" data-nodeid="4">Top level step.</p>
 
         </div>
 
-        <div class="subproof">
+        <div class="subproof" data-nodeid="6">
 
         <div class="subproof-contents">
 
-        <p class="paragraph">Sub-proof.</p>
+        <div class="step" data-nodeid="7">
+
+        <div class="statement" data-nodeid="8">
+
+        <p class="paragraph" data-nodeid="9">Sub-step.</p>
+
+        </div>
+
+        <div class="subproof" data-nodeid="11">
+
+        <div class="subproof-contents">
+
+        <p class="paragraph" data-nodeid="12">Sub-proof.</p>
 
         </div>
 
@@ -245,31 +245,31 @@ def test_two_steps():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="proof">
+        <div class="proof" data-nodeid="1">
 
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="proof-contents">
 
-        <div class="step">
+        <div class="step" data-nodeid="2">
 
-        <div class="statement">
+        <div class="statement" data-nodeid="3">
 
-        <p class="paragraph">First step.</p>
-
-        </div>
+        <p class="paragraph" data-nodeid="4">First step.</p>
 
         </div>
 
-        <div class="step last">
+        </div>
 
-        <div class="statement">
+        <div class="step last" data-nodeid="6">
 
-        <p class="paragraph">Secon step.</p>
+        <div class="statement" data-nodeid="7">
+
+        <p class="paragraph" data-nodeid="8">Secon step.</p>
 
         </div>
 

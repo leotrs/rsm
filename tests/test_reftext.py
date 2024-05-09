@@ -47,11 +47,11 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div id="eqn" class="mathblock">
+        <div id="eqn" class="mathblock" data-nodeid="1">
         $$
         2+2=4
         $$
@@ -59,7 +59,7 @@ def test_simple():
 
         </div>
 
-        <p class="paragraph">Here we refer to the <a class="reference" href="#eqn">Important Equation</a>.</p>
+        <p class="paragraph" data-nodeid="3">Here we refer to the <a class="reference" href="#eqn">Important Equation</a>.</p>
 
         </section>
 

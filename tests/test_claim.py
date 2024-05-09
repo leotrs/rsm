@@ -20,15 +20,15 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Section</h2>
 
-        <p class="paragraph">This paragraph contains a claim <span id="clm-lbl" class="construct claim"><span class="keyword">⊢ </span>all <span class="math">\(X\)</span> are <span class="math">\(Y\)</span></span>.</p>
+        <p class="paragraph" data-nodeid="2">This paragraph contains a claim <span id="clm-lbl" class="construct claim" data-nodeid="4"><span class="keyword" data-nodeid="5">⊢ </span>all <span class="math" data-nodeid="8">\(X\)</span> are <span class="math" data-nodeid="11">\(Y\)</span></span>.</p>
 
         </section>
 
@@ -57,11 +57,11 @@ def test_with_math():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This paragraph has math inside a claim <span class="construct claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.</p>
+        <p class="paragraph" data-nodeid="1">This paragraph has math inside a claim <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢ </span><span class="math" data-nodeid="6">\(2+2=4\)</span></span>.</p>
 
         </section>
 
@@ -95,20 +95,20 @@ def test_claim_within_list():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">We now make a bunch of claims.</p>
+        <p class="paragraph" data-nodeid="1">We now make a bunch of claims.</p>
 
-        <ol class="enumerate">
+        <ol class="enumerate" data-nodeid="3">
 
-        <li id="one" class="item">
-        <span class="construct claim"><span class="keyword">⊢ </span><span class="math">\(2+2=4\)</span></span>.
+        <li id="one" class="item" data-nodeid="4">
+        <span class="construct claim" data-nodeid="5"><span class="keyword" data-nodeid="6">⊢ </span><span class="math" data-nodeid="8">\(2+2=4\)</span></span>.
         </li>
 
-        <li id="two" class="item">
-        <span class="construct claim"><span class="keyword">⊢ </span><span class="math">\(3+3=6\)</span></span>.
+        <li id="two" class="item" data-nodeid="11">
+        <span class="construct claim" data-nodeid="12"><span class="keyword" data-nodeid="13">⊢ </span><span class="math" data-nodeid="15">\(3+3=6\)</span></span>.
         </li>
 
         </ol>

@@ -18,15 +18,15 @@ def test_render(tmp_path):
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Foo.</p>
+        <p class="paragraph" data-nodeid="1">Foo.</p>
 
-        <p class="paragraph">Bar.</p>
+        <p class="paragraph" data-nodeid="3">Bar.</p>
 
-        <p class="paragraph">Baz.</p>
+        <p class="paragraph" data-nodeid="5">Baz.</p>
 
         </section>
 

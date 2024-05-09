@@ -127,21 +127,32 @@ class RSMTranslatorError(Exception):
     pass
 
 
-def _make_tag(tag: str, id_: str, classes: Iterable, tabindex: int | None = None, **kwargs: Any) -> str:
+def _make_tag(
+        tag: str,
+        id_: str,
+        classes: Iterable,
+        is_selectable: bool = False,
+        nodeid: int | None = None,
+        **kwargs: Any,
+) -> str:
     text = f"<{tag}"
     if id_:
         text += f' id="{id_}"'
     if classes:
         classes = " ".join(classes)
         text += f' class="{classes}"'
+    tabindex = 0 if is_selectable else None
+    items = []
     if kwargs or tabindex is not None:
-        text += " "
-        items = []
         if kwargs:
             items += [f'{k}="{v}"' for k, v in kwargs.items() if v]
         if tabindex is not None:
             items += [f"tabindex={tabindex}"]
-        text += " ".join(items)
+    if nodeid is not None:
+        items += [f'data-nodeid="{nodeid}"']
+    if items:
+        text += " "
+    text += " ".join(items)
     text += ">"
     return text
 
@@ -225,6 +236,7 @@ class AppendOpenCloseTag(AppendText):
         newline_inner: bool = True,
         newline_outer: bool = True,
         is_selectable: bool = False,
+        **kwargs,
     ):
         self.tag = tag
         self.content = content
@@ -233,15 +245,13 @@ class AppendOpenCloseTag(AppendText):
         self.newline_inner = newline_inner
         self.newline_outer = newline_outer
         self.is_selectable = is_selectable
+        self.custom_attrs = kwargs
         super().__init__()
 
     def make_text(self) -> str:
         outer = "\n" if self.newline_outer else ""
         inner = "\n" if self.newline_inner else ""
-        if self.is_selectable:
-            tag = _make_tag(self.tag, self.id, self.classes, tabindex=0)
-        else:
-            tag = _make_tag(self.tag, self.id, self.classes)
+        tag = _make_tag(self.tag, self.id, self.classes, self.is_selectable, **self.custom_attrs)
         return (
             outer + tag
             + inner + self.content
@@ -263,6 +273,7 @@ class AppendOpenTagManualClose(AppendText):
         newline_inner: bool = True,
         newline_outer: bool = True,
         is_selectable: bool = False,
+        **kwargs,
     ):
         self.tag = tag
         self.content = content
@@ -271,15 +282,13 @@ class AppendOpenTagManualClose(AppendText):
         self.newline_inner = newline_inner
         self.newline_outer = newline_outer
         self.is_selectable = is_selectable
+        self.custom_attrs = kwargs
         super().__init__()
 
     def make_text(self) -> str:
         outer = "\n" if self.newline_outer else ""
         inner = "\n" if self.newline_inner else ""
-        if self.is_selectable:
-            tag = _make_tag(self.tag, self.id, self.classes, tabindex=0)
-        else:
-            tag = _make_tag(self.tag, self.id, self.classes)
+        tag = _make_tag(self.tag, self.id, self.classes, self.is_selectable, *self.custom_attrs)
         return outer + tag + inner + self.content
 
     def __repr__(self) -> str:
@@ -299,10 +308,11 @@ class AppendOpenTag(AppendTextAndDefer):
         tag: str = "div",
         *,
         id: str = "",
-        classes: list = None,
+        classes: list | None = None,
         newline_inner: bool = True,
         newline_outer: bool = True,
         is_selectable: bool = False,
+        **kwargs,
     ):
         self.tag = tag
         self.id = id
@@ -310,15 +320,13 @@ class AppendOpenTag(AppendTextAndDefer):
         self.newline_inner = newline_inner
         self.newline_outer = newline_outer
         self.is_selectable = is_selectable
+        self.custom_attrs = kwargs
         super().__init__()
 
     def make_text(self) -> str:
         outer = "\n" if self.newline_outer else ""
         inner = "\n" if self.newline_inner else ""
-        if self.is_selectable:
-            tag = _make_tag(self.tag, self.id, self.classes, tabindex=0)
-        else:
-            tag = _make_tag(self.tag, self.id, self.classes)
+        tag = _make_tag(self.tag, self.id, self.classes, self.is_selectable, **self.custom_attrs)
         return outer + tag + inner
 
     def make_deferred_text(self) -> str:
@@ -353,6 +361,7 @@ class AppendNodeTag(AppendOpenTag):
             newline_inner=newline_inner,
             newline_outer=newline_outer,
             is_selectable=is_selectable,
+            nodeid=node.nodeid,
         )
 
     def __repr__(self) -> str:
@@ -1165,7 +1174,13 @@ class HandrailsTranslator(Translator):
         )
 
     def _make_tools_sidebar(self):
-        return AppendText(text=f'<div class="tools-sidebar">{self.svg["vars"]}</div>')
+        html = f"""
+        <div class="tools-sidebar">
+          <div class="tools-sidebar__btn">{self.svg["vars"]}</div>
+          <div class="vars-list hide"><ul class="vars-list-ul"><li>Nothing here...</li></ul></div>
+        </div>
+        """
+        return AppendText(text=html)
 
     def _make_source_div(self):
         return AppendText(text=f'<div class="rsm-source hide">{self.tree.src}</div>')
@@ -1175,7 +1190,7 @@ class HandrailsTranslator(Translator):
         if node.title:
             batch = self._replace_batch_with_handrails(4, batch)
         if self.sidebar:
-            batch.items.insert(1, self._make_tools_sidebar())
+            batch.items.insert(2, self._make_tools_sidebar())
         if self.add_source:
             batch.items.insert(1, self._make_source_div())
         return batch

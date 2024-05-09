@@ -45,39 +45,39 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>My Title</h1>
 
-        <ol id="enm-foo" class="enumerate">
+        <ol id="enm-foo" class="enumerate" data-nodeid="1">
 
-        <li id="itm-1" class="item">
+        <li id="itm-1" class="item" data-nodeid="2">
         Foo bar.
         </li>
 
-        <li id="itm-2" class="item">
+        <li id="itm-2" class="item" data-nodeid="4">
         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
         </li>
 
-        <li id="itm-3" class="item">
+        <li id="itm-3" class="item" data-nodeid="6">
         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
         </li>
 
         </ol>
 
-        <ul id="itm-foo" class="itemize">
+        <ul id="itm-foo" class="itemize" data-nodeid="8">
 
-        <li id="itm-4" class="item">
+        <li id="itm-4" class="item" data-nodeid="9">
         Foo bar.
         </li>
 
-        <li id="itm-5" class="item">
+        <li id="itm-5" class="item" data-nodeid="11">
         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
         </li>
 
-        <li id="itm-6" class="item">
+        <li id="itm-6" class="item" data-nodeid="13">
         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
         </li>
 
@@ -136,15 +136,15 @@ def test_item_with_wrong_parent():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Some section</h2>
 
-        <p class="paragraph">Lorem ipsum [CST error at (4, 12) - (4, 18)] Foo bar.</p>
+        <p class="paragraph" data-nodeid="2">Lorem ipsum [CST error at (4, 12) - (4, 18)] Foo bar.</p>
 
         </section>
 

@@ -39,7 +39,6 @@ export function onload(path = "/static/") {
     });
 
     lsp_ws = new WebSocket("ws://127.0.0.1:1234");
-    lsp_ws.onmessage = function(event) {console.log(`[message] Data received from server: ${event.data}`)};
     lsp_ws.onerror = function(error) {console.log(`[error]`)};
     lsp_ws.onclose = function(event) {
         if (event.wasClean) {
@@ -47,6 +46,23 @@ export function onload(path = "/static/") {
         } else {
             console.log('[close] Connection died');
         }
+    };
+    lsp_ws.onmessage = function(event) {
+	console.log(`[message] Data received from server: ${event.data}`);
+        const json = JSON.parse(event.data);
+        if (("id" in json) && (typeof(json.id) === "string") && json.id.startsWith("command-list_vars")) {
+            let content = "";
+            const vars_list = $(".vars-list-ul");
+            vars_list.empty();
+            for (let nodeid of json.result) {
+                content = $(`[data-nodeid=${nodeid}]`).html();
+                content = `<li>${content}</li>`;
+                vars_list.append(content);
+            }
+        };
+	if (("id" in json) && (typeof(json.id) === "string") && json.id.startsWith("command-next_sibling")) {
+            console.log(`move focus to ${json.result}`)
+        };
     };
     lsp_ws.onopen = function(e) {
         console.log("[open] Connection established");

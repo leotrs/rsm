@@ -19,15 +19,15 @@ def test_one_word():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This should be a single wo<span class="span"><strong>rd</strong></span>.</p>
+        <p class="paragraph" data-nodeid="1">This should be a single wo<span class="span" data-nodeid="3"><strong>rd</strong></span>.</p>
 
-        <p class="paragraph">This should be a single <span class="span"><strong>wo</strong></span>rd.</p>
+        <p class="paragraph" data-nodeid="6">This should be a single <span class="span" data-nodeid="8"><strong>wo</strong></span>rd.</p>
 
-        <p class="paragraph">This should be a single w<span class="span"><strong>or</strong></span>d.</p>
+        <p class="paragraph" data-nodeid="11">This should be a single w<span class="span" data-nodeid="13"><strong>or</strong></span>d.</p>
 
         </section>
 
@@ -58,15 +58,15 @@ def test_one_word_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This should be a single wo<span class="span"><strong>rd</strong></span>.</p>
+        <p class="paragraph" data-nodeid="1">This should be a single wo<span class="span" data-nodeid="3"><strong>rd</strong></span>.</p>
 
-        <p class="paragraph">This should be a single <span class="span"><strong>wo</strong></span>rd.</p>
+        <p class="paragraph" data-nodeid="6">This should be a single <span class="span" data-nodeid="8"><strong>wo</strong></span>rd.</p>
 
-        <p class="paragraph">This should be a single w<span class="span"><strong>or</strong></span>d.</p>
+        <p class="paragraph" data-nodeid="11">This should be a single w<span class="span" data-nodeid="13"><strong>or</strong></span>d.</p>
 
         </section>
 
@@ -96,17 +96,17 @@ def test_period_after():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Period after math <span class="math">\(2+2=4\)</span>.</p>
+        <p class="paragraph" data-nodeid="1">Period after math <span class="math" data-nodeid="3">\(2+2=4\)</span>.</p>
 
-        <p class="paragraph">Period after code
-        <span class="code"><code>k=v</code></span>
+        <p class="paragraph" data-nodeid="6">Period after code
+        <span class="code" data-nodeid="8"><code>k=v</code></span>
         .</p>
 
-        <p class="paragraph">Period after claim <span class="construct claim"><span class="keyword">⊢ </span>foo</span>.</p>
+        <p class="paragraph" data-nodeid="11">Period after claim <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢ </span>foo</span>.</p>
 
         </section>
 
@@ -136,17 +136,17 @@ def test_period_after_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Period after math <span class="math">\(2+2=4\)</span>.</p>
+        <p class="paragraph" data-nodeid="1">Period after math <span class="math" data-nodeid="3">\(2+2=4\)</span>.</p>
 
-        <p class="paragraph">Period after code
-        <span class="code"><code>k=v</code></span>
+        <p class="paragraph" data-nodeid="6">Period after code
+        <span class="code" data-nodeid="8"><code>k=v</code></span>
         .</p>
 
-        <p class="paragraph">Period after claim <span class="construct claim"><span class="keyword">⊢ </span>foo</span>.</p>
+        <p class="paragraph" data-nodeid="11">Period after claim <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢ </span>foo</span>.</p>
 
         </section>
 
@@ -175,13 +175,13 @@ def test_separate_words():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="span"><strong>Separate</strong></span> words.</p>
+        <p class="paragraph" data-nodeid="1"><span class="span" data-nodeid="2"><strong>Separate</strong></span> words.</p>
 
-        <p class="paragraph">Separate <span class="span"><strong>words</strong></span>.</p>
+        <p class="paragraph" data-nodeid="5">Separate <span class="span" data-nodeid="7"><strong>words</strong></span>.</p>
 
         </section>
 
@@ -210,13 +210,13 @@ def test_separate_words_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="span"><strong>Separate</strong></span> words.</p>
+        <p class="paragraph" data-nodeid="1"><span class="span" data-nodeid="2"><strong>Separate</strong></span> words.</p>
 
-        <p class="paragraph">Separate <span class="span"><strong>words</strong></span>.</p>
+        <p class="paragraph" data-nodeid="5">Separate <span class="span" data-nodeid="7"><strong>words</strong></span>.</p>
 
         </section>
 
@@ -245,11 +245,11 @@ def test_span_multiline_content_middle_of_line():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This is a paragraph with <span class="span"><strong>a span</strong></span> that takes multiple lines</p>
+        <p class="paragraph" data-nodeid="1">This is a paragraph with <span class="span" data-nodeid="3"><strong>a span</strong></span> that takes multiple lines</p>
 
         </section>
 
@@ -278,11 +278,11 @@ def test_span_multiline_content_beginning_of_line():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This is a paragraph with <span class="span"><strong>a span</strong></span> that takes multiple lines</p>
+        <p class="paragraph" data-nodeid="1">This is a paragraph with <span class="span" data-nodeid="3"><strong>a span</strong></span> that takes multiple lines</p>
 
         </section>
 
@@ -311,11 +311,11 @@ def test_span_multiline_content_beginning_of_line_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This is a paragraph with <span class="span"><strong>a span</strong></span> that takes multiple lines</p>
+        <p class="paragraph" data-nodeid="1">This is a paragraph with <span class="span" data-nodeid="3"><strong>a span</strong></span> that takes multiple lines</p>
 
         </section>
 
@@ -344,11 +344,11 @@ def test_span_multiline_content_middle_of_line_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This is a paragraph with <span class="span"><strong>a span</strong></span> that takes multiple lines</p>
+        <p class="paragraph" data-nodeid="1">This is a paragraph with <span class="span" data-nodeid="3"><strong>a span</strong></span> that takes multiple lines</p>
 
         </section>
 
@@ -375,11 +375,11 @@ def test_math_start_of_line():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This is a paragraph with <span class="math">\(2+2=4\)</span> at the start of a line.</p>
+        <p class="paragraph" data-nodeid="1">This is a paragraph with <span class="math" data-nodeid="3">\(2+2=4\)</span> at the start of a line.</p>
 
         </section>
 
@@ -406,11 +406,11 @@ def test_math_start_of_line_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This is a paragraph with <span class="math">\(2+2=4\)</span> at the start of a line.</p>
+        <p class="paragraph" data-nodeid="1">This is a paragraph with <span class="math" data-nodeid="3">\(2+2=4\)</span> at the start of a line.</p>
 
         </section>
 
@@ -445,19 +445,19 @@ def test_table_tr():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum"><span class="span"><em>foo</em></span></td>
+        <td class="tabledatum" data-nodeid="4"><span class="span" data-nodeid="5"><em>foo</em></span></td>
 
-        <td class="tabledatum"><span class="span"><strong>bar</strong></span></td>
+        <td class="tabledatum" data-nodeid="7"><span class="span" data-nodeid="8"><strong>bar</strong></span></td>
 
         </tr>
 
@@ -498,19 +498,19 @@ def test_table_trshort():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum"><span class="span"><em>foo</em></span></td>
+        <td class="tabledatum" data-nodeid="4"><span class="span" data-nodeid="5"><em>foo</em></span></td>
 
-        <td class="tabledatum"><span class="span"><strong>bar</strong></span></td>
+        <td class="tabledatum" data-nodeid="7"><span class="span" data-nodeid="8"><strong>bar</strong></span></td>
 
         </tr>
 
@@ -549,17 +549,17 @@ def test_ignore_space_within_inline():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Ignore space <span class="span"><strong>within</strong></span> inline.</p>
+        <p class="paragraph" data-nodeid="1">Ignore space <span class="span" data-nodeid="3"><strong>within</strong></span> inline.</p>
 
-        <p class="paragraph">Ignore space <span class="span"><strong>within</strong></span> inline.</p>
+        <p class="paragraph" data-nodeid="6">Ignore space <span class="span" data-nodeid="8"><strong>within</strong></span> inline.</p>
 
-        <p class="paragraph">Ignore space <span class="construct claim"><span class="keyword">⊢ </span>within</span> inline.</p>
+        <p class="paragraph" data-nodeid="11">Ignore space <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢ </span>within</span> inline.</p>
 
-        <p class="paragraph">Ignore space <span class="construct claim"><span class="keyword">⊢ </span>within</span> inline.</p>
+        <p class="paragraph" data-nodeid="18">Ignore space <span class="construct claim" data-nodeid="20"><span class="keyword" data-nodeid="21">⊢ </span>within</span> inline.</p>
 
         </section>
 
@@ -592,17 +592,17 @@ def test_ignore_space_within_inline_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Ignore space <span class="span"><strong>within</strong></span> inline.</p>
+        <p class="paragraph" data-nodeid="1">Ignore space <span class="span" data-nodeid="3"><strong>within</strong></span> inline.</p>
 
-        <p class="paragraph">Ignore space <span class="span"><strong>within</strong></span> inline.</p>
+        <p class="paragraph" data-nodeid="6">Ignore space <span class="span" data-nodeid="8"><strong>within</strong></span> inline.</p>
 
-        <p class="paragraph">Ignore space <span class="construct claim"><span class="keyword">⊢ </span>within</span>. inline.</p>
+        <p class="paragraph" data-nodeid="11">Ignore space <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢ </span>within</span>. inline.</p>
 
-        <p class="paragraph">Ignore space <span class="construct claim"><span class="keyword">⊢ </span>within</span>. inline.</p>
+        <p class="paragraph" data-nodeid="18">Ignore space <span class="construct claim" data-nodeid="20"><span class="keyword" data-nodeid="21">⊢ </span>within</span>. inline.</p>
 
         </section>
 
@@ -645,21 +645,21 @@ def test_consecutive_lines_should_be_joined_by_spaces():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Consecutive lines should be joined by spaces.</p>
+        <p class="paragraph" data-nodeid="1">Consecutive lines should be joined by spaces.</p>
 
-        <p class="paragraph">Consecutive lines should <span class="span"><strong>be joined</strong></span> by spaces.</p>
+        <p class="paragraph" data-nodeid="3">Consecutive lines should <span class="span" data-nodeid="5"><strong>be joined</strong></span> by spaces.</p>
 
-        <p class="paragraph">Consecutive lines should <span class="span"><strong>be joined</strong></span> by spaces.</p>
+        <p class="paragraph" data-nodeid="8">Consecutive lines should <span class="span" data-nodeid="10"><strong>be joined</strong></span> by spaces.</p>
 
-        <p class="paragraph">Consecutive lines should be <span class="span"><strong>joined</strong></span> by spaces.</p>
+        <p class="paragraph" data-nodeid="13">Consecutive lines should be <span class="span" data-nodeid="15"><strong>joined</strong></span> by spaces.</p>
 
-        <p class="paragraph">Consecutive lines should be <span class="span"><strong>joined</strong></span> by spaces.</p>
+        <p class="paragraph" data-nodeid="18">Consecutive lines should be <span class="span" data-nodeid="20"><strong>joined</strong></span> by spaces.</p>
 
-        <p class="paragraph">Consecutive lines should <span class="span"><strong>be</strong></span> joined by spaces.</p>
+        <p class="paragraph" data-nodeid="23">Consecutive lines should <span class="span" data-nodeid="25"><strong>be</strong></span> joined by spaces.</p>
 
         </section>
 

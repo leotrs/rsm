@@ -21,27 +21,27 @@ def test_simple_no_handrails():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="proof">
+        <div class="proof" data-nodeid="1">
 
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="proof-contents">
 
-        <div class="sketch">
+        <div class="sketch" data-nodeid="2">
 
-        <p class="paragraph">Foo.</p>
+        <p class="paragraph" data-nodeid="3">Foo.</p>
 
         </div>
 
-        <div class="step last">
+        <div class="step last" data-nodeid="5">
 
-        <div class="statement">
+        <div class="statement" data-nodeid="6">
 
-        <p class="paragraph">Bar.</p>
+        <p class="paragraph" data-nodeid="7">Bar.</p>
 
         </div>
 
@@ -84,11 +84,11 @@ def test_simple_with_handrails():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="proof">
+        <div class="proof" data-nodeid="1">
 
         <div class="handrail handrail--offset" tabindex=0>
 
@@ -154,9 +154,9 @@ def test_simple_with_handrails():
 
         <div class="proof-contents handrail__collapsible">
 
-        <div class="sketch">
+        <div class="sketch" data-nodeid="2">
 
-        <p class="paragraph">Foo.</p>
+        <p class="paragraph" data-nodeid="3">Foo.</p>
 
         </div>
 
@@ -208,11 +208,11 @@ def test_simple_with_handrails():
 
         </div>
         <div class="step__number">(1)</div>
-        <div class="step last hide">
+        <div class="step last hide" data-nodeid="5">
 
-        <div class="statement">
+        <div class="statement" data-nodeid="6">
 
-        <p class="paragraph">Bar.</p>
+        <p class="paragraph" data-nodeid="7">Bar.</p>
 
         </div>
 

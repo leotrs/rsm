@@ -17,11 +17,11 @@ def test_empty_table():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
         </table>
 
@@ -58,19 +58,19 @@ def test_one_row_no_header():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">foo</td>
+        <td class="tabledatum" data-nodeid="4">foo</td>
 
-        <td class="tabledatum">bar</td>
+        <td class="tabledatum" data-nodeid="6">bar</td>
 
         </tr>
 
@@ -113,27 +113,27 @@ def test_two_rows_no_header():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">one</td>
+        <td class="tabledatum" data-nodeid="4">one</td>
 
-        <td class="tabledatum">two</td>
+        <td class="tabledatum" data-nodeid="6">two</td>
 
         </tr>
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="8">
 
-        <td class="tabledatum">three</td>
+        <td class="tabledatum" data-nodeid="9">three</td>
 
-        <td class="tabledatum">four</td>
+        <td class="tabledatum" data-nodeid="11">four</td>
 
         </tr>
 
@@ -182,39 +182,39 @@ def test_with_header():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <thead class="tablehead">
+        <thead class="tablehead" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">head1</td>
+        <td class="tabledatum" data-nodeid="4">head1</td>
 
-        <td class="tabledatum">head2</td>
+        <td class="tabledatum" data-nodeid="6">head2</td>
 
         </tr>
 
         </thead>
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="8">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="9">
 
-        <td class="tabledatum">one</td>
+        <td class="tabledatum" data-nodeid="10">one</td>
 
-        <td class="tabledatum">two</td>
+        <td class="tabledatum" data-nodeid="12">two</td>
 
         </tr>
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="14">
 
-        <td class="tabledatum">three</td>
+        <td class="tabledatum" data-nodeid="15">three</td>
 
-        <td class="tabledatum">four</td>
+        <td class="tabledatum" data-nodeid="17">four</td>
 
         </tr>
 
@@ -253,21 +253,21 @@ def test_math_in_header():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <thead class="tablehead">
+        <thead class="tablehead" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum"><span class="math">\(H^{\eta}\)</span></td>
+        <td class="tabledatum" data-nodeid="4"><span class="math" data-nodeid="5">\(H^{\eta}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{*}\)</span></td>
+        <td class="tabledatum" data-nodeid="7"><span class="math" data-nodeid="8">\(H^{*}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{c}\)</span></td>
+        <td class="tabledatum" data-nodeid="10"><span class="math" data-nodeid="11">\(H^{c}\)</span></td>
 
         </tr>
 
@@ -308,19 +308,19 @@ def test_shortcuts_in_header():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum"><span class="span"><em>foo</em></span></td>
+        <td class="tabledatum" data-nodeid="4"><span class="span" data-nodeid="5"><em>foo</em></span></td>
 
-        <td class="tabledatum"><span class="span"><strong>bar</strong></span></td>
+        <td class="tabledatum" data-nodeid="7"><span class="span" data-nodeid="8"><strong>bar</strong></span></td>
 
         </tr>
 
@@ -364,19 +364,19 @@ def test_simple_caption():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">foo</td>
+        <td class="tabledatum" data-nodeid="4">foo</td>
 
-        <td class="tabledatum">bar</td>
+        <td class="tabledatum" data-nodeid="6">bar</td>
 
         </tr>
 
@@ -423,26 +423,26 @@ def test_simple_caption_with_shortcuts():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">foo</td>
+        <td class="tabledatum" data-nodeid="4">foo</td>
 
-        <td class="tabledatum">bar</td>
+        <td class="tabledatum" data-nodeid="6">bar</td>
 
         </tr>
 
         </tbody>
 
         <caption>
-        <span class="span"><strong>Table 1. </strong></span>This is a <span class="span"><em>caption</em></span> with shortcuts <span class="math">\(2+2\)</span>.
+        <span class="span"><strong>Table 1. </strong></span>This is a <span class="span" data-nodeid="10"><em>caption</em></span> with shortcuts <span class="math" data-nodeid="13">\(2+2\)</span>.
         </caption>
 
         </table>
@@ -483,19 +483,19 @@ def test_reference_to_table():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table id="lbl" class="table">
+        <table id="lbl" class="table" data-nodeid="1">
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">foo</td>
+        <td class="tabledatum" data-nodeid="4">foo</td>
 
-        <td class="tabledatum">bar</td>
+        <td class="tabledatum" data-nodeid="6">bar</td>
 
         </tr>
 
@@ -503,7 +503,7 @@ def test_reference_to_table():
 
         </table>
 
-        <p class="paragraph">This <a class="reference" href="#lbl">Table 1</a> refers to the table.</p>
+        <p class="paragraph" data-nodeid="8">This <a class="reference" href="#lbl">Table 1</a> refers to the table.</p>
 
         </section>
 
@@ -541,19 +541,19 @@ def test_reference_to_table_with_reftext():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table id="lbl" class="table">
+        <table id="lbl" class="table" data-nodeid="1">
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">foo</td>
+        <td class="tabledatum" data-nodeid="4">foo</td>
 
-        <td class="tabledatum">bar</td>
+        <td class="tabledatum" data-nodeid="6">bar</td>
 
         </tr>
 
@@ -561,7 +561,7 @@ def test_reference_to_table_with_reftext():
 
         </table>
 
-        <p class="paragraph">This <a class="reference" href="#lbl">refers</a> to the table.</p>
+        <p class="paragraph" data-nodeid="8">This <a class="reference" href="#lbl">refers</a> to the table.</p>
 
         </section>
 
@@ -599,19 +599,19 @@ def test_extra_space_within_tr():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">foo</td>
+        <td class="tabledatum" data-nodeid="4">foo</td>
 
-        <td class="tabledatum">bar</td>
+        <td class="tabledatum" data-nodeid="6">bar</td>
 
         </tr>
 
@@ -657,52 +657,52 @@ def test_real_life_example():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table id="lbl" class="table">
+        <table id="lbl" class="table" data-nodeid="1">
 
-        <thead class="tablehead">
+        <thead class="tablehead" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum"><span class="math">\(H^{\tau}\)</span></td>
+        <td class="tabledatum" data-nodeid="4"><span class="math" data-nodeid="5">\(H^{\tau}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{*}\)</span></td>
+        <td class="tabledatum" data-nodeid="7"><span class="math" data-nodeid="8">\(H^{*}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{c}\)</span></td>
+        <td class="tabledatum" data-nodeid="10"><span class="math" data-nodeid="11">\(H^{c}\)</span></td>
 
         </tr>
 
         </thead>
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="13">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="14">
 
-        <td class="tabledatum"><span class="math">\(0.0001\)</span></td>
+        <td class="tabledatum" data-nodeid="15"><span class="math" data-nodeid="16">\(0.0001\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0146\)</span></td>
+        <td class="tabledatum" data-nodeid="18"><span class="math" data-nodeid="19">\(0.0146\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0549\)</span></td>
+        <td class="tabledatum" data-nodeid="21"><span class="math" data-nodeid="22">\(0.0549\)</span></td>
 
         </tr>
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="24">
 
-        <td class="tabledatum"><span class="math">\(0.1222\)</span></td>
+        <td class="tabledatum" data-nodeid="25"><span class="math" data-nodeid="26">\(0.1222\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0139\)</span></td>
+        <td class="tabledatum" data-nodeid="28"><span class="math" data-nodeid="29">\(0.0139\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0106\)</span></td>
+        <td class="tabledatum" data-nodeid="31"><span class="math" data-nodeid="32">\(0.0106\)</span></td>
 
         </tr>
 
         </tbody>
 
         <caption>
-        <span class="span"><strong>Table 1. </strong></span>Values of <span class="math">\(\epsilon\)</span> and <span class="math">\(\delta\)</span> for select subgraphs of Gr-Qc.
+        <span class="span"><strong>Table 1. </strong></span>Values of <span class="math" data-nodeid="36">\(\epsilon\)</span> and <span class="math" data-nodeid="39">\(\delta\)</span> for select subgraphs of Gr-Qc.
         </caption>
 
         </table>
@@ -754,52 +754,52 @@ def test_real_life_example_different_spacing():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table id="lbl" class="table">
+        <table id="lbl" class="table" data-nodeid="1">
 
-        <thead class="tablehead">
+        <thead class="tablehead" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum"><span class="math">\(H^{\tau}\)</span></td>
+        <td class="tabledatum" data-nodeid="4"><span class="math" data-nodeid="5">\(H^{\tau}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{*}\)</span></td>
+        <td class="tabledatum" data-nodeid="7"><span class="math" data-nodeid="8">\(H^{*}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{c}\)</span></td>
+        <td class="tabledatum" data-nodeid="10"><span class="math" data-nodeid="11">\(H^{c}\)</span></td>
 
         </tr>
 
         </thead>
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="13">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="14">
 
-        <td class="tabledatum"><span class="math">\(0.0001\)</span></td>
+        <td class="tabledatum" data-nodeid="15"><span class="math" data-nodeid="16">\(0.0001\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0146\)</span></td>
+        <td class="tabledatum" data-nodeid="18"><span class="math" data-nodeid="19">\(0.0146\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0549\)</span></td>
+        <td class="tabledatum" data-nodeid="21"><span class="math" data-nodeid="22">\(0.0549\)</span></td>
 
         </tr>
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="24">
 
-        <td class="tabledatum"><span class="math">\(0.1222\)</span></td>
+        <td class="tabledatum" data-nodeid="25"><span class="math" data-nodeid="26">\(0.1222\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0139\)</span></td>
+        <td class="tabledatum" data-nodeid="28"><span class="math" data-nodeid="29">\(0.0139\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0106\)</span></td>
+        <td class="tabledatum" data-nodeid="31"><span class="math" data-nodeid="32">\(0.0106\)</span></td>
 
         </tr>
 
         </tbody>
 
         <caption>
-        <span class="span"><strong>Table 1. </strong></span>Values of <span class="math">\(\epsilon\)</span> and <span class="math">\(\delta\)</span> for select subgraphs of Gr-Qc.
+        <span class="span"><strong>Table 1. </strong></span>Values of <span class="math" data-nodeid="36">\(\epsilon\)</span> and <span class="math" data-nodeid="39">\(\delta\)</span> for select subgraphs of Gr-Qc.
         </caption>
 
         </table>
@@ -839,45 +839,45 @@ def test_tr_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <thead class="tablehead">
+        <thead class="tablehead" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">foo</td>
+        <td class="tabledatum" data-nodeid="4">foo</td>
 
-        <td class="tabledatum">bar</td>
+        <td class="tabledatum" data-nodeid="6">bar</td>
 
-        <td class="tabledatum">baz</td>
+        <td class="tabledatum" data-nodeid="8">baz</td>
 
         </tr>
 
         </thead>
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="10">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="11">
 
-        <td class="tabledatum">a1</td>
+        <td class="tabledatum" data-nodeid="12">a1</td>
 
-        <td class="tabledatum">a2</td>
+        <td class="tabledatum" data-nodeid="14">a2</td>
 
-        <td class="tabledatum">a3</td>
+        <td class="tabledatum" data-nodeid="16">a3</td>
 
         </tr>
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="18">
 
-        <td class="tabledatum">b1</td>
+        <td class="tabledatum" data-nodeid="19">b1</td>
 
-        <td class="tabledatum">b2</td>
+        <td class="tabledatum" data-nodeid="21">b2</td>
 
-        <td class="tabledatum">b3</td>
+        <td class="tabledatum" data-nodeid="23">b3</td>
 
         </tr>
 
@@ -918,45 +918,45 @@ def test_tr_shortcut_with_math():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <thead class="tablehead">
+        <thead class="tablehead" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum"><span class="math">\(H^{\tau}\)</span></td>
+        <td class="tabledatum" data-nodeid="4"><span class="math" data-nodeid="5">\(H^{\tau}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{\top}\)</span></td>
+        <td class="tabledatum" data-nodeid="7"><span class="math" data-nodeid="8">\(H^{\top}\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(H^{c}\)</span></td>
+        <td class="tabledatum" data-nodeid="10"><span class="math" data-nodeid="11">\(H^{c}\)</span></td>
 
         </tr>
 
         </thead>
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="13">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="14">
 
-        <td class="tabledatum"><span class="math">\(0.0001\)</span></td>
+        <td class="tabledatum" data-nodeid="15"><span class="math" data-nodeid="16">\(0.0001\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0146\)</span></td>
+        <td class="tabledatum" data-nodeid="18"><span class="math" data-nodeid="19">\(0.0146\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0549\)</span></td>
+        <td class="tabledatum" data-nodeid="21"><span class="math" data-nodeid="22">\(0.0549\)</span></td>
 
         </tr>
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="24">
 
-        <td class="tabledatum"><span class="math">\(0.1222\)</span></td>
+        <td class="tabledatum" data-nodeid="25"><span class="math" data-nodeid="26">\(0.1222\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0139\)</span></td>
+        <td class="tabledatum" data-nodeid="28"><span class="math" data-nodeid="29">\(0.0139\)</span></td>
 
-        <td class="tabledatum"><span class="math">\(0.0106\)</span></td>
+        <td class="tabledatum" data-nodeid="31"><span class="math" data-nodeid="32">\(0.0106\)</span></td>
 
         </tr>
 
@@ -1000,50 +1000,49 @@ def test_tr_shortcut_with_newlines():
 
         ::
         """,
-        want="""
-        <body>
+        want="""        <body>
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <thead class="tablehead">
+        <thead class="tablehead" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">foo</td>
+        <td class="tabledatum" data-nodeid="4">foo</td>
 
-        <td class="tabledatum">bar</td>
+        <td class="tabledatum" data-nodeid="6">bar</td>
 
-        <td class="tabledatum">baz</td>
+        <td class="tabledatum" data-nodeid="8">baz</td>
 
         </tr>
 
         </thead>
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="10">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="11">
 
-        <td class="tabledatum">a1</td>
+        <td class="tabledatum" data-nodeid="12">a1</td>
 
-        <td class="tabledatum">a2</td>
+        <td class="tabledatum" data-nodeid="14">a2</td>
 
-        <td class="tabledatum">a3</td>
+        <td class="tabledatum" data-nodeid="16">a3</td>
 
         </tr>
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="18">
 
-        <td class="tabledatum">b1</td>
+        <td class="tabledatum" data-nodeid="19">b1</td>
 
-        <td class="tabledatum">b2</td>
+        <td class="tabledatum" data-nodeid="21">b2</td>
 
-        <td class="tabledatum">b3</td>
+        <td class="tabledatum" data-nodeid="23">b3</td>
 
         </tr>
 
@@ -1085,45 +1084,45 @@ def test_tr_shortcut_with_escaped_colon():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <table class="table">
+        <table class="table" data-nodeid="1">
 
-        <thead class="tablehead">
+        <thead class="tablehead" data-nodeid="2">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="3">
 
-        <td class="tabledatum">foo</td>
+        <td class="tabledatum" data-nodeid="4">foo</td>
 
-        <td class="tabledatum">bar</td>
+        <td class="tabledatum" data-nodeid="6">bar</td>
 
-        <td class="tabledatum">baz</td>
+        <td class="tabledatum" data-nodeid="8">baz</td>
 
         </tr>
 
         </thead>
 
-        <tbody class="tablebody">
+        <tbody class="tablebody" data-nodeid="10">
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="11">
 
-        <td class="tabledatum">a:</td>
+        <td class="tabledatum" data-nodeid="12">a:</td>
 
-        <td class="tabledatum">a2</td>
+        <td class="tabledatum" data-nodeid="14">a2</td>
 
-        <td class="tabledatum">a3</td>
+        <td class="tabledatum" data-nodeid="16">a3</td>
 
         </tr>
 
-        <tr class="tablerow">
+        <tr class="tablerow" data-nodeid="18">
 
-        <td class="tabledatum">b1</td>
+        <td class="tabledatum" data-nodeid="19">b1</td>
 
-        <td class="tabledatum">b2</td>
+        <td class="tabledatum" data-nodeid="21">b2</td>
 
-        <td class="tabledatum">b3</td>
+        <td class="tabledatum" data-nodeid="23">b3</td>
 
         </tr>
 

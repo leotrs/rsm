@@ -29,23 +29,23 @@ def test_numbered_sections():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. First</h2>
 
-        <p class="paragraph">Content of first.</p>
+        <p class="paragraph" data-nodeid="2">Content of first.</p>
 
         </section>
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="4">
 
         <h2>2. Second</h2>
 
-        <p class="paragraph">Content of second.</p>
+        <p class="paragraph" data-nodeid="5">Content of second.</p>
 
         </section>
 
@@ -94,31 +94,31 @@ def test_nonum():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. First</h2>
 
-        <p class="paragraph">Content of first.</p>
+        <p class="paragraph" data-nodeid="2">Content of first.</p>
 
         </section>
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="4">
 
         <h2>Second</h2>
 
-        <p class="paragraph">Content of second.</p>
+        <p class="paragraph" data-nodeid="5">Content of second.</p>
 
         </section>
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="7">
 
         <h2>2. Third</h2>
 
-        <p class="paragraph">Content of third.</p>
+        <p class="paragraph" data-nodeid="8">Content of third.</p>
 
         </section>
 

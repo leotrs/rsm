@@ -142,6 +142,7 @@ class Transformer:
         self.autonumber_nodes()
         self.make_toc()
         self.add_keywords_to_constructs()
+        self.assign_node_ids()
         return tree
 
     def collect_labels(self) -> None:
@@ -340,3 +341,9 @@ class Transformer:
             construct.types.append(kind)
             if kind not in {"then", "suffices", "claim", "claimblock", "qed"}:
                 construct.types.append("assumption")
+
+    def assign_node_ids(self) -> None:
+        nodeid = 0
+        for node in self.tree.traverse():
+            node.nodeid = nodeid
+            nodeid += 1

@@ -16,15 +16,81 @@ export function setupClassInteractions() {
         };
     });
 
-    $(".tools-sidebar").mousedown(function(e) {
+    $("html").on("keyup", function(ev) {
+	const focused = document.activeElement;
+	const node_el = $(focused).find("[data-nodeid]");
+        const nodeid = node_el.data("nodeid");
+	
+	switch(ev.which) {
+	case 74:
+	    console.log("J");
+	    lsp_ws.send(JSON.stringify({
+		"jsonrpc" : "2.0",
+		"method" : "workspace/executeCommand",
+		"id": "command-next_sibling",
+		"params": {
+                    "command": "next_sibling",
+                    "arguments": [nodeid],
+		}
+            }))
+	    break;
+	case 75:
+	    console.log("K");
+	    lsp_ws.send(JSON.stringify({
+		"jsonrpc" : "2.0",
+		"method" : "workspace/executeCommand",
+		"id": "command-prev_sibling",
+		"params": {
+                    "command": "prev_sibling",
+                    "arguments": [nodeid],
+		}
+            }))
+	    break;
+	}
+
+
+    });
+
+    $(".manuscriptwrapper").on("focusin", function(e) {
+        const focused = document.activeElement;
+        const node_el = $(focused).find("[data-nodeid]");
+        const nodeid = node_el.data("nodeid");
+        if (!nodeid) return;
+        console.log(`asking for ${nodeid}`);
+        lsp_ws.send(JSON.stringify({
+            "jsonrpc" : "2.0",
+            "method" : "workspace/executeCommand",
+            "id": "command-list_vars-999",
+            "params": {
+                "command": "list_vars",
+                "arguments": [nodeid],
+            }
+        }))
+    });
+
+    $(".tools-sidebar").on("mousedown", function(e) {
         // This element cannot receive focus via the mouse because it needs to access
         // the currently focused element - and clicking it would normally change the
         // focus to it.
         e.stopImmediatePropagation(); //stops event bubbling
         e.preventDefault();  //stops default browser action (focus)
     }).click(function() {
-        const src = $("body").children(".rsm-source");
-        console.log(document.activeElement);
+        let wrapper = $(".manuscriptwrapper");
+        if (wrapper.hasClass("manuscriptwrapper--narrow")) {
+            wrapper.removeClass("manuscriptwrapper--narrow");
+        }
+        else {
+            wrapper.addClass("manuscriptwrapper--narrow");
+        }
+
+        let vars_list = $(".tools-sidebar .vars-list");
+        if (vars_list.hasClass("hide")) {
+            vars_list.removeClass("hide");
+        }
+        else {
+            vars_list.addClass("hide");
+            
+        }
     });
 
     $(".handrail").mouseleave(function () {

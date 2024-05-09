@@ -39,7 +39,6 @@ export function onload(path = "/static/") {
     });
 
     lsp_ws = new WebSocket("ws://127.0.0.1:1234");
-    lsp_ws.onmessage = function(event) {console.log(`[message] Data received from server: ${event.data}`)};
     lsp_ws.onerror = function(error) {console.log(`[error]`)};
     lsp_ws.onclose = function(event) {
         if (event.wasClean) {

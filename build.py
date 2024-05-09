@@ -44,7 +44,7 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
     # watch out: tree-sitter might change this dir inadvertently...
     # run(f"cp ~/.tree-sitter/bin/{fn} rsm/", cwd=".")
     run(f"cp build/{fn} ../rsm/")
-    run(f"cp build/{fn} /Users/leo.torres/.emacs.d/tree-sitter/libtree-sitter-rsm.so")  # for emacs
+    # run(f"cp build/{fn} /Users/leo.torres/.emacs.d/tree-sitter/libtree-sitter-rsm.so")  # for emacs
 
 
 if __name__ == "__main__":

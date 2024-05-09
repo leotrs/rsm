@@ -47,6 +47,23 @@ export function onload(path = "/static/") {
             console.log('[close] Connection died');
         }
     };
+    lsp_ws.onmessage = function(event) {
+	console.log(`[message] Data received from server: ${event.data}`);
+        const json = JSON.parse(event.data);
+        if (("id" in json) && (typeof(json.id) === "string") && json.id.startsWith("command-list_vars")) {
+            let content = "";
+            const vars_list = $(".vars-list-ul");
+            vars_list.empty();
+            for (let nodeid of json.result) {
+                content = $(`[data-nodeid=${nodeid}]`).html();
+                content = `<li>${content}</li>`;
+                vars_list.append(content);
+            }
+        };
+	if (("id" in json) && (typeof(json.id) === "string") && json.id.startsWith("command-next_sibling")) {
+            console.log(`move focus to ${json.result}`)
+        };
+    };
     lsp_ws.onopen = function(e) {
         console.log("[open] Connection established");
         lsp_ws.send(JSON.stringify({

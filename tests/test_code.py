@@ -15,12 +15,12 @@ def test_code():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">
-        <span class="code"><code>comp = [abs(x) for x in range(10)]</code></span>
+        <p class="paragraph" data-nodeid="1">
+        <span class="code" data-nodeid="2"><code>comp = [abs(x) for x in range(10)]</code></span>
         </p>
 
         </section>
@@ -48,12 +48,12 @@ def test_code_with_shorthand():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">
-        <span class="code"><code>comp = [abs(x) for x in range(10)]</code></span>
+        <p class="paragraph" data-nodeid="1">
+        <span class="code" data-nodeid="2"><code>comp = [abs(x) for x in range(10)]</code></span>
         </p>
 
         </section>
@@ -83,12 +83,12 @@ def test_code_with_lang():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">
-        <span class="code"><code class="highlight python"><span class="n">comp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+        <p class="paragraph" data-nodeid="1">
+        <span class="code" data-nodeid="2"><code class="highlight python"><span class="n">comp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
         </code></span>
         </p>
 
@@ -117,12 +117,12 @@ def test_code_with_shorthand_and_lang():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">
-        <span class="code"><code class="highlight python"><span class="n">comp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+        <p class="paragraph" data-nodeid="1">
+        <span class="code" data-nodeid="2"><code class="highlight python"><span class="n">comp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
         </code></span>
         </p>
 
@@ -155,11 +155,11 @@ def test_codeblock():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="codeblock">
+        <div class="codeblock" data-nodeid="1">
 
         <pre>
         <code>comp = [abs(x) for x in range(10)]</code>
@@ -197,11 +197,11 @@ def test_codeblock_with_lang():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="codeblock">
+        <div class="codeblock" data-nodeid="1">
 
         <pre>
         <code class="highlight python"><span class="n">comp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
@@ -237,11 +237,11 @@ def test_codeblock_with_shorthand():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="codeblock">
+        <div class="codeblock" data-nodeid="1">
 
         <pre>
         <code>comp = [abs(x) for x in range(10)]</code>
@@ -279,11 +279,11 @@ def test_codeblock_with_shorthand_and_lang():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="codeblock">
+        <div class="codeblock" data-nodeid="1">
 
         <pre>
         <code class="highlight python"><span class="n">comp</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
@@ -329,19 +329,19 @@ def test_meta():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">
-        <span id="1" class="code"><code>k=v</code></span>
+        <p class="paragraph" data-nodeid="1">
+        <span id="1" class="code" data-nodeid="2"><code>k=v</code></span>
         </p>
 
-        <p class="paragraph">
-        <span id="2" class="code"><code>k=v</code></span>
+        <p class="paragraph" data-nodeid="4">
+        <span id="2" class="code" data-nodeid="5"><code>k=v</code></span>
         </p>
 
-        <div id="3" class="codeblock">
+        <div id="3" class="codeblock" data-nodeid="7">
 
         <pre>
         <code>k = v</code>
@@ -349,7 +349,7 @@ def test_meta():
 
         </div>
 
-        <div id="4" class="codeblock">
+        <div id="4" class="codeblock" data-nodeid="9">
 
         <pre>
         <code>k = v</code>
@@ -396,21 +396,21 @@ def test_meta_and_lang():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">
-        <span id="1" class="code"><code class="highlight js"><span class="nx">k</span><span class="o">=</span><span class="nx">v</span>
+        <p class="paragraph" data-nodeid="1">
+        <span id="1" class="code" data-nodeid="2"><code class="highlight js"><span class="nx">k</span><span class="o">=</span><span class="nx">v</span>
         </code></span>
         </p>
 
-        <p class="paragraph">
-        <span id="2" class="code"><code class="highlight js"><span class="nx">k</span><span class="o">=</span><span class="nx">v</span>
+        <p class="paragraph" data-nodeid="4">
+        <span id="2" class="code" data-nodeid="5"><code class="highlight js"><span class="nx">k</span><span class="o">=</span><span class="nx">v</span>
         </code></span>
         </p>
 
-        <div id="3" class="codeblock">
+        <div id="3" class="codeblock" data-nodeid="7">
 
         <pre>
         <code class="highlight js"><span class="nx">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">v</span>
@@ -419,7 +419,7 @@ def test_meta_and_lang():
 
         </div>
 
-        <div id="4" class="codeblock">
+        <div id="4" class="codeblock" data-nodeid="9">
 
         <pre>
         <code class="highlight js"><span class="nx">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">v</span>
@@ -458,11 +458,11 @@ def test_multiline_codeblock():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="codeblock">
+        <div class="codeblock" data-nodeid="1">
 
         <pre>
         <code>import sys
@@ -502,11 +502,11 @@ def test_multiline_codeblock_with_lang():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="codeblock">
+        <div class="codeblock" data-nodeid="1">
 
         <pre>
         <code class="highlight python"><span class="kn">import</span> <span class="nn">sys</span>
@@ -544,11 +544,11 @@ def test_multiline_codeblock_with_shorthand():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="codeblock">
+        <div class="codeblock" data-nodeid="1">
 
         <pre>
         <code>import sys
@@ -588,11 +588,11 @@ def test_multiline_codeblock_with_shorthand_and_lang():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="codeblock">
+        <div class="codeblock" data-nodeid="1">
 
         <pre>
         <code class="highlight python"><span class="kn">import</span> <span class="nn">sys</span>
@@ -637,11 +637,11 @@ def test_multiline_meta():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div id="3" class="codeblock">
+        <div id="3" class="codeblock" data-nodeid="1">
 
         <pre>
         <code>k = v
@@ -650,7 +650,7 @@ def test_multiline_meta():
 
         </div>
 
-        <div id="4" class="codeblock">
+        <div id="4" class="codeblock" data-nodeid="3">
 
         <pre>
         <code>k = v
@@ -702,11 +702,11 @@ def test_multiline_meta_and_lang():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div id="3" class="codeblock">
+        <div id="3" class="codeblock" data-nodeid="1">
 
         <pre>
         <code class="highlight lisp"><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">forall</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="nv">func</span><span class="p">)</span>
@@ -719,7 +719,7 @@ def test_multiline_meta_and_lang():
 
         </div>
 
-        <div id="4" class="codeblock">
+        <div id="4" class="codeblock" data-nodeid="3">
 
         <pre>
         <code class="highlight lisp"><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">forall</span><span class="w"> </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="nv">func</span><span class="p">)</span>

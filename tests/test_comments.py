@@ -43,11 +43,11 @@ def test_escape_comment_delimiter():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">% This is not a comment.</p>
+        <p class="paragraph" data-nodeid="1">% This is not a comment.</p>
 
         </section>
 
@@ -74,11 +74,11 @@ def test_end_of_line_comment():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Foo.</p>
+        <p class="paragraph" data-nodeid="1">Foo.</p>
 
         </section>
 
@@ -103,11 +103,11 @@ def test_percent_within_math_is_not_a_comment():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="math">\(10\%\)</span> this is not a comment</p>
+        <p class="paragraph" data-nodeid="1"><span class="math" data-nodeid="2">\(10\%\)</span> this is not a comment</p>
 
         </section>
 
@@ -136,11 +136,11 @@ def test_broken_paragraph():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This is a paragraph in the middle</p>
+        <p class="paragraph" data-nodeid="1">This is a paragraph in the middle</p>
 
         </section>
 

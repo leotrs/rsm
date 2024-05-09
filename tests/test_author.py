@@ -22,13 +22,13 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div id="mylbl" class="manuscript">
+        <div id="mylbl" class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>My Title</h1>
 
-        <div class="author">
+        <div class="author" data-nodeid="1">
 
         <p>Leo Torres</p>
 
@@ -68,17 +68,17 @@ def test_empty_author():
 
         <div class="manuscriptwrapper">
 
-        <div id="mylbl" class="manuscript">
+        <div id="mylbl" class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>The Perron non-backtracking eigenvalue after node addition</h1>
 
-        <div class="author">
+        <div class="author" data-nodeid="1">
 
         </div>
 
-        <p class="paragraph">Lorem ipsum.</p>
+        <p class="paragraph" data-nodeid="2">Lorem ipsum.</p>
 
         </section>
 

@@ -33,11 +33,11 @@ def test_no_manuscript_title():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Lorem ipsum.</p>
+        <p class="paragraph" data-nodeid="1">Lorem ipsum.</p>
 
         </section>
 
@@ -65,13 +65,13 @@ def test_manuscript_title():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>My Title</h1>
 
-        <p class="paragraph">Lorem ipsum.</p>
+        <p class="paragraph" data-nodeid="1">Lorem ipsum.</p>
 
         </section>
 
@@ -98,7 +98,7 @@ def test_manuscript_meta():
 
         <div class="manuscriptwrapper">
 
-        <div id="mylbl" class="manuscript">
+        <div id="mylbl" class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
@@ -144,17 +144,17 @@ def test_section_header():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Lorem ipsum.</p>
+        <p class="paragraph" data-nodeid="1">Lorem ipsum.</p>
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="3">
 
         <h2>1. section title</h2>
 
-        <p class="paragraph">Lorem ipsum.</p>
+        <p class="paragraph" data-nodeid="4">Lorem ipsum.</p>
 
         </section>
 

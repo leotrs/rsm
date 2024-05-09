@@ -20,15 +20,15 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Section</h2>
 
-        <p class="paragraph">Lorem ipsum.</p>
+        <p class="paragraph" data-nodeid="2">Lorem ipsum.</p>
 
         </section>
 
@@ -76,27 +76,27 @@ def test_subsections():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Section</h2>
 
-        <p class="paragraph">Lorem ipsum.</p>
+        <p class="paragraph" data-nodeid="2">Lorem ipsum.</p>
 
-        <section class="subsection level-3">
+        <section class="subsection level-3" data-nodeid="4">
 
         <h3>1.1. Sub section</h3>
 
-        <p class="paragraph">Foo</p>
+        <p class="paragraph" data-nodeid="5">Foo</p>
 
-        <section class="subsubsection level-4">
+        <section class="subsubsection level-4" data-nodeid="7">
 
         <h4>1.1.1. Sub sub section</h4>
 
-        <p class="paragraph">Bar</p>
+        <p class="paragraph" data-nodeid="8">Bar</p>
 
         </section>
 

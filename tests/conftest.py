@@ -23,7 +23,7 @@ EMPTY_WANT = """\
 
 <div class="manuscriptwrapper">
 
-<div class="manuscript">
+<div class="manuscript" data-nodeid="0">
 
 <section class="level-1">
 

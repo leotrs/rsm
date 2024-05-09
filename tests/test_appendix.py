@@ -21,17 +21,17 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Foo</h2>
 
         </section>
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="3">
 
         <h2>A. Bar</h2>
 
@@ -72,15 +72,15 @@ def test_subsection():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Foo</h2>
 
-        <section class="subsection level-3">
+        <section class="subsection level-3" data-nodeid="2">
 
         <h3>1.1. Sub Foo</h3>
 
@@ -88,11 +88,11 @@ def test_subsection():
 
         </section>
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="4">
 
         <h2>A. Bar</h2>
 
-        <section class="subsection level-3">
+        <section class="subsection level-3" data-nodeid="5">
 
         <h3>A.1. Sub Bar</h3>
 
@@ -140,19 +140,19 @@ def test_theorem():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Foo</h2>
 
-        <section class="subsection level-3">
+        <section class="subsection level-3" data-nodeid="2">
 
         <h3>1.1. Sub Foo</h3>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="3">
 
         <div class="theorem-contents">
 
@@ -166,15 +166,15 @@ def test_theorem():
 
         </section>
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="5">
 
         <h2>A. Bar</h2>
 
-        <section class="subsection level-3">
+        <section class="subsection level-3" data-nodeid="6">
 
         <h3>A.1. Sub Bar</h3>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="7">
 
         <div class="theorem-contents">
 
@@ -219,13 +219,13 @@ def test_section_reftext():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><a class="reference" href="#app">Appendix A</a></p>
+        <p class="paragraph" data-nodeid="1"><a class="reference" href="#app">Appendix A</a></p>
 
-        <section id="app" class="section level-2">
+        <section id="app" class="section level-2" data-nodeid="4">
 
         <h2>A. Foo bar</h2>
 

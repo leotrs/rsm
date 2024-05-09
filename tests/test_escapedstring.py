@@ -24,11 +24,11 @@ def test_simple_not_escaped():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Warning [CST error at (2, 7) - (2, 8)] this is a warning.</p>
+        <p class="paragraph" data-nodeid="1">Warning [CST error at (2, 7) - (2, 8)] this is a warning.</p>
 
         </section>
 
@@ -55,11 +55,11 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Warning: this is a warning.</p>
+        <p class="paragraph" data-nodeid="1">Warning: this is a warning.</p>
 
         </section>
 
@@ -86,11 +86,11 @@ def test_colon_inside_bold():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="span"><strong>Warning:</strong></span> this is a warning.</p>
+        <p class="paragraph" data-nodeid="1"><span class="span" data-nodeid="2"><strong>Warning:</strong></span> this is a warning.</p>
 
         </section>
 
@@ -117,11 +117,11 @@ def test_colon_inside_bold_no_space():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="span"><strong>Warning:</strong></span> this is a warning.</p>
+        <p class="paragraph" data-nodeid="1"><span class="span" data-nodeid="2"><strong>Warning:</strong></span> this is a warning.</p>
 
         </section>
 
@@ -148,11 +148,11 @@ def test_colon_inside_bold_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="span"><strong>Warning:</strong></span>this is a warning.</p>
+        <p class="paragraph" data-nodeid="1"><span class="span" data-nodeid="2"><strong>Warning:</strong></span>this is a warning.</p>
 
         </section>
 
@@ -177,11 +177,11 @@ def test_backslash_brace_within_math():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="math">\([k]:= \{1,\ldots,k\}\)</span></p>
+        <p class="paragraph" data-nodeid="1"><span class="math" data-nodeid="2">\([k]:= \{1,\ldots,k\}\)</span></p>
 
         </section>
 

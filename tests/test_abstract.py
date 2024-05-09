@@ -44,13 +44,13 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div id="mylbl" class="manuscript">
+        <div id="mylbl" class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>The Perron non-backtracking eigenvalue after node addition</h1>
 
-        <div class="author">
+        <div class="author" data-nodeid="1">
 
         <p>Leo Torres</p>
 
@@ -60,13 +60,13 @@ def test_simple():
 
         </div>
 
-        <div class="abstract">
+        <div class="abstract" data-nodeid="2">
 
         <h3>Abstract</h3>
 
-        <p class="paragraph">first second third</p>
+        <p class="paragraph" data-nodeid="3">first second third</p>
 
-        <p class="paragraph">fourth fifth</p>
+        <p class="paragraph" data-nodeid="5">fourth fifth</p>
 
         <p class="keywords">Keywords: spectral graph theory, non-backtracking, interlacing</p>
 
@@ -74,11 +74,11 @@ def test_simple():
 
         </div>
 
-        <section id="sec-introduction" class="section level-2 t1 t2">
+        <section id="sec-introduction" class="section level-2 t1 t2" data-nodeid="7">
 
         <h2>1. Introduction</h2>
 
-        <p class="paragraph">Lorem ipsum.</p>
+        <p class="paragraph" data-nodeid="8">Lorem ipsum.</p>
 
         </section>
 

@@ -23,11 +23,11 @@ def test_display_alone():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div id="eqn-plus" class="mathblock smallequation">
+        <div id="eqn-plus" class="mathblock smallequation" data-nodeid="1">
         $$
         2 + 2 = 4
         $$
@@ -59,11 +59,11 @@ def test_inline_no_meta():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This paragraph contains inline math <span class="math">\(2 + 2 = 4\)</span>.</p>
+        <p class="paragraph" data-nodeid="1">This paragraph contains inline math <span class="math" data-nodeid="3">\(2 + 2 = 4\)</span>.</p>
 
         </section>
 
@@ -90,11 +90,11 @@ def test_inline_with_meta():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">This paragraph contains inline math <span id="bar" class="math smallequation">\(2 + 2
+        <p class="paragraph" data-nodeid="1">This paragraph contains inline math <span id="bar" class="math smallequation" data-nodeid="3">\(2 + 2
         = 4\)</span>.</p>
 
         </section>
@@ -126,17 +126,17 @@ def test_math_with_shortcuts():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. My Section</h2>
 
-        <p class="paragraph">When <span class="math">\(a \ne 0\)</span>, there are two solutions to <span class="math">\(ax^2 + bx + c = 0\)</span> and they are</p>
+        <p class="paragraph" data-nodeid="2">When <span class="math" data-nodeid="4">\(a \ne 0\)</span>, there are two solutions to <span class="math" data-nodeid="7">\(ax^2 + bx + c = 0\)</span> and they are</p>
 
-        <div class="mathblock">
+        <div class="mathblock" data-nodeid="10">
         $$
         x = {-b \pm \sqrt{b^2-4ac} \over 2a}.
         $$
@@ -180,17 +180,17 @@ def test_math_ref():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. My Section</h2>
 
-        <p class="paragraph">This is some inline <span class="math">\(2+2=4\)</span> math.  And then some display math.</p>
+        <p class="paragraph" data-nodeid="2">This is some inline <span class="math" data-nodeid="4">\(2+2=4\)</span> math.  And then some display math.</p>
 
-        <div id="eqn-foo" class="mathblock">
+        <div id="eqn-foo" class="mathblock" data-nodeid="7">
         $$
         2+2=4
         $$
@@ -198,7 +198,7 @@ def test_math_ref():
 
         </div>
 
-        <p class="paragraph">And now we refer to <a class="reference" href="#eqn-foo">(1.1)</a>.</p>
+        <p class="paragraph" data-nodeid="9">And now we refer to <a class="reference" href="#eqn-foo">(1.1)</a>.</p>
 
         </section>
 
@@ -228,11 +228,11 @@ def test_mathblock_nonum():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="mathblock">
+        <div class="mathblock" data-nodeid="1">
         $$
         2+2=4
         $$
@@ -264,11 +264,11 @@ def test_mathblock_nonum_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="mathblock">
+        <div class="mathblock" data-nodeid="1">
         $$
         2+2=4
         $$
@@ -297,11 +297,11 @@ def test_unclosed_dollar_sign():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">There are three dollar signs here <span class="math">\(2+2\)</span>= 0 [CST error at (2, 43) - (2, 44)] .</p>
+        <p class="paragraph" data-nodeid="1">There are three dollar signs here <span class="math" data-nodeid="3">\(2+2\)</span>= 0 [CST error at (2, 43) - (2, 44)] .</p>
 
         </section>
 
@@ -336,13 +336,13 @@ def test_mathblock_isclaim():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="claimblock">
-        <span class="keyword">⊢ </span>
-        <div class="mathblock">
+        <div class="claimblock" data-nodeid="1">
+        <span class="keyword" data-nodeid="2">⊢ </span>
+        <div class="mathblock" data-nodeid="4">
         $$
         2+2 = 4
         $$
@@ -352,9 +352,9 @@ def test_mathblock_isclaim():
 
         </div>
 
-        <div class="claimblock">
-        <span class="keyword">⊢ </span>
-        <div class="mathblock">
+        <div class="claimblock" data-nodeid="6">
+        <span class="keyword" data-nodeid="7">⊢ </span>
+        <div class="mathblock" data-nodeid="9">
         $$
         2+2 = 4
         $$

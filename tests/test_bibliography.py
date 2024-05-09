@@ -31,21 +31,21 @@ def test_single():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
+        <p class="paragraph" data-nodeid="1">This has a citation at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
 
         <section class="level-2">
 
         <h2>References</h2>
 
-        <ol class="bibliography">
+        <ol class="bibliography" data-nodeid="4">
 
-        <li id="knuth" class="bibitem">
+        <li id="knuth" class="bibitem" data-nodeid="5">
         Knuth, Donald E. "Art of computer programming, volume 2, Seminumerical algorithms". Addison-Wesley Professional. 2014.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
@@ -93,21 +93,21 @@ def test_with_shortcuts():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a <span class="span"><strong>citation</strong></span> at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
+        <p class="paragraph" data-nodeid="1">This has a <span class="span" data-nodeid="3"><strong>citation</strong></span> at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
 
         <section class="level-2">
 
         <h2>References</h2>
 
-        <ol class="bibliography">
+        <ol class="bibliography" data-nodeid="7">
 
-        <li id="knuth" class="bibitem">
+        <li id="knuth" class="bibitem" data-nodeid="8">
         Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
@@ -164,25 +164,25 @@ def test_many():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference" href="#torres2020">1</a>, <a id="cite-0-1" class="reference" href="#knuth">2</a></span>]</p>
+        <p class="paragraph" data-nodeid="1">This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference" href="#torres2020">1</a>, <a id="cite-0-1" class="reference" href="#knuth">2</a></span>]</p>
 
         <section class="level-2">
 
         <h2>References</h2>
 
-        <ol class="bibliography">
+        <ol class="bibliography" data-nodeid="4">
 
-        <li id="torres2020" class="bibitem">
+        <li id="torres2020" class="bibitem" data-nodeid="5">
         Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
-        <li id="knuth" class="bibitem">
+        <li id="knuth" class="bibitem" data-nodeid="6">
         Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
@@ -239,25 +239,25 @@ def test_order():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference" href="#knuth">2</a>, <a id="cite-0-1" class="reference" href="#torres2020">1</a></span>]</p>
+        <p class="paragraph" data-nodeid="1">This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference" href="#knuth">2</a>, <a id="cite-0-1" class="reference" href="#torres2020">1</a></span>]</p>
 
         <section class="level-2">
 
         <h2>References</h2>
 
-        <ol class="bibliography">
+        <ol class="bibliography" data-nodeid="4">
 
-        <li id="torres2020" class="bibitem">
+        <li id="torres2020" class="bibitem" data-nodeid="5">
         Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 
-        <li id="knuth" class="bibitem">
+        <li id="knuth" class="bibitem" data-nodeid="6">
         Knuth, Donald E. "Art of computer programming, volume 2: Seminumerical algorithms". Addison-Wesley Professional. 2014.<br />[<a class="reference backlink" href="#cite-0">^1</a>]
         </li>
 

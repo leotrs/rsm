@@ -6,11 +6,11 @@ SIMPLE_WANT = """\
 
 <div class="manuscriptwrapper">
 
-<div class="manuscript">
+<div class="manuscript" data-nodeid="0">
 
 <section class="level-1">
 
-<figure class="figure">
+<figure class="figure" data-nodeid="1">
 <img src="assets/example.png" alt="Figure 1.">
 <figcaption>
 <span class="span"><strong>Figure 1. </strong></span>This is the figure caption.
@@ -108,14 +108,14 @@ def test_caption_with_inline_tags():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <figure class="figure">
+        <figure class="figure" data-nodeid="1">
         <img src="assets/example.png" alt="Figure 1.">
         <figcaption>
-        <span class="span"><strong>Figure 1. </strong></span>This is the <span class="span"><strong>figure</strong></span> caption.
+        <span class="span"><strong>Figure 1. </strong></span>This is the <span class="span" data-nodeid="4"><strong>figure</strong></span> caption.
         </figcaption>
 
         </figure>

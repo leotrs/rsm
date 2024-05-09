@@ -19,20 +19,20 @@ def test_inline_cannot_contain_block():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>My Title</h1>
-        <span class="error">[CST error at (3, 0) - (3, 42)]</span>
-        <section class="section level-2">
+        <span class="error" data-nodeid="1">[CST error at (3, 0) - (3, 42)]</span>
+        <section class="section level-2" data-nodeid="2">
         
         <h2>1. </h2>
         
-        <p class="paragraph">with a block.</p>
+        <p class="paragraph" data-nodeid="3">with a block.</p>
         
         </section>
-        <span class="error">[CST error at (5, 0) - (5, 2)]</span>
+        <span class="error" data-nodeid="5">[CST error at (5, 0) - (5, 2)]</span>
         </section>
 
         </div>
@@ -60,19 +60,19 @@ def test_paragraph_ends_at_block():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>My Title</h1>
 
-        <p class="paragraph">This paragraph will terminate before the section starts</p>
+        <p class="paragraph" data-nodeid="1">This paragraph will terminate before the section starts</p>
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="3">
 
         <h2>1. </h2>
 
-        <p class="paragraph">And this is inside the section.</p>
+        <p class="paragraph" data-nodeid="4">And this is inside the section.</p>
 
         </section>
 

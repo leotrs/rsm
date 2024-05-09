@@ -26,31 +26,31 @@ def test_works_with_no_reftext_and_label():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="proof">
+        <div class="proof" data-nodeid="1">
 
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="proof-contents">
 
-        <div id="lbl" class="step">
+        <div id="lbl" class="step" data-nodeid="2">
 
-        <div class="statement">
+        <div class="statement" data-nodeid="3">
 
-        <p class="paragraph">Foo.</p>
-
-        </div>
+        <p class="paragraph" data-nodeid="4">Foo.</p>
 
         </div>
 
-        <div class="step last">
+        </div>
 
-        <div class="statement">
+        <div class="step last" data-nodeid="6">
 
-        <p class="paragraph">Bar <a class="reference" href="#lbl">Step 1</a>.</p>
+        <div class="statement" data-nodeid="7">
+
+        <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#lbl">Step 1</a>.</p>
 
         </div>
 
@@ -93,31 +93,31 @@ def test_works_with_no_reftext_and_no_label():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="proof">
+        <div class="proof" data-nodeid="1">
 
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="proof-contents">
 
-        <div class="step">
+        <div class="step" data-nodeid="2">
 
-        <div class="statement">
+        <div class="statement" data-nodeid="3">
 
-        <p class="paragraph">Foo.</p>
-
-        </div>
+        <p class="paragraph" data-nodeid="4">Foo.</p>
 
         </div>
 
-        <div class="step last">
+        </div>
 
-        <div class="statement">
+        <div class="step last" data-nodeid="6">
 
-        <p class="paragraph">Bar <a class="reference" href="#">Step 1</a>.</p>
+        <div class="statement" data-nodeid="7">
+
+        <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#">Step 1</a>.</p>
 
         </div>
 
@@ -162,31 +162,31 @@ def test_works_with_reftext_and_label():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="proof">
+        <div class="proof" data-nodeid="1">
 
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="proof-contents">
 
-        <div id="lbl" class="step">
+        <div id="lbl" class="step" data-nodeid="2">
 
-        <div class="statement">
+        <div class="statement" data-nodeid="3">
 
-        <p class="paragraph">Foo.</p>
-
-        </div>
+        <p class="paragraph" data-nodeid="4">Foo.</p>
 
         </div>
 
-        <div class="step last">
+        </div>
 
-        <div class="statement">
+        <div class="step last" data-nodeid="6">
 
-        <p class="paragraph">Bar <a class="reference" href="#lbl">bar</a>.</p>
+        <div class="statement" data-nodeid="7">
+
+        <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#lbl">bar</a>.</p>
 
         </div>
 
@@ -229,31 +229,31 @@ def test_works_with_reftext_and_no_label():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <div class="proof">
+        <div class="proof" data-nodeid="1">
 
         <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="proof-contents">
 
-        <div class="step">
+        <div class="step" data-nodeid="2">
 
-        <div class="statement">
+        <div class="statement" data-nodeid="3">
 
-        <p class="paragraph">Foo.</p>
-
-        </div>
+        <p class="paragraph" data-nodeid="4">Foo.</p>
 
         </div>
 
-        <div class="step last">
+        </div>
 
-        <div class="statement">
+        <div class="step last" data-nodeid="6">
 
-        <p class="paragraph">Bar <a class="reference" href="#">bar</a>.</p>
+        <div class="statement" data-nodeid="7">
+
+        <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#">bar</a>.</p>
 
         </div>
 

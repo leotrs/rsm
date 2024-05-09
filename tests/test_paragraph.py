@@ -16,11 +16,11 @@ def test_succeeding_blankline():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph">Foo.</p>
+        <p class="paragraph" data-nodeid="1">Foo.</p>
 
         </section>
 
@@ -46,11 +46,11 @@ def test_succeeding_blankline_with_tag():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph foo">This is a paragraph.</p>
+        <p class="paragraph foo" data-nodeid="1">This is a paragraph.</p>
 
         </section>
 
@@ -77,11 +77,11 @@ def test_start_with_tag():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="span"><strong>this tag</strong></span> starts the paragraph.</p>
+        <p class="paragraph" data-nodeid="1"><span class="span" data-nodeid="2"><strong>this tag</strong></span> starts the paragraph.</p>
 
         </section>
 
@@ -108,11 +108,11 @@ def test_start_with_shortcut():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <p class="paragraph"><span class="construct claim"><span class="keyword">⊢ </span>A claim</span>.</p>
+        <p class="paragraph" data-nodeid="1"><span class="construct claim" data-nodeid="2"><span class="keyword" data-nodeid="3">⊢ </span>A claim</span>.</p>
 
         </section>
 
@@ -163,23 +163,23 @@ def test_simple():
 
         <div class="manuscriptwrapper">
 
-        <div id="mylbl" class="manuscript">
+        <div id="mylbl" class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>The Perron non-backtracking eigenvalue after node addition</h1>
 
-        <section id="sec-introduction" class="section level-2 t1 t2">
+        <section id="sec-introduction" class="section level-2 t1 t2" data-nodeid="1">
 
         <h2>1. Introduction</h2>
 
-        <p class="paragraph">Lorem ipsum.</p>
+        <p class="paragraph" data-nodeid="2">Lorem ipsum.</p>
 
-        <p id="par1" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
+        <p id="par1" class="paragraph" data-nodeid="4">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
 
-        <p id="par2" class="paragraph">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
+        <p id="par2" class="paragraph" data-nodeid="6">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
 
-        <p id="par3" class="paragraph a b c">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
+        <p id="par3" class="paragraph a b c" data-nodeid="8">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
 
         </section>
 

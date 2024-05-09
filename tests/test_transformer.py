@@ -19,13 +19,13 @@ def test_duplicate_label_warning(caplog):
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
         <h1>Title</h1>
 
-        <p class="paragraph">There are <span id="mylbl" class="span">two</span> spans with the <span class="span">same</span> label in this paragraph.</p>
+        <p class="paragraph" data-nodeid="1">There are <span id="mylbl" class="span" data-nodeid="3">two</span> spans with the <span class="span" data-nodeid="6">same</span> label in this paragraph.</p>
 
         </section>
 
@@ -72,7 +72,7 @@ def test_duplicate_bibtex_item_warning(caplog):
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
@@ -80,13 +80,13 @@ def test_duplicate_bibtex_item_warning(caplog):
 
         <h2>References</h2>
 
-        <ol class="bibliography">
+        <ol class="bibliography" data-nodeid="1">
 
-        <li id="torres2020" class="bibitem">
+        <li id="torres2020" class="bibitem" data-nodeid="2">
         Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.
         </li>
 
-        <li class="bibitem">
+        <li class="bibitem" data-nodeid="3">
         Bar. "Foo". Bug.
         </li>
 
@@ -126,15 +126,15 @@ def test_theorem_within_section():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Section</h2>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="2">
 
         <div class="theorem-contents">
 
@@ -181,15 +181,15 @@ def test_two_theorems_same_section():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Section</h2>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="2">
 
         <div class="theorem-contents">
 
@@ -199,7 +199,7 @@ def test_two_theorems_same_section():
 
         </div>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="3">
 
         <div class="theorem-contents">
 
@@ -250,15 +250,15 @@ def test_two_theorems_different_sections():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Section 1</h2>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="2">
 
         <div class="theorem-contents">
 
@@ -270,11 +270,11 @@ def test_two_theorems_different_sections():
 
         </section>
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="3">
 
         <h2>2. Section 2</h2>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="4">
 
         <div class="theorem-contents">
 
@@ -322,15 +322,15 @@ def test_two_theorems_same_section_nonum():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Section</h2>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="2">
 
         <div class="theorem-contents">
 
@@ -340,7 +340,7 @@ def test_two_theorems_same_section_nonum():
 
         </div>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="3">
 
         <div class="theorem-contents">
 
@@ -384,15 +384,15 @@ def test_theorem_inside_section_with_nonum():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>Section</h2>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="2">
 
         <div class="theorem-contents">
 
@@ -439,19 +439,19 @@ def test_theorem_inside_subsection():
 
         <div class="manuscriptwrapper">
 
-        <div class="manuscript">
+        <div class="manuscript" data-nodeid="0">
 
         <section class="level-1">
 
-        <section class="section level-2">
+        <section class="section level-2" data-nodeid="1">
 
         <h2>1. Section</h2>
 
-        <section class="subsection level-3">
+        <section class="subsection level-3" data-nodeid="2">
 
         <h3>1.1. Subsection</h3>
 
-        <div class="theorem">
+        <div class="theorem" data-nodeid="3">
 
         <div class="theorem-contents">
 

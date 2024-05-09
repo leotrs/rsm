@@ -88,6 +88,9 @@ markers = [
     'slow: marks tests as slow (deselect with "-m \"not slow\"")',
     "serial",
 ]
+filterwarnings = [
+    "ignore:.*pkg_resources.*:DeprecationWarning",
+]
 
 
 # Poe the poet

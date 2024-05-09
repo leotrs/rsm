@@ -127,6 +127,7 @@ def make() -> int:
         cmd = " ".join(other_args)
         server = livereload.Server()
         server.watch(args.src, livereload.shell(cmd))
+        main(parser, app.make, args)
         server.serve(root=".")
     else:
         main(parser, app.make, args)

@@ -1,4 +1,4 @@
-﻿Algorithm
+Algorithm
 =========
 
 Qualified name: ``rsm.nodes.Algorithm``
@@ -22,6 +22,7 @@ Qualified name: ``rsm.nodes.Algorithm``
    .. autosummary::
      
      ~Algorithm.autonumber
+     ~Algorithm.nodeid
      ~Algorithm.label
      ~Algorithm.types
      ~Algorithm.number

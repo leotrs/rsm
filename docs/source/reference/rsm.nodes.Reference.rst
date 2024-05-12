@@ -1,4 +1,4 @@
-﻿Reference
+Reference
 =========
 
 Qualified name: ``rsm.nodes.Reference``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Reference``
 
    .. autosummary::
      
+     ~Reference.nodeid
      ~Reference.label
      ~Reference.types
      ~Reference.number

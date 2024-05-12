@@ -128,12 +128,12 @@ class RSMTranslatorError(Exception):
 
 
 def _make_tag(
-        tag: str,
-        id_: str,
-        classes: Iterable,
-        is_selectable: bool = False,
-        nodeid: int | None = None,
-        **kwargs: Any,
+    tag: str,
+    id_: str,
+    classes: Iterable,
+    is_selectable: bool = False,
+    nodeid: int | None = None,
+    **kwargs: Any,
 ) -> str:
     text = f"<{tag}"
     if id_:
@@ -251,12 +251,10 @@ class AppendOpenCloseTag(AppendText):
     def make_text(self) -> str:
         outer = "\n" if self.newline_outer else ""
         inner = "\n" if self.newline_inner else ""
-        tag = _make_tag(self.tag, self.id, self.classes, self.is_selectable, **self.custom_attrs)
-        return (
-            outer + tag
-            + inner + self.content
-            + inner + f"</{self.tag}>" + outer
+        tag = _make_tag(
+            self.tag, self.id, self.classes, self.is_selectable, **self.custom_attrs
         )
+        return outer + tag + inner + self.content + inner + f"</{self.tag}>" + outer
 
     def __repr__(self) -> str:
         return self._edit_command_repr(["tag", "content", "id", "classes"])
@@ -288,7 +286,9 @@ class AppendOpenTagManualClose(AppendText):
     def make_text(self) -> str:
         outer = "\n" if self.newline_outer else ""
         inner = "\n" if self.newline_inner else ""
-        tag = _make_tag(self.tag, self.id, self.classes, self.is_selectable, *self.custom_attrs)
+        tag = _make_tag(
+            self.tag, self.id, self.classes, self.is_selectable, *self.custom_attrs
+        )
         return outer + tag + inner + self.content
 
     def __repr__(self) -> str:
@@ -326,7 +326,9 @@ class AppendOpenTag(AppendTextAndDefer):
     def make_text(self) -> str:
         outer = "\n" if self.newline_outer else ""
         inner = "\n" if self.newline_inner else ""
-        tag = _make_tag(self.tag, self.id, self.classes, self.is_selectable, **self.custom_attrs)
+        tag = _make_tag(
+            self.tag, self.id, self.classes, self.is_selectable, **self.custom_attrs
+        )
         return outer + tag + inner
 
     def make_deferred_text(self) -> str:

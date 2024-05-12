@@ -1,4 +1,4 @@
-﻿Abstract
+Abstract
 ========
 
 Qualified name: ``rsm.nodes.Abstract``
@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Abstract``
      ~Abstract.newmetakeys
      ~Abstract.keywords
      ~Abstract.msc
+     ~Abstract.nodeid
      ~Abstract.label
      ~Abstract.types
      ~Abstract.number

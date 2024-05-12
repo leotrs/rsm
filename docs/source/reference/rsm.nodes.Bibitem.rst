@@ -1,4 +1,4 @@
-﻿Bibitem
+Bibitem
 =======
 
 Qualified name: ``rsm.nodes.Bibitem``
@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Bibitem``
      ~Bibitem.autonumber
      ~Bibitem.classreftext
      ~Bibitem.newmetakeys
+     ~Bibitem.nodeid
      ~Bibitem.label
      ~Bibitem.types
      ~Bibitem.number

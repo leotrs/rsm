@@ -1,4 +1,4 @@
-﻿BaseParagraph
+BaseParagraph
 =============
 
 Qualified name: ``rsm.nodes.BaseParagraph``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.BaseParagraph``
 
    .. autosummary::
      
+     ~BaseParagraph.nodeid
      ~BaseParagraph.label
      ~BaseParagraph.types
      ~BaseParagraph.number

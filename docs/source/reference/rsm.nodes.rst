@@ -47,6 +47,8 @@
       
         Contents
       
+        Corollary
+      
         Definition
       
         Draft
@@ -54,6 +56,8 @@
         Enumerate
       
         Error
+      
+        Example
       
         Figure
       

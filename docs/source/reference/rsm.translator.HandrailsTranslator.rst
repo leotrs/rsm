@@ -21,6 +21,7 @@ Qualified name: ``rsm.translator.HandrailsTranslator``
       ~HandrailsTranslator.visit_contents
       ~HandrailsTranslator.visit_manuscript
       ~HandrailsTranslator.visit_mathblock
+      ~HandrailsTranslator.visit_paragraph
       ~HandrailsTranslator.visit_proof
       ~HandrailsTranslator.visit_section
       ~HandrailsTranslator.visit_step

@@ -1,4 +1,4 @@
-﻿Node
+Node
 ====
 
 Qualified name: ``rsm.nodes.Node``
@@ -17,6 +17,7 @@ Qualified name: ``rsm.nodes.Node``
       
       ~Node.first_ancestor_of_type
       ~Node.first_of_type
+      ~Node.get_child_by_id
       ~Node.ingest_dict_as_meta
       ~Node.last_of_type
       ~Node.metakeys
@@ -42,6 +43,7 @@ Qualified name: ``rsm.nodes.Node``
      ~Node.parent
      ~Node.possible_parents
      ~Node.reftext
+     ~Node.nodeid
      ~Node.label
      ~Node.types
      ~Node.number

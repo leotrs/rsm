@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.SourceCode``
 
    .. autosummary::
      
+     ~SourceCode.nodeid
      ~SourceCode.label
      ~SourceCode.types
      ~SourceCode.number

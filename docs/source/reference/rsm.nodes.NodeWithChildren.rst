@@ -1,4 +1,4 @@
-﻿NodeWithChildren
+NodeWithChildren
 ================
 
 Qualified name: ``rsm.nodes.NodeWithChildren``
@@ -26,6 +26,7 @@ Qualified name: ``rsm.nodes.NodeWithChildren``
    .. autosummary::
      
      ~NodeWithChildren.children
+     ~NodeWithChildren.nodeid
      ~NodeWithChildren.label
      ~NodeWithChildren.types
      ~NodeWithChildren.number

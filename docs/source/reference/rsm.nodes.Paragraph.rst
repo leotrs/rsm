@@ -1,4 +1,4 @@
-﻿Paragraph
+Paragraph
 =========
 
 Qualified name: ``rsm.nodes.Paragraph``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Paragraph``
 
    .. autosummary::
      
+     ~Paragraph.nodeid
      ~Paragraph.label
      ~Paragraph.types
      ~Paragraph.number

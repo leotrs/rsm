@@ -1,4 +1,4 @@
-﻿PendingReference
+PendingReference
 ================
 
 Qualified name: ``rsm.nodes.PendingReference``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.PendingReference``
 
    .. autosummary::
      
+     ~PendingReference.nodeid
      ~PendingReference.label
      ~PendingReference.types
      ~PendingReference.number

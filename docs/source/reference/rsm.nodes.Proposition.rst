@@ -1,4 +1,4 @@
-﻿Proposition
+Proposition
 ===========
 
 Qualified name: ``rsm.nodes.Proposition``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Proposition``
 
    .. autosummary::
      
+     ~Proposition.nodeid
      ~Proposition.label
      ~Proposition.types
      ~Proposition.number

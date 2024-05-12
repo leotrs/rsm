@@ -1,4 +1,4 @@
-﻿Note
+Note
 ====
 
 Qualified name: ``rsm.nodes.Note``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Note``
 
    .. autosummary::
      
+     ~Note.nodeid
      ~Note.label
      ~Note.types
      ~Note.number

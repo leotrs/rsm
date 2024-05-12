@@ -1,4 +1,4 @@
-﻿Item
+Item
 ====
 
 Qualified name: ``rsm.nodes.Item``
@@ -22,6 +22,7 @@ Qualified name: ``rsm.nodes.Item``
    .. autosummary::
      
      ~Item.possible_parents
+     ~Item.nodeid
      ~Item.label
      ~Item.types
      ~Item.number

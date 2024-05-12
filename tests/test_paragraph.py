@@ -64,6 +64,36 @@ def test_succeeding_blankline_with_tag():
     )
 
 
+def test_tag_no_meta():
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        :paragraph: This is a paragraph.
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+        <span class="error" data-nodeid="1">[CST error at (2, 0) - (2, 11)]</span>
+        <p class="paragraph" data-nodeid="2">This is a paragraph.</p>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
 def test_start_with_tag():
     compare_have_want(
         have="""\

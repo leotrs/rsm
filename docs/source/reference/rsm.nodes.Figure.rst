@@ -1,4 +1,4 @@
-﻿Figure
+Figure
 ======
 
 Qualified name: ``rsm.nodes.Figure``
@@ -23,6 +23,7 @@ Qualified name: ``rsm.nodes.Figure``
      
      ~Figure.autonumber
      ~Figure.newmetakeys
+     ~Figure.nodeid
      ~Figure.label
      ~Figure.types
      ~Figure.number

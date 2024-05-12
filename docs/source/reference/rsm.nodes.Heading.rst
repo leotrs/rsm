@@ -1,4 +1,4 @@
-﻿Heading
+Heading
 =======
 
 Qualified name: ``rsm.nodes.Heading``
@@ -22,6 +22,7 @@ Qualified name: ``rsm.nodes.Heading``
    .. autosummary::
      
      ~Heading.newmetakeys
+     ~Heading.nodeid
      ~Heading.label
      ~Heading.types
      ~Heading.number

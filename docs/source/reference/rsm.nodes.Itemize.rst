@@ -1,4 +1,4 @@
-﻿Itemize
+Itemize
 =======
 
 Qualified name: ``rsm.nodes.Itemize``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Itemize``
 
    .. autosummary::
      
+     ~Itemize.nodeid
      ~Itemize.label
      ~Itemize.types
      ~Itemize.number

@@ -1,4 +1,4 @@
-﻿Span
+Span
 ====
 
 Qualified name: ``rsm.nodes.Span``
@@ -23,6 +23,7 @@ Qualified name: ``rsm.nodes.Span``
      
      ~Span.attr_to_tag
      ~Span.newmetakeys
+     ~Span.nodeid
      ~Span.label
      ~Span.types
      ~Span.number

@@ -23,10 +23,14 @@ bibtex = BlockTagInfo(None)
 """List of bibliography items."""
 codeblock = BlockTagInfo(None)
 """Code listing."""
+corollary = BlockTagInfo(None)
+"""Corollary."""
 definition = BlockTagInfo(None)
 """Definition."""
 enumerate = BlockTagInfo(None)  # pylint: disable=redefined-builtin
 """Numbered list."""
+example = BlockTagInfo(None)
+"""Example."""
 figure = BlockTagInfo(None)
 """Figure float."""
 itemize = BlockTagInfo(None)

@@ -1,4 +1,4 @@
-﻿Manuscript
+Manuscript
 ==========
 
 Qualified name: ``rsm.nodes.Manuscript``
@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Manuscript``
      ~Manuscript.full_number
      ~Manuscript.newmetakeys
      ~Manuscript.nonum
+     ~Manuscript.nodeid
      ~Manuscript.label
      ~Manuscript.types
      ~Manuscript.number

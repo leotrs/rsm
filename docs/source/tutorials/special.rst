@@ -146,3 +146,26 @@ where the Appendix starts.
 
 Among other things, the ``:appendix:`` stamp restarts the numbering of the following
 sections and changes it from arabic to roman numerals.
+
+
+Paragraphs
+**********
+
+Paragraphs of text need no tag.  However, if you want to refer to an entire paragraph of
+text, you need to add a label to you.  Labels can only be specified in meta tags, and
+meta tags can only go immediately after the opening tag of a block or inline.  Then how
+can we label a paragraph of text?
+
+The ``:paragraph:`` tag exists for this reason.  Similar to the ``:item:`` tag, it does
+not need a closing Halmos.  Note that if it us used, then some meta tags *must* be
+added.
+
+.. rsm::
+
+   :manuscript:
+
+   :paragraph: {:label:my-para} This is how you refer to a paragraph of text.
+
+   And now we refer to the entire previous :ref:my-para,paragraph::.
+
+   ::

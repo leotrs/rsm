@@ -1,4 +1,4 @@
-﻿Bibliography
+Bibliography
 ============
 
 Qualified name: ``rsm.nodes.Bibliography``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Bibliography``
 
    .. autosummary::
      
+     ~Bibliography.nodeid
      ~Bibliography.label
      ~Bibliography.types
      ~Bibliography.number

@@ -17,6 +17,7 @@ Qualified name: ``rsm.transformer.Transformer``
       
       ~Transformer.add_keywords_to_constructs
       ~Transformer.add_necessary_subproofs
+      ~Transformer.assign_node_ids
       ~Transformer.autonumber_nodes
       ~Transformer.collect_labels
       ~Transformer.make_toc

@@ -1,4 +1,4 @@
-﻿Subproof
+Subproof
 ========
 
 Qualified name: ``rsm.nodes.Subproof``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Subproof``
 
    .. autosummary::
      
+     ~Subproof.nodeid
      ~Subproof.label
      ~Subproof.types
      ~Subproof.number

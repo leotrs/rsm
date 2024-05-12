@@ -1,4 +1,4 @@
-﻿Author
+Author
 ======
 
 Qualified name: ``rsm.nodes.Author``
@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Author``
      ~Author.name
      ~Author.affiliation
      ~Author.email
+     ~Author.nodeid
      ~Author.label
      ~Author.types
      ~Author.number

@@ -1,4 +1,4 @@
-﻿ClaimBlock
+ClaimBlock
 ==========
 
 Qualified name: ``rsm.nodes.ClaimBlock``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.ClaimBlock``
 
    .. autosummary::
      
+     ~ClaimBlock.nodeid
      ~ClaimBlock.label
      ~ClaimBlock.types
      ~ClaimBlock.number

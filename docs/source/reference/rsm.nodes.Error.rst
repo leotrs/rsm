@@ -1,4 +1,4 @@
-﻿Error
+Error
 =====
 
 Qualified name: ``rsm.nodes.Error``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Error``
 
    .. autosummary::
      
+     ~Error.nodeid
      ~Error.label
      ~Error.types
      ~Error.number

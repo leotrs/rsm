@@ -1,4 +1,4 @@
-﻿Statement
+Statement
 =========
 
 Qualified name: ``rsm.nodes.Statement``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Statement``
 
    .. autosummary::
      
+     ~Statement.nodeid
      ~Statement.label
      ~Statement.types
      ~Statement.number

@@ -1,4 +1,4 @@
-﻿Proof
+Proof
 =====
 
 Qualified name: ``rsm.nodes.Proof``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Proof``
 
    .. autosummary::
      
+     ~Proof.nodeid
      ~Proof.label
      ~Proof.types
      ~Proof.number

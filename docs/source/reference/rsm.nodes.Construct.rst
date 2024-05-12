@@ -1,4 +1,4 @@
-﻿Construct
+Construct
 =========
 
 Qualified name: ``rsm.nodes.Construct``
@@ -23,6 +23,7 @@ Qualified name: ``rsm.nodes.Construct``
      
      ~Construct.keyword
      ~Construct.kind_to_keyword
+     ~Construct.nodeid
      ~Construct.label
      ~Construct.types
      ~Construct.number

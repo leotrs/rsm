@@ -1,4 +1,4 @@
-﻿Lemma
+Lemma
 =====
 
 Qualified name: ``rsm.nodes.Lemma``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Lemma``
 
    .. autosummary::
      
+     ~Lemma.nodeid
      ~Lemma.label
      ~Lemma.types
      ~Lemma.number

@@ -1,4 +1,4 @@
-﻿Appendix
+Appendix
 ========
 
 Qualified name: ``rsm.nodes.Appendix``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Appendix``
 
    .. autosummary::
      
+     ~Appendix.nodeid
      ~Appendix.label
      ~Appendix.types
      ~Appendix.number

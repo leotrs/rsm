@@ -1,4 +1,4 @@
-﻿Text
+Text
 ====
 
 Qualified name: ``rsm.nodes.Text``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Text``
 
    .. autosummary::
      
+     ~Text.nodeid
      ~Text.label
      ~Text.types
      ~Text.number

@@ -1,4 +1,4 @@
-﻿Keyword
+Keyword
 =======
 
 Qualified name: ``rsm.nodes.Keyword``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Keyword``
 
    .. autosummary::
      
+     ~Keyword.nodeid
      ~Keyword.label
      ~Keyword.types
      ~Keyword.number

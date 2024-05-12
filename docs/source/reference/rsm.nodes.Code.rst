@@ -1,4 +1,4 @@
-﻿Code
+Code
 ====
 
 Qualified name: ``rsm.nodes.Code``
@@ -22,6 +22,7 @@ Qualified name: ``rsm.nodes.Code``
    .. autosummary::
      
      ~Code.newmetakeys
+     ~Code.nodeid
      ~Code.label
      ~Code.types
      ~Code.number

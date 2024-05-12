@@ -1,4 +1,4 @@
-﻿PendingPrev
+PendingPrev
 ===========
 
 Qualified name: ``rsm.nodes.PendingPrev``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.PendingPrev``
 
    .. autosummary::
      
+     ~PendingPrev.nodeid
      ~PendingPrev.label
      ~PendingPrev.types
      ~PendingPrev.number

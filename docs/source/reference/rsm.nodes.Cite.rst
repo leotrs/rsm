@@ -1,4 +1,4 @@
-﻿Cite
+Cite
 ====
 
 Qualified name: ``rsm.nodes.Cite``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Cite``
 
    .. autosummary::
      
+     ~Cite.nodeid
      ~Cite.label
      ~Cite.types
      ~Cite.number

@@ -1,4 +1,4 @@
-﻿Definition
+Definition
 ==========
 
 Qualified name: ``rsm.nodes.Definition``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Definition``
 
    .. autosummary::
      
+     ~Definition.nodeid
      ~Definition.label
      ~Definition.types
      ~Definition.number

@@ -1,4 +1,4 @@
-﻿UnknownBibitem
+UnknownBibitem
 ==============
 
 Qualified name: ``rsm.nodes.UnknownBibitem``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.UnknownBibitem``
 
    .. autosummary::
      
+     ~UnknownBibitem.nodeid
      ~UnknownBibitem.label
      ~UnknownBibitem.types
      ~UnknownBibitem.number

@@ -1,4 +1,4 @@
-﻿Theorem
+Theorem
 =======
 
 Qualified name: ``rsm.nodes.Theorem``
@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Theorem``
      ~Theorem.autonumber
      ~Theorem.newmetakeys
      ~Theorem.title
+     ~Theorem.nodeid
      ~Theorem.label
      ~Theorem.types
      ~Theorem.number

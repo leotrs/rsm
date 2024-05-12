@@ -1,4 +1,4 @@
-﻿Draft
+Draft
 =====
 
 Qualified name: ``rsm.nodes.Draft``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Draft``
 
    .. autosummary::
      
+     ~Draft.nodeid
      ~Draft.label
      ~Draft.types
      ~Draft.number

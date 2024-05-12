@@ -1,4 +1,4 @@
-﻿PendingCite
+PendingCite
 ===========
 
 Qualified name: ``rsm.nodes.PendingCite``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.PendingCite``
 
    .. autosummary::
      
+     ~PendingCite.nodeid
      ~PendingCite.label
      ~PendingCite.types
      ~PendingCite.number

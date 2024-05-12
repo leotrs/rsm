@@ -1,4 +1,4 @@
-﻿Subsection
+Subsection
 ==========
 
 Qualified name: ``rsm.nodes.Subsection``
@@ -23,6 +23,7 @@ Qualified name: ``rsm.nodes.Subsection``
      
      ~Subsection.classreftext
      ~Subsection.level
+     ~Subsection.nodeid
      ~Subsection.label
      ~Subsection.types
      ~Subsection.number

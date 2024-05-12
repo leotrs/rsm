@@ -1,11 +1,11 @@
-Itemize
+Example
 =======
 
-Qualified name: ``rsm.nodes.Itemize``
+Qualified name: ``rsm.nodes.Example``
 
 .. currentmodule:: rsm.nodes
 
-.. autoclass:: Itemize
+.. autoclass:: Example
    :show-inheritance:
    :members:
 
@@ -21,10 +21,10 @@ Qualified name: ``rsm.nodes.Itemize``
 
    .. autosummary::
      
-     ~Itemize.nodeid
-     ~Itemize.label
-     ~Itemize.types
-     ~Itemize.number
-     ~Itemize.nonum
-     ~Itemize.reftext_template
+     ~Example.nodeid
+     ~Example.label
+     ~Example.types
+     ~Example.number
+     ~Example.nonum
+     ~Example.reftext_template
    

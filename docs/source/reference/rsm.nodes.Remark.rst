@@ -1,4 +1,4 @@
-﻿Remark
+Remark
 ======
 
 Qualified name: ``rsm.nodes.Remark``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Remark``
 
    .. autosummary::
      
+     ~Remark.nodeid
      ~Remark.label
      ~Remark.types
      ~Remark.number

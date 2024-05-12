@@ -1460,6 +1460,14 @@ class Lemma(Theorem):
     _number_as = Theorem
 
 
+class Corollary(Theorem):
+    _number_as = Theorem
+
+
+class Example(Theorem):
+    _number_as = Theorem
+
+
 class Proposition(Theorem):
     _number_as = Theorem
 

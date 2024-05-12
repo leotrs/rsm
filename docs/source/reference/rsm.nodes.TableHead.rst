@@ -1,4 +1,4 @@
-﻿TableHead
+TableHead
 =========
 
 Qualified name: ``rsm.nodes.TableHead``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.TableHead``
 
    .. autosummary::
      
+     ~TableHead.nodeid
      ~TableHead.label
      ~TableHead.types
      ~TableHead.number

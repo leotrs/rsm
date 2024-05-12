@@ -1,4 +1,4 @@
-﻿Math
+Math
 ====
 
 Qualified name: ``rsm.nodes.Math``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Math``
 
    .. autosummary::
      
+     ~Math.nodeid
      ~Math.label
      ~Math.types
      ~Math.number

@@ -1,4 +1,4 @@
-﻿Caption
+Caption
 =======
 
 Qualified name: ``rsm.nodes.Caption``
@@ -22,6 +22,7 @@ Qualified name: ``rsm.nodes.Caption``
    .. autosummary::
      
      ~Caption.possible_parents
+     ~Caption.nodeid
      ~Caption.label
      ~Caption.types
      ~Caption.number

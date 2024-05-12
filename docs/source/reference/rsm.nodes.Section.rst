@@ -1,4 +1,4 @@
-﻿Section
+Section
 =======
 
 Qualified name: ``rsm.nodes.Section``
@@ -23,6 +23,7 @@ Qualified name: ``rsm.nodes.Section``
      
      ~Section.autonumber
      ~Section.level
+     ~Section.nodeid
      ~Section.label
      ~Section.types
      ~Section.number

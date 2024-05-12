@@ -1,4 +1,4 @@
-﻿TableDatum
+TableDatum
 ==========
 
 Qualified name: ``rsm.nodes.TableDatum``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.TableDatum``
 
    .. autosummary::
      
+     ~TableDatum.nodeid
      ~TableDatum.label
      ~TableDatum.types
      ~TableDatum.number

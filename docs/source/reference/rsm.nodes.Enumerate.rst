@@ -1,4 +1,4 @@
-﻿Enumerate
+Enumerate
 =========
 
 Qualified name: ``rsm.nodes.Enumerate``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.Enumerate``
 
    .. autosummary::
      
+     ~Enumerate.nodeid
      ~Enumerate.label
      ~Enumerate.types
      ~Enumerate.number

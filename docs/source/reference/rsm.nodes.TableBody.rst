@@ -1,4 +1,4 @@
-﻿TableBody
+TableBody
 =========
 
 Qualified name: ``rsm.nodes.TableBody``
@@ -21,6 +21,7 @@ Qualified name: ``rsm.nodes.TableBody``
 
    .. autosummary::
      
+     ~TableBody.nodeid
      ~TableBody.label
      ~TableBody.types
      ~TableBody.number

@@ -40,5 +40,3 @@ def test_all_tags_are_documented():
     grammar_tags = extract_grammar_tags()
     documented_tags = extract_documented_tags()
     assert grammar_tags == documented_tags
-    print(sorted(grammar_tags))
-    print(sorted(documented_tags))

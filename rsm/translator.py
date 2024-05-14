@@ -541,10 +541,10 @@ class Translator:
             logger.debug(f"Using {method} for node of class {ogclass}")
         return getattr(cls, method)
 
-    def push_visit(self, stack, node: nodes.Node) -> None:
+    def push_visit(self, stack: list[Action], node: nodes.Node) -> None:
         stack.append(self.Action(node, "visit", self.get_action_method(node, "visit")))
 
-    def push_leave(self, stack, node: nodes.Node) -> None:
+    def push_leave(self, stack: list[Action], node: nodes.Node) -> None:
         stack.append(self.Action(node, "leave", self.get_action_method(node, "leave")))
 
     def translate(self, tree: nodes.Manuscript, new: bool = True) -> str:
@@ -557,7 +557,7 @@ class Translator:
         if self.deferred:
             raise RSMTranslatorError("Something went wrong")
 
-        stack = []
+        stack: list[Translator.Action] = []
         self.push_visit(stack, tree)
         while stack:
             node, action, method = stack.pop()

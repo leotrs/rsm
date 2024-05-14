@@ -25,7 +25,7 @@ class BaseBuilder(ABC):
         self.web: Optional[WebManuscript] = None
         self.outname: str = "index.html"
 
-    def build(self, body: str, src: Path = None) -> WebManuscript:
+    def build(self, body: str, src: Path | None = None) -> WebManuscript:
         logger.info("Building...")
         self.body = body
         self.web = WebManuscript(src)

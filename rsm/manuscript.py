@@ -9,12 +9,12 @@ Classes that represent the manuscript at different stages.
 from pathlib import Path
 
 from fs.mountfs import MountFS
-from . import util
-from . import nodes
+
+from . import nodes, util
 
 
 class WebManuscript(MountFS):
-    def __init__(self, src: Path = None) -> None:
+    def __init__(self, src: Path | None = None) -> None:
         super().__init__()
         self.src = Path(src) if src else None
         self.body: str = ""

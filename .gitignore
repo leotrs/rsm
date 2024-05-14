@@ -146,3 +146,7 @@ node_modules
 
 # cibuildwheel stuff
 wheelhouse/
+
+# backstop.js stuff
+backstop_data/html_report/
+bitmaps_test/

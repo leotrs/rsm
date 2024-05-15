@@ -191,7 +191,9 @@ class LinterApp(ParserApp):
         log_time: bool = True,
         log_lineno: bool = True,
     ):
-        super().__init__(srcpath, plain, linter.Linter.LINT_LVL, log_format, log_time, log_lineno)
+        super().__init__(
+            srcpath, plain, linter.Linter.LINT_LVL, log_format, log_time, log_lineno
+        )
         mylinter = linter.Linter()
         self.add_task(Task("linter", mylinter, mylinter.lint))
 

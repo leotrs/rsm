@@ -574,6 +574,11 @@ class Translator:
 
         return self.body
 
+    def translate_and_return_body_and_tree(
+        self, tree: nodes.Manuscript, new: bool = True
+    ) -> tuple[str, nodes.Manuscript]:
+        return self.translate(tree, new), self.tree
+
     def visit_node(self, node: nodes.Node) -> EditCommand:
         return AppendBatchAndDefer(
             [

@@ -212,6 +212,7 @@ class ProcessorApp(ParserApp):
         sidebar: bool = True,
         add_source: bool = True,
         run_linter: bool = False,
+        return_tree: bool = False,
     ):
         super().__init__(srcpath, plain, loglevel, log_format, log_time, log_lineno)
         if run_linter:
@@ -220,8 +221,15 @@ class ProcessorApp(ParserApp):
         if not handrails:
             tr = translator.Translator()
         else:
-            tr = translator.HandrailsTranslator(hidden_handrails=hidden_handrails, sidebar=sidebar, add_source=add_source)
-        self.add_task(Task("translator", tr, tr.translate))
+            tr = translator.HandrailsTranslator(
+                hidden_handrails=hidden_handrails,
+                sidebar=sidebar,
+                add_source=add_source,
+            )
+        if return_tree:
+            self.add_task(Task("translator", tr, tr.translate_and_return_body_and_tree))
+        else:
+            self.add_task(Task("translator", tr, tr.translate))
 
 
 class FullBuildApp(ProcessorApp):
@@ -237,7 +245,14 @@ class FullBuildApp(ProcessorApp):
         run_linter: bool = False,
     ):
         super().__init__(
-            srcpath, plain, loglevel, log_format, log_time, handrails, run_linter
+            srcpath,
+            plain,
+            loglevel,
+            log_format,
+            log_time,
+            handrails,
+            run_linter,
+            return_tree=True,
         )
         self.add_task(Task("builder", b := builder.FullBuilder(), b.build))
         self.add_task(Task("writer", w := writer.Writer(), w.write))

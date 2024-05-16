@@ -150,3 +150,4 @@ wheelhouse/
 # backstop.js stuff
 tests/visual/backstop_data/html_report/
 tests/visual/backstop_data/bitmaps_test/
+tests/visual/rsm_data/*.html

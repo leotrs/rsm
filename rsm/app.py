@@ -243,6 +243,7 @@ class FullBuildApp(ProcessorApp):
         log_lineno: bool = True,
         handrails: bool = True,
         run_linter: bool = False,
+        outname: str = "index.html",
     ):
         super().__init__(
             srcpath,
@@ -254,7 +255,9 @@ class FullBuildApp(ProcessorApp):
             run_linter,
             return_tree=True,
         )
-        self.add_task(Task("builder", b := builder.FullBuilder(), b.build))
+        self.add_task(
+            Task("builder", b := builder.FullBuilder(outname=outname), b.build)
+        )
         self.add_task(Task("writer", w := writer.Writer(), w.write))
 
 
@@ -312,6 +315,7 @@ def make(
     log_format: str = "rsm",
     log_time: bool = True,
     log_lineno: bool = True,
+    outname: str = "index.html",
 ) -> str:
     return FullBuildApp(
         srcpath=path,
@@ -321,4 +325,5 @@ def make(
         log_format=log_format,
         log_time=log_time,
         log_lineno=log_lineno,
+        outname=outname,
     ).run()

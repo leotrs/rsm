@@ -20,11 +20,11 @@ logger = logging.getLogger("RSM").getChild("build")
 class BaseBuilder(ABC):
     """Use HTML body as a string and create a WebManuscript."""
 
-    def __init__(self) -> None:
+    def __init__(self, outname: str = "index.html") -> None:
         self.body: Optional[str] = None
         self.html: Optional[str] = None
         self.web: Optional[WebManuscript] = None
-        self.outname: str = "index.html"
+        self.outname: str = outname
 
     def build(
         self, body: str, tree: Manuscript | None, src: Path | None = None

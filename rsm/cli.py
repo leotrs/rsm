@@ -118,17 +118,22 @@ def lint() -> int:
 
 def make() -> int:
     parser = _init_parser()
+    parser.add_argument("--output", "-o", help="output filename", default="index.html")
     parser.add_argument("--serve", help="serve and autoreload", action="store_true")
     parser.set_defaults(handrails=True)
     args = parser.parse_args()
+
+    # this shoud be a partial instead...
+    func = lambda *a, **kw: app.make(*a, **kw, outname=args.output)
 
     if args.serve:
         other_args = [a for a in sys.argv if a != "--serve"]
         cmd = " ".join(other_args)
         server = livereload.Server()
         server.watch(args.src, livereload.shell(cmd))
-        main(parser, app.make, args)
+        main(parser, func, args)
         server.serve(root=".")
     else:
-        main(parser, app.make, args)
+
+        main(parser, func, args)
     return 0

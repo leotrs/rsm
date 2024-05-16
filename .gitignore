@@ -148,5 +148,5 @@ node_modules
 wheelhouse/
 
 # backstop.js stuff
-backstop_data/html_report/
-bitmaps_test/
+tests/visual/backstop_data/html_report/
+tests/visual/backstop_data/bitmaps_test/

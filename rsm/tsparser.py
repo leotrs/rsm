@@ -407,6 +407,9 @@ def _abstractify(cst):
         if cst_node.type == "comment":
             continue
 
+        print(cst_node)
+        print(dir(cst_node))
+
         # Handle bibliography-related nodes first and continue
         if (
             cst_node.type == "specialblock"

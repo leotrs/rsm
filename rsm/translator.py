@@ -1156,14 +1156,14 @@ class HandrailsTranslator(Translator):
         newitems = [
             handrail,
             btn_cont,
-            btn_togg,
-            AppendOpenCloseTag(
-                "span",
-                self.svg["rarrow"],
-                newline_inner=False,
-                newline_outer=False,
-            ),
-            btn_togg.close_command(),
+            # btn_togg,
+            # AppendOpenCloseTag(
+            #     "span",
+            #     # self.svg["rarrow"],
+            #     newline_inner=False,
+            #     newline_outer=False,
+            # ),
+            # btn_togg.close_command(),
             btn_menu,
             AppendOpenCloseTag(
                 "span",

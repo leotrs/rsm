@@ -1,0 +1,17 @@
+:manuscript:
+  :title: A reference
+
+# Section one
+  :label: sec-one
+
+Foo.
+
+::
+
+# Section two
+
+We reference :ref:sec-one::.
+
+::
+
+::

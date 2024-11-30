@@ -23,7 +23,15 @@ export function loadMathJax() {
             inTabOrder: false
           }
         }
-      }
+      },
+      startup: {
+        ready: () => {
+          MathJax.startup.defaultReady();
+          MathJax.startup.promise.then(() => {
+            setTimeout(1000);
+            console.log('MathJax ready');
+          });
+        }}
     };`
     document.body.appendChild(config);
 

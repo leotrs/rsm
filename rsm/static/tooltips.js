@@ -13,10 +13,11 @@ export function createTooltips() {
             // trying to select a class instead!
             target = target.replaceAll(".", "\\.");
             target = target.replaceAll(":", "\\:");
+	    if (target == "#") return;
+
             let tag = $(target).prop('tagName');
             let classes = $(target)[0].classList;
             let content = "";
-
             if (tag == "P") {
                 content = $(target).html();
                 content = `<div>${content}</div>`;

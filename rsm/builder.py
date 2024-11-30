@@ -30,7 +30,7 @@ class BaseBuilder(ABC):
         self, body: str, tree: Manuscript | None, src: Path | None = None
     ) -> WebManuscript:
         logger.info("Building...")
-        logger.debug(tree.title)
+        self.tree = tree
         self.body = body
         self.web = WebManuscript(src)
         self.web.body = body
@@ -88,8 +88,12 @@ class SingleFileBuilder(BaseBuilder):
             import { onload } from '/static/onload.js';
             window.addEventListener('load', (ev) => {window.lsp_ws = onload();});
           </script>
+        """
+            f"""
 
-          <title>{some_title}</title>
+          <title>{self.tree.title}</title>
+        """
+            """
         </head>
         """
         )

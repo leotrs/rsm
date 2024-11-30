@@ -1,0 +1,32 @@
+:manuscript:
+  :title: Theorem with proof
+
+:theorem:
+
+  This is a theorem. :claim: $2+2 = 4$ ::.
+
+::
+
+:proof:
+
+  :step: This is a step without proof. ::
+
+  :step: This is a step with a one-step proof.
+
+    :p: This is the one-step proof. ::
+
+  ::
+
+  :step: This is a step with a multi-step proof.
+
+    :p:
+      :step: One sub-step.::
+      :step: Two sub-steps.::
+    ::
+
+  ::
+
+::
+
+
+::

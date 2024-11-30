@@ -37,3 +37,12 @@ class Linter:
                 extra=dict(start_row=1, start_col=12),
             )
         return self.tree
+
+    def lint_section_label(self):
+        for section in self.tree.traverse(nodeclass=nodes.Section):
+            if not section.label:
+                print(section)
+                logger.lint(
+                    "Section with no label",
+                    extra={"start_row": 1, "start_col": 1},
+                )

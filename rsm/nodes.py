@@ -167,6 +167,8 @@ class Node:
         number: Optional[int] = None,
         nonum: bool = False,
         reftext_template: str = "",
+        start_point: tuple[int, int] = (-1, -1),
+        end_point: tuple[int, int] = (-1, -1),
     ) -> None:
         self.nodeid: str | None = None
         """Node id - always exists (unlike label), automatically assigned, unique within the tree."""
@@ -180,6 +182,10 @@ class Node:
         """Whether this node should be automatically given a number."""
         self.reftext_template: str = reftext_template or self.classreftext
         """Reftext template, or "" to use :attr:`classreftext`."""
+        self.start_point: tuple[int, int] = start_point
+        """The start point of the corresponding concrete syntax tree node."""
+        self.end_point: tuple[int, int] = end_point
+        """The end point of the corresponding concrete syntax tree node."""
         self._parent: Optional["NodeWithChildren"] = None
 
     def _attrs_for_repr_and_eq(self) -> list[str]:
@@ -1449,7 +1455,7 @@ class Theorem(Heading):
         clocks: int = 0,
         **kwargs: Any,
     ):
-        super().__init__(*kwargs)
+        super().__init__(**kwargs)
         self.title = title
         self.goals = goals or []
         self.stars = stars

@@ -275,8 +275,8 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     "section": nodes.Section,
     "sketch": nodes.Sketch,
     "source_file": nodes.Manuscript,
-    "spanemphas": lambda: nodes.Span(emphas=True),
-    "spanstrong": lambda: nodes.Span(strong=True),
+    "spanemphas": lambda **kwargs: nodes.Span(emphas=True, **kwargs),
+    "spanstrong": lambda **kwargs: nodes.Span(strong=True, **kwargs),
     "step": nodes.Step,
     "subproof": nodes.Subproof,
     "subsection": nodes.Subsection,
@@ -407,9 +407,6 @@ def _abstractify(cst):
         if cst_node.type == "comment":
             continue
 
-        print(cst_node)
-        print(dir(cst_node))
-
         # Handle bibliography-related nodes first and continue
         if (
             cst_node.type == "specialblock"
@@ -486,7 +483,10 @@ def _abstractify(cst):
 
         # make the correct type of AST node
         if ast_node_type in CST_TYPE_TO_AST_TYPE:
-            ast_node = CST_TYPE_TO_AST_TYPE[ast_node_type]()
+            ast_node = CST_TYPE_TO_AST_TYPE[ast_node_type](
+                start_point=cst_node.start_point,
+                end_point=cst_node.end_point,
+            )
             if isinstance(ast_node, nodes.Manuscript):
                 ast_root_node = ast_node
             elif isinstance(ast_node, nodes.Text):
@@ -504,7 +504,9 @@ def _abstractify(cst):
                 ),
             )
             ast_node = nodes.Error(
-                f"[CST error at ({start_row}, {start_col}) - ({end_row}, {end_col})]"
+                f"[CST error at ({start_row}, {start_col}) - ({end_row}, {end_col})]",
+                start_point=cst_node.start_point,
+                end_point=cst_node.end_point,
             )
         else:
             raise RSMParserError(msg=f"not found {ast_node_type}")
@@ -529,7 +531,9 @@ def _abstractify(cst):
 
         # mathblocks that are marked as claims must be enclosed within a ClaimBlock
         if ast_node_type == "mathblock" and ast_node.isclaim:
-            claimblock = nodes.ClaimBlock()
+            claimblock = nodes.ClaimBlock(
+                start_point=cst_node.start_point, end_point=cst_node.end_point
+            )
             claimblock.append(ast_node)
             ast_node = claimblock
 

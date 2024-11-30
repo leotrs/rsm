@@ -31,18 +31,22 @@ class Linter:
     def lint(self, tree: nodes.Manuscript) -> nodes.Manuscript:
         logger.info("Linting...")
         self.tree = tree
-        if not tree.title:
-            logger.lint(
-                "Manuscript with no title",
-                extra=dict(start_row=1, start_col=12),
-            )
+
+        self.lint_manuscript_title()
+        self.lint_section_label()
+
+    def _extra(self, node):
+        return {
+            "start_row": node.start_point[0] + 1,
+            "start_col": node.start_point[1] + 1,
+        }
+
+    def lint_manuscript_title(self):
+        if not self.tree.title:
+            logger.lint("Manuscript with no title", extra=self._extra(self.tree))
         return self.tree
 
     def lint_section_label(self):
         for section in self.tree.traverse(nodeclass=nodes.Section):
             if not section.label:
-                print(section)
-                logger.lint(
-                    "Section with no label",
-                    extra={"start_row": 1, "start_col": 1},
-                )
+                logger.lint("Section with no label", extra=self._extra(section))

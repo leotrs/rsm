@@ -444,6 +444,14 @@
     font-weight: var(--bold);
   }
 
+  p > span.construct:not(:first-child) > span.keyword {
+    margin-inline-start: 0.1rem;
+  }
+
+  p > span.construct > span.keyword {
+    margin-inline-end: 0.1rem;
+  }
+
   .proof {
 
     &-contents :last-of-type {

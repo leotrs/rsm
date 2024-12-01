@@ -124,6 +124,10 @@
   .manuscriptwrapper ol.enumerate,
   .manuscriptwrapper ul.itemize {
     margin-block-end: 1em; }
+  .manuscriptwrapper .handrail:has(+ .mathblock) p.paragraph,
+  .manuscriptwrapper .handrail:has(+ .mathblock) ol.enumerate,
+  .manuscriptwrapper .handrail:has(+ .mathblock) ul.itemize {
+    margin-block-end: 0; }
   .manuscriptwrapper ul.contents {
     list-style: none;
     padding-inline-start: 0; }
@@ -180,6 +184,10 @@
     margin-block: var(--h4-size); }
   .manuscriptwrapper img, .manuscriptwrapper svg {
     max-width: 100%; }
+  .manuscriptwrapper .handrail:has(> :nth-child(2).paragraph):has(+ .mathblock) {
+    margin-bottom: 0; }
+  .manuscriptwrapper .mathblock + .handrail:has(> :nth-child(2).paragraph) {
+    margin-top: 0; }
   .manuscriptwrapper .handrail {
     border-bottom-left-radius: 5px;
     border-width: 0 0 0 var(--border-thin);

@@ -152,10 +152,18 @@
   font-weight: var(--regular);
   line-height: var(--body-line-height);
 
+  // All paragraphs have this margin...
   p,
   ol.enumerate,
   ul.itemize {
     margin-block-end: 1em;
+  }
+  // ...except those whose parent handrail is followed by a mathblock, since the
+  // mathblock is meant to be part of the paragraph.
+  .handrail:has(+ .mathblock) p.paragraph,
+  .handrail:has(+ .mathblock) ol.enumerate,
+  .handrail:has(+ .mathblock) ul.itemize {
+    margin-block-end: 0;
   }
 
   ul.contents {
@@ -243,6 +251,14 @@
 
   img, svg {
     max-width: 100%;
+  }
+
+  // Reduce margin around mathblocks that are "inside" paragraphs
+  .handrail:has(> :nth-child(2).paragraph):has(+ .mathblock) {
+    margin-bottom: 0;
+   }
+  .mathblock + .handrail:has(> :nth-child(2).paragraph) {
+    margin-top: 0;
   }
 
   .handrail {

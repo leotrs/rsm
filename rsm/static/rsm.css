@@ -301,12 +301,14 @@
       transform: translateX(-100%); }
   .manuscriptwrapper .handrail.handrail--hug > .handrail__btn-container {
     top: 0; }
+  .manuscriptwrapper .handrail.handrail--hide > .handrail__btn-container {
+    top: -0.25rem; }
   .manuscriptwrapper .abstract div.handrail:first-of-type > .handrail__btn-container,
   .manuscriptwrapper .toc div.handrail:first-of-type > .handrail__btn-container {
     top: calc(var(--h3-size)/2 + (var(--header-line-height)*var(--h3-size) - var(--body-line-height)*1rem)/3); }
   .manuscriptwrapper div.theorem > .handrail:first-of-type > .handrail__btn-container,
   .manuscriptwrapper div.proof > .handrail:first-of-type > .handrail__btn-container {
-    top: 1rem; }
+    top: 0.75rem; }
   .manuscriptwrapper section.level-1 > .handrail:first-of-type > .handrail__btn-container {
     top: calc(var(--h1-size)/2 + (var(--header-line-height)*var(--h1-size) - var(--body-line-height)*1rem)/3); }
   .manuscriptwrapper section.level-2 > .handrail:first-of-type > .handrail__btn-container {

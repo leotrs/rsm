@@ -379,11 +379,11 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: var(--light);
     font-size: 0.75rem;
-    top: 32px;
-    right: 0;
-    z-index: 1;
+    top: 0;
+    z-index: 1000;
     background: var(--gray-200);
     color: var(--drk-gray);
+    width: max-content;
 
     & .option {
       display: block;
@@ -698,7 +698,6 @@
   .handrail:hover > .handrail__btn-container,
   .handrail:hover > .handrail__icons {
     display: flex;
-    flex-direction: row-reverse;
   }
 
   .handrail:hover > .step__number {

@@ -149,3 +149,6 @@ wheelhouse/
 
 # flake stuff
 .flake8
+
+# stupid mac stuff
+.DS_Store

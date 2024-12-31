@@ -1,4 +1,4 @@
-Algorithm
+﻿Algorithm
 =========
 
 Qualified name: ``rsm.nodes.Algorithm``
@@ -28,4 +28,6 @@ Qualified name: ``rsm.nodes.Algorithm``
      ~Algorithm.number
      ~Algorithm.nonum
      ~Algorithm.reftext_template
+     ~Algorithm.start_point
+     ~Algorithm.end_point
    

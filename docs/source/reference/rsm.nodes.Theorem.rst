@@ -1,4 +1,4 @@
-Theorem
+﻿Theorem
 =======
 
 Qualified name: ``rsm.nodes.Theorem``
@@ -30,4 +30,6 @@ Qualified name: ``rsm.nodes.Theorem``
      ~Theorem.number
      ~Theorem.nonum
      ~Theorem.reftext_template
+     ~Theorem.start_point
+     ~Theorem.end_point
    

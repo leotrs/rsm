@@ -1,4 +1,4 @@
-TableRow
+﻿TableRow
 ========
 
 Qualified name: ``rsm.nodes.TableRow``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.TableRow``
      ~TableRow.number
      ~TableRow.nonum
      ~TableRow.reftext_template
+     ~TableRow.start_point
+     ~TableRow.end_point
    

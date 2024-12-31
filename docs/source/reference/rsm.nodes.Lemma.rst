@@ -1,4 +1,4 @@
-Lemma
+﻿Lemma
 =====
 
 Qualified name: ``rsm.nodes.Lemma``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Lemma``
      ~Lemma.number
      ~Lemma.nonum
      ~Lemma.reftext_template
+     ~Lemma.start_point
+     ~Lemma.end_point
    

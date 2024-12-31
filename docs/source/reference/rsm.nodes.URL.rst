@@ -1,4 +1,4 @@
-URL
+﻿URL
 ===
 
 Qualified name: ``rsm.nodes.URL``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.URL``
      ~URL.number
      ~URL.nonum
      ~URL.reftext_template
+     ~URL.start_point
+     ~URL.end_point
    

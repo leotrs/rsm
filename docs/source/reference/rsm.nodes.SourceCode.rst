@@ -1,4 +1,4 @@
-SourceCode
+﻿SourceCode
 ==========
 
 Qualified name: ``rsm.nodes.SourceCode``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.SourceCode``
      ~SourceCode.number
      ~SourceCode.nonum
      ~SourceCode.reftext_template
+     ~SourceCode.start_point
+     ~SourceCode.end_point
    

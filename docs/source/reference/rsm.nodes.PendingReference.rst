@@ -1,4 +1,4 @@
-PendingReference
+﻿PendingReference
 ================
 
 Qualified name: ``rsm.nodes.PendingReference``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.PendingReference``
      ~PendingReference.number
      ~PendingReference.nonum
      ~PendingReference.reftext_template
+     ~PendingReference.start_point
+     ~PendingReference.end_point
    

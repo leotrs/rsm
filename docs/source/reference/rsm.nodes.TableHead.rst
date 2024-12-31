@@ -1,4 +1,4 @@
-TableHead
+﻿TableHead
 =========
 
 Qualified name: ``rsm.nodes.TableHead``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.TableHead``
      ~TableHead.number
      ~TableHead.nonum
      ~TableHead.reftext_template
+     ~TableHead.start_point
+     ~TableHead.end_point
    

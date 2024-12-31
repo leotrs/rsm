@@ -1,4 +1,4 @@
-BaseParagraph
+﻿BaseParagraph
 =============
 
 Qualified name: ``rsm.nodes.BaseParagraph``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.BaseParagraph``
      ~BaseParagraph.number
      ~BaseParagraph.nonum
      ~BaseParagraph.reftext_template
+     ~BaseParagraph.start_point
+     ~BaseParagraph.end_point
    

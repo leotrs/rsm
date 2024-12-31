@@ -1,4 +1,4 @@
-CodeBlock
+﻿CodeBlock
 =========
 
 Qualified name: ``rsm.nodes.CodeBlock``
@@ -29,4 +29,6 @@ Qualified name: ``rsm.nodes.CodeBlock``
      ~CodeBlock.number
      ~CodeBlock.nonum
      ~CodeBlock.reftext_template
+     ~CodeBlock.start_point
+     ~CodeBlock.end_point
    

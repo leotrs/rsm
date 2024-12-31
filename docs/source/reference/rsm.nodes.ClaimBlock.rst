@@ -1,4 +1,4 @@
-ClaimBlock
+﻿ClaimBlock
 ==========
 
 Qualified name: ``rsm.nodes.ClaimBlock``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.ClaimBlock``
      ~ClaimBlock.number
      ~ClaimBlock.nonum
      ~ClaimBlock.reftext_template
+     ~ClaimBlock.start_point
+     ~ClaimBlock.end_point
    

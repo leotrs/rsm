@@ -1,4 +1,4 @@
-Definition
+﻿Definition
 ==========
 
 Qualified name: ``rsm.nodes.Definition``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Definition``
      ~Definition.number
      ~Definition.nonum
      ~Definition.reftext_template
+     ~Definition.start_point
+     ~Definition.end_point
    

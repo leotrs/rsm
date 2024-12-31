@@ -1,4 +1,4 @@
-Example
+﻿Example
 =======
 
 Qualified name: ``rsm.nodes.Example``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Example``
      ~Example.number
      ~Example.nonum
      ~Example.reftext_template
+     ~Example.start_point
+     ~Example.end_point
    

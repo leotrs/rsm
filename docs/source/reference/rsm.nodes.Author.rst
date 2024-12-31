@@ -1,4 +1,4 @@
-Author
+﻿Author
 ======
 
 Qualified name: ``rsm.nodes.Author``
@@ -31,4 +31,6 @@ Qualified name: ``rsm.nodes.Author``
      ~Author.number
      ~Author.nonum
      ~Author.reftext_template
+     ~Author.start_point
+     ~Author.end_point
    

@@ -1,4 +1,4 @@
-Subsection
+﻿Subsection
 ==========
 
 Qualified name: ``rsm.nodes.Subsection``
@@ -29,4 +29,6 @@ Qualified name: ``rsm.nodes.Subsection``
      ~Subsection.number
      ~Subsection.nonum
      ~Subsection.reftext_template
+     ~Subsection.start_point
+     ~Subsection.end_point
    

@@ -1,4 +1,4 @@
-Span
+﻿Span
 ====
 
 Qualified name: ``rsm.nodes.Span``
@@ -29,4 +29,6 @@ Qualified name: ``rsm.nodes.Span``
      ~Span.number
      ~Span.nonum
      ~Span.reftext_template
+     ~Span.start_point
+     ~Span.end_point
    

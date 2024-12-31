@@ -1,4 +1,4 @@
-Corollary
+﻿Corollary
 =========
 
 Qualified name: ``rsm.nodes.Corollary``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Corollary``
      ~Corollary.number
      ~Corollary.nonum
      ~Corollary.reftext_template
+     ~Corollary.start_point
+     ~Corollary.end_point
    

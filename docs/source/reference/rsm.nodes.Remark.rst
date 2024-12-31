@@ -1,4 +1,4 @@
-Remark
+﻿Remark
 ======
 
 Qualified name: ``rsm.nodes.Remark``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Remark``
      ~Remark.number
      ~Remark.nonum
      ~Remark.reftext_template
+     ~Remark.start_point
+     ~Remark.end_point
    

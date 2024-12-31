@@ -1,4 +1,4 @@
-Reference
+﻿Reference
 =========
 
 Qualified name: ``rsm.nodes.Reference``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Reference``
      ~Reference.number
      ~Reference.nonum
      ~Reference.reftext_template
+     ~Reference.start_point
+     ~Reference.end_point
    

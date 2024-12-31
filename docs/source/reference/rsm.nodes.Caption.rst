@@ -1,4 +1,4 @@
-Caption
+﻿Caption
 =======
 
 Qualified name: ``rsm.nodes.Caption``
@@ -28,4 +28,6 @@ Qualified name: ``rsm.nodes.Caption``
      ~Caption.number
      ~Caption.nonum
      ~Caption.reftext_template
+     ~Caption.start_point
+     ~Caption.end_point
    

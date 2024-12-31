@@ -1,4 +1,4 @@
-TableDatum
+﻿TableDatum
 ==========
 
 Qualified name: ``rsm.nodes.TableDatum``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.TableDatum``
      ~TableDatum.number
      ~TableDatum.nonum
      ~TableDatum.reftext_template
+     ~TableDatum.start_point
+     ~TableDatum.end_point
    

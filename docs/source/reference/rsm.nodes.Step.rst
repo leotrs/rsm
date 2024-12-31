@@ -1,4 +1,4 @@
-Step
+﻿Step
 ====
 
 Qualified name: ``rsm.nodes.Step``
@@ -29,4 +29,6 @@ Qualified name: ``rsm.nodes.Step``
      ~Step.number
      ~Step.nonum
      ~Step.reftext_template
+     ~Step.start_point
+     ~Step.end_point
    

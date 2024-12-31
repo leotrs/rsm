@@ -1,4 +1,4 @@
-Sketch
+﻿Sketch
 ======
 
 Qualified name: ``rsm.nodes.Sketch``
@@ -28,4 +28,6 @@ Qualified name: ``rsm.nodes.Sketch``
      ~Sketch.number
      ~Sketch.nonum
      ~Sketch.reftext_template
+     ~Sketch.start_point
+     ~Sketch.end_point
    

@@ -1,4 +1,4 @@
-Proposition
+﻿Proposition
 ===========
 
 Qualified name: ``rsm.nodes.Proposition``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Proposition``
      ~Proposition.number
      ~Proposition.nonum
      ~Proposition.reftext_template
+     ~Proposition.start_point
+     ~Proposition.end_point
    

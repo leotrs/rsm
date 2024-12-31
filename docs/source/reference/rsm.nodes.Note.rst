@@ -1,4 +1,4 @@
-Note
+﻿Note
 ====
 
 Qualified name: ``rsm.nodes.Note``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Note``
      ~Note.number
      ~Note.nonum
      ~Note.reftext_template
+     ~Note.start_point
+     ~Note.end_point
    

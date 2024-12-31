@@ -1,4 +1,4 @@
-MathBlock
+﻿MathBlock
 =========
 
 Qualified name: ``rsm.nodes.MathBlock``
@@ -30,4 +30,6 @@ Qualified name: ``rsm.nodes.MathBlock``
      ~MathBlock.number
      ~MathBlock.nonum
      ~MathBlock.reftext_template
+     ~MathBlock.start_point
+     ~MathBlock.end_point
    

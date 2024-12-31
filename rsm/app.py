@@ -191,7 +191,9 @@ class LinterApp(ParserApp):
         log_time: bool = True,
         log_lineno: bool = True,
     ):
-        super().__init__(srcpath, plain, linter.Linter.LINT_LVL, log_format, log_time, log_lineno)
+        super().__init__(
+            srcpath, plain, linter.Linter.LINT_LVL, log_format, log_time, log_lineno
+        )
         mylinter = linter.Linter()
         self.add_task(Task("linter", mylinter, mylinter.lint))
 
@@ -218,7 +220,11 @@ class ProcessorApp(ParserApp):
         if not handrails:
             tr = translator.Translator()
         else:
-            tr = translator.HandrailsTranslator(hidden_handrails=hidden_handrails, sidebar=sidebar, add_source=add_source)
+            tr = translator.HandrailsTranslator(
+                hidden_handrails=hidden_handrails,
+                sidebar=sidebar,
+                add_source=add_source,
+            )
         self.add_task(Task("translator", tr, tr.translate))
 
 

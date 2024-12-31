@@ -1,4 +1,4 @@
-Heading
+﻿Heading
 =======
 
 Qualified name: ``rsm.nodes.Heading``
@@ -28,4 +28,6 @@ Qualified name: ``rsm.nodes.Heading``
      ~Heading.number
      ~Heading.nonum
      ~Heading.reftext_template
+     ~Heading.start_point
+     ~Heading.end_point
    

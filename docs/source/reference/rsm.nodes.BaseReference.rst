@@ -1,4 +1,4 @@
-BaseReference
+﻿BaseReference
 =============
 
 Qualified name: ``rsm.nodes.BaseReference``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.BaseReference``
      ~BaseReference.number
      ~BaseReference.nonum
      ~BaseReference.reftext_template
+     ~BaseReference.start_point
+     ~BaseReference.end_point
    

@@ -1,4 +1,4 @@
-Appendix
+﻿Appendix
 ========
 
 Qualified name: ``rsm.nodes.Appendix``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Appendix``
      ~Appendix.number
      ~Appendix.nonum
      ~Appendix.reftext_template
+     ~Appendix.start_point
+     ~Appendix.end_point
    

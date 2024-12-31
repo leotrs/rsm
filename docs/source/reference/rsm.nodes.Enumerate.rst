@@ -1,4 +1,4 @@
-Enumerate
+﻿Enumerate
 =========
 
 Qualified name: ``rsm.nodes.Enumerate``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Enumerate``
      ~Enumerate.number
      ~Enumerate.nonum
      ~Enumerate.reftext_template
+     ~Enumerate.start_point
+     ~Enumerate.end_point
    

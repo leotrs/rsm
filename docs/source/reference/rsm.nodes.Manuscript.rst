@@ -1,4 +1,4 @@
-Manuscript
+﻿Manuscript
 ==========
 
 Qualified name: ``rsm.nodes.Manuscript``
@@ -29,4 +29,6 @@ Qualified name: ``rsm.nodes.Manuscript``
      ~Manuscript.types
      ~Manuscript.number
      ~Manuscript.reftext_template
+     ~Manuscript.start_point
+     ~Manuscript.end_point
    

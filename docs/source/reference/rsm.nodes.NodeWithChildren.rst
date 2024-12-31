@@ -1,4 +1,4 @@
-NodeWithChildren
+﻿NodeWithChildren
 ================
 
 Qualified name: ``rsm.nodes.NodeWithChildren``
@@ -32,4 +32,6 @@ Qualified name: ``rsm.nodes.NodeWithChildren``
      ~NodeWithChildren.number
      ~NodeWithChildren.nonum
      ~NodeWithChildren.reftext_template
+     ~NodeWithChildren.start_point
+     ~NodeWithChildren.end_point
    

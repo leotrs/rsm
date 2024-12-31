@@ -1,4 +1,4 @@
-Math
+﻿Math
 ====
 
 Qualified name: ``rsm.nodes.Math``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Math``
      ~Math.number
      ~Math.nonum
      ~Math.reftext_template
+     ~Math.start_point
+     ~Math.end_point
    

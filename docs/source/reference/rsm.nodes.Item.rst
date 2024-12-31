@@ -1,4 +1,4 @@
-Item
+﻿Item
 ====
 
 Qualified name: ``rsm.nodes.Item``
@@ -28,4 +28,6 @@ Qualified name: ``rsm.nodes.Item``
      ~Item.number
      ~Item.nonum
      ~Item.reftext_template
+     ~Item.start_point
+     ~Item.end_point
    

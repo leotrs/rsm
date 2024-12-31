@@ -1,4 +1,4 @@
-Cite
+﻿Cite
 ====
 
 Qualified name: ``rsm.nodes.Cite``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Cite``
      ~Cite.number
      ~Cite.nonum
      ~Cite.reftext_template
+     ~Cite.start_point
+     ~Cite.end_point
    

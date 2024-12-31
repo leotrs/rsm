@@ -1,4 +1,4 @@
-Text
+﻿Text
 ====
 
 Qualified name: ``rsm.nodes.Text``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Text``
      ~Text.number
      ~Text.nonum
      ~Text.reftext_template
+     ~Text.start_point
+     ~Text.end_point
    

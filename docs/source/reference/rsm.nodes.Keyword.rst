@@ -1,4 +1,4 @@
-Keyword
+﻿Keyword
 =======
 
 Qualified name: ``rsm.nodes.Keyword``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Keyword``
      ~Keyword.number
      ~Keyword.nonum
      ~Keyword.reftext_template
+     ~Keyword.start_point
+     ~Keyword.end_point
    

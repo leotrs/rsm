@@ -1,4 +1,4 @@
-Contents
+﻿Contents
 ========
 
 Qualified name: ``rsm.nodes.Contents``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.Contents``
      ~Contents.number
      ~Contents.nonum
      ~Contents.reftext_template
+     ~Contents.start_point
+     ~Contents.end_point
    

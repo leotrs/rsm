@@ -1,4 +1,4 @@
-PendingPrev
+﻿PendingPrev
 ===========
 
 Qualified name: ``rsm.nodes.PendingPrev``
@@ -27,4 +27,6 @@ Qualified name: ``rsm.nodes.PendingPrev``
      ~PendingPrev.number
      ~PendingPrev.nonum
      ~PendingPrev.reftext_template
+     ~PendingPrev.start_point
+     ~PendingPrev.end_point
    

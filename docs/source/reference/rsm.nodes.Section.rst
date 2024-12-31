@@ -1,4 +1,4 @@
-Section
+﻿Section
 =======
 
 Qualified name: ``rsm.nodes.Section``
@@ -29,4 +29,6 @@ Qualified name: ``rsm.nodes.Section``
      ~Section.number
      ~Section.nonum
      ~Section.reftext_template
+     ~Section.start_point
+     ~Section.end_point
    

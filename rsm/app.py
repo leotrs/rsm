@@ -209,7 +209,6 @@ class ProcessorApp(ParserApp):
         log_lineno: bool = True,
         handrails: bool = False,
         hidden_handrails: bool = True,
-        sidebar: bool = True,
         add_source: bool = True,
         run_linter: bool = False,
     ):
@@ -222,7 +221,6 @@ class ProcessorApp(ParserApp):
         else:
             tr = translator.HandrailsTranslator(
                 hidden_handrails=hidden_handrails,
-                sidebar=sidebar,
                 add_source=add_source,
             )
         self.add_task(Task("translator", tr, tr.translate))
@@ -252,7 +250,6 @@ def render(
     path: str = "",
     handrails: bool = False,
     hidden_handrails: bool = False,
-    sidebar: bool = False,
     add_source: bool = False,
     loglevel: int = RSMApp.default_log_level,
     log_format: str = "rsm",
@@ -264,7 +261,6 @@ def render(
         plain=source,
         handrails=handrails,
         hidden_handrails=hidden_handrails,
-        sidebar=sidebar,
         add_source=add_source,
         loglevel=loglevel,
         log_format=log_format,

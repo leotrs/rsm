@@ -7,11 +7,13 @@
 # source directory (../rsm/), there needs to be a different conftest.py file in that
 # directory.
 
-import rsm
-import pytest
-from textwrap import dedent
 import sys
+from textwrap import dedent
+
+import pytest
 from icecream import ic
+
+import rsm
 
 # ic.disable()
 
@@ -41,7 +43,9 @@ def compare_have_want(have, want, handrails=False):
     """Compare obtained output (have) against the desired output (want)."""
     want = dedent(want).lstrip()
     have = dedent(have).lstrip()
-    have = rsm.render(have, handrails=handrails, hidden_handrails=False, sidebar=False, add_source=False).lstrip()
+    have = rsm.render(
+        have, handrails=handrails, hidden_handrails=False, add_source=False
+    ).lstrip()
 
     try:
         assert have == want

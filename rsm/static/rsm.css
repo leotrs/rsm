@@ -48,28 +48,6 @@
   box-sizing: border-box;
   margin: 0; }
 
-.tools-sidebar {
-  position: fixed;
-  top: calc(var(--h1-size));
-  right: 1em;
-  max-width: 18em;
-  display: flex;
-  flex-direction: row-reverse; }
-  .tools-sidebar .vars-list {
-    max-width: 85%;
-    box-shadow: 0 0 8px 4px #eee;
-    padding: 1em;
-    border-radius: 10px;
-    margin: auto;
-    font-size: 80%;
-    overflow-x: scroll; }
-  .tools-sidebar .vars-list-ul {
-    padding-inline-start: 1em; }
-  .tools-sidebar .tools-sidebar__btn:hover > svg {
-    background: var(--gray-900);
-    color: var(--gray-200);
-    cursor: pointer; }
-
 .manuscriptwrapper {
   border-radius: 8px;
   margin: 0 auto;

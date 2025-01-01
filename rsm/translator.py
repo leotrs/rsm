@@ -1115,12 +1115,10 @@ class HandrailsTranslator(Translator):
         self,
         quiet: bool = False,
         hidden_handrails: bool = True,
-        sidebar: bool = True,
         add_source: bool = True,
     ):
         super().__init__(quiet)
         self.hidden_handrails = hidden_handrails
-        self.sidebar = sidebar
         self.add_source = add_source
 
     @staticmethod
@@ -1196,15 +1194,6 @@ class HandrailsTranslator(Translator):
             0, [cmd], AppendBatchAndDefer, include_content
         )
 
-    def _make_tools_sidebar(self):
-        html = f"""
-        <div class="tools-sidebar">
-          <div class="tools-sidebar__btn">{self.svg["vars"]}</div>
-          <div class="vars-list hide"><ul class="vars-list-ul"><li>Nothing here...</li></ul></div>
-        </div>
-        """
-        return AppendText(text=html)
-
     def _make_source_div(self):
         return AppendText(text=f'<div class="rsm-source hide">{self.tree.src}</div>')
 
@@ -1212,8 +1201,6 @@ class HandrailsTranslator(Translator):
         batch = super().visit_manuscript(node)
         if node.title:
             batch = self._replace_batch_with_handrails(4, batch)
-        if self.sidebar:
-            batch.items.insert(2, self._make_tools_sidebar())
         if self.add_source:
             batch.items.insert(1, self._make_source_div())
         return batch

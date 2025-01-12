@@ -1,0 +1,282 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_empty_0_document_0_phone_s.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_empty_0_document_0_phone_s.png",
+        "selector": "document",
+        "fileName": "backstop_default_empty_0_document_0_phone_s.png",
+        "label": "empty",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/empty.html",
+        "expect": 0,
+        "viewportLabel": "phone_s",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_empty_0_document_1_phone_l.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_empty_0_document_1_phone_l.png",
+        "selector": "document",
+        "fileName": "backstop_default_empty_0_document_1_phone_l.png",
+        "label": "empty",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/empty.html",
+        "expect": 0,
+        "viewportLabel": "phone_l",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_empty_0_document_2_tablet_v.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_empty_0_document_2_tablet_v.png",
+        "selector": "document",
+        "fileName": "backstop_default_empty_0_document_2_tablet_v.png",
+        "label": "empty",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/empty.html",
+        "expect": 0,
+        "viewportLabel": "tablet_v",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_empty_0_document_3_tablet_h.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_empty_0_document_3_tablet_h.png",
+        "selector": "document",
+        "fileName": "backstop_default_empty_0_document_3_tablet_h.png",
+        "label": "empty",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/empty.html",
+        "expect": 0,
+        "viewportLabel": "tablet_h",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_empty_0_document_4_web_s.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_empty_0_document_4_web_s.png",
+        "selector": "document",
+        "fileName": "backstop_default_empty_0_document_4_web_s.png",
+        "label": "empty",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/empty.html",
+        "expect": 0,
+        "viewportLabel": "web_s",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_empty_0_document_5_web_l.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_empty_0_document_5_web_l.png",
+        "selector": "document",
+        "fileName": "backstop_default_empty_0_document_5_web_l.png",
+        "label": "empty",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/empty.html",
+        "expect": 0,
+        "viewportLabel": "web_l",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_paragraph_0_document_0_phone_s.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_paragraph_0_document_0_phone_s.png",
+        "selector": "document",
+        "fileName": "backstop_default_paragraph_0_document_0_phone_s.png",
+        "label": "paragraph",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/paragraph.html",
+        "expect": 0,
+        "viewportLabel": "phone_s",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_paragraph_0_document_1_phone_l.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_paragraph_0_document_1_phone_l.png",
+        "selector": "document",
+        "fileName": "backstop_default_paragraph_0_document_1_phone_l.png",
+        "label": "paragraph",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/paragraph.html",
+        "expect": 0,
+        "viewportLabel": "phone_l",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_paragraph_0_document_2_tablet_v.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_paragraph_0_document_2_tablet_v.png",
+        "selector": "document",
+        "fileName": "backstop_default_paragraph_0_document_2_tablet_v.png",
+        "label": "paragraph",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/paragraph.html",
+        "expect": 0,
+        "viewportLabel": "tablet_v",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_paragraph_0_document_3_tablet_h.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_paragraph_0_document_3_tablet_h.png",
+        "selector": "document",
+        "fileName": "backstop_default_paragraph_0_document_3_tablet_h.png",
+        "label": "paragraph",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/paragraph.html",
+        "expect": 0,
+        "viewportLabel": "tablet_h",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_paragraph_0_document_4_web_s.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_paragraph_0_document_4_web_s.png",
+        "selector": "document",
+        "fileName": "backstop_default_paragraph_0_document_4_web_s.png",
+        "label": "paragraph",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/paragraph.html",
+        "expect": 0,
+        "viewportLabel": "web_s",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_paragraph_0_document_5_web_l.png",
+        "test": "../bitmaps_test/20240516-222155/backstop_default_paragraph_0_document_5_web_l.png",
+        "selector": "document",
+        "fileName": "backstop_default_paragraph_0_document_5_web_l.png",
+        "label": "paragraph",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "file:///Users/leo.torres/rsm/tests/visual/rsm_data/paragraph.html",
+        "expect": 0,
+        "viewportLabel": "web_l",
+        "diff": {
+          "isSameDimensions": true,
+          "dimensionDifference": {
+            "width": 0,
+            "height": 0
+          },
+          "misMatchPercentage": "0.00"
+        }
+      },
+      "status": "pass"
+    }
+  ],
+  "id": "backstop_default"
+}

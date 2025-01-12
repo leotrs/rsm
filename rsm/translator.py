@@ -113,7 +113,7 @@ import logging
 import textwrap
 from abc import ABC, abstractmethod
 from collections import namedtuple
-from typing import Any, Callable, Iterable, Optional
+from typing import Any, Callable, Iterable, Literal, Optional
 
 from icecream import ic
 
@@ -177,7 +177,7 @@ class EditCommand(ABC):
         middles = []
         for key in members:
             s = f"{key}="
-            value = getattr(self, key)
+            value = getattr(self, key, None)
             if isinstance(value, str):
                 value = repr(textwrap.shorten(value.strip(), 60))
             s += f"{value}"
@@ -868,15 +868,11 @@ class Translator:
             f"{classname.capitalize()}"
             + (f" {node.full_number}" if not node.nonum and node.number else "")
             + (f": {node.title}." if node.title else "."),
-            ["theorem__title", f"{classname}__title"],
+            ["hr-label"],
         )
-        classes = ["theorem-contents"]
-        if classname != "theorem":
-            classes.append(f"{classname}-contents")
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node, additional_classes=["theorem"]),
-                AppendOpenTag(classes=classes),
                 AppendExternalTree(title),
             ]
         )
@@ -886,12 +882,7 @@ class Translator:
 
     def visit_subproof(self, node: nodes.Subproof) -> EditCommand:
         classname = node.__class__.__name__.lower()
-        return AppendBatchAndDefer(
-            [
-                AppendNodeTag(node),
-                AppendOpenTag(classes=[f"{classname}-contents"]),
-            ]
-        )
+        return AppendBatchAndDefer([AppendNodeTag(node)])
 
     def visit_proof(self, node: nodes.Proof) -> EditCommandBatch:
         last = node.last_of_type(nodes.Step)
@@ -899,14 +890,11 @@ class Translator:
             last.types.append("last")
 
         classname = node.__class__.__name__.lower()
-        title = self._make_title_node(
-            f"{classname.capitalize()}. ", [f"{classname}__title"]
-        )
+        title = self._make_title_node(f"{classname.capitalize()}. ", ["hr-label"])
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
                 AppendExternalTree(title),
-                AppendOpenTag(classes=[f"{classname}-contents"]),
             ]
         )
 
@@ -918,7 +906,7 @@ class Translator:
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
         # add it to the returned batch!!!
         batch = self.leave_node(node)
-        batch.items.insert(1, AppendHalmos())
+        batch.items.insert(-1, AppendHalmos())
         batch = AppendBatch(batch.items)
         return batch
 
@@ -1109,16 +1097,41 @@ class HandrailsTranslator(Translator):
         <path d="M9 18v3h6v-3" />
         </svg>
         """,
+        "bookmark": """<svg width="14" height="18" viewBox="0 0 14 18" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 4.55556V17L7 13.4444L1 17V4.55556C1 3.61256 1.42143 2.70819 2.17157 2.0414C2.92172 1.3746 3.93913 1 5 1H9C10.0609 1 11.0783 1.3746 11.8284 2.0414C12.5786 2.70819 13 3.61256 13 4.55556Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        """,
+        "success": """<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" fill="#3C4952" stroke-width="0" class="icon icon-tabler icons-tabler-filled icon-tabler-circle-check">
+        <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" />
+        </svg>
+        """,
+        "alert": """<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="1.1 1 22 22" fill="#3C4952" stroke-width="0" class="icon icon-tabler icons-tabler-filled icon-tabler-alert-triangle">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 1.67c.955 0 1.845 .467 2.39 1.247l.105 .16l8.114 13.548a2.914 2.914 0 0 1 -2.307 4.363l-.195 .008h-16.225a2.914 2.914 0 0 1 -2.582 -4.2l.099 -.185l8.11 -13.538a2.914 2.914 0 0 1 2.491 -1.403zm.01 13.33l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -7a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z" />
+        </svg>
+        """,
+        "question": """<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#3C4952" stroke-width="0" class="icon icon-tabler icons-tabler-filled icon-tabler-help-hexagon">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M10.425 1.414a3.33 3.33 0 0 1 3.026 -.097l.19 .097l6.775 3.995l.096 .063l.092 .077l.107 .075a3.224 3.224 0 0 1 1.266 2.188l.018 .202l.005 .204v7.284c0 1.106 -.57 2.129 -1.454 2.693l-.17 .1l-6.803 4.302c-.918 .504 -2.019 .535 -3.004 .068l-.196 -.1l-6.695 -4.237a3.225 3.225 0 0 1 -1.671 -2.619l-.007 -.207v-7.285c0 -1.106 .57 -2.128 1.476 -2.705l6.95 -4.098zm1.575 13.586a1 1 0 0 0 -.993 .883l-.007 .117l.007 .127a1 1 0 0 0 1.986 0l.007 -.117l-.007 -.127a1 1 0 0 0 -.993 -.883zm1.368 -6.673a2.98 2.98 0 0 0 -3.631 .728a1 1 0 0 0 1.44 1.383l.171 -.18a.98 .98 0 0 1 1.11 -.15a1 1 0 0 1 -.34 1.886l-.232 .012a1 1 0 0 0 .111 1.994a3 3 0 0 0 1.371 -5.673z" />
+        </svg>
+        """,
+        "heart": """<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="1 1 22 22" fill="#3C4952" class="icon icon-tabler icons-tabler-filled icon-tabler-heart">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" />
+        </svg>
+        """,
+        "star": """<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.00561 14.2664L4.06109 17L5.00561 11.2101L1 7.11004L6.52774 6.26763L9 1L11.4723 6.26763L17 7.11004L12.9944 11.2101L13.9389 17L9.00561 14.2664Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        """,
     }
 
     def __init__(
         self,
         quiet: bool = False,
-        hidden_handrails: bool = True,
         add_source: bool = True,
     ):
         super().__init__(quiet)
-        self.hidden_handrails = hidden_handrails
         self.add_source = add_source
 
     @staticmethod
@@ -1130,68 +1143,247 @@ class HandrailsTranslator(Translator):
             newline_inner=False,
         )
 
-    def _replace_items_with_handrails(self, index, items, cls, include_content=False):
-        classes = ["handrail", "handrail--offset"]
-        if include_content:
-            handrail = AppendOpenTag(classes=classes, is_selectable=True)
+    def _hr(
+        self,
+        include_content: bool,
+        depth: int,
+        classes: list[str] | None = None,
+    ) -> EditCommand:
+        classes = (classes or []) + ["hr"] + (["hr-offset"] if depth > 0 else [])
+        classes = list(dict.fromkeys(classes))  # deletes duplicates AND preserves order
+        return (
+            AppendOpenTag(classes=classes, is_selectable=True)
+            if include_content
+            else AppendOpenTagManualClose(classes=classes, is_selectable=True)
+        )
+
+    def _hr_collapse_zone(self, collapsible: bool) -> AppendOpenCloseTag:
+        if collapsible:
+            content = """
+            <div class="hr-collapse">
+              <div class="icon-wrapper">
+                <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1L7 7L1 13" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+"""
         else:
-            handrail = AppendOpenTagManualClose(classes=classes, is_selectable=True)
-        btn_cont = AppendOpenTagManualClose(classes=["handrail__btn-container"])
-        btn_togg = AppendOpenTagManualClose(
-            classes=["handrail__btn", "handrail__btn-toggle"], newline_inner=False
+            content = """<div class="hr-spacer"></div>"""
+        return AppendOpenCloseTag(
+            tag="div",
+            content=content,
+            classes=["hr-collapse-zone"],
         )
-        btn_menu = AppendOpenTagManualClose(
-            classes=["handrail__btn", "handrail__btn-menu", "handrail__btn--relative"],
-            newline_inner=False,
+
+    def _hr_menu_zone(self) -> AppendOpenCloseTag:
+        return AppendOpenCloseTag(
+            tag="div",
+            content="""
+                <div class="hr-menu">
+
+                  <div class="hr-menu-item">
+                    <span class="icon-wrapper">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 12.0003L12 6.00031M8 3.00031L8.463 2.46431C9.40081 1.52663 10.6727 0.999906 11.9989 1C13.325 1.00009 14.5968 1.527 15.5345 2.46481C16.4722 3.40261 16.9989 4.6745 16.9988 6.00066C16.9987 7.32682 16.4718 8.59863 15.534 9.53631L15 10.0003M10.0001 15.0003L9.60314 15.5343C8.65439 16.4725 7.37393 16.9987 6.03964 16.9987C4.70535 16.9987 3.42489 16.4725 2.47614 15.5343C2.0085 15.0719 1.63724 14.5213 1.38385 13.9144C1.13047 13.3076 1 12.6565 1 11.9988C1 11.3412 1.13047 10.69 1.38385 10.0832C1.63724 9.47628 2.0085 8.92571 2.47614 8.46331L3.00014 8.00031" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                    <span class="hr-menu-item-text">Link</span>
+                  </div>
+
+                  <div class="hr-menu-item">
+                    <span class="icon-wrapper">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.57525 14.0448L6.00051 10.36M7.78824 7.64238L10.211 3.95918M7.79153 10.364L10.2134 14.044M12.0004 3.96001L14.4265 7.64801M4.36842 15.4C4.36842 14.9757 4.19098 14.5687 3.87513 14.2686C3.55928 13.9686 3.13089 13.8 2.68421 13.8C2.23753 13.8 1.80914 13.9686 1.49329 14.2686C1.17744 14.5687 1 14.9757 1 15.4C1 15.8243 1.17744 16.2313 1.49329 16.5314C1.80914 16.8314 2.23753 17 2.68421 17C3.13089 17 3.55928 16.8314 3.87513 16.5314C4.19098 16.2313 4.36842 15.8243 4.36842 15.4ZM12.7895 2.6C12.7895 2.17565 12.612 1.76869 12.2962 1.46863C11.9803 1.16857 11.5519 1 11.1053 1C10.6586 1 10.2302 1.16857 9.91435 1.46863C9.5985 1.76869 9.42105 2.17565 9.42105 2.6C9.42105 3.02435 9.5985 3.43131 9.91435 3.73137C10.2302 4.03143 10.6586 4.2 11.1053 4.2C11.5519 4.2 11.9803 4.03143 12.2962 3.73137C12.612 3.43131 12.7895 3.02435 12.7895 2.6ZM12.7895 15.4C12.7895 14.9757 12.612 14.5687 12.2962 14.2686C11.9803 13.9686 11.5519 13.8 11.1053 13.8C10.6586 13.8 10.2302 13.9686 9.91435 14.2686C9.5985 14.5687 9.42105 14.9757 9.42105 15.4C9.42105 15.8243 9.5985 16.2313 9.91435 16.5314C10.2302 16.8314 10.6586 17 11.1053 17C11.5519 17 11.9803 16.8314 12.2962 16.5314C12.612 16.2313 12.7895 15.8243 12.7895 15.4ZM8.57895 9C8.57895 8.57565 8.4015 8.16869 8.08565 7.86863C7.7698 7.56857 7.34142 7.4 6.89474 7.4C6.44806 7.4 6.01967 7.56857 5.70382 7.86863C5.38797 8.16869 5.21053 8.57565 5.21053 9C5.21053 9.42435 5.38797 9.83131 5.70382 10.1314C6.01967 10.4314 6.44806 10.6 6.89474 10.6C7.34142 10.6 7.7698 10.4314 8.08565 10.1314C8.4015 9.83131 8.57895 9.42435 8.57895 9ZM17 9C17 8.57565 16.8226 8.16869 16.5067 7.86863C16.1909 7.56857 15.7625 7.4 15.3158 7.4C14.8691 7.4 14.4407 7.56857 14.1249 7.86863C13.809 8.16869 13.6316 8.57565 13.6316 9C13.6316 9.42435 13.809 9.83131 14.1249 10.1314C14.4407 10.4314 14.8691 10.6 15.3158 10.6C15.7625 10.6 16.1909 10.4314 16.5067 10.1314C16.8226 9.83131 17 9.42435 17 9Z" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                    <span class="hr-menu-item-text">Tree</span>
+                  </div>
+
+                  <div class="hr-menu-item">
+                    <span class="icon-wrapper">
+                      <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.55556 4.5L1 8L4.55556 11.5M13.4444 4.5L17 8L13.4444 11.5M10.7778 1L7.22222 15" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                    <span class="hr-menu-item-text">Code</span>
+                  </div>
+
+                </div>
+""",
+            classes=["hr-menu-zone"],
         )
-        opt_tag = AppendOpenTagManualClose(
-            classes=["options", "hide"], newline_inner=True, newline_outer=True
+
+    def _hr_border_zone(self) -> AppendOpenCloseTag:
+        return AppendOpenCloseTag(
+            tag="div",
+            content="""
+                <div class="hr-border-dots">
+                  <div class="icon-wrapper">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="10 3 4 18"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                      <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                      <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="hr-border-rect">
+                </div>
+""",
+            classes=["hr-border-zone"],
         )
-        options = [
-            self._make_option_tag(opt, self.svg[opt])
-            for opt in ["link", "tree", "source"]
-        ]
+
+    def _hr_spacer_zone(self) -> AppendOpenCloseTag:
+        return AppendOpenCloseTag(
+            tag="div",
+            content="""<div class="hr-spacer"></div>""",
+            classes=["hr-spacer-zone"],
+        )
+
+    def _hr_content_zone(self, include_content) -> EditCommand:
+        return (
+            AppendOpenTag(classes=["hr-content-zone"])
+            if include_content
+            else AppendOpenTagManualClose(classes=["hr-content-zone"])
+        )
+
+    def _hr_info_zone_icon(self, icon) -> AppendOpenCloseTag:
+        hr_info_start = """<div class="hr-info">"""
+        hr_info_middle = ""
+        hr_info_end = "</div>"
+        if icon is not None:
+            hr_info_middle = f"""
+                <div class="icon-wrapper {icon}">
+                {self.svg[icon]}
+                </div>
+                """
+        return AppendOpenCloseTag(
+            tag="div",
+            content=hr_info_start + hr_info_middle + hr_info_end,
+            classes=["hr-info-zone"],
+        )
+
+    def _hr_info_zone_number(
+        self, number: int | str, style: Literal["eqn", "step"]
+    ) -> AppendOpenCloseTag:
+        hr_info_start = """<div class="hr-info">"""
+        if style == "step":
+            hr_info_middle = f"""<div class="step-number"><p>⟨{number}⟩</p></div>"""
+        elif style == "eqn":
+            hr_info_middle = f"""<div class="eqn-number"><p>({number})</p></div>"""
+        hr_info_end = "</div>"
+        return AppendOpenCloseTag(
+            tag="div",
+            content=hr_info_start + hr_info_middle + hr_info_end,
+            classes=["hr-info-zone"],
+        )
+
+    def _hr_from_node(self, node):
+        classes = (
+            (node.types or [])
+            + ["hr"]
+            + (["hr-hidden"] if node.handrail_depth == 2 else [])
+            + (["hr-offset"] if node.handrail_depth > 1 else [])
+        )
+        classes = list(dict.fromkeys(classes))  # deletes duplicates AND preserves order
+        return AppendNodeTag(node, additional_classes=classes, is_selectable=True)
+
+    def _replace_node_with_handrails(
+        self,
+        node,
+        collapsible: bool = True,
+    ):
+        handrail = self._hr_from_node(node)
+        hr_content_zone = self._hr_content_zone(True)
+
         newitems = [
             handrail,
-            btn_cont,
-            # btn_togg,
-            # AppendOpenCloseTag(
-            #     "span",
-            #     # self.svg["rarrow"],
-            #     newline_inner=False,
-            #     newline_outer=False,
-            # ),
-            # btn_togg.close_command(),
-            btn_menu,
-            AppendOpenCloseTag(
-                "span",
-                self.svg["vdots"],
-                newline_inner=False,
-                newline_outer=False,
-            ),
-            opt_tag,
-            *options,
-            opt_tag.close_command(),
-            btn_menu.close_command(),
-            btn_cont.close_command(),
+            self._hr_collapse_zone(collapsible),
+            self._hr_menu_zone(),
+            self._hr_border_zone(),
+            self._hr_spacer_zone(),
+            hr_content_zone,
+        ]
+        return AppendBatchAndDefer(newitems)
+
+    def _wrap_item_with_handrails(
+        self,
+        index,
+        items,
+        cls,
+        classes=None,
+        include_content=False,
+        icon=None,
+        collapsible=True,
+        depth=0,
+    ):
+        handrail = self._hr(include_content, depth, classes)
+        hr_content_zone = self._hr_content_zone(include_content)
+
+        newitems = [
+            handrail,
+            self._hr_collapse_zone(collapsible),
+            self._hr_menu_zone(),
+            self._hr_border_zone(),
+            self._hr_spacer_zone(),
+            hr_content_zone,
             items[index],
         ]
+
         if not include_content:
-            newitems.append(handrail.close_command())
-        # else:
-        #    nothing to do here since when include_content is True, handrail will defer
-        #    its close command
+            newitems += [
+                hr_content_zone.close_command(),
+                self._hr_info_zone_icon(icon),
+                handrail.close_command(),
+            ]
+        else:
+            # Nothing to do since in this case, everything will close by itself and/or
+            # be handlded in the corresponding leave_* method.
+            pass
+
         newitems = items[:index] + newitems + items[index + 1 :]
         return cls(newitems)
 
-    def _replace_batch_with_handrails(self, index, batch, include_content=False):
-        return self._replace_items_with_handrails(
-            index, batch.items, batch.__class__, include_content
+    def _wrap_batch_item_with_handrails(
+        self,
+        index,
+        batch,
+        include_content=False,
+        icon=None,
+        collapsible=True,
+        depth=0,
+        classes=None,
+    ):
+        return self._wrap_item_with_handrails(
+            index,
+            batch.items,
+            batch.__class__,
+            classes,
+            include_content,
+            icon,
+            collapsible,
+            depth,
         )
 
-    def _replace_cmd_with_handrails(self, cmd, include_content=False):
-        return self._replace_items_with_handrails(
-            0, [cmd], AppendBatchAndDefer, include_content
+    def _wrap_cmd_with_handrails(
+        self,
+        cmd,
+        include_content=False,
+        icon=None,
+        collapsible=True,
+        depth=0,
+        classes=None,
+    ):
+        return self._wrap_item_with_handrails(
+            0,
+            [cmd],
+            AppendBatchAndDefer,
+            classes,
+            include_content,
+            icon,
+            collapsible,
+            depth,
         )
 
     def _make_source_div(self):
@@ -1200,65 +1392,97 @@ class HandrailsTranslator(Translator):
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         batch = super().visit_manuscript(node)
         if node.title:
-            batch = self._replace_batch_with_handrails(4, batch)
+            batch = self._wrap_batch_item_with_handrails(4, batch, classes=["heading"])
         if self.add_source:
-            batch.items.insert(1, self._make_source_div())
+            batch.items.insert(2, self._make_source_div())
         return batch
 
     def visit_section(self, node: nodes.Section) -> EditCommand:
         batch = super().visit_section(node)
-        return self._replace_batch_with_handrails(1, batch)
+        return self._wrap_batch_item_with_handrails(
+            1, batch, icon=getattr(node, "icon", None), classes=["heading"]
+        )
 
     def visit_abstract(self, node: nodes.Abstract) -> EditCommand:
         batch = super().visit_abstract(node)
-        return self._replace_batch_with_handrails(1, batch)
+        return self._wrap_batch_item_with_handrails(1, batch)
 
     def visit_contents(self, node: nodes.Contents) -> EditCommand:
         batch = super().visit_contents(node)
-        return self._replace_batch_with_handrails(1, batch)
+        return self._wrap_batch_item_with_handrails(1, batch)
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
         batch = super().visit_bibliography(node)
-        return self._replace_batch_with_handrails(1, batch)
+        return self._wrap_batch_item_with_handrails(1, batch)
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
         cmd = super().visit_paragraph(node)
-        if self.hidden_handrails:
-            batch = self._replace_cmd_with_handrails(cmd, include_content=True)
-            batch.items[0].classes.append("handrail--hide")
-            return batch
-        else:
-            return cmd
+        batch = self._wrap_cmd_with_handrails(
+            cmd,
+            include_content=True,
+            collapsible=False,
+            depth=node.handrail_depth,
+            classes=["paragraph"],
+        )
+        batch.items[0].classes.append("hr-hidden")
+        return batch
+
+    def leave_paragraph(self, node: nodes.Step) -> EditCommand:
+        # For documentation: if a visit_* method returns a command with defers = True,
+        # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
+        # add it to the returned batch!!!
+        batch = self.leave_node(node)
+
+        if (icon := getattr(node, "icon", None)) is not None:
+            batch.items.insert(2, self._hr_info_zone_icon(icon))
+        # elif node.first_ancestor_of_type(nodes.Step):
+        #     batch.items.insert(
+        #         2, self._hr_info_zone_step_number(node.parent.parent.full_number)
+        #     )
+
+        batch = AppendBatch(batch.items)
+        return batch
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         batch = super().visit_theorem(node)
-        batch.items[1].classes.append("handrail__collapsible")
-        batch = self._replace_batch_with_handrails(1, batch, include_content=True)
-        batch.items[1].classes += [
-            f"stars-{node.stars}",
-            f"clocks-{node.clocks}",
-        ]
-        batch.items[-1].root.types.append("do-not-hide")
+        hr = self._replace_node_with_handrails(node)
+        hr.items += batch.items[1:]
+        return hr
+
+    def leave_theorem(self, node: nodes.Theorem) -> EditCommand:
+        # For documentation: if a visit_* method returns a command with defers = True,
+        # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
+        # add it to the returned batch!!!
+        batch = self.leave_node(node)
+        batch.items.insert(1, self._hr_info_zone_icon(getattr(node, "icon", None)))
+        batch = AppendBatch(batch.items)
         return batch
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         batch = super().visit_proof(node)
-        batch.items[2].classes.append("handrail__collapsible")
+        hr = self._replace_node_with_handrails(node)
+        hr.items += batch.items[1:]
+        return hr
 
-        # the last element is the proof title, we pop it as it will be inserted into the
-        # proof header div
-        tree = batch.items[1]
-        batch.items = [batch.items[0], batch.items[2]]
-        tree.root.types.append("do-not-hide")
+    def leave_proof(self, node: nodes.Proof) -> EditCommand:
+        # For documentation: if a visit_* method returns a command with defers = True,
+        # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
+        # add it to the returned batch!!!
+        batch = self.leave_node(node)
+        batch.items.insert(1, self._hr_info_zone_icon(getattr(node, "icon", None)))
+        batch = AppendBatch(batch.items)
+        return batch
 
-        if any(type(c) is nodes.Sketch for c in node.children):
-            self._add_proof_header_with_sketch(batch, tree)
-            for c in node.children:
-                if type(c) is not nodes.Sketch:
-                    c.types.append("hide")
-        else:
-            self._add_proof_header_sans_sketch(batch, tree)
-        return self._replace_batch_with_handrails(1, batch, include_content=True)
+    def visit_statement(self, node: nodes.Statement) -> EditCommand:
+        batch = super().visit_statement(node)
+        hr = self._replace_node_with_handrails(node)
+        return hr
+
+    def leave_statement(self, node: nodes.Statement) -> EditCommand:
+        batch = self.leave_node(node)
+        batch.items.insert(1, self._hr_info_zone_icon(getattr(node, "icon", None)))
+        batch = AppendBatch(batch.items)
+        return batch
 
     def _add_proof_header_with_sketch(
         self, batch: EditCommandBatch, tree: nodes.Node
@@ -1290,44 +1514,39 @@ class HandrailsTranslator(Translator):
 
     def visit_subproof(self, node: nodes.Subproof) -> EditCommand:
         batch = super().visit_subproof(node)
-        batch.items[1].classes += ["handrail", "handrail--hug", "handrail__collapsible"]
+        hr = self._replace_node_with_handrails(node)
+        hr.items[0].classes.append("hr-shift-1")
+        try:
+            hr.items[0].classes.remove("hr-hidden")
+        except ValueError:
+            pass
+        return hr
+
+    def leave_subproof(self, node: nodes.Subproof) -> EditCommand:
+        batch = self.leave_node(node)
+        batch.items.insert(1, self._hr_info_zone_icon(getattr(node, "icon", None)))
+        batch = AppendBatch(batch.items)
         return batch
 
     def visit_step(self, node: nodes.Step) -> EditCommand:
-        cmd = super().visit_step(node)
-        batch = self._replace_cmd_with_handrails(cmd, include_content=True)
-        batch.items[0].classes.append("handrail__collapsible")
-        batch.items.insert(
-            -1,
-            AppendOpenCloseTag(
-                classes=["step__number"],
-                content=f"({node.full_number})",
-                newline_inner=False,
-                newline_outer=False,
-            ),
-        )
-        return batch
+        batch = super().visit_step(node)
+        hr = self._replace_node_with_handrails(node)
+        return hr
 
     def leave_step(self, node: nodes.Step) -> EditCommand:
-        # For documentation: if a visit_* method returns a command with defers = True,
-        # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
-        # add it to the returned batch!!!
         batch = self.leave_node(node)
-        batch.items.insert(1, AppendHalmos(classes=["hide"]))
+        batch.items.insert(1, self._hr_info_zone_number(node.full_number, style="step"))
         batch = AppendBatch(batch.items)
         return batch
 
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
-        batch = super().visit_mathblock(node)
-        if node.nonum:
-            return batch
+        batch = self._replace_node_with_handrails(node)
+        batch.items.append(AppendTextAndDefer("$$\n", "\n$$"))
+        batch.items[0].classes.append("hr-hidden")
+        return batch
 
-        batch.items.insert(
-            -1,
-            AppendOpenCloseTag(
-                content=f"({node.full_number})",
-                classes=["mathblock__number mathblock__number--phantom"],
-                newline_inner=False,
-            ),
-        )
+    def leave_mathblock(self, node: nodes.MathBlock) -> EditCommand:
+        batch = self.leave_node(node)
+        batch.items.insert(2, self._hr_info_zone_number(node.full_number, style="eqn"))
+        batch = AppendBatch(batch.items)
         return batch

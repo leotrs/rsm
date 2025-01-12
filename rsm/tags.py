@@ -118,8 +118,8 @@ emphas = MetaTagInfo(None, bool)
 """Whether span is emphasized."""
 goal = MetaTagInfo(None, "?")
 """Theorem goal."""
-icons = MetaTagInfo(None, list)
-"""Icons assigned to the block."""
+icon = MetaTagInfo(None, list)
+"""Icon assigned to the block."""
 isclaim = MetaTagInfo(None, bool)
 """Whether a math block is a claim."""
 keywords = MetaTagInfo(None, list)

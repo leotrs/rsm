@@ -30,29 +30,21 @@ def test_simple():
 
         <div class="theorem" data-nodeid="1">
 
-        <div class="theorem-contents">
-
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph" data-nodeid="2">All <span class="math" data-nodeid="4">\(X\)</span> are <span class="math" data-nodeid="7">\(Y\)</span>.</p>
 
         </div>
 
-        </div>
-
         <div class="proof" data-nodeid="10">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="step last" data-nodeid="11">
 
         <div class="statement" data-nodeid="12">
 
         <p class="paragraph" data-nodeid="13">Axiom.</p>
-
-        </div>
 
         </div>
 
@@ -102,23 +94,15 @@ def test_empty_proof():
 
         <div class="theorem" data-nodeid="1">
 
-        <div class="theorem-contents">
-
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph" data-nodeid="2">Theorem contents.</p>
 
         </div>
 
-        </div>
-
         <div class="proof" data-nodeid="4">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
-
-        </div>
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="halmos"></div>
 
@@ -166,9 +150,7 @@ def test_sub_step():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="step last" data-nodeid="2">
 
@@ -180,8 +162,6 @@ def test_sub_step():
 
         <div class="subproof" data-nodeid="6">
 
-        <div class="subproof-contents">
-
         <div class="step" data-nodeid="7">
 
         <div class="statement" data-nodeid="8">
@@ -192,15 +172,7 @@ def test_sub_step():
 
         <div class="subproof" data-nodeid="11">
 
-        <div class="subproof-contents">
-
         <p class="paragraph" data-nodeid="12">Sub-proof.</p>
-
-        </div>
-
-        </div>
-
-        </div>
 
         </div>
 
@@ -251,9 +223,7 @@ def test_two_steps():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="step" data-nodeid="2">
 
@@ -270,8 +240,6 @@ def test_two_steps():
         <div class="statement" data-nodeid="7">
 
         <p class="paragraph" data-nodeid="8">Secon step.</p>
-
-        </div>
 
         </div>
 

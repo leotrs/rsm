@@ -394,21 +394,15 @@ def test_prev_shortcut():
 
         <div class="theorem" data-nodeid="1">
 
-        <div class="theorem-contents">
-
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph" data-nodeid="2">All <span class="math" data-nodeid="4">\(X\)</span> are <span class="math" data-nodeid="7">\(Y\)</span>.</p>
 
         </div>
 
-        </div>
-
         <div class="proof" data-nodeid="10">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div id="st1" class="step" data-nodeid="11">
 
@@ -430,13 +424,7 @@ def test_prev_shortcut():
 
         <div class="subproof" data-nodeid="34">
 
-        <div class="subproof-contents">
-
         <p class="paragraph" data-nodeid="35">Due to <a class="reference" href="#st1">Step 1</a>.</p>
-
-        </div>
-
-        </div>
 
         </div>
 
@@ -500,21 +488,15 @@ def test_prev2_shortcut():
 
         <div class="theorem" data-nodeid="1">
 
-        <div class="theorem-contents">
-
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph" data-nodeid="2">All <span class="math" data-nodeid="4">\(X\)</span> are <span class="math" data-nodeid="7">\(Y\)</span>.</p>
 
         </div>
 
-        </div>
-
         <div class="proof" data-nodeid="10">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div id="st1" class="step" data-nodeid="11">
 
@@ -546,13 +528,7 @@ def test_prev2_shortcut():
 
         <div class="subproof" data-nodeid="38">
 
-        <div class="subproof-contents">
-
         <p class="paragraph" data-nodeid="39">Due to <a class="reference" href="#st1">Step 1</a>.</p>
-
-        </div>
-
-        </div>
 
         </div>
 
@@ -616,21 +592,15 @@ def test_prev_and_prev2_shortcut():
 
         <div class="theorem" data-nodeid="1">
 
-        <div class="theorem-contents">
-
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
 
         <p class="paragraph" data-nodeid="2">All <span class="math" data-nodeid="4">\(X\)</span> are <span class="math" data-nodeid="7">\(Y\)</span>.</p>
 
         </div>
 
-        </div>
-
         <div class="proof" data-nodeid="10">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div id="st1" class="step" data-nodeid="11">
 
@@ -662,13 +632,7 @@ def test_prev_and_prev2_shortcut():
 
         <div class="subproof" data-nodeid="38">
 
-        <div class="subproof-contents">
-
         <p class="paragraph" data-nodeid="39">Due to <a class="reference" href="#st2">Step 2</a> and <a class="reference" href="#st1">Step 1</a>.</p>
-
-        </div>
-
-        </div>
 
         </div>
 

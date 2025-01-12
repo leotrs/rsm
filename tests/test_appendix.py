@@ -154,11 +154,7 @@ def test_theorem():
 
         <div class="theorem" data-nodeid="3">
 
-        <div class="theorem-contents">
-
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1.</strong></span></p>
-
-        </div>
+        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.1.</strong></span></p>
 
         </div>
 
@@ -176,11 +172,7 @@ def test_theorem():
 
         <div class="theorem" data-nodeid="7">
 
-        <div class="theorem-contents">
-
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem A.1.</strong></span></p>
-
-        </div>
+        <p class="paragraph hr-label"><span class="span"><strong>Theorem A.1.</strong></span></p>
 
         </div>
 

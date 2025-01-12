@@ -1,6 +1,7 @@
 import pytest
-import rsm
 from conftest import compare_have_want
+
+import rsm
 
 
 def test_works_with_no_reftext_and_label():
@@ -32,9 +33,7 @@ def test_works_with_no_reftext_and_label():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div id="lbl" class="step" data-nodeid="2">
 
@@ -51,8 +50,6 @@ def test_works_with_no_reftext_and_label():
         <div class="statement" data-nodeid="7">
 
         <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#lbl">Step 1</a>.</p>
-
-        </div>
 
         </div>
 
@@ -99,9 +96,7 @@ def test_works_with_no_reftext_and_no_label():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="step" data-nodeid="2">
 
@@ -118,8 +113,6 @@ def test_works_with_no_reftext_and_no_label():
         <div class="statement" data-nodeid="7">
 
         <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#">Step 1</a>.</p>
-
-        </div>
 
         </div>
 
@@ -168,9 +161,7 @@ def test_works_with_reftext_and_label():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div id="lbl" class="step" data-nodeid="2">
 
@@ -187,8 +178,6 @@ def test_works_with_reftext_and_label():
         <div class="statement" data-nodeid="7">
 
         <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#lbl">bar</a>.</p>
-
-        </div>
 
         </div>
 
@@ -235,9 +224,7 @@ def test_works_with_reftext_and_no_label():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
-
-        <div class="proof-contents">
+        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
 
         <div class="step" data-nodeid="2">
 
@@ -254,8 +241,6 @@ def test_works_with_reftext_and_no_label():
         <div class="statement" data-nodeid="7">
 
         <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#">bar</a>.</p>
-
-        </div>
 
         </div>
 

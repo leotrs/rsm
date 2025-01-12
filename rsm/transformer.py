@@ -142,6 +142,7 @@ class Transformer:
         self.autonumber_nodes()
         self.make_toc()
         self.add_keywords_to_constructs()
+        self.add_handrail_depth()
         self.assign_node_ids()
         return tree
 
@@ -247,6 +248,7 @@ class Transformer:
 
             statement = nodes.Statement()
             statement.append(children[:split_at_idx])
+            statement.handrail_depth += 1
 
             if split_at_idx == len(children):
                 step.append(statement)
@@ -341,6 +343,17 @@ class Transformer:
             construct.types.append(kind)
             if kind not in {"then", "suffices", "claim", "claimblock", "qed"}:
                 construct.types.append("assumption")
+
+    def add_handrail_depth(self) -> None:
+        for node in self.tree.traverse(nodeclass=nodes.Theorem):
+            for desc in node.traverse():
+                desc.handrail_depth += 1
+        for node in self.tree.traverse(nodeclass=nodes.Proof):
+            for desc in node.traverse():
+                desc.handrail_depth += 1
+        for node in self.tree.traverse(nodeclass=nodes.Step):
+            for desc in node.traverse():
+                desc.handrail_depth += 1
 
     def assign_node_ids(self) -> None:
         nodeid = 0

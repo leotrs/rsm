@@ -176,6 +176,8 @@ class Node:
         """Unique identifier."""
         self.types: list[str] = types or []
         """Types of this node."""
+        self.handrail_depth = 0
+        """The number of ancestors of this node that have a handrail."""
         self.number: int = number
         """Node number."""
         self.nonum: bool = nonum

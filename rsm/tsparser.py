@@ -35,6 +35,7 @@ from pathlib import Path
 from typing import Callable, Optional, Union
 
 import tree_sitter
+import tree_sitter_rsm
 from icecream import ic
 from tree_sitter import Node as TSNode
 from tree_sitter import Tree as TSTree
@@ -139,11 +140,8 @@ class TSParser:
         # system has compiled the rsm.so (or rsm.dll) file and placed it in the
         # directory where this module lies.
         #
-        library_fn = "rsm.dll" if sys.platform == "win32" else "rsm.so"
-        library_path = str(Path(__file__).parent / library_fn)
-        self._lang = tree_sitter.Language(library_path, "rsm")
-        self._parser = tree_sitter.Parser()
-        self._parser.set_language(self._lang)
+        self._lang = tree_sitter.Language(tree_sitter_rsm.language())
+        self._parser = tree_sitter.Parser(self._lang)
         self.cst = None
         """The concrete syntax tree generated from the source."""
         self.ast = None
@@ -196,7 +194,7 @@ class TSParser:
             logger.debug("abstract syntax tree:")
             print(self.ast.sexp())
 
-        self.ast.src = self.cst.text.decode(encoding)
+        self.ast.src = self.cst.root_node.text.decode(encoding)
         return self.ast
 
 
@@ -474,10 +472,12 @@ def _abstractify(cst):
             if first.type in ["item", "caption"]:
                 cst_node = first
             ast_node_type = cst_node.type
+
         elif cst_node.type in ["block", "inline"]:
             tag = cst_node.child_by_field_name("tag")
             ast_node_type = tag.type
             dont_push_these_ids.add(id(tag))
+
         else:
             ast_node_type = cst_node.type
 

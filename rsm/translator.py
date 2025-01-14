@@ -216,7 +216,7 @@ class AppendText(EditCommand):
         self._text = text
 
     def __repr__(self) -> str:
-        return self._edit_command_repr(["text"])
+        return self._edit_command_repr(["_text"])
 
     def execute(self, translator: "Translator") -> None:
         translator.body += self.make_text()

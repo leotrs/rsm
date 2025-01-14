@@ -83,6 +83,7 @@ PUSH_THESE_TYPES = {
     "keyword",
     "construct",
     "specialconstruct",
+    "mathblock",
     "ERROR",
 }
 
@@ -459,6 +460,9 @@ def _abstractify(cst):
             if ast_node_type == "table":
                 stack.append((parent, cst_node.named_children[0]))
                 continue
+
+        elif cst_node.type == "mathblock":
+            ast_node_type = "mathblock"
 
         elif cst_node.type == "td":
             # td tags are special because the entire contents are in the first children,

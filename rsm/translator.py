@@ -654,7 +654,56 @@ class Translator:
         return batch
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
-        return AppendNodeTag(node, tag="p", newline_inner=False)
+        # There are three kinds of paragraphs, depending on whether the paragraph
+        # contains a mathblock, and if so, where it is located.  In the simplest case,
+        # the paragraph does not contain a mathblock.  In this case, we simply want to
+        # append
+        #
+        # <div class="paragraph"><p>...paragraph contents...</p></div>
+        #
+        # In the second case, the paragraph contains a mathblock and this is the last
+        # child of the paragraph.  In this case, we want to append
+        #
+        # <div class="paragraph"><p>...paragraph contents...</p>
+        # <div class="mathblock">...math contents...</div>
+        # </div>
+        #
+        # In the third case, the mathblock is not the last child of the paragraph, and
+        # in this case we need to append
+        #
+        # <div class="paragraph">
+        # <p>...paragraph contents...</p>
+        # <div class="mathblock">...math contents...</div>
+        # <p>...more paragraph contents...</p>
+        # </div>
+        #
+        # Importantly, all cases start with two opening tags `<div><p>` but only the
+        # first case ends with the coresponding closing `</p></div>` tags.  Note the
+        # third case finishes in a similar way but the closing </p> tag in that case
+        # does not correspond to the tag opened at the start of the paragraph.
+        #
+        # A paragraph cannot start with a mathblock.
+        #
+        contains_block = False
+        for _ in node.traverse(nodeclass=nodes.MathBlock):
+            contains_block = True
+
+        if contains_block:
+            return AppendBatchAndDefer(
+                [
+                    AppendNodeTag(node, "div"),
+                    discard_me := AppendOpenTagManualClose(
+                        tag="p", newline_inner=False
+                    ),
+                ]
+            )
+        else:
+            return AppendBatchAndDefer(
+                [
+                    AppendNodeTag(node, "div"),
+                    AppendOpenTag(tag="p", newline_inner=False),
+                ]
+            )
 
     def visit_step(self, node: nodes.Step) -> EditCommand:
         return AppendNodeTag(node)
@@ -718,32 +767,46 @@ class Translator:
         )
 
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
-        # the strings '$$' and '$$' are MathJax's delimiters for inline math
+        assert isinstance(node.parent, nodes.Paragraph)
         return AppendBatchAndDefer(
             [
+                # A paragraph that contains a mathblock cannot _start_ with a mathblock,
+                # so this mathblock must always contain some previous siblings that must
+                # be enclosed in <p> tags.  (See comment in visit_paragraph().)
+                AppendText("</p>"),
+                # This is the actual tag corresponding to the mathblock.
                 AppendNodeTag(node, "div"),
+                # The contents of a mathblock must be enclosed in '$$' and '$$' due to
+                # how MathJax works.
                 AppendTextAndDefer("$$\n", "\n$$"),
             ]
         )
 
     def leave_mathblock(self, node: nodes.MathBlock) -> EditCommand:
-        # For documentation: if a visit_* method returns a command with defers = True,
-        # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
-        # add it to the returned batch!!!
-        if node.nonum:
-            return self.leave_node(node)
-
+        # See also the comment in visit_paragraph().
+        assert isinstance(node.parent, nodes.Paragraph)
         batch = self.leave_node(node)
-        batch.items.insert(
-            1,
-            AppendOpenCloseTag(
-                content=f"({node.full_number})",
-                classes=["mathblock__number"],
-                newline_inner=False,
-            ),
-        )
-        batch = AppendBatch(batch.items)
-        return batch
+
+        # In case this mathblock is the last child of the paragraph, there is nothing
+        # special to do since visit_mathblock() already handled the remaining </p> tag.
+        if not node.next_sibling():
+            return batch
+
+        # If there are more children, we need to close this mathblock, start a new <p>
+        # tag, and defer its closing.  This tag must close at the time that we leave the
+        # parent paragraph.  The least hacky way I found to control the parent node's
+        # deferred commands was to use a special attribute.
+        else:
+            node.parent._must_close_p_tag = True
+            tag = AppendText("<p>")
+            batch.items.insert(2, tag)
+            return AppendBatch(batch.items)
+
+    def leave_paragraph(self, node: nodes.Paragraph) -> EditCommand:
+        batch = self.leave_node(node)
+        if getattr(node, "_must_close_p_tag", False):
+            batch.items.insert(0, AppendText("</p>"))
+        return AppendBatch(batch.items)
 
     def visit_sourcecode(self, node: nodes.SourceCode) -> EditCommand:
         classes = []

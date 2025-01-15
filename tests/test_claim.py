@@ -28,7 +28,11 @@ def test_simple():
 
         <h2>1. Section</h2>
 
-        <p class="paragraph" data-nodeid="2">This paragraph contains a claim <span id="clm-lbl" class="construct claim" data-nodeid="4"><span class="keyword" data-nodeid="5">⊢ </span>all <span class="math" data-nodeid="8">\(X\)</span> are <span class="math" data-nodeid="11">\(Y\)</span></span>.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>This paragraph contains a claim <span id="clm-lbl" class="construct claim" data-nodeid="4"><span class="keyword" data-nodeid="5">⊢ </span>all <span class="math" data-nodeid="8">\(X\)</span> are <span class="math" data-nodeid="11">\(Y\)</span></span>.</p>
+
+        </div>
 
         </section>
 
@@ -61,7 +65,11 @@ def test_with_math():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This paragraph has math inside a claim <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢ </span><span class="math" data-nodeid="6">\(2+2=4\)</span></span>.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This paragraph has math inside a claim <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢ </span><span class="math" data-nodeid="6">\(2+2=4\)</span></span>.</p>
+
+        </div>
 
         </section>
 
@@ -99,7 +107,11 @@ def test_claim_within_list():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">We now make a bunch of claims.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>We now make a bunch of claims.</p>
+
+        </div>
 
         <ol class="enumerate" data-nodeid="3">
 

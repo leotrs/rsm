@@ -64,9 +64,17 @@ def test_simple():
 
         <h3>Abstract</h3>
 
-        <p class="paragraph" data-nodeid="3">first second third</p>
+        <div class="paragraph" data-nodeid="3">
 
-        <p class="paragraph" data-nodeid="5">fourth fifth</p>
+        <p>first second third</p>
+
+        </div>
+
+        <div class="paragraph" data-nodeid="5">
+
+        <p>fourth fifth</p>
+
+        </div>
 
         <p class="keywords">Keywords: spectral graph theory, non-backtracking, interlacing</p>
 
@@ -78,7 +86,11 @@ def test_simple():
 
         <h2>1. Introduction</h2>
 
-        <p class="paragraph" data-nodeid="8">Lorem ipsum.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>Lorem ipsum.</p>
+
+        </div>
 
         </section>
 

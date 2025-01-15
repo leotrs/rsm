@@ -28,7 +28,11 @@ def test_simple():
 
         <h2>1. Section</h2>
 
-        <p class="paragraph" data-nodeid="2">Lorem ipsum.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Lorem ipsum.</p>
+
+        </div>
 
         </section>
 
@@ -84,19 +88,31 @@ def test_subsections():
 
         <h2>1. Section</h2>
 
-        <p class="paragraph" data-nodeid="2">Lorem ipsum.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Lorem ipsum.</p>
+
+        </div>
 
         <section class="subsection level-3" data-nodeid="4">
 
         <h3>1.1. Sub section</h3>
 
-        <p class="paragraph" data-nodeid="5">Foo</p>
+        <div class="paragraph" data-nodeid="5">
+
+        <p>Foo</p>
+
+        </div>
 
         <section class="subsubsection level-4" data-nodeid="7">
 
         <h4>1.1.1. Sub sub section</h4>
 
-        <p class="paragraph" data-nodeid="8">Bar</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>Bar</p>
+
+        </div>
 
         </section>
 

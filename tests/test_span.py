@@ -19,7 +19,11 @@ def test_one_span():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This is a <span class="span" data-nodeid="3"><strong>boring</strong></span> paragraph.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a <span class="span" data-nodeid="3"><strong>boring</strong></span> paragraph.</p>
+
+        </div>
 
         </section>
 
@@ -51,7 +55,11 @@ def test_two_spans():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This is a <span class="span" data-nodeid="3"><strong>boring</strong></span> paragraph, though it has two <span class="span" data-nodeid="6"><em>spans</em></span> so it's less boring.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a <span class="span" data-nodeid="3"><strong>boring</strong></span> paragraph, though it has two <span class="span" data-nodeid="6"><em>spans</em></span> so it's less boring.</p>
+
+        </div>
 
         </section>
 
@@ -84,7 +92,11 @@ def test_nested():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This is a <span class="span" data-nodeid="3"><strong>paragraph with a <span class="span" data-nodeid="5"><em>span within a span</em></span></strong></span> so that makes it really cool.  BTW it also has a Halmos at the start of a line!</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a <span class="span" data-nodeid="3"><strong>paragraph with a <span class="span" data-nodeid="5"><em>span within a span</em></span></strong></span> so that makes it really cool.  BTW it also has a Halmos at the start of a line!</p>
+
+        </div>
 
         </section>
 
@@ -118,7 +130,11 @@ def test_span_with_multiline_meta():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This is a paragraph with <span id="lbl" class="span" data-nodeid="3"><strong>a span</strong></span> and it is multi line.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a paragraph with <span id="lbl" class="span" data-nodeid="3"><strong>a span</strong></span> and it is multi line.</p>
+
+        </div>
 
         </section>
 
@@ -149,7 +165,11 @@ def test_span_with_label():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This is a <span id="myspn" class="span" data-nodeid="3"><strong>boring</strong></span> paragraph.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a <span id="myspn" class="span" data-nodeid="3"><strong>boring</strong></span> paragraph.</p>
+
+        </div>
 
         </section>
 
@@ -180,7 +200,11 @@ def test_span_part_of_word():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This word is half bold <span class="span" data-nodeid="3"><strong>bo</strong></span>ring.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This word is half bold <span class="span" data-nodeid="3"><strong>bo</strong></span>ring.</p>
+
+        </div>
 
         </section>
 
@@ -211,7 +235,11 @@ def test_span_part_of_word_with_shortcut():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This word is half bold <span class="span" data-nodeid="3"><strong>bo</strong></span>ring.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This word is half bold <span class="span" data-nodeid="3"><strong>bo</strong></span>ring.</p>
+
+        </div>
 
         </section>
 

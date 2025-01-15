@@ -27,11 +27,19 @@ def test_simple_no_handrails():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Proof. </strong></span></p>
+
+        </div>
 
         <div class="sketch" data-nodeid="2">
 
-        <p class="paragraph" data-nodeid="3">Foo.</p>
+        <div class="paragraph" data-nodeid="3">
+
+        <p>Foo.</p>
+
+        </div>
 
         </div>
 
@@ -39,7 +47,11 @@ def test_simple_no_handrails():
 
         <div class="statement" data-nodeid="6">
 
-        <p class="paragraph" data-nodeid="7">Bar.</p>
+        <div class="paragraph" data-nodeid="7">
+
+        <p>Bar.</p>
+
+        </div>
 
         </div>
 

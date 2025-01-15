@@ -37,7 +37,11 @@ def test_single():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">This has a citation at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This has a citation at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
+
+        </div>
 
         <section class="level-2">
 
@@ -99,7 +103,11 @@ def test_with_shortcuts():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">This has a <span class="span" data-nodeid="3"><strong>citation</strong></span> at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This has a <span class="span" data-nodeid="3"><strong>citation</strong></span> at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
+
+        </div>
 
         <section class="level-2">
 
@@ -170,7 +178,11 @@ def test_many():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference" href="#torres2020">1</a>, <a id="cite-0-1" class="reference" href="#knuth">2</a></span>]</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference" href="#torres2020">1</a>, <a id="cite-0-1" class="reference" href="#knuth">2</a></span>]</p>
+
+        </div>
 
         <section class="level-2">
 
@@ -245,7 +257,11 @@ def test_order():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference" href="#knuth">2</a>, <a id="cite-0-1" class="reference" href="#torres2020">1</a></span>]</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference" href="#knuth">2</a>, <a id="cite-0-1" class="reference" href="#torres2020">1</a></span>]</p>
+
+        </div>
 
         <section class="level-2">
 

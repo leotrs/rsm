@@ -503,7 +503,11 @@ def test_reference_to_table():
 
         </table>
 
-        <p class="paragraph" data-nodeid="8">This <a class="reference" href="#lbl">Table 1</a> refers to the table.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>This <a class="reference" href="#lbl">Table 1</a> refers to the table.</p>
+
+        </div>
 
         </section>
 
@@ -561,7 +565,11 @@ def test_reference_to_table_with_reftext():
 
         </table>
 
-        <p class="paragraph" data-nodeid="8">This <a class="reference" href="#lbl">refers</a> to the table.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>This <a class="reference" href="#lbl">refers</a> to the table.</p>
+
+        </div>
 
         </section>
 

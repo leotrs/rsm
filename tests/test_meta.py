@@ -25,7 +25,11 @@ def test_list_with_only_one_element():
 
         <h1>My Title</h1>
 
-        <p class="paragraph mytype" data-nodeid="1">This paragraph has only one type</p>
+        <div class="paragraph mytype" data-nodeid="1">
+
+        <p>This paragraph has only one type</p>
+
+        </div>
 
         </section>
 
@@ -60,7 +64,11 @@ def test_list_with_one_element_before_key():
 
         <h1>My Title</h1>
 
-        <p id="lbl" class="paragraph mytype" data-nodeid="1">This paragraph has only one type, that appears before another key.</p>
+        <div id="lbl" class="paragraph mytype" data-nodeid="1">
+
+        <p>This paragraph has only one type, that appears before another key.</p>
+
+        </div>
 
         </section>
 
@@ -94,7 +102,11 @@ def test_list_no_braces():
 
         <h1>My Title</h1>
         <span class="error" data-nodeid="1">[CST error at (3, 0) - (3, 28)]</span>
-        <p class="paragraph" data-nodeid="2">This paragraph has only one type</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>This paragraph has only one type</p>
+
+        </div>
 
         </section>
 
@@ -128,9 +140,17 @@ def test_inline_no_meta_start_with_tag():
 
         <section class="level-1">
 
-        <p id="lbl" class="paragraph" data-nodeid="1">Foo bar.</p>
+        <div id="lbl" class="paragraph" data-nodeid="1">
 
-        <p class="paragraph" data-nodeid="3">This span starts with a tag that is not a meta key, <span class="span" data-nodeid="5"><a class="reference" href="#lbl">some paragraph</a>, instead it starts with a ref</span>.</p>
+        <p>Foo bar.</p>
+
+        </div>
+
+        <div class="paragraph" data-nodeid="3">
+
+        <p>This span starts with a tag that is not a meta key, <span class="span" data-nodeid="5"><a class="reference" href="#lbl">some paragraph</a>, instead it starts with a ref</span>.</p>
+
+        </div>
 
         </section>
 
@@ -161,7 +181,11 @@ def test_list_within_inline():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">Foo <span class="span t1 t2" data-nodeid="3">bar</span> baz.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Foo <span class="span t1 t2" data-nodeid="3">bar</span> baz.</p>
+
+        </div>
 
         </section>
 
@@ -190,7 +214,11 @@ def test_inline_start_with_brace():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This span starts with a brace <span class="span" data-nodeid="3">{</span>.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This span starts with a brace <span class="span" data-nodeid="3">{</span>.</p>
+
+        </div>
 
         </section>
 
@@ -221,7 +249,11 @@ def test_inline_meta_with_no_space():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">Foo <span class="span" data-nodeid="3"><strong>bar</strong></span>.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Foo <span class="span" data-nodeid="3"><strong>bar</strong></span>.</p>
+
+        </div>
 
         </section>
 
@@ -252,7 +284,11 @@ def test_inline_meta_with_space_in_between_braces():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">Foo <span class="span" data-nodeid="3"><strong>bar</strong></span>.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Foo <span class="span" data-nodeid="3"><strong>bar</strong></span>.</p>
+
+        </div>
 
         </section>
 

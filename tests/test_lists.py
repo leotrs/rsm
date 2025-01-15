@@ -144,7 +144,11 @@ def test_item_with_wrong_parent():
 
         <h2>1. Some section</h2>
 
-        <p class="paragraph" data-nodeid="2">Lorem ipsum [CST error at (4, 12) - (4, 18)] Foo bar.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Lorem ipsum [CST error at (4, 12) - (4, 18)] Foo bar.</p>
+
+        </div>
 
         </section>
 

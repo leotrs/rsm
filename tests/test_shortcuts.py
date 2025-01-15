@@ -23,7 +23,11 @@ def test_one_strong():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">This paragraph has a <span class="span" data-nodeid="3"><strong>shortcut</strong></span> for strong span.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This paragraph has a <span class="span" data-nodeid="3"><strong>shortcut</strong></span> for strong span.</p>
+
+        </div>
 
         </section>
 
@@ -57,7 +61,11 @@ def test_two_strong():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">This paragraph has two <span class="span" data-nodeid="3"><strong>shortcuts</strong></span> for strong <span class="span" data-nodeid="6"><strong>spans</strong></span>.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This paragraph has two <span class="span" data-nodeid="3"><strong>shortcuts</strong></span> for strong <span class="span" data-nodeid="6"><strong>spans</strong></span>.</p>
+
+        </div>
 
         </section>
 
@@ -91,7 +99,11 @@ def test_one_emphas():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">This paragraph has a <span class="span" data-nodeid="3"><em>shortcut</em></span> for emphasis span.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This paragraph has a <span class="span" data-nodeid="3"><em>shortcut</em></span> for emphasis span.</p>
+
+        </div>
 
         </section>
 
@@ -124,7 +136,11 @@ def test_one_math():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">This paragraph has some <span class="math" data-nodeid="3">\(2+2=4\)</span> awesome math.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This paragraph has some <span class="math" data-nodeid="3">\(2+2=4\)</span> awesome math.</p>
+
+        </div>
 
         </section>
 
@@ -158,8 +174,12 @@ def test_two_math():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">This paragraph has some <span class="math" data-nodeid="3">\(2+2=4\)</span> awesome math and also some math that <span class="math" data-nodeid="6">\(2 + 2 + 2
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This paragraph has some <span class="math" data-nodeid="3">\(2+2=4\)</span> awesome math and also some math that <span class="math" data-nodeid="6">\(2 + 2 + 2
         + 2 + 2 = 10\)</span> is broken down.</p>
+
+        </div>
 
         </section>
 
@@ -178,7 +198,6 @@ def test_mathblock():
         :manuscript:
 
         This paragraph is followed by display math
-
         $$2 + 2 = 4.$$
 
         ::
@@ -192,13 +211,14 @@ def test_mathblock():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This paragraph is followed by display math</p>
+        <div class="paragraph" data-nodeid="1">
 
+        <p>This paragraph is followed by display math </p>
         <div class="mathblock" data-nodeid="3">
         $$
         2 + 2 = 4.
         $$
-        <div class="mathblock__number">(1)</div>
+        </div>
 
         </div>
 
@@ -240,7 +260,11 @@ def test_section_shortcut():
 
         <h2>1. My Section</h2>
 
-        <p class="paragraph" data-nodeid="2">This section contains a shortcut</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>This section contains a shortcut</p>
+
+        </div>
 
         </section>
 
@@ -293,19 +317,31 @@ def test_subsubsection_shortcut():
 
         <h2>1. My Section</h2>
 
-        <p class="paragraph" data-nodeid="2">Foo.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Foo.</p>
+
+        </div>
 
         <section class="subsection level-3" data-nodeid="4">
 
         <h3>1.1. My Subsection</h3>
 
-        <p class="paragraph" data-nodeid="5">Bar.</p>
+        <div class="paragraph" data-nodeid="5">
+
+        <p>Bar.</p>
+
+        </div>
 
         <section class="subsubsection level-4" data-nodeid="7">
 
         <h4>1.1.1. My Subsubsection</h4>
 
-        <p class="paragraph" data-nodeid="8">Baz.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>Baz.</p>
+
+        </div>
 
         </section>
 
@@ -343,7 +379,11 @@ def test_claim_shortcut():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This paragraph contains a <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢ </span>claim with a turnstile</span>. And also another one <span class="construct claim" data-nodeid="8"><span class="keyword" data-nodeid="9">⊢ </span>but it takes multiple lines</span>.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This paragraph contains a <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢ </span>claim with a turnstile</span>. And also another one <span class="construct claim" data-nodeid="8"><span class="keyword" data-nodeid="9">⊢ </span>but it takes multiple lines</span>.</p>
+
+        </div>
 
         </section>
 
@@ -394,21 +434,37 @@ def test_prev_shortcut():
 
         <div class="theorem" data-nodeid="1">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <div class="paragraph hr-label">
 
-        <p class="paragraph" data-nodeid="2">All <span class="math" data-nodeid="4">\(X\)</span> are <span class="math" data-nodeid="7">\(Y\)</span>.</p>
+        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+
+        </div>
+
+        <div class="paragraph" data-nodeid="2">
+
+        <p>All <span class="math" data-nodeid="4">\(X\)</span> are <span class="math" data-nodeid="7">\(Y\)</span>.</p>
+
+        </div>
 
         </div>
 
         <div class="proof" data-nodeid="10">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Proof. </strong></span></p>
+
+        </div>
 
         <div id="st1" class="step" data-nodeid="11">
 
         <div class="statement" data-nodeid="12">
 
-        <p class="paragraph" data-nodeid="13">All <span class="math" data-nodeid="15">\(X\)</span> are <span class="math" data-nodeid="18">\(Z\)</span> and all <span class="math" data-nodeid="21">\(Z\)</span> are <span class="math" data-nodeid="24">\(Y\)</span>.</p>
+        <div class="paragraph" data-nodeid="13">
+
+        <p>All <span class="math" data-nodeid="15">\(X\)</span> are <span class="math" data-nodeid="18">\(Z\)</span> and all <span class="math" data-nodeid="21">\(Z\)</span> are <span class="math" data-nodeid="24">\(Y\)</span>.</p>
+
+        </div>
 
         </div>
 
@@ -418,13 +474,21 @@ def test_prev_shortcut():
 
         <div class="statement" data-nodeid="28">
 
-        <p class="paragraph" data-nodeid="29"><span class="construct qed" data-nodeid="30"><span class="keyword" data-nodeid="31">QED </span></span>.</p>
+        <div class="paragraph" data-nodeid="29">
+
+        <p><span class="construct qed" data-nodeid="30"><span class="keyword" data-nodeid="31">QED </span></span>.</p>
+
+        </div>
 
         </div>
 
         <div class="subproof" data-nodeid="34">
 
-        <p class="paragraph" data-nodeid="35">Due to <a class="reference" href="#st1">Step 1</a>.</p>
+        <div class="paragraph" data-nodeid="35">
+
+        <p>Due to <a class="reference" href="#st1">Step 1</a>.</p>
+
+        </div>
 
         </div>
 
@@ -488,21 +552,37 @@ def test_prev2_shortcut():
 
         <div class="theorem" data-nodeid="1">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <div class="paragraph hr-label">
 
-        <p class="paragraph" data-nodeid="2">All <span class="math" data-nodeid="4">\(X\)</span> are <span class="math" data-nodeid="7">\(Y\)</span>.</p>
+        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+
+        </div>
+
+        <div class="paragraph" data-nodeid="2">
+
+        <p>All <span class="math" data-nodeid="4">\(X\)</span> are <span class="math" data-nodeid="7">\(Y\)</span>.</p>
+
+        </div>
 
         </div>
 
         <div class="proof" data-nodeid="10">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Proof. </strong></span></p>
+
+        </div>
 
         <div id="st1" class="step" data-nodeid="11">
 
         <div class="statement" data-nodeid="12">
 
-        <p class="paragraph" data-nodeid="13">All <span class="math" data-nodeid="15">\(X\)</span> are <span class="math" data-nodeid="18">\(Z\)</span> and all <span class="math" data-nodeid="21">\(Z\)</span> are <span class="math" data-nodeid="24">\(Y\)</span>.</p>
+        <div class="paragraph" data-nodeid="13">
+
+        <p>All <span class="math" data-nodeid="15">\(X\)</span> are <span class="math" data-nodeid="18">\(Z\)</span> and all <span class="math" data-nodeid="21">\(Z\)</span> are <span class="math" data-nodeid="24">\(Y\)</span>.</p>
+
+        </div>
 
         </div>
 
@@ -512,7 +592,11 @@ def test_prev2_shortcut():
 
         <div class="statement" data-nodeid="28">
 
-        <p class="paragraph" data-nodeid="29">Something inconsequential here.</p>
+        <div class="paragraph" data-nodeid="29">
+
+        <p>Something inconsequential here.</p>
+
+        </div>
 
         </div>
 
@@ -522,13 +606,21 @@ def test_prev2_shortcut():
 
         <div class="statement" data-nodeid="32">
 
-        <p class="paragraph" data-nodeid="33"><span class="construct qed" data-nodeid="34"><span class="keyword" data-nodeid="35">QED </span></span>.</p>
+        <div class="paragraph" data-nodeid="33">
+
+        <p><span class="construct qed" data-nodeid="34"><span class="keyword" data-nodeid="35">QED </span></span>.</p>
+
+        </div>
 
         </div>
 
         <div class="subproof" data-nodeid="38">
 
-        <p class="paragraph" data-nodeid="39">Due to <a class="reference" href="#st1">Step 1</a>.</p>
+        <div class="paragraph" data-nodeid="39">
+
+        <p>Due to <a class="reference" href="#st1">Step 1</a>.</p>
+
+        </div>
 
         </div>
 

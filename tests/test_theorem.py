@@ -25,9 +25,17 @@ def test_simple():
 
         <div class="theorem" data-nodeid="1">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <div class="paragraph hr-label">
 
-        <p class="paragraph" data-nodeid="2">Theorem contents.</p>
+        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+
+        </div>
+
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Theorem contents.</p>
+
+        </div>
 
         </div>
 
@@ -78,25 +86,49 @@ def test_multiple():
 
         <div class="theorem" data-nodeid="1">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <div class="paragraph hr-label">
 
-        <p class="paragraph" data-nodeid="2">Theorem contents.</p>
+        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+
+        </div>
+
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Theorem contents.</p>
+
+        </div>
 
         </div>
 
         <div class="lemma theorem" data-nodeid="4">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Lemma 2.</strong></span></p>
+        <div class="paragraph hr-label">
 
-        <p class="paragraph" data-nodeid="5">And a lemma.</p>
+        <p><span class="span"><strong>Lemma 2.</strong></span></p>
+
+        </div>
+
+        <div class="paragraph" data-nodeid="5">
+
+        <p>And a lemma.</p>
+
+        </div>
 
         </div>
 
         <div class="theorem" data-nodeid="7">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 3.</strong></span></p>
+        <div class="paragraph hr-label">
 
-        <p class="paragraph" data-nodeid="8">Another theorem.</p>
+        <p><span class="span"><strong>Theorem 3.</strong></span></p>
+
+        </div>
+
+        <div class="paragraph" data-nodeid="8">
+
+        <p>Another theorem.</p>
+
+        </div>
 
         </div>
 

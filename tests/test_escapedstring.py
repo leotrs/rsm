@@ -28,7 +28,11 @@ def test_simple_not_escaped():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">Warning [CST error at (2, 7) - (2, 8)] this is a warning.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Warning [CST error at (2, 7) - (2, 8)] this is a warning.</p>
+
+        </div>
 
         </section>
 
@@ -59,7 +63,11 @@ def test_simple():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">Warning: this is a warning.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Warning: this is a warning.</p>
+
+        </div>
 
         </section>
 
@@ -90,7 +98,11 @@ def test_colon_inside_bold():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1"><span class="span" data-nodeid="2"><strong>Warning:</strong></span> this is a warning.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="span" data-nodeid="2"><strong>Warning:</strong></span> this is a warning.</p>
+
+        </div>
 
         </section>
 
@@ -121,7 +133,11 @@ def test_colon_inside_bold_no_space():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1"><span class="span" data-nodeid="2"><strong>Warning:</strong></span> this is a warning.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="span" data-nodeid="2"><strong>Warning:</strong></span> this is a warning.</p>
+
+        </div>
 
         </section>
 
@@ -152,7 +168,11 @@ def test_colon_inside_bold_with_shortcut():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1"><span class="span" data-nodeid="2"><strong>Warning:</strong></span>this is a warning.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="span" data-nodeid="2"><strong>Warning:</strong></span>this is a warning.</p>
+
+        </div>
 
         </section>
 
@@ -181,7 +201,11 @@ def test_backslash_brace_within_math():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1"><span class="math" data-nodeid="2">\([k]:= \{1,\ldots,k\}\)</span></p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="math" data-nodeid="2">\([k]:= \{1,\ldots,k\}\)</span></p>
+
+        </div>
 
         </section>
 

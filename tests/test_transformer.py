@@ -26,7 +26,11 @@ def test_duplicate_label_warning(caplog):
 
         <h1>Title</h1>
 
-        <p class="paragraph" data-nodeid="1">There are <span id="mylbl" class="span" data-nodeid="3">two</span> spans with the <span class="span" data-nodeid="6">same</span> label in this paragraph.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>There are <span id="mylbl" class="span" data-nodeid="3">two</span> spans with the <span class="span" data-nodeid="6">same</span> label in this paragraph.</p>
+
+        </div>
 
         </section>
 
@@ -137,7 +141,11 @@ def test_theorem_within_section():
 
         <div class="theorem" data-nodeid="2">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+
+        </div>
 
         </div>
 
@@ -188,13 +196,21 @@ def test_two_theorems_same_section():
 
         <div class="theorem" data-nodeid="2">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+
+        </div>
 
         </div>
 
         <div class="theorem" data-nodeid="3">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.2.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem 1.2.</strong></span></p>
+
+        </div>
 
         </div>
 
@@ -249,7 +265,11 @@ def test_two_theorems_different_sections():
 
         <div class="theorem" data-nodeid="2">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+
+        </div>
 
         </div>
 
@@ -261,7 +281,11 @@ def test_two_theorems_different_sections():
 
         <div class="theorem" data-nodeid="4">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 2.1.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem 2.1.</strong></span></p>
+
+        </div>
 
         </div>
 
@@ -313,13 +337,21 @@ def test_two_theorems_same_section_nonum():
 
         <div class="theorem" data-nodeid="2">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem.</strong></span></p>
+
+        </div>
 
         </div>
 
         <div class="theorem" data-nodeid="3">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+
+        </div>
 
         </div>
 
@@ -367,7 +399,11 @@ def test_theorem_inside_section_with_nonum():
 
         <div class="theorem" data-nodeid="2">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+
+        </div>
 
         </div>
 
@@ -422,7 +458,11 @@ def test_theorem_inside_subsection():
 
         <div class="theorem" data-nodeid="3">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+
+        </div>
 
         </div>
 

@@ -806,7 +806,7 @@ class Translator:
         batch = self.leave_node(node)
         if getattr(node, "_must_close_p_tag", False):
             batch.items.insert(0, AppendText("</p>"))
-        return AppendBatch(batch.items)
+        return batch
 
     def visit_sourcecode(self, node: nodes.SourceCode) -> EditCommand:
         classes = []

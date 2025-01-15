@@ -102,7 +102,7 @@ def test_manuscript():
 
         </div>
 
-        <div class="paragraph hr hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-hidden" tabindex=0 data-nodeid="1">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -166,7 +166,7 @@ def test_manuscript():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="1">Hello.</p>
+        <p>Hello.</p>
 
         </div>
 
@@ -362,7 +362,11 @@ def test_two_steps():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Proof. </strong></span></p>
+
+        </div>
 
         <div class="step hr hr-hidden hr-offset" tabindex=0 data-nodeid="2">
 
@@ -508,7 +512,7 @@ def test_two_steps():
 
         <div class="hr-content-zone">
 
-        <div class="paragraph hr hr-offset hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-hidden hr-offset" tabindex=0 data-nodeid="4">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -572,7 +576,7 @@ def test_two_steps():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="4">Foo.</p>
+        <p>Foo.</p>
 
         </div>
 
@@ -738,7 +742,7 @@ def test_two_steps():
 
         <div class="hr-content-zone">
 
-        <div class="paragraph hr hr-offset hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-hidden hr-offset" tabindex=0 data-nodeid="8">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -802,7 +806,7 @@ def test_two_steps():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="8">Bar.</p>
+        <p>Bar.</p>
 
         </div>
 
@@ -1027,7 +1031,11 @@ def test_sub_step():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Proof. </strong></span></p>
+
+        </div>
 
         <div class="step last hr hr-hidden hr-offset" tabindex=0 data-nodeid="2">
 
@@ -1173,7 +1181,7 @@ def test_sub_step():
 
         <div class="hr-content-zone">
 
-        <div class="paragraph hr hr-offset hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-hidden hr-offset" tabindex=0 data-nodeid="4">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -1237,7 +1245,7 @@ def test_sub_step():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="4">Top level step.</p>
+        <p>Top level step.</p>
 
         </div>
 
@@ -1467,7 +1475,7 @@ def test_sub_step():
 
         <div class="hr-content-zone">
 
-        <div class="paragraph hr hr-offset hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-offset hr-hidden" tabindex=0 data-nodeid="9">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -1531,7 +1539,7 @@ def test_sub_step():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="9">Sub-step.</p>
+        <p>Sub-step.</p>
 
         </div>
 
@@ -1617,7 +1625,7 @@ def test_sub_step():
 
         <div class="hr-content-zone">
 
-        <div class="paragraph hr hr-offset hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-offset hr-hidden" tabindex=0 data-nodeid="12">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -1681,7 +1689,7 @@ def test_sub_step():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="12">Sub-proof.</p>
+        <p>Sub-proof.</p>
 
         </div>
 
@@ -1926,7 +1934,7 @@ def test_section():
 
         </div>
 
-        <div class="paragraph hr hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-hidden" tabindex=0 data-nodeid="2">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -1990,7 +1998,7 @@ def test_section():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="2">Hello.</p>
+        <p>Hello.</p>
 
         </div>
 
@@ -2196,7 +2204,7 @@ def test_abstract():
 
         </div>
 
-        <div class="paragraph hr hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-hidden" tabindex=0 data-nodeid="2">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -2260,7 +2268,7 @@ def test_abstract():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="2">The abstract.</p>
+        <p>The abstract.</p>
 
         </div>
 
@@ -2373,9 +2381,13 @@ def test_theorem():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <div class="paragraph hr-label">
 
-        <div class="paragraph hr hr-offset hr-hidden" tabindex=0>
+        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+
+        </div>
+
+        <div class="paragraph hr hr-hidden" tabindex=0 data-nodeid="2">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -2439,7 +2451,7 @@ def test_theorem():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="2">Hello.</p>
+        <p>Hello.</p>
 
         </div>
 
@@ -2641,7 +2653,11 @@ def test_proof():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Proof. </strong></span></p>
+
+        </div>
 
         <div class="step last hr hr-hidden hr-offset" tabindex=0 data-nodeid="2">
 
@@ -2787,7 +2803,7 @@ def test_proof():
 
         <div class="hr-content-zone">
 
-        <div class="paragraph hr hr-offset hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-hidden hr-offset" tabindex=0 data-nodeid="4">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -2851,7 +2867,7 @@ def test_proof():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="4">Bar.</p>
+        <p>Bar.</p>
 
         </div>
 
@@ -3071,11 +3087,15 @@ def test_proof_with_sketch():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Proof. </strong></span></p>
+
+        </div>
 
         <div class="sketch" data-nodeid="2">
 
-        <div class="paragraph hr hr-offset hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-hidden" tabindex=0 data-nodeid="3">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -3139,7 +3159,7 @@ def test_proof_with_sketch():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="3">Foo.</p>
+        <p>Foo.</p>
 
         </div>
 
@@ -3291,7 +3311,7 @@ def test_proof_with_sketch():
 
         <div class="hr-content-zone">
 
-        <div class="paragraph hr hr-offset hr-hidden" tabindex=0>
+        <div class="paragraph hr hr-hidden hr-offset" tabindex=0 data-nodeid="7">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -3355,7 +3375,7 @@ def test_proof_with_sketch():
 
         <div class="hr-content-zone">
 
-        <p class="paragraph" data-nodeid="7">Bar.</p>
+        <p>Bar.</p>
 
         </div>
 

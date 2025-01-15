@@ -1480,15 +1480,13 @@ class HandrailsTranslator(Translator):
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
         cmd = super().visit_paragraph(node)
-        batch = self._wrap_cmd_with_handrails(
-            cmd,
-            include_content=True,
+        batch = self._replace_node_with_handrails(
+            node,
             collapsible=False,
-            depth=node.handrail_depth,
-            classes=["paragraph"],
         )
-        batch.items[0].classes.append("hr-hidden")
-        return batch
+        if "hr-hidden" not in batch.items[0].classes:
+            batch.items[0].classes.append("hr-hidden")
+        return AppendBatchAndDefer([*batch.items, *cmd.items[1:]])
 
     def leave_paragraph(self, node: nodes.Step) -> EditCommand:
         # For documentation: if a visit_* method returns a command with defers = True,

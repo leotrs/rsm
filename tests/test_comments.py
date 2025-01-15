@@ -1,5 +1,6 @@
 import pytest
-from conftest import compare_have_want, EMPTY_WANT
+from conftest import EMPTY_WANT, compare_have_want
+
 import rsm
 
 
@@ -47,7 +48,11 @@ def test_escape_comment_delimiter():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">% This is not a comment.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>% This is not a comment.</p>
+
+        </div>
 
         </section>
 
@@ -78,7 +83,11 @@ def test_end_of_line_comment():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">Foo.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Foo.</p>
+
+        </div>
 
         </section>
 
@@ -107,7 +116,11 @@ def test_percent_within_math_is_not_a_comment():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1"><span class="math" data-nodeid="2">\(10\%\)</span> this is not a comment</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="math" data-nodeid="2">\(10\%\)</span> this is not a comment</p>
+
+        </div>
 
         </section>
 
@@ -140,7 +153,11 @@ def test_broken_paragraph():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This is a paragraph in the middle</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a paragraph in the middle</p>
+
+        </div>
 
         </section>
 

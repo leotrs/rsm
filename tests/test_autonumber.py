@@ -1,6 +1,7 @@
 import pytest
-import rsm
 from conftest import compare_have_want
+
+import rsm
 
 
 def test_numbered_sections():
@@ -37,7 +38,11 @@ def test_numbered_sections():
 
         <h2>1. First</h2>
 
-        <p class="paragraph" data-nodeid="2">Content of first.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Content of first.</p>
+
+        </div>
 
         </section>
 
@@ -45,7 +50,11 @@ def test_numbered_sections():
 
         <h2>2. Second</h2>
 
-        <p class="paragraph" data-nodeid="5">Content of second.</p>
+        <div class="paragraph" data-nodeid="5">
+
+        <p>Content of second.</p>
+
+        </div>
 
         </section>
 
@@ -102,7 +111,11 @@ def test_nonum():
 
         <h2>1. First</h2>
 
-        <p class="paragraph" data-nodeid="2">Content of first.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Content of first.</p>
+
+        </div>
 
         </section>
 
@@ -110,7 +123,11 @@ def test_nonum():
 
         <h2>Second</h2>
 
-        <p class="paragraph" data-nodeid="5">Content of second.</p>
+        <div class="paragraph" data-nodeid="5">
+
+        <p>Content of second.</p>
+
+        </div>
 
         </section>
 
@@ -118,7 +135,11 @@ def test_nonum():
 
         <h2>2. Third</h2>
 
-        <p class="paragraph" data-nodeid="8">Content of third.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>Content of third.</p>
+
+        </div>
 
         </section>
 

@@ -1,6 +1,7 @@
 import pytest
+from conftest import EMPTY_WANT, compare_have_want
+
 import rsm
-from conftest import compare_have_want, EMPTY_WANT
 
 
 def test_empty_manuscript():
@@ -37,7 +38,11 @@ def test_no_manuscript_title():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">Lorem ipsum.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Lorem ipsum.</p>
+
+        </div>
 
         </section>
 
@@ -71,7 +76,11 @@ def test_manuscript_title():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">Lorem ipsum.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Lorem ipsum.</p>
+
+        </div>
 
         </section>
 
@@ -148,13 +157,21 @@ def test_section_header():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">Lorem ipsum.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Lorem ipsum.</p>
+
+        </div>
 
         <section class="section level-2" data-nodeid="3">
 
         <h2>1. section title</h2>
 
-        <p class="paragraph" data-nodeid="4">Lorem ipsum.</p>
+        <div class="paragraph" data-nodeid="4">
+
+        <p>Lorem ipsum.</p>
+
+        </div>
 
         </section>
 

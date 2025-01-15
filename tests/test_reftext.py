@@ -1,4 +1,5 @@
 from conftest import compare_have_want
+
 import rsm
 
 
@@ -32,6 +33,7 @@ def test_simple():
         have="""\
         :manuscript:
 
+        Some math
         :mathblock:
           :label: eqn
           :reftext: Important Equation
@@ -51,15 +53,22 @@ def test_simple():
 
         <section class="level-1">
 
-        <div id="eqn" class="mathblock" data-nodeid="1">
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Some math </p>
+        <div id="eqn" class="mathblock" data-nodeid="3">
         $$
         2+2=4
         $$
-        <div class="mathblock__number">(1)</div>
+        </div>
 
         </div>
 
-        <p class="paragraph" data-nodeid="3">Here we refer to the <a class="reference" href="#eqn">Important Equation</a>.</p>
+        <div class="paragraph" data-nodeid="5">
+
+        <p>Here we refer to the <a class="reference" href="#eqn">Important Equation</a>.</p>
+
+        </div>
 
         </section>
 

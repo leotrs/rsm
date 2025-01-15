@@ -78,7 +78,11 @@ def test_empty_author():
 
         </div>
 
-        <p class="paragraph" data-nodeid="2">Lorem ipsum.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Lorem ipsum.</p>
+
+        </div>
 
         </section>
 

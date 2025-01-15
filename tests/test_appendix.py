@@ -154,7 +154,11 @@ def test_theorem():
 
         <div class="theorem" data-nodeid="3">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+
+        </div>
 
         </div>
 
@@ -172,7 +176,11 @@ def test_theorem():
 
         <div class="theorem" data-nodeid="7">
 
-        <p class="paragraph hr-label"><span class="span"><strong>Theorem A.1.</strong></span></p>
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Theorem A.1.</strong></span></p>
+
+        </div>
 
         </div>
 
@@ -215,7 +223,11 @@ def test_section_reftext():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1"><a class="reference" href="#app">Appendix A</a></p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p><a class="reference" href="#app">Appendix A</a></p>
+
+        </div>
 
         <section id="app" class="section level-2" data-nodeid="4">
 

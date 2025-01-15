@@ -191,6 +191,9 @@ class TSParser:
         except AttributeError as ex:
             raise RSMParserError(msg="Error abstractifying.") from ex
 
+        if self.ast is None:
+            raise RSMParserError(msg="The CST contains errors.")
+
         if logger.getEffectiveLevel() <= logging.DEBUG:
             logger.debug("abstract syntax tree:")
             print(self.ast.sexp())
@@ -332,6 +335,8 @@ def _parse_meta_into_dict(node):
 
 
 def _normalize_text(root):
+    if root is None:
+        return
     for node in root.traverse():
         # Merge consecutive text nodes (each text node ends at a newline, so consecutive
         # text nodes are just adjacent lines of text and can always be merged).  Also,

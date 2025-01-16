@@ -1347,7 +1347,7 @@ class HandrailsTranslator(Translator):
             (node.types or [])
             + ["hr"]
             + (["hr-hidden"] if node.handrail_depth == 2 else [])
-            + (["hr-offset"] if node.handrail_depth > 1 else [])
+            + (["hr-offset"] if node.handrail_depth > 0 else [])
         )
         classes = list(dict.fromkeys(classes))  # deletes duplicates AND preserves order
         return AppendNodeTag(node, additional_classes=classes, is_selectable=True)
@@ -1492,15 +1492,8 @@ class HandrailsTranslator(Translator):
         # For documentation: if a visit_* method returns a command with defers = True,
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
         # add it to the returned batch!!!
-        batch = self.leave_node(node)
-
-        if (icon := getattr(node, "icon", None)) is not None:
-            batch.items.insert(2, self._hr_info_zone_icon(icon))
-        # elif node.first_ancestor_of_type(nodes.Step):
-        #     batch.items.insert(
-        #         2, self._hr_info_zone_step_number(node.parent.parent.full_number)
-        #     )
-
+        batch = super().leave_paragraph(node)
+        batch.items.insert(2, self._hr_info_zone_icon(getattr(node, "icon", None)))
         batch = AppendBatch(batch.items)
         return batch
 
@@ -1601,13 +1594,13 @@ class HandrailsTranslator(Translator):
         return batch
 
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
-        batch = self._replace_node_with_handrails(node)
+        batch = self._replace_node_with_handrails(node, collapsible=False)
         batch.items.append(AppendTextAndDefer("$$\n", "\n$$"))
         batch.items[0].classes.append("hr-hidden")
         return batch
 
     def leave_mathblock(self, node: nodes.MathBlock) -> EditCommand:
-        batch = self.leave_node(node)
+        batch = super().leave_mathblock(node)
         batch.items.insert(2, self._hr_info_zone_number(node.full_number, style="eqn"))
-        batch = AppendBatch(batch.items)
+        batch = AppendBatch(batch.items[:3] + [batch.items[-1], batch.items[-2]])
         return batch

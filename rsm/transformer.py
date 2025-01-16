@@ -347,12 +347,18 @@ class Transformer:
     def add_handrail_depth(self) -> None:
         for node in self.tree.traverse(nodeclass=nodes.Theorem):
             for desc in node.traverse():
+                if desc == node:
+                    continue
                 desc.handrail_depth += 1
         for node in self.tree.traverse(nodeclass=nodes.Proof):
             for desc in node.traverse():
+                if desc == node:
+                    continue
                 desc.handrail_depth += 1
         for node in self.tree.traverse(nodeclass=nodes.Step):
             for desc in node.traverse():
+                if desc == node:
+                    continue
                 desc.handrail_depth += 1
 
     def assign_node_ids(self) -> None:

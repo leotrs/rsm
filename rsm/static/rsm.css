@@ -326,6 +326,7 @@
 
   .hr-shift-1 {
     left: 24px;
+    width: calc(100% - 24px);
   }
 
   &.subproof .hr-offset.hr.hr-hidden .hr-border-zone {

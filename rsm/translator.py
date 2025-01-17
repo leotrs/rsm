@@ -618,11 +618,13 @@ class Translator:
             return AppendBatchAndDefer(
                 [
                     AppendNodeTag(node),
+                    AppendOpenTagManualClose("div", classes=["paragraph"]),
                     *[
                         AppendParagraph(str(x))
                         for x in [node.name, node.affiliation, email]
                         if x
                     ],
+                    AppendText("</div>"),
                 ]
             )
         else:
@@ -1343,12 +1345,15 @@ class HandrailsTranslator(Translator):
             classes=["hr-info-zone"],
         )
 
-    def _hr_from_node(self, node):
+    def _hr_from_node(
+        self, node: nodes.NodeSubType, additional_classes: None | list[str] = None
+    ):
         classes = (
             (node.types or [])
             + ["hr"]
             + (["hr-hidden"] if node.handrail_depth == 2 else [])
             + (["hr-offset"] if node.handrail_depth > 0 else [])
+            + (additional_classes or [])
         )
         classes = list(dict.fromkeys(classes))  # deletes duplicates AND preserves order
         return AppendNodeTag(node, additional_classes=classes, is_selectable=True)
@@ -1357,8 +1362,9 @@ class HandrailsTranslator(Translator):
         self,
         node,
         collapsible: bool = True,
+        additional_classes: None | list[str] = None,
     ):
-        handrail = self._hr_from_node(node)
+        handrail = self._hr_from_node(node, additional_classes)
         hr_content_zone = self._hr_content_zone(True)
 
         newitems = [
@@ -1461,6 +1467,12 @@ class HandrailsTranslator(Translator):
             batch.items.insert(2, self._make_source_div())
         return batch
 
+    def visit_author(self, node: nodes.Author) -> EditCommand:
+        batch = super().visit_author(node)
+        hr = self._replace_node_with_handrails(node, additional_classes=["hr-hidden"])
+        hr.items += batch.items[2:]
+        return hr
+
     def visit_section(self, node: nodes.Section) -> EditCommand:
         batch = super().visit_section(node)
         return self._wrap_batch_item_with_handrails(
@@ -1469,7 +1481,7 @@ class HandrailsTranslator(Translator):
 
     def visit_abstract(self, node: nodes.Abstract) -> EditCommand:
         batch = super().visit_abstract(node)
-        return self._wrap_batch_item_with_handrails(1, batch)
+        return self._wrap_batch_item_with_handrails(1, batch, classes=["heading"])
 
     def visit_contents(self, node: nodes.Contents) -> EditCommand:
         batch = super().visit_contents(node)

@@ -62,6 +62,7 @@
 .manuscriptwrapper {
   .error {background-color: pink;}
   .node-with-no-class {background-color: pink;}
+  .reference.unknown {background-color: pink;}
   .hide {display: none !important;}
 }
 

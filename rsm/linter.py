@@ -34,6 +34,7 @@ class Linter:
 
         self.lint_manuscript_title()
         self.lint_section_label()
+        self.lint_mathblock_inside_paragraph()
 
         return self.tree
 
@@ -55,3 +56,12 @@ class Linter:
         for section in self.tree.traverse(nodeclass=nodes.Section):
             if not section.label:
                 logger.lint("Section with no label", extra=self._extra(section))
+
+    def lint_mathblock_inside_paragraph(self) -> None:
+        for block in self.tree.traverse(nodeclass=nodes.MathBlock):
+            if not isinstance(block.parent, nodes.Paragraph):
+                cls = type(block.parent)
+                logger.lint(
+                    f"MathBlock must be direct child of Paragraph, not {cls}",
+                    extra=self._extra(block),
+                )

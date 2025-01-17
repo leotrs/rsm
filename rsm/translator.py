@@ -695,9 +695,7 @@ class Translator:
             return AppendBatchAndDefer(
                 [
                     AppendNodeTag(node, "div"),
-                    discard_me := AppendOpenTagManualClose(
-                        tag="p", newline_inner=False
-                    ),
+                    AppendOpenTagManualClose(tag="p", newline_inner=False),
                 ]
             )
         else:
@@ -801,8 +799,7 @@ class Translator:
         # deferred commands was to use a special attribute.
         else:
             node.parent._must_close_p_tag = True
-            tag = AppendText("<p>")
-            batch.items.insert(2, tag)
+            batch.items.append(AppendText("<p>"))
             return AppendBatch(batch.items)
 
     def leave_paragraph(self, node: nodes.Paragraph) -> EditCommand:
@@ -1181,31 +1178,25 @@ class HandrailsTranslator(Translator):
         """,
         "bookmark": """<svg width="14" height="18" viewBox="0 0 14 18" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
         <path d="M13 4.55556V17L7 13.4444L1 17V4.55556C1 3.61256 1.42143 2.70819 2.17157 2.0414C2.92172 1.3746 3.93913 1 5 1H9C10.0609 1 11.0783 1.3746 11.8284 2.0414C12.5786 2.70819 13 3.61256 13 4.55556Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        """,
+        </svg>""",
         "success": """<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" fill="#3C4952" stroke-width="0" class="icon icon-tabler icons-tabler-filled icon-tabler-circle-check">
         <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" />
-        </svg>
-        """,
+        </svg>""",
         "alert": """<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="1.1 1 22 22" fill="#3C4952" stroke-width="0" class="icon icon-tabler icons-tabler-filled icon-tabler-alert-triangle">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M12 1.67c.955 0 1.845 .467 2.39 1.247l.105 .16l8.114 13.548a2.914 2.914 0 0 1 -2.307 4.363l-.195 .008h-16.225a2.914 2.914 0 0 1 -2.582 -4.2l.099 -.185l8.11 -13.538a2.914 2.914 0 0 1 2.491 -1.403zm.01 13.33l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -7a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z" />
-        </svg>
-        """,
+        </svg>""",
         "question": """<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#3C4952" stroke-width="0" class="icon icon-tabler icons-tabler-filled icon-tabler-help-hexagon">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M10.425 1.414a3.33 3.33 0 0 1 3.026 -.097l.19 .097l6.775 3.995l.096 .063l.092 .077l.107 .075a3.224 3.224 0 0 1 1.266 2.188l.018 .202l.005 .204v7.284c0 1.106 -.57 2.129 -1.454 2.693l-.17 .1l-6.803 4.302c-.918 .504 -2.019 .535 -3.004 .068l-.196 -.1l-6.695 -4.237a3.225 3.225 0 0 1 -1.671 -2.619l-.007 -.207v-7.285c0 -1.106 .57 -2.128 1.476 -2.705l6.95 -4.098zm1.575 13.586a1 1 0 0 0 -.993 .883l-.007 .117l.007 .127a1 1 0 0 0 1.986 0l.007 -.117l-.007 -.127a1 1 0 0 0 -.993 -.883zm1.368 -6.673a2.98 2.98 0 0 0 -3.631 .728a1 1 0 0 0 1.44 1.383l.171 -.18a.98 .98 0 0 1 1.11 -.15a1 1 0 0 1 -.34 1.886l-.232 .012a1 1 0 0 0 .111 1.994a3 3 0 0 0 1.371 -5.673z" />
-        </svg>
-        """,
+        </svg>""",
         "heart": """<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="1 1 22 22" fill="#3C4952" class="icon icon-tabler icons-tabler-filled icon-tabler-heart">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" />
-        </svg>
-        """,
+        </svg>""",
         "star": """<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
         <path d="M9.00561 14.2664L4.06109 17L5.00561 11.2101L1 7.11004L6.52774 6.26763L9 1L11.4723 6.26763L17 7.11004L12.9944 11.2101L13.9389 17L9.00561 14.2664Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        """,
+        </svg>""",
     }
 
     def __init__(
@@ -1515,15 +1506,19 @@ class HandrailsTranslator(Translator):
         )
         if "hr-hidden" not in batch.items[0].classes:
             batch.items[0].classes.append("hr-hidden")
-        return AppendBatchAndDefer([*batch.items, *cmd.items[1:]])
+        batch = AppendBatchAndDefer([*batch.items, *cmd.items[1:]])
+        logger.debug("visiting paragraph")
+        logger.debug(batch)
+        return batch
 
-    def leave_paragraph(self, node: nodes.Step) -> EditCommand:
+    def leave_paragraph(self, node: nodes.Paragraph) -> EditCommand:
         # For documentation: if a visit_* method returns a command with defers = True,
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
         # add it to the returned batch!!!
         batch = super().leave_paragraph(node)
-        batch.items.insert(2, self._hr_info_zone_icon(getattr(node, "icon", None)))
-        batch = AppendBatch(batch.items)
+        batch.items.insert(-1, self._hr_info_zone_icon(getattr(node, "icon", None)))
+        logger.debug("leaving paragraph")
+        logger.debug(batch)
         return batch
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
@@ -1624,12 +1619,16 @@ class HandrailsTranslator(Translator):
 
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         batch = self._replace_node_with_handrails(node, collapsible=False)
+        batch.items.insert(0, AppendText("</p>"))
         batch.items.append(AppendTextAndDefer("$$\n", "\n$$"))
-        batch.items[0].classes.append("hr-hidden")
+        batch.items[1].classes += ["hr-hidden", "hr-offset"]
+        logger.debug("visiting mathblock")
+        logger.debug(batch)
         return batch
 
     def leave_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         batch = super().leave_mathblock(node)
         batch.items.insert(2, self._hr_info_zone_number(node.full_number, style="eqn"))
-        batch = AppendBatch(batch.items[:3] + [batch.items[-1], batch.items[-2]])
+        logger.debug("leaving mathblock")
+        logger.debug(batch)
         return batch

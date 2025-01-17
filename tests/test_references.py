@@ -148,3 +148,39 @@ def test_ref_to_unknown_label(caplog):
         """,
     )
     assert "Reference to nonexistent label" in caplog.text
+
+
+def test_cite_to_unknown_label(caplog):
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        This is an unknown cite :cite:foobar::.
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is an unknown cite [<a id="cite-0" class="reference unknown" href="#">[unknown label "foobar"]</a>].</p>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+    assert "Reference to nonexistent label" in caplog.text

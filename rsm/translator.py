@@ -885,6 +885,7 @@ class Translator:
         href_text: str,
         label: str = "",
         id_: str = "",
+        additional_classes: None | list[str] = None,
     ) -> str:
         if not target:
             raise RSMTranslatorError(f"Found a {node.__class__} without a target")
@@ -897,7 +898,14 @@ class Translator:
         if not isinstance(node, nodes.URL) and "reference" not in classes:
             classes.insert(0, "reference")
         tag = (
-            _make_tag("a", id_=id_, classes=classes, href=href_text) + reftext + "</a>"
+            _make_tag(
+                "a",
+                id_=id_,
+                classes=classes + (additional_classes or []),
+                href=href_text,
+            )
+            + reftext
+            + "</a>"
         )
         return tag
 
@@ -979,7 +987,15 @@ class Translator:
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
         if len(node.targets) == 1:
             t = node.targets[0]
-            text = self._make_ahref_tag_text(node, t, f"#{t.label}", id_=node.label)
+            text = self._make_ahref_tag_text(
+                node,
+                t,
+                f"#{t.label}",
+                id_=node.label,
+                additional_classes=["unknown"]
+                if isinstance(node.targets[0], nodes.UnknownBibitem)
+                else [],
+            )
         else:
             tags = [
                 self._make_ahref_tag_text(

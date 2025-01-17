@@ -463,12 +463,13 @@ class AppendHalmos(AppendOpenCloseTag):
 
 
 class AppendExternalTree(AppendText):
-    def __init__(self, root: nodes.Node):
+    def __init__(self, root: nodes.Node, handrails: bool = False):
         super().__init__()
         self.root = root
+        self.cls = HandrailsTranslator if handrails else Translator
 
     def make_text(self) -> str:
-        return Translator(quiet=True).translate(self.root)
+        return self.cls(quiet=True).translate(self.root)
 
 
 class EditCommandBatch(EditCommand):
@@ -605,7 +606,7 @@ class Translator:
         return batch
 
     def visit_author(self, node: nodes.Author) -> EditCommand:
-        if [node.name, node.affiliation, node.email]:
+        if any([node.name, node.affiliation, node.email]):
             if node.email:
                 email = (
                     _make_tag("a", id_="", classes="", href=f"mailto:{node.email}")

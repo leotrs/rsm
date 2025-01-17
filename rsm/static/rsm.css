@@ -168,6 +168,17 @@
   /* Margins between the heading and the first paragraph */
   .hr.heading {margin-bottom: 16px;}
 
+  /* Margins between most elements */
+  .hr {
+    margin-block-end: 1em;
+  }
+  .hr.mathblock {
+    margin-block-end: 0em;
+  }
+/* .manuscriptwrapper ol.enumerate, */
+/* .manuscriptwrapper ul.itemize  */
+
+
 }
 
 
@@ -252,7 +263,7 @@
 }
 /* Handrails: individual elements -- content-zone */
 .manuscriptwrapper .hr .hr-content-zone {
-  p {
+  & > p:first-child {
     padding-top: 8px;
   }
 }
@@ -275,16 +286,16 @@
 
 /* Handrail hover */
 .manuscriptwrapper .hr {
-  .hr-border-zone .hr-border-dots, .hr-collapse-zone .hr-collapse {opacity: 0%;}
+  & > .hr-border-zone .hr-border-dots, & > .hr-collapse-zone .hr-collapse {opacity: 0%;}
 }
 .manuscriptwrapper .hr:hover {
-  .hr-border-zone .hr-border-dots, .hr-collapse-zone .hr-collapse {opacity: 100%;}
+  & > .hr-border-zone .hr-border-dots, & > .hr-collapse-zone .hr-collapse {opacity: 100%;}
 }
 .manuscriptwrapper .hr.hr-hidden {
-  .hr-border-zone {opacity: 0%;}
+  & > .hr-border-zone {opacity: 0%;}
 }
 .manuscriptwrapper .hr.hr-hidden:hover {
-  .hr-border-zone {opacity: 100%;}
+  & > .hr-border-zone {opacity: 100%;}
 }
 
 
@@ -364,10 +375,6 @@
 
 
 
-.manuscriptwrapper div.paragraph,
-.manuscriptwrapper ol.enumerate,
-.manuscriptwrapper ul.itemize {
-  margin-block-end: 1em; }
 
 
 /* .manuscriptwrapper figure { */

@@ -5,7 +5,7 @@
 
 export function createTooltips() {
     $(".manuscriptwrapper a.reference").tooltipster({
-        theme: 'tooltipster-shadow',
+        theme: ['tooltipster-shadow', 'tooltipster-shadow-rsm'],
         functionInit: function(instance, helper) {
             let target = $(helper.origin).attr("href");
 
@@ -38,6 +38,10 @@ export function createTooltips() {
             } else if (tag == "SECTION") {
                 let clone = $(target).clone();
                 clone.children().slice(2).remove();
+		clone.find(".hr-collapse-zone").remove();
+		clone.find(".hr-menu-zone").remove();
+		clone.find(".hr-border-zone").remove();
+		clone.find(".hr-info-zone").remove();
                 clone.css('font-size', '0.7rem');
                 content = clone.html();
             } else if (tag == "A") {
@@ -68,15 +72,6 @@ export function createTooltips() {
 		console.log(`tooltip target with unknown tag ${tag}`);
 	    }
 
-            instance.content($(content));
-        }
-    });
-
-    $("a.note__link").tooltipster({
-        theme: 'tooltipster-shadow',
-        functionInit: function(instance, helper) {
-            let content = $(helper.origin).parent().next().html();
-            content = `<div>${content}</div>`;
             instance.content($(content));
         }
     });

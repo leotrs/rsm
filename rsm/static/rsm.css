@@ -386,7 +386,7 @@
     align-items: center;
 
     .eqn-number p, .step-number p {
-      font-size: 12px;
+      font-size: 14px;
       color: var(--medium);
     }
   }
@@ -506,6 +506,9 @@
     padding-inline-start: 0;
     margin-left: 48px; 		/* temporary */
     margin-top: 1rem;
+
+    li {margin-block: 0.5rem;}
+
   }
 
   ul.contents ul.itemize {

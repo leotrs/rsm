@@ -20,4 +20,14 @@ export function setupClassInteractions() {
 	});
     });
 
+    // Set height of offset handrails' borders
+    document.querySelectorAll('.hr.hr-offset > .hr-border-zone > .hr-border-rect').forEach(border => {
+	console.log(border);
+	const siblings = Array.from(border.parentElement.parentElement.children);
+	const content = siblings.find(sibling => sibling.classList.contains("hr-content-zone"));
+	if (content) {
+	    border.style.height = `${content.offsetHeight}px`;
+	}
+    });
+
 }

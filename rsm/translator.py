@@ -1507,8 +1507,6 @@ class HandrailsTranslator(Translator):
         if "hr-hidden" not in batch.items[0].classes:
             batch.items[0].classes.append("hr-hidden")
         batch = AppendBatchAndDefer([*batch.items, *cmd.items[1:]])
-        logger.debug("visiting paragraph")
-        logger.debug(batch)
         return batch
 
     def leave_paragraph(self, node: nodes.Paragraph) -> EditCommand:
@@ -1517,8 +1515,6 @@ class HandrailsTranslator(Translator):
         # add it to the returned batch!!!
         batch = super().leave_paragraph(node)
         batch.items.insert(-1, self._hr_info_zone_icon(getattr(node, "icon", None)))
-        logger.debug("leaving paragraph")
-        logger.debug(batch)
         return batch
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
@@ -1622,13 +1618,9 @@ class HandrailsTranslator(Translator):
         batch.items.insert(0, AppendText("</p>"))
         batch.items.append(AppendTextAndDefer("$$\n", "\n$$"))
         batch.items[1].classes += ["hr-hidden", "hr-offset"]
-        logger.debug("visiting mathblock")
-        logger.debug(batch)
         return batch
 
     def leave_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         batch = super().leave_mathblock(node)
         batch.items.insert(2, self._hr_info_zone_number(node.full_number, style="eqn"))
-        logger.debug("leaving mathblock")
-        logger.debug(batch)
         return batch

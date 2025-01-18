@@ -1492,11 +1492,11 @@ class HandrailsTranslator(Translator):
 
     def visit_contents(self, node: nodes.Contents) -> EditCommand:
         batch = super().visit_contents(node)
-        return self._wrap_batch_item_with_handrails(1, batch)
+        return self._wrap_batch_item_with_handrails(1, batch, classes=["heading"])
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
         batch = super().visit_bibliography(node)
-        return self._wrap_batch_item_with_handrails(1, batch)
+        return self._wrap_batch_item_with_handrails(1, batch, classes=["heading"])
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
         cmd = super().visit_paragraph(node)

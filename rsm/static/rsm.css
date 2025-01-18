@@ -501,11 +501,30 @@
 /* TOC */
 .manuscriptwrapper {
 
+  .toc-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding-left: 48px;
+
+    .minimap {
+      width: 48px;
+      display: flex;
+      justify-content: center;
+
+      svg {
+	width: 32px;
+	height: 100%;
+	display: block;
+	fill: var(--gray-200);
+	stroke: var(--gray-200);
+      }
+    }
+
+  }
+
   ul.contents {
     list-style: none;
     padding-inline-start: 0;
-    margin-left: 48px; 		/* temporary */
-    margin-top: 1rem;
 
     li {margin-block: 0.5rem;}
 
@@ -698,6 +717,9 @@
     text-decoration: none;
     color: var(--link-default);
     cursor: pointer;
+    /* by default, links do weird things with line heights, so if we want a single line
+    inside an <a> tag to be 24px tall, we need to change its display */
+    display: inline-block;
   }
 
   a:hover {

@@ -1468,19 +1468,35 @@ class HandrailsTranslator(Translator):
         return AppendText(text=f'<div class="rsm-source hide">{self.tree.src}</div>')
 
     def _make_minimap(self, node: nodes.Contents) -> EditCommand:
-        radii = {nodes.Section: 16, nodes.Subsection: 12, nodes.Subsubsection: 8}
+        radii = {nodes.Section: 8, nodes.Subsection: 6, nodes.Subsubsection: 4}
         num = 0
         circles = []
         for ref in node.traverse(nodeclass=nodes.Reference):
-            cy = 12 * (num + 1)
+            cy = 20 + (24 + 8) * num
             r = radii[type(ref.target)]
-            circles.append(f'<circle cx="4" cy="{cy}" r="{r}" />')
+            circles.append(f'<circle cx="16" cy="{cy}" r="{r}" />')
+            circles.append(f'<circle cx="16" cy="{cy}" r="3" fill="#FCFEFF" />')
             num += 1
-        svg_start = """
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 100" preserveAspectRatio="none">
-          <rect width="8" height="100" />"""
-        svg_middle = "\n".join(circles)
-        svg_end = "</svg>"
+        height = num * (24 + 8) + 8
+        svg_start = f"""
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 {height}" fill="#3C4952" stroke-width="0">
+          <defs>
+
+            <linearGradient id="purple-green" x1="0%" x2="0%" y1="0%" y2="100%" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#AD71F2" />
+              <stop offset="100%" stop-color="#1FB5A2" />
+            </linearGradient>
+
+            <mask id="gradient-mask">
+              <rect width="100%" height="100%" fill="url(#purple-green)" />
+            </mask>
+
+          </defs>
+
+          <g fill="url(#purple-green)">
+            <rect x="12" width="8" height="{height}" />"""
+        svg_middle = "\n    ".join(circles)
+        svg_end = "<g>\n</svg>"
         svg = svg_start + svg_middle + svg_end
         minimap = AppendOpenTagManualClose(classes=["minimap"])
         batch = AppendBatch([minimap, AppendText(svg), minimap.close_command()])

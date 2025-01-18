@@ -228,10 +228,17 @@
   .hr-border-rect {
     position: relative;
     top: -32px;
-    left: 6px;
+    left: 7px;
     width: 8px;
     height: 100%;
     min-height: 8px;
+    border-left: 2px solid #DAE1E5;
+    /* border-bottom-left-radius: 8px; */
+  }
+}
+.manuscriptwrapper .hr.heading {
+  .hr-border-rect {
+    left: 6px;
     border-left: 4px solid #DAE1E5;
     /* border-bottom-left-radius: 8px; */
   }

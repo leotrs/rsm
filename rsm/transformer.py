@@ -309,28 +309,33 @@ class Transformer:
         current_parent = toc
         for sec in self.tree.traverse(nodeclass=nodes.Section):
             item = nodes.Item()
-
-            # Sections with no number are still displayed in the TOC, while sub- or
-            # subsubsections are simply ignored
-            if sec.nonum and isinstance(node, nodes.Subsection):
-                continue
             reftext = f"{sec.title}" if sec.nonum else f"{sec.full_number}. {sec.title}"
-
             item.append(nodes.Reference(target=sec, overwrite_reftext=reftext))
-            if type(sec) is nodes.Section:
-                toc.append(item)
-                if sec.first_of_type(nodes.Subsection):
-                    itemize = nodes.Itemize()
-                    item.append(itemize)
-                    current_parent = itemize
-            elif type(sec) is nodes.Subsection:
+
+            # The order of the if isinstance(...) statements here matters because all
+            # Subsections are also Sections so isinstance(sec, nodes.Section) evaluates
+            # to True even when sec is a Subsection.  Thus, we have to go from smallest
+            # (Subsubsection) to largest (Section).
+            if isinstance(sec, nodes.Subsubsection):
+                current_parent.append(item)
+                if sec.parent.last_of_type(nodes.Subsubsection) is sec:
+                    current_parent = current_parent.parent.parent
+            elif isinstance(sec, nodes.Subsection):
                 current_parent.append(item)
                 if sec.first_of_type(nodes.Subsubsection):
                     itemize = nodes.Itemize()
                     item.append(itemize)
                     current_parent = itemize
+                elif sec.parent.last_of_type(nodes.Subsection) is sec:
+                    current_parent = current_parent.parent.parent
+            elif isinstance(sec, nodes.Section):
+                toc.append(item)
+                if sec.first_of_type(nodes.Subsection):
+                    itemize = nodes.Itemize()
+                    item.append(itemize)
+                    current_parent = itemize
             else:
-                current_parent.append(item)
+                raise RSMTransformerError("How did we get here?")
 
     def add_keywords_to_constructs(self) -> None:
         for construct in self.tree.traverse(nodeclass=nodes.Construct):

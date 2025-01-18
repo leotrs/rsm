@@ -735,6 +735,7 @@ class Translator:
             [
                 AppendOpenTag(classes=["toc"]),
                 AppendHeading(3, "Table of Contents"),
+                AppendOpenTag(classes=["toc-wrapper"]),
                 AppendNodeTag(node, "ul"),
             ]
         )
@@ -1466,6 +1467,25 @@ class HandrailsTranslator(Translator):
     def _make_source_div(self):
         return AppendText(text=f'<div class="rsm-source hide">{self.tree.src}</div>')
 
+    def _make_minimap(self, node: nodes.Contents) -> EditCommand:
+        radii = {nodes.Section: 16, nodes.Subsection: 12, nodes.Subsubsection: 8}
+        num = 0
+        circles = []
+        for ref in node.traverse(nodeclass=nodes.Reference):
+            cy = 12 * (num + 1)
+            r = radii[type(ref.target)]
+            circles.append(f'<circle cx="4" cy="{cy}" r="{r}" />')
+            num += 1
+        svg_start = """
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 100" preserveAspectRatio="none">
+          <rect width="8" height="100" />"""
+        svg_middle = "\n".join(circles)
+        svg_end = "</svg>"
+        svg = svg_start + svg_middle + svg_end
+        minimap = AppendOpenTagManualClose(classes=["minimap"])
+        batch = AppendBatch([minimap, AppendText(svg), minimap.close_command()])
+        return batch
+
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         batch = super().visit_manuscript(node)
         if node.title:
@@ -1492,7 +1512,11 @@ class HandrailsTranslator(Translator):
 
     def visit_contents(self, node: nodes.Contents) -> EditCommand:
         batch = super().visit_contents(node)
-        return self._wrap_batch_item_with_handrails(1, batch, classes=["heading"])
+        batch = self._wrap_batch_item_with_handrails(1, batch, classes=["heading"])
+        batch.items = (
+            batch.items[:-1] + self._make_minimap(node).items + [batch.items[-1]]
+        )
+        return batch
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
         batch = super().visit_bibliography(node)

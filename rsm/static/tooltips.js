@@ -6,7 +6,8 @@
 export function createTooltips() {
     $(".manuscriptwrapper a.reference").tooltipster({
         theme: ['tooltipster-shadow', 'tooltipster-shadow-rsm'],
-	maxWidth: '48px',
+	minWidth: 100,
+	maxWidth: 500,
         functionInit: function(instance, helper) {
             let target = $(helper.origin).attr("href");
 

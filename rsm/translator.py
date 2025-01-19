@@ -538,8 +538,8 @@ class Translator:
         while not hasattr(cls, method):
             nodeclass = nodeclass.__bases__[0]
             method = f"{action}_{nodeclass.__name__.lower()}"
-        if action == "visit" and ogclass is not nodeclass:
-            logger.debug(f"Using {method} for node of class {ogclass}")
+        # if action == "visit" and ogclass is not nodeclass:
+        #     logger.debug(f"Using {method} for node of class {ogclass}")
         return getattr(cls, method)
 
     def push_visit(self, stack, node: nodes.Node) -> None:

@@ -28,6 +28,13 @@ def test_mechanism():
     assert node.reftext == "1"
 
 
+def test_defaults():
+    t = rsm.nodes.Theorem()
+    assert t.reftext.strip() == "Theorem"
+    s = rsm.nodes.Step()
+    assert s.reftext.strip() == "Step"
+
+
 def test_simple():
     compare_have_want(
         have="""\

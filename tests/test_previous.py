@@ -234,7 +234,7 @@ def test_works_with_reftext_and_label():
     )
 
 
-def test_works_with_reftext_and_no_label():
+def test_works_with_reftext_and_no_label(caplog):
     compare_have_want(
         have="""\
         :manuscript:
@@ -307,6 +307,7 @@ def test_works_with_reftext_and_no_label():
         </body>
         """,
     )
+    assert ":prev: references un-labeled step, link will not work" in caplog.text
 
 
 def test_previous_outside_step():

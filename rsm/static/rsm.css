@@ -206,6 +206,10 @@
     border-radius: 16px;
   }
 
+  .tooltipster-arrow-bottom span {
+    border: var(--border-thin) solid var(--border-primary);
+  }
+
   .tooltipster-arrow-background {
     border-top-color: var(--surface-page);
   }
@@ -350,8 +354,6 @@
 /* Handrails: individual elements -- menu-zone */
 .manuscriptwrapper .hr .hr-menu-zone {
   .hr-menu {
-    position: relative;
-    left: -104px;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -360,6 +362,8 @@
     border: 1px solid var(--border-primary);
     border-radius: 8px;
     width: 120px;
+    box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+		0px 1px 2px 0px rgba(0, 0, 0, 0.30);
   }
   .hr-menu-item {
     display: flex;
@@ -438,7 +442,15 @@
 }
 
 
-/* Menu interaction */
+/* Menu positioning and interaction */
+.manuscriptwrapper .hr .hr-menu-zone .hr-menu {
+  position: relative;
+  left: -104px;
+}
+.manuscriptwrapper .hr.hr-offset .hr-menu-zone .hr-menu {
+  position: relative;
+  left: -120px;
+}
 .manuscriptwrapper .hr {
   .hr-border-dots:hover, .hr-collapse:hover {background: var(--surface-hint);}
   .hr-collapse:hover svg {stroke: var(--extra-dark);}

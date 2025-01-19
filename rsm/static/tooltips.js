@@ -6,6 +6,7 @@
 export function createTooltips() {
     $(".manuscriptwrapper a.reference").tooltipster({
         theme: ['tooltipster-shadow', 'tooltipster-shadow-rsm'],
+	maxWidth: '48px',
         functionInit: function(instance, helper) {
             let target = $(helper.origin).attr("href");
 
@@ -13,6 +14,7 @@ export function createTooltips() {
             // trying to select a class instead!
             target = target.replaceAll(".", "\\.");
             target = target.replaceAll(":", "\\:");
+	    console.log(helper.origin, target);
             let tag = $(target).prop('tagName');
             let classes = $(target)[0].classList;
             let content = "";
@@ -64,6 +66,14 @@ export function createTooltips() {
 		case classes.contains("algorithm"):
                     content = $(target).html();
                     break;
+		case classes.contains("paragraph"):
+		    let clone = $(target).clone();
+		    clone.find(".hr-collapse-zone").remove();
+		    clone.find(".hr-menu-zone").remove();
+		    clone.find(".hr-border-zone").remove();
+		    clone.find(".hr-info-zone").remove();
+		    content = $(clone).html();
+		    break;
                 case true:
                     console.log("tooltip target DIV with unknown class: ")
                     console.log(classes);
@@ -72,6 +82,7 @@ export function createTooltips() {
 		console.log(`tooltip target with unknown tag ${tag}`);
 	    }
 
+	    content = `<div class="manuscriptwrapper">${content}</div>`
             instance.content($(content));
         }
     });

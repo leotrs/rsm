@@ -209,6 +209,11 @@
   .tooltipster-arrow-background {
     border-top-color: var(--surface-page);
   }
+
+  .manuscriptwrapper {
+    padding: 0 1rem 0 1rem;
+  }
+
 }
 
 

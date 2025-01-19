@@ -29,4 +29,15 @@ export function setupClassInteractions() {
 	}
     });
 
+    // Minimap
+    const items = document.querySelectorAll('ul.contents li.item');
+    const num_items = items.length;
+    items.forEach((item, idx) => {
+	item.addEventListener('mouseenter', () => {
+	    let percent = (idx + 1) / num_items * 100;
+            document.getElementById("stop-follow-mouse-1").setAttribute("offset", `${percent}%`);
+	    document.getElementById("stop-follow-mouse-2").setAttribute("offset", `${percent}%`);
+	});
+    });
+
 }

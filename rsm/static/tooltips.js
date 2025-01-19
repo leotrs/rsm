@@ -14,9 +14,9 @@ export function createTooltips() {
             // trying to select a class instead!
             target = target.replaceAll(".", "\\.");
             target = target.replaceAll(":", "\\:");
-	    console.log(helper.origin, target);
             let tag = $(target).prop('tagName');
             let classes = $(target)[0].classList;
+	    let clone = undefined;
             let content = "";
 
             if (tag == "P") {
@@ -38,7 +38,7 @@ export function createTooltips() {
             } else if (tag == "TABLE") {
 		content = $(target)[0].outerHTML;
             } else if (tag == "SECTION") {
-                let clone = $(target).clone();
+                clone = $(target).clone();
                 clone.children().slice(2).remove();
 		clone.find(".hr-collapse-zone").remove();
 		clone.find(".hr-menu-zone").remove();
@@ -52,10 +52,22 @@ export function createTooltips() {
             } else if (tag == "DIV") {
                 switch(true) {
                 case classes.contains("step"):
-                    content = $(target).children(".statement").html();
+		    clone = $(target).find(".statement").clone();
+		    clone.find(".hr-collapse-zone").remove();
+		    clone.find(".hr-menu-zone").remove();
+		    clone.find(".hr-border-zone").remove();
+		    clone.find(".hr-info-zone").remove();
+                    clone.css('font-size', '0.7rem');
+                    content = clone.html();
                     break;
-		case classes.contains("theorem"):
-		    content = $(target).find(".theorem-contents").html();
+		case ["theorem", "proposition"].some(cls => classes.contains(cls)):
+		    clone = $(target).clone();
+		    clone.find(".hr-collapse-zone").remove();
+		    clone.find(".hr-menu-zone").remove();
+		    clone.find(".hr-border-zone").remove();
+		    clone.find(".hr-info-zone").remove();
+                    clone.css('font-size', '0.7rem');
+                    content = clone.html();
 		    break;
                 case classes.contains("math"):
                     content = $(target).html();
@@ -67,7 +79,7 @@ export function createTooltips() {
                     content = $(target).html();
                     break;
 		case classes.contains("paragraph"):
-		    let clone = $(target).clone();
+		    clone = $(target).clone();
 		    clone.find(".hr-collapse-zone").remove();
 		    clone.find(".hr-menu-zone").remove();
 		    clone.find(".hr-border-zone").remove();

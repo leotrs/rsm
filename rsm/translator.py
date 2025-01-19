@@ -1484,7 +1484,9 @@ class HandrailsTranslator(Translator):
 
             <linearGradient id="purple-green" x1="0%" x2="0%" y1="0%" y2="100%" gradientUnits="userSpaceOnUse">
               <stop offset="0%" stop-color="#AD71F2" />
-              <stop offset="100%" stop-color="#1FB5A2" />
+              <stop id="stop-follow-mouse-1" offset="100%" stop-color="#1FB5A2" />
+              <stop id="stop-follow-mouse-2" offset="100%" stop-color="#DAE1E5" />
+              <stop offset="100%" stop-color="#DAE1E5" />
             </linearGradient>
 
             <mask id="gradient-mask">

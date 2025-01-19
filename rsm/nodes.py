@@ -419,7 +419,7 @@ class Node:
         if not ancestor:
             logger.warning(
                 f"{self.__class__.__name__} numbered within "
-                f"{self.number_within.__name__} but no such ancestor was found; "
+                f"{self.number_within} but no such ancestor was found; "
                 "using root node instead"
             )
             ancestor = self.first_ancestor_of_type(Manuscript)
@@ -1440,7 +1440,7 @@ class Step(Paragraph):
 
 
 Step.possible_parents.add(Step)
-Step._number_within = (Step, Proof)
+Step._number_within = (Proof, Step)
 
 
 class Theorem(Heading):

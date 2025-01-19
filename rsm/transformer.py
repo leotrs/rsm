@@ -223,6 +223,11 @@ class Transformer:
                         raise RSMTransformerError(
                             f"Did not find previous {pending.target} step(s)"
                         )
+
+                if target.label is None or not target.label.strip():
+                    logger.warning(
+                        ":prev: references un-labeled step, link will not work"
+                    )
                 pending.replace_self(
                     nodes.Reference(
                         target=target, overwrite_reftext=pending.overwrite_reftext

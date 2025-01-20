@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Text``
      ~Text.nodeid
      ~Text.label
      ~Text.types
+     ~Text.handrail_depth
      ~Text.number
      ~Text.nonum
      ~Text.reftext_template

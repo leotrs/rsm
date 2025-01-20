@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Math``
      ~Math.nodeid
      ~Math.label
      ~Math.types
+     ~Math.handrail_depth
      ~Math.number
      ~Math.nonum
      ~Math.reftext_template

@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Item``
      ~Item.nodeid
      ~Item.label
      ~Item.types
+     ~Item.handrail_depth
      ~Item.number
      ~Item.nonum
      ~Item.reftext_template

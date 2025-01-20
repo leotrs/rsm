@@ -26,6 +26,7 @@ Qualified name: ``rsm.nodes.Figure``
      ~Figure.nodeid
      ~Figure.label
      ~Figure.types
+     ~Figure.handrail_depth
      ~Figure.number
      ~Figure.nonum
      ~Figure.reftext_template

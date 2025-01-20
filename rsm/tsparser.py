@@ -112,13 +112,12 @@ class TSParser:
 
     >>> cst = parser.parse(src, abstractify=False)
     >>> rsm.tsparser.print_cst(cst)
-    (source_file (1, 0) - (4, 0)
-      (manuscript (1, 0) - (1, 12))
-      (paragraph (2, 0) - (3, 0)
-        (text (2, 0) - (2, 11) "Hello, RSM!")
-        (paragraph_end (3, 0) - (3, 0)))
-      (:: (3, 0) - (3, 2)))
-
+    (source_file Point(row=1, column=0) - Point(row=4, column=0)
+      (manuscript Point(row=1, column=0) - Point(row=1, column=12))
+      (paragraph Point(row=2, column=0) - Point(row=3, column=0)
+        (text Point(row=2, column=0) - Point(row=2, column=11) "Hello, RSM!")
+        (paragraph_end Point(row=3, column=0) - Point(row=3, column=0)))
+      (:: Point(row=3, column=0) - Point(row=3, column=2)))
     """
 
     def __init__(self):

@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Reference``
      ~Reference.nodeid
      ~Reference.label
      ~Reference.types
+     ~Reference.handrail_depth
      ~Reference.number
      ~Reference.nonum
      ~Reference.reftext_template

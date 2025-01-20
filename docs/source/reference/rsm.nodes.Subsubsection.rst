@@ -26,6 +26,7 @@ Qualified name: ``rsm.nodes.Subsubsection``
      ~Subsubsection.nodeid
      ~Subsubsection.label
      ~Subsubsection.types
+     ~Subsubsection.handrail_depth
      ~Subsubsection.number
      ~Subsubsection.nonum
      ~Subsubsection.reftext_template

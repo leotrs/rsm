@@ -26,6 +26,7 @@ Qualified name: ``rsm.nodes.Step``
      ~Step.nodeid
      ~Step.label
      ~Step.types
+     ~Step.handrail_depth
      ~Step.number
      ~Step.nonum
      ~Step.reftext_template

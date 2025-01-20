@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Bibliography``
      ~Bibliography.nodeid
      ~Bibliography.label
      ~Bibliography.types
+     ~Bibliography.handrail_depth
      ~Bibliography.number
      ~Bibliography.nonum
      ~Bibliography.reftext_template

@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.PendingPrev``
      ~PendingPrev.nodeid
      ~PendingPrev.label
      ~PendingPrev.types
+     ~PendingPrev.handrail_depth
      ~PendingPrev.number
      ~PendingPrev.nonum
      ~PendingPrev.reftext_template

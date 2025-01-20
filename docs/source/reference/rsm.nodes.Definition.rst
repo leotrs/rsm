@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Definition``
      ~Definition.nodeid
      ~Definition.label
      ~Definition.types
+     ~Definition.handrail_depth
      ~Definition.number
      ~Definition.nonum
      ~Definition.reftext_template

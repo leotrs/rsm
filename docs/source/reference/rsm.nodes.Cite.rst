@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Cite``
      ~Cite.nodeid
      ~Cite.label
      ~Cite.types
+     ~Cite.handrail_depth
      ~Cite.number
      ~Cite.nonum
      ~Cite.reftext_template

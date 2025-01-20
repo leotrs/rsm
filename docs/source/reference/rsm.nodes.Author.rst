@@ -28,6 +28,7 @@ Qualified name: ``rsm.nodes.Author``
      ~Author.nodeid
      ~Author.label
      ~Author.types
+     ~Author.handrail_depth
      ~Author.number
      ~Author.nonum
      ~Author.reftext_template

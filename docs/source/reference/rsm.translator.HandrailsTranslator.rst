@@ -15,8 +15,15 @@ Qualified name: ``rsm.translator.HandrailsTranslator``
    .. autosummary::
       :nosignatures:
       
+      ~HandrailsTranslator.leave_mathblock
+      ~HandrailsTranslator.leave_paragraph
+      ~HandrailsTranslator.leave_proof
+      ~HandrailsTranslator.leave_statement
       ~HandrailsTranslator.leave_step
+      ~HandrailsTranslator.leave_subproof
+      ~HandrailsTranslator.leave_theorem
       ~HandrailsTranslator.visit_abstract
+      ~HandrailsTranslator.visit_author
       ~HandrailsTranslator.visit_bibliography
       ~HandrailsTranslator.visit_contents
       ~HandrailsTranslator.visit_manuscript
@@ -24,6 +31,7 @@ Qualified name: ``rsm.translator.HandrailsTranslator``
       ~HandrailsTranslator.visit_paragraph
       ~HandrailsTranslator.visit_proof
       ~HandrailsTranslator.visit_section
+      ~HandrailsTranslator.visit_statement
       ~HandrailsTranslator.visit_step
       ~HandrailsTranslator.visit_subproof
       ~HandrailsTranslator.visit_theorem

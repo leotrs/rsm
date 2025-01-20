@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Contents``
      ~Contents.nodeid
      ~Contents.label
      ~Contents.types
+     ~Contents.handrail_depth
      ~Contents.number
      ~Contents.nonum
      ~Contents.reftext_template

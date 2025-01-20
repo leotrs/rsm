@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.BaseParagraph``
      ~BaseParagraph.nodeid
      ~BaseParagraph.label
      ~BaseParagraph.types
+     ~BaseParagraph.handrail_depth
      ~BaseParagraph.number
      ~BaseParagraph.nonum
      ~BaseParagraph.reftext_template

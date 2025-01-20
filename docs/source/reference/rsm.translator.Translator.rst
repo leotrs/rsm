@@ -1,4 +1,4 @@
-Translator
+﻿Translator
 ==========
 
 Qualified name: ``rsm.translator.Translator``
@@ -19,6 +19,7 @@ Qualified name: ``rsm.translator.Translator``
       ~Translator.leave_abstract
       ~Translator.leave_mathblock
       ~Translator.leave_node
+      ~Translator.leave_paragraph
       ~Translator.leave_proof
       ~Translator.push_leave
       ~Translator.push_visit

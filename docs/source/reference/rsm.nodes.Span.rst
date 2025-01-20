@@ -26,6 +26,7 @@ Qualified name: ``rsm.nodes.Span``
      ~Span.nodeid
      ~Span.label
      ~Span.types
+     ~Span.handrail_depth
      ~Span.number
      ~Span.nonum
      ~Span.reftext_template

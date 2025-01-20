@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Proposition``
      ~Proposition.nodeid
      ~Proposition.label
      ~Proposition.types
+     ~Proposition.handrail_depth
      ~Proposition.number
      ~Proposition.nonum
      ~Proposition.reftext_template

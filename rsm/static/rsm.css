@@ -342,6 +342,7 @@
     min-height: 8px;
     border-left: var(--border-thin) solid var(--handrail-default);
     /* border-bottom-left-radius: 8px; */
+
   }
 }
 .manuscriptwrapper .hr.heading {
@@ -459,13 +460,40 @@
 
 
 /* Labeled handrails */
-.manuscriptwrapper .hr .hr-content-zone {
+.manuscriptwrapper .hr.hr-labeled .hr-content-zone {
   .hr-label {
     padding-block: 8px;
     border-bottom: 1px solid var(--border-primary);
   }
 }
 
+
+/* Collapsible handrails */
+.manuscriptwrapper .hr.hr-collapsed.hr-labeled  {
+
+  & > .hr-border-zone > .hr-border-rect {
+    border-bottom-left-radius: 8px;
+    border-bottom: 2px solid var(--handrail-default);
+  }
+
+  & > .hr-spacer-zone {
+    border-bottom: 2px dashed var(--handrail-default);
+  }
+
+  & > .hr-content-zone > .hr-label {
+    border-bottom: unset;
+  }
+
+  & > .hr-collapse-zone > .hr-collapse {
+    opacity: 100%;
+
+    .icon-wrapper.uncollapse svg {
+      stroke: var(--primary-700);
+    }
+
+  }
+
+}
 
 /* Proofs */
 .manuscriptwrapper .hr {

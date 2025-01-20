@@ -337,19 +337,15 @@
     position: relative;
     top: -32px;
     left: 7px;
-    width: 8px;
     height: 100%;
     min-height: 8px;
     border-left: var(--border-thin) solid var(--handrail-default);
-    /* border-bottom-left-radius: 8px; */
-
   }
 }
 .manuscriptwrapper .hr.heading {
   .hr-border-rect {
     left: 6px;
     border-left: var(--border-med) solid var(--handrail-default);
-    /* border-bottom-left-radius: 8px; */
   }
 }
 /* Handrails: individual elements -- menu-zone */
@@ -469,27 +465,28 @@
 
 
 /* Collapsible handrails */
-.manuscriptwrapper .hr.hr-collapsed.hr-labeled  {
+.manuscriptwrapper .hr.hr-collapsed  {
 
   & > .hr-border-zone > .hr-border-rect {
     border-bottom-left-radius: 8px;
-    border-bottom: 2px solid var(--handrail-default);
   }
 
-  & > .hr-spacer-zone {
-    border-bottom: 2px dashed var(--handrail-default);
+  & > .hr-spacer-zone, & > .hr-border-zone > .hr-border-rect {
+    border-bottom: var(--border-med) solid var(--handrail-default);
   }
 
-  & > .hr-content-zone > .hr-label {
+  &.hr-labeled > .hr-spacer-zone, &.hr-labeled > .hr-border-zone > .hr-border-rect {
+    border-bottom: var(--border-thin) solid var(--handrail-default);
+  }
+
+  &.hr-labeled > .hr-content-zone > .hr-label {
     border-bottom: unset;
   }
 
   & > .hr-collapse-zone > .hr-collapse {
     opacity: 100%;
 
-    .icon-wrapper.uncollapse svg {
-      stroke: var(--primary-700);
-    }
+    .icon-wrapper.uncollapse svg { stroke: var(--primary-700); }
 
   }
 

@@ -294,7 +294,7 @@ def test_two_steps():
 
         </div>
 
-        <div class="proof hr" tabindex=0 data-nodeid="1">
+        <div class="proof hr hr-labeled" tabindex=0 data-nodeid="1">
 
         <div class="hr-collapse-zone">
 
@@ -971,7 +971,7 @@ def test_sub_step():
 
         </div>
 
-        <div class="proof hr" tabindex=0 data-nodeid="1">
+        <div class="proof hr hr-labeled" tabindex=0 data-nodeid="1">
 
         <div class="hr-collapse-zone">
 
@@ -2341,7 +2341,7 @@ def test_theorem():
 
         <section class="level-1">
 
-        <div class="theorem hr" tabindex=0 data-nodeid="1">
+        <div class="theorem hr hr-labeled" tabindex=0 data-nodeid="1">
 
         <div class="hr-collapse-zone">
 
@@ -2617,7 +2617,7 @@ def test_proof():
 
         </div>
 
-        <div class="proof hr" tabindex=0 data-nodeid="1">
+        <div class="proof hr hr-labeled" tabindex=0 data-nodeid="1">
 
         <div class="hr-collapse-zone">
 
@@ -3055,7 +3055,7 @@ def test_proof_with_sketch():
 
         </div>
 
-        <div class="proof hr" tabindex=0 data-nodeid="1">
+        <div class="proof hr hr-labeled" tabindex=0 data-nodeid="1">
 
         <div class="hr-collapse-zone">
 

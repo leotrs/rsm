@@ -1561,7 +1561,7 @@ class HandrailsTranslator(Translator):
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         batch = super().visit_theorem(node)
-        hr = self._replace_node_with_handrails(node)
+        hr = self._replace_node_with_handrails(node, additional_classes=["hr-labeled"])
         hr.items += batch.items[1:]
         return hr
 
@@ -1576,7 +1576,7 @@ class HandrailsTranslator(Translator):
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         batch = super().visit_proof(node)
-        hr = self._replace_node_with_handrails(node)
+        hr = self._replace_node_with_handrails(node, additional_classes=["hr-labeled"])
         hr.items += batch.items[1:]
         return hr
 

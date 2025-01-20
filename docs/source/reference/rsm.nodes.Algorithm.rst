@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Algorithm``
      ~Algorithm.nodeid
      ~Algorithm.label
      ~Algorithm.types
+     ~Algorithm.handrail_depth
      ~Algorithm.number
      ~Algorithm.nonum
      ~Algorithm.reftext_template

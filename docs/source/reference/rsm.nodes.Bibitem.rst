@@ -27,6 +27,7 @@ Qualified name: ``rsm.nodes.Bibitem``
      ~Bibitem.nodeid
      ~Bibitem.label
      ~Bibitem.types
+     ~Bibitem.handrail_depth
      ~Bibitem.number
      ~Bibitem.nonum
      ~Bibitem.reftext_template

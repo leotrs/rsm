@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Draft``
      ~Draft.nodeid
      ~Draft.label
      ~Draft.types
+     ~Draft.handrail_depth
      ~Draft.number
      ~Draft.nonum
      ~Draft.reftext_template

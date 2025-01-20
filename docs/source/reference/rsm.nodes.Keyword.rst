@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Keyword``
      ~Keyword.nodeid
      ~Keyword.label
      ~Keyword.types
+     ~Keyword.handrail_depth
      ~Keyword.number
      ~Keyword.nonum
      ~Keyword.reftext_template

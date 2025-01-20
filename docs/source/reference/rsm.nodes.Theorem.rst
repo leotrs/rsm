@@ -27,6 +27,7 @@ Qualified name: ``rsm.nodes.Theorem``
      ~Theorem.nodeid
      ~Theorem.label
      ~Theorem.types
+     ~Theorem.handrail_depth
      ~Theorem.number
      ~Theorem.nonum
      ~Theorem.reftext_template

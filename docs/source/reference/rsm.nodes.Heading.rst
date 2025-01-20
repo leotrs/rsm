@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Heading``
      ~Heading.nodeid
      ~Heading.label
      ~Heading.types
+     ~Heading.handrail_depth
      ~Heading.number
      ~Heading.nonum
      ~Heading.reftext_template

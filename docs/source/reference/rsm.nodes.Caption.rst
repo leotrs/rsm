@@ -25,6 +25,7 @@ Qualified name: ``rsm.nodes.Caption``
      ~Caption.nodeid
      ~Caption.label
      ~Caption.types
+     ~Caption.handrail_depth
      ~Caption.number
      ~Caption.nonum
      ~Caption.reftext_template

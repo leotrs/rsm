@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.ClaimBlock``
      ~ClaimBlock.nodeid
      ~ClaimBlock.label
      ~ClaimBlock.types
+     ~ClaimBlock.handrail_depth
      ~ClaimBlock.number
      ~ClaimBlock.nonum
      ~ClaimBlock.reftext_template

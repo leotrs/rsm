@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Subproof``
      ~Subproof.nodeid
      ~Subproof.label
      ~Subproof.types
+     ~Subproof.handrail_depth
      ~Subproof.number
      ~Subproof.nonum
      ~Subproof.reftext_template

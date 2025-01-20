@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.TableBody``
      ~TableBody.nodeid
      ~TableBody.label
      ~TableBody.types
+     ~TableBody.handrail_depth
      ~TableBody.number
      ~TableBody.nonum
      ~TableBody.reftext_template

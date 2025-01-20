@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Lemma``
      ~Lemma.nodeid
      ~Lemma.label
      ~Lemma.types
+     ~Lemma.handrail_depth
      ~Lemma.number
      ~Lemma.nonum
      ~Lemma.reftext_template

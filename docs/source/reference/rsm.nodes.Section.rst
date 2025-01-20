@@ -26,6 +26,7 @@ Qualified name: ``rsm.nodes.Section``
      ~Section.nodeid
      ~Section.label
      ~Section.types
+     ~Section.handrail_depth
      ~Section.number
      ~Section.nonum
      ~Section.reftext_template

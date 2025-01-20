@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.Proof``
      ~Proof.nodeid
      ~Proof.label
      ~Proof.types
+     ~Proof.handrail_depth
      ~Proof.number
      ~Proof.nonum
      ~Proof.reftext_template

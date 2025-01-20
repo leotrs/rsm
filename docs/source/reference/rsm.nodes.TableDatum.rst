@@ -24,6 +24,7 @@ Qualified name: ``rsm.nodes.TableDatum``
      ~TableDatum.nodeid
      ~TableDatum.label
      ~TableDatum.types
+     ~TableDatum.handrail_depth
      ~TableDatum.number
      ~TableDatum.nonum
      ~TableDatum.reftext_template

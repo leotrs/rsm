@@ -27,6 +27,7 @@ Qualified name: ``rsm.nodes.Abstract``
      ~Abstract.nodeid
      ~Abstract.label
      ~Abstract.types
+     ~Abstract.handrail_depth
      ~Abstract.number
      ~Abstract.nonum
      ~Abstract.reftext_template

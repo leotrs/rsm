@@ -46,6 +46,7 @@ Qualified name: ``rsm.nodes.Node``
      ~Node.nodeid
      ~Node.label
      ~Node.types
+     ~Node.handrail_depth
      ~Node.number
      ~Node.nonum
      ~Node.reftext_template

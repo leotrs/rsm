@@ -25,32 +25,37 @@ export function setupClassInteractions() {
     document.querySelectorAll(".hr > .hr-collapse-zone > .hr-collapse").forEach(collapse => {
 	collapse.addEventListener("click", function () {
             const hr = this.parentElement.parentElement;
+	    let rest;
 	    if (hr.classList.contains("hr-labeled")) {
-		const label = hr.querySelectorAll(".hr-content-zone > .hr-label");
-		const rest = hr.querySelectorAll(".hr-content-zone > :not(.hr-label)");
-		const icon = hr.querySelector(".hr-collapse-zone > .hr-collapse > .icon-wrapper");
-		if (!hr.classList.contains("hr-collapsed")) {
-		    hr.classList.add("hr-collapsed");
-		    rest.forEach(el => { el.classList.add("hide"); });
-		    icon.classList.remove("collapse");
-		    icon.classList.add("uncollapse");
-		    icon.innerHTML = `
+		rest = hr.querySelectorAll(".hr-content-zone > :not(.hr-label)");
+	    } else {
+		rest = Array.from(hr.parentElement.children).filter(el => {return el !== hr});
+		console.log(Array.from(hr.parentElement.children));
+	    };
+
+	    const icon = hr.querySelector(".hr-collapse-zone > .hr-collapse > .icon-wrapper");
+	    if (!hr.classList.contains("hr-collapsed")) {
+		hr.classList.add("hr-collapsed");
+		rest.forEach(el => { el.classList.add("hide"); });
+		icon.classList.remove("collapse");
+		icon.classList.add("uncollapse");
+		icon.innerHTML = `
                     <svg width="14" height="8" viewBox="0 0 14 8" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 1L7 7L13 1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     `;
-		} else {
-		    hr.classList.remove("hr-collapsed");
-		    rest.forEach(el => { el.classList.remove("hide"); });
-		    icon.classList.remove("uncollapse");
-		    icon.classList.add("collapse");
-		    icon.innerHTML = `
+	    } else {
+		hr.classList.remove("hr-collapsed");
+		rest.forEach(el => { el.classList.remove("hide"); });
+		icon.classList.remove("uncollapse");
+		icon.classList.add("collapse");
+		icon.innerHTML = `
                     <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 1L7 7L1 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     `;
-		};
 	    };
+
 	});
     });
 

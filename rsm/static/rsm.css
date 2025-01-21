@@ -418,11 +418,11 @@
   & > .hr-border-zone {opacity: 100%;}
 }
 .manuscriptwrapper .step.hr:hover > .hr-info-zone p {
-  color: var(--almost-black);
+  color: var(--extra-dark);
   font-weight: var(--weight-semi);
 }
 .manuscriptwrapper .mathblock.hr:hover > .hr-info-zone p {
-  color: var(--almost-black);
+  color: var(--extra-dark);
   font-weight: var(--weight-semi);
 }
 
@@ -598,58 +598,6 @@
 /* .manuscriptwrapper figcaption { */
 /*   text-align: center; */
 /*   margin-block: var(--h4-size); } */
-/* .manuscriptwrapper img, .manuscriptwrapper svg { */
-/*   max-width: 100%; } */
-/* .manuscriptwrapper .handrail { */
-/*   border-bottom-left-radius: 5px; */
-/*   border-width: 0 0 0 var(--border-thin); */
-/*   border-color: var(--lgt-gray); */
-/*   border-style: solid; */
-/*   padding: 0 0 0 var(--handrail-offset); */
-/*   margin-block: var(--handrail-margin-block) var(--handrail-margin-block); */
-/*   position: relative; } */
-/* .manuscriptwrapper .handrail__icons { */
-/*   align-items: flex-end; */
-/*   display: none; */
-/*   flex-direction: column; */
-/*   font-size: .8rem; */
-/*   left: 0; */
-/*   position: absolute; */
-/*   top: .5rem; */
-/*   transform: translateX(calc(-100% - 1.5*var(--handrail-offset))); } */
-/* .manuscriptwrapper .handrail--hug { */
-/*   margin-block: 0 0; */
-/*   padding: 0 0 0 var(--handrail-offset); } */
-/* .manuscriptwrapper .handrail .proof__title, .manuscriptwrapper .handrail .theorem__title { */
-/*   padding-block: 1rem; } */
-/* .manuscriptwrapper .handrail .theorem__title { */
-/*   border-bottom: var(--gray-200) solid 1px; } */
-/* .manuscriptwrapper .handrail--hug > p:not(.topic-title), .manuscriptwrapper .handrail--hug > .proof__title { */
-/*   padding-block: 0; } */
-/* .manuscriptwrapper .handrail--offset { */
-/*   transform: translateX(calc(-1 * var(--handrail-offset) - var(--border-thin))); */
-/*   width: calc(100% + var(--handrail-offset) + var(--border-thin)); } */
-/* .manuscriptwrapper .handrail .handrail--offset { */
-/*   border-width: 0 0 0 0; } */
-/* .manuscriptwrapper .handrail > h1 { */
-/*   margin-block: calc(var(--h1-size) / 2); */
-/*   padding-block: calc(var(--h1-size) / 2); } */
-/* .manuscriptwrapper .handrail > h2 { */
-/*   margin-block: calc(var(--h2-size) / 2); */
-/*   padding-block: calc(var(--h2-size) / 2); } */
-/* .manuscriptwrapper .handrail > h3 { */
-/*   margin-block: calc(var(--h3-size) / 2); */
-/*   padding-block: calc(var(--h3-size) / 2); } */
-/* .manuscriptwrapper .handrail > h4 { */
-/*   margin-block: calc(var(--h4-size) / 2); */
-/*   padding-block: calc(var(--h4-size) / 2); } */
-/* .manuscriptwrapper .handrail > h5 { */
-/*   margin-block: calc(var(--h5-size) / 2); */
-/*   padding-block: calc(var(--h5-size) / 2); } */
-/* .manuscriptwrapper .handrail--hide { */
-/*   border-color: transparent; } */
-/* .manuscriptwrapper .proof > .handrail.collapsed .halmos:last-of-type { */
-/*   bottom: 0; } */
 /* .manuscriptwrapper .halmos { */
 /*   display: flex; */
 /*   justify-content: flex-end; */
@@ -678,6 +626,7 @@
 /*   align-items: center; */
 /*   background: radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 2px/2px 2px, radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 6px/2px 2px, radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 10px/2px 2px; */
 /*   background-repeat: no-repeat; } */
+
 .manuscriptwrapper .keyword {
   color: var(--keyword-blue);
   font-weight: var(--weight-bold); }
@@ -685,44 +634,10 @@
   margin-inline-start: 0.1rem; }
 .manuscriptwrapper p > span.construct > span.keyword {
   margin-inline-end: 0.1rem; }
-.manuscriptwrapper .proof-contents :last-of-type {
-  margin-block-end: 0; }
-.manuscriptwrapper .proof div.sketch {
-  margin-block: var(--handrail-margin-block) var(--handrail-margin-block); }
-.manuscriptwrapper .sketch p:last-of-type {
-  padding-block-end: 1rem; }
-.manuscriptwrapper .theorem-contents :last-of-type {
-  margin-block-end: 0; }
-.manuscriptwrapper .theorem > *:last-of-type {
-  padding-block-end: 1rem; }
-.manuscriptwrapper .definition-contents :last-of-type {
-  margin-block-end: 0; }
-.manuscriptwrapper .definition p:last-of-type {
-  padding-block-end: 1rem; }
 .manuscriptwrapper .author > p {
   margin: 0; }
-.manuscriptwrapper .highlight.code {
-  display: inline-block; }
 .manuscriptwrapper dd > p, .manuscriptwrapper dt > p {
   margin-block-end: 0.25em; }
-.manuscriptwrapper .proof__header {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: var(--gray-200) solid 1px; }
-.manuscriptwrapper .proof__tabs {
-  display: inherit; }
-.manuscriptwrapper .proof__tabs > button {
-  border: none;
-  background: var(--white);
-  padding-inline: 1rem;
-  font-size: 16px;
-  color: var(--med-gray); }
-.manuscriptwrapper .proof__tabs > button.active {
-  color: var(--link-color);
-  box-shadow: 0px 10px 0px -5px var(--link-color); }
-.manuscriptwrapper .proof__tabs > button:hover {
-  color: var(--link-color-hover);
-  cursor: pointer; }
 
 
 

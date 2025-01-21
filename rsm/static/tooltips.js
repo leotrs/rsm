@@ -67,14 +67,18 @@ export function createTooltips() {
 		    clone.find(".hr-menu-zone").remove();
 		    clone.find(".hr-border-zone").remove();
 		    clone.find(".hr-info-zone").remove();
-                    clone.css('font-size', '0.7rem');
                     content = clone.html();
 		    break;
                 case classes.contains("math"):
                     content = $(target).html();
                     break;
                 case classes.contains("mathblock"):
-                    content = $(target).find('mjx-container').clone();
+		    clone = $(target).clone();
+		    clone.find(".hr-collapse-zone").remove();
+		    clone.find(".hr-menu-zone").remove();
+		    clone.find(".hr-border-zone").remove();
+		    clone.find(".hr-info-zone").remove();
+                    content = clone.html();
                     break;
 		case classes.contains("algorithm"):
                     content = $(target).html();

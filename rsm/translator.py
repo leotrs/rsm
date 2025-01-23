@@ -1589,17 +1589,6 @@ class HandrailsTranslator(Translator):
         batch = AppendBatch(batch.items)
         return batch
 
-    def visit_statement(self, node: nodes.Statement) -> EditCommand:
-        batch = super().visit_statement(node)
-        hr = self._replace_node_with_handrails(node)
-        return hr
-
-    def leave_statement(self, node: nodes.Statement) -> EditCommand:
-        batch = self.leave_node(node)
-        batch.items.insert(1, self._hr_info_zone_icon(getattr(node, "icon", None)))
-        batch = AppendBatch(batch.items)
-        return batch
-
     def _add_proof_header_with_sketch(
         self, batch: EditCommandBatch, tree: nodes.Node
     ) -> None:

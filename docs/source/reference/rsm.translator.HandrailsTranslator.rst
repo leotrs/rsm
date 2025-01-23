@@ -18,7 +18,6 @@ Qualified name: ``rsm.translator.HandrailsTranslator``
       ~HandrailsTranslator.leave_mathblock
       ~HandrailsTranslator.leave_paragraph
       ~HandrailsTranslator.leave_proof
-      ~HandrailsTranslator.leave_statement
       ~HandrailsTranslator.leave_step
       ~HandrailsTranslator.leave_subproof
       ~HandrailsTranslator.leave_theorem
@@ -31,7 +30,6 @@ Qualified name: ``rsm.translator.HandrailsTranslator``
       ~HandrailsTranslator.visit_paragraph
       ~HandrailsTranslator.visit_proof
       ~HandrailsTranslator.visit_section
-      ~HandrailsTranslator.visit_statement
       ~HandrailsTranslator.visit_step
       ~HandrailsTranslator.visit_subproof
       ~HandrailsTranslator.visit_theorem

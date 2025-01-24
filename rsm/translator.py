@@ -1250,6 +1250,14 @@ class HandrailsTranslator(Translator):
             classes=["hr-collapse-zone"],
         )
 
+    def _hr_menu_label(self, label: str) -> str:
+        return f"""
+  <div class="hr-menu-label">
+    <span class="hr-menu-item-text">{label}</span>
+  </div>
+
+  <div class="hr-menu-separator"></div>"""
+
     def _hr_menu_item_collapse(self) -> str:
         return """
   <div class="hr-menu-item collapse-subproof">
@@ -1270,7 +1278,9 @@ class HandrailsTranslator(Translator):
       </svg>
     </span>
     <span class="hr-menu-item-text">Collapse all</span>
-  </div>"""
+  </div>
+
+  <div class="hr-menu-separator"></div>"""
 
     def _hr_menu_item_link(self) -> str:
         return """
@@ -1308,13 +1318,16 @@ class HandrailsTranslator(Translator):
 
     def _hr_menu_zone(
         self,
+        label: str = "",
+        collapse: bool = False,
         link: bool = True,
         tree: bool = True,
         code: bool = True,
-        collapse: bool = False,
     ) -> AppendOpenCloseTag:
         start, end = '\n<div class="hr-menu">', "</div>\n"
         middle = ""
+        if label:
+            middle = middle + "\n" + self._hr_menu_label(label)
         if collapse:
             middle = middle + "\n" + self._hr_menu_item_collapse()
         if link:
@@ -1425,6 +1438,7 @@ class HandrailsTranslator(Translator):
         node,
         collapsible: bool = True,
         collapse_in_menu: bool = False,
+        menu_label: str = "",
         additional_classes: None | list[str] = None,
     ):
         handrail = self._hr_from_node(node, additional_classes)
@@ -1432,7 +1446,10 @@ class HandrailsTranslator(Translator):
         newitems = [
             handrail,
             self._hr_collapse_zone(collapsible),
-            self._hr_menu_zone(collapse=collapse_in_menu),
+            self._hr_menu_zone(
+                label=menu_label or node.reftext,
+                collapse=collapse_in_menu,
+            ),
             self._hr_border_zone(),
             self._hr_spacer_zone(),
             hr_content_zone,
@@ -1451,7 +1468,7 @@ class HandrailsTranslator(Translator):
         return AppendBatchAndDefer(newitems)
 
     def _step_handrails(self, node: nodes.Step) -> AppendBatchAndDefer:
-        menu_zone = self._hr_menu_zone(collapse=True)
+        menu_zone = self._hr_menu_zone(label=node.reftext, collapse=True)
         sub = node.first_of_type(nodes.Subproof)
         if sub is None:
             # we shouldn't do this, we should turn the whole menu into an external tree..
@@ -1481,14 +1498,15 @@ class HandrailsTranslator(Translator):
 
     def _wrap_item_with_handrails(
         self,
-        index,
-        items,
+        index: int,
+        items: list,
         cls,
-        classes=None,
-        include_content=False,
+        classes: list[str] | None = None,
+        include_content: bool = False,
         icon=None,
-        collapsible=True,
-        depth=0,
+        collapsible: bool = True,
+        depth: int = 0,
+        menu_label: str = "",
     ):
         handrail = self._hr(include_content, depth, classes)
         hr_content_zone = self._hr_content_zone(include_content)
@@ -1496,7 +1514,7 @@ class HandrailsTranslator(Translator):
         newitems = [
             handrail,
             self._hr_collapse_zone(collapsible),
-            self._hr_menu_zone(),
+            self._hr_menu_zone(label=menu_label),
             self._hr_border_zone(),
             self._hr_spacer_zone(),
             hr_content_zone,
@@ -1519,13 +1537,14 @@ class HandrailsTranslator(Translator):
 
     def _wrap_batch_item_with_handrails(
         self,
-        index,
-        batch,
-        include_content=False,
+        index: int,
+        batch: EditCommandBatch,
+        include_content: bool = False,
         icon=None,
-        collapsible=True,
-        depth=0,
-        classes=None,
+        collapsible: bool = True,
+        depth: int = 0,
+        classes: list[str] | None = None,
+        menu_label: str = "",
     ):
         return self._wrap_item_with_handrails(
             index,
@@ -1536,6 +1555,7 @@ class HandrailsTranslator(Translator):
             icon,
             collapsible,
             depth,
+            menu_label,
         )
 
     def _wrap_cmd_with_handrails(
@@ -1607,7 +1627,9 @@ class HandrailsTranslator(Translator):
     def visit_manuscript(self, node: nodes.Manuscript) -> EditCommand:
         batch = super().visit_manuscript(node)
         if node.title:
-            batch = self._wrap_batch_item_with_handrails(4, batch, classes=["heading"])
+            batch = self._wrap_batch_item_with_handrails(
+                4, batch, classes=["heading"], menu_label="Title"
+            )
         if self.add_source:
             batch.items.insert(2, self._make_source_div())
         if toc := node.first_of_type(nodes.Contents):
@@ -1629,16 +1651,24 @@ class HandrailsTranslator(Translator):
     def visit_section(self, node: nodes.Section) -> EditCommand:
         batch = super().visit_section(node)
         return self._wrap_batch_item_with_handrails(
-            1, batch, icon=getattr(node, "icon", None), classes=["heading"]
+            1,
+            batch,
+            icon=getattr(node, "icon", None),
+            classes=["heading"],
+            menu_label=node.reftext,
         )
 
     def visit_abstract(self, node: nodes.Abstract) -> EditCommand:
         batch = super().visit_abstract(node)
-        return self._wrap_batch_item_with_handrails(1, batch, classes=["heading"])
+        return self._wrap_batch_item_with_handrails(
+            1, batch, classes=["heading"], menu_label=node.reftext
+        )
 
     def visit_contents(self, node: nodes.Contents) -> EditCommand:
         batch = super().visit_contents(node)
-        batch = self._wrap_batch_item_with_handrails(1, batch, classes=["heading"])
+        batch = self._wrap_batch_item_with_handrails(
+            1, batch, classes=["heading"], menu_label=node.reftext
+        )
         batch.items = (
             batch.items[:-1]
             + self._make_minimap(node, follow="mouse").items
@@ -1648,14 +1678,13 @@ class HandrailsTranslator(Translator):
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
         batch = super().visit_bibliography(node)
-        return self._wrap_batch_item_with_handrails(1, batch, classes=["heading"])
+        return self._wrap_batch_item_with_handrails(
+            1, batch, classes=["heading"], menu_label=node.reftext
+        )
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
         cmd = super().visit_paragraph(node)
-        batch = self._replace_node_with_handrails(
-            node,
-            collapsible=False,
-        )
+        batch = self._replace_node_with_handrails(node, collapsible=False)
         if "hr-hidden" not in batch.items[0].classes:
             batch.items[0].classes.append("hr-hidden")
         batch = AppendBatchAndDefer([*batch.items, *cmd.items[1:]])
@@ -1752,7 +1781,9 @@ class HandrailsTranslator(Translator):
         return batch
 
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
-        batch = self._replace_node_with_handrails(node, collapsible=False)
+        batch = self._replace_node_with_handrails(
+            node, collapsible=False, menu_label=node.long_reftext
+        )
         batch.items.insert(0, AppendText("</p>"))
         batch.items.append(AppendTextAndDefer("$$\n", "\n$$"))
         batch.items[1].classes += ["hr-hidden", "hr-offset"]

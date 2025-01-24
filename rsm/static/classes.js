@@ -23,10 +23,13 @@ export function setupClassInteractions() {
 
     // Collapse
     document.querySelectorAll(".hr > .hr-collapse-zone > .hr-collapse").forEach(collapse => {
-	collapse.addEventListener("click", collapseHandrail);
+	collapse.addEventListener("click", ev => collapseHandrail(ev.target));
     });
     document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-subproof:not(.disabled)").forEach(collapse => {
-	collapse.addEventListener("click", collapseHandrail);
+	collapse.addEventListener("click", ev => collapseHandrail(ev.target));
+    });
+    document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(collapse => {
+	collapse.addEventListener("click", ev => collapseAll(ev.target));
     });
 
     // Set height of offset handrails' borders
@@ -86,7 +89,8 @@ function withinView(el, top = true) {
     } else {
 	return rect.top < viewportHeight && rect.bottom > 0;
     };
-}
+};
+
 
 function updateHeight(entries) {
     for (const entry of entries) {
@@ -97,8 +101,8 @@ function updateHeight(entries) {
 };
 
 
-function collapseHandrail() {
-    const hr = this.closest(".hr");
+function collapseHandrail(target) {
+    const hr = target.closest(".hr");
     let rest;
     if (hr.classList.contains("hr-labeled")) {
 	rest = hr.querySelectorAll("& > .hr-content-zone > :not(.hr-label)");
@@ -112,32 +116,71 @@ function collapseHandrail() {
 	hr.classList.add("hr-collapsed");
 	rest.forEach(el => { el.classList.add("hide"); });
 	const icon = hr.querySelector("& .icon-wrapper.collapse");
-	if (icon) {
-	    icon.classList.remove("collapse");
-	    icon.classList.add("uncollapse");
-	    icon.innerHTML = `
+	if (!icon) return;
+	icon.classList.remove("collapse");
+	icon.classList.add("expand");
+	icon.innerHTML = `
                     <svg width="14" height="8" viewBox="0 0 14 8" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 1L7 7L13 1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     `;
-	    const menu_item = icon.nextElementSibling;
-	    if (menu_item && menu_item.classList.contains("hr-menu-item-text")) { menu_item.textContent = "Expand" };
-	}
+	const item_text = icon.nextElementSibling;
+	if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Expand" };
     } else {
 	hr.classList.remove("hr-collapsed");
 	rest.forEach(el => { el.classList.remove("hide"); });
-	const icon = hr.querySelector("& .icon-wrapper.uncollapse");
-	if (icon) {
-	    icon.classList.remove("uncollapse");
-	    icon.classList.add("collapse");
-	    icon.innerHTML = `
+	const icon = hr.querySelector("& .icon-wrapper.expand");
+	if (!icon) return;
+	icon.classList.remove("expand");
+	icon.classList.add("collapse");
+	icon.innerHTML = `
                     <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 1L7 7L1 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     `;
-	    const menu_item = icon.nextElementSibling;
-	    if (menu_item && menu_item.classList.contains("hr-menu-item-text")) { menu_item.textContent = "Collapse" };
-	}
+	const item_text = icon.nextElementSibling;
+	if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Collapse" };
     };
 
-}
+};
+
+
+function collapseAll(target) {
+    const qry = "& > .hr-content-zone > .subproof > .hr-content-zone > .step:has(.subproof)";
+    const hr = target.closest(".hr")
+    hr.querySelectorAll(qry).forEach(st => collapseHandrail(st));
+
+    const ex_icon = hr.querySelector("& .icon-wrapper.expand-all");
+    console.log(ex_icon);
+    if (ex_icon) {
+	ex_icon.classList.remove("expand-all");
+	ex_icon.classList.add("collapse-all");
+	ex_icon.innerHTML = `
+                    <svg width="9" height="9" viewBox="5 5 14 14" fill="none" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M7 7l5 5l-5 5" />
+                      <path d="M13 7l5 5l-5 5" />
+                    </svg>
+                    `;
+	const item_text = ex_icon.nextElementSibling;
+	if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Collapse all" };
+	return;
+    }
+
+    const co_icon = hr.querySelector("& .icon-wrapper.collapse-all");
+    console.log(co_icon);
+    if (co_icon) {
+	co_icon.classList.remove("collapse-all");
+	co_icon.classList.add("expand-all");
+	co_icon.innerHTML = `
+                    <svg width="9" height="9" viewBox="5 5 14 14" fill="none" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 7l5 5l5 -5" />
+                      <path d="M7 13l5 5l5 -5" />
+                    </svg>
+                    `;
+	const item_text = co_icon.nextElementSibling;
+	if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Expand all" };
+	return;
+    }
+
+};

@@ -395,12 +395,12 @@
     border-left: var(--border-med) solid var(--handrail-default);
   }
 }
-.manuscriptwrapper .hr.paragraph .hr-border-zone {
+.manuscriptwrapper .hr.step .hr.paragraph .hr-border-zone {
   /* Put paragraphs' border zone last so if they are inside another element with a
      handrail, the other element's border zone appears first.  This happens e.g. in
      proof steps.
    */
-  z-index: -1;
+  z-index: 0;
 }
 /* Handrails: individual elements -- menu-zone */
 .manuscriptwrapper .hr .hr-menu-zone {

@@ -81,7 +81,7 @@ function collapseHandrail() {
                     </svg>
                     `;
 	    const menu_item = icon.nextElementSibling;
-	    if (menu_item.classList.contains("hr-menu-item-text")) { menu_item.textContent = "Expand" };
+	    if (menu_item && menu_item.classList.contains("hr-menu-item-text")) { menu_item.textContent = "Expand" };
 	}
     } else {
 	hr.classList.remove("hr-collapsed");
@@ -96,7 +96,7 @@ function collapseHandrail() {
                     </svg>
                     `;
 	    const menu_item = icon.nextElementSibling;
-	    if (menu_item.classList.contains("hr-menu-item-text")) { menu_item.textContent = "Collapse" };
+	    if (menu_item && menu_item.classList.contains("hr-menu-item-text")) { menu_item.textContent = "Collapse" };
 	}
     };
 

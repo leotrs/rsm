@@ -431,7 +431,7 @@ class Node:
     def reftext(self) -> str:
         return self.reftext_template.format(
             nodeclass=self.__class__.__name__, number=self.full_number
-        )
+        ).strip()
 
     def traverse(
         self,
@@ -1211,6 +1211,10 @@ class MathBlock(NodeWithChildren):
     def __init__(self, isclaim: bool = False, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.isclaim = isclaim
+
+    @property
+    def long_reftext(self) -> str:
+        return f"Equation {self.reftext}".strip()
 
 
 class SourceCode(Text):

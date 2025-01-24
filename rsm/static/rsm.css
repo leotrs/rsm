@@ -404,6 +404,7 @@
 }
 /* Handrails: individual elements -- menu-zone */
 .manuscriptwrapper .hr .hr-menu-zone {
+
   .hr-menu {
     display: flex;
     flex-direction: column;
@@ -416,7 +417,8 @@
     box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
 		0px 1px 2px 0px rgba(0, 0, 0, 0.30);
   }
-  .hr-menu-item {
+
+  .hr-menu-item, .hr-menu-label {
     display: flex;
     padding-inline: 12px;
     gap: 8px;
@@ -425,6 +427,18 @@
     .hr-menu-item-text {
       font-size: 14px;
     }
+  }
+
+  .hr-menu-label .hr-menu-item-text {
+    font-weight: var(--weight-semi);
+  }
+
+  .hr-menu-separator {
+    border-top: 1px solid var(--light);
+    margin-block: 4px;
+    width: calc(100% - 24px);
+    left: 12px;
+    position: relative;
   }
 
 }

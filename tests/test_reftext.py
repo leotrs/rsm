@@ -8,7 +8,7 @@ def test_mechanism():
     node = cls()
     assert node.classreftext == cls.classreftext
     assert node.reftext_template == cls.classreftext
-    assert node.reftext == "Section "
+    assert node.reftext == "Section"
 
     node.reftext_template = "foobar"
     assert node.classreftext == cls.classreftext

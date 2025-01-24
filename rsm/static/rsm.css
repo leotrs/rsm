@@ -418,10 +418,15 @@
   }
   .hr-menu-item {
     display: flex;
-    padding-inline: 16px;
+    padding-inline: 12px;
     gap: 8px;
     align-items: center;
+
+    .hr-menu-item-text {
+      font-size: 14px;
+    }
   }
+
 }
 /* Handrails: individual elements -- spacer-zone */
 .manuscriptwrapper .hr .hr-spacer-zone, .manuscriptwrapper .hr .hr-collapse-zone {

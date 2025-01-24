@@ -1259,6 +1259,17 @@ class HandrailsTranslator(Translator):
       </svg>
     </span>
     <span class="hr-menu-item-text">Collapse</span>
+  </div>
+
+  <div class="hr-menu-item collapse-steps">
+    <span class="icon-wrapper collapse-all">
+      <svg width="9" height="9" viewBox="5 5 14 14" fill="none" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M7 7l5 5l-5 5" />
+        <path d="M13 7l5 5l-5 5" />
+      </svg>
+    </span>
+    <span class="hr-menu-item-text">Collapse all</span>
   </div>"""
 
     def _hr_menu_item_link(self) -> str:
@@ -1441,11 +1452,22 @@ class HandrailsTranslator(Translator):
 
     def _step_handrails(self, node: nodes.Step) -> AppendBatchAndDefer:
         menu_zone = self._hr_menu_zone(collapse=True)
-        if node.first_of_type(nodes.Subproof) is None:
+        sub = node.first_of_type(nodes.Subproof)
+        if sub is None:
             # we shouldn't do this, we should turn the whole menu into an external tree..
             menu_zone.content = menu_zone.content.replace(
                 'class="hr-menu-item collapse-subproof"',
                 'class="hr-menu-item collapse-subproof disabled"',
+            )
+            menu_zone.content = menu_zone.content.replace(
+                'class="hr-menu-item collapse-steps"',
+                'class="hr-menu-item collapse-steps disabled"',
+            )
+        if sub and sub.first_of_type(nodes.Step) is None:
+            # we shouldn't do this, we should turn the whole menu into an external tree..
+            menu_zone.content = menu_zone.content.replace(
+                'class="hr-menu-item collapse-steps"',
+                'class="hr-menu-item collapse-steps disabled"',
             )
         newitems = [
             self._hr_from_node(node),

@@ -645,7 +645,7 @@
 /* TOC */
 .manuscriptwrapper {
 
-  .toc-wrapper {
+  .toc-wrapper, .float-minimap-wrapper {
     display: flex;
     flex-direction: row;
     padding-left: 48px;
@@ -662,6 +662,16 @@
 	fill: var(--gray-200);
 	stroke: var(--gray-200);
       }
+    }
+
+  }
+
+  .float-minimap-wrapper {
+
+    .minimap {
+      position: fixed;
+      top: 192px;
+      left: 48px;
     }
 
   }

@@ -317,7 +317,7 @@ class Transformer:
             reftext = f"{sec.title}" if sec.nonum else f"{sec.full_number}. {sec.title}"
             item.append(nodes.Reference(target=sec, overwrite_reftext=reftext))
 
-            # The order of the if isinstance(...) statements here matters because all
+            # The order of the `if isinstance(...)` statements here matters because all
             # Subsections are also Sections so isinstance(sec, nodes.Section) evaluates
             # to True even when sec is a Subsection.  Thus, we have to go from smallest
             # (Subsubsection) to largest (Section).

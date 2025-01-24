@@ -47,6 +47,30 @@
   --purple-100: #F2E9FE;
   --purple-50: #FAF5FF;
 
+  --green-950: #072C2B;
+  --green-900: #174A46;
+  --green-800: #165954;
+  --green-700: #157067;
+  --green-600: #158C7F;
+  --green-500: #1FB5A2;
+  --green-400: #37CAB6;
+  --green-300: #66E2CC;
+  --green-200: #9FF0E0;
+  --green-100: #CFF8EE;
+  --green-50: #F1FCFA;
+
+  --red-950: #450A0A;
+  --red-900: #7F1D1E;
+  --red-800: #991B1C;
+  --red-700: #B81D1E;
+  --red-600: #DB2728;
+  --red-500: #EF4B4C;
+  --red-400: #F87172;
+  --red-300: #FCA5A6;
+  --red-200: #FECACA;
+  --red-100: #FEE2E2;
+  --red-50: #FEF2F2;
+
   /* Colors -- Alias */
   --black: var(--gray-1000);
   --almost-black: var(--gray-950);
@@ -94,14 +118,38 @@
   --information-100: var(--blue-100);
   --information-50: var(--blue-50);
 
+  --success-950: var(--green-950);
+  --success-900: var(--green-900);
+  --success-800: var(--green-800);
+  --success-700: var(--green-700);
+  --success-600: var(--green-600);
+  --success-500: var(--green-500);
+  --success-400: var(--green-400);
+  --success-300: var(--green-300);
+  --success-200: var(--green-200);
+  --success-100: var(--green-100);
+  --success-50: var(--green-50);
+
+  --error-950: var(--red-950);
+  --error-900: var(--red-900);
+  --error-800: var(--red-800);
+  --error-700: var(--red-700);
+  --error-600: var(--red-600);
+  --error-500: var(--red-500);
+  --error-400: var(--red-400);
+  --error-300: var(--red-300);
+  --error-200: var(--red-200);
+  --error-100: var(--red-100);
+  --error-50: var(--red-50);
+
   /* Colors -- Semantic */
   --surface-page: var(--white);
   --surface-primary: var(--almost-white);
   --surface-hover: var(--extra-light);
   --surface-information: var(--information-50);
-  /* --surface-success: var(); */
+  --surface-success: var(--success-50);
   /* --surface-warning: var(); */
-  /* --surface-error: var(); */
+  --surface-error: var(--error-50);
   --surface-action: var(--primary-500);
   --surface-action-hover: var(--primary-600);
   --surface-disabled: var(--gray-200);
@@ -115,7 +163,8 @@
   --link-default: var(--primary-600);
   --link-hover: var(--primary-500);
 
-  --keyword-blue: var(--primary-700);
+  --text-disabled: var(--gray-400);
+  --text-keyword: var(--primary-700);
 
   /* Type */
   --body-line-height: 1.5;
@@ -152,9 +201,9 @@
 
 /* General utilities */
 .manuscriptwrapper {
-  .error {background-color: pink;}
-  .node-with-no-class {background-color: pink;}
-  .reference.unknown {background-color: pink;}
+  .error {background-color: var(--error-100);}
+  .node-with-no-class {background-color: var(--error-100);}
+  .reference.unknown {background-color: var(--error-100);}
   .hide {display: none !important;}
 }
 
@@ -297,18 +346,18 @@
     display: flex;
 
     .hr-collapse-zone {flex-shrink: 0;}
-    .hr-menu-zone {position: absolute;display: none;}
+    .hr-menu-zone {position: absolute; display: none;}
     .hr-border-zone {flex-shrink: 0;}
     .hr-spacer-zone {flex-shrink: 0;}
-    .hr-content-zone {flex-shrink: 1;flex-grow: 1;flex-basis: 0;}
-    .hr-info-zone {padding: 8px;flex-shrink: 0;}
+    .hr-content-zone {flex-shrink: 1; flex-grow: 1; flex-basis: 0;}
+    .hr-info-zone {padding: 8px; flex-shrink: 0;}
 
     &.hr-offset {position: relative;}
-    &.hr-offset > .hr-collapse-zone {position: absolute;left: -48px;}
-    &.hr-offset > .hr-menu-zone {position: absolute;left: -32px;}
-    &.hr-offset > .hr-border-zone {position: absolute;left: -32px;}
-    &.hr-offset > .hr-spacer-zone {position: absolute;left: -16px;}
-    &.hr-offset > .hr-info-zone {position: absolute;right: -48px;}
+    &.hr-offset > .hr-collapse-zone {position: absolute; left: -48px;}
+    &.hr-offset > .hr-menu-zone {position: absolute; left: -32px;}
+    &.hr-offset > .hr-border-zone {position: absolute; left: -32px;}
+    &.hr-offset > .hr-spacer-zone {position: absolute; left: -16px;}
+    &.hr-offset > .hr-info-zone {position: absolute; right: -48px;}
 
   }
 }
@@ -345,6 +394,13 @@
     left: 6px;
     border-left: var(--border-med) solid var(--handrail-default);
   }
+}
+.manuscriptwrapper .hr.paragraph .hr-border-zone {
+  /* Put paragraphs' border zone last so if they are inside another element with a
+     handrail, the other element's border zone appears first.  This happens e.g. in
+     proof steps.
+   */
+  z-index: -1;
 }
 /* Handrails: individual elements -- menu-zone */
 .manuscriptwrapper .hr .hr-menu-zone {
@@ -446,6 +502,7 @@
 .manuscriptwrapper .hr .hr-menu-zone .hr-menu {
   position: relative;
   left: -104px;
+  z-index: 1;
 }
 .manuscriptwrapper .hr.hr-offset .hr-menu-zone .hr-menu {
   position: relative;
@@ -455,6 +512,21 @@
   .hr-border-dots:hover, .hr-collapse:hover {background: var(--surface-hint);}
   .hr-collapse:hover svg {stroke: var(--extra-dark);}
   .hr-menu-item:hover {background: var(--surface-hint);}
+}
+.manuscriptwrapper .hr-menu-zone .hr-menu-item {
+  svg {stroke: var(--dark);}
+  .hr-menu-item-text {color: var(--dark);}
+
+  &.disabled {
+    svg {stroke: var(--medium);}
+    .hr-menu-item-text{color: var(--medium);}
+  }
+
+  &:hover:not(.disabled) {
+    svg {stroke: var(--extra-dark);}
+    .hr-menu-item-text{color: var(--extra-dark);}
+  }
+
 }
 
 
@@ -478,7 +550,10 @@
     border-bottom: var(--border-med) solid var(--handrail-default);
   }
 
-  &.hr-labeled > .hr-spacer-zone, &.hr-labeled > .hr-border-zone > .hr-border-rect {
+  &.hr-labeled > .hr-spacer-zone,
+  &.hr-labeled > .hr-border-zone > .hr-border-rect,
+  &.step > .hr-spacer-zone,
+  &.step > .hr-border-zone > .hr-border-rect {
     border-bottom: var(--border-thin) solid var(--handrail-default);
   }
 
@@ -507,8 +582,8 @@
     opacity: 100%;
   }
 
-  &.subproof .hr-spacer-zone .hr-spacer {
-    width: 8px;
+  &.subproof > .hr-border-zone > .hr-border-rect {
+    top: 0;
   }
 
   &.subproof {
@@ -518,12 +593,21 @@
   &.proof .step:hover::after {
     content: "";
     position: absolute;
-    background: var(--keyword-blue);
+    background: var(--text-keyword);
     width: 8px;
     height: 8px;
     top: calc(100% - 8px);
     left: calc(100% + 8px);
     border-radius: 2px;
+  }
+
+  &.step.hr-collapsed > .hr-content-zone::after {
+    content: "steps hidden";
+    position: relative;
+    left: 16px;
+    color: var(--medium);
+    font-style: italic;
+    font-size: 14px;
   }
 
 }
@@ -543,16 +627,16 @@
 
 
 /* Icons */
-.icon-wrapper {
+.manuscriptwrapper .icon-wrapper {
 
   svg {width: 16px;height: 16px;}
 
-  &.bookmark > svg {fill: #0E9AE9;stroke: #0E9AE9;}
-  &.success > svg {fill: #1FB5A2;stroke: #1FB5A2;}
-  &.alert > svg {fill: #F5862B;stroke: #F5862B;}
-  &.question > svg {fill: #AD71F2;stroke: #AD71F2;}
-  &.heart > svg {fill: #EF4B4C;stroke: #EF4B4C;}
-  &.star > svg {fill: #FFD31B;stroke: #FFD31B;}
+  &.bookmark > svg {fill: var(--blue-500); stroke: var(--blue-500);}
+  &.success > svg {fill: var(--green-500); stroke: var(--green-500);}
+  &.alert > svg {fill: #F5862B; stroke: #F5862B;}
+  &.question > svg {fill: var(--purple-500); stroke: var(--purple-500);}
+  &.heart > svg {fill: var(--red-500); stroke: var(--red-500);}
+  &.star > svg {fill: #FFD31B; stroke: #FFD31B;}
   &.collapse > svg {stroke: var(--dark);}
 
 }
@@ -629,12 +713,12 @@
 /*   right: 0; */
 /*   height: var(--halmos-side-length); */
 /*   width: var(--halmos-side-length); */
-/*   background-color: var(--keyword-blue); } */
+/*   background-color: var(--text-keyword); } */
 /* .manuscriptwrapper .halmos.with-ellipsis::before { */
 /*   content: ''; */
 /*   display: flex; */
 /*   border-style: solid; */
-/*   border-color: var(--keyword-blue) var(--keyword-blue) var(--keyword-blue) var(--keyword-blue); */
+/*   border-color: var(--text-keyword) var(--text-keyword) var(--text-keyword) var(--text-keyword); */
 /*   border-width: .0625em 0 .0625em .0625em; */
 /*   position: absolute; */
 /*   right: 8px; */
@@ -642,11 +726,11 @@
 /*   height: var(--halmos-side-length); */
 /*   justify-content: space-evenly; */
 /*   align-items: center; */
-/*   background: radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 2px/2px 2px, radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 6px/2px 2px, radial-gradient(farthest-side, var(--keyword-blue) 100%, transparent) 10px/2px 2px; */
+/*   background: radial-gradient(farthest-side, var(--text-keyword) 100%, transparent) 2px/2px 2px, radial-gradient(farthest-side, var(--text-keyword) 100%, transparent) 6px/2px 2px, radial-gradient(farthest-side, var(--text-keyword) 100%, transparent) 10px/2px 2px; */
 /*   background-repeat: no-repeat; } */
 
 .manuscriptwrapper .keyword {
-  color: var(--keyword-blue);
+  color: var(--text-keyword);
   font-weight: var(--weight-bold); }
 .manuscriptwrapper p > span.construct:not(:first-child) > span.keyword {
   margin-inline-start: 0.1rem; }

@@ -138,6 +138,19 @@ def test_two_steps():
 
           <div class="hr-menu-separator"></div>
 
+          <div class="hr-menu-item collapse-steps">
+            <span class="icon-wrapper collapse-all">
+              <svg width="9" height="9" viewBox="5 5 14 14" fill="none" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M7 7l5 5l-5 5" />
+                <path d="M13 7l5 5l-5 5" />
+              </svg>
+            </span>
+            <span class="hr-menu-item-text">Collapse all</span>
+          </div>
+
+          <div class="hr-menu-separator"></div>
+
           <div class="hr-menu-item">
             <span class="icon-wrapper link">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
@@ -723,6 +736,19 @@ def test_sub_step():
 
           <div class="hr-menu-label">
             <span class="hr-menu-item-text">Proof</span>
+          </div>
+
+          <div class="hr-menu-separator"></div>
+
+          <div class="hr-menu-item collapse-steps">
+            <span class="icon-wrapper collapse-all">
+              <svg width="9" height="9" viewBox="5 5 14 14" fill="none" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M7 7l5 5l-5 5" />
+                <path d="M13 7l5 5l-5 5" />
+              </svg>
+            </span>
+            <span class="hr-menu-item-text">Collapse all</span>
           </div>
 
           <div class="hr-menu-separator"></div>
@@ -1650,6 +1676,19 @@ def test_proof():
 
           <div class="hr-menu-separator"></div>
 
+          <div class="hr-menu-item collapse-steps">
+            <span class="icon-wrapper collapse-all">
+              <svg width="9" height="9" viewBox="5 5 14 14" fill="none" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M7 7l5 5l-5 5" />
+                <path d="M13 7l5 5l-5 5" />
+              </svg>
+            </span>
+            <span class="hr-menu-item-text">Collapse all</span>
+          </div>
+
+          <div class="hr-menu-separator"></div>
+
           <div class="hr-menu-item">
             <span class="icon-wrapper link">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
@@ -2218,6 +2257,19 @@ def test_proof_with_sketch():
 
           <div class="hr-menu-label">
             <span class="hr-menu-item-text">Proof</span>
+          </div>
+
+          <div class="hr-menu-separator"></div>
+
+          <div class="hr-menu-item collapse-steps">
+            <span class="icon-wrapper collapse-all">
+              <svg width="9" height="9" viewBox="5 5 14 14" fill="none" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M7 7l5 5l-5 5" />
+                <path d="M13 7l5 5l-5 5" />
+              </svg>
+            </span>
+            <span class="hr-menu-item-text">Collapse all</span>
           </div>
 
           <div class="hr-menu-separator"></div>

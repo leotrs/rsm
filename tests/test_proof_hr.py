@@ -222,7 +222,7 @@ def test_two_steps():
         <div class="hr-menu">
 
           <div class="hr-menu-label">
-            <span class="hr-menu-item-text">Step 1</span>
+            <span class="hr-menu-item-text">Step ⟨1⟩</span>
           </div>
 
           <div class="hr-menu-separator"></div>
@@ -406,7 +406,7 @@ def test_two_steps():
         <div class="hr-menu">
 
           <div class="hr-menu-label">
-            <span class="hr-menu-item-text">Step 2</span>
+            <span class="hr-menu-item-text">Step ⟨2⟩</span>
           </div>
 
           <div class="hr-menu-separator"></div>
@@ -824,7 +824,7 @@ def test_sub_step():
         <div class="hr-menu">
 
           <div class="hr-menu-label">
-            <span class="hr-menu-item-text">Step 1</span>
+            <span class="hr-menu-item-text">Step ⟨1⟩</span>
           </div>
 
           <div class="hr-menu-separator"></div>
@@ -1020,7 +1020,7 @@ def test_sub_step():
         <div class="hr-menu">
 
           <div class="hr-menu-label">
-            <span class="hr-menu-item-text">Step 1.1</span>
+            <span class="hr-menu-item-text">Step ⟨1.1⟩</span>
           </div>
 
           <div class="hr-menu-separator"></div>
@@ -1760,7 +1760,7 @@ def test_proof():
         <div class="hr-menu">
 
           <div class="hr-menu-label">
-            <span class="hr-menu-item-text">Step 1</span>
+            <span class="hr-menu-item-text">Step ⟨1⟩</span>
           </div>
 
           <div class="hr-menu-separator"></div>
@@ -2345,7 +2345,7 @@ def test_proof_with_sketch():
         <div class="hr-menu">
 
           <div class="hr-menu-label">
-            <span class="hr-menu-item-text">Step 1</span>
+            <span class="hr-menu-item-text">Step ⟨1⟩</span>
           </div>
 
           <div class="hr-menu-separator"></div>

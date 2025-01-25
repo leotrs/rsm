@@ -1443,6 +1443,7 @@ class Sketch(NodeWithChildren):
 
 class Step(Paragraph):
     autonumber = True
+    classreftext: ClassVar[str] = "Step ⟨{number}⟩"
     possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = {Proof, Subproof}
     has_handrail = True
 

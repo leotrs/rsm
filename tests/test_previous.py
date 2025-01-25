@@ -59,7 +59,7 @@ def test_works_with_no_reftext_and_label():
 
         <div class="paragraph" data-nodeid="8">
 
-        <p>Bar <a class="reference" href="#lbl">Step 1</a>.</p>
+        <p>Bar <a class="reference" href="#lbl">Step ⟨1⟩</a>.</p>
 
         </div>
 
@@ -134,7 +134,7 @@ def test_works_with_no_reftext_and_no_label():
 
         <div class="paragraph" data-nodeid="8">
 
-        <p>Bar <a class="reference" href="#">Step 1</a>.</p>
+        <p>Bar <a class="reference" href="#">Step ⟨1⟩</a>.</p>
 
         </div>
 

@@ -405,7 +405,7 @@ def test_real_life_example():
 
         <div class="paragraph" data-nodeid="223">
 
-        <p>where the first equation is true by <a class="reference" href="#asm">induction hypothesis</a>, and the last equation is due to <a class="reference" href="#stp-edges">Step 5</a> and <a class="reference" href="#stp-sum">Step 6</a>.</p>
+        <p>where the first equation is true by <a class="reference" href="#asm">induction hypothesis</a>, and the last equation is due to <a class="reference" href="#stp-edges">Step ⟨5⟩</a> and <a class="reference" href="#stp-sum">Step ⟨6⟩</a>.</p>
 
         </div>
 

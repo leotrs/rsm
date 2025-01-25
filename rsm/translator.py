@@ -1415,19 +1415,22 @@ class HandrailsTranslator(Translator):
     def _replace_node_with_handrails(
         self,
         node,
-        collapsible: bool = True,
-        collapse_in_menu: bool = False,
-        menu_label: str = "",
+        *,
         additional_classes: None | list[str] = None,
+        menu_label: str = "",
+        collapse_in_hr: bool = True,
+        collapse_in_menu: bool = False,
+        collapse_all_in_menu: bool = False,
     ):
         handrail = self._hr_from_node(node, additional_classes)
         hr_content_zone = self._hr_content_zone(True)
         newitems = [
             handrail,
-            self._hr_collapse_zone(collapsible),
+            self._hr_collapse_zone(collapse_in_hr),
             self._hr_menu_zone(
                 label=menu_label or node.reftext,
                 collapse=collapse_in_menu,
+                collapse_all=collapse_all_in_menu,
             ),
             self._hr_border_zone(),
             self._hr_spacer_zone(),
@@ -1485,7 +1488,7 @@ class HandrailsTranslator(Translator):
         classes: list[str] | None = None,
         include_content: bool = False,
         icon=None,
-        collapsible: bool = True,
+        collapse_in_hr: bool = True,
         depth: int = 0,
         menu_label: str = "",
     ):
@@ -1494,7 +1497,7 @@ class HandrailsTranslator(Translator):
 
         newitems = [
             handrail,
-            self._hr_collapse_zone(collapsible),
+            self._hr_collapse_zone(collapse_in_hr),
             self._hr_menu_zone(label=menu_label),
             self._hr_border_zone(),
             self._hr_spacer_zone(),
@@ -1522,7 +1525,7 @@ class HandrailsTranslator(Translator):
         batch: EditCommandBatch,
         include_content: bool = False,
         icon=None,
-        collapsible: bool = True,
+        collapse_in_hr: bool = True,
         depth: int = 0,
         classes: list[str] | None = None,
         menu_label: str = "",
@@ -1534,7 +1537,7 @@ class HandrailsTranslator(Translator):
             classes,
             include_content,
             icon,
-            collapsible,
+            collapse_in_hr,
             depth,
             menu_label,
         )
@@ -1544,7 +1547,7 @@ class HandrailsTranslator(Translator):
         cmd,
         include_content=False,
         icon=None,
-        collapsible=True,
+        collapse_in_hr=True,
         depth=0,
         classes=None,
     ):
@@ -1555,7 +1558,7 @@ class HandrailsTranslator(Translator):
             classes,
             include_content,
             icon,
-            collapsible,
+            collapse_in_hr,
             depth,
         )
 
@@ -1665,7 +1668,7 @@ class HandrailsTranslator(Translator):
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:
         cmd = super().visit_paragraph(node)
-        batch = self._replace_node_with_handrails(node, collapsible=False)
+        batch = self._replace_node_with_handrails(node, collapse_in_hr=False)
         if "hr-hidden" not in batch.items[0].classes:
             batch.items[0].classes.append("hr-hidden")
         batch = AppendBatchAndDefer([*batch.items, *cmd.items[1:]])
@@ -1708,7 +1711,9 @@ class HandrailsTranslator(Translator):
 
     def visit_proof(self, node: nodes.Proof) -> EditCommand:
         batch = super().visit_proof(node)
-        hr = self._replace_node_with_handrails(node, additional_classes=["hr-labeled"])
+        hr = self._replace_node_with_handrails(
+            node, additional_classes=["hr-labeled"], collapse_all_in_menu=True
+        )
         hr.items += batch.items[1:]
         return hr
 
@@ -1807,7 +1812,7 @@ class HandrailsTranslator(Translator):
 
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         batch = self._replace_node_with_handrails(
-            node, collapsible=False, menu_label=node.long_reftext
+            node, collapse_in_hr=False, menu_label=node.long_reftext
         )
         batch.items.insert(0, AppendText("</p>"))
         batch.items.append(AppendTextAndDefer("$$\n", "\n$$"))

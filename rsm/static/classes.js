@@ -29,7 +29,10 @@ export function setupClassInteractions() {
 	collapse.addEventListener("click", ev => collapseHandrail(ev.target));
     });
     document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(collapse => {
-	collapse.addEventListener("click", ev => collapseAll(ev.target));
+	collapse.addEventListener("click", ev => collapseAll(ev.target, true));
+    });
+    document.querySelectorAll(".hr.proof > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(collapse => {
+	collapse.addEventListener("click", ev => collapseAll(ev.target, false));
     });
 
     // Set height of offset handrails' borders
@@ -145,8 +148,13 @@ function collapseHandrail(target) {
 };
 
 
-function collapseAll(target) {
-    const qry = "& > .hr-content-zone > .subproof > .hr-content-zone > .step:has(.subproof)";
+function collapseAll(target, withinSubproof = true) {
+    let qry;
+    if (withinSubproof) {
+        qry = "& > .hr-content-zone > .subproof > .hr-content-zone > .step:has(.subproof)";
+    } else {
+        qry = "& > .hr-content-zone > .step:has(.subproof)";
+    }
     const hr = target.closest(".hr")
     hr.querySelectorAll(qry).forEach(st => collapseHandrail(st));
 

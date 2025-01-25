@@ -378,6 +378,14 @@ def _normalize_text(root):
             if (last := node.last_of_type(nodes.Text)) and not last.next_sibling():
                 last.text = last.text.rstrip()
 
+        # Return the space we borrowed from Construct nodes.
+        if isinstance(node, nodes.Construct):
+            if (first := node.first_of_type(nodes.Text)) and not first.prev_sibling():
+                first.text = f" {first.text}"
+            if (first := node.first_of_type(nodes.Math)) and not first.prev_sibling():
+                node.prepend(nodes.Text(" "))
+            node.prepend(nodes.Keyword().append(nodes.Text(node.keyword)))
+
         # At this point, the whitespace within non-paragraphs (e.g. Span, Claim) has
         # been dealt with, as has the leading and trailing whitespace of Paragraphs.
         # Since the text nodes have been merged, now every Paragraph's children look

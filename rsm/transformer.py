@@ -344,14 +344,10 @@ class Transformer:
 
     def add_keywords_to_constructs(self) -> None:
         for construct in self.tree.traverse(nodeclass=nodes.Construct):
-            keyword = nodes.Keyword()
-            keyword.append(nodes.Text(f"{construct.keyword} "))
-            construct.prepend(keyword)
-
             kind = construct.kind
             assert kind
             construct.types.append(kind)
-            if kind not in {"then", "suffices", "claim", "claimblock", "qed"}:
+            if kind not in {"then", "suffices", "claim", "claimblock", "qed", "prove"}:
                 construct.types.append("assumption")
 
     def add_handrail_depth(self) -> None:

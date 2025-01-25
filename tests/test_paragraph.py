@@ -161,7 +161,7 @@ def test_start_with_shortcut():
 
         <div class="paragraph" data-nodeid="1">
 
-        <p><span class="construct claim" data-nodeid="2"><span class="keyword" data-nodeid="3">⊢ </span>A claim</span>.</p>
+        <p><span class="construct claim" data-nodeid="2"><span class="keyword" data-nodeid="3">⊢</span> A claim</span>.</p>
 
         </div>
 

@@ -140,7 +140,7 @@ def test_period_after():
 
         <div class="paragraph" data-nodeid="11">
 
-        <p>Period after claim <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢ </span>foo</span>.</p>
+        <p>Period after claim <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢</span> foo</span>.</p>
 
         </div>
 
@@ -192,7 +192,7 @@ def test_period_after_with_shortcut():
 
         <div class="paragraph" data-nodeid="11">
 
-        <p>Period after claim <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢ </span>foo</span>.</p>
+        <p>Period after claim <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢</span> foo</span>.</p>
 
         </div>
 
@@ -655,13 +655,13 @@ def test_ignore_space_within_inline():
 
         <div class="paragraph" data-nodeid="11">
 
-        <p>Ignore space <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢ </span>within</span> inline.</p>
+        <p>Ignore space <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢</span> within</span> inline.</p>
 
         </div>
 
         <div class="paragraph" data-nodeid="18">
 
-        <p>Ignore space <span class="construct claim" data-nodeid="20"><span class="keyword" data-nodeid="21">⊢ </span>within</span> inline.</p>
+        <p>Ignore space <span class="construct claim" data-nodeid="20"><span class="keyword" data-nodeid="21">⊢</span> within</span> inline.</p>
 
         </div>
 
@@ -714,13 +714,13 @@ def test_ignore_space_within_inline_with_shortcut():
 
         <div class="paragraph" data-nodeid="11">
 
-        <p>Ignore space <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢ </span>within</span>. inline.</p>
+        <p>Ignore space <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢</span> within</span>. inline.</p>
 
         </div>
 
         <div class="paragraph" data-nodeid="18">
 
-        <p>Ignore space <span class="construct claim" data-nodeid="20"><span class="keyword" data-nodeid="21">⊢ </span>within</span>. inline.</p>
+        <p>Ignore space <span class="construct claim" data-nodeid="20"><span class="keyword" data-nodeid="21">⊢</span> within</span>. inline.</p>
 
         </div>
 

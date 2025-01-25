@@ -1780,6 +1780,38 @@ class HandrailsTranslator(Translator):
         batch = AppendBatch(batch.items)
         return batch
 
+    def visit_math(self, node: nodes.Math) -> EditCommand:
+        batch = super().visit_math(node)
+        sib = node.next_sibling()
+        if not isinstance(sib, nodes.Text):
+            return batch
+        if not sib.text.startswith("."):
+            return batch
+
+        # We reach this branch only if the Math node is immediately followed by Text
+        # that starts with a dot "."; in this case, the math and the dot may be
+        # separated if the browser's viewport is too narrow, which looks ugly.  The only
+        # way to fix it is to wrap the math and the dot in a span, and remove the dot
+        # from the subsequent text.  The span is then dealt with using CSS.
+        node._followed_by_dot = True
+        batch.items.insert(
+            0,
+            AppendOpenTagManualClose(
+                tag="span",
+                classes=["inline-math-wrapper"],
+                newline_outer=False,
+            ),
+        )
+        sib.text = sib.text[1:]
+        return batch
+
+    def leave_math(self, node: nodes.Math) -> EditCommand:
+        batch = self.leave_node(node)
+        if not getattr(node, "_followed_by_dot", False):
+            return batch
+        batch.items.extend([AppendText("<span>.</span>"), AppendText("</span>")])
+        return batch
+
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         batch = self._replace_node_with_handrails(
             node, collapsible=False, menu_label=node.long_reftext

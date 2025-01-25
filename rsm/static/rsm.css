@@ -255,8 +255,8 @@
     border-radius: 16px;
   }
 
-  .tooltipster-arrow-bottom span {
-    border: var(--border-thin) solid var(--border-primary);
+  .tooltipster-arrow-border {
+    border-top-color: var(--border-primary);
   }
 
   .tooltipster-arrow-background {

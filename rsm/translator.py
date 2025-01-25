@@ -1256,9 +1256,7 @@ class HandrailsTranslator(Translator):
         return f"""
   <div class="hr-menu-label">
     <span class="hr-menu-item-text">{label}</span>
-  </div>
-
-  <div class="hr-menu-separator"></div>"""
+  </div>"""
 
     def _make_menu_item(self, classes: list[str], icon: str, text: str) -> str:
         if classes:
@@ -1273,10 +1271,14 @@ class HandrailsTranslator(Translator):
     <span class="hr-menu-item-text">{text}</span>
   </div>"""
 
+    def _hr_menu_sep(self) -> str:
+        return '\n\n  <div class="hr-menu-separator"></div>'
+
     def _hr_menu_item_collapse(self) -> str:
-        coll = self._make_menu_item(["collapse-subproof"], "collapse", "Collapse")
-        call = self._make_menu_item(["collapse-steps"], "collapse-all", "Collapse all")
-        return coll + "\n" + call + '\n\n  <div class="hr-menu-separator"></div>'
+        return self._make_menu_item(["collapse-subproof"], "collapse", "Collapse")
+
+    def _hr_menu_item_collapse_all(self) -> str:
+        return self._make_menu_item(["collapse-steps"], "collapse-all", "Collapse all")
 
     def _hr_menu_item_link(self) -> str:
         return self._make_menu_item(classes=[], icon="link", text="Copy link")
@@ -1291,6 +1293,7 @@ class HandrailsTranslator(Translator):
         self,
         label: str = "",
         collapse: bool = False,
+        collapse_all: bool = False,
         link: bool = True,
         tree: bool = True,
         code: bool = True,
@@ -1298,9 +1301,13 @@ class HandrailsTranslator(Translator):
         start, end = '\n<div class="hr-menu">', "\n</div>\n"
         middle = ""
         if label:
-            middle = middle + "\n" + self._hr_menu_label(label)
+            middle = middle + "\n" + self._hr_menu_label(label) + self._hr_menu_sep()
         if collapse:
             middle = middle + "\n" + self._hr_menu_item_collapse()
+        if collapse_all:
+            middle = middle + "\n" + self._hr_menu_item_collapse_all()
+        if collapse or collapse_all:
+            middle = middle + self._hr_menu_sep()
         if link:
             middle = middle + "\n" + self._hr_menu_item_link()
         if tree:
@@ -1440,7 +1447,9 @@ class HandrailsTranslator(Translator):
         return AppendBatchAndDefer(newitems)
 
     def _step_handrails(self, node: nodes.Step) -> AppendBatchAndDefer:
-        menu_zone = self._hr_menu_zone(label=node.reftext, collapse=True)
+        menu_zone = self._hr_menu_zone(
+            label=node.reftext, collapse=True, collapse_all=True
+        )
         sub = node.first_of_type(nodes.Subproof)
         if sub is None:
             # we shouldn't do this, we should turn the whole menu into an external tree..

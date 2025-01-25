@@ -1283,9 +1283,8 @@ class HandrailsTranslator(Translator):
         return self._make_menu_item(classes, "collapse-all", "Collapse all")
 
     def _hr_menu_item_link(self, disabled: bool = False) -> str:
-        return self._make_menu_item(
-            classes=(["disabled"] if disabled else []), icon="link", text="Copy link"
-        )
+        classes = ["link"] + (["disabled"] if disabled else [])
+        return self._make_menu_item(classes=classes, icon="link", text="Copy link")
 
     def _hr_menu_item_tree(self, disabled: bool = False) -> str:
         return self._make_menu_item(
@@ -1453,6 +1452,7 @@ class HandrailsTranslator(Translator):
                 label=menu_label or node.reftext,
                 collapse=collapse_in_menu,
                 collapse_all=collapse_all_in_menu,
+                link=(True if node.label else "disabled"),
             ),
             self._hr_border_zone(),
             self._hr_spacer_zone(),
@@ -1472,18 +1472,22 @@ class HandrailsTranslator(Translator):
         return AppendBatchAndDefer(newitems)
 
     def _step_handrails(self, node: nodes.Step) -> AppendBatchAndDefer:
-        sub = node.first_of_type(nodes.Subproof)
+        sub: nodes.Subproof | None = node.first_of_type(nodes.Subproof)
+        link: bool | Literal["disabled"] = True if node.label else "disabled"
         if sub is None:
             menu_zone = self._hr_menu_zone(
-                label=node.reftext, collapse="disabled", collapse_all="disabled"
+                label=node.reftext,
+                collapse="disabled",
+                collapse_all="disabled",
+                link=link,
             )
         elif sub and sub.first_of_type(nodes.Step) is None:
             menu_zone = self._hr_menu_zone(
-                label=node.reftext, collapse=True, collapse_all="disabled"
+                label=node.reftext, collapse=True, collapse_all="disabled", link=link
             )
         else:
             menu_zone = self._hr_menu_zone(
-                label=node.reftext, collapse=True, collapse_all=True
+                label=node.reftext, collapse=True, collapse_all=True, link=link
             )
         newitems = [
             self._hr_from_node(node),
@@ -1500,12 +1504,14 @@ class HandrailsTranslator(Translator):
         index: int,
         items: list,
         cls,
+        *,
         classes: list[str] | None = None,
         include_content: bool = False,
         icon=None,
         collapse_in_hr: bool = True,
         depth: int = 0,
         menu_label: str = "",
+        link: bool | Literal["disabled"] = True,
     ):
         handrail = self._hr(include_content, depth, classes)
         hr_content_zone = self._hr_content_zone(include_content)
@@ -1513,7 +1519,7 @@ class HandrailsTranslator(Translator):
         newitems = [
             handrail,
             self._hr_collapse_zone(collapse_in_hr),
-            self._hr_menu_zone(label=menu_label),
+            self._hr_menu_zone(label=menu_label, link=link),
             self._hr_border_zone(),
             self._hr_spacer_zone(),
             hr_content_zone,
@@ -1538,43 +1544,49 @@ class HandrailsTranslator(Translator):
         self,
         index: int,
         batch: EditCommandBatch,
+        *,
         include_content: bool = False,
         icon=None,
         collapse_in_hr: bool = True,
         depth: int = 0,
         classes: list[str] | None = None,
         menu_label: str = "",
+        link: bool | Literal["disabled"] = True,
     ):
         return self._wrap_item_with_handrails(
             index,
             batch.items,
             batch.__class__,
-            classes,
-            include_content,
-            icon,
-            collapse_in_hr,
-            depth,
-            menu_label,
+            classes=classes,
+            include_content=include_content,
+            icon=icon,
+            collapse_in_hr=collapse_in_hr,
+            depth=depth,
+            menu_label=menu_label,
+            link=link,
         )
 
     def _wrap_cmd_with_handrails(
         self,
         cmd,
+        *,
         include_content=False,
         icon=None,
         collapse_in_hr=True,
         depth=0,
         classes=None,
+        link: bool | Literal["disabled"] = True,
     ):
         return self._wrap_item_with_handrails(
             0,
             [cmd],
             AppendBatchAndDefer,
-            classes,
-            include_content,
-            icon,
-            collapse_in_hr,
-            depth,
+            classes=classes,
+            include_content=include_content,
+            icon=icon,
+            collapse_in_hr=collapse_in_hr,
+            depth=depth,
+            link=link,
         )
 
     def _make_source_div(self):
@@ -1627,7 +1639,7 @@ class HandrailsTranslator(Translator):
         batch = super().visit_manuscript(node)
         if node.title:
             batch = self._wrap_batch_item_with_handrails(
-                4, batch, classes=["heading"], menu_label="Title"
+                4, batch, classes=["heading"], menu_label="Title", link=True
             )
         if self.add_source:
             batch.items.insert(2, self._make_source_div())
@@ -1655,18 +1667,27 @@ class HandrailsTranslator(Translator):
             icon=getattr(node, "icon", None),
             classes=["heading"],
             menu_label=node.reftext,
+            link=True if node.label else "disabled",
         )
 
     def visit_abstract(self, node: nodes.Abstract) -> EditCommand:
         batch = super().visit_abstract(node)
         return self._wrap_batch_item_with_handrails(
-            1, batch, classes=["heading"], menu_label=node.reftext
+            1,
+            batch,
+            classes=["heading"],
+            menu_label=node.reftext,
+            link=True if node.label else "disabled",
         )
 
     def visit_contents(self, node: nodes.Contents) -> EditCommand:
         batch = super().visit_contents(node)
         batch = self._wrap_batch_item_with_handrails(
-            1, batch, classes=["heading"], menu_label=node.reftext
+            1,
+            batch,
+            classes=["heading"],
+            menu_label=node.reftext,
+            link=True if node.label else "disabled",
         )
         batch.items = (
             batch.items[:-1]
@@ -1678,7 +1699,11 @@ class HandrailsTranslator(Translator):
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
         batch = super().visit_bibliography(node)
         return self._wrap_batch_item_with_handrails(
-            1, batch, classes=["heading"], menu_label=node.reftext
+            1,
+            batch,
+            classes=["heading"],
+            menu_label=node.reftext,
+            link=True if node.label else "disabled",
         )
 
     def visit_paragraph(self, node: nodes.Paragraph) -> EditCommand:

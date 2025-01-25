@@ -1274,46 +1274,68 @@ class HandrailsTranslator(Translator):
     def _hr_menu_sep(self) -> str:
         return '\n\n  <div class="hr-menu-separator"></div>'
 
-    def _hr_menu_item_collapse(self) -> str:
-        return self._make_menu_item(["collapse-subproof"], "collapse", "Collapse")
+    def _hr_menu_item_collapse(self, disabled: bool = False) -> str:
+        classes = ["collapse-subproof"] + (["disabled"] if disabled else [])
+        return self._make_menu_item(classes, "collapse", "Collapse")
 
-    def _hr_menu_item_collapse_all(self) -> str:
-        return self._make_menu_item(["collapse-steps"], "collapse-all", "Collapse all")
+    def _hr_menu_item_collapse_all(self, disabled: bool = False) -> str:
+        classes = ["collapse-steps"] + (["disabled"] if disabled else [])
+        return self._make_menu_item(classes, "collapse-all", "Collapse all")
 
-    def _hr_menu_item_link(self) -> str:
-        return self._make_menu_item(classes=[], icon="link", text="Copy link")
+    def _hr_menu_item_link(self, disabled: bool = False) -> str:
+        return self._make_menu_item(
+            classes=(["disabled"] if disabled else []), icon="link", text="Copy link"
+        )
 
-    def _hr_menu_item_tree(self) -> str:
-        return self._make_menu_item(classes=[], icon="tree", text="Tree")
+    def _hr_menu_item_tree(self, disabled: bool = False) -> str:
+        return self._make_menu_item(
+            classes=(["disabled"] if disabled else []), icon="tree", text="Tree"
+        )
 
-    def _hr_menu_item_code(self) -> str:
-        return self._make_menu_item(classes=[], icon="code", text="Source")
+    def _hr_menu_item_code(self, disabled: bool = False) -> str:
+        return self._make_menu_item(
+            classes=(["disabled"] if disabled else []), icon="code", text="Source"
+        )
 
     def _hr_menu_zone(
         self,
         label: str = "",
-        collapse: bool = False,
-        collapse_all: bool = False,
-        link: bool = True,
-        tree: bool = True,
-        code: bool = True,
+        collapse: bool | Literal["disabled"] = False,
+        collapse_all: bool | Literal["disabled"] = False,
+        link: bool | Literal["disabled"] = True,
+        tree: bool | Literal["disabled"] = True,
+        code: bool | Literal["disabled"] = True,
     ) -> AppendOpenCloseTag:
         start, end = '\n<div class="hr-menu">', "\n</div>\n"
         middle = ""
         if label:
             middle = middle + "\n" + self._hr_menu_label(label) + self._hr_menu_sep()
         if collapse:
-            middle = middle + "\n" + self._hr_menu_item_collapse()
+            middle = (
+                middle
+                + "\n"
+                + self._hr_menu_item_collapse(disabled=collapse == "disabled")
+            )
         if collapse_all:
-            middle = middle + "\n" + self._hr_menu_item_collapse_all()
+            middle = (
+                middle
+                + "\n"
+                + self._hr_menu_item_collapse_all(disabled=collapse_all == "disabled")
+            )
         if collapse or collapse_all:
             middle = middle + self._hr_menu_sep()
         if link:
-            middle = middle + "\n" + self._hr_menu_item_link()
+            middle = (
+                middle + "\n" + self._hr_menu_item_link(disabled=link == "disabled")
+            )
         if tree:
-            middle = middle + "\n" + self._hr_menu_item_tree()
+            middle = (
+                middle + "\n" + self._hr_menu_item_tree(disabled=tree == "disabled")
+            )
         if code:
-            middle = middle + "\n" + self._hr_menu_item_code()
+            middle = (
+                middle + "\n" + self._hr_menu_item_code(disabled=code == "disabled")
+            )
         if middle.startswith("\n"):
             middle = middle[1:]
         return AppendOpenCloseTag(
@@ -1450,25 +1472,18 @@ class HandrailsTranslator(Translator):
         return AppendBatchAndDefer(newitems)
 
     def _step_handrails(self, node: nodes.Step) -> AppendBatchAndDefer:
-        menu_zone = self._hr_menu_zone(
-            label=node.reftext, collapse=True, collapse_all=True
-        )
         sub = node.first_of_type(nodes.Subproof)
         if sub is None:
-            # we shouldn't do this, we should turn the whole menu into an external tree..
-            menu_zone.content = menu_zone.content.replace(
-                'class="hr-menu-item collapse-subproof"',
-                'class="hr-menu-item collapse-subproof disabled"',
+            menu_zone = self._hr_menu_zone(
+                label=node.reftext, collapse="disabled", collapse_all="disabled"
             )
-            menu_zone.content = menu_zone.content.replace(
-                'class="hr-menu-item collapse-steps"',
-                'class="hr-menu-item collapse-steps disabled"',
+        elif sub and sub.first_of_type(nodes.Step) is None:
+            menu_zone = self._hr_menu_zone(
+                label=node.reftext, collapse=True, collapse_all="disabled"
             )
-        if sub and sub.first_of_type(nodes.Step) is None:
-            # we shouldn't do this, we should turn the whole menu into an external tree..
-            menu_zone.content = menu_zone.content.replace(
-                'class="hr-menu-item collapse-steps"',
-                'class="hr-menu-item collapse-steps disabled"',
+        else:
+            menu_zone = self._hr_menu_zone(
+                label=node.reftext, collapse=True, collapse_all=True
             )
         newitems = [
             self._hr_from_node(node),

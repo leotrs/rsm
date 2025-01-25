@@ -160,6 +160,9 @@ class Node:
 
     """
 
+    has_handrail: ClassVar[bool] = False
+    """Whether nodes of this class are rendered with a handrail."""
+
     def __init__(
         self,
         label: str = "",
@@ -1427,7 +1430,7 @@ class Statement(NodeWithChildren):
 
 
 class Proof(NodeWithChildren):
-    pass
+    has_handrail = True
 
 
 class Subproof(NodeWithChildren):  # importantly, NOT a subclass of Proof!
@@ -1435,12 +1438,13 @@ class Subproof(NodeWithChildren):  # importantly, NOT a subclass of Proof!
 
 
 class Sketch(NodeWithChildren):
-    possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = {Proof}
+    has_handrail = True
 
 
 class Step(Paragraph):
     autonumber = True
     possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = {Proof, Subproof}
+    has_handrail = True
 
 
 Step.possible_parents.add(Step)
@@ -1452,6 +1456,7 @@ class Theorem(Heading):
     title = ""
     _number_within = Section
     newmetakeys: ClassVar[set] = {"title", "goals", "stars", "clocks"}
+    has_handrail = True
 
     def __init__(
         self,
@@ -1594,3 +1599,11 @@ class Item(BaseParagraph):
         Enumerate,
         Contents,
     }
+
+
+def all_node_subtypes():
+    return [
+        obj
+        for name, obj in globals().items()
+        if type(obj) is type and issubclass(obj, Node)
+    ]

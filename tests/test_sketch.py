@@ -6,9 +6,9 @@ def test_simple_no_handrails():
         have="""\
         :manuscript:
 
-        :proof:
+        :sketch: Foo.::
 
-          :sketch: Foo.::
+        :proof:
 
           :step: Bar.::
 
@@ -25,21 +25,27 @@ def test_simple_no_handrails():
 
         <section class="level-1">
 
-        <div class="proof" data-nodeid="1">
+        <div class="sketch" data-nodeid="1">
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span"><strong>Proof sketch.</strong></span></p>
 
         </div>
 
-        <div class="sketch" data-nodeid="2">
-
-        <div class="paragraph" data-nodeid="3">
+        <div class="paragraph" data-nodeid="2">
 
         <p>Foo.</p>
 
         </div>
+
+        </div>
+
+        <div class="proof" data-nodeid="4">
+
+        <div class="paragraph hr-label">
+
+        <p><span class="span"><strong>Proof. </strong></span></p>
 
         </div>
 

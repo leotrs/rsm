@@ -3656,7 +3656,7 @@ def test_mathblock_nonum():
         <div class="hr-menu">
 
           <div class="hr-menu-label">
-            <span class="hr-menu-item-text">Equation (None)</span>
+            <span class="hr-menu-item-text">Equation</span>
           </div>
 
           <div class="hr-menu-separator"></div>

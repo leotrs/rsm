@@ -1812,7 +1812,9 @@ class HandrailsTranslator(Translator):
 
     def visit_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         batch = self._replace_node_with_handrails(
-            node, collapse_in_hr=False, menu_label=node.long_reftext
+            node,
+            collapse_in_hr=False,
+            menu_label="Equation" if node.nonum else node.long_reftext,
         )
         batch.items.insert(0, AppendText("</p>"))
         batch.items.append(AppendTextAndDefer("$$\n", "\n$$"))

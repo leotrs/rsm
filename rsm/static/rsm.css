@@ -156,7 +156,10 @@
   --surface-hint: var(--information-200);
 
   --border-primary: var(--gray-200);
-  --border-information: var(--information-500);
+  --border-information: var(--information-100);
+  --border-success: var(--success-100);
+  --border-error: var(--error-100);
+  --border-action: var(--information-500);
   --handrail-default: var(--border-primary);
   --handrail-active: var(--border-information);
 
@@ -661,13 +664,14 @@
 
   svg {width: 16px;height: 16px;}
 
-  &.bookmark > svg {fill: var(--blue-500); stroke: var(--blue-500);}
-  &.success > svg {fill: var(--green-500); stroke: var(--green-500);}
+  &.bookmark > svg {fill: var(--information-500); stroke: var(--information-500);}
+  &.success > svg {fill: var(--success-500); stroke: var(--success-500);}
   &.alert > svg {fill: #F5862B; stroke: #F5862B;}
   &.question > svg {fill: var(--purple-500); stroke: var(--purple-500);}
   &.heart > svg {fill: var(--red-500); stroke: var(--red-500);}
   &.star > svg {fill: #FFD31B; stroke: #FFD31B;}
   &.collapse > svg {stroke: var(--dark);}
+  &.error > svg {fill: var(--error-500); stroke: var(--error-500);}
 
 }
 
@@ -828,6 +832,105 @@
 
 }
 
+
+/* Toast notifications */
+/* Modified from https://codepen.io/jrsmiffy/pen/eYYwrap */
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--extra-dark);
+  border-width: 2px;
+  border-style: solid;
+  margin: auto;
+  width: max-content;
+  padding-block: 8px;
+  padding-inline: 16px;
+  border-radius: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: fadein 0.5s, stay 3s 1s, fadeout 0.5s 4.5s;
+
+  & .close {
+    padding: 8px;
+    border-radius: 8px;
+    svg {stroke: var(--almost-black)};
+  }
+
+  & .close:hover {
+    cursor: pointer;
+    background: var(--light);
+  }
+
+  & .spacer {
+    display: inline-block;
+    width: 16px;
+  }
+
+  & .bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 14px;
+    z-index: -1;
+    animation: shrinkleft 5s;
+  }
+
+  &.information {
+    background-color: var(--surface-information);
+    border-color: var(--border-information);
+
+    & .bg {
+      background-color: var(--information-100);
+    }
+
+  }
+
+  &.success {
+    background-color: var(--surface-success);
+    border-color: var(--border-success);
+
+    & .bg {
+      background-color: var(--success-100);
+    }
+
+  }
+
+  &.error {
+    background-color: var(--surface-error);
+    border-color: var(--border-error);
+
+    & .bg {
+      background-color: var(--error-100);
+    }
+
+  }
+
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes stay {}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 60px; opacity: 0;}
+}
+
+@keyframes shrinkleft {
+  from {width: 100%;}
+  to {width: 0%;}
+}
 
 
 /* RSM predefined types */

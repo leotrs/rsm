@@ -163,7 +163,6 @@ function collapseAll(target, withinSubproof = true) {
     hr.querySelectorAll(qry).forEach(st => collapseHandrail(st));
 
     const ex_icon = hr.querySelector("& .icon-wrapper.expand-all");
-    console.log(ex_icon);
     if (ex_icon) {
 	ex_icon.classList.remove("expand-all");
 	ex_icon.classList.add("collapse-all");
@@ -180,7 +179,6 @@ function collapseAll(target, withinSubproof = true) {
     }
 
     const co_icon = hr.querySelector("& .icon-wrapper.collapse-all");
-    console.log(co_icon);
     if (co_icon) {
 	co_icon.classList.remove("collapse-all");
 	co_icon.classList.add("expand-all");
@@ -197,24 +195,91 @@ function collapseAll(target, withinSubproof = true) {
 
 };
 
-function copyLink(target) {
+async function copyLink(target) {
     const url = document.location.href.split('#')[0];
     const hr = target.closest(".hr")
+    let needs_anchor = true;
     let anchor = "";
+    let link = "";
     if (!hr.classList.contains("heading")) {
         anchor = hr.id;
     } else {
         const section = hr.closest("section");
-        if (section.classList.contains("level-1")) {
-            navigator.clipboard.writeText(`${url}`);
-            return;
-        } else {
+        if (!section.classList.contains("level-1")) {
             anchor = section.parentElement.id;
+        } else {
+            needs_anchor = false;
         }
     }
-    if (!anchor) {
-        console.log("did not find an anchor");
+    if (needs_anchor && !anchor) {
+        launchToast("Could not copy link.", "error");
         return;
     }
-    navigator.clipboard.writeText(`${url}#${anchor}`);
+    link = `${url}#${anchor}`
+    try {
+        await navigator.clipboard.writeText(link);
+        launchToast("Link copied to clipboard.", "success");
+    } catch (error) {
+        launchToast("Could not copy link.", "error");
+    }
+};
+
+
+function makeToast(text, style) {
+    const toast = document.createElement("div");
+    toast.className = `toast ${style}`
+
+    const icon = document.createElement("span");
+    icon.className = `icon-wrapper ${style}`;
+    toast.appendChild(icon);
+
+    switch(style) {
+    case "success":
+        icon.innerHTML = `
+        <svg width="18" height="18" viewBox="2 2 20 20" fill="#3C4952" stroke-width="0" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" />
+        </svg>
+        `
+        break;
+    case "error":
+        icon.innerHTML = `
+        <svg width="18" height="18" viewBox="2 2 20 20" fill="#3C4952" stroke-width="0" xmlns="http://www.w3.org/2000/svg">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-6.489 5.8a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" />
+        </svg>
+        `
+        break;
+    }
+
+    const msg = document.createElement("span");
+    msg.className = "msg";
+    msg.innerText = text;
+    toast.appendChild(msg);
+
+    const spacer = document.createElement("span");
+    spacer.className = "spacer";
+    toast.appendChild(spacer);
+
+    const close = document.createElement("span");
+    close.className = "icon-wrapper close";
+    close.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 1L1 13M1 1L13 13" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        `
+    close.addEventListener("click", ev => toast.remove());
+    toast.appendChild(close);
+
+    const bg = document.createElement("div");
+    bg.className = "bg";
+    toast.appendChild(bg);
+
+    return toast;
 }
+
+
+function launchToast(text, style="information") {
+    const toast = makeToast(text, style);
+    document.querySelector(".manuscriptwrapper").appendChild(toast);
+    setTimeout(() => { toast.remove(); }, 15000);
+};

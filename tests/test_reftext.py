@@ -31,8 +31,19 @@ def test_mechanism():
 def test_defaults():
     t = rsm.nodes.Theorem()
     assert t.reftext.strip() == "Theorem"
+    p = rsm.nodes.Proof()
+    assert p.reftext.strip() == "Proof"
     s = rsm.nodes.Step()
-    assert s.reftext.strip() == "Step"
+    assert s.reftext.strip() == "Step ⟨⟩"
+    m = rsm.nodes.MathBlock()
+    assert m.reftext.strip() == "()"
+
+
+def test_nonum():
+    s = rsm.nodes.Step(nonum=True)
+    assert s.reftext.strip() == "Step ⟨None⟩"
+    m = rsm.nodes.MathBlock(nonum=True)
+    assert m.reftext.strip() == "(None)"
 
 
 def test_simple():

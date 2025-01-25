@@ -381,7 +381,7 @@ def test_claim_shortcut():
 
         <div class="paragraph" data-nodeid="1">
 
-        <p>This paragraph contains a <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢ </span>claim with a turnstile</span>. And also another one <span class="construct claim" data-nodeid="8"><span class="keyword" data-nodeid="9">⊢ </span>but it takes multiple lines</span>.</p>
+        <p>This paragraph contains a <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢</span> claim with a turnstile</span>. And also another one <span class="construct claim" data-nodeid="8"><span class="keyword" data-nodeid="9">⊢</span> but it takes multiple lines</span>.</p>
 
         </div>
 
@@ -476,7 +476,7 @@ def test_prev_shortcut():
 
         <div class="paragraph" data-nodeid="29">
 
-        <p><span class="construct qed" data-nodeid="30"><span class="keyword" data-nodeid="31">QED </span></span>.</p>
+        <p><span class="construct qed" data-nodeid="30"><span class="keyword" data-nodeid="31">QED</span></span>.</p>
 
         </div>
 
@@ -608,7 +608,7 @@ def test_prev2_shortcut():
 
         <div class="paragraph" data-nodeid="33">
 
-        <p><span class="construct qed" data-nodeid="34"><span class="keyword" data-nodeid="35">QED </span></span>.</p>
+        <p><span class="construct qed" data-nodeid="34"><span class="keyword" data-nodeid="35">QED</span></span>.</p>
 
         </div>
 
@@ -740,7 +740,7 @@ def test_prev_and_prev2_shortcut():
 
         <div class="paragraph" data-nodeid="33">
 
-        <p><span class="construct qed" data-nodeid="34"><span class="keyword" data-nodeid="35">QED </span></span>.</p>
+        <p><span class="construct qed" data-nodeid="34"><span class="keyword" data-nodeid="35">QED</span></span>.</p>
 
         </div>
 
@@ -981,7 +981,7 @@ def test_math_after_turnstile():
 
         <div class="paragraph" data-nodeid="1">
 
-        <p>This paragraph has math inside a claim <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢ </span><span class="math" data-nodeid="6">\(2+2=4\)</span></span>.</p>
+        <p>This paragraph has math inside a claim <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢</span> <span class="math" data-nodeid="7">\(2+2=4\)</span></span>.</p>
 
         </div>
 
@@ -1030,11 +1030,11 @@ def test_turnstile_and_math_within_list():
         <ol class="enumerate" data-nodeid="3">
 
         <li id="one" class="item" data-nodeid="4">
-        <span class="construct claim" data-nodeid="5"><span class="keyword" data-nodeid="6">⊢ </span><span class="math" data-nodeid="8">\(2+2=4\)</span></span>.
+        <span class="construct claim" data-nodeid="5"><span class="keyword" data-nodeid="6">⊢</span> <span class="math" data-nodeid="9">\(2+2=4\)</span></span>.
         </li>
 
-        <li id="two" class="item" data-nodeid="11">
-        <span class="construct claim" data-nodeid="12"><span class="keyword" data-nodeid="13">⊢ </span><span class="math" data-nodeid="15">\(3+3=6\)</span></span>.
+        <li id="two" class="item" data-nodeid="12">
+        <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢</span> <span class="math" data-nodeid="17">\(3+3=6\)</span></span>.
         </li>
 
         </ol>
@@ -1122,7 +1122,7 @@ def test_asterisk_inside_code():
 
 def test_asterisk_inside_mathblock():
     compare_have_want(
-        have="""\
+        have=r"""
         :manuscript:
 
         Here comes a mathblock with an asterisk\:

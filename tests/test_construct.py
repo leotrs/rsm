@@ -122,11 +122,11 @@ def test_real_life_example():
 
         <div class="paragraph" data-nodeid="1">
 
-        <p><span class="construct let assumption" data-nodeid="2"><span class="keyword" data-nodeid="3">LET </span><span class="math" data-nodeid="5">\(G\)</span> be a simple graph</span>.  We will prove a fundamental fact about its structure. <span class="construct define assumption" data-nodeid="9"><span class="keyword" data-nodeid="10">DEFINE </span><span class="math" data-nodeid="12">\(L(G) := |E(G)|\)</span>, where <span class="math" data-nodeid="15">\(E(G)\)</span> is the set of edges of <span class="math" data-nodeid="18">\(G\)</span></span> and <span class="construct write assumption" data-nodeid="21"><span class="keyword" data-nodeid="22">WRITE </span><span class="math" data-nodeid="24">\(\deg(u)\)</span> for the degree of a node <span class="math" data-nodeid="27">\(u \in V(G)\)</span></span>.</p>
+        <p><span class="construct let assumption" data-nodeid="2"><span class="keyword" data-nodeid="3">LET</span> <span class="math" data-nodeid="6">\(G\)</span> be a simple graph</span>.  We will prove a fundamental fact about its structure. <span class="construct define assumption" data-nodeid="10"><span class="keyword" data-nodeid="11">DEFINE</span> <span class="math" data-nodeid="14">\(L(G) := |E(G)|\)</span>, where <span class="math" data-nodeid="17">\(E(G)\)</span> is the set of edges of <span class="math" data-nodeid="20">\(G\)</span></span> and <span class="construct write assumption" data-nodeid="23"><span class="keyword" data-nodeid="24">WRITE</span> <span class="math" data-nodeid="27">\(\deg(u)\)</span> for the degree of a node <span class="math" data-nodeid="30">\(u \in V(G)\)</span></span>.</p>
 
         </div>
 
-        <div id="thm-main" class="theorem important main" data-nodeid="30">
+        <div id="thm-main" class="theorem important main" data-nodeid="33">
 
         <div class="paragraph hr-label">
 
@@ -134,10 +134,10 @@ def test_real_life_example():
 
         </div>
 
-        <div class="paragraph" data-nodeid="31">
+        <div class="paragraph" data-nodeid="34">
 
         <p>We have </p>
-        <div id="eqn-thm" class="mathblock" data-nodeid="33">
+        <div id="eqn-thm" class="mathblock" data-nodeid="36">
         $$
         \sum_{u \in V(G)} \deg(u) = 2L(G).
         $$
@@ -147,7 +147,7 @@ def test_real_life_example():
 
         </div>
 
-        <div class="proof" data-nodeid="35">
+        <div class="proof" data-nodeid="38">
 
         <div class="paragraph hr-label">
 
@@ -155,51 +155,13 @@ def test_real_life_example():
 
         </div>
 
-        <div class="step" data-nodeid="36">
+        <div class="step" data-nodeid="39">
 
-        <div class="statement" data-nodeid="37">
+        <div class="statement" data-nodeid="40">
 
-        <div class="paragraph" data-nodeid="38">
+        <div class="paragraph" data-nodeid="41">
 
-        <p><span class="construct define assumption" data-nodeid="39"><span class="keyword" data-nodeid="40">DEFINE </span><span class="math" data-nodeid="42">\(n = |V(G)|\)</span>.</span></p>
-
-        </div>
-
-        </div>
-
-        </div>
-
-        <div class="step" data-nodeid="45">
-
-        <div class="statement" data-nodeid="46">
-
-        <div class="paragraph" data-nodeid="47">
-
-        <p><span class="construct case assumption" data-nodeid="48"><span class="keyword" data-nodeid="49">CASE </span><span class="math" data-nodeid="51">\(n = 1\)</span>.</span></p>
-
-        </div>
-
-        </div>
-
-        <div class="subproof" data-nodeid="54">
-
-        <div class="step" data-nodeid="55">
-
-        <div class="statement" data-nodeid="56">
-
-        <div class="paragraph" data-nodeid="57">
-
-        <p><span class="construct claim" data-nodeid="58"><span class="keyword" data-nodeid="59">⊢ </span><span class="math" data-nodeid="61">\(L(G) = 0\)</span></span>.</p>
-
-        </div>
-
-        </div>
-
-        <div class="subproof" data-nodeid="64">
-
-        <div class="paragraph" data-nodeid="65">
-
-        <p><span class="math" data-nodeid="66">\(G\)</span> has no self-loops by assumption.</p>
+        <p><span class="construct define assumption" data-nodeid="42"><span class="keyword" data-nodeid="43">DEFINE</span> <span class="math" data-nodeid="46">\(n = |V(G)|\)</span>.</span></p>
 
         </div>
 
@@ -207,23 +169,37 @@ def test_real_life_example():
 
         </div>
 
-        <div class="step" data-nodeid="69">
+        <div class="step" data-nodeid="49">
 
-        <div class="statement" data-nodeid="70">
+        <div class="statement" data-nodeid="50">
+
+        <div class="paragraph" data-nodeid="51">
+
+        <p><span class="construct case assumption" data-nodeid="52"><span class="keyword" data-nodeid="53">CASE</span> <span class="math" data-nodeid="56">\(n = 1\)</span>.</span></p>
+
+        </div>
+
+        </div>
+
+        <div class="subproof" data-nodeid="59">
+
+        <div class="step" data-nodeid="60">
+
+        <div class="statement" data-nodeid="61">
+
+        <div class="paragraph" data-nodeid="62">
+
+        <p><span class="construct claim" data-nodeid="63"><span class="keyword" data-nodeid="64">⊢</span> <span class="math" data-nodeid="67">\(L(G) = 0\)</span></span>.</p>
+
+        </div>
+
+        </div>
+
+        <div class="subproof" data-nodeid="70">
 
         <div class="paragraph" data-nodeid="71">
 
-        <p><span class="construct let assumption" data-nodeid="72"><span class="keyword" data-nodeid="73">LET </span><span class="math" data-nodeid="75">\(u \in V(G)\)</span></span>, <span class="construct then" data-nodeid="78"><span class="keyword" data-nodeid="79">THEN </span><span class="math" data-nodeid="81">\(\deg(u) = 0\)</span></span>.</p>
-
-        </div>
-
-        </div>
-
-        <div class="subproof" data-nodeid="84">
-
-        <div class="paragraph" data-nodeid="85">
-
-        <p>Since <span class="math" data-nodeid="87">\(G\)</span> has only one node, and it has no self-loops.</p>
+        <p><span class="math" data-nodeid="72">\(G\)</span> has no self-loops by assumption.</p>
 
         </div>
 
@@ -231,13 +207,37 @@ def test_real_life_example():
 
         </div>
 
-        <div class="step" data-nodeid="90">
+        <div class="step" data-nodeid="75">
 
-        <div class="statement" data-nodeid="91">
+        <div class="statement" data-nodeid="76">
 
-        <div class="paragraph" data-nodeid="92">
+        <div class="paragraph" data-nodeid="77">
 
-        <p><span class="construct qed" data-nodeid="93"><span class="keyword" data-nodeid="94">QED </span></span></p>
+        <p><span class="construct let assumption" data-nodeid="78"><span class="keyword" data-nodeid="79">LET</span> <span class="math" data-nodeid="82">\(u \in V(G)\)</span></span>, <span class="construct then" data-nodeid="85"><span class="keyword" data-nodeid="86">THEN</span> <span class="math" data-nodeid="89">\(\deg(u) = 0\)</span></span>.</p>
+
+        </div>
+
+        </div>
+
+        <div class="subproof" data-nodeid="92">
+
+        <div class="paragraph" data-nodeid="93">
+
+        <p>Since <span class="math" data-nodeid="95">\(G\)</span> has only one node, and it has no self-loops.</p>
+
+        </div>
+
+        </div>
+
+        </div>
+
+        <div class="step" data-nodeid="98">
+
+        <div class="statement" data-nodeid="99">
+
+        <div class="paragraph" data-nodeid="100">
+
+        <p><span class="construct qed" data-nodeid="101"><span class="keyword" data-nodeid="102">QED</span></span></p>
 
         </div>
 
@@ -249,21 +249,21 @@ def test_real_life_example():
 
         </div>
 
-        <div class="step" data-nodeid="96">
+        <div class="step" data-nodeid="104">
 
-        <div class="statement" data-nodeid="97">
+        <div class="statement" data-nodeid="105">
 
-        <div class="paragraph" data-nodeid="98">
+        <div class="paragraph" data-nodeid="106">
 
-        <p><span class="construct let assumption" data-nodeid="99"><span class="keyword" data-nodeid="100">LET </span><span class="math" data-nodeid="102">\(v \notin V(G)\)</span></span>. <span class="construct write assumption" data-nodeid="105"><span class="keyword" data-nodeid="106">WRITE </span><span class="math" data-nodeid="108">\(H\)</span> for the graph resulting from adding <span class="math" data-nodeid="111">\(v\)</span> to <span class="math" data-nodeid="114">\(G\)</span></span>. SUFFICES <span class="construct assume assumption" data-nodeid="117"><span class="keyword" data-nodeid="118">ASSUME </span><span class="span" data-nodeid="120"><span id="asm" class="span" data-nodeid="121">the theorem is true for <span class="math" data-nodeid="123">\(G\)</span></span></span></span>, <span class="construct prove assumption" data-nodeid="126"><span class="keyword" data-nodeid="127">PROVE </span>the theorem is true for <span class="math" data-nodeid="130">\(H\)</span></span>.</p>
-
-        </div>
+        <p><span class="construct let assumption" data-nodeid="107"><span class="keyword" data-nodeid="108">LET</span> <span class="math" data-nodeid="111">\(v \notin V(G)\)</span></span>. <span class="construct write assumption" data-nodeid="114"><span class="keyword" data-nodeid="115">WRITE</span> <span class="math" data-nodeid="118">\(H\)</span> for the graph resulting from adding <span class="math" data-nodeid="121">\(v\)</span> to <span class="math" data-nodeid="124">\(G\)</span></span>. SUFFICES <span class="construct assume assumption" data-nodeid="127"><span class="keyword" data-nodeid="128">ASSUME</span><span class="span" data-nodeid="130"><span id="asm" class="span" data-nodeid="131">the theorem is true for <span class="math" data-nodeid="133">\(G\)</span></span></span></span>, <span class="construct prove" data-nodeid="136"><span class="keyword" data-nodeid="137">PROVE</span> the theorem is true for <span class="math" data-nodeid="140">\(H\)</span></span>.</p>
 
         </div>
 
-        <div class="subproof" data-nodeid="133">
+        </div>
 
-        <div class="paragraph" data-nodeid="134">
+        <div class="subproof" data-nodeid="143">
+
+        <div class="paragraph" data-nodeid="144">
 
         <p>By induction.</p>
 
@@ -273,37 +273,13 @@ def test_real_life_example():
 
         </div>
 
-        <div class="step" data-nodeid="136">
+        <div class="step" data-nodeid="146">
 
-        <div class="statement" data-nodeid="137">
+        <div class="statement" data-nodeid="147">
 
-        <div class="paragraph" data-nodeid="138">
+        <div class="paragraph" data-nodeid="148">
 
-        <p><span class="construct define assumption" data-nodeid="139"><span class="keyword" data-nodeid="140">DEFINE </span><span class="math" data-nodeid="142">\(\deg_G(u), \deg_H(u)\)</span> as the degree of node <span class="math" data-nodeid="145">\(u\)</span> in <span class="math" data-nodeid="148">\(G\)</span> and <span class="math" data-nodeid="151">\(H\)</span> respectively.</span> Note <span class="math" data-nodeid="155">\(\deg_G(v) = 0\)</span>.</p>
-
-        </div>
-
-        </div>
-
-        </div>
-
-        <div id="stp-edges" class="step" data-nodeid="158">
-
-        <div class="statement" data-nodeid="159">
-
-        <div class="paragraph" data-nodeid="160">
-
-        <p><span class="construct claim" data-nodeid="161"><span class="keyword" data-nodeid="162">⊢ </span><span class="math" data-nodeid="164">\(L(H) = L(G) + \deg_H(v)\)</span></span>.</p>
-
-        </div>
-
-        </div>
-
-        <div class="subproof" data-nodeid="167">
-
-        <div class="paragraph" data-nodeid="168">
-
-        <p>Because the only added edges are those incident to <span class="math" data-nodeid="170">\(v\)</span>.</p>
+        <p><span class="construct define assumption" data-nodeid="149"><span class="keyword" data-nodeid="150">DEFINE</span> <span class="math" data-nodeid="153">\(\deg_G(u), \deg_H(u)\)</span> as the degree of node <span class="math" data-nodeid="156">\(u\)</span> in <span class="math" data-nodeid="159">\(G\)</span> and <span class="math" data-nodeid="162">\(H\)</span> respectively.</span> Note <span class="math" data-nodeid="166">\(\deg_G(v) = 0\)</span>.</p>
 
         </div>
 
@@ -311,27 +287,23 @@ def test_real_life_example():
 
         </div>
 
-        <div id="stp-sum" class="step" data-nodeid="173">
+        <div id="stp-edges" class="step" data-nodeid="169">
 
-        <div class="statement" data-nodeid="174">
+        <div class="statement" data-nodeid="170">
 
-        <div class="paragraph" data-nodeid="175">
+        <div class="paragraph" data-nodeid="171">
 
-        <p><span class="construct claim" data-nodeid="176"><span class="keyword" data-nodeid="177">⊢ </span><span class="math" data-nodeid="179">\(\sum_{u \in V(H)} \deg_H(u) = 2\deg_H(v) + \sum_{u \in V(G)} \deg_G(u)\)</span></span>.</p>
-
-        </div>
+        <p><span class="construct claim" data-nodeid="172"><span class="keyword" data-nodeid="173">⊢</span> <span class="math" data-nodeid="176">\(L(H) = L(G) + \deg_H(v)\)</span></span>.</p>
 
         </div>
 
-        <div class="subproof" data-nodeid="182">
+        </div>
 
-        <div class="step" data-nodeid="183">
+        <div class="subproof" data-nodeid="179">
 
-        <div class="statement" data-nodeid="184">
+        <div class="paragraph" data-nodeid="180">
 
-        <div class="paragraph" data-nodeid="185">
-
-        <p><span class="construct write assumption" data-nodeid="186"><span class="keyword" data-nodeid="187">WRITE </span><span class="math" data-nodeid="189">\(W \subset V(G)\)</span> for the set of neighbors of <span class="math" data-nodeid="192">\(v\)</span>.</span></p>
+        <p>Because the only added edges are those incident to <span class="math" data-nodeid="182">\(v\)</span>.</p>
 
         </div>
 
@@ -339,14 +311,42 @@ def test_real_life_example():
 
         </div>
 
-        <div class="step" data-nodeid="195">
+        <div id="stp-sum" class="step" data-nodeid="185">
 
-        <div class="statement" data-nodeid="196">
+        <div class="statement" data-nodeid="186">
 
-        <div class="paragraph" data-nodeid="197">
+        <div class="paragraph" data-nodeid="187">
+
+        <p><span class="construct claim" data-nodeid="188"><span class="keyword" data-nodeid="189">⊢</span> <span class="math" data-nodeid="192">\(\sum_{u \in V(H)} \deg_H(u) = 2\deg_H(v) + \sum_{u \in V(G)} \deg_G(u)\)</span></span>.</p>
+
+        </div>
+
+        </div>
+
+        <div class="subproof" data-nodeid="195">
+
+        <div class="step" data-nodeid="196">
+
+        <div class="statement" data-nodeid="197">
+
+        <div class="paragraph" data-nodeid="198">
+
+        <p><span class="construct write assumption" data-nodeid="199"><span class="keyword" data-nodeid="200">WRITE</span> <span class="math" data-nodeid="203">\(W \subset V(G)\)</span> for the set of neighbors of <span class="math" data-nodeid="206">\(v\)</span>.</span></p>
+
+        </div>
+
+        </div>
+
+        </div>
+
+        <div class="step" data-nodeid="209">
+
+        <div class="statement" data-nodeid="210">
+
+        <div class="paragraph" data-nodeid="211">
 
         <p>We have </p>
-        <div class="mathblock" data-nodeid="199">
+        <div class="mathblock" data-nodeid="213">
         $$
         \begin{align}
                 \sum_{u \in V(H)} \deg_H(u) &= \phantom{2} \deg_H(v) + \sum_{u \in V(H)\setminus\{v\}} \deg_H(u) \\
@@ -360,11 +360,9 @@ def test_real_life_example():
 
         </div>
 
-        <div class="paragraph" data-nodeid="201">
+        <div class="paragraph" data-nodeid="215">
 
-        <p>where in the right-most term in third equation we have used the fact that for every node <span class="math" data-nodeid="203">\(u\)</span> in <span class="math" data-nodeid="206">\(V(G) \setminus W \setminus v\)</span> we have <span class="math" data-nodeid="209">\(\deg_H(u) = \deg_G(u)\)</span>.</p>
-
-        </div>
+        <p>where in the right-most term in third equation we have used the fact that for every node <span class="math" data-nodeid="217">\(u\)</span> in <span class="math" data-nodeid="220">\(V(G) \setminus W \setminus v\)</span> we have <span class="math" data-nodeid="223">\(\deg_H(u) = \deg_G(u)\)</span>.</p>
 
         </div>
 
@@ -374,24 +372,26 @@ def test_real_life_example():
 
         </div>
 
-        <div class="step last" data-nodeid="212">
+        </div>
 
-        <div class="statement" data-nodeid="213">
+        <div class="step last" data-nodeid="226">
 
-        <div class="paragraph" data-nodeid="214">
+        <div class="statement" data-nodeid="227">
 
-        <p><span class="construct qed" data-nodeid="215"><span class="keyword" data-nodeid="216">QED </span></span></p>
+        <div class="paragraph" data-nodeid="228">
+
+        <p><span class="construct qed" data-nodeid="229"><span class="keyword" data-nodeid="230">QED</span></span></p>
 
         </div>
 
         </div>
 
-        <div class="subproof" data-nodeid="218">
+        <div class="subproof" data-nodeid="232">
 
-        <div class="paragraph" data-nodeid="219">
+        <div class="paragraph" data-nodeid="233">
 
         <p>We have </p>
-        <div class="mathblock" data-nodeid="221">
+        <div class="mathblock" data-nodeid="235">
         $$
         \begin{align}
                 2 L(G) &= \sum_{u \in V(G)} \deg_G(u) \\
@@ -403,7 +403,7 @@ def test_real_life_example():
 
         </div>
 
-        <div class="paragraph" data-nodeid="223">
+        <div class="paragraph" data-nodeid="237">
 
         <p>where the first equation is true by <a class="reference" href="#asm">induction hypothesis</a>, and the last equation is due to <a class="reference" href="#stp-edges">Step ⟨5⟩</a> and <a class="reference" href="#stp-sum">Step ⟨6⟩</a>.</p>
 

@@ -30,7 +30,7 @@ def test_simple():
 
         <div class="paragraph" data-nodeid="2">
 
-        <p>This paragraph contains a claim <span id="clm-lbl" class="construct claim" data-nodeid="4"><span class="keyword" data-nodeid="5">⊢ </span>all <span class="math" data-nodeid="8">\(X\)</span> are <span class="math" data-nodeid="11">\(Y\)</span></span>.</p>
+        <p>This paragraph contains a claim <span id="clm-lbl" class="construct claim" data-nodeid="4"><span class="keyword" data-nodeid="5">⊢</span> all <span class="math" data-nodeid="8">\(X\)</span> are <span class="math" data-nodeid="11">\(Y\)</span></span>.</p>
 
         </div>
 
@@ -67,7 +67,7 @@ def test_with_math():
 
         <div class="paragraph" data-nodeid="1">
 
-        <p>This paragraph has math inside a claim <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢ </span><span class="math" data-nodeid="6">\(2+2=4\)</span></span>.</p>
+        <p>This paragraph has math inside a claim <span class="construct claim" data-nodeid="3"><span class="keyword" data-nodeid="4">⊢</span> <span class="math" data-nodeid="7">\(2+2=4\)</span></span>.</p>
 
         </div>
 
@@ -116,11 +116,11 @@ def test_claim_within_list():
         <ol class="enumerate" data-nodeid="3">
 
         <li id="one" class="item" data-nodeid="4">
-        <span class="construct claim" data-nodeid="5"><span class="keyword" data-nodeid="6">⊢ </span><span class="math" data-nodeid="8">\(2+2=4\)</span></span>.
+        <span class="construct claim" data-nodeid="5"><span class="keyword" data-nodeid="6">⊢</span> <span class="math" data-nodeid="9">\(2+2=4\)</span></span>.
         </li>
 
-        <li id="two" class="item" data-nodeid="11">
-        <span class="construct claim" data-nodeid="12"><span class="keyword" data-nodeid="13">⊢ </span><span class="math" data-nodeid="15">\(3+3=6\)</span></span>.
+        <li id="two" class="item" data-nodeid="12">
+        <span class="construct claim" data-nodeid="13"><span class="keyword" data-nodeid="14">⊢</span> <span class="math" data-nodeid="17">\(3+3=6\)</span></span>.
         </li>
 
         </ol>

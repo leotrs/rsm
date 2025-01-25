@@ -632,6 +632,12 @@
 }
 
 
+/* Inline math */
+/* Prevent math followed by a dot from being separated. */
+.manuscriptwrapper .inline-math-wrapper {
+  white-space: nowrap;
+}
+
 
 /* Other */
 .manuscriptwrapper .hr {

@@ -45,6 +45,7 @@ export function createTooltips() {
 		clone.find(".hr-collapse-zone").remove();
 		clone.find(".hr-menu-zone").remove();
 		clone.find(".hr-border-zone").remove();
+                clone.find(".hr-spacer-zone").remove();
 		clone.find(".hr-info-zone").remove();
                 clone.css('font-size', '0.7rem');
                 content = clone.html();
@@ -58,6 +59,7 @@ export function createTooltips() {
 		    clone.find(".hr-collapse-zone").remove();
 		    clone.find(".hr-menu-zone").remove();
 		    clone.find(".hr-border-zone").remove();
+                    clone.find(".hr-spacer-zone").remove();
 		    clone.find(".hr-info-zone").remove();
                     clone.css('font-size', '0.7rem');
                     content = clone.html();
@@ -67,6 +69,7 @@ export function createTooltips() {
 		    clone.find(".hr-collapse-zone").remove();
 		    clone.find(".hr-menu-zone").remove();
 		    clone.find(".hr-border-zone").remove();
+                    clone.find(".hr-spacer-zone").remove();
 		    clone.find(".hr-info-zone").remove();
                     content = clone.html();
 		    break;
@@ -78,6 +81,7 @@ export function createTooltips() {
 		    clone.find(".hr-collapse-zone").remove();
 		    clone.find(".hr-menu-zone").remove();
 		    clone.find(".hr-border-zone").remove();
+                    clone.find(".hr-spacer-zone").remove();
 		    clone.find(".hr-info-zone").remove();
                     content = clone.html();
                     break;
@@ -89,6 +93,7 @@ export function createTooltips() {
 		    clone.find(".hr-collapse-zone").remove();
 		    clone.find(".hr-menu-zone").remove();
 		    clone.find(".hr-border-zone").remove();
+                    clone.find(".hr-spacer-zone").remove();
 		    clone.find(".hr-info-zone").remove();
 		    content = $(clone).html();
 		    break;

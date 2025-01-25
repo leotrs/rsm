@@ -252,12 +252,6 @@
     border: var(--border-thin) solid var(--border-primary);
   }
 
-  .tooltipster-content {
-    background: var(--surface-page);
-    color: var(--extra-dark);
-    border-radius: 16px;
-  }
-
   .tooltipster-arrow-border {
     border-top-color: var(--border-primary);
   }
@@ -266,8 +260,18 @@
     border-top-color: var(--surface-page);
   }
 
-  .manuscriptwrapper {
-    padding: 0 1rem 0 1rem;
+  .tooltipster-content {
+    background: var(--surface-page);
+    color: var(--extra-dark);
+    border-radius: 16px;
+
+    .manuscriptwrapper {
+      padding: 0 1rem 0 1rem;
+
+      /* .paragraph {margin-block-end: 0.5rem !important}; */
+
+    }
+
   }
 
 }
@@ -776,15 +780,14 @@
 .manuscriptwrapper .keyword {
   color: var(--text-keyword);
   font-weight: var(--weight-bold); }
-.manuscriptwrapper p > span.construct:not(:first-child) > span.keyword {
-  margin-inline-start: 0.1rem; }
-.manuscriptwrapper p > span.construct > span.keyword {
-  margin-inline-end: 0.1rem; }
+/* .manuscriptwrapper p > span.construct:not(:first-child) > span.keyword { */
+/*   margin-inline-start: 0.1rem; } */
+/* .manuscriptwrapper p > span.construct > span.keyword { */
+/*   margin-inline-end: 0.1rem; } */
 .manuscriptwrapper .author > p {
   margin: 0; }
-.manuscriptwrapper dd > p, .manuscriptwrapper dt > p {
-  margin-block-end: 0.25em; }
-
+/* .manuscriptwrapper dd > p, .manuscriptwrapper dt > p { */
+/*   margin-block-end: 0.25em; } */
 
 
 

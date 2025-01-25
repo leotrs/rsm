@@ -5,7 +5,7 @@
 
 export function setupClassInteractions() {
 
-    // Handrail menus
+    // Show and hide handrail menus
     document.querySelectorAll(".hr > .hr-menu-zone > .hr-menu").forEach(menu => {
 	menu.addEventListener("mouseleave", function () {
 	    this.parentElement.style.display = "none";
@@ -21,25 +21,30 @@ export function setupClassInteractions() {
 	});
     });
 
-    // Collapse
-    document.querySelectorAll(".hr > .hr-collapse-zone > .hr-collapse").forEach(collapse => {
-	collapse.addEventListener("click", ev => collapseHandrail(ev.target));
+    // Handrail menu: link button
+    document.querySelectorAll(".hr > .hr-menu-zone > .hr-menu > .hr-menu-item.link:not(.disabled)").forEach(btn => {
+	btn.addEventListener("click", ev => copyLink(ev.target));
     });
-    document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-subproof:not(.disabled)").forEach(collapse => {
-	collapse.addEventListener("click", ev => collapseHandrail(ev.target));
+
+    // Handrail menu: collapse and collapse-all buttons
+    document.querySelectorAll(".hr > .hr-collapse-zone > .hr-collapse").forEach(btn => {
+	btn.addEventListener("click", ev => collapseHandrail(ev.target));
     });
-    document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(collapse => {
-	collapse.addEventListener("click", ev => collapseAll(ev.target, true));
+    document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-subproof:not(.disabled)").forEach(btn => {
+	btn.addEventListener("click", ev => collapseHandrail(ev.target));
     });
-    document.querySelectorAll(".hr.proof > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(collapse => {
-	collapse.addEventListener("click", ev => collapseAll(ev.target, false));
+    document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(btn => {
+	btn.addEventListener("click", ev => collapseAll(ev.target, true));
+    });
+    document.querySelectorAll(".hr.proof > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(btn => {
+	btn.addEventListener("click", ev => collapseAll(ev.target, false));
     });
 
     // Set height of offset handrails' borders
     const resizeObserver = new ResizeObserver(updateHeight);
     document.querySelectorAll('.hr.hr-offset > .hr-content-zone').forEach(el => resizeObserver.observe(el));
 
-    // Contents
+    // Table of contents
     const items = document.querySelectorAll('ul.contents li.item');
     const num_items = items.length;
     items.forEach((item, idx) => {
@@ -60,7 +65,6 @@ export function setupClassInteractions() {
 	    float_mm.classList.remove("hide");
 	};
     });
-
     window.addEventListener('scroll', () => {
 	const mm = document.querySelector(".float-minimap-wrapper > .minimap");
 	if (mm.classList.contains("hide")) return;
@@ -192,3 +196,25 @@ function collapseAll(target, withinSubproof = true) {
     }
 
 };
+
+function copyLink(target) {
+    const url = document.location.href.split('#')[0];
+    const hr = target.closest(".hr")
+    let anchor = "";
+    if (!hr.classList.contains("heading")) {
+        anchor = hr.id;
+    } else {
+        const section = hr.closest("section");
+        if (section.classList.contains("level-1")) {
+            navigator.clipboard.writeText(`${url}`);
+            return;
+        } else {
+            anchor = section.parentElement.id;
+        }
+    }
+    if (!anchor) {
+        console.log("did not find an anchor");
+        return;
+    }
+    navigator.clipboard.writeText(`${url}#${anchor}`);
+}

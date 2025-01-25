@@ -35,7 +35,7 @@ def test_works_with_no_reftext_and_label():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span label">Proof.</span></p>
 
         </div>
 
@@ -110,7 +110,7 @@ def test_works_with_no_reftext_and_no_label():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span label">Proof.</span></p>
 
         </div>
 
@@ -187,7 +187,7 @@ def test_works_with_reftext_and_label():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span label">Proof.</span></p>
 
         </div>
 
@@ -262,7 +262,7 @@ def test_works_with_reftext_and_no_label(caplog):
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span label">Proof.</span></p>
 
         </div>
 

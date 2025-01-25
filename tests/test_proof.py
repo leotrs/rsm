@@ -32,7 +32,7 @@ def test_simple():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p><span class="span label">Theorem 1.</span></p>
 
         </div>
 
@@ -48,7 +48,7 @@ def test_simple():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span label">Proof.</span></p>
 
         </div>
 
@@ -112,7 +112,7 @@ def test_empty_proof():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p><span class="span label">Theorem 1.</span></p>
 
         </div>
 
@@ -128,7 +128,7 @@ def test_empty_proof():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span label">Proof.</span></p>
 
         </div>
 
@@ -180,7 +180,7 @@ def test_sub_step():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span label">Proof.</span></p>
 
         </div>
 
@@ -269,7 +269,7 @@ def test_two_steps():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span label">Proof.</span></p>
 
         </div>
 

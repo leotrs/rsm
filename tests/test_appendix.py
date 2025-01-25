@@ -156,7 +156,7 @@ def test_theorem():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 
@@ -178,7 +178,7 @@ def test_theorem():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem A.1.</strong></span></p>
+        <p><span class="span label">Theorem A.1.</span></p>
 
         </div>
 

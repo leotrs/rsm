@@ -554,6 +554,11 @@
   .hr-label {
     padding-block: 8px;
     border-bottom: 1px solid var(--border-primary);
+
+    span.label {
+      font-weight: var(--weight-semi);
+    }
+
   }
 }
 

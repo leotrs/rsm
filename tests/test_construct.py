@@ -130,7 +130,7 @@ def test_real_life_example():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p><span class="span label">Theorem 1.</span></p>
 
         </div>
 
@@ -151,7 +151,7 @@ def test_real_life_example():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span label">Proof.</span></p>
 
         </div>
 

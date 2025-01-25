@@ -921,26 +921,26 @@ class Translator:
         return AppendNodeTag(node)
 
     def _make_title_node(
-        self, text: str, types: list, paragraph: bool = True
+        self, label: str, desc: str = "", types: list = ["hr-label"]
     ) -> nodes.Node:
-        if paragraph:
-            para = nodes.Paragraph(types=types)
-        span = nodes.Span(strong=True)
-        text = nodes.Text(text=text)
-        span.append(text)
-        if paragraph:
+        para = nodes.Paragraph(types=types)
+        if label:
+            span = nodes.Span(types=["label"])
+            span.append(nodes.Text(text=label))
             para.append(span)
-            return para
-        else:
-            return span
+        if desc:
+            span = nodes.Span(types=["desc"])
+            span.append(nodes.Text(text=desc))
+            para.append(span)
+        return para
 
     def visit_theorem(self, node: nodes.Theorem) -> EditCommand:
         classname = node.__class__.__name__.lower()
         title = self._make_title_node(
-            f"{classname.capitalize()}"
+            label=f"{classname.capitalize()}"
             + (f" {node.full_number}" if not node.nonum and node.number else "")
-            + (f": {node.title}." if node.title else "."),
-            ["hr-label"],
+            + (": " if node.title else "."),
+            desc=node.title or "",
         )
         return AppendBatchAndDefer(
             [
@@ -957,7 +957,7 @@ class Translator:
         return AppendBatchAndDefer([AppendNodeTag(node)])
 
     def visit_sketch(self, node: nodes.Sketch) -> EditCommand:
-        title = self._make_title_node("Proof sketch.", ["hr-label"])
+        title = self._make_title_node(label="Proof sketch.")
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
@@ -971,7 +971,7 @@ class Translator:
             last.types.append("last")
 
         classname = node.__class__.__name__.lower()
-        title = self._make_title_node(f"{classname.capitalize()}. ", ["hr-label"])
+        title = self._make_title_node(label=f"{classname.capitalize()}.")
         return AppendBatchAndDefer(
             [
                 AppendNodeTag(node),
@@ -1092,17 +1092,19 @@ class Translator:
 
     def visit_caption(self, node: nodes.Caption) -> EditCommand:
         parent = node.parent
-        title = self._make_title_node(
-            f"{parent.__class__.__name__} {parent.full_number}. ",
-            types=[],
-            paragraph=False,
+        caption = AppendOpenCloseTag(
+            tag="span",
+            content=f"{parent.__class__.__name__} {parent.full_number}. ",
+            classes=["label"],
+            newline_inner=False,
+            newline_outer=False,
         )
         return AppendBatchAndDefer(
             [
                 AppendOpenTag(
                     "figcaption" if isinstance(parent, nodes.Figure) else "caption"
                 ),
-                AppendExternalTree(title),
+                caption,
             ]
         )
 

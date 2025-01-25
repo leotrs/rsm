@@ -956,6 +956,15 @@ class Translator:
         classname = node.__class__.__name__.lower()
         return AppendBatchAndDefer([AppendNodeTag(node)])
 
+    def visit_sketch(self, node: nodes.Sketch) -> EditCommand:
+        title = self._make_title_node("Proof sketch.", ["hr-label"])
+        return AppendBatchAndDefer(
+            [
+                AppendNodeTag(node),
+                AppendExternalTree(title),
+            ]
+        )
+
     def visit_proof(self, node: nodes.Proof) -> EditCommandBatch:
         last = node.last_of_type(nodes.Step)
         if last:
@@ -969,9 +978,6 @@ class Translator:
                 AppendExternalTree(title),
             ]
         )
-
-    def visit_sketch(self, node: nodes.Sketch) -> EditCommand:
-        return AppendNodeTag(node)
 
     def leave_proof(self, node: nodes.Proof) -> EditCommand:
         # For documentation: if a visit_* method returns a command with defers = True,
@@ -1708,6 +1714,18 @@ class HandrailsTranslator(Translator):
         # For documentation: if a visit_* method returns a command with defers = True,
         # then the corresponding leave_* method MUST MUST MUST call leave_node(node) and
         # add it to the returned batch!!!
+        batch = self.leave_node(node)
+        batch.items.insert(1, self._hr_info_zone_icon(getattr(node, "icon", None)))
+        batch = AppendBatch(batch.items)
+        return batch
+
+    def visit_sketch(self, node: nodes.Sketch) -> EditCommand:
+        batch = super().visit_sketch(node)
+        hr = self._replace_node_with_handrails(node, additional_classes=["hr-labeled"])
+        hr.items += batch.items[1:]
+        return hr
+
+    def leave_sketch(self, node: nodes.Sketch) -> EditCommand:
         batch = self.leave_node(node)
         batch.items.insert(1, self._hr_info_zone_icon(getattr(node, "icon", None)))
         batch = AppendBatch(batch.items)

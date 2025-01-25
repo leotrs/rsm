@@ -355,17 +355,12 @@ class Transformer:
                 construct.types.append("assumption")
 
     def add_handrail_depth(self) -> None:
-        for node in self.tree.traverse(nodeclass=nodes.Theorem):
-            for desc in node.traverse():
-                if desc == node:
-                    continue
-                desc.handrail_depth += 1
-        for node in self.tree.traverse(nodeclass=nodes.Proof):
-            for desc in node.traverse():
-                if desc == node:
-                    continue
-                desc.handrail_depth += 1
-        for node in self.tree.traverse(nodeclass=nodes.Step):
+        for nc in nodes.all_node_subtypes():
+            if nc.has_handrail:
+                self._add_handrail_depth_for_class(nc)
+
+    def _add_handrail_depth_for_class(self, nodeclass) -> None:
+        for node in self.tree.traverse(nodeclass=nodeclass):
             for desc in node.traverse():
                 if desc == node:
                     continue

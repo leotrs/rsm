@@ -534,7 +534,7 @@
 }
 .manuscriptwrapper .hr-menu-zone .hr-menu-item {
   svg {stroke: var(--dark);}
-  .hr-menu-item-text {color: var(--dark);}
+  .hr-menu-item-text {color: var(--gray-800);}
 
   &.disabled {
     svg {stroke: var(--medium);}
@@ -543,7 +543,7 @@
 
   &:hover:not(.disabled) {
     svg {stroke: var(--extra-dark);}
-    .hr-menu-item-text{color: var(--extra-dark);}
+    .hr-menu-item-text{color: var(--gray-900);}
   }
 
 }

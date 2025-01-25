@@ -29,7 +29,7 @@ def test_simple_no_handrails():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof sketch.</strong></span></p>
+        <p><span class="span label">Proof sketch.</span></p>
 
         </div>
 
@@ -45,7 +45,7 @@ def test_simple_no_handrails():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Proof. </strong></span></p>
+        <p><span class="span label">Proof.</span></p>
 
         </div>
 

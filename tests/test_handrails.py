@@ -886,7 +886,7 @@ def test_theorem():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p><span class="span label">Theorem 1.</span></p>
 
         </div>
 

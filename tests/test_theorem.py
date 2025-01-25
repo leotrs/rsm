@@ -27,7 +27,7 @@ def test_simple():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p><span class="span label">Theorem 1.</span></p>
 
         </div>
 
@@ -88,7 +88,7 @@ def test_multiple():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p><span class="span label">Theorem 1.</span></p>
 
         </div>
 
@@ -104,7 +104,7 @@ def test_multiple():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Lemma 2.</strong></span></p>
+        <p><span class="span label">Lemma 2.</span></p>
 
         </div>
 
@@ -120,7 +120,7 @@ def test_multiple():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 3.</strong></span></p>
+        <p><span class="span label">Theorem 3.</span></p>
 
         </div>
 

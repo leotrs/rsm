@@ -143,7 +143,7 @@ def test_theorem_within_section():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 
@@ -198,7 +198,7 @@ def test_two_theorems_same_section():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 
@@ -208,7 +208,7 @@ def test_two_theorems_same_section():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.2.</strong></span></p>
+        <p><span class="span label">Theorem 1.2.</span></p>
 
         </div>
 
@@ -267,7 +267,7 @@ def test_two_theorems_different_sections():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 
@@ -283,7 +283,7 @@ def test_two_theorems_different_sections():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 2.1.</strong></span></p>
+        <p><span class="span label">Theorem 2.1.</span></p>
 
         </div>
 
@@ -339,7 +339,7 @@ def test_two_theorems_same_section_nonum():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem.</strong></span></p>
+        <p><span class="span label">Theorem.</span></p>
 
         </div>
 
@@ -349,7 +349,7 @@ def test_two_theorems_same_section_nonum():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 
@@ -401,7 +401,7 @@ def test_theorem_inside_section_with_nonum():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p><span class="span label">Theorem 1.</span></p>
 
         </div>
 
@@ -460,7 +460,7 @@ def test_theorem_inside_subsection():
 
         <div class="paragraph hr-label">
 
-        <p><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 

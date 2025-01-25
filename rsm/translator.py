@@ -1414,15 +1414,17 @@ class HandrailsTranslator(Translator):
     def _hr_info_zone_number(
         self, number: int | str, style: Literal["eqn", "step"]
     ) -> AppendOpenCloseTag:
-        hr_info_start = """<div class="hr-info">"""
-        if style == "step":
-            hr_info_middle = f"""<div class="step-number"><p>⟨{number}⟩</p></div>"""
-        elif style == "eqn":
-            hr_info_middle = f"""<div class="eqn-number"><p>({number})</p></div>"""
-        hr_info_end = "</div>"
+        start = """<div class="hr-info">"""
+        middle = ""
+        if number is not None:
+            if style == "step":
+                middle = f"""<div class="step-number"><p>⟨{number}⟩</p></div>"""
+            elif style == "eqn":
+                middle = f"""<div class="eqn-number"><p>({number})</p></div>"""
+        end = "</div>"
         return AppendOpenCloseTag(
             tag="div",
-            content=hr_info_start + hr_info_middle + hr_info_end,
+            content=start + middle + end,
             classes=["hr-info-zone"],
         )
 

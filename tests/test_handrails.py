@@ -3756,7 +3756,7 @@ def test_author():
         <p>Leo Torres</p>
 
         <p><a href="mailto:leo@leotrs.com">leo@leotrs.com</a></p>
-        </div>
+
         </div>
 
         </div>

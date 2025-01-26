@@ -86,6 +86,34 @@ export function setupClassInteractions() {
 	document.getElementById("stop-follow-scroll-2").setAttribute("offset", `${percent}%`);
     });
 
+    // Navigation with custom keys
+    document.addEventListener('keydown', (event) => {
+        if (['j', 'J', 'k', 'K'].includes(event.key)) {
+            event.preventDefault();
+
+            const focusableElements = Array.from(
+                document.querySelector(".manuscriptwrapper").querySelectorAll('[href], [tabindex]:not([tabindex="-1"])')
+            );
+            const currentIndex = focusableElements.indexOf(document.activeElement);
+
+            let nextIndex;
+            if (currentIndex !== -1) {
+                if (['j', 'J'].includes(event.key)) {
+                    nextIndex = (currentIndex + 1) % focusableElements.length;
+                } else if (['k', 'K'].includes(event.key)) {
+                    nextIndex = (currentIndex - 1 + focusableElements.length) % focusableElements.length;
+                }
+            } else {
+                if (['j', 'J'].includes(event.key)) {
+                    nextIndex = 0;
+                } else if (['k', 'K'].includes(event.key)) {
+                    nextIndex = focusableElements.length - 1;
+                }
+            }
+            focusableElements[nextIndex].focus();
+        }
+    });
+
 }
 
 function withinView(el, top = true) {

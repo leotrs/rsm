@@ -550,10 +550,8 @@
   /* Most active areas include the info zone, except if the active area is a proof step statement */
   .hr-info-zone {border-top-right-radius: 16px; border-bottom-right-radius: 16px};
 
-
+  /* Colors when hovered */
   .hr-border-zone .hr-border-dots:hover {background: var(--primary-600);}
-
-  &.statement .hr-info-zone {background: var(--surface-page);}
 
 }
 

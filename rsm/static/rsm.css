@@ -524,12 +524,12 @@
 
   /* highlight EVERY nested handrail border */
   .hr-border-zone {
-    .hr-border-dots {background: var(--primary-400);}
+    .hr-border-dots {background: var(--primary-600);}
     .hr-border-dots svg {stroke: var(--almost-white);}
     .hr-border-rect {border-left-color: var(--handrail-active);}
   }
-  .hr-collapsed > .hr-spacer-zone, & > .hr-border-zone > .hr-border-rect {
-    border-bottom-color: var(--handrail-active);
+  &.hr-collapsed > .hr-spacer-zone, &.hr-collapsed > .hr-border-zone > .hr-border-rect {
+    border-bottom-color: var(--handrail-active) !important;
   }
 
   /* highlight ONLY the current active handrail's collapse and dots */
@@ -551,7 +551,7 @@
   .hr-info-zone {border-top-right-radius: 16px; border-bottom-right-radius: 16px};
 
   /* Colors when hovered */
-  .hr-border-zone .hr-border-dots:hover {background: var(--primary-600);}
+  .hr-border-zone .hr-border-dots:hover {background: var(--primary-400);}
 
 }
 

@@ -1666,6 +1666,11 @@ class HandrailsTranslator(Translator):
         hr.items += batch.items[2:-1]
         return hr
 
+    def leave_author(self, node: nodes.Author) -> EditCommand:
+        batch = super().leave_node(node)
+        batch.items.insert(-1, self._hr_info_zone_icon(getattr(node, "icon", None)))
+        return batch
+
     def visit_section(self, node: nodes.Section) -> EditCommand:
         batch = super().visit_section(node)
         return self._wrap_batch_item_with_handrails(

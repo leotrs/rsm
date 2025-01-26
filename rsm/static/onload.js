@@ -8,13 +8,15 @@ export async function onload(path = "/static/") {
         const libs = await import(`${path}libraries.js`);
 
         // MathJax
-        await libs.loadMathJax();
-        console.log("MathJax loaded!");
+        try {
+            const math = await libs.loadMathJax();
+        } catch (err) {
+            console.error("Loading MathJax FAILED!", err);
+        }
 
         // Pseudocode
         try {
             await libs.loadPseudocode();
-            console.log("Pseudocode loaded!");
 
             const elements = document.querySelectorAll("pre.pseudocode");
             if (elements.length) {

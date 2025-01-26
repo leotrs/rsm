@@ -844,6 +844,13 @@
 
   }
 
+  a:focus {
+    outline: 4px solid var(--border-action);
+    border-radius: 4px;
+    background: var(--surface-information);
+    color: var(--information-700);
+  }
+
 }
 
 

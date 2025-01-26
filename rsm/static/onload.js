@@ -37,18 +37,26 @@ export async function onload(path = "/static/") {
 
         // Classes
         try {
-            const cls = await import(`${path}classes.js`);
-            cls.setup();
+            const hr = await import(`${path}handrails.js`);
+            hr.setup();
         } catch (err) {
-            console.error("Loading classes.js FAILED!", err);
+            console.error("Loading handrails.js FAILED!", err);
         }
 
-        // Keyboard shortcuts
+        // Keyboard interaction
         try {
-            const kbd = await import(`${path}shortcuts.js`);
+            const kbd = await import(`${path}keyboard.js`);
             kbd.setup();
         } catch (err) {
-            console.error("Loading shortcuts.js FAILED!", err);
+            console.error("Loading keyboard.js FAILED!", err);
+        }
+
+        // Minimap
+        try {
+            const mm = await import(`${path}minimap.js`);
+            mm.setup();
+        } catch (err) {
+            console.error("Loading minimap.js FAILED!", err);
         }
     } catch (err) {
         console.error("An error occurred during initialization:", err);

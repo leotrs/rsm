@@ -1,4 +1,4 @@
-// classes.js
+// handrails.js
 //
 // Basic user interactions, mostly dealing with handrails and their menus.
 //

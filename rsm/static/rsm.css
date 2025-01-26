@@ -569,7 +569,7 @@
 .manuscriptwrapper .hr {
   .hr-border-dots:hover, .hr-collapse:hover {background: var(--surface-hint);}
   .hr-collapse:hover svg {stroke: var(--extra-dark);}
-  .hr-menu-item:hover {background: var(--surface-hint);}
+  .hr-menu-item:hover, .hr-menu-item.active {background: var(--surface-hint);}
 }
 .manuscriptwrapper .hr-menu-zone .hr-menu-item {
   svg {stroke: var(--dark);}
@@ -580,7 +580,7 @@
     .hr-menu-item-text{color: var(--medium);}
   }
 
-  &:hover:not(.disabled) {
+  &:hover:not(.disabled), &.active:not(.disabled) {
     svg {stroke: var(--extra-dark);}
     .hr-menu-item-text{color: var(--gray-900);}
   }

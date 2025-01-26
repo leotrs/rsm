@@ -376,6 +376,9 @@
     top: 8px;
     border-radius: 8px;
     opacity: 0%;
+
+    .icon-wrapper {padding-top: 8px; padding-bottom: 8px;}
+
   }
 }
 /* Handrails: individual elements -- border-zone */
@@ -386,6 +389,9 @@
     border-radius: 8px;
     background: var(--surface-hover);
     z-index: 1;
+
+    .icon-wrapper {padding-top: 8px; padding-bottom: 8px;}
+
   }
   .hr-border-rect {
     position: relative;
@@ -562,9 +568,7 @@
     padding-block: 8px;
     border-bottom: 1px solid var(--border-primary);
 
-    span.label {
-      font-weight: var(--weight-semi);
-    }
+    span.label {font-weight: var(--weight-semi);}
 
   }
 }
@@ -609,17 +613,11 @@
     width: calc(100% - 24px);
   }
 
-  &.subproof .hr-offset.hr.hr-hidden .hr-border-zone {
-    opacity: 100%;
-  }
+  &.subproof .hr-offset.hr.hr-hidden .hr-border-zone {opacity: 100%;}
 
-  &.subproof > .hr-border-zone > .hr-border-rect {
-    top: 0;
-  }
+  &.subproof > .hr-border-zone > .hr-border-rect {top: 0;}
 
-  &.subproof {
-    margin-block-end: 0;
-  }
+  &.subproof {margin-block-end: 0;}
 
   &.proof .step:hover::after {
     content: "";
@@ -651,22 +649,10 @@
 }
 
 
-/* Other */
-.manuscriptwrapper .hr {
-
-  .hr-collapse .icon-wrapper,
-  .hr-border-dots .icon-wrapper {
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-
-}
-
-
 /* Icons */
 .manuscriptwrapper .icon-wrapper {
 
-  svg {width: 16px;height: 16px;}
+  svg {width: 16px; height: 16px;}
 
   &.bookmark > svg {fill: var(--information-500); stroke: var(--information-500);}
   &.success > svg {fill: var(--success-500); stroke: var(--success-500);}
@@ -733,50 +719,34 @@
 
 /* Bibliography */
 .manuscriptwrapper ol.bibliography {
+  list-style: none;
+  counter-reset: item 1;
   padding-inline-start: 48px;
 
   li {margin-block: 0.75rem;}
 
+  li::before {
+    margin-right: 10px;
+    padding: 3px;
+    content: counter(item);
+    width: 1.2em;
+    text-align: center;
+    display: inline-block;
+  }
+
 }
 
 
+/* Figures */
+.manuscriptwrapper figure {
+  margin-block: var(--h2-size);
+  text-align: center; }
+.manuscriptwrapper figcaption {
+  text-align: center;
+  margin-block: var(--h4-size); }
 
 
-/* .manuscriptwrapper figure { */
-/*   margin-block: var(--h2-size); */
-/*   text-align: center; } */
-/* .manuscriptwrapper figcaption { */
-/*   text-align: center; */
-/*   margin-block: var(--h4-size); } */
-/* .manuscriptwrapper .halmos { */
-/*   display: flex; */
-/*   justify-content: flex-end; */
-/*   position: absolute; */
-/*   right: 0; */
-/*   bottom: 1rem; } */
-/* .manuscriptwrapper .halmos::after { */
-/*   content: ''; */
-/*   display: block; */
-/*   position: absolute; */
-/*   right: 0; */
-/*   height: var(--halmos-side-length); */
-/*   width: var(--halmos-side-length); */
-/*   background-color: var(--text-keyword); } */
-/* .manuscriptwrapper .halmos.with-ellipsis::before { */
-/*   content: ''; */
-/*   display: flex; */
-/*   border-style: solid; */
-/*   border-color: var(--text-keyword) var(--text-keyword) var(--text-keyword) var(--text-keyword); */
-/*   border-width: .0625em 0 .0625em .0625em; */
-/*   position: absolute; */
-/*   right: 8px; */
-/*   width: var(--ellipsis-width); */
-/*   height: var(--halmos-side-length); */
-/*   justify-content: space-evenly; */
-/*   align-items: center; */
-/*   background: radial-gradient(farthest-side, var(--text-keyword) 100%, transparent) 2px/2px 2px, radial-gradient(farthest-side, var(--text-keyword) 100%, transparent) 6px/2px 2px, radial-gradient(farthest-side, var(--text-keyword) 100%, transparent) 10px/2px 2px; */
-/*   background-repeat: no-repeat; } */
-
+/* Other */
 .manuscriptwrapper .keyword {
   color: var(--text-keyword);
   font-weight: var(--weight-bold); }
@@ -786,9 +756,6 @@
 /*   margin-inline-end: 0.1rem; } */
 .manuscriptwrapper .author > p {
   margin: 0; }
-/* .manuscriptwrapper dd > p, .manuscriptwrapper dt > p { */
-/*   margin-block-end: 0.25em; } */
-
 
 
 
@@ -826,11 +793,25 @@
     /* by default, links do weird things with line heights, so if we want a single line
     inside an <a> tag to be 24px tall, we need to change its display */
     display: inline-block;
+
+    &.reference.backlink {
+      font-size: 14px;
+      margin-left: 0.2em;
+
+      &:not(:last-child) {margin-right: 0.2em;}
+
+    }
+
+    & > .icon-wrapper.ext > svg {stroke: var(--link-default);}
+
   }
 
   a:hover {
     text-decoration: underline;
     color: var(--link-hover);
+
+    & > .icon-wrapper.ext > svg {stroke: var(--link-hover);}
+
   }
 
 }
@@ -890,9 +871,7 @@
     background-color: var(--surface-information);
     border-color: var(--border-information);
 
-    & .bg {
-      background-color: var(--information-100);
-    }
+    & .bg {background-color: var(--information-100);}
 
   }
 
@@ -900,9 +879,7 @@
     background-color: var(--surface-success);
     border-color: var(--border-success);
 
-    & .bg {
-      background-color: var(--success-100);
-    }
+    & .bg {background-color: var(--success-100);}
 
   }
 
@@ -910,26 +887,20 @@
     background-color: var(--surface-error);
     border-color: var(--border-error);
 
-    & .bg {
-      background-color: var(--error-100);
-    }
+    & .bg {background-color: var(--error-100);}
 
   }
 
 }
-
 @keyframes fadein {
   from {bottom: 0; opacity: 0;}
   to {bottom: 30px; opacity: 1;}
 }
-
 @keyframes stay {}
-
 @keyframes fadeout {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 60px; opacity: 0;}
 }
-
 @keyframes shrinkleft {
   from {width: 100%;}
   to {width: 0%;}

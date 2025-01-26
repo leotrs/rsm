@@ -110,6 +110,7 @@ by ``rsm-make``.
 """
 
 import logging
+import re
 import textwrap
 from abc import ABC, abstractmethod
 from collections import namedtuple
@@ -1058,7 +1059,7 @@ class Translator:
                     classes=["reference", "backlink"],
                     href=f"#{link_lbl}",
                 )
-                + f"^{idx}"
+                + f"↖{idx}"
                 + "</a>"
                 for idx, link_lbl in enumerate(node.backlinks, start=1)
             ]
@@ -1200,6 +1201,12 @@ class HandrailsTranslator(Translator):
         <path d="M7 7l5 5l-5 5" />
         <path d="M13 7l5 5l-5 5" />
       </svg>""",
+        "ext": """<svg width="15" height="15" viewBox="3 3 18 18" fill="none" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+          <path d="M11 13l9 -9" />
+          <path d="M15 4h5v5" />
+        </svg>""",
     }
 
     def __init__(
@@ -1698,6 +1705,7 @@ class HandrailsTranslator(Translator):
 
     def visit_bibliography(self, node: nodes.Bibliography) -> EditCommand:
         batch = super().visit_bibliography(node)
+        batch.items[2] = AppendNodeTag(node, "div")
         return self._wrap_batch_item_with_handrails(
             1,
             batch,
@@ -1865,3 +1873,41 @@ class HandrailsTranslator(Translator):
         batch = super().leave_mathblock(node)
         batch.items.insert(2, self._hr_info_zone_number(node.full_number, style="eqn"))
         return batch
+
+    def visit_bibitem(self, node: nodes.Bibitem) -> EditCommand:
+        batch = super().visit_bibitem(node)
+        batch.items[0] = AppendNodeTag(node, "div")
+        hr = self._wrap_batch_item_with_handrails(
+            1,
+            batch,
+            include_content=False,
+            classes=["hr-hidden"],
+            icon="ext",
+            collapse_in_hr=False,
+            link=False,
+        )
+
+        # get the <a> tag already there...
+        text = batch.items[1]._text
+        pat = r'(<a.*?class="bibitem-doi".*?>).*?</a>'
+        mobj = re.search(pat, text)
+        if mobj is None:
+            logger.warning("Unable to extract link from {node}")
+            return hr
+
+        # ...remove it from the content zone...
+        left, right = mobj.span()
+        hr.items[-4]._text = text[:left] + text[right:]
+
+        # ...and add it to the info zone.
+        hr.items[-2].content = (
+            '<div class="hr-info">\n'
+            + mobj.group(1)
+            + "\n"
+            + hr.items[-2].content[22:-6].strip()
+            + "</a>\n</div>"
+        )
+
+        hr.items.insert(7, AppendText("<p>"))
+        hr.items.insert(9, AppendText("</p>"))
+        return hr

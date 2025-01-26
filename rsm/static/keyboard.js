@@ -47,6 +47,24 @@ export function setup () {
         }
     });
 
+    // Tooltips
+    document.addEventListener('keydown', (event) => {
+        if (event.key == "i") {
+            toggleTooltip(document.activeElement);
+        }
+    });
+
+}
+
+
+function toggleTooltip(el) {
+    if (!el.classList.contains("tooltipstered")) return;
+    console.log($(el).tooltipster("status"));
+    if ($(el).tooltipster("status").open) {
+        $(el).tooltipster("close");
+    } else {
+        $(el).tooltipster("open");
+    }
 }
 
 

@@ -8,6 +8,17 @@ export function createTooltips() {
         theme: ['tooltipster-shadow', 'tooltipster-shadow-rsm'],
 	minWidth: 100,
 	maxWidth: 500,
+        trigger: 'custom',
+        triggerOpen: {
+            mouseenter: true,
+            touchstart: true
+        },
+        triggerClose: {
+            click: true,
+            mouseleave: true,
+            originClick: true,
+            touchleave: true
+        },
         functionInit: function(instance, helper) {
             let target = $(helper.origin).attr("href");
 

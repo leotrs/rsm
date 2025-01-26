@@ -1774,34 +1774,6 @@ class HandrailsTranslator(Translator):
         batch = AppendBatch(batch.items)
         return batch
 
-    def _add_proof_header_with_sketch(
-        self, batch: EditCommandBatch, tree: nodes.Node
-    ) -> None:
-        header = AppendOpenTagManualClose(classes=["proof__header"])
-        tabs = AppendOpenTagManualClose(classes=["proof__tabs"])
-        batch.items[1:1] = [
-            header,
-            tree,
-            tabs,
-            AppendOpenCloseTag(
-                "button",
-                content="sketch",
-                classes=["sketch", "active"],
-                newline_inner=False,
-            ),
-            AppendOpenCloseTag(
-                "button", content="full", classes=["full"], newline_inner=False
-            ),
-            tabs.close_command(),
-            header.close_command(),
-        ]
-
-    def _add_proof_header_sans_sketch(
-        self, batch: EditCommandBatch, tree: nodes.Node
-    ) -> None:
-        header = AppendOpenTagManualClose(classes=["proof__header"])
-        batch.items[1:1] = [header, tree, header.close_command()]
-
     def visit_subproof(self, node: nodes.Subproof) -> EditCommand:
         hr = self._subproof_handrails(node)
         try:

@@ -216,3 +216,31 @@ def test_backslash_brace_within_math():
         </body>
         """,
     )
+
+
+def test_colon_inside_manuscript_title():
+    compare_have_want(
+        have=r"""
+        :manuscript:
+          :title: foo\:bar
+        ::
+        """,
+        want=r"""        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+
+        <h1>foo:bar</h1>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

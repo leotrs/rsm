@@ -161,7 +161,7 @@
   --border-error: var(--error-100);
   --border-action: var(--information-500);
   --handrail-default: var(--border-primary);
-  --handrail-active: var(--border-information);
+  --handrail-active: var(--border-action);
 
   --link-default: var(--primary-600);
   --link-hover: var(--primary-500);
@@ -364,7 +364,7 @@
     &.hr-offset > .hr-menu-zone {position: absolute; left: -32px;}
     &.hr-offset > .hr-border-zone {position: absolute; left: -32px;}
     &.hr-offset > .hr-spacer-zone {position: absolute; left: -16px;}
-    &.hr-offset > .hr-info-zone {position: absolute; right: -48px;}
+    &.hr-offset > .hr-info-zone {position: absolute; left: 100%;}
 
   }
 }
@@ -471,26 +471,24 @@
 /* Handrails: individual elements -- info-zone */
 .manuscriptwrapper .hr .hr-info-zone {
   .hr-info {
-    width: 32px;
+    min-width: 32px;
     height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    z-index: 1;
 
     .eqn-number p, .step-number p {
       font-size: 14px;
       color: var(--medium);
     }
 
-    &:has(.eqn-number), &:has(.step-number) {
-      justify-content: flex-start;
-    }
+    &:has(.eqn-number), &:has(.step-number) {justify-content: flex-start;}
 
   }
 
-  &:has(.eqn-number) {
-    bottom: 8px;
-  }
+  & .eqn-number, & .step-number {padding-bottom: 12px;}
 
 }
 
@@ -519,14 +517,44 @@
 
 
 /* Handrail active */
-.manuscriptwrapper .hr.active {
-  .hr-border-zone .hr-border-dots {background: var(--primary-400);}
-  .hr-border-zone .hr-border-dots svg {stroke: var(--almost-white);}
-  .hr-border-zone .hr-border-rect {border-left-color: var(--handrail-active);}
-  .hr-content-zone {background: var(--surface-information);}
-}
-.manuscriptwrapper .hr.active .hr-border-zone .hr-border-dots:hover {
-  background: var(--primary-600);
+.manuscriptwrapper .hr.active,
+.manuscriptwrapper .hr:focus {
+  /* reset the default behavior */
+  outline: none;
+
+  /* highlight EVERY nested handrail border */
+  .hr-border-zone {
+    .hr-border-dots {background: var(--primary-400);}
+    .hr-border-dots svg {stroke: var(--almost-white);}
+    .hr-border-rect {border-left-color: var(--handrail-active);}
+  }
+  .hr-collapsed > .hr-spacer-zone, & > .hr-border-zone > .hr-border-rect {
+    border-bottom-color: var(--handrail-active);
+  }
+
+  /* highlight ONLY the current active handrail's collapse and dots */
+  & > .hr-border-zone > .hr-border-dots, & > .hr-collapse-zone > .hr-collapse {opacity: 100%}
+  &.hr-hidden > .hr-border-zone, &.hr-hidden > .hr-collapse-zone {opacity: 100%}
+
+  /* The active background is highlighted in zones but EXCEPT for collapse zone.
+   Additionally, in the border zone we only paint the inner rectangle (hr-border-rect),
+   otherwise the painted background would overflow the handrail border. */
+  /* & > .hr-collapse-zone, */
+  & > .hr-border-zone > .hr-border-rect,
+  & > .hr-spacer-zone,
+  & > .hr-content-zone,
+  & > .hr-info-zone {
+    background: var(--surface-information);
+  }
+
+  /* Most active areas include the info zone, except if the active area is a proof step statement */
+  .hr-info-zone {border-top-right-radius: 16px; border-bottom-right-radius: 16px};
+
+
+  .hr-border-zone .hr-border-dots:hover {background: var(--primary-600);}
+
+  &.statement .hr-info-zone {background: var(--surface-page);}
+
 }
 
 
@@ -615,7 +643,7 @@
 
   &.subproof .hr-offset.hr.hr-hidden .hr-border-zone {opacity: 100%;}
 
-  &.subproof > .hr-border-zone > .hr-border-rect {top: 0;}
+  &.subproof > .hr-border-zone > .hr-border-rect {top: 0; width: 16px}
 
   &.subproof {margin-block-end: 0;}
 
@@ -693,9 +721,13 @@
   .float-minimap-wrapper {
 
     .minimap {
+      opacity: 50%;
       position: fixed;
       top: 192px;
       left: 48px;
+
+      &:hover {opacity: 100%};
+
     }
 
   }

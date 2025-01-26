@@ -102,7 +102,7 @@ function withinView(el, top = true) {
 function updateHeight(entries) {
     for (const entry of entries) {
 	const hr = entry.target.parentElement;
-	const elementsToResize = hr.querySelectorAll('& > .hr-border-zone, & > .hr-spacer-zone');
+	const elementsToResize = hr.querySelectorAll('& > .hr-border-zone, & > .hr-spacer-zone, & > .hr-info-zone');
 	elementsToResize.forEach(el => { el.style.height = `${entry.contentRect.height}px`; })
     }
 };

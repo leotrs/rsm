@@ -406,6 +406,8 @@ def _normalize_text(root):
             node.text = EscapedString(node.text, DELIMS).escape()
         if isinstance(node, nodes.Section):
             node.title = EscapedString(node.title, DELIMS).escape()
+        if isinstance(node, nodes.Manuscript):
+            node.title = EscapedString(node.title, DELIMS).escape()
 
 
 def _abstractify(cst):

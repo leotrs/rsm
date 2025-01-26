@@ -3,9 +3,9 @@
 // Basic user interactions.
 //
 
-export function setupClassInteractions() {
+export function setup() {
 
-    // Show and hide handrail menus
+    // Handrail menu: show and hide
     document.querySelectorAll(".hr > .hr-menu-zone > .hr-menu").forEach(menu => {
 	menu.addEventListener("mouseleave", function () {
 	    this.parentElement.style.display = "none";
@@ -86,62 +86,8 @@ export function setupClassInteractions() {
 	document.getElementById("stop-follow-scroll-2").setAttribute("offset", `${percent}%`);
     });
 
-    // Navigation with custom keys
-    document.addEventListener('keydown', (event) => {
-        if (['j', 'J', 'k', 'K'].includes(event.key)) {
-            event.preventDefault();
-
-            const focusableElements = Array.from(
-                document.querySelector(".manuscriptwrapper").querySelectorAll('[href], [tabindex]:not([tabindex="-1"])')
-            );
-
-            let index = focusableElements.indexOf(document.activeElement);
-            let direction;
-            if (index !== -1) {
-                if (['j', 'J'].includes(event.key)) {
-                    direction = "down";
-                    do { index = (index + 1) % focusableElements.length; }
-                    while ( !isFocusable(focusableElements[index]) );
-                } else if (['k', 'K'].includes(event.key)) {
-                    direction = "up";
-                    do { index = (index - 1 + focusableElements.length) % focusableElements.length; }
-                    while ( !isFocusable(focusableElements[index]) );
-                }
-            } else { index = 0; }
-            focusableElements[index].focus();
-            scrollToMiddle(focusableElements[index], direction);
-        }
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key == ".") {
-            const focused = document.activeElement;
-            if (!focused.classList.contains("hr")) return;
-            const menu = focused.querySelector("& > .hr-menu-zone");
-            if (!menu) return;
-            const style = getComputedStyle(menu);
-            if (style.display == "block") menu.style.display = "none";
-            else if (style.display == "none") menu.style.display = "block";
-        }
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key == ",") {
-            const focused = document.activeElement;
-            if (!focused.classList.contains("hr")) return;
-            const coll = focused.querySelector("& > .hr-collapse-zone > .hr-collapse");
-            if (!coll) return;
-            collapseHandrail(coll);
-        }
-    });
-
 }
 
-function isFocusable(el) {
-    if (el.classList.contains("hr-collapsed") && !el.classList.contains("hide")) return true;
-    if (el.closest(".hr-collapsed") || el.closest(".hide")) return false;
-    return true;
-}
 
 function withinView(el, top = true) {
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -163,7 +109,7 @@ function updateHeight(entries) {
 };
 
 
-function collapseHandrail(target) {
+export function collapseHandrail(target) {
     const hr = target.closest(".hr");
     let rest;
     if (hr.classList.contains("hr-labeled")) {
@@ -338,35 +284,3 @@ function launchToast(text, style="information") {
     document.querySelector(".manuscriptwrapper").appendChild(toast);
     setTimeout(() => { toast.remove(); }, 15000);
 };
-
-
-function scrollToMiddle(element, direction) {
-    const rect = element.getBoundingClientRect();
-    const elementTop = rect.top;
-    const elementHeight = rect.height;
-    const elementCenterY = elementTop + elementHeight / 2;
-    const viewportHeight = window.innerHeight;
-    const viewportCenterY = viewportHeight / 2;
-    const offset = elementCenterY - viewportCenterY;
-    const farEnoughFromCenter = Math.abs(offset) > 48;
-
-    let scrollAmount;
-    if (elementHeight > viewportHeight) {
-        // element taller than viewport: just align its top with the top of the viewport
-        scrollAmount = -elementTop;
-    } else {
-        // If scrolling would push the element's top above the viewport,
-        // limit the scroll to align the top of the element with the top of the viewport
-        if (elementTop + offset < 0) { scrollAmount = -elementTop }
-        // Otherwise, scroll to center the element (if far enough from center)
-        else if (farEnoughFromCenter) { scrollAmount = offset }
-        else { return };
-    }
-
-    if (direction == "down" && scrollAmount < 0) return;
-    if (direction == "up" && scrollAmount > 0) return;
-    window.scrollBy({
-        top: scrollAmount,
-        behavior: 'smooth',
-    });
-}

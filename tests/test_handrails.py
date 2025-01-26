@@ -1104,15 +1104,7 @@ def test_author():
         <div class="author hr hr-hidden" tabindex=0 data-nodeid="1">
 
         <div class="hr-collapse-zone">
-
-                    <div class="hr-collapse">
-                      <div class="icon-wrapper collapse">
-                        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M1 1L7 7L1 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </div>
-                    </div>
-
+        <div class="hr-spacer"></div>
         </div>
 
         <div class="hr-menu-zone">

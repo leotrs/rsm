@@ -1662,7 +1662,9 @@ class HandrailsTranslator(Translator):
 
     def visit_author(self, node: nodes.Author) -> EditCommand:
         batch = super().visit_author(node)
-        hr = self._replace_node_with_handrails(node, additional_classes=["hr-hidden"])
+        hr = self._replace_node_with_handrails(
+            node, additional_classes=["hr-hidden"], collapse_in_hr=False
+        )
         hr.items += batch.items[2:-1]
         return hr
 

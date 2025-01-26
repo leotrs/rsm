@@ -2973,7 +2973,7 @@ def test_bibliography():
         </div>
 
         <div class="hr-content-zone">
-        <p>Atiyah, M.F., & MacDonald, I.G. "Introduction to commutative algebra". CRC Press. 2018. <br />[<a class="reference backlink" href="#cite-0">^1</a>]</p>
+        <p>Atiyah, M.F., & MacDonald, I.G. "Introduction to commutative algebra". CRC Press. 2018. <br />[<a class="reference backlink" href="#cite-0">↖1</a>]</p>
         </div>
 
         <div class="hr-info-zone">

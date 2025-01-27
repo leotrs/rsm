@@ -659,7 +659,8 @@
   &.step.hr-collapsed > .hr-content-zone::after {
     content: "steps hidden";
     position: relative;
-    left: 16px;
+    left: 4px;
+    top: 8px;
     color: var(--medium);
     font-style: italic;
     font-size: 14px;
@@ -840,10 +841,17 @@
   }
 
   a:focus {
-    outline: none;
+    outline: none;              /* reset the default */
     box-shadow: 0 var(--border-thin) 0 var(--border-action);
     background: var(--surface-information);
     color: var(--information-700);
+  }
+
+  a:focus:has(.icon-wrapper.ext) {
+    outline: 2px solid var(--information-500);
+    box-shadow: unset;
+    border-radius: 4px;
+    outline-offset: 4px;
   }
 
   /* a.tooltipstered { */

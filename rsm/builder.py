@@ -67,7 +67,7 @@ class SingleFileBuilder(BaseBuilder):
         self.web.html = html
 
     def make_html_header(self) -> str:
-        return dedent(
+        header = dedent(
             """\
         <head>
           <meta charset="utf-8" />
@@ -85,13 +85,23 @@ class SingleFileBuilder(BaseBuilder):
             window.addEventListener('load', (ev) => {window.lsp_ws = onload();});
           </script>
 
-          <title>{some_title}</title>
+          <title>__TITLE_PLACEHOLDER__</title>
         </head>
         """
         )
+        title = self._extract_title()
+        header = header.replace("__TITLE_PLACEHOLDER__", title)
+        return header
 
     def make_html_footer(self) -> str:
         return ""
+
+    def _extract_title(self) -> str:
+        mobj = re.search(r"<h1>(.*?)</h1>", self.body)
+        if mobj is None:
+            return ""
+        else:
+            return mobj.group(1)
 
 
 class FullBuilder(SingleFileBuilder):

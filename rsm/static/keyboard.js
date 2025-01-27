@@ -9,19 +9,17 @@ export function setup () {
     document.addEventListener('keydown', (event) => {
         if (['j', 'k'].includes(event.key)) {
             event.preventDefault();
-            const direction = event.key == 'j' ? "next" : "prev";
-            focusPrevOrNext(direction);
+            focusPrevOrNext(event.key == 'j' ? "next" : "prev");
         }
     });
 
     // Nagivation: up or down
-    // document.addEventListener('keydown', (event) => {
-    //     if (['h', 'H', 'l', 'L'].includes(event.key)) {
-    //         event.preventDefault();
-    //         const direction = ['h', 'H'].includes(event.key) ? "up" : "down";
-    //         focusUpOrDown(direction);
-    //     }
-    // });
+    document.addEventListener('keydown', (event) => {
+        if (['h', 'l'].includes(event.key)) {
+            event.preventDefault();
+            focusUpOrDown(event.key == 'h' ? "down" : "up");
+        }
+    });
 
     // Navigation: back to top
     document.addEventListener('keydown', (event) => {
@@ -87,13 +85,22 @@ function toggleTooltip(el) {
 function executeActiveMenuItem(el) {
     const menu = el.querySelector("& > .hr-menu-zone > .hr-menu");
     if (!menu) return;
-    const activeItems = menu.querySelectorAll("& > .hr-menu-item.active");
+    const activeItems = menu.querySelectorAll("& > .hr-menu-item.active:not(.disabled)");
     if (activeItems.length == 0) return;
     if (activeItems.length > 1) {console.log("more than one active items, ignoring"); return};
     const cls = Array.from(activeItems[0].classList).filter(cls => cls !== 'active' && cls !== 'hr-menu-item');
     if (cls.length == 0) {console.log(`unknown item`); return};
     if (cls.length > 1) {console.log(`item has too many classes, ignoring`); return};
-    console.log(cls);
+    switch(cls[0]) {
+    case "collapse-subproof":
+        collapseHandrail(el);
+        break;
+    case "collapse-steps":
+        collapseAll(el);
+        break;
+    case true:
+        console.log($`unknown item class: ${cls[0]}`);
+    }
 }
 
 
@@ -125,40 +132,37 @@ function menuUpOrDown(el, direction) {
 }
 
 
-// function findFirstDescendantInArray(el, array) {
-//     const stack = [...el.children];
+function focusUpOrDown(direction) {
+    const focusableElements = getFocusableElements();
+    let current = document.activeElement;
+    let index = focusableElements.indexOf(current);
 
-//     while (stack.length > 0) {
-//         const current = stack.pop();
-//         if (array.includes(current)) { return current };
-//         for (let child of current.children) {
-//             stack.push(child);
-//         }
-//     }
+    let nextElement;
+    if (index !== -1) {
+        if (direction == "up") {
+            for (const el of focusableElements.slice(0, index).reverse()) {
+                if (el.parentElement == current.parentElement) {
+                    nextElement = el;
+                    break;
+                }
+            }
+        } else if (direction == "down") {
+            for (const el of focusableElements.slice(index+1)) {
+                if (el.parentElement == current.parentElement) {
+                    nextElement = el;
+                    break;
+                }
+            }
+        } else {
+            console.log(`unknown direction ${direction}`);
+        }
+    } else { nextElement = focusableElements[0]; }
 
-//     return null;
-// }
-
-
-// function focusUpOrDown(direction) {
-//     const focusableElements = getFocusableElements();
-//     let index = focusableElements.indexOf(document.activeElement);
-//     let current = document.activeElement;
-//     if (index !== -1) {
-//         if (direction == "up") {
-//             do {
-//                 current = current.parentElement;
-//             } while (current && !focusableElements.includes(current));
-//         } else {
-//             current = findFirstDescendantInArray(current, focusableElements);
-//         }
-//     } else { index = 0; }
-
-//     if (current) {
-//         current.focus();
-//         maybeScrollToMiddle(current, direction);
-//     }
-// }
+    if (nextElement) {
+        nextElement.focus();
+        maybeScrollToMiddle(nextElement, direction);
+    }
+}
 
 
 function focusPrevOrNext(direction) {
@@ -195,7 +199,6 @@ function toggleCollapse(el) {
 
 
 function toggleCollapseAll(el) {
-    console.log(el);
     if (!el.classList.contains("hr")) return;
     const collAll = el.querySelector(`
         & > .hr-menu-zone .collapse-all:not(.disabled),

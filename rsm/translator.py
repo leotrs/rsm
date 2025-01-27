@@ -1004,7 +1004,11 @@ class Translator:
         else:
             tags = [
                 self._make_ahref_tag_text(
-                    node, t, f"#{t.label}", id_=f"{node.label}-{idx}"
+                    node,
+                    t,
+                    f"#{t.label}",
+                    id_=f"{node.label}-{idx}",
+                    additional_classes=["cite"],
                 )
                 for idx, t in enumerate(node.targets)
             ]

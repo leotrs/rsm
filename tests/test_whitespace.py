@@ -814,3 +814,108 @@ def test_consecutive_lines_should_be_joined_by_spaces():
         </body>
         """,
     )
+
+
+def test_span_span():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+          :span: foo :: :span: bar ::
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="span" data-nodeid="2">foo</span> <span class="span" data-nodeid="5">bar</span></p>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_span_construct():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+          :span: foo :: :prove: bar ::
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="span" data-nodeid="2">foo</span> <span class="construct prove" data-nodeid="5"><span class="keyword" data-nodeid="6">PROVE</span> bar</span></p>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_construct_construct():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+          :pick:foo :: :st: bar ::
+
+        ::
+        """,
+        want="""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="construct pick assumption" data-nodeid="2"><span class="keyword" data-nodeid="3">PICK</span> foo</span> <span class="construct st assumption" data-nodeid="7"><span class="keyword" data-nodeid="8">SUCH THAT</span> bar</span></p>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

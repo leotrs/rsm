@@ -26,11 +26,8 @@ class BaseBuilder(ABC):
         self.web: Optional[WebManuscript] = None
         self.outname: str = outname
 
-    def build(
-        self, body: str, tree: Manuscript | None, src: Path | None = None
-    ) -> WebManuscript:
+    def build(self, body: str, src: Path | None = None) -> WebManuscript:
         logger.info("Building...")
-        self.tree = tree
         self.body = body
         self.web = WebManuscript(src)
         self.web.body = body
@@ -110,8 +107,8 @@ class SingleFileBuilder(BaseBuilder):
 
 
 class FullBuilder(SingleFileBuilder):
-    def build(self, body: str, tree: Manuscript, src: Path = None) -> WebManuscript:
-        super().build(body, tree, src)
+    def build(self, body: str, src: Path = None) -> WebManuscript:
+        super().build(body, src)
         logger.debug("Moving default RSM assets...")
         self.mount_static()
         if self.required_assets:

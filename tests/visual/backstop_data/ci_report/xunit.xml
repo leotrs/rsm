@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="21" failures="20" errors="20" skipped="0">
-  <testsuite name="BackstopJS" tests="21" failures="20" errors="20" skipped="0">
-    <testcase classname="document" name=" ›› empty">
-      <failure message="Design deviation ›› empty (document) component"/>
-      <error message="Design deviation ›› empty (document) component"/>
+<testsuites tests="21" failures="21" errors="21" skipped="0">
+  <testsuite name="BackstopJS" tests="21" failures="21" errors="21" skipped="0">
+    <testcase classname="" name=" ›› empty">
+      <failure message="Design deviation ›› empty () component"/>
+      <error message="Design deviation ›› empty () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› empty"/>
-    <testcase classname="document" name=" ›› empty">
-      <failure message="Design deviation ›› empty (document) component"/>
-      <error message="Design deviation ›› empty (document) component"/>
+    <testcase classname="" name=" ›› empty">
+      <failure message="Design deviation ›› empty () component"/>
+      <error message="Design deviation ›› empty () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› paragraph">
-      <failure message="Design deviation ›› paragraph (document) component"/>
-      <error message="Design deviation ›› paragraph (document) component"/>
+    <testcase classname="" name=" ›› empty">
+      <failure message="Design deviation ›› empty () component"/>
+      <error message="Design deviation ›› empty () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› paragraph">
-      <failure message="Design deviation ›› paragraph (document) component"/>
-      <error message="Design deviation ›› paragraph (document) component"/>
+    <testcase classname="" name=" ›› paragraph">
+      <failure message="Design deviation ›› paragraph () component"/>
+      <error message="Design deviation ›› paragraph () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› paragraph">
-      <failure message="Design deviation ›› paragraph (document) component"/>
-      <error message="Design deviation ›› paragraph (document) component"/>
+    <testcase classname="" name=" ›› paragraph">
+      <failure message="Design deviation ›› paragraph () component"/>
+      <error message="Design deviation ›› paragraph () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› theorem_proof">
-      <failure message="Design deviation ›› theorem_proof (document) component"/>
-      <error message="Design deviation ›› theorem_proof (document) component"/>
+    <testcase classname="" name=" ›› paragraph">
+      <failure message="Design deviation ›› paragraph () component"/>
+      <error message="Design deviation ›› paragraph () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› theorem_proof">
-      <failure message="Design deviation ›› theorem_proof (document) component"/>
-      <error message="Design deviation ›› theorem_proof (document) component"/>
+    <testcase classname="" name=" ›› theorem_proof">
+      <failure message="Design deviation ›› theorem_proof () component"/>
+      <error message="Design deviation ›› theorem_proof () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› theorem_proof">
-      <failure message="Design deviation ›› theorem_proof (document) component"/>
-      <error message="Design deviation ›› theorem_proof (document) component"/>
+    <testcase classname="" name=" ›› theorem_proof">
+      <failure message="Design deviation ›› theorem_proof () component"/>
+      <error message="Design deviation ›› theorem_proof () component"/>
+    </testcase>
+    <testcase classname="" name=" ›› theorem_proof">
+      <failure message="Design deviation ›› theorem_proof () component"/>
+      <error message="Design deviation ›› theorem_proof () component"/>
     </testcase>
     <testcase classname="" name=" ›› hover_title">
       <failure message="Design deviation ›› hover_title () component"/>
@@ -58,29 +61,29 @@
       <failure message="Design deviation ›› click_title () component"/>
       <error message="Design deviation ›› click_title () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› ref">
-      <failure message="Design deviation ›› ref (document) component"/>
-      <error message="Design deviation ›› ref (document) component"/>
+    <testcase classname="" name=" ›› ref">
+      <failure message="Design deviation ›› ref () component"/>
+      <error message="Design deviation ›› ref () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› ref">
-      <failure message="Design deviation ›› ref (document) component"/>
-      <error message="Design deviation ›› ref (document) component"/>
+    <testcase classname="" name=" ›› ref">
+      <failure message="Design deviation ›› ref () component"/>
+      <error message="Design deviation ›› ref () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› ref">
-      <failure message="Design deviation ›› ref (document) component"/>
-      <error message="Design deviation ›› ref (document) component"/>
+    <testcase classname="" name=" ›› ref">
+      <failure message="Design deviation ›› ref () component"/>
+      <error message="Design deviation ›› ref () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› hover_ref">
-      <failure message="Design deviation ›› hover_ref (document) component"/>
-      <error message="Design deviation ›› hover_ref (document) component"/>
+    <testcase classname="" name=" ›› hover_ref">
+      <failure message="Design deviation ›› hover_ref () component"/>
+      <error message="Design deviation ›› hover_ref () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› hover_ref">
-      <failure message="Design deviation ›› hover_ref (document) component"/>
-      <error message="Design deviation ›› hover_ref (document) component"/>
+    <testcase classname="" name=" ›› hover_ref">
+      <failure message="Design deviation ›› hover_ref () component"/>
+      <error message="Design deviation ›› hover_ref () component"/>
     </testcase>
-    <testcase classname="document" name=" ›› hover_ref">
-      <failure message="Design deviation ›› hover_ref (document) component"/>
-      <error message="Design deviation ›› hover_ref (document) component"/>
+    <testcase classname="" name=" ›› hover_ref">
+      <failure message="Design deviation ›› hover_ref () component"/>
+      <error message="Design deviation ›› hover_ref () component"/>
     </testcase>
   </testsuite>
 </testsuites>

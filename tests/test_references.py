@@ -170,7 +170,7 @@ def test_cite_to_unknown_label(caplog):
 
         <div class="paragraph" data-nodeid="1">
 
-        <p>This is an unknown cite [<a id="cite-0" class="reference unknown" href="#">[unknown label "foobar"]</a>].</p>
+        <p>This is an unknown cite [<a id="cite-0" class="reference cite unknown" href="#">[unknown label "foobar"]</a>].</p>
 
         </div>
 

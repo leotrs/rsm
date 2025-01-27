@@ -2811,7 +2811,7 @@ def test_bibliography():
 
         <div class="hr-content-zone">
 
-        <p>This is a citation [<a id="cite-0" class="reference" href="#atiyah2018introduction">1</a>].</p>
+        <p>This is a citation [<a id="cite-0" class="reference cite" href="#atiyah2018introduction">1</a>].</p>
 
         </div>
 

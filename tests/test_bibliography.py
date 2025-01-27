@@ -39,7 +39,7 @@ def test_single():
 
         <div class="paragraph" data-nodeid="1">
 
-        <p>This has a citation at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
+        <p>This has a citation at the end. [<a id="cite-0" class="reference cite" href="#knuth">1</a>]</p>
 
         </div>
 
@@ -105,7 +105,7 @@ def test_with_shortcuts():
 
         <div class="paragraph" data-nodeid="1">
 
-        <p>This has a <span class="span" data-nodeid="3"><strong>citation</strong></span> at the end. [<a id="cite-0" class="reference" href="#knuth">1</a>]</p>
+        <p>This has a <span class="span" data-nodeid="3"><strong>citation</strong></span> at the end. [<a id="cite-0" class="reference cite" href="#knuth">1</a>]</p>
 
         </div>
 
@@ -180,7 +180,7 @@ def test_many():
 
         <div class="paragraph" data-nodeid="1">
 
-        <p>This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference" href="#torres2020">1</a>, <a id="cite-0-1" class="reference" href="#knuth">2</a></span>]</p>
+        <p>This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference cite" href="#torres2020">1</a>, <a id="cite-0-1" class="reference cite" href="#knuth">2</a></span>]</p>
 
         </div>
 
@@ -259,7 +259,7 @@ def test_order():
 
         <div class="paragraph" data-nodeid="1">
 
-        <p>This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference" href="#knuth">2</a>, <a id="cite-0-1" class="reference" href="#torres2020">1</a></span>]</p>
+        <p>This has a citation at the end. [<span id="cite-0"><a id="cite-0-0" class="reference cite" href="#knuth">2</a>, <a id="cite-0-1" class="reference cite" href="#torres2020">1</a></span>]</p>
 
         </div>
 

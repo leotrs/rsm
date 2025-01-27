@@ -1428,7 +1428,10 @@ class HandrailsTranslator(Translator):
         )
 
     def _hr_from_node(
-        self, node: nodes.NodeSubType, additional_classes: None | list[str] = None
+        self,
+        node: nodes.NodeSubType,
+        additional_classes: None | list[str] = None,
+        is_selectable: bool = True,
     ):
         classes = (
             (node.types or [])
@@ -1438,7 +1441,9 @@ class HandrailsTranslator(Translator):
             + (additional_classes or [])
         )
         classes = list(dict.fromkeys(classes))  # deletes duplicates AND preserves order
-        return AppendNodeTag(node, additional_classes=classes, is_selectable=True)
+        return AppendNodeTag(
+            node, additional_classes=classes, is_selectable=is_selectable
+        )
 
     def _replace_node_with_handrails(
         self,
@@ -1469,7 +1474,7 @@ class HandrailsTranslator(Translator):
 
     def _subproof_handrails(self, node: nodes.Subproof) -> AppendBatchAndDefer:
         newitems = [
-            self._hr_from_node(node, ["hr-shift-1"]),
+            self._hr_from_node(node, ["hr-shift-1"], is_selectable=False),
             self._hr_collapse_zone(False),
             self._hr_menu_zone_empty(),
             self._hr_border_zone_empty(),

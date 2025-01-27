@@ -2,13 +2,14 @@
 //
 // Keyboard interaction
 //
+import { collapseHandrail, collapseAll } from '/static/handrails.js';
 
 export function setup () {
     // Nagivation: next or previous
     document.addEventListener('keydown', (event) => {
-        if (['j', 'J', 'k', 'K'].includes(event.key)) {
+        if (['j', 'k'].includes(event.key)) {
             event.preventDefault();
-            const direction = ['j', 'J'].includes(event.key) ? "next" : "prev";
+            const direction = event.key == 'j' ? "next" : "prev";
             focusPrevOrNext(direction);
         }
     });
@@ -22,12 +23,20 @@ export function setup () {
     //     }
     // });
 
+    // Navigation: back to top
+    document.addEventListener('keydown', (event) => {
+        if (event.key == "H") { focusTop() }
+    });
+
     // Basic actions on the currently focused element
     document.addEventListener('keydown', (event) => {
         if (event.key == ".") { toggleMenu(document.activeElement) }
     });
     document.addEventListener('keydown', (event) => {
         if (event.key == ",") { toggleCollapse(document.activeElement) }
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key == ";") { toggleCollapseAll(document.activeElement) }
     });
     document.addEventListener('keydown', (event) => {
         if (event.key == "z") { scrollToMiddle(document.activeElement) }
@@ -43,7 +52,8 @@ export function setup () {
     document.addEventListener("keyup", (event) => {
         event.preventDefault();
         if (event.keyCode === 13) {
-            console.log("what to do here?");
+            event.preventDefault();
+            executeActiveMenuItem(document.activeElement);
         }
     });
 
@@ -57,14 +67,33 @@ export function setup () {
 }
 
 
+function focusTop() {
+    const focusable = getFocusableElements();
+    focusable[0].focus();
+    scrollToMiddle(focusable[0], "up");
+}
+
+
 function toggleTooltip(el) {
     if (!el.classList.contains("tooltipstered")) return;
-    console.log($(el).tooltipster("status"));
     if ($(el).tooltipster("status").open) {
         $(el).tooltipster("close");
     } else {
         $(el).tooltipster("open");
     }
+}
+
+
+function executeActiveMenuItem(el) {
+    const menu = el.querySelector("& > .hr-menu-zone > .hr-menu");
+    if (!menu) return;
+    const activeItems = menu.querySelectorAll("& > .hr-menu-item.active");
+    if (activeItems.length == 0) return;
+    if (activeItems.length > 1) {console.log("more than one active items, ignoring"); return};
+    const cls = Array.from(activeItems[0].classList).filter(cls => cls !== 'active' && cls !== 'hr-menu-item');
+    if (cls.length == 0) {console.log(`unknown item`); return};
+    if (cls.length > 1) {console.log(`item has too many classes, ignoring`); return};
+    console.log(cls);
 }
 
 
@@ -126,7 +155,6 @@ function menuUpOrDown(el, direction) {
 //     } else { index = 0; }
 
 //     if (current) {
-//         console.log(current);
 //         current.focus();
 //         maybeScrollToMiddle(current, direction);
 //     }
@@ -159,9 +187,22 @@ function getFocusableElements() {
 
 function toggleCollapse(el) {
     if (!el.classList.contains("hr")) return;
-    const coll = el.querySelector("& > .hr-collapse-zone > .hr-collapse");
-    if (!coll) return;
-    collapseHandrail(coll);
+    const coll1 = el.querySelector("& > .hr-collapse-zone > .hr-collapse");
+    const coll2 = el.querySelector("& > .hr-menu-zone .collapse-subproof:not(.disabled)");
+    if (!coll1 && !coll2) return;
+    collapseHandrail(el);
+}
+
+
+function toggleCollapseAll(el) {
+    console.log(el);
+    if (!el.classList.contains("hr")) return;
+    const collAll = el.querySelector(`
+        & > .hr-menu-zone .collapse-all:not(.disabled),
+        & > .hr-menu-zone .expand-all:not(.disabled)
+    `);
+    const withinSubproof = el.classList.contains("step");
+    if (collAll) collapseAll(el, withinSubproof);
 }
 
 

@@ -63,6 +63,7 @@ function updateHeight(entries) {
 
 
 export function collapseHandrail(target) {
+    console.log(`collapsing ${target}`);
     const hr = target.closest(".hr");
     let rest;
     if (hr.classList.contains("hr-labeled")) {
@@ -106,14 +107,14 @@ export function collapseHandrail(target) {
 };
 
 
-function collapseAll(target, withinSubproof = true) {
+export function collapseAll(target, withinSubproof = true) {
     let qry;
     if (withinSubproof) {
         qry = "& > .hr-content-zone > .subproof > .hr-content-zone > .step:has(.subproof)";
     } else {
         qry = "& > .hr-content-zone > .step:has(.subproof)";
     }
-    const hr = target.closest(".hr")
+    const hr = target.closest(".hr");
     hr.querySelectorAll(qry).forEach(st => collapseHandrail(st));
 
     const ex_icon = hr.querySelector("& .icon-wrapper.expand-all");

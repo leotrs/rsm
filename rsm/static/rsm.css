@@ -845,11 +845,24 @@
   }
 
   a:focus {
-    outline: 4px solid var(--border-action);
-    border-radius: 4px;
+    outline: none;
+    box-shadow: 0 var(--border-thin) 0 var(--border-action);
     background: var(--surface-information);
     color: var(--information-700);
   }
+
+  /* a.tooltipstered { */
+  /*   position: relative; */
+  /* } */
+  /* a.tooltipstered:focus::after { */
+  /*   content: ''; */
+  /*   position: absolute; */
+  /*   right: -8px; */
+  /*   width: 6px; */
+  /*   height: 6px; */
+  /*   background-color: var(--information-400); */
+  /*   border-radius: 50%; */
+  /* } */
 
 }
 

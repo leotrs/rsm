@@ -63,7 +63,6 @@ function updateHeight(entries) {
 
 
 export function collapseHandrail(target) {
-    console.log(`collapsing ${target}`);
     const hr = target.closest(".hr");
     let rest;
     if (hr.classList.contains("hr-labeled")) {

@@ -1,4 +1,4 @@
-PendingCite
+﻿PendingCite
 ===========
 
 Qualified name: ``rsm.nodes.PendingCite``
@@ -24,7 +24,10 @@ Qualified name: ``rsm.nodes.PendingCite``
      ~PendingCite.nodeid
      ~PendingCite.label
      ~PendingCite.types
+     ~PendingCite.handrail_depth
      ~PendingCite.number
      ~PendingCite.nonum
      ~PendingCite.reftext_template
+     ~PendingCite.start_point
+     ~PendingCite.end_point
    

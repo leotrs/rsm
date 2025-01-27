@@ -1,4 +1,4 @@
-Proof
+﻿Proof
 =====
 
 Qualified name: ``rsm.nodes.Proof``
@@ -24,7 +24,10 @@ Qualified name: ``rsm.nodes.Proof``
      ~Proof.nodeid
      ~Proof.label
      ~Proof.types
+     ~Proof.handrail_depth
      ~Proof.number
      ~Proof.nonum
      ~Proof.reftext_template
+     ~Proof.start_point
+     ~Proof.end_point
    

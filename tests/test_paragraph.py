@@ -21,7 +21,11 @@ def test_succeeding_blankline():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">Foo.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Foo.</p>
+
+        </div>
 
         </section>
 
@@ -51,7 +55,11 @@ def test_succeeding_blankline_with_tag():
 
         <section class="level-1">
 
-        <p class="paragraph foo" data-nodeid="1">This is a paragraph.</p>
+        <div class="paragraph foo" data-nodeid="1">
+
+        <p>This is a paragraph.</p>
+
+        </div>
 
         </section>
 
@@ -81,7 +89,11 @@ def test_tag_no_meta():
 
         <section class="level-1">
         <span class="error" data-nodeid="1">[CST error at (2, 0) - (2, 11)]</span>
-        <p class="paragraph" data-nodeid="2">This is a paragraph.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>This is a paragraph.</p>
+
+        </div>
 
         </section>
 
@@ -112,7 +124,11 @@ def test_start_with_tag():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1"><span class="span" data-nodeid="2"><strong>this tag</strong></span> starts the paragraph.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="span" data-nodeid="2"><strong>this tag</strong></span> starts the paragraph.</p>
+
+        </div>
 
         </section>
 
@@ -143,7 +159,11 @@ def test_start_with_shortcut():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1"><span class="construct claim" data-nodeid="2"><span class="keyword" data-nodeid="3">⊢ </span>A claim</span>.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="construct claim" data-nodeid="2"><span class="keyword" data-nodeid="3">⊢</span> A claim</span>.</p>
+
+        </div>
 
         </section>
 
@@ -204,15 +224,124 @@ def test_simple():
 
         <h2>1. Introduction</h2>
 
-        <p class="paragraph" data-nodeid="2">Lorem ipsum.</p>
+        <div class="paragraph" data-nodeid="2">
 
-        <p id="par1" class="paragraph" data-nodeid="4">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
+        <p>Lorem ipsum.</p>
 
-        <p id="par2" class="paragraph" data-nodeid="6">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
+        </div>
 
-        <p id="par3" class="paragraph a b c" data-nodeid="8">This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
+        <div id="par1" class="paragraph" data-nodeid="4">
+
+        <p>This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
+
+        </div>
+
+        <div id="par2" class="paragraph" data-nodeid="6">
+
+        <p>This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
+
+        </div>
+
+        <div id="par3" class="paragraph a b c" data-nodeid="8">
+
+        <p>This is a paragraph with meta data. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text. It has several lines of text.</p>
+
+        </div>
 
         </section>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_mathblock_inside_paragraph():
+    compare_have_want(
+        have="""\
+        :manuscript:
+          :title: Mathblocks inside paragraphs
+
+        This is a paragraph and the following equation
+        $$
+        2+2 = 4,
+        $$
+        should be part of the same paragraph still.
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+
+        <h1>Mathblocks inside paragraphs</h1>
+
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a paragraph and the following equation </p>
+        <div class="mathblock" data-nodeid="3">
+        $$
+        2+2 = 4,
+        $$
+        </div>
+        <p> should be part of the same paragraph still.</p>
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+
+
+def test_mathblock_ending_paragraph():
+    compare_have_want(
+        have="""\
+        :manuscript:
+          :title: Mathblocks inside paragraphs
+
+        This is a paragraph that ends with an equation.
+        $$
+        2+2 = 4.
+        $$
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+
+        <h1>Mathblocks inside paragraphs</h1>
+
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a paragraph that ends with an equation. </p>
+        <div class="mathblock" data-nodeid="3">
+        $$
+        2+2 = 4.
+        $$
+        </div>
+
+        </div>
 
         </section>
 

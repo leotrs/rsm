@@ -1,4 +1,4 @@
-Statement
+﻿Statement
 =========
 
 Qualified name: ``rsm.nodes.Statement``
@@ -24,7 +24,10 @@ Qualified name: ``rsm.nodes.Statement``
      ~Statement.nodeid
      ~Statement.label
      ~Statement.types
+     ~Statement.handrail_depth
      ~Statement.number
      ~Statement.nonum
      ~Statement.reftext_template
+     ~Statement.start_point
+     ~Statement.end_point
    

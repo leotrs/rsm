@@ -1,4 +1,4 @@
-Code
+﻿Code
 ====
 
 Qualified name: ``rsm.nodes.Code``
@@ -25,7 +25,10 @@ Qualified name: ``rsm.nodes.Code``
      ~Code.nodeid
      ~Code.label
      ~Code.types
+     ~Code.handrail_depth
      ~Code.number
      ~Code.nonum
      ~Code.reftext_template
+     ~Code.start_point
+     ~Code.end_point
    

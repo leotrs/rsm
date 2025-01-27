@@ -1,4 +1,4 @@
-Bibitem
+﻿Bibitem
 =======
 
 Qualified name: ``rsm.nodes.Bibitem``
@@ -27,7 +27,10 @@ Qualified name: ``rsm.nodes.Bibitem``
      ~Bibitem.nodeid
      ~Bibitem.label
      ~Bibitem.types
+     ~Bibitem.handrail_depth
      ~Bibitem.number
      ~Bibitem.nonum
      ~Bibitem.reftext_template
+     ~Bibitem.start_point
+     ~Bibitem.end_point
    

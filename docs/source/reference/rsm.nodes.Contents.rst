@@ -1,4 +1,4 @@
-Contents
+﻿Contents
 ========
 
 Qualified name: ``rsm.nodes.Contents``
@@ -24,7 +24,10 @@ Qualified name: ``rsm.nodes.Contents``
      ~Contents.nodeid
      ~Contents.label
      ~Contents.types
+     ~Contents.handrail_depth
      ~Contents.number
      ~Contents.nonum
      ~Contents.reftext_template
+     ~Contents.start_point
+     ~Contents.end_point
    

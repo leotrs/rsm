@@ -160,6 +160,9 @@ class Node:
 
     """
 
+    has_handrail: ClassVar[bool] = False
+    """Whether nodes of this class are rendered with a handrail."""
+
     def __init__(
         self,
         label: str = "",
@@ -167,6 +170,8 @@ class Node:
         number: Optional[int] = None,
         nonum: bool = False,
         reftext_template: str = "",
+        start_point: tuple[int, int] = (-1, -1),
+        end_point: tuple[int, int] = (-1, -1),
     ) -> None:
         self.nodeid: str | None = None
         """Node id - always exists (unlike label), automatically assigned, unique within the tree."""
@@ -174,12 +179,18 @@ class Node:
         """Unique identifier."""
         self.types: list[str] = types or []
         """Types of this node."""
+        self.handrail_depth = 0
+        """The number of ancestors of this node that have a handrail."""
         self.number: int = number
         """Node number."""
         self.nonum: bool = nonum
         """Whether this node should be automatically given a number."""
         self.reftext_template: str = reftext_template or self.classreftext
         """Reftext template, or "" to use :attr:`classreftext`."""
+        self.start_point: tuple[int, int] = start_point
+        """The start point of the corresponding concrete syntax tree node."""
+        self.end_point: tuple[int, int] = end_point
+        """The end point of the corresponding concrete syntax tree node."""
         self._parent: Optional["NodeWithChildren"] = None
 
     def _attrs_for_repr_and_eq(self) -> list[str]:
@@ -411,7 +422,7 @@ class Node:
         if not ancestor:
             logger.warning(
                 f"{self.__class__.__name__} numbered within "
-                f"{self.number_within.__name__} but no such ancestor was found; "
+                f"{self.number_within} but no such ancestor was found; "
                 "using root node instead"
             )
             ancestor = self.first_ancestor_of_type(Manuscript)
@@ -423,7 +434,7 @@ class Node:
     def reftext(self) -> str:
         return self.reftext_template.format(
             nodeclass=self.__class__.__name__, number=self.full_number
-        )
+        ).strip()
 
     def traverse(
         self,
@@ -1204,6 +1215,10 @@ class MathBlock(NodeWithChildren):
         super().__init__(**kwargs)
         self.isclaim = isclaim
 
+    @property
+    def long_reftext(self) -> str:
+        return f"Equation {self.reftext}".strip()
+
 
 class SourceCode(Text):
     def __init__(self, text: str = "", lang: str = "", **kwargs: Any) -> None:
@@ -1415,7 +1430,7 @@ class Statement(NodeWithChildren):
 
 
 class Proof(NodeWithChildren):
-    pass
+    has_handrail = True
 
 
 class Subproof(NodeWithChildren):  # importantly, NOT a subclass of Proof!
@@ -1423,16 +1438,18 @@ class Subproof(NodeWithChildren):  # importantly, NOT a subclass of Proof!
 
 
 class Sketch(NodeWithChildren):
-    possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = {Proof}
+    has_handrail = True
 
 
 class Step(Paragraph):
     autonumber = True
+    classreftext: ClassVar[str] = "Step ⟨{number}⟩"
     possible_parents: ClassVar[set[Type["NodeWithChildren"]]] = {Proof, Subproof}
+    has_handrail = True
 
 
 Step.possible_parents.add(Step)
-Step._number_within = (Step, Proof)
+Step._number_within = (Proof, Step)
 
 
 class Theorem(Heading):
@@ -1440,6 +1457,7 @@ class Theorem(Heading):
     title = ""
     _number_within = Section
     newmetakeys: ClassVar[set] = {"title", "goals", "stars", "clocks"}
+    has_handrail = True
 
     def __init__(
         self,
@@ -1449,7 +1467,7 @@ class Theorem(Heading):
         clocks: int = 0,
         **kwargs: Any,
     ):
-        super().__init__(*kwargs)
+        super().__init__(**kwargs)
         self.title = title
         self.goals = goals or []
         self.stars = stars
@@ -1582,3 +1600,11 @@ class Item(BaseParagraph):
         Enumerate,
         Contents,
     }
+
+
+def all_node_subtypes():
+    return [
+        obj
+        for name, obj in globals().items()
+        if type(obj) is type and issubclass(obj, Node)
+    ]

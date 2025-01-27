@@ -1,6 +1,5 @@
 from conftest import compare_have_want
 
-
 SIMPLE_WANT = """\
 <body>
 
@@ -13,7 +12,7 @@ SIMPLE_WANT = """\
 <figure class="figure" data-nodeid="1">
 <img src="assets/example.png" alt="Figure 1.">
 <figcaption>
-<span class="span"><strong>Figure 1. </strong></span>This is the figure caption.
+<span class="label">Figure 1. </span>This is the figure caption.
 </figcaption>
 
 </figure>
@@ -115,7 +114,7 @@ def test_caption_with_inline_tags():
         <figure class="figure" data-nodeid="1">
         <img src="assets/example.png" alt="Figure 1.">
         <figcaption>
-        <span class="span"><strong>Figure 1. </strong></span>This is the <span class="span" data-nodeid="4"><strong>figure</strong></span> caption.
+        <span class="label">Figure 1. </span>This is the <span class="span" data-nodeid="4"><strong>figure</strong></span> caption.
         </figcaption>
 
         </figure>

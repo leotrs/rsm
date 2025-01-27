@@ -1,6 +1,7 @@
 import pytest
-import rsm
 from conftest import compare_have_want
+
+import rsm
 
 
 def test_works_with_no_reftext_and_label():
@@ -32,15 +33,21 @@ def test_works_with_no_reftext_and_label():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
 
-        <div class="proof-contents">
+        <p><span class="span label">Proof.</span></p>
+
+        </div>
 
         <div id="lbl" class="step" data-nodeid="2">
 
         <div class="statement" data-nodeid="3">
 
-        <p class="paragraph" data-nodeid="4">Foo.</p>
+        <div class="paragraph" data-nodeid="4">
+
+        <p>Foo.</p>
+
+        </div>
 
         </div>
 
@@ -50,7 +57,9 @@ def test_works_with_no_reftext_and_label():
 
         <div class="statement" data-nodeid="7">
 
-        <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#lbl">Step 1</a>.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>Bar <a class="reference" href="#lbl">Step ⟨1⟩</a>.</p>
 
         </div>
 
@@ -99,15 +108,21 @@ def test_works_with_no_reftext_and_no_label():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
 
-        <div class="proof-contents">
+        <p><span class="span label">Proof.</span></p>
+
+        </div>
 
         <div class="step" data-nodeid="2">
 
         <div class="statement" data-nodeid="3">
 
-        <p class="paragraph" data-nodeid="4">Foo.</p>
+        <div class="paragraph" data-nodeid="4">
+
+        <p>Foo.</p>
+
+        </div>
 
         </div>
 
@@ -117,7 +132,9 @@ def test_works_with_no_reftext_and_no_label():
 
         <div class="statement" data-nodeid="7">
 
-        <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#">Step 1</a>.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>Bar <a class="reference" href="#">Step ⟨1⟩</a>.</p>
 
         </div>
 
@@ -168,15 +185,21 @@ def test_works_with_reftext_and_label():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
 
-        <div class="proof-contents">
+        <p><span class="span label">Proof.</span></p>
+
+        </div>
 
         <div id="lbl" class="step" data-nodeid="2">
 
         <div class="statement" data-nodeid="3">
 
-        <p class="paragraph" data-nodeid="4">Foo.</p>
+        <div class="paragraph" data-nodeid="4">
+
+        <p>Foo.</p>
+
+        </div>
 
         </div>
 
@@ -186,7 +209,9 @@ def test_works_with_reftext_and_label():
 
         <div class="statement" data-nodeid="7">
 
-        <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#lbl">bar</a>.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>Bar <a class="reference" href="#lbl">bar</a>.</p>
 
         </div>
 
@@ -209,7 +234,7 @@ def test_works_with_reftext_and_label():
     )
 
 
-def test_works_with_reftext_and_no_label():
+def test_works_with_reftext_and_no_label(caplog):
     compare_have_want(
         have="""\
         :manuscript:
@@ -235,15 +260,21 @@ def test_works_with_reftext_and_no_label():
 
         <div class="proof" data-nodeid="1">
 
-        <p class="paragraph proof__title"><span class="span"><strong>Proof. </strong></span></p>
+        <div class="paragraph hr-label">
 
-        <div class="proof-contents">
+        <p><span class="span label">Proof.</span></p>
+
+        </div>
 
         <div class="step" data-nodeid="2">
 
         <div class="statement" data-nodeid="3">
 
-        <p class="paragraph" data-nodeid="4">Foo.</p>
+        <div class="paragraph" data-nodeid="4">
+
+        <p>Foo.</p>
+
+        </div>
 
         </div>
 
@@ -253,7 +284,9 @@ def test_works_with_reftext_and_no_label():
 
         <div class="statement" data-nodeid="7">
 
-        <p class="paragraph" data-nodeid="8">Bar <a class="reference" href="#">bar</a>.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>Bar <a class="reference" href="#">bar</a>.</p>
 
         </div>
 
@@ -274,6 +307,7 @@ def test_works_with_reftext_and_no_label():
         </body>
         """,
     )
+    assert ":prev: references un-labeled step, link will not work" in caplog.text
 
 
 def test_previous_outside_step():

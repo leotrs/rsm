@@ -15,6 +15,7 @@ Qualified name: ``rsm.transformer.Transformer``
    .. autosummary::
       :nosignatures:
       
+      ~Transformer.add_handrail_depth
       ~Transformer.add_keywords_to_constructs
       ~Transformer.add_necessary_subproofs
       ~Transformer.assign_node_ids

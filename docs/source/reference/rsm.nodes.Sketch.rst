@@ -1,4 +1,4 @@
-Sketch
+﻿Sketch
 ======
 
 Qualified name: ``rsm.nodes.Sketch``
@@ -25,7 +25,10 @@ Qualified name: ``rsm.nodes.Sketch``
      ~Sketch.nodeid
      ~Sketch.label
      ~Sketch.types
+     ~Sketch.handrail_depth
      ~Sketch.number
      ~Sketch.nonum
      ~Sketch.reftext_template
+     ~Sketch.start_point
+     ~Sketch.end_point
    

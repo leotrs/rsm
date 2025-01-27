@@ -208,11 +208,8 @@ class ProcessorApp(ParserApp):
         log_time: bool = True,
         log_lineno: bool = True,
         handrails: bool = False,
-        hidden_handrails: bool = True,
-        sidebar: bool = True,
         add_source: bool = True,
         run_linter: bool = False,
-        return_tree: bool = False,
     ):
         super().__init__(srcpath, plain, loglevel, log_format, log_time, log_lineno)
         if run_linter:
@@ -222,14 +219,9 @@ class ProcessorApp(ParserApp):
             tr = translator.Translator()
         else:
             tr = translator.HandrailsTranslator(
-                hidden_handrails=hidden_handrails,
-                sidebar=sidebar,
                 add_source=add_source,
             )
-        if return_tree:
-            self.add_task(Task("translator", tr, tr.translate_and_return_body_and_tree))
-        else:
-            self.add_task(Task("translator", tr, tr.translate))
+        self.add_task(Task("translator", tr, tr.translate))
 
 
 class FullBuildApp(ProcessorApp):
@@ -253,7 +245,6 @@ class FullBuildApp(ProcessorApp):
             log_time,
             handrails,
             run_linter,
-            return_tree=True,
         )
         self.add_task(
             Task("builder", b := builder.FullBuilder(outname=outname), b.build)
@@ -265,8 +256,6 @@ def render(
     source: str = "",
     path: str = "",
     handrails: bool = False,
-    hidden_handrails: bool = False,
-    sidebar: bool = False,
     add_source: bool = False,
     loglevel: int = RSMApp.default_log_level,
     log_format: str = "rsm",
@@ -277,8 +266,6 @@ def render(
         srcpath=path,
         plain=source,
         handrails=handrails,
-        hidden_handrails=hidden_handrails,
-        sidebar=sidebar,
         add_source=add_source,
         loglevel=loglevel,
         log_format=log_format,

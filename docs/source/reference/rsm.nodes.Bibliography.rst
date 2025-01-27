@@ -1,4 +1,4 @@
-Bibliography
+﻿Bibliography
 ============
 
 Qualified name: ``rsm.nodes.Bibliography``
@@ -24,7 +24,10 @@ Qualified name: ``rsm.nodes.Bibliography``
      ~Bibliography.nodeid
      ~Bibliography.label
      ~Bibliography.types
+     ~Bibliography.handrail_depth
      ~Bibliography.number
      ~Bibliography.nonum
      ~Bibliography.reftext_template
+     ~Bibliography.start_point
+     ~Bibliography.end_point
    

@@ -30,12 +30,14 @@ def test_simple():
 
         <div class="author" data-nodeid="1">
 
+        <div class="paragraph">
+
         <p>Leo Torres</p>
 
         <p>Max Planck Institute for Mathematics in the Sciences</p>
 
         <p><a href="mailto:leo@leotrs.com">leo@leotrs.com</a></p>
-
+        </div>
         </div>
 
         </section>
@@ -78,7 +80,11 @@ def test_empty_author():
 
         </div>
 
-        <p class="paragraph" data-nodeid="2">Lorem ipsum.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Lorem ipsum.</p>
+
+        </div>
 
         </section>
 

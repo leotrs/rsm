@@ -35,6 +35,7 @@ from pathlib import Path
 from typing import Callable, Optional, Union
 
 import tree_sitter
+import tree_sitter_rsm
 from icecream import ic
 from tree_sitter import Node as TSNode
 from tree_sitter import Tree as TSTree
@@ -82,6 +83,7 @@ PUSH_THESE_TYPES = {
     "keyword",
     "construct",
     "specialconstruct",
+    "mathblock",
     "ERROR",
 }
 
@@ -110,13 +112,12 @@ class TSParser:
 
     >>> cst = parser.parse(src, abstractify=False)
     >>> rsm.tsparser.print_cst(cst)
-    (source_file (1, 0) - (4, 0)
-      (manuscript (1, 0) - (1, 12))
-      (paragraph (2, 0) - (3, 0)
-        (text (2, 0) - (2, 11) "Hello, RSM!")
-        (paragraph_end (3, 0) - (3, 0)))
-      (:: (3, 0) - (3, 2)))
-
+    (source_file Point(row=1, column=0) - Point(row=4, column=0)
+      (manuscript Point(row=1, column=0) - Point(row=1, column=12))
+      (paragraph Point(row=2, column=0) - Point(row=3, column=0)
+        (text Point(row=2, column=0) - Point(row=2, column=11) "Hello, RSM!")
+        (paragraph_end Point(row=3, column=0) - Point(row=3, column=0)))
+      (:: Point(row=3, column=0) - Point(row=3, column=2)))
     """
 
     def __init__(self):
@@ -139,11 +140,8 @@ class TSParser:
         # system has compiled the rsm.so (or rsm.dll) file and placed it in the
         # directory where this module lies.
         #
-        library_fn = "rsm.dll" if sys.platform == "win32" else "rsm.so"
-        library_path = str(Path(__file__).parent / library_fn)
-        self._lang = tree_sitter.Language(library_path, "rsm")
-        self._parser = tree_sitter.Parser()
-        self._parser.set_language(self._lang)
+        self._lang = tree_sitter.Language(tree_sitter_rsm.language())
+        self._parser = tree_sitter.Parser(self._lang)
         self.cst = None
         """The concrete syntax tree generated from the source."""
         self.ast = None
@@ -192,11 +190,14 @@ class TSParser:
         except AttributeError as ex:
             raise RSMParserError(msg="Error abstractifying.") from ex
 
+        if self.ast is None:
+            raise RSMParserError(msg="The CST contains errors.")
+
         if logger.getEffectiveLevel() <= logging.DEBUG:
             logger.debug("abstract syntax tree:")
             print(self.ast.sexp())
 
-        self.ast.src = self.cst.text.decode(encoding)
+        self.ast.src = self.cst.root_node.text.decode(encoding)
         return self.ast
 
 
@@ -275,8 +276,8 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
     "section": nodes.Section,
     "sketch": nodes.Sketch,
     "source_file": nodes.Manuscript,
-    "spanemphas": lambda: nodes.Span(emphas=True),
-    "spanstrong": lambda: nodes.Span(strong=True),
+    "spanemphas": lambda **kwargs: nodes.Span(emphas=True, **kwargs),
+    "spanstrong": lambda **kwargs: nodes.Span(strong=True, **kwargs),
     "step": nodes.Step,
     "subproof": nodes.Subproof,
     "subsection": nodes.Subsection,
@@ -333,6 +334,8 @@ def _parse_meta_into_dict(node):
 
 
 def _normalize_text(root):
+    if root is None:
+        return
     for node in root.traverse():
         # Merge consecutive text nodes (each text node ends at a newline, so consecutive
         # text nodes are just adjacent lines of text and can always be merged).  Also,
@@ -375,6 +378,14 @@ def _normalize_text(root):
             if (last := node.last_of_type(nodes.Text)) and not last.next_sibling():
                 last.text = last.text.rstrip()
 
+        # Return the space we borrowed from Construct nodes.
+        if isinstance(node, nodes.Construct):
+            if (first := node.first_of_type(nodes.Text)) and not first.prev_sibling():
+                first.text = f" {first.text}"
+            if (first := node.first_of_type(nodes.Math)) and not first.prev_sibling():
+                node.prepend(nodes.Text(" "))
+            node.prepend(nodes.Keyword().append(nodes.Text(node.keyword)))
+
         # At this point, the whitespace within non-paragraphs (e.g. Span, Claim) has
         # been dealt with, as has the leading and trailing whitespace of Paragraphs.
         # Since the text nodes have been merged, now every Paragraph's children look
@@ -390,10 +401,31 @@ def _normalize_text(root):
             child.text = re.sub(r"(.*?)\s+$", r"\1 ", child.text)
             child.text = re.sub(r"^\s+(.*?)", r" \1", child.text)
 
+        # Finally we handle the space between non-Text children of the paragraph, for
+        # example two Spans together, or a Span followed by a Construct.  In all cases,
+        # we simply insert a single space between them.
+        classes = [nodes.Span, nodes.Construct]
+        indices_to_replace = []
+        if isinstance(node, nodes.Paragraph):
+            for idx, child in enumerate(node.children[:-1]):
+                sibling = node.children[idx + 1]
+                if type(child) in classes and type(sibling) in classes:
+                    indices_to_replace.append(idx)
+
+            # at each iteration we replace a node with two nodes, so the indices we have
+            # gathered will shift by 1
+            shift = 0
+            for idx in indices_to_replace:
+                child = node.children[idx + shift]
+                child.replace_self([child, nodes.Text(" ")])
+                shift += 1
+
         # Manage escaped characters.
         if isinstance(node, nodes.Text) and not node.asis:
             node.text = EscapedString(node.text, DELIMS).escape()
         if isinstance(node, nodes.Section):
+            node.title = EscapedString(node.title, DELIMS).escape()
+        if isinstance(node, nodes.Manuscript):
             node.title = EscapedString(node.title, DELIMS).escape()
 
 
@@ -462,6 +494,9 @@ def _abstractify(cst):
                 stack.append((parent, cst_node.named_children[0]))
                 continue
 
+        elif cst_node.type == "mathblock":
+            ast_node_type = "mathblock"
+
         elif cst_node.type == "td":
             # td tags are special because the entire contents are in the first children,
             # so we might as well add that with the current parent and ignore the
@@ -474,16 +509,21 @@ def _abstractify(cst):
             if first.type in ["item", "caption"]:
                 cst_node = first
             ast_node_type = cst_node.type
+
         elif cst_node.type in ["block", "inline"]:
             tag = cst_node.child_by_field_name("tag")
             ast_node_type = tag.type
             dont_push_these_ids.add(id(tag))
+
         else:
             ast_node_type = cst_node.type
 
         # make the correct type of AST node
         if ast_node_type in CST_TYPE_TO_AST_TYPE:
-            ast_node = CST_TYPE_TO_AST_TYPE[ast_node_type]()
+            ast_node = CST_TYPE_TO_AST_TYPE[ast_node_type](
+                start_point=cst_node.start_point,
+                end_point=cst_node.end_point,
+            )
             if isinstance(ast_node, nodes.Manuscript):
                 ast_root_node = ast_node
             elif isinstance(ast_node, nodes.Text):
@@ -501,7 +541,9 @@ def _abstractify(cst):
                 ),
             )
             ast_node = nodes.Error(
-                f"[CST error at ({start_row}, {start_col}) - ({end_row}, {end_col})]"
+                f"[CST error at ({start_row}, {start_col}) - ({end_row}, {end_col})]",
+                start_point=cst_node.start_point,
+                end_point=cst_node.end_point,
             )
         else:
             raise RSMParserError(msg=f"not found {ast_node_type}")
@@ -526,7 +568,9 @@ def _abstractify(cst):
 
         # mathblocks that are marked as claims must be enclosed within a ClaimBlock
         if ast_node_type == "mathblock" and ast_node.isclaim:
-            claimblock = nodes.ClaimBlock()
+            claimblock = nodes.ClaimBlock(
+                start_point=cst_node.start_point, end_point=cst_node.end_point
+            )
             claimblock.append(ast_node)
             ast_node = claimblock
 

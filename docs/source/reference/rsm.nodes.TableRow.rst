@@ -1,4 +1,4 @@
-TableRow
+﻿TableRow
 ========
 
 Qualified name: ``rsm.nodes.TableRow``
@@ -24,7 +24,10 @@ Qualified name: ``rsm.nodes.TableRow``
      ~TableRow.nodeid
      ~TableRow.label
      ~TableRow.types
+     ~TableRow.handrail_depth
      ~TableRow.number
      ~TableRow.nonum
      ~TableRow.reftext_template
+     ~TableRow.start_point
+     ~TableRow.end_point
    

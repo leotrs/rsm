@@ -1,4 +1,4 @@
-TableDatum
+﻿TableDatum
 ==========
 
 Qualified name: ``rsm.nodes.TableDatum``
@@ -24,7 +24,10 @@ Qualified name: ``rsm.nodes.TableDatum``
      ~TableDatum.nodeid
      ~TableDatum.label
      ~TableDatum.types
+     ~TableDatum.handrail_depth
      ~TableDatum.number
      ~TableDatum.nonum
      ~TableDatum.reftext_template
+     ~TableDatum.start_point
+     ~TableDatum.end_point
    

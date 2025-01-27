@@ -1,4 +1,4 @@
-Math
+﻿Math
 ====
 
 Qualified name: ``rsm.nodes.Math``
@@ -24,7 +24,10 @@ Qualified name: ``rsm.nodes.Math``
      ~Math.nodeid
      ~Math.label
      ~Math.types
+     ~Math.handrail_depth
      ~Math.number
      ~Math.nonum
      ~Math.reftext_template
+     ~Math.start_point
+     ~Math.end_point
    

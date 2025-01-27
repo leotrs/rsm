@@ -1,5 +1,6 @@
 import pytest
 from conftest import compare_have_want
+
 import rsm
 
 
@@ -25,7 +26,11 @@ def test_duplicate_label_warning(caplog):
 
         <h1>Title</h1>
 
-        <p class="paragraph" data-nodeid="1">There are <span id="mylbl" class="span" data-nodeid="3">two</span> spans with the <span class="span" data-nodeid="6">same</span> label in this paragraph.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>There are <span id="mylbl" class="span" data-nodeid="3">two</span> spans with the <span class="span" data-nodeid="6">same</span> label in this paragraph.</p>
+
+        </div>
 
         </section>
 
@@ -83,11 +88,11 @@ def test_duplicate_bibtex_item_warning(caplog):
         <ol class="bibliography" data-nodeid="1">
 
         <li id="torres2020" class="bibitem" data-nodeid="2">
-        Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.
+        1. Torres, Leo and Chan, Kevin S and Tong, Hanghang and Eliassi-Rad, Tina. "Nonbacktracking eigenvalues under node removal: X-centrality and targeted immunization". SIAM Journal on Mathematics of Data Science. 2021.
         </li>
 
         <li class="bibitem" data-nodeid="3">
-        Bar. "Foo". Bug.
+        2. Bar. "Foo". Bug.
         </li>
 
         </ol>
@@ -136,9 +141,9 @@ def test_theorem_within_section():
 
         <div class="theorem" data-nodeid="2">
 
-        <div class="theorem-contents">
+        <div class="paragraph hr-label">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 
@@ -191,9 +196,9 @@ def test_two_theorems_same_section():
 
         <div class="theorem" data-nodeid="2">
 
-        <div class="theorem-contents">
+        <div class="paragraph hr-label">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 
@@ -201,9 +206,9 @@ def test_two_theorems_same_section():
 
         <div class="theorem" data-nodeid="3">
 
-        <div class="theorem-contents">
+        <div class="paragraph hr-label">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.2.</strong></span></p>
+        <p><span class="span label">Theorem 1.2.</span></p>
 
         </div>
 
@@ -260,9 +265,9 @@ def test_two_theorems_different_sections():
 
         <div class="theorem" data-nodeid="2">
 
-        <div class="theorem-contents">
+        <div class="paragraph hr-label">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 
@@ -276,9 +281,9 @@ def test_two_theorems_different_sections():
 
         <div class="theorem" data-nodeid="4">
 
-        <div class="theorem-contents">
+        <div class="paragraph hr-label">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 2.1.</strong></span></p>
+        <p><span class="span label">Theorem 2.1.</span></p>
 
         </div>
 
@@ -332,9 +337,9 @@ def test_two_theorems_same_section_nonum():
 
         <div class="theorem" data-nodeid="2">
 
-        <div class="theorem-contents">
+        <div class="paragraph hr-label">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem.</strong></span></p>
+        <p><span class="span label">Theorem.</span></p>
 
         </div>
 
@@ -342,9 +347,9 @@ def test_two_theorems_same_section_nonum():
 
         <div class="theorem" data-nodeid="3">
 
-        <div class="theorem-contents">
+        <div class="paragraph hr-label">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 
@@ -394,9 +399,9 @@ def test_theorem_inside_section_with_nonum():
 
         <div class="theorem" data-nodeid="2">
 
-        <div class="theorem-contents">
+        <div class="paragraph hr-label">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.</strong></span></p>
+        <p><span class="span label">Theorem 1.</span></p>
 
         </div>
 
@@ -453,9 +458,9 @@ def test_theorem_inside_subsection():
 
         <div class="theorem" data-nodeid="3">
 
-        <div class="theorem-contents">
+        <div class="paragraph hr-label">
 
-        <p class="paragraph theorem__title"><span class="span"><strong>Theorem 1.1.</strong></span></p>
+        <p><span class="span label">Theorem 1.1.</span></p>
 
         </div>
 

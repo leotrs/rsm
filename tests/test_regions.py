@@ -26,11 +26,15 @@ def test_inline_cannot_contain_block():
         <h1>My Title</h1>
         <span class="error" data-nodeid="1">[CST error at (3, 0) - (3, 42)]</span>
         <section class="section level-2" data-nodeid="2">
-        
+
         <h2>1. </h2>
-        
-        <p class="paragraph" data-nodeid="3">with a block.</p>
-        
+
+        <div class="paragraph" data-nodeid="3">
+
+        <p>with a block.</p>
+
+        </div>
+
         </section>
         <span class="error" data-nodeid="5">[CST error at (5, 0) - (5, 2)]</span>
         </section>
@@ -66,13 +70,21 @@ def test_paragraph_ends_at_block():
 
         <h1>My Title</h1>
 
-        <p class="paragraph" data-nodeid="1">This paragraph will terminate before the section starts</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This paragraph will terminate before the section starts</p>
+
+        </div>
 
         <section class="section level-2" data-nodeid="3">
 
         <h2>1. </h2>
 
-        <p class="paragraph" data-nodeid="4">And this is inside the section.</p>
+        <div class="paragraph" data-nodeid="4">
+
+        <p>And this is inside the section.</p>
+
+        </div>
 
         </section>
 

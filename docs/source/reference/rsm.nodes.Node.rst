@@ -1,4 +1,4 @@
-Node
+﻿Node
 ====
 
 Qualified name: ``rsm.nodes.Node``
@@ -46,7 +46,10 @@ Qualified name: ``rsm.nodes.Node``
      ~Node.nodeid
      ~Node.label
      ~Node.types
+     ~Node.handrail_depth
      ~Node.number
      ~Node.nonum
      ~Node.reftext_template
+     ~Node.start_point
+     ~Node.end_point
    

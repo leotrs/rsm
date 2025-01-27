@@ -1,4 +1,5 @@
 from conftest import compare_have_want
+
 import rsm
 
 
@@ -7,7 +8,7 @@ def test_mechanism():
     node = cls()
     assert node.classreftext == cls.classreftext
     assert node.reftext_template == cls.classreftext
-    assert node.reftext == "Section "
+    assert node.reftext == "Section"
 
     node.reftext_template = "foobar"
     assert node.classreftext == cls.classreftext
@@ -27,11 +28,30 @@ def test_mechanism():
     assert node.reftext == "1"
 
 
+def test_defaults():
+    t = rsm.nodes.Theorem()
+    assert t.reftext.strip() == "Theorem"
+    p = rsm.nodes.Proof()
+    assert p.reftext.strip() == "Proof"
+    s = rsm.nodes.Step()
+    assert s.reftext.strip() == "Step ⟨⟩"
+    m = rsm.nodes.MathBlock()
+    assert m.reftext.strip() == "()"
+
+
+def test_nonum():
+    s = rsm.nodes.Step(nonum=True)
+    assert s.reftext.strip() == "Step ⟨None⟩"
+    m = rsm.nodes.MathBlock(nonum=True)
+    assert m.reftext.strip() == "(None)"
+
+
 def test_simple():
     compare_have_want(
         have="""\
         :manuscript:
 
+        Some math
         :mathblock:
           :label: eqn
           :reftext: Important Equation
@@ -51,15 +71,22 @@ def test_simple():
 
         <section class="level-1">
 
-        <div id="eqn" class="mathblock" data-nodeid="1">
+        <div class="paragraph" data-nodeid="1">
+
+        <p>Some math </p>
+        <div id="eqn" class="mathblock" data-nodeid="3">
         $$
         2+2=4
         $$
-        <div class="mathblock__number">(1)</div>
+        </div>
 
         </div>
 
-        <p class="paragraph" data-nodeid="3">Here we refer to the <a class="reference" href="#eqn">Important Equation</a>.</p>
+        <div class="paragraph" data-nodeid="5">
+
+        <p>Here we refer to the <a class="reference" href="#eqn">Important Equation</a>.</p>
+
+        </div>
 
         </section>
 

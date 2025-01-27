@@ -22,7 +22,11 @@ def test_no_reftext():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This paragraph has a hyperlink <a href="https://www.apache.com">https://www.apache.com</a>.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This paragraph has a hyperlink <a href="https://www.apache.com">https://www.apache.com</a>.</p>
+
+        </div>
 
         </section>
 
@@ -53,7 +57,11 @@ def test_custom_reftext():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This is a link to <a href="https://www.apache.com"> Apache</a>.</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a link to <a href="https://www.apache.com"> Apache</a>.</p>
+
+        </div>
 
         </section>
 
@@ -84,7 +92,11 @@ def test_no_target():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This is a malformed url [CST error at (2, 24) - (2, 31)] .</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a malformed url [CST error at (2, 24) - (2, 31)] .</p>
+
+        </div>
 
         </section>
 
@@ -113,7 +125,11 @@ def test_no_target():
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">This is a malformed url with a space [CST error at (2, 37) - (2, 45)] .</p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is a malformed url with a space [CST error at (2, 37) - (2, 45)] .</p>
+
+        </div>
 
         </section>
 

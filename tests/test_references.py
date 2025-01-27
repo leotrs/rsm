@@ -1,6 +1,7 @@
 import pytest
-import rsm
 from conftest import compare_have_want
+
+import rsm
 
 
 def test_reftext():
@@ -33,11 +34,19 @@ def test_reftext():
 
         <h2>1. First</h2>
 
-        <p class="paragraph" data-nodeid="2">Content of first.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Content of first.</p>
+
+        </div>
 
         </section>
 
-        <p class="paragraph" data-nodeid="4">This is a paragraph that refers to <a class="reference" href="#sec-lbl">Section 1</a>.</p>
+        <div class="paragraph" data-nodeid="4">
+
+        <p>This is a paragraph that refers to <a class="reference" href="#sec-lbl">Section 1</a>.</p>
+
+        </div>
 
         </section>
 
@@ -80,11 +89,19 @@ def test_overwrite_reftext():
 
         <h2>1. First</h2>
 
-        <p class="paragraph" data-nodeid="2">Content of first.</p>
+        <div class="paragraph" data-nodeid="2">
+
+        <p>Content of first.</p>
+
+        </div>
 
         </section>
 
-        <p class="paragraph" data-nodeid="4">This is a paragraph that refers to <a class="reference" href="#sec-lbl">The Section</a>.</p>
+        <div class="paragraph" data-nodeid="4">
+
+        <p>This is a paragraph that refers to <a class="reference" href="#sec-lbl">The Section</a>.</p>
+
+        </div>
 
         </section>
 
@@ -115,7 +132,47 @@ def test_ref_to_unknown_label(caplog):
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1"><span class="error" data-nodeid="2">[unknown label "foo"]</span></p>
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="error" data-nodeid="2">[unknown label "foo"]</span></p>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )
+    assert "Reference to nonexistent label" in caplog.text
+
+
+def test_cite_to_unknown_label(caplog):
+    compare_have_want(
+        have="""\
+        :manuscript:
+
+        This is an unknown cite :cite:foobar::.
+
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+
+        <div class="paragraph" data-nodeid="1">
+
+        <p>This is an unknown cite [<a id="cite-0" class="reference cite unknown" href="#">[unknown label "foobar"]</a>].</p>
+
+        </div>
 
         </section>
 

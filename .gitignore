@@ -151,3 +151,9 @@ wheelhouse/
 tests/visual/backstop_data/html_report/
 tests/visual/backstop_data/bitmaps_test/
 tests/visual/rsm_data/*.html
+
+# flake stuff
+.flake8
+
+# stupid mac stuff
+.DS_Store

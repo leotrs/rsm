@@ -10,7 +10,7 @@ import rsm
 TEMPLATE = """
 
 def {test_name}():
-    compare_have_want(
+    {function}(
         have=\"\"\"
 {source}
         \"\"\",
@@ -40,6 +40,9 @@ def main(file_path, test_path, test_name, handrails=False):
         file.write(
             TEMPLATE.format(
                 test_name=test_name,
+                function="compare_have_want_handrails"
+                if handrails
+                else "compare_have_want",
                 source=indent(source.strip(), "        "),
                 target=indent(target.strip(), "        "),
             )

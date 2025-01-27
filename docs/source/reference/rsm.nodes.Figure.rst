@@ -1,4 +1,4 @@
-Figure
+﻿Figure
 ======
 
 Qualified name: ``rsm.nodes.Figure``
@@ -26,7 +26,10 @@ Qualified name: ``rsm.nodes.Figure``
      ~Figure.nodeid
      ~Figure.label
      ~Figure.types
+     ~Figure.handrail_depth
      ~Figure.number
      ~Figure.nonum
      ~Figure.reftext_template
+     ~Figure.start_point
+     ~Figure.end_point
    

@@ -1,4 +1,4 @@
-Error
+﻿Error
 =====
 
 Qualified name: ``rsm.nodes.Error``
@@ -24,7 +24,10 @@ Qualified name: ``rsm.nodes.Error``
      ~Error.nodeid
      ~Error.label
      ~Error.types
+     ~Error.handrail_depth
      ~Error.number
      ~Error.nonum
      ~Error.reftext_template
+     ~Error.start_point
+     ~Error.end_point
    

@@ -383,7 +383,7 @@ def test_simple_caption():
         </tbody>
 
         <caption>
-        <span class="span"><strong>Table 1. </strong></span>This is a caption.
+        <span class="label">Table 1. </span>This is a caption.
         </caption>
 
         </table>
@@ -442,7 +442,7 @@ def test_simple_caption_with_shortcuts():
         </tbody>
 
         <caption>
-        <span class="span"><strong>Table 1. </strong></span>This is a <span class="span" data-nodeid="10"><em>caption</em></span> with shortcuts <span class="math" data-nodeid="13">\(2+2\)</span>.
+        <span class="label">Table 1. </span>This is a <span class="span" data-nodeid="10"><em>caption</em></span> with shortcuts <span class="math" data-nodeid="13">\(2+2\)</span>.
         </caption>
 
         </table>
@@ -503,7 +503,11 @@ def test_reference_to_table():
 
         </table>
 
-        <p class="paragraph" data-nodeid="8">This <a class="reference" href="#lbl">Table 1</a> refers to the table.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>This <a class="reference" href="#lbl">Table 1</a> refers to the table.</p>
+
+        </div>
 
         </section>
 
@@ -561,7 +565,11 @@ def test_reference_to_table_with_reftext():
 
         </table>
 
-        <p class="paragraph" data-nodeid="8">This <a class="reference" href="#lbl">refers</a> to the table.</p>
+        <div class="paragraph" data-nodeid="8">
+
+        <p>This <a class="reference" href="#lbl">refers</a> to the table.</p>
+
+        </div>
 
         </section>
 
@@ -702,7 +710,7 @@ def test_real_life_example():
         </tbody>
 
         <caption>
-        <span class="span"><strong>Table 1. </strong></span>Values of <span class="math" data-nodeid="36">\(\epsilon\)</span> and <span class="math" data-nodeid="39">\(\delta\)</span> for select subgraphs of Gr-Qc.
+        <span class="label">Table 1. </span>Values of <span class="math" data-nodeid="36">\(\epsilon\)</span> and <span class="math" data-nodeid="39">\(\delta\)</span> for select subgraphs of Gr-Qc.
         </caption>
 
         </table>
@@ -799,7 +807,7 @@ def test_real_life_example_different_spacing():
         </tbody>
 
         <caption>
-        <span class="span"><strong>Table 1. </strong></span>Values of <span class="math" data-nodeid="36">\(\epsilon\)</span> and <span class="math" data-nodeid="39">\(\delta\)</span> for select subgraphs of Gr-Qc.
+        <span class="label">Table 1. </span>Values of <span class="math" data-nodeid="36">\(\epsilon\)</span> and <span class="math" data-nodeid="39">\(\delta\)</span> for select subgraphs of Gr-Qc.
         </caption>
 
         </table>

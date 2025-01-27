@@ -1,0 +1,74 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_empty_0__0_phone.png",
+        "test": "../bitmaps_test/20240516-221214/backstop_default_empty_0__0_phone.png",
+        "selector": "",
+        "fileName": "backstop_default_empty_0__0_phone.png",
+        "label": "empty",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "rsm_data/empty.html",
+        "expect": 0,
+        "viewportLabel": "phone",
+        "engineErrorMsg": "Protocol error (Page.navigate): Cannot navigate to invalid URL",
+        "error": "Reference file not found /Users/leo.torres/rsm/tests/visual/backstop_data/bitmaps_reference/backstop_default_empty_0__0_phone.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_empty_0__1_tablet.png",
+        "test": "../bitmaps_test/20240516-221214/backstop_default_empty_0__1_tablet.png",
+        "selector": "",
+        "fileName": "backstop_default_empty_0__1_tablet.png",
+        "label": "empty",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "rsm_data/empty.html",
+        "expect": 0,
+        "viewportLabel": "tablet",
+        "engineErrorMsg": "Protocol error (Page.navigate): Cannot navigate to invalid URL",
+        "error": "Reference file not found /Users/leo.torres/rsm/tests/visual/backstop_data/bitmaps_reference/backstop_default_empty_0__1_tablet.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_paragraph_0__0_phone.png",
+        "test": "../bitmaps_test/20240516-221214/backstop_default_paragraph_0__0_phone.png",
+        "selector": "",
+        "fileName": "backstop_default_paragraph_0__0_phone.png",
+        "label": "paragraph",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "rsm_data/paragraph.html",
+        "expect": 0,
+        "viewportLabel": "phone",
+        "engineErrorMsg": "Protocol error (Page.navigate): Cannot navigate to invalid URL",
+        "error": "Reference file not found /Users/leo.torres/rsm/tests/visual/backstop_data/bitmaps_reference/backstop_default_paragraph_0__0_phone.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "../bitmaps_reference/backstop_default_paragraph_0__1_tablet.png",
+        "test": "../bitmaps_test/20240516-221214/backstop_default_paragraph_0__1_tablet.png",
+        "selector": "",
+        "fileName": "backstop_default_paragraph_0__1_tablet.png",
+        "label": "paragraph",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 0.1,
+        "url": "rsm_data/paragraph.html",
+        "expect": 0,
+        "viewportLabel": "tablet",
+        "engineErrorMsg": "Protocol error (Page.navigate): Cannot navigate to invalid URL",
+        "error": "Reference file not found /Users/leo.torres/rsm/tests/visual/backstop_data/bitmaps_reference/backstop_default_paragraph_0__1_tablet.png"
+      },
+      "status": "fail"
+    }
+  ],
+  "id": "backstop_default"
+}

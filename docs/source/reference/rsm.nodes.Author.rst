@@ -1,4 +1,4 @@
-Author
+﻿Author
 ======
 
 Qualified name: ``rsm.nodes.Author``
@@ -28,7 +28,10 @@ Qualified name: ``rsm.nodes.Author``
      ~Author.nodeid
      ~Author.label
      ~Author.types
+     ~Author.handrail_depth
      ~Author.number
      ~Author.nonum
      ~Author.reftext_template
+     ~Author.start_point
+     ~Author.end_point
    

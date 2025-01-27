@@ -22,11 +22,23 @@ def test_render(tmp_path):
 
         <section class="level-1">
 
-        <p class="paragraph" data-nodeid="1">Foo.</p>
+        <div class="paragraph" data-nodeid="1">
 
-        <p class="paragraph" data-nodeid="3">Bar.</p>
+        <p>Foo.</p>
 
-        <p class="paragraph" data-nodeid="5">Baz.</p>
+        </div>
+
+        <div class="paragraph" data-nodeid="3">
+
+        <p>Bar.</p>
+
+        </div>
+
+        <div class="paragraph" data-nodeid="5">
+
+        <p>Baz.</p>
+
+        </div>
 
         </section>
 

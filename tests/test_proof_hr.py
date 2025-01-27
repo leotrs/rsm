@@ -989,7 +989,7 @@ def test_sub_step():
 
         </div>
 
-        <div class="subproof hr hr-offset hr-shift-1" tabindex=0 data-nodeid="6">
+        <div class="subproof hr hr-offset hr-shift-1" data-nodeid="6">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>
@@ -1185,7 +1185,7 @@ def test_sub_step():
 
         </div>
 
-        <div class="subproof hr hr-offset hr-shift-1" tabindex=0 data-nodeid="11">
+        <div class="subproof hr hr-offset hr-shift-1" data-nodeid="11">
 
         <div class="hr-collapse-zone">
         <div class="hr-spacer"></div>

@@ -32,13 +32,10 @@ export function createTooltips() {
 	    let clone = undefined;
             let content = "";
 
-            if (tag == "P") {
+            if (["P", "LI", "FIGURE"].includes(tag)) {
                 content = $(target).html();
                 content = `<div>${content}</div>`;
-            } else if (tag == "LI") {
-                content = $(target).html();
-                content = `<div>${content}</div>`;
-	    } else if (tag == "SPAN" && classes.contains("math")) {
+            } else if (tag == "SPAN" && classes.contains("math")) {
                 content = $(target).html();
                 content = `<div>${content}</div>`;
 	    } else if (tag == "SPAN") {
@@ -46,18 +43,12 @@ export function createTooltips() {
                 content = `<div>${content}</div>`;
 	    } else if (tag == "DT") {
 		content = $(target).next().html();
-            } else if (tag == "FIGURE") {
-                content = $(target).html();
             } else if (tag == "TABLE") {
 		content = $(target)[0].outerHTML;
             } else if (tag == "SECTION") {
                 clone = $(target).clone();
                 clone.children().slice(2).remove();
-		clone.find(".hr-collapse-zone").remove();
-		clone.find(".hr-menu-zone").remove();
-		clone.find(".hr-border-zone").remove();
-                clone.find(".hr-spacer-zone").remove();
-		clone.find(".hr-info-zone").remove();
+                stripHandrail(clone);
                 clone.css('font-size', '0.7rem');
                 content = clone.html();
             } else if (tag == "A") {
@@ -67,50 +58,20 @@ export function createTooltips() {
                 switch(true) {
                 case classes.contains("step"):
 		    clone = $(target).find(".statement").clone();
-		    clone.find(".hr-collapse-zone").remove();
-		    clone.find(".hr-menu-zone").remove();
-		    clone.find(".hr-border-zone").remove();
-                    clone.find(".hr-spacer-zone").remove();
-		    clone.find(".hr-info-zone").remove();
+		    stripHandrail(clone);
                     clone.css('font-size', '0.7rem');
                     content = clone.html();
                     break;
-		case ["theorem", "proposition"].some(cls => classes.contains(cls)):
-		    clone = $(target).clone();
-		    clone.find(".hr-collapse-zone").remove();
-		    clone.find(".hr-menu-zone").remove();
-		    clone.find(".hr-border-zone").remove();
-                    clone.find(".hr-spacer-zone").remove();
-		    clone.find(".hr-info-zone").remove();
-                    content = clone.html();
-		    break;
-                case classes.contains("math"):
+                case Array.from(classes).filter(cls => ["math", "algorithm"].includes(cls)).length > 0:
                     content = $(target).html();
                     break;
-                case classes.contains("mathblock"):
+		case Array.from(classes).filter(cls => ["paragraph", "mathblock", "theorem", "proposition", "remark", "bibitem"].includes(cls)).length > 0:
 		    clone = $(target).clone();
-		    clone.find(".hr-collapse-zone").remove();
-		    clone.find(".hr-menu-zone").remove();
-		    clone.find(".hr-border-zone").remove();
-                    clone.find(".hr-spacer-zone").remove();
-		    clone.find(".hr-info-zone").remove();
-                    content = clone.html();
-                    break;
-		case classes.contains("algorithm"):
-                    content = $(target).html();
-                    break;
-		case classes.contains("paragraph"):
-		    clone = $(target).clone();
-		    clone.find(".hr-collapse-zone").remove();
-		    clone.find(".hr-menu-zone").remove();
-		    clone.find(".hr-border-zone").remove();
-                    clone.find(".hr-spacer-zone").remove();
-		    clone.find(".hr-info-zone").remove();
+                    stripHandrail(clone);
 		    content = $(clone).html();
 		    break;
                 case true:
-                    console.log("tooltip target DIV with unknown class: ")
-                    console.log(classes);
+                    console.log(`tooltip target DIV with unknown class: ${classes}`)
                 }
             } else {
 		console.log(`tooltip target with unknown tag ${tag}`);
@@ -127,4 +88,13 @@ export function createTooltips() {
     else {
         console.log('updated but did not find Mathjax.typeset');
     }
+}
+
+
+function stripHandrail(hr) {
+    hr.find(".hr-collapse-zone").remove();
+    hr.find(".hr-menu-zone").remove();
+    hr.find(".hr-border-zone").remove();
+    hr.find(".hr-spacer-zone").remove();
+    hr.find(".hr-info-zone").remove();
 }

@@ -879,7 +879,7 @@ class Translator:
 
     def _make_ahref_tag_text(
         self,
-        node: nodes.BaseReference,
+        node: nodes.BaseReference | nodes.Cite,
         target: nodes.Node,
         href_text: str,
         label: str = "",
@@ -990,16 +990,17 @@ class Translator:
         return batch
 
     def visit_cite(self, node: nodes.Cite) -> EditCommand:
+        classes = ["cite"]
         if len(node.targets) == 1:
             t = node.targets[0]
+            if isinstance(node.targets[0], nodes.UnknownBibitem):
+                classes.append("unknown")
             text = self._make_ahref_tag_text(
                 node,
                 t,
                 f"#{t.label}",
                 id_=node.label,
-                additional_classes=["unknown"]
-                if isinstance(node.targets[0], nodes.UnknownBibitem)
-                else [],
+                additional_classes=classes,
             )
         else:
             tags = [
@@ -1008,7 +1009,7 @@ class Translator:
                     t,
                     f"#{t.label}",
                     id_=f"{node.label}-{idx}",
-                    additional_classes=["cite"],
+                    additional_classes=classes,
                 )
                 for idx, t in enumerate(node.targets)
             ]

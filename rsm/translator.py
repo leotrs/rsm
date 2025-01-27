@@ -1028,6 +1028,8 @@ class Translator:
 
     def visit_bibitem(self, node: nodes.Bibitem) -> EditCommand:
         items = [node.author, f'"{node.title}"']
+        if node.number:
+            items.insert(0, f"{node.number}.")
         if node.kind == "article":
             if node.journal:
                 items.append(node.journal)

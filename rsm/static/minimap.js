@@ -9,11 +9,11 @@ export function setup() {
     const items = document.querySelectorAll('ul.contents li.item');
     const num_items = items.length;
     items.forEach((item, idx) => {
-	item.addEventListener('mouseenter', () => {
-	    let percent = (idx + 1) / num_items * 100;
-            document.getElementById("stop-follow-mouse-1").setAttribute("offset", `${percent}%`);
-	    document.getElementById("stop-follow-mouse-2").setAttribute("offset", `${percent}%`);
-	});
+        let percent = (idx + 1) / num_items * 100;
+	item.addEventListener('mouseenter', () => { highlightMinimap(percent, "mouse") });
+        item.querySelectorAll("a.reference").forEach(
+            a => a.addEventListener('focus', () => { highlightMinimap(percent, "mouse") })
+        );
     });
 
     // Floating minimap
@@ -28,7 +28,8 @@ export function setup() {
     });
     window.addEventListener('scroll', () => {
 	const mm = document.querySelector(".float-minimap-wrapper > .minimap");
-	if (mm.classList.contains("hide")) return;
+        const isHidden = mm.classList.contains("hide") || getComputedStyle(mm).display == "none" || getComputedStyle(mm.parentElement).display == "none";
+	if (isHidden) return;
 
 	const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 	const sections = document.querySelectorAll('section');
@@ -43,8 +44,7 @@ export function setup() {
 	} else {
 	    percent = 0;
 	};
-	document.getElementById("stop-follow-scroll-1").setAttribute("offset", `${percent}%`);
-	document.getElementById("stop-follow-scroll-2").setAttribute("offset", `${percent}%`);
+        highlightMinimap(percent, 'scroll');
     });
 
 }
@@ -59,3 +59,9 @@ function withinView(el, top = true) {
 	return rect.top < viewportHeight && rect.bottom > 0;
     };
 };
+
+
+function highlightMinimap(percent, name) {
+    document.getElementById(`stop-follow-${name}-1`).setAttribute("offset", `${percent}%`);
+    document.getElementById(`stop-follow-${name}-2`).setAttribute("offset", `${percent}%`);
+}

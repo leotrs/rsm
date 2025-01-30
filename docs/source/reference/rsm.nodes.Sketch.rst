@@ -1,4 +1,4 @@
-﻿Sketch
+Sketch
 ======
 
 Qualified name: ``rsm.nodes.Sketch``
@@ -21,7 +21,7 @@ Qualified name: ``rsm.nodes.Sketch``
 
    .. autosummary::
      
-     ~Sketch.possible_parents
+     ~Sketch.has_handrail
      ~Sketch.nodeid
      ~Sketch.label
      ~Sketch.types

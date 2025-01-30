@@ -296,20 +296,20 @@ class Node:
         Output meta for even more debugging information.
 
         >>> print(msc.sexp(meta=True))
-        (Manuscript { :reftext: Manuscript  }
-          (Section { :reftext: Section  }
-            (Paragraph { :reftext: Paragraph  }
-              (Text { :reftext: Text  })))
-          (Section { :reftext: Section  }
-            (Subsection { :reftext: Section  }
-              (Paragraph { :reftext: Paragraph  }
-                (Text { :reftext: Text  }))
-              (Paragraph { :reftext: Paragraph  }
-                (Span { :reftext: Span , :strong: True }
-                  (Text { :reftext: Text  })))))
-          (Section { :reftext: Section  }
-            (Paragraph { :reftext: Paragraph  }
-              (Text { :reftext: Text  }))))
+        (Manuscript { :reftext: Manuscript }
+          (Section { :reftext: Section }
+            (Paragraph { :reftext: Paragraph }
+              (Text { :reftext: Text })))
+          (Section { :reftext: Section }
+            (Subsection { :reftext: Section }
+              (Paragraph { :reftext: Paragraph }
+                (Text { :reftext: Text }))
+              (Paragraph { :reftext: Paragraph }
+                (Span { :reftext: Span, :strong: True }
+                  (Text { :reftext: Text })))))
+          (Section { :reftext: Section }
+            (Paragraph { :reftext: Paragraph }
+              (Text { :reftext: Text }))))
 
         Use `ignore_meta_keys` for a less verbose output.
 

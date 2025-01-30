@@ -62,6 +62,13 @@ export function setup () {
         }
     });
 
+    // Math functions
+    document.addEventListener('keydown', (event) => {
+        if (event.key == "a") {
+            highlightSymbols(document.activeElement);
+        }
+    });
+
 }
 
 
@@ -310,4 +317,13 @@ function maybeScrollToMiddle(element, direction) {
         top: scrollAmount,
         behavior: 'smooth',
     });
+}
+
+
+function highlightSymbols(el) {
+    if (!el) return;
+
+    const qry = `.let.assumption`;
+    document.querySelectorAll(qry).forEach(el => el.classList.add("hilite"));
+
 }

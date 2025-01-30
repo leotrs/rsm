@@ -12,12 +12,10 @@ export function setup() {
 	});
     });
     document.querySelectorAll(".hr > .hr-border-zone > .hr-border-dots").forEach(dots => {
-	dots.addEventListener("click", function () {
+	dots.addEventListener("click", function (ev) {
             const siblings = Array.from(this.parentElement.parentElement.children);
             const target = siblings.find(sibling => sibling.classList.contains("hr-menu-zone"));
-            if (target) {
-		target.style.display = "block";
-            }
+            if (target) { target.style.display = "block" };
 	});
     });
 

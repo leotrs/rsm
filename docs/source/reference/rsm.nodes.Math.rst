@@ -1,4 +1,4 @@
-﻿Math
+Math
 ====
 
 Qualified name: ``rsm.nodes.Math``

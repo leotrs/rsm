@@ -1,4 +1,4 @@
-﻿Node
+Node
 ====
 
 Qualified name: ``rsm.nodes.Node``
@@ -37,6 +37,7 @@ Qualified name: ``rsm.nodes.Node``
      ~Node.children
      ~Node.classreftext
      ~Node.full_number
+     ~Node.has_handrail
      ~Node.newmetakeys
      ~Node.number_as
      ~Node.number_within

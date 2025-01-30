@@ -37,7 +37,7 @@ export async function onload(path = "/static/") {
             console.error("Loading tooltips FAILED!", err);
         }
 
-        // Classes
+        // Handrails
         try {
             const hr = await import(`${path}handrails.js`);
             hr.setup();
@@ -60,6 +60,15 @@ export async function onload(path = "/static/") {
         } catch (err) {
             console.error("Loading minimap.js FAILED!", err);
         }
+
+        // Icons
+        try {
+            const icons = await import(`${path}icons.js`);
+            icons.setup();
+        } catch (err) {
+            console.error("Loading icons.js FAILED!", err);
+        }
+
     } catch (err) {
         console.error("An error occurred during initialization:", err);
     }

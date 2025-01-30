@@ -168,6 +168,7 @@
 
   --text-disabled: var(--gray-400);
   --text-keyword: var(--primary-700);
+  --text-hilite-bg: var(--secondary-200);
 
   /* Type */
   --body-line-height: 1.5;
@@ -602,10 +603,16 @@
   .hr-label {
     padding-block: 8px;
     border-bottom: 1px solid var(--border-primary);
+    margin-bottom: 8px;
 
     span.label {font-weight: var(--weight-semi);}
 
   }
+}
+
+/* Labeled paragraphs */
+.manuscriptwrapper .pg-label {
+  font-weight: var(--weight-semi);
 }
 
 
@@ -774,6 +781,12 @@
     display: inline-block;
   }
 
+}
+
+
+/* Highlighting */
+.manuscriptwrapper .hilite {
+  background-color: var(--text-hilite-bg);
 }
 
 

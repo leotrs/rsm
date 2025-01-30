@@ -1,4 +1,4 @@
-﻿Manuscript
+Manuscript
 ==========
 
 Qualified name: ``rsm.nodes.Manuscript``

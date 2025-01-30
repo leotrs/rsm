@@ -668,17 +668,18 @@ class Translator:
         # In the second case, the paragraph contains a mathblock and this is the last
         # child of the paragraph.  In this case, we want to append
         #
-        # <div class="paragraph"><p>...paragraph contents...</p>
-        # <div class="mathblock">...math contents...</div>
+        # <div class="paragraph">
+        #   <p>...paragraph contents...</p>
+        #   <div class="mathblock">...math contents...</div>
         # </div>
         #
         # In the third case, the mathblock is not the last child of the paragraph, and
         # in this case we need to append
         #
         # <div class="paragraph">
-        # <p>...paragraph contents...</p>
-        # <div class="mathblock">...math contents...</div>
-        # <p>...more paragraph contents...</p>
+        #   <p>...paragraph contents...</p>
+        #   <div class="mathblock">...math contents...</div>
+        #   <p>...more paragraph contents...</p>
         # </div>
         #
         # Importantly, all cases start with two opening tags `<div><p>` but only the
@@ -687,25 +688,22 @@ class Translator:
         # does not correspond to the tag opened at the start of the paragraph.
         #
         # A paragraph cannot start with a mathblock.
-        #
-        contains_block = False
-        for _ in node.traverse(nodeclass=nodes.MathBlock):
-            contains_block = True
-
-        if contains_block:
-            return AppendBatchAndDefer(
-                [
-                    AppendNodeTag(node, "div"),
-                    AppendOpenTagManualClose(tag="p", newline_inner=False),
-                ]
-            )
+        items: list[EditCommand] = [AppendNodeTag(node, "div")]  #
+        if node.first_of_type(nodes.MathBlock):
+            items.append(AppendOpenTagManualClose(tag="p", newline_inner=False))
         else:
-            return AppendBatchAndDefer(
-                [
-                    AppendNodeTag(node, "div"),
-                    AppendOpenTag(tag="p", newline_inner=False),
-                ]
+            items.append(AppendOpenTag(tag="p", newline_inner=False))
+
+        # Now we're inside the <p> tag in the appropriate way, make sure to add the
+        # title, if it exists.
+        if node.title:
+            items.append(
+                AppendOpenCloseTag(
+                    tag="span", content=f"{node.title}.", classes=["pg-label"]
+                )
             )
+
+        return AppendBatchAndDefer(items)
 
     def visit_step(self, node: nodes.Step) -> EditCommand:
         return AppendNodeTag(node)

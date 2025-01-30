@@ -1,4 +1,4 @@
-﻿Theorem
+Theorem
 =======
 
 Qualified name: ``rsm.nodes.Theorem``
@@ -22,6 +22,7 @@ Qualified name: ``rsm.nodes.Theorem``
    .. autosummary::
      
      ~Theorem.autonumber
+     ~Theorem.has_handrail
      ~Theorem.newmetakeys
      ~Theorem.title
      ~Theorem.nodeid

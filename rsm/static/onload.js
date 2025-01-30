@@ -7,34 +7,19 @@ export async function onload(path = "/static/") {
     try {
         const libs = await import(`${path}libraries.js`);
 
+        // Icons
+        try {
+            const icons = await import(`${path}icons.js`);
+            icons.setup();
+        } catch (err) {
+            console.error("Loading icons.js FAILED!", err);
+        }
+
         // MathJax
         try {
             const math = await libs.loadMathJax();
         } catch (err) {
             console.error("Loading MathJax FAILED!", err);
-        }
-
-        // Pseudocode
-        try {
-            await libs.loadPseudocode();
-
-            const elements = document.querySelectorAll("pre.pseudocode");
-            if (elements.length) {
-                pseudocode.renderElement(elements[0], {
-                    lineNumber: true,
-                    noEnd: true,
-                });
-            }
-        } catch (err) {
-            console.error("Loading pseudocode FAILED!", err);
-        }
-
-        // Tooltipster
-        try {
-            const tips = await import(`${path}tooltips.js`);
-            tips.createTooltips();
-        } catch (err) {
-            console.error("Loading tooltips FAILED!", err);
         }
 
         // Handrails
@@ -53,6 +38,21 @@ export async function onload(path = "/static/") {
             console.error("Loading keyboard.js FAILED!", err);
         }
 
+        // Pseudocode
+        try {
+            await libs.loadPseudocode();
+
+            const elements = document.querySelectorAll("pre.pseudocode");
+            if (elements.length) {
+                pseudocode.renderElement(elements[0], {
+                    lineNumber: true,
+                    noEnd: true,
+                });
+            }
+        } catch (err) {
+            console.error("Loading pseudocode FAILED!", err);
+        }
+
         // Minimap
         try {
             const mm = await import(`${path}minimap.js`);
@@ -61,12 +61,12 @@ export async function onload(path = "/static/") {
             console.error("Loading minimap.js FAILED!", err);
         }
 
-        // Icons
+        // Tooltipster
         try {
-            const icons = await import(`${path}icons.js`);
-            icons.setup();
+            const tips = await import(`${path}tooltips.js`);
+            tips.createTooltips();
         } catch (err) {
-            console.error("Loading icons.js FAILED!", err);
+            console.error("Loading tooltips FAILED!", err);
         }
 
     } catch (err) {

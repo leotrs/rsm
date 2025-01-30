@@ -71,7 +71,7 @@ function openHandrail(hr) {
     hr.classList.remove("hr-collapsed");
     const rest = getRest(hr);
     rest.forEach(el => { el.classList.remove("hide"); });
-    const icon = hr.querySelector("& .icon-wrapper.expand");
+    const icon = hr.querySelector("& .icon.expand");
     if (!icon) return;
     icon.classList.remove("expand");
     icon.classList.add("collapse");
@@ -89,7 +89,7 @@ function closeHandrail(hr) {
     hr.classList.add("hr-collapsed");
     const rest = getRest(hr);
     rest.forEach(el => { el.classList.add("hide"); });
-    const icon = hr.querySelector("& .icon-wrapper.collapse");
+    const icon = hr.querySelector("& .icon.collapse");
     if (!icon) return;
     icon.classList.remove("collapse");
     icon.classList.add("expand");
@@ -125,7 +125,7 @@ export function collapseAll(target, withinSubproof = true) {
     }
 
     const hr = target.closest(".hr");
-    const ex_icon = hr.querySelector("& .icon-wrapper.expand-all");
+    const ex_icon = hr.querySelector("& .icon.expand-all");
     if (ex_icon) {
         hr.querySelectorAll(qry).forEach(st => openHandrail(st));
 	ex_icon.classList.remove("expand-all");
@@ -142,7 +142,7 @@ export function collapseAll(target, withinSubproof = true) {
 	return;
     }
 
-    const co_icon = hr.querySelector("& .icon-wrapper.collapse-all");
+    const co_icon = hr.querySelector("& .icon.collapse-all");
     if (co_icon) {
         hr.querySelectorAll(qry).forEach(st => closeHandrail(st));
 	co_icon.classList.remove("collapse-all");
@@ -171,7 +171,7 @@ async function copyLink(target) {
     } else {
         const section = hr.closest("section");
         if (!section.classList.contains("level-1")) {
-            anchor = section.parentElement.id;
+            anchor = section.id;
         } else {
             needs_anchor = false;
         }
@@ -195,7 +195,7 @@ function makeToast(text, style) {
     toast.className = `toast ${style}`
 
     const icon = document.createElement("span");
-    icon.className = `icon-wrapper ${style}`;
+    icon.className = `icon ${style}`;
     toast.appendChild(icon);
 
     switch(style) {
@@ -226,7 +226,7 @@ function makeToast(text, style) {
     toast.appendChild(spacer);
 
     const close = document.createElement("span");
-    close.className = "icon-wrapper close";
+    close.className = "icon close";
     close.innerHTML = `
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
           <path d="M13 1L1 13M1 1L13 13" stroke-linecap="round" stroke-linejoin="round"/>

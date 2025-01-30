@@ -182,19 +182,19 @@ function focusUpOrDown(direction) {
 
     // Otherwise, just traverse the focusable elements in order.
     index = focusableElements.indexOf(current);
-    let nextElement;
+    let target;
     if (index !== -1) {
         if (direction == "up") {
             for (const el of focusableElements.slice(0, index).reverse()) {
                 if (el.parentElement == current.parentElement) {
-                    nextElement = el;
+                    target = el;
                     break;
                 }
             }
         } else if (direction == "down") {
             for (const el of focusableElements.slice(index + 1)) {
                 if (el.parentElement == current.parentElement) {
-                    nextElement = el;
+                    target = el;
                     break;
                 }
             }
@@ -202,9 +202,9 @@ function focusUpOrDown(direction) {
             console.log(`unknown direction ${direction}`);
         }
     }
-    if (nextElement) {
-        nextElement.focus();
-        maybeScrollToMiddle(nextElement, direction);
+    if (target) {
+        target.focus();
+        maybeScrollToMiddle(target, direction);
     }
 }
 

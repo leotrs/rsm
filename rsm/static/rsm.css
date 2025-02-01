@@ -520,7 +520,9 @@
   color: var(--extra-dark);
   font-weight: var(--weight-semi);
 }
-.manuscriptwrapper .mathblock.hr:hover > .hr-info-zone p {
+.manuscriptwrapper .mathblock.hr:hover > .hr-info-zone p,
+.manuscriptwrapper .mathblock.hr:focus > .hr-info-zone p,
+.manuscriptwrapper .paragraph.hr:focus > .hr-content-zone > .mathblock > .hr-info-zone p {
   color: var(--extra-dark);
   font-weight: var(--weight-semi);
 }
@@ -661,7 +663,12 @@
 
   &.subproof {margin-block-end: 0;}
 
-  &.proof .step:hover::after {
+  &.proof {position: relative;} /*to be able to position the Halmos*/
+
+  &.proof:hover::after,
+  &.proof:focus::after,
+  &.proof .step:hover::after,
+  &.proof .step:focus::after {
     content: "";
     position: absolute;
     background: var(--text-keyword);
@@ -985,7 +992,7 @@
   .largest {font-size: 1.7281rem;}
   .huge {font-size: 2.0741rem;}
   .huger {font-size: 2.488rem;}
-  .draft {color: var(--primary-500);}
+  .draft {color: var(--secondary-600);}
 }
 
 /* @media (min-width: 70em) { */

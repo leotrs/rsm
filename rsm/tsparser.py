@@ -404,7 +404,7 @@ def _normalize_text(root):
         # Finally we handle the space between non-Text children of the paragraph, for
         # example two Spans together, or a Span followed by a Construct.  In all cases,
         # we simply insert a single space between them.
-        classes = [nodes.Span, nodes.Construct]
+        classes = [nodes.Span, nodes.Construct, nodes.Math]
         indices_to_replace = []
         if isinstance(node, nodes.Paragraph):
             for idx, child in enumerate(node.children[:-1]):

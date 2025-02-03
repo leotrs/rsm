@@ -1887,13 +1887,13 @@ def test_toc_no_labels():
                   </defs>
 
                   <g fill="url(#purple-green-scroll)">
-                    <rect x="12" width="8" height="104" />
-            <circle id="mm-" cx="16" cy="20" r="8" />
-            <circle cx="16" cy="20" r="3" fill="#FCFEFF" />
-            <circle id="mm-" cx="16" cy="52" r="8" />
-            <circle cx="16" cy="52" r="3" fill="#FCFEFF" />
-            <circle id="mm-" cx="16" cy="84" r="6" />
-            <circle cx="16" cy="84" r="3" fill="#FCFEFF" /><g>
+                    <rect x="14" y="24" width="4" height="56" />
+            <a href="#" class="reference" tabindex="-1"><circle id="mm-" cx="16" cy="20" r="8" /></a>
+            <circle cx="16" cy="20" r="4" fill="#FCFEFF" />
+            <a href="#" class="reference" tabindex="-1"><circle id="mm-" cx="16" cy="52" r="8" /></a>
+            <circle cx="16" cy="52" r="4" fill="#FCFEFF" />
+            <a href="#" class="reference" tabindex="-1"><circle id="mm-" cx="16" cy="84" r="6" /></a>
+            <circle cx="16" cy="84" r="2" fill="#FCFEFF" /></g>
         </svg>
         </div>
         </div>
@@ -2201,13 +2201,13 @@ def test_toc_no_labels():
                   </defs>
 
                   <g fill="url(#purple-green-mouse)">
-                    <rect x="12" width="8" height="104" />
+                    <rect x="14" y="24" width="4" height="56" />
             <circle cx="16" cy="20" r="8" />
-            <circle cx="16" cy="20" r="3" fill="#FCFEFF" />
+            <circle cx="16" cy="20" r="4" fill="#FCFEFF" />
             <circle cx="16" cy="52" r="8" />
-            <circle cx="16" cy="52" r="3" fill="#FCFEFF" />
+            <circle cx="16" cy="52" r="4" fill="#FCFEFF" />
             <circle cx="16" cy="84" r="6" />
-            <circle cx="16" cy="84" r="3" fill="#FCFEFF" /><g>
+            <circle cx="16" cy="84" r="2" fill="#FCFEFF" /></g>
         </svg>
         </div>
 
@@ -2523,13 +2523,13 @@ def test_toc_with_labels():
                   </defs>
 
                   <g fill="url(#purple-green-scroll)">
-                    <rect x="12" width="8" height="104" />
-            <circle id="mm-sec-1" cx="16" cy="20" r="8" />
-            <circle cx="16" cy="20" r="3" fill="#FCFEFF" />
-            <circle id="mm-sec-2" cx="16" cy="52" r="8" />
-            <circle cx="16" cy="52" r="3" fill="#FCFEFF" />
-            <circle id="mm-sub-sec" cx="16" cy="84" r="6" />
-            <circle cx="16" cy="84" r="3" fill="#FCFEFF" /><g>
+                    <rect x="14" y="24" width="4" height="56" />
+            <a href="#sec-1" class="reference" tabindex="-1"><circle id="mm-sec-1" cx="16" cy="20" r="8" /></a>
+            <circle cx="16" cy="20" r="4" fill="#FCFEFF" />
+            <a href="#sec-2" class="reference" tabindex="-1"><circle id="mm-sec-2" cx="16" cy="52" r="8" /></a>
+            <circle cx="16" cy="52" r="4" fill="#FCFEFF" />
+            <a href="#sub-sec" class="reference" tabindex="-1"><circle id="mm-sub-sec" cx="16" cy="84" r="6" /></a>
+            <circle cx="16" cy="84" r="2" fill="#FCFEFF" /></g>
         </svg>
         </div>
         </div>
@@ -2837,13 +2837,13 @@ def test_toc_with_labels():
                   </defs>
 
                   <g fill="url(#purple-green-mouse)">
-                    <rect x="12" width="8" height="104" />
+                    <rect x="14" y="24" width="4" height="56" />
             <circle cx="16" cy="20" r="8" />
-            <circle cx="16" cy="20" r="3" fill="#FCFEFF" />
+            <circle cx="16" cy="20" r="4" fill="#FCFEFF" />
             <circle cx="16" cy="52" r="8" />
-            <circle cx="16" cy="52" r="3" fill="#FCFEFF" />
+            <circle cx="16" cy="52" r="4" fill="#FCFEFF" />
             <circle cx="16" cy="84" r="6" />
-            <circle cx="16" cy="84" r="3" fill="#FCFEFF" /><g>
+            <circle cx="16" cy="84" r="2" fill="#FCFEFF" /></g>
         </svg>
         </div>
 

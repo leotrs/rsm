@@ -230,7 +230,7 @@ function focusPrevOrNext(direction) {
 
 function getFocusableElements() {
     return Array.from(
-        document.querySelector(".manuscriptwrapper").querySelectorAll('[href], [tabindex]:not([tabindex="-1"])')
+        document.querySelector(".manuscriptwrapper").querySelectorAll('[href]:not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])')
     );
 }
 

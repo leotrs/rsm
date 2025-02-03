@@ -930,7 +930,7 @@ def test_math_math():
 
         ::
         """,
-        want="""
+        want=r"""
         <body>
 
         <div class="manuscriptwrapper">

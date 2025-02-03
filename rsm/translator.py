@@ -1579,10 +1579,13 @@ class HandrailsTranslator(Translator):
             r = radii[type(ref.target)]
             id_ = f"mm-{ref.target.label}"
             if with_ids:
-                circles.append(f'<circle id="{id_}" cx="16" cy="{cy}" r="{r}" />')
+                circles.append(
+                    f'<a href="#{ref.target.label}" class="reference" tabindex="-1">'
+                    f'<circle id="{id_}" cx="16" cy="{cy}" r="{r}" /></a>'
+                )
             else:
                 circles.append(f'<circle cx="16" cy="{cy}" r="{r}" />')
-            circles.append(f'<circle cx="16" cy="{cy}" r="3" fill="#FCFEFF" />')
+            circles.append(f'<circle cx="16" cy="{cy}" r="{r-4}" fill="#FCFEFF" />')
             num += 1
         height = num * (24 + 8) + 8
         svg_start = f"""
@@ -1603,9 +1606,9 @@ class HandrailsTranslator(Translator):
           </defs>
 
           <g fill="url(#purple-green-{follow})">
-            <rect x="12" width="8" height="{height}" />\n    """
+            <rect x="14" y="24" width="4" height="{height - 48}" />\n    """
         svg_middle = "\n    ".join(circles)
-        svg_end = "<g>\n</svg>"
+        svg_end = "</g>\n</svg>"
         svg = svg_start + svg_middle + svg_end
         minimap = AppendOpenTagManualClose(classes=["minimap"])
         batch = AppendBatch([minimap, AppendText(svg), minimap.close_command()])

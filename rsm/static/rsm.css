@@ -496,6 +496,8 @@
 
     &:has(.eqn-number), &:has(.step-number) {justify-content: flex-start;}
 
+    &:has(.eqn-number) {position: relative; top: calc(100% - 16px);}
+
   }
 
   & .eqn-number, & .step-number {padding-bottom: 12px;}
@@ -675,9 +677,10 @@
     width: 8px;
     height: 8px;
     top: calc(100% - 8px);
-    left: calc(100% + 8px);
     border-radius: 2px;
   }
+  &.proof:hover::after, &.proof:focus::after {left: calc(100% + 8px - 48px);}
+  &.proof .step:hover::after, &.proof .step:focus::after {left: calc(100% + 8px);}
 
   &.step.hr-collapsed > .hr-content-zone::after {
     content: "steps hidden";
@@ -749,8 +752,9 @@
     .minimap {
       opacity: 50%;
       position: fixed;
-      top: 192px;
       left: 48px;
+      top: 50%;
+      transform: translateY(-50%);
 
       &:hover {opacity: 100%};
 

@@ -1581,11 +1581,15 @@ class HandrailsTranslator(Translator):
             if with_ids:
                 circles.append(
                     f'<a href="#{ref.target.label}" class="reference" tabindex="-1">'
-                    f'<circle id="{id_}" cx="16" cy="{cy}" r="{r}" /></a>'
+                    f'<circle id="{id_}" cx="16" cy="{cy}" r="{r}" />'
                 )
             else:
                 circles.append(f'<circle cx="16" cy="{cy}" r="{r}" />')
-            circles.append(f'<circle cx="16" cy="{cy}" r="{r-4}" fill="#FCFEFF" />')
+            circle = f'<circle cx="16" cy="{cy}" r="{r-4}" fill="#FCFEFF" />'
+            if with_ids:
+                circles.append(circle + "</a>")
+            else:
+                circles.append(circle)
             num += 1
         height = num * (24 + 8) + 8
         svg_start = f"""

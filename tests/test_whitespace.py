@@ -919,3 +919,38 @@ def test_construct_construct():
         </body>
         """,
     )
+
+
+def test_math_math():
+    compare_have_want(
+        have="""
+        :manuscript:
+
+          $2$ $2$
+
+        ::
+        """,
+        want=r"""
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+
+        <div class="paragraph" data-nodeid="1">
+
+        <p><span class="math" data-nodeid="2">\(2\)</span> <span class="math" data-nodeid="5">\(2\)</span></p>
+
+        </div>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """,
+    )

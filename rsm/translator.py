@@ -673,17 +673,18 @@ class Translator:
         # In the second case, the paragraph contains a mathblock and this is the last
         # child of the paragraph.  In this case, we want to append
         #
-        # <div class="paragraph"><p>...paragraph contents...</p>
-        # <div class="mathblock">...math contents...</div>
+        # <div class="paragraph">
+        #   <p>...paragraph contents...</p>
+        #   <div class="mathblock">...math contents...</div>
         # </div>
         #
         # In the third case, the mathblock is not the last child of the paragraph, and
         # in this case we need to append
         #
         # <div class="paragraph">
-        # <p>...paragraph contents...</p>
-        # <div class="mathblock">...math contents...</div>
-        # <p>...more paragraph contents...</p>
+        #   <p>...paragraph contents...</p>
+        #   <div class="mathblock">...math contents...</div>
+        #   <p>...more paragraph contents...</p>
         # </div>
         #
         # Importantly, all cases start with two opening tags `<div><p>` but only the
@@ -692,25 +693,22 @@ class Translator:
         # does not correspond to the tag opened at the start of the paragraph.
         #
         # A paragraph cannot start with a mathblock.
-        #
-        contains_block = False
-        for _ in node.traverse(nodeclass=nodes.MathBlock):
-            contains_block = True
-
-        if contains_block:
-            return AppendBatchAndDefer(
-                [
-                    AppendNodeTag(node, "div"),
-                    AppendOpenTagManualClose(tag="p", newline_inner=False),
-                ]
-            )
+        items: list[EditCommand] = [AppendNodeTag(node, "div")]  #
+        if node.first_of_type(nodes.MathBlock):
+            items.append(AppendOpenTagManualClose(tag="p", newline_inner=False))
         else:
-            return AppendBatchAndDefer(
-                [
-                    AppendNodeTag(node, "div"),
-                    AppendOpenTag(tag="p", newline_inner=False),
-                ]
+            items.append(AppendOpenTag(tag="p", newline_inner=False))
+
+        # Now we're inside the <p> tag in the appropriate way, make sure to add the
+        # title, if it exists.
+        if node.title:
+            items.append(
+                AppendOpenCloseTag(
+                    tag="span", content=f"{node.title}.", classes=["pg-label"]
+                )
             )
+
+        return AppendBatchAndDefer(items)
 
     def visit_step(self, node: nodes.Step) -> EditCommand:
         return AppendNodeTag(node)
@@ -1145,16 +1143,6 @@ class Translator:
 class HandrailsTranslator(Translator):
 
     svg = {
-        "rarrow": """<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-        <polyline points="9 6 15 12 9 18"></polyline>
-        </svg>""",
-        "vdots": """<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-        <circle cx="12" cy="12" r="1"></circle>
-        <circle cx="12" cy="19" r="1"></circle>
-        <circle cx="12" cy="5" r="1"></circle>
-        </svg>""",
         "link": """<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
         <path d="M6 12.0003L12 6.00031M8 3.00031L8.463 2.46431C9.40081 1.52663 10.6727 0.999906 11.9989 1C13.325 1.00009 14.5968 1.527 15.5345 2.46481C16.4722 3.40261 16.9989 4.6745 16.9988 6.00066C16.9987 7.32682 16.4718 8.59863 15.534 9.53631L15 10.0003M10.0001 15.0003L9.60314 15.5343C8.65439 16.4725 7.37393 16.9987 6.03964 16.9987C4.70535 16.9987 3.42489 16.4725 2.47614 15.5343C2.0085 15.0719 1.63724 14.5213 1.38385 13.9144C1.13047 13.3076 1 12.6565 1 11.9988C1 11.3412 1.13047 10.69 1.38385 10.0832C1.63724 9.47628 2.0085 8.92571 2.47614 8.46331L3.00014 8.00031" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>""",
@@ -1164,41 +1152,21 @@ class HandrailsTranslator(Translator):
         "code": """<svg width="18" height="16" viewBox="0 0 18 16" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
         <path d="M4.55556 4.5L1 8L4.55556 11.5M13.4444 4.5L17 8L13.4444 11.5M10.7778 1L7.22222 15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>""",
-        "vars": """<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-variable">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M5 4c-2.5 5 -2.5 10 0 16m14 -16c2.5 5 2.5 10 0 16m-10 -11h1c1 0 1 1 2.016 3.527c.984 2.473 .984 3.473 1.984 3.473h1" />
-        <path d="M8 16c1.5 0 3 -2 4 -3.5s2.5 -3.5 4 -3.5" />
-        </svg>""",
-        "widen": """<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-viewport-wide">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M10 12h-7l3 -3m0 6l-3 -3" />
-        <path d="M14 12h7l-3 -3m0 6l3 -3" />
-        <path d="M3 6v-3h18v3" />
-        <path d="M3 18v3h18v-3" />
-        </svg>""",
-        "narrow": """<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-viewport-narrow">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M3 12h7l-3 -3m0 6l3 -3" />
-        <path d="M21 12h-7l3 -3m0 6l-3 -3" />
-        <path d="M9 6v-3h6v3" />
-        <path d="M9 18v3h6v-3" />
-        </svg>
-        """,
         "bookmark": """<svg width="14" height="18" viewBox="0 0 14 18" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
         <path d="M13 4.55556V17L7 13.4444L1 17V4.55556C1 3.61256 1.42143 2.70819 2.17157 2.0414C2.92172 1.3746 3.93913 1 5 1H9C10.0609 1 11.0783 1.3746 11.8284 2.0414C12.5786 2.70819 13 3.61256 13 4.55556Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>""",
-        "success": """<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" fill="#3C4952" stroke-width="0" class="icon icon-tabler icons-tabler-filled icon-tabler-circle-check">
+        "success": """<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" fill="#3C4952" stroke-width="0" >
         <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" />
         </svg>""",
-        "alert": """<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="1.1 1 22 22" fill="#3C4952" stroke-width="0" class="icon icon-tabler icons-tabler-filled icon-tabler-alert-triangle">
+        "alert": """<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="1.1 1 22 22" fill="#3C4952" stroke-width="0" >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M12 1.67c.955 0 1.845 .467 2.39 1.247l.105 .16l8.114 13.548a2.914 2.914 0 0 1 -2.307 4.363l-.195 .008h-16.225a2.914 2.914 0 0 1 -2.582 -4.2l.099 -.185l8.11 -13.538a2.914 2.914 0 0 1 2.491 -1.403zm.01 13.33l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -7a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z" />
         </svg>""",
-        "question": """<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#3C4952" stroke-width="0" class="icon icon-tabler icons-tabler-filled icon-tabler-help-hexagon">
+        "question": """<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#3C4952" stroke-width="0" >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M10.425 1.414a3.33 3.33 0 0 1 3.026 -.097l.19 .097l6.775 3.995l.096 .063l.092 .077l.107 .075a3.224 3.224 0 0 1 1.266 2.188l.018 .202l.005 .204v7.284c0 1.106 -.57 2.129 -1.454 2.693l-.17 .1l-6.803 4.302c-.918 .504 -2.019 .535 -3.004 .068l-.196 -.1l-6.695 -4.237a3.225 3.225 0 0 1 -1.671 -2.619l-.007 -.207v-7.285c0 -1.106 .57 -2.128 1.476 -2.705l6.95 -4.098zm1.575 13.586a1 1 0 0 0 -.993 .883l-.007 .117l.007 .127a1 1 0 0 0 1.986 0l.007 -.117l-.007 -.127a1 1 0 0 0 -.993 -.883zm1.368 -6.673a2.98 2.98 0 0 0 -3.631 .728a1 1 0 0 0 1.44 1.383l.171 -.18a.98 .98 0 0 1 1.11 -.15a1 1 0 0 1 -.34 1.886l-.232 .012a1 1 0 0 0 .111 1.994a3 3 0 0 0 1.371 -5.673z" />
         </svg>""",
-        "heart": """<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="1 1 22 22" fill="#3C4952" class="icon icon-tabler icons-tabler-filled icon-tabler-heart">
+        "heart": """<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="1 1 22 22" fill="#3C4952" >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" />
         </svg>""",
@@ -1256,10 +1224,7 @@ class HandrailsTranslator(Translator):
         if collapsible:
             content = """
             <div class="hr-collapse">
-              <div class="icon-wrapper collapse">
-                <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1L7 7L1 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+              <div class="icon collapse">
               </div>
             </div>
 """
@@ -1284,8 +1249,7 @@ class HandrailsTranslator(Translator):
             classes_str = ""
         return f"""
   <div class="hr-menu-item{classes_str}">
-    <span class="icon-wrapper {icon}">
-      {self.svg[icon]}
+    <span class="icon {icon}">
     </span>
     <span class="hr-menu-item-text">{text}</span>
   </div>"""
@@ -1370,13 +1334,7 @@ class HandrailsTranslator(Translator):
             tag="div",
             content="""
                 <div class="hr-border-dots">
-                  <div class="icon-wrapper">
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="10 3 4 18"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                      <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                      <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                      <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                    </svg>
+                  <div class="icon dots">
                   </div>
                 </div>
                 <div class="hr-border-rect">
@@ -1412,8 +1370,7 @@ class HandrailsTranslator(Translator):
         hr_info_end = "</div>"
         if icon is not None:
             hr_info_middle = f"""
-                <div class="icon-wrapper {icon}">
-                {self.svg[icon]}
+                <div class="icon {icon}">
                 </div>
                 """
         return AppendOpenCloseTag(
@@ -1627,10 +1584,17 @@ class HandrailsTranslator(Translator):
             r = radii[type(ref.target)]
             id_ = f"mm-{ref.target.label}"
             if with_ids:
-                circles.append(f'<circle id="{id_}" cx="16" cy="{cy}" r="{r}" />')
+                circles.append(
+                    f'<a href="#{ref.target.label}" class="reference" tabindex="-1">'
+                    f'<circle id="{id_}" cx="16" cy="{cy}" r="{r}" />'
+                )
             else:
                 circles.append(f'<circle cx="16" cy="{cy}" r="{r}" />')
-            circles.append(f'<circle cx="16" cy="{cy}" r="3" fill="#FCFEFF" />')
+            circle = f'<circle cx="16" cy="{cy}" r="{r-4}" fill="#FCFEFF" />'
+            if with_ids:
+                circles.append(circle + "</a>")
+            else:
+                circles.append(circle)
             num += 1
         height = num * (24 + 8) + 8
         svg_start = f"""
@@ -1651,9 +1615,9 @@ class HandrailsTranslator(Translator):
           </defs>
 
           <g fill="url(#purple-green-{follow})">
-            <rect x="12" width="8" height="{height}" />\n    """
+            <rect x="14" y="24" width="4" height="{height - 48}" />\n    """
         svg_middle = "\n    ".join(circles)
-        svg_end = "<g>\n</svg>"
+        svg_end = "</g>\n</svg>"
         svg = svg_start + svg_middle + svg_end
         minimap = AppendOpenTagManualClose(classes=["minimap"])
         batch = AppendBatch([minimap, AppendText(svg), minimap.close_command()])

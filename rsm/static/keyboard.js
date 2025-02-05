@@ -2,7 +2,7 @@
 //
 // Keyboard interaction
 //
-import { collapseHandrail, collapseAll } from '/static/handrails.js';
+import { toggleHandrail, collapseAll } from '/static/handrails.js';
 
 export function setup () {
     // Nagivation: next or previous
@@ -62,6 +62,13 @@ export function setup () {
         }
     });
 
+    // Math functions
+    document.addEventListener('keydown', (event) => {
+        if (event.key == "a") {
+            highlightSymbols(document.activeElement);
+        }
+    });
+
 }
 
 
@@ -93,7 +100,7 @@ function executeActiveMenuItem(el) {
     if (cls.length > 1) {console.log(`item has too many classes, ignoring`); return};
     switch(cls[0]) {
     case "collapse-subproof":
-        collapseHandrail(el);
+        toggleHandrail(el);
         break;
     case "collapse-steps":
         collapseAll(el);
@@ -137,30 +144,67 @@ function focusUpOrDown(direction) {
     let current = document.activeElement;
     let index = focusableElements.indexOf(current);
 
-    let nextElement;
+    // If not focused on anything, just focus the top element.
+    if (index == -1) {
+        maybeScrollToMiddle(focusableElements[0], direction);
+        return;
+    }
+
+    // When focusing a heading of, say, a Subsection, we want to go to the next
+    // Subsection. However, div.heading elements are children of <section> tags so if we
+    // simply look for immediate siblings, we will end up in the first paragraph of the
+    // current Subsection.  Instead, we need to go up to the parent <section> and look
+    // for sibling <section> elements.
+    if (current.classList.contains("heading")) {
+        const currentSection = current.parentElement;
+        const siblingSections = Array.from(currentSection.parentElement.querySelectorAll("& > section"));
+        index = siblingSections.indexOf(currentSection);
+        if (index == -1) {
+            console.log("something went wrong");
+            return;
+        }
+
+        let targetSection;
+        if (direction == "down" && index < siblingSections.length - 1) {
+            targetSection = siblingSections[index + 1];
+        } else if ((direction == "up" && index > 0)) {
+            targetSection = siblingSections[index - 1];
+        }
+
+        const target = targetSection?.querySelector(".heading");
+        if (target) {
+            target.focus();
+            maybeScrollToMiddle(target, direction);
+        }
+
+        return;
+    };
+
+    // Otherwise, just traverse the focusable elements in order.
+    index = focusableElements.indexOf(current);
+    let target;
     if (index !== -1) {
         if (direction == "up") {
             for (const el of focusableElements.slice(0, index).reverse()) {
                 if (el.parentElement == current.parentElement) {
-                    nextElement = el;
+                    target = el;
                     break;
                 }
             }
         } else if (direction == "down") {
-            for (const el of focusableElements.slice(index+1)) {
+            for (const el of focusableElements.slice(index + 1)) {
                 if (el.parentElement == current.parentElement) {
-                    nextElement = el;
+                    target = el;
                     break;
                 }
             }
         } else {
             console.log(`unknown direction ${direction}`);
         }
-    } else { nextElement = focusableElements[0]; }
-
-    if (nextElement) {
-        nextElement.focus();
-        maybeScrollToMiddle(nextElement, direction);
+    }
+    if (target) {
+        target.focus();
+        maybeScrollToMiddle(target, direction);
     }
 }
 
@@ -172,9 +216,11 @@ function focusPrevOrNext(direction) {
         if (direction == "next") {
             do { index = (index + 1) % focusableElements.length; }
             while ( !isFocusable(focusableElements[index]) );
-        } else {
+        } else if (direction == "prev") {
             do { index = (index - 1 + focusableElements.length) % focusableElements.length; }
             while ( !isFocusable(focusableElements[index]) );
+        } else {
+            console.log(`unknown direction ${direction}`);
         }
     } else { index = 0; }
     focusableElements[index].focus();
@@ -184,7 +230,7 @@ function focusPrevOrNext(direction) {
 
 function getFocusableElements() {
     return Array.from(
-        document.querySelector(".manuscriptwrapper").querySelectorAll('[href], [tabindex]:not([tabindex="-1"])')
+        document.querySelector(".manuscriptwrapper").querySelectorAll('[href]:not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])')
     );
 }
 
@@ -194,7 +240,7 @@ function toggleCollapse(el) {
     const coll1 = el.querySelector("& > .hr-collapse-zone > .hr-collapse");
     const coll2 = el.querySelector("& > .hr-menu-zone .collapse-subproof:not(.disabled)");
     if (!coll1 && !coll2) return;
-    collapseHandrail(el);
+    toggleHandrail(el);
 }
 
 
@@ -271,4 +317,13 @@ function maybeScrollToMiddle(element, direction) {
         top: scrollAmount,
         behavior: 'smooth',
     });
+}
+
+
+function highlightSymbols(el) {
+    if (!el) return;
+
+    const qry = `.let.assumption`;
+    document.querySelectorAll(qry).forEach(el => el.classList.add("hilite"));
+
 }

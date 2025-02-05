@@ -168,6 +168,7 @@
 
   --text-disabled: var(--gray-400);
   --text-keyword: var(--primary-700);
+  --text-hilite-bg: var(--secondary-200);
 
   /* Type */
   --body-line-height: 1.5;
@@ -254,10 +255,12 @@
 
   .tooltipster-arrow-border {
     border-top-color: var(--border-primary);
+    border-bottom-color: var(--border-primary);
   }
 
   .tooltipster-arrow-background {
     border-top-color: var(--surface-page);
+    border-bottom-color: var(--surface-page);
   }
 
   .tooltipster-content {
@@ -341,8 +344,15 @@
   /* Margins between most elements */
   .hr {margin-block-end: 1em;}
   .hr.mathblock {margin-block-end: 0em;}
-  .proof .hr.statement, .proof .hr.paragraph {margin-block-end: 0.5em;}
   ol.enumerate, ul.itemize {margin-block-end: 1.0em;}
+  .proof .hr.statement, .proof .hr.paragraph {margin-block-end: 0.5em;}
+
+  /* Since MathJax containers already have a bottom margin of 1.0em, the paragraphs whose
+   last element is an equation do not need margin */
+  .mathblock:is(:last-child) mjx-container[jax="CHTML"][display="true"] {
+    margin-block-end: 0;
+  }
+  /* .paragraph:has(:last-child.mathblock) {margin-block-end: 0;} */
 
 }
 
@@ -377,7 +387,7 @@
     border-radius: 8px;
     opacity: 0%;
 
-    .icon-wrapper {padding-top: 8px; padding-bottom: 8px;}
+    .icon {padding-top: 8px; padding-bottom: 8px;}
 
   }
 }
@@ -390,7 +400,7 @@
     background: var(--surface-hover);
     z-index: 1;
 
-    .icon-wrapper {padding-top: 8px; padding-bottom: 8px;}
+    .icon {padding-top: 8px; padding-bottom: 8px;}
 
   }
   .hr-border-rect {
@@ -486,6 +496,8 @@
 
     &:has(.eqn-number), &:has(.step-number) {justify-content: flex-start;}
 
+    &:has(.eqn-number) {position: relative; top: calc(100% - 16px);}
+
   }
 
   & .eqn-number, & .step-number {padding-bottom: 12px;}
@@ -510,7 +522,9 @@
   color: var(--extra-dark);
   font-weight: var(--weight-semi);
 }
-.manuscriptwrapper .mathblock.hr:hover > .hr-info-zone p {
+.manuscriptwrapper .mathblock.hr:hover > .hr-info-zone p,
+.manuscriptwrapper .mathblock.hr:focus > .hr-info-zone p,
+.manuscriptwrapper .paragraph.hr:focus > .hr-content-zone > .mathblock > .hr-info-zone p {
   color: var(--extra-dark);
   font-weight: var(--weight-semi);
 }
@@ -593,10 +607,16 @@
   .hr-label {
     padding-block: 8px;
     border-bottom: 1px solid var(--border-primary);
+    margin-bottom: 8px;
 
     span.label {font-weight: var(--weight-semi);}
 
   }
+}
+
+/* Labeled paragraphs */
+.manuscriptwrapper .pg-label {
+  font-weight: var(--weight-semi);
 }
 
 
@@ -625,7 +645,7 @@
   & > .hr-collapse-zone > .hr-collapse {
     opacity: 100%;
 
-    .icon-wrapper.uncollapse svg { stroke: var(--primary-700); }
+    .icon.expand svg { stroke: var(--primary-700); }
 
   }
 
@@ -645,16 +665,22 @@
 
   &.subproof {margin-block-end: 0;}
 
-  &.proof .step:hover::after {
+  &.proof {position: relative;} /*to be able to position the Halmos*/
+
+  &.proof:hover::after,
+  &.proof:focus::after,
+  &.proof .step:hover::after,
+  &.proof .step:focus::after {
     content: "";
     position: absolute;
     background: var(--text-keyword);
     width: 8px;
     height: 8px;
     top: calc(100% - 8px);
-    left: calc(100% + 8px);
     border-radius: 2px;
   }
+  &.proof:hover::after, &.proof:focus::after {left: calc(100% + 8px - 48px);}
+  &.proof .step:hover::after, &.proof .step:focus::after {left: calc(100% + 8px);}
 
   &.step.hr-collapsed > .hr-content-zone::after {
     content: "steps hidden";
@@ -677,7 +703,7 @@
 
 
 /* Icons */
-.manuscriptwrapper .icon-wrapper {
+.manuscriptwrapper .icon {
 
   svg {width: 16px; height: 16px;}
 
@@ -701,6 +727,10 @@
     flex-direction: row;
     padding-left: 48px;
 
+    ul.contents {
+      flex-grow: 1;
+    }
+
     .minimap {
       width: 48px;
       display: flex;
@@ -722,8 +752,9 @@
     .minimap {
       opacity: 50%;
       position: fixed;
-      top: 192px;
       left: 48px;
+      top: 50%;
+      transform: translateY(-50%);
 
       &:hover {opacity: 100%};
 
@@ -768,6 +799,12 @@
 }
 
 
+/* Highlighting */
+.manuscriptwrapper .hilite {
+  background-color: var(--text-hilite-bg);
+}
+
+
 /* Figures */
 .manuscriptwrapper figure {
   margin-block: var(--h2-size);
@@ -780,7 +817,7 @@
 /* Other */
 .manuscriptwrapper .keyword {
   color: var(--text-keyword);
-  font-weight: var(--weight-bold); }
+  font-weight: var(--weight-semi); }
 /* .manuscriptwrapper p > span.construct:not(:first-child) > span.keyword { */
 /*   margin-inline-start: 0.1rem; } */
 /* .manuscriptwrapper p > span.construct > span.keyword { */
@@ -828,7 +865,7 @@
     &.reference.backlink, &.reference.cite {padding-inline: 0.2em;}
     &.reference.backlink {font-size: 14px;}
 
-    & > .icon-wrapper.ext > svg {stroke: var(--link-default);}
+    & > .icon.ext > svg {stroke: var(--link-default);}
 
   }
 
@@ -836,7 +873,7 @@
     text-decoration: underline;
     color: var(--link-hover);
 
-    & > .icon-wrapper.ext > svg {stroke: var(--link-hover);}
+    & > .icon.ext > svg {stroke: var(--link-hover);}
 
   }
 
@@ -847,25 +884,12 @@
     color: var(--information-700);
   }
 
-  a:focus:has(.icon-wrapper.ext) {
+  a:focus:has(.icon.ext) {
     outline: 2px solid var(--information-500);
     box-shadow: unset;
     border-radius: 4px;
     outline-offset: 4px;
   }
-
-  /* a.tooltipstered { */
-  /*   position: relative; */
-  /* } */
-  /* a.tooltipstered:focus::after { */
-  /*   content: ''; */
-  /*   position: absolute; */
-  /*   right: -8px; */
-  /*   width: 6px; */
-  /*   height: 6px; */
-  /*   background-color: var(--information-400); */
-  /*   border-radius: 50%; */
-  /* } */
 
 }
 
@@ -972,7 +996,7 @@
   .largest {font-size: 1.7281rem;}
   .huge {font-size: 2.0741rem;}
   .huger {font-size: 2.488rem;}
-  .draft {color: var(--primary-500);}
+  .draft {color: var(--secondary-600);}
 }
 
 /* @media (min-width: 70em) { */

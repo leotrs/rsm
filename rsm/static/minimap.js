@@ -9,11 +9,11 @@ export function setup() {
     const items = document.querySelectorAll('ul.contents li.item');
     const num_items = items.length;
     items.forEach((item, idx) => {
-	item.addEventListener('mouseenter', () => {
-	    let percent = (idx + 1) / num_items * 100;
-            document.getElementById("stop-follow-mouse-1").setAttribute("offset", `${percent}%`);
-	    document.getElementById("stop-follow-mouse-2").setAttribute("offset", `${percent}%`);
-	});
+        let percent = (idx + 1) / num_items * 100;
+	item.addEventListener('mouseenter', () => { highlightMinimap(percent, "mouse") });
+        item.querySelectorAll("a.reference").forEach(
+            a => a.addEventListener('focus', () => { highlightMinimap(percent, "mouse") })
+        );
     });
 
     // Floating minimap
@@ -26,25 +26,26 @@ export function setup() {
 	    float_mm.classList.remove("hide");
 	};
     });
+
+    const mm = document.querySelector(".float-minimap-wrapper > .minimap");
+    const sections = Array.from(document.querySelectorAll('section'));
     window.addEventListener('scroll', () => {
-	const mm = document.querySelector(".float-minimap-wrapper > .minimap");
-	if (mm.classList.contains("hide")) return;
+        if (!mm) return;
 
-	const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-	const sections = document.querySelectorAll('section');
-	const lastInViewport = Array.from(sections).findLast(sec => withinView(sec, true));
+        const isHidden = mm.classList.contains("hide") || getComputedStyle(mm).display == "none" || getComputedStyle(mm.parentElement).display == "none";
+	if (isHidden) return;
+
+	const lastInViewport = sections.findLast(sec => withinView(sec, true));
 	const circle = document.querySelector(`#mm-${lastInViewport?.id}`)
-
 	let percent;
-	if (circle && mm) {
+	if (circle) {
 	    const circle_rect = circle.getBoundingClientRect();
 	    const mm_rect = mm.getBoundingClientRect();
 	    percent = (circle_rect.bottom - mm_rect.top + 12) / mm.offsetHeight * 100;
 	} else {
 	    percent = 0;
 	};
-	document.getElementById("stop-follow-scroll-1").setAttribute("offset", `${percent}%`);
-	document.getElementById("stop-follow-scroll-2").setAttribute("offset", `${percent}%`);
+        highlightMinimap(percent, 'scroll');
     });
 
 }
@@ -59,3 +60,9 @@ function withinView(el, top = true) {
 	return rect.top < viewportHeight && rect.bottom > 0;
     };
 };
+
+
+function highlightMinimap(percent, name) {
+    document.getElementById(`stop-follow-${name}-1`).setAttribute("offset", `${percent}%`);
+    document.getElementById(`stop-follow-${name}-2`).setAttribute("offset", `${percent}%`);
+}

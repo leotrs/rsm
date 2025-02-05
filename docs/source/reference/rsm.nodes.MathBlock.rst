@@ -1,4 +1,4 @@
-﻿MathBlock
+MathBlock
 =========
 
 Qualified name: ``rsm.nodes.MathBlock``
@@ -23,6 +23,7 @@ Qualified name: ``rsm.nodes.MathBlock``
      
      ~MathBlock.autonumber
      ~MathBlock.classreftext
+     ~MathBlock.long_reftext
      ~MathBlock.newmetakeys
      ~MathBlock.nodeid
      ~MathBlock.label

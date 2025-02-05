@@ -140,6 +140,11 @@
 
    
    
+   .. rubric:: Functions
+
+   
+   .. autofunction:: all_node_subtypes
+   
    
 
    

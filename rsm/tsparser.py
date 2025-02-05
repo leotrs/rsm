@@ -401,24 +401,13 @@ def _normalize_text(root):
             child.text = re.sub(r"(.*?)\s+$", r"\1 ", child.text)
             child.text = re.sub(r"^\s+(.*?)", r" \1", child.text)
 
-        # Finally we handle the space between non-Text children of the paragraph, for
+        # Finally we handle the space between non-Text children of a paragraph, for
         # example two Spans together, or a Span followed by a Construct.  In all cases,
         # we simply insert a single space between them.
-        classes = [nodes.Span, nodes.Construct]
-        indices_to_replace = []
-        if isinstance(node, nodes.Paragraph):
-            for idx, child in enumerate(node.children[:-1]):
-                sibling = node.children[idx + 1]
-                if type(child) in classes and type(sibling) in classes:
-                    indices_to_replace.append(idx)
-
-            # at each iteration we replace a node with two nodes, so the indices we have
-            # gathered will shift by 1
-            shift = 0
-            for idx in indices_to_replace:
-                child = node.children[idx + shift]
-                child.replace_self([child, nodes.Text(" ")])
-                shift += 1
+        classes = [nodes.Span, nodes.Construct, nodes.Math]
+        sibling = node.next_sibling()
+        if sibling and type(node) in classes and type(sibling) in classes:
+            node.replace_self([node, nodes.Text(" ")])
 
         # Manage escaped characters.
         if isinstance(node, nodes.Text) and not node.asis:

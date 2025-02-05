@@ -12,12 +12,10 @@ export function setup() {
 	});
     });
     document.querySelectorAll(".hr > .hr-border-zone > .hr-border-dots").forEach(dots => {
-	dots.addEventListener("click", function () {
+	dots.addEventListener("click", function (ev) {
             const siblings = Array.from(this.parentElement.parentElement.children);
             const target = siblings.find(sibling => sibling.classList.contains("hr-menu-zone"));
-            if (target) {
-		target.style.display = "block";
-            }
+            if (target) { target.style.display = "block" };
 	});
     });
 
@@ -28,10 +26,10 @@ export function setup() {
 
     // Handrail menu: collapse and collapse-all buttons
     document.querySelectorAll(".hr > .hr-collapse-zone > .hr-collapse").forEach(btn => {
-	btn.addEventListener("click", ev => collapseHandrail(ev.target));
+	btn.addEventListener("click", ev => toggleHandrail(ev.target));
     });
     document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-subproof:not(.disabled)").forEach(btn => {
-	btn.addEventListener("click", ev => collapseHandrail(ev.target));
+	btn.addEventListener("click", ev => toggleHandrail(ev.target));
     });
     document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(btn => {
 	btn.addEventListener("click", ev => collapseAll(ev.target, true));
@@ -62,8 +60,50 @@ function updateHeight(entries) {
 };
 
 
-export function collapseHandrail(target) {
+export function toggleHandrail(target) {
     const hr = target.closest(".hr");
+    if (hr.classList.contains("hr-collapsed")) { openHandrail(hr) }
+    else { closeHandrail(hr) };
+};
+
+
+function openHandrail(hr) {
+    hr.classList.remove("hr-collapsed");
+    const rest = getRest(hr);
+    rest.forEach(el => { el.classList.remove("hide"); });
+    const icon = hr.querySelector("& .icon.expand");
+    if (!icon) return;
+    icon.classList.remove("expand");
+    icon.classList.add("collapse");
+    icon.innerHTML = `
+                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1L7 7L1 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    `;
+    const item_text = icon.nextElementSibling;
+    if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Collapse" };
+}
+
+
+function closeHandrail(hr) {
+    hr.classList.add("hr-collapsed");
+    const rest = getRest(hr);
+    rest.forEach(el => { el.classList.add("hide"); });
+    const icon = hr.querySelector("& .icon.collapse");
+    if (!icon) return;
+    icon.classList.remove("collapse");
+    icon.classList.add("expand");
+    icon.innerHTML = `
+                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1L7 7L13 1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    `;
+    const item_text = icon.nextElementSibling;
+    if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Expand" };
+}
+
+
+function getRest(hr) {
     let rest;
     if (hr.classList.contains("hr-labeled")) {
 	rest = hr.querySelectorAll("& > .hr-content-zone > :not(.hr-label)");
@@ -72,38 +112,8 @@ export function collapseHandrail(target) {
     } else {
 	rest = Array.from(hr.parentElement.children).filter(el => {return el !== hr});
     };
-
-    if (!hr.classList.contains("hr-collapsed")) {
-	hr.classList.add("hr-collapsed");
-	rest.forEach(el => { el.classList.add("hide"); });
-	const icon = hr.querySelector("& .icon-wrapper.collapse");
-	if (!icon) return;
-	icon.classList.remove("collapse");
-	icon.classList.add("expand");
-	icon.innerHTML = `
-                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1L7 7L13 1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    `;
-	const item_text = icon.nextElementSibling;
-	if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Expand" };
-    } else {
-	hr.classList.remove("hr-collapsed");
-	rest.forEach(el => { el.classList.remove("hide"); });
-	const icon = hr.querySelector("& .icon-wrapper.expand");
-	if (!icon) return;
-	icon.classList.remove("expand");
-	icon.classList.add("collapse");
-	icon.innerHTML = `
-                    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1L7 7L1 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    `;
-	const item_text = icon.nextElementSibling;
-	if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Collapse" };
-    };
-
-};
+    return rest;
+}
 
 
 export function collapseAll(target, withinSubproof = true) {
@@ -113,11 +123,11 @@ export function collapseAll(target, withinSubproof = true) {
     } else {
         qry = "& > .hr-content-zone > .step:has(.subproof)";
     }
-    const hr = target.closest(".hr");
-    hr.querySelectorAll(qry).forEach(st => collapseHandrail(st));
 
-    const ex_icon = hr.querySelector("& .icon-wrapper.expand-all");
+    const hr = target.closest(".hr");
+    const ex_icon = hr.querySelector("& .icon.expand-all");
     if (ex_icon) {
+        hr.querySelectorAll(qry).forEach(st => openHandrail(st));
 	ex_icon.classList.remove("expand-all");
 	ex_icon.classList.add("collapse-all");
 	ex_icon.innerHTML = `
@@ -132,8 +142,9 @@ export function collapseAll(target, withinSubproof = true) {
 	return;
     }
 
-    const co_icon = hr.querySelector("& .icon-wrapper.collapse-all");
+    const co_icon = hr.querySelector("& .icon.collapse-all");
     if (co_icon) {
+        hr.querySelectorAll(qry).forEach(st => closeHandrail(st));
 	co_icon.classList.remove("collapse-all");
 	co_icon.classList.add("expand-all");
 	co_icon.innerHTML = `
@@ -160,7 +171,7 @@ async function copyLink(target) {
     } else {
         const section = hr.closest("section");
         if (!section.classList.contains("level-1")) {
-            anchor = section.parentElement.id;
+            anchor = section.id;
         } else {
             needs_anchor = false;
         }
@@ -184,7 +195,7 @@ function makeToast(text, style) {
     toast.className = `toast ${style}`
 
     const icon = document.createElement("span");
-    icon.className = `icon-wrapper ${style}`;
+    icon.className = `icon ${style}`;
     toast.appendChild(icon);
 
     switch(style) {
@@ -215,7 +226,7 @@ function makeToast(text, style) {
     toast.appendChild(spacer);
 
     const close = document.createElement("span");
-    close.className = "icon-wrapper close";
+    close.className = "icon close";
     close.innerHTML = `
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
           <path d="M13 1L1 13M1 1L13 13" stroke-linecap="round" stroke-linejoin="round"/>
@@ -235,5 +246,5 @@ function makeToast(text, style) {
 function launchToast(text, style="information") {
     const toast = makeToast(text, style);
     document.querySelector(".manuscriptwrapper").appendChild(toast);
-    setTimeout(() => { toast.remove(); }, 15000);
+    setTimeout(() => { toast.remove(); }, 5000);
 };

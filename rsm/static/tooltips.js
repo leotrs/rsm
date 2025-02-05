@@ -21,16 +21,22 @@ export function createTooltips() {
         },
         functionInit: function(instance, helper) {
             let target = $(helper.origin).attr("href");
+            let content = "";
 
-            // make sure to escape any '.' in the id, otherwise jquery will think we are
-            // trying to select a class instead!
+            // escape '.' since it gets confused with a class
             target = target.replaceAll(".", "\\.");
+            // escape ':' since it gets confused with the protocol
             target = target.replaceAll(":", "\\:");
-	    if (target == "#") return;
+	    if (target == "#") {
+                console.log("internal reference without target anchor");
+                content = '<span class="error">no anchor for target</span>';
+                setTooltipContent(instance, content);
+                return;
+            };
+
             let tag = $(target).prop('tagName');
             let classes = $(target)[0].classList;
 	    let clone = undefined;
-            let content = "";
 
             if (["P", "LI", "FIGURE"].includes(tag)) {
                 content = $(target).html();
@@ -77,8 +83,7 @@ export function createTooltips() {
 		console.log(`tooltip target with unknown tag ${tag}`);
 	    }
 
-	    content = `<div class="manuscriptwrapper">${content}</div>`
-            instance.content($(content));
+            setTooltipContent(instance, content);
         }
     });
 
@@ -97,4 +102,10 @@ function stripHandrail(hr) {
     hr.find(".hr-border-zone").remove();
     hr.find(".hr-spacer-zone").remove();
     hr.find(".hr-info-zone").remove();
+}
+
+function setTooltipContent(tt, content) {
+    // add .manuscriptwrapper so that all CSS rules apply inside the tooltip
+    content = `<div class="manuscriptwrapper">${content}</div>`;
+    tt.content($(content));
 }

@@ -26,18 +26,19 @@ export function setup() {
 	    float_mm.classList.remove("hide");
 	};
     });
+
+    const mm = document.querySelector(".float-minimap-wrapper > .minimap");
+    const sections = Array.from(document.querySelectorAll('section'));
     window.addEventListener('scroll', () => {
-	const mm = document.querySelector(".float-minimap-wrapper > .minimap");
+        if (!mm) return;
+
         const isHidden = mm.classList.contains("hide") || getComputedStyle(mm).display == "none" || getComputedStyle(mm.parentElement).display == "none";
 	if (isHidden) return;
 
-	const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-	const sections = document.querySelectorAll('section');
-	const lastInViewport = Array.from(sections).findLast(sec => withinView(sec, true));
+	const lastInViewport = sections.findLast(sec => withinView(sec, true));
 	const circle = document.querySelector(`#mm-${lastInViewport?.id}`)
-
 	let percent;
-	if (circle && mm) {
+	if (circle) {
 	    const circle_rect = circle.getBoundingClientRect();
 	    const mm_rect = mm.getBoundingClientRect();
 	    percent = (circle_rect.bottom - mm_rect.top + 12) / mm.offsetHeight * 100;

@@ -28,9 +28,9 @@ export function createTooltips() {
             // escape ':' since it gets confused with the protocol
             target = target.replaceAll(":", "\\:");
 	    if (target == "#") {
-                console.log("internal reference without target anchor");
-                content = '<span class="error">no anchor for target</span>';
+                content = '<span class="error">target node has no label</span>';
                 setTooltipContent(instance, content);
+                helper.origin.classList.add("error");
                 return;
             };
 

@@ -144,6 +144,7 @@
 
   /* Colors -- Semantic */
   --surface-page: var(--white);
+  /* --surface-page: var(--almost-black); */
   --surface-primary: var(--almost-white);
   --surface-hover: var(--extra-light);
   --surface-information: var(--information-50);
@@ -227,6 +228,7 @@
   line-height: var(--body-line-height);
   background: var(--surface-page);
   color: var(--extra-dark);
+  /* color: var(--gray-200); */
 
   /* Outermost wrapper when the viewport is narrow */
   &.wrapper-narrow {

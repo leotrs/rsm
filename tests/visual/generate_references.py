@@ -14,8 +14,7 @@ DATA_DIR = Path(__file__).parent / "rsm_data"
 def main():
     for file in DATA_DIR.iterdir():
         if file.is_file() and file.suffix == ".rsm":
-            print(file)
-            rsm.make(path=file, lint=False, outname=str(DATA_DIR / f"{file.stem}.html"))
+            rsm.make(path=file, lint=False, outname=f"m{file.stem}.html")
 
 
 if __name__ == "__main__":

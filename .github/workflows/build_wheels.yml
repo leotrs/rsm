@@ -19,7 +19,7 @@ jobs:
         submodules: true
 
     - name: Run cibuildwheel
-      uses: pypa/cibuildwheel@v2.11.4
+      uses: pypa/cibuildwheel@v2.23.1
 
     - uses: actions/upload-artifact@v4
       with:

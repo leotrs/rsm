@@ -80,11 +80,11 @@ echo "###### Old version ######"
 ldd --version
 
 echo "###### New version ######"
-export LD_LIBRARY_PATH="$HOME/.local/glibc-2.34/lib:$LD_LIBRARY_PATH"
-export PATH="$HOME/.local/glibc-2.34/bin:$PATH"
-ldd --version
-which ldd
-which gcc
+# export LD_LIBRARY_PATH="$HOME/.local/glibc-2.34/lib:$LD_LIBRARY_PATH"
+# export PATH="$HOME/.local/glibc-2.34/bin:$PATH"
+# ldd --version
+# which ldd
+# which gcc
 
 echo "###### fnm env ######"
 eval "$(fnm env)"

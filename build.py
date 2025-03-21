@@ -4,6 +4,7 @@ import subprocess
 import sys
 from typing import Any
 
+subprocess.run("fnv env --use-on-cd", shell=True)
 RESULT = subprocess.run("which npm", shell=True, capture_output=True, text=True)
 print("Exit code:", RESULT.returncode)
 print("Output:", RESULT.stdout.strip())

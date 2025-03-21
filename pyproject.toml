@@ -52,7 +52,7 @@ manylinux-x86_64-image = "manylinux_2_28"
 [tool.cibuildwheel.linux]
 before-all = '''echo "Downloading and extracting glibc 2.29 code"
 mkdir -p /tmp/glibc-2.29
-cd /opt
+cd /tmp
 curl -LO http://ftp.gnu.org/gnu/libc/glibc-2.29.tar.gz
 tar -xvzf glibc-2.29.tar.gz;
 cd glibc-2.29

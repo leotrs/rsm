@@ -47,7 +47,7 @@ rsm-lint = "rsm.cli:lint"
 
 [tool.cibuildwheel]
 build = ["cp310-manylinux_x86_64", "cp311-manylinux_x86_64", "cp310-macosx_x86_64", "cp311-macosx_x86_64", "cp310-macosx_arm64", "cp311-macosx_arm64", "cp310-win_amd64", "cp310-win32", "cp311-win_amd64", "cp311-win32"]
-manylinux-x86_64-image = "manylinux_2_34"
+manylinux-x86_64-image = "manylinux_2_28"
 
 [tool.cibuildwheel.linux]
 before-all = 'curl -o- https://fnm.vercel.app/install | bash && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && fnm install 20 && node -v && npm -v && which npm'

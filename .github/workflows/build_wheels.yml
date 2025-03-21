@@ -23,6 +23,11 @@ jobs:
       env:
         CIBW_ARCHS_LINUX: ${{ runner.arch == 'X64' && 'auto ppc64le s390x' || 'auto' }}
 
+    - name: List artifacts
+      run: gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts --jq '.artifacts[].name'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - uses: actions/upload-artifact@v4
       with:
         path: ./wheelhouse/*.whl

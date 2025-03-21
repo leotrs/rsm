@@ -46,18 +46,16 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
         run("sh node_modules/.bin/tree-sitter build -o build/rsm.dll")
     elif sys.platform.startswith("linux"):
         run(
-            'export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH" && export PATH="/opt/glibc-2.29/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter generate'
-        )
-        run(
-            'export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH" && export PATH="/opt/glibc-2.29/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter build -o build/rsm.so'
-        )
-    else:
-        run(
+            # 'export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH" && export PATH="/opt/glibc-2.29/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter generate'
             'export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter generate'
         )
         run(
+            # 'export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH" && export PATH="/opt/glibc-2.29/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter build -o build/rsm.so'
             'export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter build -o build/rsm.so'
         )
+    else:
+        run("node ./node_modules/.bin/tree-sitter generate")
+        run("node ./node_modules/.bin/tree-sitter build -o build/rsm.so")
 
     fn = "rsm.dll" if sys.platform == "win32" else "rsm.so"
     # watch out: tree-sitter might change this dir inadvertently...

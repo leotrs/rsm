@@ -65,7 +65,7 @@ make clean
 ../configure --prefix="$HOME/.local/glibc-2.34" --disable-werror CFLAGS="-Wno-error=use-after-free -O2"
 echo "\n\n###### Installing ######"
 make -j$(nproc)
-make prefix=$HOME/.local/glibc-2.34 install
+make install DESTDIR=$HOME/.local/glibc-2.34
 echo "\n\n###### Downloading and installing fnm ######"
 curl -o- https://fnm.vercel.app/install | bash
 export PATH="$HOME/.local/share/fnm:$PATH"

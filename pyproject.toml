@@ -50,27 +50,36 @@ build = ["cp310-manylinux_x86_64", "cp311-manylinux_x86_64", "cp310-macosx_x86_6
 manylinux-x86_64-image = "manylinux_2_28"
 
 [tool.cibuildwheel.linux]
-before-all = '''echo "Downloading and extracting glibc 2.29 code"
-mkdir -p /tmp/glibc-2.29
-cd /tmp
-curl -LO http://ftp.gnu.org/gnu/libc/glibc-2.29.tar.gz
-tar -xvzf glibc-2.29.tar.gz;
-cd glibc-2.29
-mkdir build
-cd build
-echo "GCC version"
-gcc -v
-echo "Configuring"
-make clean
-../configure --prefix=/opt/glibc-2.29 --disable-werror CFLAGS="-Wno-error=array-parameter" CFLAGS="-O2"
-echo "Installing"
-make -j$(nproc)
-make install
-echo "Downloading and installing fnm"
+# before-all = '''echo "Downloading and extracting glibc 2.29 code"
+# mkdir -p /tmp/glibc-2.29
+# cd /tmp
+# curl -LO http://ftp.gnu.org/gnu/libc/glibc-2.29.tar.gz
+# tar -xvzf glibc-2.29.tar.gz;
+# cd glibc-2.29
+# mkdir build
+# cd build
+# echo "GCC version"
+# gcc -v
+# echo "Configuring"
+# make clean
+# ../configure --prefix=/opt/glibc-2.29 --disable-werror CFLAGS="-Wno-error=array-parameter" CFLAGS="-O2"
+# echo "Installing"
+# make -j$(nproc)
+# make install
+# echo "Downloading and installing fnm"
+# curl -o- https://fnm.vercel.app/install | bash
+# export PATH="$HOME/.local/share/fnm:$PATH"
+# export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH"
+# export PATH="/opt/glibc-2.29/bin:$PATH"
+# eval "$(fnm env)"
+# echo "Installing node and npm"
+# fnm install 20
+# node -v
+# npm -v
+# '''
+before-all = '''echo "Downloading and installing fnm"
 curl -o- https://fnm.vercel.app/install | bash
 export PATH="$HOME/.local/share/fnm:$PATH"
-export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH"
-export PATH="/opt/glibc-2.29/bin:$PATH"
 eval "$(fnm env)"
 echo "Installing node and npm"
 fnm install 20

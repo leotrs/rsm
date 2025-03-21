@@ -62,19 +62,20 @@ echo "\n\n###### GCC version ######"
 gcc -v
 echo "\n\n###### Configuring ######"
 make clean
-../configure --prefix="/opt/glibc-2.34" --disable-werror CFLAGS="-Wno-error=use-after-free -O2"
+../configure --prefix="$HOME/.local/glibc-2.34" --disable-werror CFLAGS="-Wno-error=use-after-free -O2"
 echo "\n\n###### Installing ######"
 make -j$(nproc)
-make install
+make prefix=$HOME/.local/glibc-2.34 install
 echo "\n\n###### Downloading and installing fnm ######"
 curl -o- https://fnm.vercel.app/install | bash
 export PATH="$HOME/.local/share/fnm:$PATH"
 echo "\n\n###### Version ######"
 ldd --version
-export LD_LIBRARY_PATH="/opt/glibc-2.34/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="$HOME/.local/glibc-2.34/lib:$LD_LIBRARY_PATH"
 export PATH="/opt/glibc-2.34/bin:$PATH"
 echo "\n\n###### Version ######"
 ldd --version
+echo "\n\n###### fnm env ######"
 eval "$(fnm env)"
 echo "\n\n###### Installing node and npm ######"
 fnm install 20

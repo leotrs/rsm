@@ -35,7 +35,7 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
     # Install tree-sitter and its dependencies
     if sys.platform.startswith("linux"):
         run(
-            'export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH" && export PATH="/opt/glibc-2.29/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && export LD_PRELOAD="/opt/glibc-2.29/lib/libc.so.6 && npm install'
+            'export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH" && export PATH="/opt/glibc-2.29/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && npm install'
         )
     else:
         run("npm install")
@@ -46,10 +46,10 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
         run("sh node_modules/.bin/tree-sitter build -o build/rsm.dll")
     elif sys.platform.startswith("linux"):
         run(
-            'export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH" && export PATH="/opt/glibc-2.29/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && export LD_PRELOAD="/opt/glibc-2.29/lib/libc.so.6" && node ./node_modules/.bin/tree-sitter generate'
+            'export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH" && export PATH="/opt/glibc-2.29/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter generate'
         )
         run(
-            'export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH" && export PATH="/opt/glibc-2.29/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && export LD_PRELOAD="/opt/glibc-2.29/lib/libc.so.6" && node ./node_modules/.bin/tree-sitter build -o build/rsm.so'
+            'export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH" && export PATH="/opt/glibc-2.29/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter build -o build/rsm.so'
         )
     else:
         run(

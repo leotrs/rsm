@@ -37,7 +37,7 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
 
     # Install tree-sitter and its dependencies
     if sys.platform.startswith("linux"):
-        run(f"fnm env && npm install")
+        run(f"$HOME/.local/share/fnm env && npm install")
     else:
         run(f"npm install")
 

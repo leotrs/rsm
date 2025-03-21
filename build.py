@@ -48,8 +48,12 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
         run("sh node_modules/.bin/tree-sitter generate")
         run("sh node_modules/.bin/tree-sitter build -o build/rsm.so")
     elif sys.platform.startswith("linux"):
-        run("node ./node_modules/.bin/tree-sitter generate")
-        run("node ./node_modules/.bin/tree-sitter build -o build/rsm.so")
+        run(
+            'export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter generate'
+        )
+        run(
+            'export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter build -o build/rsm.so'
+        )
     else:
         run(
             'export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter generate'

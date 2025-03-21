@@ -37,7 +37,9 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
 
     # Install tree-sitter and its dependencies
     if sys.platform.startswith("linux"):
-        run('export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)"')
+        run(
+            'export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && npm install'
+        )
     else:
         run("npm install")
 
@@ -45,9 +47,16 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
     if sys.platform == "win32":
         run("sh node_modules/.bin/tree-sitter generate")
         run("sh node_modules/.bin/tree-sitter build -o build/rsm.so")
-    else:
+    elif sys.platform.startswith("linux"):
         run("node ./node_modules/.bin/tree-sitter generate")
         run("node ./node_modules/.bin/tree-sitter build -o build/rsm.so")
+    else:
+        run(
+            'export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter generate'
+        )
+        run(
+            'export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)" && node ./node_modules/.bin/tree-sitter build -o build/rsm.so'
+        )
 
     fn = "rsm.dll" if sys.platform == "win32" else "rsm.so"
     # watch out: tree-sitter might change this dir inadvertently...

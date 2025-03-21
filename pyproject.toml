@@ -72,7 +72,7 @@ export PATH="$HOME/.local/share/fnm:$PATH"
 echo "\n\n###### Version ######"
 ldd --version
 export LD_LIBRARY_PATH="$HOME/.local/glibc-2.34/lib:$LD_LIBRARY_PATH"
-export PATH="/opt/glibc-2.34/bin:$PATH"
+export PATH="$HOME/.local/glibc-2.34/bin:$PATH"
 echo "\n\n###### Version ######"
 ldd --version
 echo "\n\n###### fnm env ######"

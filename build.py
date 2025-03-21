@@ -46,10 +46,12 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
         run("sh node_modules/.bin/tree-sitter build -o build/rsm.dll")
     elif sys.platform.startswith("linux"):
         run(
-            'export LD_LIBRARY_PATH="$HOME/.local/glibc-2.34/lib:$LD_LIBRARY_PATH" && export PATH="$HOME/.local/glibc-2.34/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env --use-on-cd)" && node ./node_modules/.bin/tree-sitter generate'
+            # 'export LD_LIBRARY_PATH="$HOME/.local/glibc-2.34/lib:$LD_LIBRARY_PATH" && export PATH="$HOME/.local/glibc-2.34/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env --use-on-cd)" && node ./node_modules/.bin/tree-sitter generate'
+            'export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env --use-on-cd)" && node ./node_modules/.bin/tree-sitter generate'
         )
         run(
-            'export LD_LIBRARY_PATH="$HOME/.local/glibc-2.34/lib:$LD_LIBRARY_PATH" && export PATH="$HOME/.local/glibc-2.34/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env --use-on-cd)" && node ./node_modules/.bin/tree-sitter build -o build/rsm.so'
+            # 'export LD_LIBRARY_PATH="$HOME/.local/glibc-2.34/lib:$LD_LIBRARY_PATH" && export PATH="$HOME/.local/glibc-2.34/bin:$PATH" && export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env --use-on-cd)" && node ./node_modules/.bin/tree-sitter build -o build/rsm.so'
+            'export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env --use-on-cd)" && node ./node_modules/.bin/tree-sitter build -o build/rsm.so'
         )
     else:
         run("node ./node_modules/.bin/tree-sitter generate")

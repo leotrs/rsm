@@ -10,16 +10,24 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-13, macos-latest, windows-latest]
+        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-latest]
 
     steps:
     - name: Checkout the repository and submodules
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: true
 
+    - name: Set up QEMU
+      if: runner.os == 'Linux' && runner.arch == 'X64'
+      uses: docker/setup-qemu-action@v3
+      with:
+        platforms: all
+
     - name: Run cibuildwheel
       uses: pypa/cibuildwheel@v2.23.1
+      env:
+        CIBW_ARCHS_LINUX: ${{ runner.arch == 'X64' && 'auto ppc64le s390x' || 'auto' }}
 
     - uses: actions/upload-artifact@v4
       with:

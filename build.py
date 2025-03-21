@@ -32,7 +32,7 @@ def run(
 
 def build(_: Any):  # one argument is passed by poetry but we don't need it
     """Install tree-sitter and build the shared object library."""
-    run(f"{NPM_PATH}/npm install")  # Install tree-sitter and its dependencies
+    run(f"{NPM_PATH} install")  # Install tree-sitter and its dependencies
 
     # 'tree-sitter test' creates the .so file; we don't care if the tests actually pass,
     if sys.platform == "win32":

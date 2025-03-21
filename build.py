@@ -4,9 +4,11 @@ import subprocess
 import sys
 from typing import Any
 
-RESULT = subprocess.run(
-    "which npm", shell=True, check=True, capture_output=True, text=True
-)
+RESULT = subprocess.run("which npm", shell=True, capture_output=True, text=True)
+print("Exit code:", RESULT.returncode)
+print("Output:", RESULT.stdout.strip())
+print("Error:", RESULT.stderr.strip())
+
 NPM_PATH = RESULT.stdout.strip()
 
 

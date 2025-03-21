@@ -62,7 +62,7 @@ echo "GCC version"
 gcc -v
 echo "Configuring"
 make clean
-../configure --prefix=/opt/glibc-2.29"
+../configure --prefix="/opt/glibc-2.29"
 echo "Installing"
 make -j$(nproc)
 make install

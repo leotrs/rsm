@@ -4,15 +4,17 @@ import subprocess
 import sys
 from typing import Any
 
-# All shell commands below run from this directory by default; see the cwd parameter
-DEFAULT_CMD_DIR = "tree-sitter-rsm"
+RESULT = subprocess.run(
+    "which npm", shell=True, check=True, capture_output=True, text=True
+)
+NPM_PATH = RESULT.stdout.strip()
 
 
 def run(
     cmd: str,
     check: bool = True,
     shell: bool = True,
-    cwd: str = DEFAULT_CMD_DIR,
+    cwd: str = "tree-sitter-rsm",
     print_output: bool = False,
 ):
     """Run a shell command from `cwd`.
@@ -30,7 +32,7 @@ def run(
 
 def build(_: Any):  # one argument is passed by poetry but we don't need it
     """Install tree-sitter and build the shared object library."""
-    run("npm install")  # Install tree-sitter and its dependencies
+    run(f"{NPM_PATH}/npm install")  # Install tree-sitter and its dependencies
 
     # 'tree-sitter test' creates the .so file; we don't care if the tests actually pass,
     if sys.platform == "win32":

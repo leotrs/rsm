@@ -69,6 +69,8 @@ make install
 echo "Downloading and installing fnm"
 curl -o- https://fnm.vercel.app/install | bash
 export PATH="$HOME/.local/share/fnm:$PATH"
+export LD_LIBRARY_PATH="/opt/glibc-2.29/lib:$LD_LIBRARY_PATH"
+export PATH="/opt/glibc-2.29/bin:$PATH"
 eval "$(fnm env)"
 echo "Installing node and npm"
 fnm install 20

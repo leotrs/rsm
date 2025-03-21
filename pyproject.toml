@@ -51,7 +51,7 @@ manylinux-x86_64-image = "manylinux2014"
 
 [tool.cibuildwheel.linux]
 # before-all = "ldd --version && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt install -y nodejs"
-before-all = "curl -o- https://fnm.vercel.app/install | bash && fnm install 20"
+before-all = "curl -o- https://fnm.vercel.app/install | bash && source /root/.bashrc && fnm install 20"
 
 
 # Mypy

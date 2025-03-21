@@ -37,9 +37,9 @@ def build(_: Any):  # one argument is passed by poetry but we don't need it
 
     # Install tree-sitter and its dependencies
     if sys.platform.startswith("linux"):
-        run(f"$HOME/.local/share/fnm env && npm install")
+        run('export PATH="$HOME/.local/share/fnm:$PATH" && eval "$(fnm env)"')
     else:
-        run(f"npm install")
+        run("npm install")
 
     # 'tree-sitter test' creates the .so file; we don't care if the tests actually pass,
     if sys.platform == "win32":

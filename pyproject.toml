@@ -62,7 +62,7 @@ echo "\n\n###### GCC version ######"
 gcc -v
 echo "\n\n###### Configuring ######"
 make clean
-../configure --prefix="/opt/glibc-2.34" CFLAGS="-Wno-error=use-after-free -O2"
+../configure --prefix="/opt/glibc-2.34" CFLAGS="-Wno-error=use-after-free -O2 --disable-werror"
 echo "\n\n###### Installing ######"
 make -j$(nproc)
 make install

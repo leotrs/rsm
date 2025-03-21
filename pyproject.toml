@@ -57,7 +57,7 @@ tar -xvzf glibc-2.29.tar.gz
 cd glibc-2.29
 mkdir build
 cd build
-../configure --prefix=/opt/glibc-2.29 CFLAGS="-Wno-error=array-parameter" CFLAGS="-O2"
+../configure --prefix=/opt/glibc-2.29 --disable-werror CFLAGS="-Wno-error=array-parameter" CFLAGS="-O2"
 make -j$(nproc)
 make install
 curl -o- https://fnm.vercel.app/install | bash

@@ -52,34 +52,34 @@ manylinux-x86_64-image = "manylinux_2_28"
 [tool.cibuildwheel.linux]
 before-all = '''echo "###### START HERE ######"
 
-echo "###### Downloading and extracting glibc 2.34 code ######"
-mkdir -p /tmp/glibc-2.34
-cd /tmp
-curl -LO http://ftp.gnu.org/gnu/libc/glibc-2.34.tar.gz
-tar -xvzf glibc-2.34.tar.gz;
-cd glibc-2.34
-mkdir build
-cd build
+# echo "###### Downloading and extracting glibc 2.34 code ######"
+# mkdir -p /tmp/glibc-2.34
+# cd /tmp
+# curl -LO http://ftp.gnu.org/gnu/libc/glibc-2.34.tar.gz
+# tar -xvzf glibc-2.34.tar.gz;
+# cd glibc-2.34
+# mkdir build
+# cd build
 
-echo "###### GCC version ######"
-gcc -v
+# echo "###### GCC version ######"
+# gcc -v
 
-echo "###### Configuring ######"
-make clean
-../configure --prefix="$HOME/.local/glibc-2.34" --disable-werror CFLAGS="-Wno-error=use-after-free -O2"
+# echo "###### Configuring ######"
+# make clean
+# ../configure --prefix="$HOME/.local/glibc-2.34" --disable-werror CFLAGS="-Wno-error=use-after-free -O2"
 
-echo "###### Installing ######"
-make -j$(nproc)
-make install
+# echo "###### Installing ######"
+# make -j$(nproc)
+# make install
 
 echo "###### Downloading and installing fnm ######"
 curl -o- https://fnm.vercel.app/install | bash
 export PATH="$HOME/.local/share/fnm:$PATH"
 
-echo "###### Old version ######"
-ldd --version
+# echo "###### Old version ######"
+# ldd --version
 
-echo "###### New version ######"
+# echo "###### New version ######"
 # export LD_LIBRARY_PATH="$HOME/.local/glibc-2.34/lib:$LD_LIBRARY_PATH"
 # export PATH="$HOME/.local/glibc-2.34/bin:$PATH"
 # ldd --version

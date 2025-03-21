@@ -2,7 +2,7 @@
 
 [project]
 name = "rsm-markup"
-version = "0.2.1"
+version = "0.2.5"
 description = "ReStructured Manuscripts (RSM) markup language"
 readme = "README.md"
 authors = [{ name = "Leo Torres", email = "leo@leotrs.com" }]
@@ -108,7 +108,7 @@ docs-serve  = { shell = "sphinx-autobuild docs/source/ docs/build/ --port 7001 -
 
 [tool.poetry]
 name = "rsm-markup"
-version = "0.2.4"
+version = "0.2.5"
 description = "ReStructured Manuscript (RSM) markup language"
 authors = ["leotrs <leo@leotrs.com>"]
 license = "MIT"

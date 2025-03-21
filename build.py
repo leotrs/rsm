@@ -4,13 +4,12 @@ import subprocess
 import sys
 from typing import Any
 
-subprocess.run("fnm env --use-on-cd", shell=True)
-RESULT = subprocess.run("which npm", shell=True, capture_output=True, text=True)
-print("Exit code:", RESULT.returncode)
-print("Output:", RESULT.stdout.strip())
-print("Error:", RESULT.stderr.strip())
+# RESULT = subprocess.run("which npm", shell=True, capture_output=True, text=True)
+# print("Exit code:", RESULT.returncode)
+# print("Output:", RESULT.stdout.strip())
+# print("Error:", RESULT.stderr.strip())
 
-NPM_PATH = RESULT.stdout.strip()
+# NPM_PATH = RESULT.stdout.strip()
 
 
 def run(
@@ -35,7 +34,7 @@ def run(
 
 def build(_: Any):  # one argument is passed by poetry but we don't need it
     """Install tree-sitter and build the shared object library."""
-    run(f"{NPM_PATH} install")  # Install tree-sitter and its dependencies
+    run(f"fnm env && npm install")  # Install tree-sitter and its dependencies
 
     # 'tree-sitter test' creates the .so file; we don't care if the tests actually pass,
     if sys.platform == "win32":

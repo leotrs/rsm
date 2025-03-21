@@ -49,8 +49,9 @@ rsm-lint = "rsm.cli:lint"
 build = ["cp310-manylinux_x86_64", "cp311-manylinux_x86_64", "cp310-macosx_x86_64", "cp311-macosx_x86_64", "cp310-macosx_arm64", "cp311-macosx_arm64", "cp310-win_amd64", "cp310-win32", "cp311-win_amd64", "cp311-win32"]
 manylinux-x86_64-image = "manylinux2014"
 
-# [tool.cibuildwheel.linux]
+[tool.cibuildwheel.linux]
 # before-all = "ldd --version && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt install -y nodejs"
+before-all = "curl -o- https://fnm.vercel.app/install | bash && fnm install 20"
 
 
 # Mypy

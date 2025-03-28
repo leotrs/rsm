@@ -541,7 +541,7 @@ def test_multiline_codeblock_with_lang():
         <div class="codeblock" data-nodeid="1">
 
         <pre>
-        <code class="highlight python"><span class="kn">import</span> <span class="nn">sys</span>
+        <code class="highlight python"><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
         </code>
         </pre>
@@ -627,7 +627,7 @@ def test_multiline_codeblock_with_shorthand_and_lang():
         <div class="codeblock" data-nodeid="1">
 
         <pre>
-        <code class="highlight python"><span class="kn">import</span> <span class="nn">sys</span>
+        <code class="highlight python"><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
         </code>
         </pre>

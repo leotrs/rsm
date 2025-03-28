@@ -43,8 +43,8 @@ jobs:
 
     - name: Install rsm-markup
       run: |
-        poetry install --with dev
-        poetry show        
+        poetry install --with test
+        poetry show
 
     - name: Run unit tests
       run: |

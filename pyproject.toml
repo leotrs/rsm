@@ -111,6 +111,9 @@ description = "ReStructured Manuscript (RSM) markup language"
 authors = ["leotrs <leo@leotrs.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [
+    {include = "rsm"}
+]
 
 
 [[tool.poetry.source]]

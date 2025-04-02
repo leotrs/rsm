@@ -3,14 +3,17 @@
 // Function to run when the entire document finishes loading
 //
 
-export async function onload(path = "/static/") {
+export async function onload(root = null, path = "/static/") {
+    console.log("onload");
+    if (!root) { root = document };
+
     try {
         const libs = await import(`${path}libraries.js`);
 
         // Icons
         try {
             const icons = await import(`${path}icons.js`);
-            icons.setup();
+            icons.setup(root, local);
         } catch (err) {
             console.error("Loading icons.js FAILED!", err);
         }

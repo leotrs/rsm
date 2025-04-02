@@ -154,5 +154,5 @@ wheelhouse/
 .DS_Store
 
 # don't commit compiled examples
-examples/*.html
-examples/static
+rsm-examples/*.html
+rsm-examples/static

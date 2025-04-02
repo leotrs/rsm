@@ -1,0 +1,34 @@
+:manuscript:
+  :title: New handrails are cool
+
+# Icons
+  :label: sec-one
+  :icon: heart
+
+:paragraph: {:icon: star} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+:theorem:
+  :icon: question
+
+  This is the statement of the theorem, and it contains math!
+  $$
+  2+2=4.
+  $$
+  This is the same paragraph.
+
+  :paragraph: {:icon: alert} And here is another one paragraph that does not have math
+  within it.
+
+  And another $2+2=4$.
+
+::
+
+::
+
+::

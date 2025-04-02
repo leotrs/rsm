@@ -1,0 +1,1115 @@
+:manuscript:
+  :title: Indefinite Linear Algebra of the NBM
+  :date: 2024-04-13
+
+
+:author:
+  :name: Leo Torres
+  :email: leo@leotrs.com
+::
+
+
+:paragraph: {:types: hide} preamble
+$$
+  :nonum:
+\newcommand{\into}[2]{{\vec{\mathbf{#1}}}^{{#2}}}
+\newcommand{\from}[2]{{{}}^{{#2}}{\vec{\mathbf{#1}}}}
+\newcommand{\mb}[1]{\mathbf{#1}}
+$$
+
+
+:abstract:
+
+  We study the properties of the NBM of a graph that come from its particular symmetry.
+  We systematically follow :cite:thebook::.
+
+::
+
+
+:toc:
+
+
+# Introduction
+  :label: sec-intro
+
+:let: $G$ be an undirected, simple graph :: and :let: $m$ be the number of edges in
+$G$::.  :write: $E$ for the set of edges of $G$ and $\vec{E}$ for the set of directed
+edges of $G$::, i.e. where each undirected edge $i-j \in E$ corresponds to two directed
+edges $i \to j, j \to i \in \vec{E}$.  :let: $\mb{B}$ be the /non-backtracking/ (or
+simply /NB/) operator of $G$::.  That is to say, $\mb{B}$ is an operator in the
+space $\mathbb{C}^{\vec{E}}$ defined by $$ \left( \mb{B} \mb{v} \right)_{i \to
+j} = \sum_{k \to i \in \vec{E}} \mb{v}_{k \to i} - \mb{v}_{j \to i}.  $$
+
+In order to see $\mb{B}$ as a matrix, we will identify the space of functions
+$\mathbb{C}^{\vec{E}}$ with the complex vector space $\mathbb{C}^{2m}$, with components
+ordered as follows.  Choose an arbitrary orientation for the $m$ undirected edges of
+$G$, and order them in some arbitrary way.  These correspond to the first $m$
+coordinates in $\mathbb{C}^{2m}$.  The second $m$ coordinates correspond to the opposite
+orientation of the edges sorted in the same order.
+
+:remark:
+
+  In the rest of these notes, we will consider $\mb{B}$ as an operator in
+  $\mathbb{C}^{\vec{E}}$ or as a matrix acting in $\mathbb{C}^{2m}$ interchangeably, as
+  convenient.  Accordingly, we will write a function $\mb{v} \colon
+  \mathbb{C}^{\vec{E}} \to \mathbb{C}$ with components $\mb{v}_{i \to j}$ for $i \to
+  j \in \vec{E}$, and identify it with the vector $\mb{v} \in \mathbb{C}^{2m}$ with
+  components $\mb{v}_r$ for $r \in \{ 1, \ldots, 2m \}$.  The order of the
+  components will always be the same, unless stated otherwise.
+
+::
+
+$\mb{B}$ is not Hermitian, however it does have some symmetry.  There exists an
+operator $\mb{P}$ such that
+$$
+\mb{BP} = \mb{P} \mb{B}^*.
+$$
+We call this matrix /the flip operator/ or simply /the flip/ of $G$.  The flip is
+defined as
+$$
+  :label: flip-defn
+(\mb{Pv})_{i \to j} = \mb{v}_{j \to i},
+$$
+for any $\mb{v} \in \mathbb{C}^{\vec{E}}$.  This explains where the name /flip/
+comes from\: $\mb{P}$ acts by flipping the orientation of each edge.  Moreover, when
+the rows and columns of the matrix $\mb{B}$ are ordered in the usual way, we can
+write
+$$
+  :label: flip-blocks
+
+\mb{P} = \left(
+\begin{array}
+\,\mb{0} & \mb{I} \\
+\mb{I} & \mb{0}
+\end{array}
+\right),
+$$
+where $\mb{0}$ and $\mb{I}$ are the zero matrix and the identity matrix,
+respectively, in $\mathbb{C}^{m \times m}$.  Concretely, $\mb{P}$ swaps the $i$-th
+and $(m+i)$-th coordinates with each other.
+
+
+From now on, we :let: $\mb{P}$ be the flip of $G$ ::.
+
+:remark: Even though both $\mb{B}$ and $\mb{P}$ have all real coefficients, we
+  will consider them as transformations on a complex space.  The reason is that the
+  eigenvalues of $\mb{B}$ are in general complex numbers.  Thus, we will discuss
+  their properties with the language appropriate to complex spaces.  For example, we
+  will say that $\mb{P}$ is /unitary/ rather than /orthogonal/.
+::
+
+:paragraph: {:label:flip-evectors, :title: A definition} :write: $\mb{v}^i :=
+\langle \ldots, 1, \ldots, 0, \ldots, 1, \ldots, 0 \rangle$, the vector with a $1$ in
+the /i/-th and /(m+i)/-th components, for each $i = 1, \ldots, m$::.  Similarly, :write:
+$\mb{v}^{-i} := \langle \ldots, 1, \ldots, 0, \ldots, -1, \ldots, 0 \rangle$, the
+vector with a $1$ in the /i/-th component and a $-1$ in the /(m+i)/-th component, for
+each $i = 1, \ldots, m$::.
+
+
+
+:proposition:
+  :title: Properties of the flip
+  :label: prop-flip
+
+  :claim: The flip $\mb{P}$ is involutory, invertible, Hermitian, and unitary ::.
+  Furthermore, :claim: $\left\{ \mb{v}^{i} \right\}_{i=1}^m \cup \left\{
+  \mb{v}^{-i} \right\}_{i=1}^m$ make a complete basis of eigenvectors of
+  $\mb{P}$ ::.
+
+::
+
+:proof:
+
+  :step: :claim: The flip $\mb{P}$ is involutory, invertible, Hermitian, and unitary ::.
+
+    :p: Direct computation using :ref:flip-defn:: yields $\mb{P}^2 = \mb{I}$,
+    which in turn means it is its own inverse.  :ref:flip-blocks:: means $\mb{P}$ is
+    Hermitian. All Hermitian involutory matrices are unitary. :: ::
+
+  :step: :claim: $\left\{ \mb{v}^{i} \right\}_{i=1}^m \cup \left\{ \mb{v}^{-i}
+  \right\}_{i=1}^m$ make a complete basis of eigenvectors of $\mb{P}$ ::
+
+    :p:
+
+      :step: :claim: $\mb{P} \mb{v}^i = \mb{v}^i$ and $\mb{P}
+      \mb{v}^{-i} = -\mb{v}^i$::. ::
+
+      :step: :claim: The vectors $\left\{ \mb{v}^{i} \right\}_{i=1}^m \cup \left\{
+	\mb{v}^{-i} \right\}_{i=1}^m$ are all linearly independent. :: ::
+
+    ::
+
+  ::
+
+::
+
+
+
+:remark: In the rest of these notes, each section and subsection is numbered according
+to the chapters and sections of :cite:thebook::.  ::
+
+::
+
+
+# Indefinite Inner Products
+:label: sec-indefinite-inner-products
+
+
+## Definition
+:label: sec-definition
+
+Since every invertible Hermitian matrix defines an indefinite inner product,
+$\mb{P}$ defines one too.  For two vectors $\mb{x}, \mb{y} \in
+\mathbb{C}^{2m}$, we have
+$$
+[\mb{x}, \mb{y}]_\mb{P} := \mb{x}^{\top} \mb{P} \overline{\mb{y}} = \sum_{i \to j} \mb{x}_{i \to j} \, \overline{\mb{y}_{j \to i}}.
+$$
+
+When rows and columns are ordered in the usual way, we equivalently have
+$$
+\mb{x}^{\top} \mb{P} \overline{\mb{y}} = \sum_{r=1}^{2m} \mb{x}_{r} \, \overline{\mb{y}_{m + r}},
+$$
+where the subscript $m+r$ is taken modulo $2m$.
+
+:remark: Usually, the complex inner product is written with the complex conjugate in the
+first argument, as $\mb{x}^* \mb{P} \mb{y}$.  Unfortunately, the authors of
+:cite:thebook:: choose to use it on the second argument, $\mb{x}^{\top} \mb{P}
+\overline{\mb{y}}$, as shown above.  Since we are following them closely, we choose
+to use their notation.::
+
+
+### The flip and the sip
+:label: sec-flip-sip
+:nonum:
+
+The book :cite:thebook:: repeatedly uses the so-called /sip/ matrix (short for /standard
+involutory permutation/), defined as the $n \times n$ matrix with
+$$
+\mb{S}_n =
+\left[
+\begin{array}
+\,0 & 0 & \ldots & 0 & 1 \\
+0 & 0 & \ldots & 1 & 0 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 1 & \ldots & 0 & 0 \\
+1 & 0 & \ldots & 0 & 0
+\end{array}
+\right].
+$$
+
+In our case, the $\mb{P}$ matrix would be exactly equal to $\mb{S}_{2m}$ if we
+had ordered the oriented edges in a different way.  Specifically, after fixing the
+orientation of the edges of $G$ and placing them as the first $m$ components, if we
+place the next $m$ components /in the reverse order/, then $\mb{P}$ would equal
+$\mb{S}_{2m}$.  Since the order of the oriented edges is arbitrary, all properties
+of the sip matrix are shared by the flip, both as operators or as matrices.  With this
+in mind, we will continue to use $\mb{P}$ and the oriented edge order defined above.
+
+::
+
+::
+
+
+## Orthogonality and Orthogonal Bases
+:label: sec-orthogonality
+
+Following example 2.2.1 in :cite:thebook::, we look for a subspace $\mathcal{M}$ whose
+$\mb{P}$-orthogonal companion is not its direct complement.  :let: $\alpha \to
+\beta$ be an arbitrary edge ::, and :let: $\mathcal{M}$ be the subspace spanned by
+$\mb{e}_{\alpha \to \beta}$::. Then
+$$
+\left[\mb{e}_{\alpha \to \beta}, \mb{y} \right]_\mb{P}
+=
+\sum_{i \to j} \left(\mb{e}_{\alpha \to \beta}\right)_{i \to j} \, \overline{\mb{y}_{j \to i}}
+=
+\overline{\mb{y}_{\beta \to \alpha}}.
+$$
+
+If $\mb{y}$ is $\mb{P}$-orthogonal to $\mb{e}_{\alpha \to \beta}$ then it
+must satisfy $\mb{y}_{\beta \to \alpha} = 0$.  Thus
+$\mathcal{M}^{[\bot]_{\mb{P}}}$ is spanned by $\{ \mb{e}_{i \to j} \colon i \to
+j \neq \beta \to \alpha \}$.  Note this set contains $\mb{e}_{\alpha \to \beta}$
+itself.
+
+According to Proposition 2.2.2 of :cite:thebook::, this is due to the fact that this
+particular $\mathcal{M}$ is degenerate.  Indeed, :claim: $\left[\mb{e}_{\alpha \to
+\beta}, z \mb{e}_{\alpha \to \beta} \right]_\mb{P} = 0$, for any $z \in
+\mathbb{C}$ ::, but $\mb{e}_{\alpha \to \beta}$ is obviously not zero.
+
+:draft: What about the subspace corresponding to the unit eigenvalues of $\mb{B}$? ::
+
+
+
+### P-Orthogonal basis
+:label: sec-p-orthogonal-basis
+:nonum:
+
+The canonical basis of $\mathbb{C}^{2m}$ is not $\mb{P}$-orthonormal.  Indeed,
+$\left[ \mb{e}_{i \to j}, \mb{e}_{i \to j} \right]_\mb{P} = 0$ for any edge
+$i \to j$.  Instead, we can use the basis of eigenvectors of $\mb{P}$ exhibited
+:ref:flip-evectors, previously::.  Observe we have, for every $i \in \left\{ -m, \ldots,
+-1, 1, \ldots, m \right\}$, $$ \left[ \mb{v}^i, \mb{v}^i \right]_\mb{P} =
+\sum_{r=1}^{2m} \mb{v}^i_r \overline{\mb{v}^i_{m+r}} = \mb{v}_i^i
+\mb{v}_{m+i}^i + \mb{v}_{m+i}^i \mb{v}_{i}^i = \begin{cases} - 2, & i \in
+\left\{ -m, \ldots, -1 \right\} \\ \phantom{-} 2, & i \in \left\{ 1, \ldots, m
+\right\}. \\ \end{cases} $$
+
+Additionally,
+$$
+\begin{align}
+\left[\mb{v}^i, \mb{v}^j\right]_\mb{P}
+&=
+0,
+\text{ for each } i \in \{-m, \ldots, -1, 1, \ldots, m\} \text{ and each } j \neq -i, \\
+\left[\mb{v}^i, \mb{v}^{-i} \right]_\mb{P}
+&=
+\sum_{r=1}^{2m} \mb{v}^i_r \overline{\mb{v}^{-i}_{m+r}}
+=
+\mb{v}_i^i \mb{v}_{m+i}^{-i} + \mb{v}_{m+i}^i \mb{v}_{i}^{-i}
+= -1 + 1 = 0.
+\end{align}
+$$
+Therefore, the set $\left\{ \frac{\mb{v}^i}{\sqrt{2}} \colon i = -m,
+\ldots, -1, 1, \ldots, m \right\}$ is a $\mb{P}$-orthonormal basis.
+
+Moreover, this basis is also orthogonal in the standard sense, which comes from the fact
+that they are the eigenvectors of $\mb{P}$.  Still, we have the following
+computation,
+$$
+\begin{align}
+\left(\mb{v}^i\right)^* \mb{v}^i
+&=
+\sum_{r=1}^{2m} \overline{\mb{v}^i_r} \mb{v}^i_{r}
+=
+\overline{\mb{v}^i_i} \mb{v}^i_i + \overline{\mb{v}^i_{m+i}} \mb{v}^i_{m+i} \\
+&=
+1 + 1
+=
+2,
+\text{ for each } i \in \{1, \ldots, m\} \\
+&=
+\left(-1\right)^2 + \left(-1\right)^2
+=
+2,
+\text{ for each } i \in \{-m, \ldots, -1\} \\
+\left(\mb{v}^i\right)^* \mb{v}^j
+&=
+\sum_{r=1}^{2m} \overline{\mb{v}^i_r} \mb{v}^j_{r} \\
+&=
+0,
+\text{ for each } i \neq m + j \\
+&=
+1(1) + 1(-1) = 0,
+\text{ for each } i = m + j. \\
+\end{align}
+$$
+
+::
+
+::
+
+
+## Classification of Subspaces
+:label: sec-classification-of-subspaces
+
+::
+
+
+## Exercises
+:label: sec-exercises
+
+The goal of most of the exercises in this section revolves around finding subspaces with
+certain properties (neutral, positive, non-negative, etc) for a given indefinite inner
+product.  We do so here for the flip $\mb{P}$.
+
+Consider an arbitrary vector $\mb{z}$ written in the $\mb{P}$-orthogonal basis
+described :ref:flip-evectors, above:: as $\mb{z} = \sum_{r=1}^m \left(\zeta_r
+\mb{v}^r + \zeta_{-r} \mb{v}^{-r} \right)$.  In this case we have
+$$
+:label: eqn-product-basis
+\begin{align}
+\left[\mb{z}, \mb{z} \right]_\mb{P}
+&=
+\sum_{r=1}^m \sum_{s=1}^m \left[ \zeta_r \mb{v}^r + \zeta_{-r}\mb{v}^{-r}, \zeta_s\mb{v}^{s} + \zeta_{-s}\mb{v}^{-s} \right]_{\mb{P}} \\
+&=
+\sum_{r=1}^m \sum_{s=1}^m \left(
+ \left[ \zeta_r \mb{v}^r, \zeta_s\mb{v}^{s} \right]_{\mb{P}} +
+ \left[ \zeta_r \mb{v}^r, \zeta_{-s}\mb{v}^{-s} \right]_{\mb{P}} +
+ \left[ \zeta_{-r} \mb{v}^{-r}, \zeta_s\mb{v}^{s} \right]_{\mb{P}} +
+ \left[ \zeta_{-r} \mb{v}^{-r}, \zeta_{-s}\mb{v}^{-s} \right]_{\mb{P}}
+\right) \\
+&=
+2 \sum_{r=1}^m \left| \zeta_r \right|^2 - 2 \sum_{r=1}^m \left| \zeta_{-r} \right|^2.
+\end{align}
+$$
+
+:proposition:
+
+  :let: $\mb{p} = \left(\zeta_1, \ldots, \zeta_m \right)$ and $\mb{q} =
+  \left(\zeta_{-1}, \ldots, \zeta_{-m} \right)$ for a given vector $\mb{z}$. ::
+  :claim: $\mb{z}$ is $\mb{P}$-neutral if and only if there exists a unitary
+  matrix $\mb{R}$ such that $\mb{p} = \mb{R q}$. ::
+
+::
+
+:proof:
+
+  :step: $\Longleftarrow$
+
+    :p:
+
+      :step: :let: $\mb{R} \in \mathbb{C}^{m \times m}$ be a unitary matrix such
+      that $\mb{p} = \mb{R q}$. :: ::
+
+      :step:
+
+	:claim: $\sum_{r=1}^m \left| \zeta_r \right|^2 = \sum_{r=1}^m \left| \zeta_{-r} \right|^2$. ::
+
+	:p: We have
+	    $$
+	    \sum_{r=1}^m \left| \zeta_r \right|^2
+            =
+            \mb{p}^* \mb{p}
+            =
+            \left(\mb{R q}\right)^* \left(\mb{R q}\right)
+            =
+            \mb{q}^* \mb{q}
+            =
+            \sum_{r=1}^m \left| \zeta_{-r} \right|^2.
+	    $$
+
+	:: ::
+
+      :step: $\,$ :qed:
+
+        :p: From :prev: and :ref:eqn-product-basis::. ::
+
+      ::
+
+    :: ::
+
+  :step: $\Longrightarrow$
+
+    :p:
+
+      :step: :assume: $\mb{z}$ is neutral, that is, that $\mb{p}^* \mb{p} =
+      \mb{q}^* \mb{q}$::. ::
+
+      :step: :qed:
+
+	:p:
+
+	  There are in fact infinitely many unitary matrices $\mb{R}$ in this case
+	  since there are infinitely many linear maps that take $\mb{p}$ to
+	  $\mb{q}$ while rotating or reflecting the rest of the space.:: ::
+
+    :: ::
+
+::
+
+:corollary:
+
+  :let: $\mb{R}$ be an $m \times m$ unitary matrix.  The subspace $\left\{\mb{z}
+  \colon \mb{p} = \mb{R} \mb{q} \right\}$ is neutral. ::
+
+::
+
+We have shown that the set of all neutral vectors (the neutral? cone) is the union of
+the spaces $\left\{ \mb{z} \colon \mb{p} = \mb{R} \mb{q} \right\}$.
+This family of spaces is parameterized by the set of $m \times m$ unitary matrices
+$\mb{R}$.  This is not only a set but the Lie group $U(n)$, thus a group that is
+also a differentiable manifold.  In other words, /we have a vector bundle over $U(n)$/.
+
+It is known that the tangent bundle of a Lie group is trivial.  But can we give our cone
+some other interesting topology that makes it a non-trivial vector bundle?  And if so,
+how can we use this?
+
+Another observation is that the spaces $\left\{ \mb{z} \colon \mb{p} =
+\mb{R} \mb{q} \right\}$ have non-trivial intersections (related to the
+eigenvectors of eigenvalue $1$ of certain unitary matrices).  These intersections may be
+the key to figuring out a natural topology for this space.
+
+
+:draft: if this is a hyperbola, what are the foci? where are the cosh and sinh? ::
+
+:draft: From the same equation above it is also easy to construct (maximal) positive and
+negative subspaces, and combining those with neutral subspaces we can build non-negative
+and non-positive subspaces.  But what about building all?::
+
+:draft: The invariant subspace corresponding to $\lambda = 1$ of a NBM is clearly a
+positive subspace. What about $\lambda = -1$? What about other unitary evals? ::
+
+:: ::
+
+
+
+# Orthogonalization and Orthogonal Polynomials
+:label: sec-orthogonal-polynomials
+
+The canonical basis does not have a regular orthogonalization since the Gram matrix is
+equal to $\mb{P}$ and thus at least the first $m$ principal submatrices have
+determinant equal to zero.
+
+:draft: Look for orthogonalizations of paticularly interesting bases. ::
+
+::
+
+
+
+# Classes of Linear Transformations
+:label: sec-linear-transformations
+
+## Adjoint Matrices
+:label: sec-adjoint-matrices
+
+One of the most important facts is that $\mb{B}$ is $\mb{P}$-selfadjoint.  This
+is proved directly from the definitions.
+
+:draft:After Proposition 4.1.3 of :cite:thebook::, exhibit the matrices involved in using the
+flip and the sip.  What is the transformation that when applied to $\mb{B}$ results
+in a sip-selfadjoint matrix?::
+
+Following :ref:prop-flip:: we can write
+$$
+\mb{P} =
+\frac{1}{2}
+\left(
+\begin{array}
+\,\mb{I} & \phantom{-}\mb{I} \\
+\mb{I} & \mb{-I}
+\end{array}
+\right)
+\left(
+\begin{array}
+\,\mb{I} & \phantom{-}\mb{0} \\
+\mb{0} & \mb{-I}
+\end{array}
+\right)
+\left(
+\begin{array}
+\,\mb{I} & \phantom{-}\mb{I} \\
+\mb{I} & \mb{-I}
+\end{array}
+\right).
+$$
+
+Similarly, for the sip matrix $\mb{S}_{2m}$, we have
+$$
+\mb{S}_{2m}
+=
+\frac{1}{2}
+\left(
+\begin{array}
+\,\mb{I} & \mb{S}_{m} \\
+\mb{S}_{m} & -\mb{I}
+\end{array}
+\right)
+\left(
+\begin{array}
+\,\mb{I} & \mb{0} \\
+\mb{0} & -\mb{I}
+\end{array}
+\right)
+\left(
+\begin{array}
+\,\mb{I} & \mb{S}_{m} \\
+\mb{S}_{m} & -\mb{I}
+\end{array}
+\right)
+.
+$$
+Therefore,
+$$
+\begin{align}
+\left(
+\begin{array}
+\,\mb{I} & \mb{S}_{m} \\
+\mb{S}_{m} & -\mb{I}
+\end{array}
+\right)
+\mb{S}_{2m}
+\left(
+\begin{array}
+\,\mb{I} & \mb{S}_{m} \\
+\mb{S}_{m} & -\mb{I}
+\end{array}
+\right)
+&=
+\left(
+\begin{array}
+\,\mb{I} & \phantom{-}\mb{I} \\
+\mb{I} & \mb{-I}
+\end{array}
+\right)
+\mb{P}
+\left(
+\begin{array}
+\,\mb{I} & \phantom{-}\mb{I} \\
+\mb{I} & \mb{-I}
+\end{array}
+\right)
+
+\\
+4 \mb{S}_{2m}
+&=
+\left(
+\begin{array}
+\,\mb{I} & \mb{S}_{m} \\
+\mb{S}_{m} & -\mb{I}
+\end{array}
+\right)
+\left(
+\begin{array}
+\,\mb{I} & \phantom{-}\mb{I} \\
+\mb{I} & \mb{-I}
+\end{array}
+\right)
+\mb{P}
+\left(
+\begin{array}
+\,\mb{I} & \phantom{-}\mb{I} \\
+\mb{I} & \mb{-I}
+\end{array}
+\right)
+\left(
+\begin{array}
+\,\mb{I} & \mb{S}_{m} \\
+\mb{S}_{m} & -\mb{I}
+\end{array}
+\right) \\
+4 \mb{S}_{2m}
+&=
+\left(
+\begin{array}
+\,\mb{S}_m + \mb{I} & \mb{I}-\mb{S}_m \\
+\mb{S}_m - \mb{I} & \mb{I} + \mb{S}_m
+\end{array}
+\right)
+\mb{P}
+\left(
+\begin{array}
+\,\mb{I} + \mb{S}_m & \mb{S}_m - \mb{I} \\
+\mb{I} - \mb{S}_m & \mb{S}_m + \mb{I}
+\end{array}
+\right) \\
+\mb{S}_{2m}
+&=
+\mb{Q}\mb{P}\mb{Q}^{*},
+\end{align}
+$$
+for $\mb{Q} = \frac{1}{2} \left(\begin{array}
+\,\mb{S}_m + \mb{I} & \mb{I} - \mb{S}_m \\
+\mb{S}_m - \mb{I} & \mb{I} + \mb{S}_m
+\end{array}\right)$.  This in turn implies that
+$$
+\mb{B}' := \left( \mb{Q}^* \right)^{-1} \mb{B} \mb{Q}^*
+$$
+is $\mb{S}_{2m}$-selfadjoint.
+
+We have that $\mb{Q}^{2} = \mb{S}_{2m}$.  Therefore,
+$\mb{Q}^{-1} = \mb{S}_{2m}\mb{Q}$.  Now we can write
+$$
+\mb{B}'
+=
+\mb{Q}^{*} \mb{S}_{2m} \mb{B} \mb{Q}^{*}.
+$$
+
+
+:draft: are $\mb{P}$ or $\mb{B}$ persymmetric or centrosymmetric?::
+
+::
+
+
+## H-selfadjoint Matrices\: Examples and Simplest Properties
+:label: sec-selfadjoint-matrices
+
+::
+
+
+## H-unitary Matrices\: Examples and Simplest Properties
+:label: sec-unitary-matrices
+
+According to Proposition 4.3.4 of :cite:thebook::, we have that any Cayley transform of
+$\mb{B}$ will be $\mb{P}$-unitary.  Thus, for any $\left| \alpha \right| = 1$
+and $w \neq \overline{w}$, the matrix
+$$
+U := \alpha \left( B - \overline{w} I \right) \left( B - w I \right)^{-1}
+$$
+is $\mb{P}$-unitary.  Furthermore, the eigenvalues of $\mb{U}$ are the Cayley
+transform of the eigenvalues of $\mb{B}$, and the root subspaces are kept intact
+(which is in fact a special case of the more general fact that analytic transformations
+preserve root subspaces and transform the eigenvalues).
+
+$\mb{P}$-unitary matrices have a spectrum that is symmetrical with respect to the
+unit circle.
+
+:draft: Is $\mb{B}$ $(\mb{P}, \mb{S})$-unitary? See eqn 4.3.20 in the
+book. ::
+
+::
+
+
+## A second characterization of H-unitary matrices
+:label: sec-charac-unit
+
+::
+
+
+## Unitary similarity
+:label: sec-unitary-simil
+
+::
+
+
+## Contractions
+:label: sec-contractions
+
+::
+
+
+## Dissipative matrices
+:label: sec-dissipative
+
+::
+
+
+## Symplectic matrices
+:label: sec-symplectic
+
+::
+
+
+## Exercises
+:label: sec-4-exercises
+
+:proposition:
+  :title: Exercise 8
+
+  :let: $\mb{A}$ be an $\mb{H}$-orthogonal projection in
+  $\mathbb{C}^n(\mb{H})$::.  :prove: that $\text{Ker}(\mb{A})$ and
+  $\text{Range}(\mb{A})$ are $\mb{H}$-orthogonal and $\mb{A}^{[*]} =
+  \mb{A}$.::
+
+::
+
+:proof:
+
+  :step: :let: $\mb{x} \in \text{Ker}(\mb{A})$ and $\mb{y} \in
+  \text{Range}(\mb{A})$ with $\mb{y} = \mb{A} \mb{z}$. :: ::
+
+  :step: :draft: complete me :: We have
+    $$
+      \begin{align}
+      [\mb{x}, \mb{y}]_{\mb{P}}
+      =
+      \left[ \mb{x}, \mb{A} \mb{z} \right]_{\mb{P}}
+      =
+      \left[ \mb{A}^{*} \mb{x}, \mb{z} \right]_{\mb{P}}
+      =
+      \left[ \mb{A}^{*} \mb{x}, \mb{z} \right]_{\mb{P}}
+      \end{align}
+    $$
+ ::
+
+::
+
+::
+
+::
+
+
+# Scratch
+:label: sec-scratch
+
+:proposition:
+  :label: left-right-evectors
+
+  :let: $\lambda$ be nonreal :: and :let: $\mb{v}$ be a right eigenvector of
+  $\lambda$ ::.  :let: $\mb{u} = \overline{\mb{P v}}$ ::. Then
+
+  :enumerate:
+
+    :item: :claim: $\overline{\mb{v}}$ is a right eigenvector of $\overline{\lambda}$. ::
+
+    :item: :claim: $\mb{u}^*$ is a left eigenvector of $\lambda$. ::
+
+    :item: :claim: $\mb{u}^\top$ is a left eigenvector of $\overline{\lambda}$. ::
+
+    :item: :claim: $\left[\mb{v}, \mb{v} \right]_\mb{P} = 0 = \left[\mb{u}, \mb{u} \right]_\mb{P}$. ::
+
+    :item: :claim: $\left[\mb{v}, \overline{\mb{v}} \right]_\mb{P} = \overline{\left[\mb{u}, \overline{\mb{u}} \right]_\mb{P}} = \mb{u}^* \mb{v} = \mb{v}^\top \mb{P v}$. ::
+
+  ::
+
+::
+
+
+:proof:
+
+  :step: :claim: $\overline{\mb{v}}$ is a right eigenvector of $\overline{\lambda}$. ::
+
+    :p: Take the complex conjugate of the equation $\mb{B v} = \lambda \mb{v}$. :: ::
+
+  :step: :claim: $\mb{u}^*$ is a left eigenvector of $\lambda$. ::
+
+    :p: We have
+      $$
+      :label: eqn-u
+      \begin{align}
+      \mb{B} \mb{v} &= \lambda \mb{v} \\
+      \mb{P} \mb{B}^* \mb{P} \mb{v} &= \lambda \mb{v} \\
+      \mb{B}^* \mb{P} \mb{v} &= \lambda \mb{P} \mb{v} \\
+      \mb{B}^* \overline{\mb{u}} &= \lambda \overline{\mb{u}} \\
+      \overline{\mb{u}}^\top \mb{B} &= \lambda \overline{\mb{u}}^\top,
+      \end{align}
+      $$
+      where in the last step we have taken the transpose and not the complex adjoint.
+
+    :: ::
+
+  :step: :claim: $\mb{u}^\top$ is a left eigenvector of $\overline{\lambda}$. ::
+
+    :p: Take the complex conjugate of the last step in :ref:eqn-u::, and recall $\overline{\mb{B}} = \mb{B}$. :: ::
+
+  :step: :claim: $\left[\mb{v}, \mb{v} \right]_\mb{P} = 0 = \left[\mb{u}, \mb{u} \right]_\mb{P}$. ::
+
+    :p: Due to result 4.2.5 from :cite:thebook::, which says that the root subspace
+    coresponding to a nonreal eigenvalue is $\mb{P}$-neutral. :: ::
+
+  :step: :claim: $\left[\mb{v}, \overline{\mb{v}} \right]_\mb{P} = \overline{\left[\mb{u}, \overline{\mb{u}} \right]_\mb{P}} = \mb{u}^* \mb{v} = \mb{v}^\top \mb{P v}$. ::
+
+    :p: All these equations are established by direct evaluation.  For example,
+      $$
+      \begin{align}
+      \left[\mb{u}, \overline{\mb{u}}\right]_\mb{P}
+      &=
+      \mb{u}^\top \mb{P} \overline{\overline{\mb{u}}} \\
+      &=
+      \left(\overline{\mb{P v}}\right)^\top \mb{P} \left(\overline{\mb{P v}}\right) \\
+      &=
+      \mb{v}^* \mb{P} \mb{P} \mb{P} \overline{\mb{v}} \\
+      &=
+      \mb{v}^* \mb{P} \overline{\mb{v}} \\
+      &=
+      \overline{\mb{v}^\top \mb{P} \mb{v}} \\
+      &=
+      \overline{\left[\mb{v}, \overline{\mb{v}}\right]_\mb{P}}
+      \end{align}
+      $$ :: ::
+
+::
+
+
+:proposition:
+
+  :let: $\lambda$ be nonreal :: and :let: $\mb{v}$ be a right eigenvector of
+  $\lambda$ such that $\mb{v}^\top \mb{P} \mb{v} = 1$ ::.  :let: $\mb{u}
+  = \overline{\mb{P v}}$ ::. Then $\mb{v} \mb{u}^*$ is the eigenprojection
+  (a.k.a. principal idempotent) of $\mb{B}$ corresponding to $\mb{v}$.  That is
+  to say,
+  $$
+  \mb{B} \left(\mb{v} \mb{u}^*\right) = \lambda \left(\mb{v} \mb{u}^*\right) = \left(\mb{v} \mb{u}^*\right) \mb{B}
+  \quad\text{and}\quad
+  \left(\mb{v} \mb{u}^*\right)^2 = \mb{v} \mb{u}^*.
+  $$
+
+::
+
+:proof:
+
+  :step: :claim: $\mb{B} \left(\mb{v} \mb{u}^*\right) = \lambda
+  \left(\mb{v} \mb{u}^*\right) = \left(\mb{v} \mb{u}^*\right)
+  \mb{B}$. ::
+
+    :p: Immediate from the fact that $\mb{v}, \mb{u}^*$ are right, left
+    eigenvectors of $\mb{B}$ corresponding to $\lambda$. :: ::
+
+
+  :step: :claim: $\left(\mb{v} \mb{u}^*\right)^2 = \mb{v} \mb{u}^*$. ::
+
+    :p: $\left(\mb{v} \mb{u}^*\right)^2 = \mb{v} \mb{u}^* \mb{v}
+    \mb{u}^* = \left(\mb{v}^\top \mb{P} \mb{v} \right) \mb{v}
+    \mb{u}^* = \mb{v} \mb{u}^*$. :: ::
+
+::
+
+The preceeding result is immediate from the fact that $\mb{u}$ is the left
+eigenvector corresponding to $\mb{v}$.  What's important here is that we have been
+able to write both $\mb{u} = \overline{\mb{P v}}$ and the normalization constant
+$\mb{v}^\top \mb{P} \mb{v} = 1$ purely in terms of $\mb{v}$.
+
+:remark:
+
+  :draft: Taking the adjoint does not commute with taking a restriction. ::
+
+::
+
+:lemma:
+
+  :let: $\mb{B v} = \lambda \mb{v}$ with nonreal $\lambda$ ::. Then, :claim:
+  $\left( \left|\lambda\right|^2 - 1 \right) \mb{v}^* \mb{v} =\sum_j
+  \left|\into{v}{j}\right|^2 \left( d_j - 2 \right)$ ::.
+
+::
+
+:proof:
+
+  :step: :claim: $0 = \sum_{i \to j} \mb{v}_{i \to j} \overline{\mb{v}}_{j \to i}$ ::.
+
+    :p: We have
+      $$
+      \begin{align}
+      0
+      =
+      \left[ \mb{v}, \mb{v} \right]_\mb{P}
+      =
+      \mb{v}^\top \mb{P} \overline{\mb{v}}
+      =
+      \sum_{i \to j} \mb{v}_{i \to j}\left( \mb{P} \overline{\mb{v}} \right)_{i \to j}
+      =
+      \sum_{i \to j} \mb{v}_{i \to j} \overline{\mb{v}}_{j \to i} = \star.
+      \end{align}
+      $$ :: ::
+
+  :step: :claim: $\lambda^{-1} \sum_j \left|\into{v}{j}\right|^2 \left( d_j - 1 \right) = \overline{\lambda} \mb{v}^* \mb{v}$ ::.
+
+    :p:
+
+      :step: Applying :draft: such and such :: in $\star$, we have
+        $$
+        \begin{align}
+        \star
+        &=
+        \sum_{i \to j} \overline{\mb{v}}_{j \to i} \left( \into{v}{j} - \lambda \mb{v}_{j \to i} \right) \\
+        &=
+        \sum_j \into{v}{j} \sum_i a_{ij} \overline{\mb{v}}_{j \to i} - \lambda \sum_{i \to j} \overline{\mb{v}}_{j \to i} \mb{v}_{j \to i} \\
+        &=
+        \sum_j \into{v}{j} \overline{\from{v}{j}} - \lambda \mb{v}^* \mb{v} \\
+        &=
+        \star \star.
+        \end{align}
+        $$
+
+	Now take the conjugate and observe $\mb{v}^* \mb{v} \in \mathbb{R}$.
+  	$$
+  	\begin{align}
+        \star \star
+        &=
+        \sum_j \overline{\into{v}{j}} \from{v}{j} - \overline{\lambda} \mb{v}^* \mb{v}
+        =
+        \sum_j \overline{\into{v}{j}} \lambda^{-1} \left( d_j - 1 \right) \into{v}{j} - \overline{\lambda} \mb{v}^* \mb{v}.
+        \end{align}
+        $$ :: :: ::
+
+  :step: :claim: $\sum_i \left|\into{v}{i}\right|^2 = \mb{v}^* \mb{v}$ ::.
+
+    :p: We have
+      $$
+      \begin{align}
+      \star
+      &=
+      \sum_{i \to j} \overline{\mb{v}}_{j \to i} \lambda^{-1} \left( \into{v}{i} - \mb{v}_{j \to i} \right)
+      =
+      \lambda^{-1} \sum_i \into{v}{i} \sum_j a_{ij} \overline{\mb{v}}_{j \to i}  - \lambda^{-1} \sum_{i \to j} \overline{\mb{v}}_{j \to i} \mb{v}_{j \to i} \\
+      &=
+      \lambda^{-1} \sum_i \into{v}{i} \overline{\into{v}{i}} - \lambda^{-1} \mb{v}^* \mb{v}.
+      \end{align}
+      $$ :: ::
+
+
+  :step: :qed:
+
+    Multiplying :prev2: by $\lambda$ and subtracting :prev:.
+
+  ::
+
+::
+
+:proposition:
+
+  :let: $\mb{B} \mb{v} = \lambda \mb{v}$ with $\left|\lambda\right| = 1$ ::.
+  Then :claim: $\into{v}{j} \left( d_j - 2 \right) = 0$, for each node $j$::.
+
+::
+
+:proof:
+
+  :step:
+
+    Direct from previous lemma, noting that each term in the sum is non-negative, and
+    that $\left|\into{v}{j}\right| = 0 \iff \into{v}{j} = 0$.
+
+  ::
+
+::
+
+:proposition:
+
+  :let: $\lambda$ be a nonreal eigenvalue::.  Then, :claim: $\left|\lambda\right|^2 \geq
+  1$ ::.
+
+::
+
+:proof:
+
+  Direct from the lemma.  :draft: this is nice, but is it necessary? ::
+
+::
+
+:proposition:
+
+  :let: $\mb{B v} = \lambda \mb{v}$ with nonreal $\lambda$::. Then, :claim:
+  $\mb{B}^* \mb{B} \mb{v} = \mb{B} \mb{B}^* \mb{v} = \mb{v}$
+  ::.
+
+::
+
+:proof:
+
+  Also from the lemma.
+
+::
+
+:proposition:
+
+  :let: $\mb{B v} = \lambda \mb{v}$ with nonreal $\lambda$ ::. :claim: $\sum_j
+  \left|\into{v}{j} \right|^2 = \mb{v}^* \mb{v}$ ::.
+
+::
+
+:proof:
+
+  This is exactly the second to last step in the lemma.
+
+::
+
+
+::
+
+# Diagonalizability
+:label: sec-diagonaliza
+
+:draft: See exercise 10 of section 5 of the book (page 122) ::
+
+:let: $G$ be a graph with NBM $\mb{B}$::. :assume: $\mb{B}$ is diagonalizable ::
+and :let: $\mb{R}$ be a full-rank matrix of eigenvectors, and $\mb{\Lambda}$ the
+corresponding diagonal matrix of eigenvalues::.  We have
+$$
+\mb{B} \mb{R} = \mb{R} \mb{\Lambda}.
+$$
+
+:write: $\mb{L} := \mb{R}^{-1}$ ::.  Observe that $\mb{L}$ is a
+matrix of left eigenvectors of $\mb{B}$,
+$$
+\begin{align}
+\mb{B} \mb{R}
+&=
+\mb{R} \mb{\Lambda} \\
+\mb{B}
+&=
+\mb{R} \mb{\Lambda} \mb{L} \\
+\mb{L} \mb{B}
+&=
+\mb{\Lambda} \mb{L}.
+\end{align}
+$$
+
+On the other hand, by :ref:left-right-evectors::, we know that $\left(
+\overline{\mb{P} \mb{R}} \right)^* = \mb{R}^\top \mb{P}$ is also a
+matrix of left eigenvectors.  The natural question is to ask whether this is the same as
+$\mb{L}$, or in other words, whether
+$$
+\mb{R}^{-1} \stackrel{?}{=} \mb{R}^\top \mb{P}
+\quad\text{or, equivalently,}\quad
+\mb{I} \stackrel{?}{=} \mb{R}^\top \mb{P} \mb{R}.
+$$
+
+We will see that this is not in general the case, though there is a decomposition of
+$\mb{R}$ that is almost as good.
+
+:let: $\lambda, \mu$ be two distinct real eigenvalues of $\mb{B}$ ::.  By Theorem
+4.2.4 of :cite:thebook::, we have that $\left[ \mb{v}, \mb{u} \right]_\mb{P}
+= 0$, for any eigenvector $\mb{v}$ of $\lambda$ and any eigenvector $\mb{u}$ of
+$\mu$.  Furthermore, in this case we have
+$$
+0
+=
+\left[ \mb{v}, \mb{u} \right]_\mb{P}
+=
+\mb{v}^\top \mb{P} \overline{\mb{u}}
+=
+\mb{v}^\top \mb{P} \mb{u},
+$$
+since $\mb{u}$ can always be chosen with real components.  Furthermore, $\mb{v}$
+can be chosen to satisfy $\mb{v}^\top \mb{P} \mb{v} = 1$.  This is because
+$\left[ \mb{v}, \mb{v} \right]_\mb{P}$ is non-zero if and only if $\lambda$
+is non-defective.
+
+:draft: MISSING\: what if $\lambda$ has two orthogonal eigenvectors?::
+
+Now :assume: $\lambda, \mu$ are two distinct nonreal eigenvalues of $\mb{B}$ ::.  We
+are interested in the form
+$$
+\mb{v}^\top \mb{P} \mb{u} = \left[ \mb{v}, \overline{\mb{u}} \right]_\mb{P}.
+$$
+
+Note that $\overline{\mb{u}}$ is an eigenvector of $\overline{\mu}$.  Applying
+Theorem 4.2.4 of :cite:thebook:: to $\lambda$ and $\overline{\mu}$, we have that $\left[
+\mb{v}, \overline{\mb{u}} \right]_\mb{P} = 0$ whenever $\lambda \neq \mu$.
+Furthermore, like in the real case, we have that $\mb{v}^\top \mb{P} \mb{v}
+= \left[ \mb{v}, \overline{\mb{v}} \right] = 1$ because $\lambda$ is
+non-defective.
+
+:draft: MISSING\: what if $\lambda$ has two orthogonal eigenvectors?::
+
+When $\lambda$ is real and $\mu$ is not, we immediately have $\mb{v}^\top \mb{P}
+\mb{u} = \left[ \mb{v}, \overline{\mb{u}} \right]_\mb{P} = 0$.
+
+:draft: did we just prove what we said we couldn't prove??? ::
+
+With this observation, if $\left\{ \mb{v} \right\}_{r=1}^m$ is a full basis of right
+eigenvectors, we can now write
+$$
+\mb{B}
+=
+\mb{R} \mb{\Lambda} \mb{L}
+=
+\sum_r \lambda_r \frac{\mb{v}_r \mb{v}_r^\top \mb{P}}{\mb{v}_r^\top \mb{P} \mb{v}_r}.
+$$
+
+This is particularly important for matrix functions of $\mb{B}$.  If $f$ is analytic
+in a neighborhood of each of the eigenvalues of $\mb{B}$, we have
+$$
+f\left( \mb{B} \right)
+=
+\sum_r f\left( \lambda_r \right) \frac{\mb{v}_r \mb{v}_r^\top \mb{P}}{\mb{v}_r^\top \mb{P} \mb{v}_r}.
+$$
+
+As a particular example, we have the resolvent of $\mb{B}$,
+$$
+\left( \mb{B} - t \mb{I} \right)^{-1}
+=
+\sum_r \left( \lambda_r - t \right)^{-1} \frac{\mb{v}_r \mb{v}_r^\top \mb{P}}{\mb{v}_r^\top \mb{P} \mb{v}_r}.
+$$
+
+
+::
+
+
+:bibliography: ::
+
+::
+
+
+
+:bibtex:
+
+@book{thebook,
+  title={Indefinite Linear Algebra and Applications},
+  author={Israel Gohberg, Peter Lancaster, Leiba Rodman},
+  year={2005},
+  publisher={Birkhäuser Basel},
+  doi={https://doi.org/10.1007/b137517},
+}
+
+::

@@ -1,0 +1,35 @@
+:manuscript:
+  :title: Exercise 1
+
+
+# Section one
+
+:pick: $g \in A[x]$ :: :st: $fg = 1$. ::
+
+:theorem:
+
+  :claim: All $X$ are $Y$ ::.
+
+::
+
+:proof:
+
+  :step: By some definition, we have
+    $$
+      2+2 = 4,
+    $$
+    as we said before.
+
+    :p:
+
+      :step: And this is the proof of that fact. ::
+
+      :step: And another step. ::
+
+    ::
+
+  ::
+
+::
+
+::

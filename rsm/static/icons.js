@@ -35,9 +35,9 @@ const icons = {
 </svg>`
 }
 
-export function setup() {
+export function setup(root) {
     for (const icon in icons) {
-        document.querySelectorAll(`.icon.${icon}`).forEach(iw => {
+        root.querySelectorAll(`.icon.${icon}`).forEach(iw => {
             iw.innerHTML = icons[`${icon}`];
         });
     }

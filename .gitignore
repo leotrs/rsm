@@ -152,3 +152,7 @@ wheelhouse/
 
 # stupid mac stuff
 .DS_Store
+
+# don't commit compiled examples
+examples/*.html
+examples/static

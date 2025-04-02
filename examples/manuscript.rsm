@@ -1,0 +1,33 @@
+:manuscript:
+  :title: RSM Markup
+
+:author:
+  :name: Melvin J. Blanc
+  :affiliation: ACME University
+  :email: mel@acme.edu
+::
+
+:abstract:
+
+ Web-first scientific manuscripts. Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo
+  bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.  Foo bar baz.Foo
+  bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo
+  bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo
+  bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo
+  bar baz.
+
+
+  Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar baz.Foo bar
+      baz.Foo bar baz.
+
+::
+
+# Awesome
+
+  Simple markup for :span:{:strong:, :emphas:}
+ web native:: scientific publications. Foo bar baz. Foo bar baz. Foo bar baz. Foo
+  bar baz. Foo bar baz. 
+
+::
+
+::

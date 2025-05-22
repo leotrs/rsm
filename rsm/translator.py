@@ -1581,19 +1581,19 @@ class HandrailsTranslator(Translator):
             if with_ids:
                 circles.append(
                     f'<a href="#{ref.target.label}" class="reference" tabindex="-1">'
-                    f'<circle id="{id_}" cx="16" cy="{cy}" r="{r}" />'
+                    f'<circle id="{id_}" cx="16" cy="{cy}" r="{r}" data-pos="{cy}" />'
                 )
             else:
-                circles.append(f'<circle cx="16" cy="{cy}" r="{r}" />')
-            circle = f'<circle cx="16" cy="{cy}" r="{r-4}" fill="#FCFEFF" />'
+                circles.append(f'<circle cx="16" cy="{cy}" r="{r}" data-pos="{cy}" />')
+            circle = f'<circle cx="16" cy="{cy}" r="{r-4}" fill="#FCFEFF" data-pos="{cy}" />'
             if with_ids:
                 circles.append(circle + "</a>")
             else:
                 circles.append(circle)
             num += 1
-        height = num * (24 + 8) + 8
+        height = max(num * (24 + 8) + 8, 48)
         svg_start = f"""
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 {height}" fill="#3C4952" stroke-width="0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 {height}" fill="#3C4952" preserveAspectRatio="xMinYMid meet" stroke-width="0">
           <defs>
 
             <linearGradient id="purple-green-{follow}" x1="0%" x2="0%" y1="0%" y2="100%" gradientUnits="userSpaceOnUse">

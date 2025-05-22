@@ -2,7 +2,7 @@
 
 [project]
 name = "rsm-markup"
-version = "0.2.7"
+version = "0.2.9"
 description = "ReStructured Manuscripts (RSM) markup language"
 readme = "README.md"
 authors = [{ name = "Leo Torres", email = "leo@leotrs.com" }]
@@ -106,7 +106,7 @@ docs-serve  = { shell = "sphinx-autobuild docs/source/ docs/build/ --port 7001 -
 
 [tool.poetry]
 name = "rsm-markup"
-version = "0.2.7"
+version = "0.2.9"
 description = "ReStructured Manuscript (RSM) markup language"
 authors = ["leotrs <leo@leotrs.com>"]
 license = "MIT"
@@ -115,7 +115,7 @@ packages = [
     {include = "rsm"}
 ]
 include = [
-    { path = "examples/*.rsm", format = ["sdist", "wheel"] }
+    { path = "rsm-examples/*.rsm", format = ["sdist", "wheel"] }
 ]
 
 

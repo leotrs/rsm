@@ -5,246 +5,246 @@
 
 export function setup() {
 
-    // Handrail menu: show and hide
-    document.querySelectorAll(".hr > .hr-menu-zone > .hr-menu").forEach(menu => {
-	menu.addEventListener("mouseleave", function () {
-            closeMenu(menu);
-	});
+  // Handrail menu: show and hide
+  document.querySelectorAll(".hr > .hr-menu-zone > .hr-menu").forEach(menu => {
+    menu.addEventListener("mouseleave", function () {
+      closeMenu(menu);
     });
-    document.querySelectorAll(".hr > .hr-border-zone > .hr-border-dots").forEach(dots => {
-	dots.addEventListener("click", function (ev) {
-            const siblings = Array.from(this.parentElement.parentElement.children);
-            const target = siblings.find(sibling => sibling.classList.contains("hr-menu-zone"));
-            if (target) { target.style.display = "block" };
-	});
+  });
+  document.querySelectorAll(".hr > .hr-border-zone > .hr-border-dots").forEach(dots => {
+    dots.addEventListener("click", function (ev) {
+      const siblings = Array.from(this.parentElement.parentElement.children);
+      const target = siblings.find(sibling => sibling.classList.contains("hr-menu-zone"));
+      if (target) { target.style.display = "block" };
     });
+  });
 
-    // Handrail menu: link button
-    document.querySelectorAll(".hr > .hr-menu-zone > .hr-menu > .hr-menu-item.link:not(.disabled)").forEach(btn => {
-	btn.addEventListener("click", ev => copyLink(ev.target));
-    });
+  // Handrail menu: link button
+  document.querySelectorAll(".hr > .hr-menu-zone > .hr-menu > .hr-menu-item.link:not(.disabled)").forEach(btn => {
+    btn.addEventListener("click", ev => copyLink(ev.target));
+  });
 
-    // Handrail menu: collapse and collapse-all buttons
-    document.querySelectorAll(".hr > .hr-collapse-zone > .hr-collapse").forEach(btn => {
-	btn.addEventListener("click", ev => toggleHandrail(ev.target));
-    });
-    document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-subproof:not(.disabled)").forEach(btn => {
-	btn.addEventListener("click", ev => toggleHandrail(ev.target));
-    });
-    document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(btn => {
-	btn.addEventListener("click", ev => collapseAll(ev.target, true));
-    });
-    document.querySelectorAll(".hr.proof > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(btn => {
-	btn.addEventListener("click", ev => collapseAll(ev.target, false));
-    });
+  // Handrail menu: collapse and collapse-all buttons
+  document.querySelectorAll(".hr > .hr-collapse-zone > .hr-collapse").forEach(btn => {
+    btn.addEventListener("click", ev => toggleHandrail(ev.target));
+  });
+  document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-subproof:not(.disabled)").forEach(btn => {
+    btn.addEventListener("click", ev => toggleHandrail(ev.target));
+  });
+  document.querySelectorAll(".hr.step > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(btn => {
+    btn.addEventListener("click", ev => collapseAll(ev.target, true));
+  });
+  document.querySelectorAll(".hr.proof > .hr-menu-zone > .hr-menu > .hr-menu-item.collapse-steps:not(.disabled)").forEach(btn => {
+    btn.addEventListener("click", ev => collapseAll(ev.target, false));
+  });
 
-    // Set height of offset handrails' borders
-    const resizeObserver = new ResizeObserver(updateHeight);
-    document.querySelectorAll('.hr.hr-offset > .hr-content-zone').forEach(el => resizeObserver.observe(el));
+  // Set height of offset handrails' borders
+  const resizeObserver = new ResizeObserver(updateHeight);
+  document.querySelectorAll('.hr.hr-offset > .hr-content-zone').forEach(el => resizeObserver.observe(el));
 
 }
 
 
 function closeMenu(menu) {
-    menu.parentElement.style.display = "none";
-    menu.querySelectorAll("& > .hr-menu-item").forEach(it => it.classList.remove("active"));
+  menu.parentElement.style.display = "none";
+  menu.querySelectorAll("& > .hr-menu-item").forEach(it => it.classList.remove("active"));
 }
 
 
 function updateHeight(entries) {
-    for (const entry of entries) {
-	const hr = entry.target.parentElement;
-	const elementsToResize = hr.querySelectorAll('& > .hr-border-zone, & > .hr-spacer-zone, & > .hr-info-zone');
-	elementsToResize.forEach(el => { el.style.height = `${entry.contentRect.height}px`; })
-    }
+  for (const entry of entries) {
+    const hr = entry.target.parentElement;
+    const elementsToResize = hr.querySelectorAll('& > .hr-border-zone, & > .hr-spacer-zone, & > .hr-info-zone');
+    elementsToResize.forEach(el => { el.style.height = `${entry.contentRect.height}px`; })
+  }
 };
 
 
 export function toggleHandrail(target) {
-    const hr = target.closest(".hr");
-    if (hr.classList.contains("hr-collapsed")) { openHandrail(hr) }
-    else { closeHandrail(hr) };
+  const hr = target.closest(".hr");
+  if (hr.classList.contains("hr-collapsed")) { openHandrail(hr) }
+  else { closeHandrail(hr) };
 };
 
 
 function openHandrail(hr) {
-    hr.classList.remove("hr-collapsed");
-    const rest = getRest(hr);
-    rest.forEach(el => { el.classList.remove("hide"); });
-    const icon = hr.querySelector("& .icon.expand");
-    if (!icon) return;
-    icon.classList.remove("expand");
-    icon.classList.add("collapse");
-    icon.innerHTML = `
+  hr.classList.remove("hr-collapsed");
+  const rest = getRest(hr);
+  rest.forEach(el => { el.classList.remove("hide"); });
+  const icon = hr.querySelector("& .icon.expand");
+  if (!icon) return;
+  icon.classList.remove("expand");
+  icon.classList.add("collapse");
+  icon.innerHTML = `
                     <svg width="8" height="14" viewBox="0 0 8 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 1L7 7L1 13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     `;
-    const item_text = icon.nextElementSibling;
-    if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Collapse" };
+  const item_text = icon.nextElementSibling;
+  if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Collapse" };
 }
 
 
 function closeHandrail(hr) {
-    hr.classList.add("hr-collapsed");
-    const rest = getRest(hr);
-    rest.forEach(el => { el.classList.add("hide"); });
-    const icon = hr.querySelector("& .icon.collapse");
-    if (!icon) return;
-    icon.classList.remove("collapse");
-    icon.classList.add("expand");
-    icon.innerHTML = `
+  hr.classList.add("hr-collapsed");
+  const rest = getRest(hr);
+  rest.forEach(el => { el.classList.add("hide"); });
+  const icon = hr.querySelector("& .icon.collapse");
+  if (!icon) return;
+  icon.classList.remove("collapse");
+  icon.classList.add("expand");
+  icon.innerHTML = `
                     <svg width="14" height="8" viewBox="0 0 14 8" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 1L7 7L13 1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     `;
-    const item_text = icon.nextElementSibling;
-    if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Expand" };
+  const item_text = icon.nextElementSibling;
+  if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Expand" };
 }
 
 
 function getRest(hr) {
-    let rest;
-    if (hr.classList.contains("hr-labeled")) {
-	rest = hr.querySelectorAll("& > .hr-content-zone > :not(.hr-label)");
-    } else if (hr.classList.contains("step")) {
-	rest = hr.querySelectorAll("& > .hr-content-zone > :not(.statement)");
-    } else {
-	rest = Array.from(hr.parentElement.children).filter(el => {return el !== hr});
-    };
-    return rest;
+  let rest;
+  if (hr.classList.contains("hr-labeled")) {
+    rest = hr.querySelectorAll("& > .hr-content-zone > :not(.hr-label)");
+  } else if (hr.classList.contains("step")) {
+    rest = hr.querySelectorAll("& > .hr-content-zone > :not(.statement)");
+  } else {
+    rest = Array.from(hr.parentElement.children).filter(el => { return el !== hr });
+  };
+  return rest;
 }
 
 
 export function collapseAll(target, withinSubproof = true) {
-    let qry;
-    if (withinSubproof) {
-        qry = "& > .hr-content-zone > .subproof > .hr-content-zone > .step:has(.subproof)";
-    } else {
-        qry = "& > .hr-content-zone > .step:has(.subproof)";
-    }
+  let qry;
+  if (withinSubproof) {
+    qry = "& > .hr-content-zone > .subproof > .hr-content-zone > .step:has(.subproof)";
+  } else {
+    qry = "& > .hr-content-zone > .step:has(.subproof)";
+  }
 
-    const hr = target.closest(".hr");
-    const ex_icon = hr.querySelector("& .icon.expand-all");
-    if (ex_icon) {
-        hr.querySelectorAll(qry).forEach(st => openHandrail(st));
-	ex_icon.classList.remove("expand-all");
-	ex_icon.classList.add("collapse-all");
-	ex_icon.innerHTML = `
+  const hr = target.closest(".hr");
+  const ex_icon = hr.querySelector("& .icon.expand-all");
+  if (ex_icon) {
+    hr.querySelectorAll(qry).forEach(st => openHandrail(st));
+    ex_icon.classList.remove("expand-all");
+    ex_icon.classList.add("collapse-all");
+    ex_icon.innerHTML = `
                     <svg width="9" height="9" viewBox="5 5 14 14" fill="none" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                       <path d="M7 7l5 5l-5 5" />
                       <path d="M13 7l5 5l-5 5" />
                     </svg>
                     `;
-	const item_text = ex_icon.nextElementSibling;
-	if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Collapse all" };
-	return;
-    }
+    const item_text = ex_icon.nextElementSibling;
+    if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Collapse all" };
+    return;
+  }
 
-    const co_icon = hr.querySelector("& .icon.collapse-all");
-    if (co_icon) {
-        hr.querySelectorAll(qry).forEach(st => closeHandrail(st));
-	co_icon.classList.remove("collapse-all");
-	co_icon.classList.add("expand-all");
-	co_icon.innerHTML = `
+  const co_icon = hr.querySelector("& .icon.collapse-all");
+  if (co_icon) {
+    hr.querySelectorAll(qry).forEach(st => closeHandrail(st));
+    co_icon.classList.remove("collapse-all");
+    co_icon.classList.add("expand-all");
+    co_icon.innerHTML = `
                     <svg width="9" height="9" viewBox="5 5 14 14" fill="none" stroke="#3C4952" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                       <path d="M7 7l5 5l5 -5" />
                       <path d="M7 13l5 5l5 -5" />
                     </svg>
                     `;
-	const item_text = co_icon.nextElementSibling;
-	if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Expand all" };
-	return;
-    }
+    const item_text = co_icon.nextElementSibling;
+    if (item_text && item_text.classList.contains("hr-menu-item-text")) { item_text.textContent = "Expand all" };
+    return;
+  }
 
 };
 
 async function copyLink(target) {
-    const url = document.location.href.split('#')[0];
-    const hr = target.closest(".hr")
-    let needs_anchor = true;
-    let anchor = "";
-    let link = "";
-    if (!hr.classList.contains("heading")) {
-        anchor = hr.id;
+  const url = document.location.href.split('#')[0];
+  const hr = target.closest(".hr")
+  let needs_anchor = true;
+  let anchor = "";
+  let link = "";
+  if (!hr.classList.contains("heading")) {
+    anchor = hr.id;
+  } else {
+    const section = hr.closest("section");
+    if (!section.classList.contains("level-1")) {
+      anchor = section.id;
     } else {
-        const section = hr.closest("section");
-        if (!section.classList.contains("level-1")) {
-            anchor = section.id;
-        } else {
-            needs_anchor = false;
-        }
+      needs_anchor = false;
     }
-    if (needs_anchor && !anchor) {
-        launchToast("Could not copy link.", "error");
-        return;
-    }
-    link = `${url}#${anchor}`
-    try {
-        await navigator.clipboard.writeText(link);
-        launchToast("Link copied to clipboard.", "success");
-    } catch (error) {
-        launchToast("Could not copy link.", "error");
-    }
+  }
+  if (needs_anchor && !anchor) {
+    launchToast("Could not copy link.", "error");
+    return;
+  }
+  link = `${url}#${anchor}`
+  try {
+    await navigator.clipboard.writeText(link);
+    launchToast("Link copied to clipboard.", "success");
+  } catch (error) {
+    launchToast("Could not copy link.", "error");
+  }
 };
 
 
 function makeToast(text, style) {
-    const toast = document.createElement("div");
-    toast.className = `toast ${style}`
+  const toast = document.createElement("div");
+  toast.className = `toast ${style}`
 
-    const icon = document.createElement("span");
-    icon.className = `icon ${style}`;
-    toast.appendChild(icon);
+  const icon = document.createElement("span");
+  icon.className = `icon ${style}`;
+  toast.appendChild(icon);
 
-    switch(style) {
+  switch (style) {
     case "success":
-        icon.innerHTML = `
+      icon.innerHTML = `
         <svg width="18" height="18" viewBox="2 2 20 20" fill="#3C4952" stroke-width="0" xmlns="http://www.w3.org/2000/svg">
           <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" />
         </svg>
         `
-        break;
+      break;
     case "error":
-        icon.innerHTML = `
+      icon.innerHTML = `
         <svg width="18" height="18" viewBox="2 2 20 20" fill="#3C4952" stroke-width="0" xmlns="http://www.w3.org/2000/svg">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
           <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-6.489 5.8a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" />
         </svg>
         `
-        break;
-    }
+      break;
+  }
 
-    const msg = document.createElement("span");
-    msg.className = "msg";
-    msg.innerText = text;
-    toast.appendChild(msg);
+  const msg = document.createElement("span");
+  msg.className = "msg";
+  msg.innerText = text;
+  toast.appendChild(msg);
 
-    const spacer = document.createElement("span");
-    spacer.className = "spacer";
-    toast.appendChild(spacer);
+  const spacer = document.createElement("span");
+  spacer.className = "spacer";
+  toast.appendChild(spacer);
 
-    const close = document.createElement("span");
-    close.className = "icon close";
-    close.innerHTML = `
+  const close = document.createElement("span");
+  close.className = "icon close";
+  close.innerHTML = `
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
           <path d="M13 1L1 13M1 1L13 13" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         `
-    close.addEventListener("click", ev => toast.remove());
-    toast.appendChild(close);
+  close.addEventListener("click", ev => toast.remove());
+  toast.appendChild(close);
 
-    const bg = document.createElement("div");
-    bg.className = "bg";
-    toast.appendChild(bg);
+  const bg = document.createElement("div");
+  bg.className = "bg";
+  toast.appendChild(bg);
 
-    return toast;
+  return toast;
 }
 
 
-function launchToast(text, style="information") {
-    const toast = makeToast(text, style);
-    document.querySelector(".manuscriptwrapper").appendChild(toast);
-    setTimeout(() => { toast.remove(); }, 5000);
+function launchToast(text, style = "information") {
+  const toast = makeToast(text, style);
+  document.querySelector(".manuscriptwrapper").appendChild(toast);
+  setTimeout(() => { toast.remove(); }, 5000);
 };

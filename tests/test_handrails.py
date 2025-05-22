@@ -1870,7 +1870,7 @@ def test_toc_no_labels():
         <div class="float-minimap-wrapper">
         <div class="minimap">
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 104" fill="#3C4952" stroke-width="0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 104" fill="#3C4952" preserveAspectRatio="xMinYMid meet" stroke-width="0">
                   <defs>
 
                     <linearGradient id="purple-green-scroll" x1="0%" x2="0%" y1="0%" y2="100%" gradientUnits="userSpaceOnUse">
@@ -1888,12 +1888,12 @@ def test_toc_no_labels():
 
                   <g fill="url(#purple-green-scroll)">
                     <rect x="14" y="24" width="4" height="56" />
-            <a href="#" class="reference" tabindex="-1"><circle id="mm-" cx="16" cy="20" r="8" />
-            <circle cx="16" cy="20" r="4" fill="#FCFEFF" /></a>
-            <a href="#" class="reference" tabindex="-1"><circle id="mm-" cx="16" cy="52" r="8" />
-            <circle cx="16" cy="52" r="4" fill="#FCFEFF" /></a>
-            <a href="#" class="reference" tabindex="-1"><circle id="mm-" cx="16" cy="84" r="6" />
-            <circle cx="16" cy="84" r="2" fill="#FCFEFF" /></a></g>
+            <a href="#" class="reference" tabindex="-1"><circle id="mm-" cx="16" cy="20" r="8" data-pos="20" />
+            <circle cx="16" cy="20" r="4" fill="#FCFEFF" data-pos="20" /></a>
+            <a href="#" class="reference" tabindex="-1"><circle id="mm-" cx="16" cy="52" r="8" data-pos="52" />
+            <circle cx="16" cy="52" r="4" fill="#FCFEFF" data-pos="52" /></a>
+            <a href="#" class="reference" tabindex="-1"><circle id="mm-" cx="16" cy="84" r="6" data-pos="84" />
+            <circle cx="16" cy="84" r="2" fill="#FCFEFF" data-pos="84" /></a></g>
         </svg>
         </div>
         </div>
@@ -2184,7 +2184,7 @@ def test_toc_no_labels():
 
         <div class="minimap">
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 104" fill="#3C4952" stroke-width="0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 104" fill="#3C4952" preserveAspectRatio="xMinYMid meet" stroke-width="0">
                   <defs>
 
                     <linearGradient id="purple-green-mouse" x1="0%" x2="0%" y1="0%" y2="100%" gradientUnits="userSpaceOnUse">
@@ -2202,12 +2202,12 @@ def test_toc_no_labels():
 
                   <g fill="url(#purple-green-mouse)">
                     <rect x="14" y="24" width="4" height="56" />
-            <circle cx="16" cy="20" r="8" />
-            <circle cx="16" cy="20" r="4" fill="#FCFEFF" />
-            <circle cx="16" cy="52" r="8" />
-            <circle cx="16" cy="52" r="4" fill="#FCFEFF" />
-            <circle cx="16" cy="84" r="6" />
-            <circle cx="16" cy="84" r="2" fill="#FCFEFF" /></g>
+            <circle cx="16" cy="20" r="8" data-pos="20" />
+            <circle cx="16" cy="20" r="4" fill="#FCFEFF" data-pos="20" />
+            <circle cx="16" cy="52" r="8" data-pos="52" />
+            <circle cx="16" cy="52" r="4" fill="#FCFEFF" data-pos="52" />
+            <circle cx="16" cy="84" r="6" data-pos="84" />
+            <circle cx="16" cy="84" r="2" fill="#FCFEFF" data-pos="84" /></g>
         </svg>
         </div>
 
@@ -2506,7 +2506,7 @@ def test_toc_with_labels():
         <div class="float-minimap-wrapper">
         <div class="minimap">
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 104" fill="#3C4952" stroke-width="0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 104" fill="#3C4952" preserveAspectRatio="xMinYMid meet" stroke-width="0">
                   <defs>
 
                     <linearGradient id="purple-green-scroll" x1="0%" x2="0%" y1="0%" y2="100%" gradientUnits="userSpaceOnUse">
@@ -2524,12 +2524,12 @@ def test_toc_with_labels():
 
                   <g fill="url(#purple-green-scroll)">
                     <rect x="14" y="24" width="4" height="56" />
-            <a href="#sec-1" class="reference" tabindex="-1"><circle id="mm-sec-1" cx="16" cy="20" r="8" />
-            <circle cx="16" cy="20" r="4" fill="#FCFEFF" /></a>
-            <a href="#sec-2" class="reference" tabindex="-1"><circle id="mm-sec-2" cx="16" cy="52" r="8" />
-            <circle cx="16" cy="52" r="4" fill="#FCFEFF" /></a>
-            <a href="#sub-sec" class="reference" tabindex="-1"><circle id="mm-sub-sec" cx="16" cy="84" r="6" />
-            <circle cx="16" cy="84" r="2" fill="#FCFEFF" /></a></g>
+            <a href="#sec-1" class="reference" tabindex="-1"><circle id="mm-sec-1" cx="16" cy="20" r="8" data-pos="20" />
+            <circle cx="16" cy="20" r="4" fill="#FCFEFF" data-pos="20" /></a>
+            <a href="#sec-2" class="reference" tabindex="-1"><circle id="mm-sec-2" cx="16" cy="52" r="8" data-pos="52" />
+            <circle cx="16" cy="52" r="4" fill="#FCFEFF" data-pos="52" /></a>
+            <a href="#sub-sec" class="reference" tabindex="-1"><circle id="mm-sub-sec" cx="16" cy="84" r="6" data-pos="84" />
+            <circle cx="16" cy="84" r="2" fill="#FCFEFF" data-pos="84" /></a></g>
         </svg>
         </div>
         </div>
@@ -2820,7 +2820,7 @@ def test_toc_with_labels():
 
         <div class="minimap">
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 104" fill="#3C4952" stroke-width="0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 104" fill="#3C4952" preserveAspectRatio="xMinYMid meet" stroke-width="0">
                   <defs>
 
                     <linearGradient id="purple-green-mouse" x1="0%" x2="0%" y1="0%" y2="100%" gradientUnits="userSpaceOnUse">
@@ -2838,12 +2838,12 @@ def test_toc_with_labels():
 
                   <g fill="url(#purple-green-mouse)">
                     <rect x="14" y="24" width="4" height="56" />
-            <circle cx="16" cy="20" r="8" />
-            <circle cx="16" cy="20" r="4" fill="#FCFEFF" />
-            <circle cx="16" cy="52" r="8" />
-            <circle cx="16" cy="52" r="4" fill="#FCFEFF" />
-            <circle cx="16" cy="84" r="6" />
-            <circle cx="16" cy="84" r="2" fill="#FCFEFF" /></g>
+            <circle cx="16" cy="20" r="8" data-pos="20" />
+            <circle cx="16" cy="20" r="4" fill="#FCFEFF" data-pos="20" />
+            <circle cx="16" cy="52" r="8" data-pos="52" />
+            <circle cx="16" cy="52" r="4" fill="#FCFEFF" data-pos="52" />
+            <circle cx="16" cy="84" r="6" data-pos="84" />
+            <circle cx="16" cy="84" r="2" fill="#FCFEFF" data-pos="84" /></g>
         </svg>
         </div>
 

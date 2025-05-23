@@ -7,7 +7,7 @@ import rsm
 def test_duplicate_label_warning(caplog):
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: Title
 
         There are :span: {:label: mylbl} two :: spans with the :span: {:label: mylbl}
@@ -47,7 +47,7 @@ def test_duplicate_label_warning(caplog):
 def test_duplicate_bibtex_item_warning(caplog):
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :bibliography: ::
 
@@ -114,7 +114,7 @@ def test_duplicate_bibtex_item_warning(caplog):
 def test_theorem_within_section():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         # Section
 
@@ -163,7 +163,7 @@ def test_theorem_within_section():
 def test_two_theorems_same_section():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         # Section
 
@@ -226,7 +226,7 @@ def test_two_theorems_same_section():
 def test_two_theorems_different_sections():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         # Section 1
 
@@ -297,7 +297,7 @@ def test_two_theorems_different_sections():
 def test_two_theorems_same_section_nonum():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         # Section
 
@@ -361,7 +361,7 @@ def test_two_theorems_same_section_nonum():
 def test_theorem_inside_section_with_nonum():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         # Section
         :nonum:
@@ -411,7 +411,7 @@ def test_theorem_inside_section_with_nonum():
 def test_theorem_inside_subsection():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         # Section
 

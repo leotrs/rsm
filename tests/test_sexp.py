@@ -3,7 +3,7 @@ from textwrap import dedent
 import rsm
 from rsm.app import ProcessorApp
 
-src = """:manuscript:
+src = """:rsm:
 :title: My Title
 
 # My Section

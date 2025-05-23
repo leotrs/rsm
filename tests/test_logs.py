@@ -4,7 +4,7 @@ import subprocess
 import pytest
 import ujson as json
 
-EMPTY_MANUSCRIPT = ":manuscript: ::"
+EMPTY_MANUSCRIPT = ":rsm: ::"
 EMPTY_MANUSCRIPT_LOGS = {}
 EMPTY_MANUSCRIPT_LOGS_V = [
     {
@@ -51,7 +51,7 @@ EMPTY_MANUSCRIPT_LOGS_V = [
     },
 ]
 
-WRONG_MANUSCRIPT = ":manuscript: : ::"
+WRONG_MANUSCRIPT = ":rsm: : ::"
 WRONG_MANUSCRIPT_LOGS = [
     {
         "name": "RSM.parse",

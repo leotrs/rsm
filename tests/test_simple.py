@@ -5,25 +5,25 @@ import rsm
 
 
 def test_empty_manuscript():
-    compare_have_want(have=":manuscript: ::\n", want=EMPTY_WANT)
+    compare_have_want(have=":rsm: ::\n", want=EMPTY_WANT)
 
 
 def test_no_eof_newline():
-    compare_have_want(have=":manuscript: ::", want=EMPTY_WANT)
+    compare_have_want(have=":rsm: ::", want=EMPTY_WANT)
 
 
 def test_ignore_starting_space():
-    compare_have_want(have="      :manuscript: ::\n", want=EMPTY_WANT)
+    compare_have_want(have="      :rsm: ::\n", want=EMPTY_WANT)
 
 
 def test_ignore_starting_newline():
-    compare_have_want(have="\n:manuscript: ::\n", want=EMPTY_WANT)
+    compare_have_want(have="\n:rsm: ::\n", want=EMPTY_WANT)
 
 
 def test_no_manuscript_title():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         Lorem ipsum.
 
@@ -58,7 +58,7 @@ def test_no_manuscript_title():
 def test_manuscript_title():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         Lorem ipsum.
@@ -96,7 +96,7 @@ def test_manuscript_title():
 def test_manuscript_meta():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :label: mylbl
           :title: My Title
           :date: 2022-03-29
@@ -127,7 +127,7 @@ def test_manuscript_meta():
 def test_no_halmos():
     with pytest.raises(rsm.tsparser.RSMParserError):
         compare_have_want(
-            have=""":manuscript:\n\nFoo.\n""",
+            have=""":rsm:\n\nFoo.\n""",
             want="XXX",
         )
 
@@ -135,7 +135,7 @@ def test_no_halmos():
 def test_section_header():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         Lorem ipsum.
 

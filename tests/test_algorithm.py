@@ -5,7 +5,7 @@ from conftest import compare_have_want
 
 def test_real_life_example():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         :algorithm:
         \begin{algorithm}
@@ -88,7 +88,7 @@ def test_real_life_example():
 
 def test_label():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         :algorithm:
         :label: alg

@@ -98,7 +98,7 @@ class TSParser:
     Examples
     --------
     >>> src = \"\"\"
-    ... :manuscript:
+    ... :rsm:
     ... Hello, RSM!
     ... ::
     ... \"\"\"

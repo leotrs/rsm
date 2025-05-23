@@ -7,7 +7,7 @@ import rsm
 def test_simple():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         :enumerate:
@@ -98,7 +98,7 @@ def test_item_with_wrong_parent():
     with pytest.raises(rsm.nodes.RSMNodeError):
         compare_have_want(
             have="""\
-            :manuscript:
+            :rsm:
 
             :item: Foo bar.
 
@@ -110,7 +110,7 @@ def test_item_with_wrong_parent():
     with pytest.raises(rsm.nodes.RSMNodeError):
         compare_have_want(
             have="""\
-            :manuscript:
+            :rsm:
 
             # Some section
 
@@ -123,7 +123,7 @@ def test_item_with_wrong_parent():
 
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         # Some section
 

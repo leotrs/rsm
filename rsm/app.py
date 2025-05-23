@@ -19,7 +19,7 @@ appropriate class manually.  For example:
 .. code-block:: python
 
    This
-   >>> src = ":manuscript: Hello, RSM! ::"
+   >>> src = ":rsm: Hello, RSM! ::"
    >>> html = rsm.make(source=src)
 
    Is essentially equivalent to the following.

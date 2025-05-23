@@ -15,8 +15,6 @@ def test_reftext():
 
         Content of first.
 
-        ::
-
         This is a paragraph that refers to :ref:sec-lbl::.
 
         ::
@@ -69,8 +67,6 @@ def test_overwrite_reftext():
           :label: sec-lbl
 
         Content of first.
-
-        ::
 
         This is a paragraph that refers to :ref:sec-lbl,The Section::.
 

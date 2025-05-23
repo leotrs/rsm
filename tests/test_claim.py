@@ -12,8 +12,6 @@ def test_simple():
           This paragraph contains a claim :claim: {:label: clm-lbl}all $X$ are $Y$ ::.
 
         ::
-
-        ::
         """,
         want=r"""
         <body>

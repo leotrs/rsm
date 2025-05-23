@@ -176,8 +176,6 @@ def test_section():
         Hello.
 
         ::
-
-        ::
         """,
         want="""
         <body>
@@ -1849,15 +1847,9 @@ def test_toc_no_labels():
 
                 # Section
 
-                ::
-
                 # Section
 
                 ## Sub-section
-
-                ::
-
-                ::
 
                 ::
         """,
@@ -2483,17 +2475,11 @@ def test_toc_with_labels():
                 # Section
                   :label: sec-1
 
-                ::
-
                 # Section
                   :label: sec-2
 
                 ## Sub-section
                   :label: sub-sec
-
-                ::
-
-                ::
 
                 ::
         """,

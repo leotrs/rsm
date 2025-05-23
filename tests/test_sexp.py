@@ -14,14 +14,11 @@ foo :cite:foo:: bar baz
 
 Foobar.
 
-::
-
 # Another section
 :nonum:
 
 $2+2=4$
 
-::
 ::
 """
 

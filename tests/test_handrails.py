@@ -172,7 +172,7 @@ def test_section():
         :rsm:
         :title: Some Title
 
-        # Section
+        ## Section
         Hello.
 
         ::
@@ -1845,11 +1845,11 @@ def test_toc_no_labels():
 
                 :toc:
 
-                # Section
+                ## Section
 
-                # Section
+                ## Section
 
-                ## Sub-section
+                ### Sub-section
 
                 ::
         """,
@@ -2472,13 +2472,13 @@ def test_toc_with_labels():
 
                 :toc:
 
-                # Section
+                ## Section
                   :label: sec-1
 
-                # Section
+                ## Section
                   :label: sec-2
 
-                ## Sub-section
+                ### Sub-section
                   :label: sub-sec
 
                 ::

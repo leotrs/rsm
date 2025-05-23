@@ -238,7 +238,7 @@ def test_section_shortcut():
         have="""\
         :rsm:
 
-        # My Section
+        ## My Section
           :label: my-sec
 
         This section contains a shortcut
@@ -282,15 +282,15 @@ def test_subsubsection_shortcut():
         have="""\
         :rsm:
 
-        # My Section
+        ## My Section
 
         Foo.
 
-        ## My Subsection
+        ### My Subsection
 
         Bar.
 
-        ### My Subsubsection
+        #### My Subsubsection
 
         Baz.
 
@@ -845,7 +845,7 @@ def test_hashtag_not_at_the_start_of_line():
     compare_have_want(
         have=r"""        :rsm:
 
-        # This is a section title
+        ## This is a section title
 
         And \# this is not!
 

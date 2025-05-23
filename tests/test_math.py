@@ -130,8 +130,6 @@ def test_math_with_shortcuts():
         $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
 
         ::
-
-        ::
         """,
         want=r"""        <body>
 
@@ -181,8 +179,6 @@ def test_math_ref():
           2+2=4
         ::
         And now we refer to :ref:eqn-foo::.
-
-        ::
 
         ::
         """,

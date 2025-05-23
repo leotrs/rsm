@@ -14,14 +14,10 @@ def test_numbered_sections():
 
         Content of first.
 
-        ::
-
         :section:
           :title: Second
 
         Content of second.
-
-        ::
 
         ::
         """,
@@ -79,22 +75,16 @@ def test_nonum():
 
         Content of first.
 
-        ::
-
         :section:
           :title: Second
           :nonum:
 
         Content of second.
 
-        ::
-
         :section:
           :title: Third
 
         Content of third.
-
-        ::
 
         ::
         """,

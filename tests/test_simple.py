@@ -145,8 +145,6 @@ def test_section_header():
         Lorem ipsum.
 
         ::
-
-        ::
         """,
         want="""\
         <body>

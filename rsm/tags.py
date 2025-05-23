@@ -55,8 +55,6 @@ subsection = BlockTagInfo(None)
 """Subsection."""
 subsubsection = BlockTagInfo(None)
 """Sub-subsection."""
-subsubsubsection = BlockTagInfo(None)
-"""Sub-sub-subsection."""
 theorem = BlockTagInfo(None)
 """Theorem."""
 toc = BlockTagInfo(None)

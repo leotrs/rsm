@@ -477,9 +477,6 @@ def _abstractify(cst):
         # equal to cst_node.type, or neither, or both!  For this reason, from now on, DO
         # NOT use cst_node.tpye, always use ast_node_type instead.
         ast_node_type = ""
-        logger.warning("===ANALYZING===")
-        logger.debug(f'CST NODE {cst_node.type}')
-        logger.debug(f'WITH CHILDREN {[c.type for c in cst_node.children]}')
         if cst_node.type == "source_file" or cst_node.type.endswith("section"):
             meta = cst_node.child_by_field_name("meta")
             ast_node_type = cst_node.type

@@ -37,11 +37,11 @@ def test_no_meta():
           (Text))
         (Subsection
           (Paragraph
-            (Text)))
-        (Section
-          (Paragraph
-            (Math
-              (Text))))))
+            (Text))))
+      (Section
+        (Paragraph
+          (Math
+            (Text)))))
     """
     want = dedent(want).strip()
     assert have == want
@@ -61,11 +61,11 @@ def test_with_meta():
           (Text { :reftext: Text }))
         (Subsection { :reftext: Section 1.1, :title: My Subsection, :types: ['level-3'] }
           (Paragraph { :reftext: Paragraph }
-            (Text { :reftext: Text })))
-        (Section { :nonum: True, :reftext: Section None, :title: Another section, :types: ['level-2'] }
-          (Paragraph { :reftext: Paragraph }
-            (Math { :reftext: Math }
-              (Text { :reftext: Text }))))))
+            (Text { :reftext: Text }))))
+      (Section { :nonum: True, :reftext: Section None, :title: Another section, :types: ['level-2'] }
+        (Paragraph { :reftext: Paragraph }
+          (Math { :reftext: Math }
+            (Text { :reftext: Text })))))
     """
     want = dedent(want).strip()
     assert have == want
@@ -85,11 +85,11 @@ def test_with_meta_ignore_reftext():
           (Text {  }))
         (Subsection { :title: My Subsection, :types: ['level-3'] }
           (Paragraph {  }
-            (Text {  })))
-        (Section { :nonum: True, :title: Another section, :types: ['level-2'] }
-          (Paragraph {  }
-            (Math {  }
-              (Text {  }))))))
+            (Text {  }))))
+      (Section { :nonum: True, :title: Another section, :types: ['level-2'] }
+        (Paragraph {  }
+          (Math {  }
+            (Text {  })))))
     """
     want = dedent(want).strip()
     assert have == want

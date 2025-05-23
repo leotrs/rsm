@@ -10,7 +10,7 @@ There exist pre-determined types that can be added to any tag to change font siz
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    :paragraph: {:types: tiny} Lorem ipsum.
 
@@ -39,7 +39,7 @@ These work on blocks, inlines, paragraphs, or even math blocks.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    $ {:types: tiny} 2 + 2 = 4$
 
@@ -72,7 +72,7 @@ by using ``:nonum:``.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    # First
    ::
@@ -90,7 +90,7 @@ Other numbered blocks such as math blocks also accept ``:nonum:``.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    $$
    2 + 2 = 4
@@ -118,7 +118,7 @@ defining new commands inside a hidden math block with no number.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    This is not valid math\: $\tr(X)$.
 

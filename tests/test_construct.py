@@ -3,7 +3,7 @@ from conftest import compare_have_want
 
 def test_real_life_example():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
         :title: A simple proof
 
         :let: $G$ be a simple graph::.  We will prove a fundamental fact about its structure.

@@ -30,7 +30,7 @@ SIMPLE_WANT = """\
 def test_simple():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :figure:
           :path: assets/example.png
@@ -48,7 +48,7 @@ def test_simple():
 def test_simple_with_extra_whitespace():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :figure:
           :path: assets/example.png
@@ -68,7 +68,7 @@ def test_simple_with_extra_whitespace():
 def test_simple_with_multi_line_caption():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :figure:
           :path: assets/example.png
@@ -91,7 +91,7 @@ def test_simple_with_multi_line_caption():
 def test_caption_with_inline_tags():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :figure:
           :path: assets/example.png

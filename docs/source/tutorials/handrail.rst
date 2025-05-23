@@ -7,7 +7,7 @@ In the following example, hover (or tap, on mobile) on the manuscript title.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
      :title: Hover me!
 
    Introducing the handrail.
@@ -21,7 +21,7 @@ the manuscript, such as sections and remarks.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
      :title: Handrails
 
    # Sections have handrails

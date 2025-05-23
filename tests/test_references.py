@@ -7,7 +7,7 @@ import rsm
 def test_reftext():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :section:
           :title: First
@@ -60,7 +60,7 @@ def test_reftext():
 def test_overwrite_reftext():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :section:
           :title: First
@@ -113,7 +113,7 @@ def test_overwrite_reftext():
 def test_ref_to_unknown_label(caplog):
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :ref:foo::
 
@@ -149,7 +149,7 @@ def test_ref_to_unknown_label(caplog):
 def test_cite_to_unknown_label(caplog):
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This is an unknown cite :cite:foobar::.
 

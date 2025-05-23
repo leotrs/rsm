@@ -4,7 +4,7 @@ from conftest import compare_have_want
 def test_simple():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         # Foo
 
@@ -49,7 +49,7 @@ def test_simple():
 def test_subsection():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         # Foo
         ## Sub Foo
@@ -108,7 +108,7 @@ def test_subsection():
 def test_theorem():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         # Foo
         ## Sub Foo
@@ -191,7 +191,7 @@ def test_theorem():
 def test_section_reftext():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :ref:app::
 

@@ -1061,7 +1061,7 @@ class Author(Node):
     --------
     .. rsm::
 
-       :manuscript:
+       :rsm:
 
           :author:
             :name: Melvin J. Noir
@@ -1100,7 +1100,7 @@ class Abstract(NodeWithChildren):
     --------
     .. rsm::
 
-       :manuscript:
+       :rsm:
 
        :abstract:
          :keywords: {cosmology, general relativity, black holes}
@@ -1269,7 +1269,7 @@ class Algorithm(NodeWithChildren):
     --------
     .. rsm::
 
-       :manuscript:
+       :rsm:
 
        :algorithm:
          \begin{algorithm}
@@ -1322,7 +1322,7 @@ class Appendix(Node):
 
     .. code-block:: text
 
-       :manuscript:
+       :rsm:
 
        # Before Appendix
        ::

@@ -5,7 +5,7 @@ from conftest import compare_have_want
 def test_single():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This has a citation at the end. :cite:knuth::
@@ -71,7 +71,7 @@ def test_single():
 def test_with_shortcuts():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This has a *citation* at the end. :cite:knuth::
@@ -137,7 +137,7 @@ def test_with_shortcuts():
 def test_many():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This has a citation at the end. :cite:torres2020,knuth::
@@ -216,7 +216,7 @@ def test_many():
 def test_order():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This has a citation at the end. :cite:knuth,torres2020::

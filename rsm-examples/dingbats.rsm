@@ -1,7 +1,7 @@
 :rsm:
-  :title: New handrails are cool
+# New handrails are cool
 
-# Icons
+## Icons
   :label: sec-one
   :icon: heart
 
@@ -26,7 +26,5 @@ exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
   within it.
 
   And another $2+2=4$.
-
-::
 
 ::

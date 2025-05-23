@@ -93,6 +93,35 @@ def test_manuscript_title():
     )
 
 
+def test_manuscript_with_shortcut_title():
+    compare_have_want(
+        have="""\
+        :rsm:
+        # Title
+        ::
+        """,
+        want="""\
+        <body>
+
+        <div class="manuscriptwrapper">
+
+        <div class="manuscript" data-nodeid="0">
+
+        <section class="level-1">
+
+        <h1>Title</h1>
+
+        </section>
+
+        </div>
+
+        </div>
+
+        </body>
+        """
+    )
+
+
 def test_manuscript_meta():
     compare_have_want(
         have="""\

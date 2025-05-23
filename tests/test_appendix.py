@@ -7,12 +7,10 @@ def test_simple():
         :manuscript:
 
         # Foo
-        ::
 
         :appendix:
 
         # Bar
-        ::
 
         ::
         """,
@@ -55,15 +53,11 @@ def test_subsection():
 
         # Foo
         ## Sub Foo
-        ::
-        ::
 
         :appendix:
 
         # Bar
         ## Sub Bar
-        ::
-        ::
 
         ::
         """,
@@ -121,17 +115,12 @@ def test_theorem():
 
         :theorem: ::
 
-        ::
-        ::
-
         :appendix:
 
         # Bar
         ## Sub Bar
 
         :theorem: ::
-        ::
-        ::
 
         ::
         """,
@@ -209,8 +198,7 @@ def test_section_reftext():
         :appendix:
 
         # Foo bar
-        :label: app
-        ::
+          :label: app
 
         ::
         """,

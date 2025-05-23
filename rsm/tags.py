@@ -37,8 +37,6 @@ itemize = BlockTagInfo(None)
 """Unnumbered list."""
 lemma = BlockTagInfo(None)
 """Lemma."""
-manuscript = BlockTagInfo(None)
-"""Top-level RSM Manuscript."""
 mathblock = BlockTagInfo(None)
 """Math block (a.k.a. display math)."""
 proof = BlockTagInfo(None)
@@ -47,6 +45,8 @@ proposition = BlockTagInfo(None)
 """Proposition."""
 remark = BlockTagInfo(None)
 """Remark."""
+rsm = BlockTagInfo(None)
+"""Top-level RSM tag."""
 section = BlockTagInfo(None)
 """Section."""
 sketch = BlockTagInfo(None)

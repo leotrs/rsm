@@ -124,7 +124,7 @@ def test_math_with_shortcuts():
     compare_have_want(
         have=r"""        :rsm:
 
-        # My Section
+        ## My Section
 
         When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are
         $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
@@ -171,7 +171,7 @@ def test_math_ref():
     compare_have_want(
         have=r"""        :rsm:
 
-        # My Section
+        ## My Section
 
         This is some inline $2+2=4$ math.  And then some display math.
         :mathblock:

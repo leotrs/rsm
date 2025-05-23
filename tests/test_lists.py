@@ -125,7 +125,7 @@ def test_item_with_wrong_parent():
         have="""\
         :rsm:
 
-        # Some section
+        ## Some section
 
         Lorem ipsum :item: Foo bar.
 

@@ -116,7 +116,7 @@ def test_theorem_within_section():
         have="""\
         :rsm:
 
-        # Section
+        ## Section
 
         :theorem:
 
@@ -165,7 +165,7 @@ def test_two_theorems_same_section():
         have="""\
         :rsm:
 
-        # Section
+        ## Section
 
         :theorem:
 
@@ -228,13 +228,13 @@ def test_two_theorems_different_sections():
         have="""\
         :rsm:
 
-        # Section 1
+        ## Section 1
 
         :theorem:
 
         ::
 
-        # Section 2
+        ## Section 2
 
         :theorem:
 
@@ -299,7 +299,7 @@ def test_two_theorems_same_section_nonum():
         have="""\
         :rsm:
 
-        # Section
+        ## Section
 
         :theorem:
         :nonum:
@@ -363,7 +363,7 @@ def test_theorem_inside_section_with_nonum():
         have="""\
         :rsm:
 
-        # Section
+        ## Section
         :nonum:
 
         :theorem:
@@ -413,9 +413,9 @@ def test_theorem_inside_subsection():
         have="""\
         :rsm:
 
-        # Section
+        ## Section
 
-        ## Subsection
+        ### Subsection
 
         :theorem:
 

@@ -6,15 +6,15 @@ from rsm.app import ProcessorApp
 src = """:rsm:
 :title: My Title
 
-# My Section
+## My Section
 
 foo :cite:foo:: bar baz
 
-## My Subsection
+### My Subsection
 
 Foobar.
 
-# Another section
+## Another section
 :nonum:
 
 $2+2=4$

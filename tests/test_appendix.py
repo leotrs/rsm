@@ -6,11 +6,11 @@ def test_simple():
         have="""
         :rsm:
 
-        # Foo
+        ## Foo
 
         :appendix:
 
-        # Bar
+        ## Bar
 
         ::
         """,
@@ -51,13 +51,13 @@ def test_subsection():
         have="""
         :rsm:
 
-        # Foo
-        ## Sub Foo
+        ## Foo
+        ### Sub Foo
 
         :appendix:
 
-        # Bar
-        ## Sub Bar
+        ## Bar
+        ### Sub Bar
 
         ::
         """,
@@ -110,15 +110,15 @@ def test_theorem():
         have="""
         :rsm:
 
-        # Foo
-        ## Sub Foo
+        ## Foo
+        ### Sub Foo
 
         :theorem: ::
 
         :appendix:
 
-        # Bar
-        ## Sub Bar
+        ## Bar
+        ### Sub Bar
 
         :theorem: ::
 
@@ -197,7 +197,7 @@ def test_section_reftext():
 
         :appendix:
 
-        # Foo bar
+        ## Foo bar
           :label: app
 
         ::

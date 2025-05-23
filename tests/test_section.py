@@ -12,8 +12,6 @@ def test_simple():
         Lorem ipsum.
 
         ::
-
-        ::
         """,
         want="""\
         <body>
@@ -66,12 +64,6 @@ def test_subsections():
           :title: Sub sub section
 
         Bar
-
-        ::
-
-        ::
-
-        ::
 
         ::
         """,

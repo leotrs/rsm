@@ -123,8 +123,6 @@ def test_theorem_within_section():
         ::
 
         ::
-
-        ::
         """,
         want="""\
         <body>
@@ -174,8 +172,6 @@ def test_two_theorems_same_section():
         ::
 
         :theorem:
-
-        ::
 
         ::
 
@@ -238,13 +234,9 @@ def test_two_theorems_different_sections():
 
         ::
 
-        ::
-
         # Section 2
 
         :theorem:
-
-        ::
 
         ::
 
@@ -319,8 +311,6 @@ def test_two_theorems_same_section_nonum():
         ::
 
         ::
-
-        ::
         """,
         want="""\
         <body>
@@ -381,8 +371,6 @@ def test_theorem_inside_section_with_nonum():
         ::
 
         ::
-
-        ::
         """,
         want="""\
         <body>
@@ -430,10 +418,6 @@ def test_theorem_inside_subsection():
         ## Subsection
 
         :theorem:
-
-        ::
-
-        ::
 
         ::
 

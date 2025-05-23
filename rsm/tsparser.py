@@ -64,27 +64,31 @@ class RSMParserError(Exception):
 
 DELIMS = ":%$`*{#"
 PUSH_THESE_TYPES = {
-    "block",
-    "inline",
-    "specialblock",
-    "specialinline",
-    "paragraph",
-    "text",
+    "ERROR",
+    "appendix",
     "bibitem",
     "bibtex",
+    "block",
+    "caption",
+    "construct",
+    "inline",
+    "keyword",
+    "mathblock",
+    "paragraph",
+    "section",
+    "subsection",
+    "subsubsection",
+    "specialblock",
+    "specialconstruct",
+    "specialinline",
     "table",
     "tbody",
-    "thead",
     "td",
+    "tdcontent",
+    "text",
+    "thead",
     "tr",
     "trshort",
-    "tdcontent",
-    "caption",
-    "keyword",
-    "construct",
-    "specialconstruct",
-    "mathblock",
-    "ERROR",
 }
 
 
@@ -424,7 +428,7 @@ def _abstractify(cst):
     stack = [(None, cst.root_node)]
     while stack:
         parent, cst_node = stack.pop()
-        dont_push_these_ids = set()
+        skip_these_ids = set()
         if cst_node.type == "comment":
             continue
 
@@ -473,7 +477,41 @@ def _abstractify(cst):
         # equal to cst_node.type, or neither, or both!  For this reason, from now on, DO
         # NOT use cst_node.tpye, always use ast_node_type instead.
         ast_node_type = ""
-        if cst_node.type in ["specialblock", "specialinline"]:
+        if cst_node.type == "source_file" or cst_node.type.endswith("section"):
+            meta = cst_node.child_by_field_name("meta")
+            ast_node_type = cst_node.type
+
+            ast_node = CST_TYPE_TO_AST_TYPE[ast_node_type](
+                start_point=cst_node.start_point,
+                end_point=cst_node.end_point,
+            )
+
+            if ast_node_type.endswith("section") and (section_title := cst_node.child_by_field_name("title")):
+                # Sections with a hastag shurtcut ("# Section Title") have the title as
+                # a text child node with field name 'title', so we must extract that
+                # here. Sections with a tag (":section:") have the title as a meta key,
+                # so that is handled when meta is ingested.
+                ast_node.title = section_title.text.decode("utf-8")
+                skip_these_ids.add(section_title.id)
+
+            if isinstance(ast_node, nodes.Manuscript):
+                ast_root_node = ast_node
+            if meta:
+                ast_node.ingest_dict_as_meta(_parse_meta_into_dict(meta))
+
+            if parent and isinstance(parent, nodes.NodeWithChildren):
+                parent.append(ast_node)
+
+            stack += reversed(
+                [
+                    (ast_node, c)
+                    for c in cst_node.named_children
+                    if c.type in PUSH_THESE_TYPES and c.id not in skip_these_ids
+                ]
+            )
+            continue
+
+        elif cst_node.type in ["specialblock", "specialinline"]:
             ast_node_type = cst_node.named_children[0].type
 
             # Tables are special because the entire contents are in the first children,
@@ -502,7 +540,7 @@ def _abstractify(cst):
         elif cst_node.type in ["block", "inline"]:
             tag = cst_node.child_by_field_name("tag")
             ast_node_type = tag.type
-            dont_push_these_ids.add(id(tag))
+            skip_these_ids.add(tag.id)
 
         else:
             ast_node_type = cst_node.type
@@ -568,25 +606,15 @@ def _abstractify(cst):
             if tag := cst_node.child_by_field_name("tag"):
                 ast_node.kind = tag.type
 
-        if ast_node_type.endswith("section") and cst_node.type == "specialblock":
-            # Sections with a hastag shurtcut ("# Section Title") have the title as a
-            # text child node, so must extract that here.  Sections with a tag
-            # (":section:") have the title as a meta key, so that is handled elsewhere.
-            # Sections of the former kind have cst_node type of 'specialblock' while the
-            # latter have type 'block'.
-            text_node = cst_node.named_children[1]
-            ast_node.title = text_node.text.decode("utf-8")
-            dont_push_these_ids.add(id(text_node))
-
         if ast_node_type in ["ref", "previous", "url"]:
             target_node = cst_node.named_children[1]
             ast_node.target = target_node.text.decode("utf-8")
-            dont_push_these_ids.add(id(target_node))
+            skip_these_ids.add(target_node.id)
 
             if len(cst_node.named_children) > 2:
                 reftext_node = cst_node.named_children[2]
                 ast_node.overwrite_reftext = reftext_node.text.decode("utf-8")
-                dont_push_these_ids.add(id(reftext_node))
+                skip_these_ids.add(reftext_node.id)
 
         if ast_node_type.startswith("prev") and ast_node_type != "previous":
             if ast_node_type == "prev":
@@ -599,7 +627,7 @@ def _abstractify(cst):
             target_node = cst_node.named_children[1]
             labels = target_node.text.decode("utf-8").split(",")
             ast_node.targetlabels = [l.strip() for l in labels]
-            dont_push_these_ids.add(id(target_node))
+            skip_these_ids.add(target_node.id)
 
         # If a text node ends in a newline (i.e. if the next sibling is in a new row),
         # then we assume the user means to leave a space in between them...
@@ -622,7 +650,7 @@ def _abstractify(cst):
             [
                 (ast_node, c)
                 for c in cst_node.named_children
-                if c.type in PUSH_THESE_TYPES and id(c) not in dont_push_these_ids
+                if c.type in PUSH_THESE_TYPES and c.id not in skip_these_ids
             ]
         )
 

@@ -2,17 +2,17 @@
   :title: Solutions to Atiyah and MacDonald
 
 
-% :author:
-%   :name: Leo Torres
-%   :email: leo@leotrs.com
-% ::
+:author:
+  :name: Leo Torres
+  :email: leo@leotrs.com
+::
 
 
-% :abstract:
+:abstract:
 
-%   :paragraph:{:icon: star} We systematically solve the exercises in Atiyah and MacDonald using the RSM language.
+  :paragraph:{:icon: star} We systematically solve the exercises in Atiyah and MacDonald using the RSM language.
 
-% ::
+::
 
 
 # Rings and Ideals
@@ -35,18 +35,18 @@
 :proof:
   :icon: question
 
-  % :sketch:
+  :sketch:
 
-  %   Let $x$ be a nilpotent element. Then $x^n = 0$ for some $n \in N$.  Then
+    Let $x$ be a nilpotent element. Then $x^n = 0$ for some $n \in N$.  Then
 
-  %   $$
-  %   (1 + x)(1 - x + x^2 - \ldots + (-1)^n x^n) = 1 + (−1)^n x^{n+1} = 1
-  %   $$
+    $$
+    (1 + x)(1 - x + x^2 - \ldots + (-1)^n x^n) = 1 + (−1)^n x^{n+1} = 1
+    $$
 
-  %   Let $u$ be a unit.  Then, $u^{−1} x$ is still nilpotent, since $(u^{−1} x)^n =
-  %   u^{−n} x^n = 0$.  Thus $1 + u^{−1} x$ is unit, thus $u + x$ is a unit.
+    Let $u$ be a unit.  Then, $u^{−1} x$ is still nilpotent, since $(u^{−1} x)^n =
+    u^{−n} x^n = 0$.  Thus $1 + u^{−1} x$ is unit, thus $u + x$ is a unit.
 
-  % ::
+  ::
 
   :step:
     :label: x-is-nilp
@@ -310,21 +310,18 @@
 
 ::
 
+:bibliography: ::
+
 ::
 
+:bibtex:
 
-% :bibliography: ::
+@book{atiyah2018introduction,
+  title={Introduction to commutative algebra},
+  author={Atiyah, M.F., & MacDonald, I.G.},
+  year={2018},
+  publisher={CRC Press},
+  doi={https://doi.org/10.1201/9780429493638},
+}
 
-% ::
-
-% :bibtex:
-
-% @book{atiyah2018introduction,
-%   title={Introduction to commutative algebra},
-%   author={Atiyah, M.F., & MacDonald, I.G.},
-%   year={2018},
-%   publisher={CRC Press},
-%   doi={https://doi.org/10.1201/9780429493638},
-% }
-
-% ::
+::

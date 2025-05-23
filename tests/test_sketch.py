@@ -4,7 +4,7 @@ from conftest import compare_have_want, compare_have_want_handrails
 def test_simple_no_handrails():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :sketch: Foo.::
 

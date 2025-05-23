@@ -59,7 +59,7 @@ class Transformer:
     Consider the following manuscript.
 
     >>> src = \"\"\"
-    ... :manuscript:
+    ... :rsm:
     ... Here comes a :span:{:label:lbl} word :: with a label,
     ... and a reference to the :ref:lbl,word::.
     ... ::

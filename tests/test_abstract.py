@@ -4,7 +4,7 @@ from conftest import compare_have_want
 def test_simple():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :label: mylbl
           :title: The Perron non-backtracking eigenvalue after node addition
           :date: 2022-03-29

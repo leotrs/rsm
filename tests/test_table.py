@@ -4,7 +4,7 @@ from conftest import compare_have_want
 def test_empty_table():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :table:
 
@@ -39,7 +39,7 @@ def test_empty_table():
 def test_one_row_no_header():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
 
@@ -92,7 +92,7 @@ def test_one_row_no_header():
 def test_two_rows_no_header():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
 
@@ -155,7 +155,7 @@ def test_two_rows_no_header():
 def test_with_header():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
 
@@ -235,7 +235,7 @@ def test_with_header():
 
 def test_math_in_header():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         :table:
 
@@ -289,7 +289,7 @@ def test_math_in_header():
 def test_shortcuts_in_header():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
 
@@ -342,7 +342,7 @@ def test_shortcuts_in_header():
 def test_simple_caption():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
 
@@ -402,7 +402,7 @@ def test_simple_caption():
 def test_simple_caption_with_shortcuts():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
 
@@ -461,7 +461,7 @@ def test_simple_caption_with_shortcuts():
 def test_reference_to_table():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
         :label: lbl
@@ -523,7 +523,7 @@ def test_reference_to_table():
 def test_reference_to_table_with_reftext():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
         :label: lbl
@@ -585,7 +585,7 @@ def test_reference_to_table_with_reftext():
 def test_extra_space_within_tr():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
 
@@ -640,7 +640,7 @@ def test_extra_space_within_tr():
 
 def test_real_life_example():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         :table:
           :label: lbl
@@ -728,7 +728,7 @@ def test_real_life_example():
 
 def test_real_life_example_different_spacing():
     compare_have_want(
-        have=r"""         :manuscript:
+        have=r"""         :rsm:
 
         :table:
           :label: lbl
@@ -826,7 +826,7 @@ def test_real_life_example_different_spacing():
 def test_tr_shortcut():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
 
@@ -906,7 +906,7 @@ def test_tr_shortcut():
 
 def test_tr_shortcut_with_math():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         :table:
 
@@ -986,7 +986,7 @@ def test_tr_shortcut_with_math():
 def test_tr_shortcut_with_newlines():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         :table:
 
@@ -1071,7 +1071,7 @@ def test_tr_shortcut_with_newlines():
 
 def test_tr_shortcut_with_escaped_colon():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         :table:
 

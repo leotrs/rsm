@@ -4,7 +4,7 @@ from conftest import compare_have_want
 def test_simple():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :section:
           :title: Section
@@ -48,7 +48,7 @@ def test_simple():
 def test_with_math():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This paragraph has math inside a claim :claim: :math:2+2=4:: ::.
 
@@ -83,7 +83,7 @@ def test_with_math():
 def test_claim_within_list():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         We now make a bunch of claims.
 

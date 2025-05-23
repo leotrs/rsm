@@ -5,7 +5,7 @@ from conftest import EMPTY_WANT, compare_have_want
 def test_one_strong():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This paragraph has a *shortcut* for strong span.
@@ -43,7 +43,7 @@ def test_one_strong():
 def test_two_strong():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This paragraph has two *shortcuts* for strong *spans*.
@@ -81,7 +81,7 @@ def test_two_strong():
 def test_one_emphas():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This paragraph has a /shortcut/ for emphasis span.
@@ -119,7 +119,7 @@ def test_one_emphas():
 def test_one_math():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This paragraph has some $2+2=4$ awesome math.
@@ -156,7 +156,7 @@ def test_one_math():
 def test_two_math():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This paragraph has some $2+2=4$ awesome math and also some math that $2 + 2 + 2
@@ -195,7 +195,7 @@ def test_two_math():
 def test_mathblock():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This paragraph is followed by display math
         $$2 + 2 = 4.$$
@@ -236,9 +236,9 @@ def test_mathblock():
 def test_section_shortcut():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
-        # My Section
+        ## My Section
           :label: my-sec
 
         This section contains a shortcut
@@ -280,17 +280,17 @@ def test_section_shortcut():
 def test_subsubsection_shortcut():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
-        # My Section
+        ## My Section
 
         Foo.
 
-        ## My Subsection
+        ### My Subsection
 
         Bar.
 
-        ### My Subsubsection
+        #### My Subsubsection
 
         Baz.
 
@@ -355,7 +355,7 @@ def test_subsubsection_shortcut():
 def test_claim_shortcut():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This paragraph contains a :|-: claim with a turnstile::. And also another one :⊢: but it takes
         multiple lines::.
@@ -391,7 +391,7 @@ def test_claim_shortcut():
 def test_prev_shortcut():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :theorem:
 
@@ -504,7 +504,7 @@ def test_prev_shortcut():
 def test_prev2_shortcut():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :theorem:
 
@@ -636,7 +636,7 @@ def test_prev2_shortcut():
 def test_prev_and_prev2_shortcut():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :theorem:
 
@@ -768,7 +768,7 @@ def test_prev_and_prev2_shortcut():
 def test_code_shortcut():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This is inline code`comp = [abs(x) for x in range(10)]`.
 
@@ -805,7 +805,7 @@ def test_code_shortcut():
 def test_codeblock_shortcut():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         ```
         comp = [abs(x) for x in range(10)]
@@ -843,9 +843,9 @@ def test_codeblock_shortcut():
 
 def test_hashtag_not_at_the_start_of_line():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
-        # This is a section title
+        ## This is a section title
 
         And \# this is not!
 
@@ -885,7 +885,7 @@ def test_hashtag_not_at_the_start_of_line():
 
 def test_escaped_colon_behind_halmos():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         Shortcut right beside an escaped colon :span: {:emphas:} foo\:::
 
@@ -919,7 +919,7 @@ def test_escaped_colon_behind_halmos():
 
 def test_escaped_colon_behind_halmos_after_shortcut():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         Shortcut right beside an escaped colon *foo\:*
 
@@ -954,7 +954,7 @@ def test_escaped_colon_behind_halmos_after_shortcut():
 def test_math_after_turnstile():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This paragraph has math inside a claim :⊢: $2+2=4$::.
 
@@ -989,7 +989,7 @@ def test_math_after_turnstile():
 def test_turnstile_and_math_within_list():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         We now make a bunch of claims
 
@@ -1043,7 +1043,7 @@ def test_turnstile_and_math_within_list():
 def test_asterisk_inside_math():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         $2*2 = 4*1$
 
@@ -1077,7 +1077,7 @@ def test_asterisk_inside_math():
 def test_asterisk_inside_code():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         `[x**2 for x in range(10)]`
 
@@ -1113,7 +1113,7 @@ def test_asterisk_inside_code():
 def test_asterisk_inside_mathblock():
     compare_have_want(
         have=r"""
-        :manuscript:
+        :rsm:
 
         Here comes a mathblock with an asterisk\:
         $$
@@ -1155,7 +1155,7 @@ def test_asterisk_inside_mathblock():
 def test_asterisk_inside_codeblock():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         ```
         2*2 = 4*1

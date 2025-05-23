@@ -8,7 +8,7 @@ the ``:ref:`` tag to refer to it.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    :remark:
      :label: lbl1
@@ -30,7 +30,7 @@ can override this behavior when using the ``:reftext:`` tag.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    :remark:
      :label: lbl2
@@ -52,7 +52,7 @@ notation.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    :remark:
      :label: lbl3

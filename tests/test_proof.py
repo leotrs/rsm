@@ -4,7 +4,7 @@ from conftest import compare_have_want
 def test_simple():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :theorem:
 
@@ -84,7 +84,7 @@ def test_simple():
 def test_empty_proof():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :theorem:
 
@@ -150,7 +150,7 @@ def test_empty_proof():
 def test_sub_step():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :proof:
 
@@ -244,7 +244,7 @@ def test_sub_step():
 def test_two_steps():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :proof:
 

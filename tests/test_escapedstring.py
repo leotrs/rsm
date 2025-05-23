@@ -13,7 +13,7 @@ def test_ignore_single_char():
 def test_simple_not_escaped():
     compare_have_want(
         have="""
-        :manuscript:
+        :rsm:
 
         Warning: this is a warning.
 
@@ -48,7 +48,7 @@ def test_simple_not_escaped():
 def test_simple():
     compare_have_want(
         have=r"""
-        :manuscript:
+        :rsm:
 
         Warning\: this is a warning.
 
@@ -83,7 +83,7 @@ def test_simple():
 def test_colon_inside_bold():
     compare_have_want(
         have=r"""
-        :manuscript:
+        :rsm:
 
         :span: {:strong:} Warning\: :: this is a warning.
 
@@ -118,7 +118,7 @@ def test_colon_inside_bold():
 def test_colon_inside_bold_no_space():
     compare_have_want(
         have=r"""
-        :manuscript:
+        :rsm:
 
         :span: {:strong:} Warning\::: this is a warning.
 
@@ -153,7 +153,7 @@ def test_colon_inside_bold_no_space():
 def test_colon_inside_bold_with_shortcut():
     compare_have_want(
         have=r"""
-        :manuscript:
+        :rsm:
 
         *Warning\: *this is a warning.
 
@@ -187,7 +187,7 @@ def test_colon_inside_bold_with_shortcut():
 
 def test_backslash_brace_within_math():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         $[k]:= \{1,\ldots,k\}$
 
@@ -221,7 +221,7 @@ def test_backslash_brace_within_math():
 def test_colon_inside_manuscript_title():
     compare_have_want(
         have=r"""
-        :manuscript:
+        :rsm:
           :title: foo\:bar
         ::
         """,

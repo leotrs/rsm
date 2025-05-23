@@ -7,25 +7,25 @@ At the core of ReStructured Manuscripts is the RSM markup language. Inspired by 
 languages such as Markdown, ReST, and LaTeX, RSM strives for simplicity, flexibility,
 and functionality.
 
-Every RSM manuscript starts with the string ``:manuscript:`` and ends with a double
+Every RSM manuscript starts with the string ``:rsm:`` and ends with a double
 colon ``::``.  The entire contents of the manuscript are placed within these delimiters.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    Hello, RSM!
 
    ::
 
-Strings such as ``:manuscript:`` are called *tags*.  In RSM, tags are used to annotate
+Strings such as ``:rsm:`` are called *tags*.  In RSM, tags are used to annotate
 regions of text, for example to delimit sections and other parts of a manuscript.  The
 tag functions as open delimiter, and the empty tag ``::``, a.k.a. *Halmos*, is the
 closing delimiter.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    :abstract:
 
@@ -47,13 +47,13 @@ Some tags are used to add meta-data to the annotated regions.  For example, the
 while the ``:title:`` tag directly below it modifies the parent ``:section:`` tag by
 specifying its title.  Tags such as this are called *meta* tags.
 
-Tags such as ``:manuscript:``, ``:abstract:``, and ``:section:`` introduce parts of the
+Tags such as ``:rsm:``, ``:abstract:``, and ``:section:`` introduce parts of the
 manuscript that are clearly separated from other parts.  These are called *block* tags.
 In contrast, the following example illustrates the ``:span:`` tag.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    Span tags do not introduce new parts, but
    :span: {:strong:} live within:: their
@@ -75,7 +75,7 @@ be used as shorthand to introduce a section with a title.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    # Awesome section
 
@@ -90,7 +90,7 @@ Here is a complete example using all the basic features of RSM markup.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
      :title: RSM Markup
 
    :author:

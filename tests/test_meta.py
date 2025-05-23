@@ -7,7 +7,7 @@ import rsm
 def test_list_with_only_one_element():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         :paragraph: {:types: mytype} This paragraph has only one type
@@ -45,7 +45,7 @@ def test_list_with_only_one_element():
 def test_list_with_one_element_before_key():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         :paragraph: {:types: mytype, :label: lbl} This paragraph has only one type,
@@ -84,7 +84,7 @@ def test_list_with_one_element_before_key():
 def test_list_no_braces():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         :paragraph: {:types: t1, t2} This paragraph has only one type
@@ -122,7 +122,7 @@ def test_list_no_braces():
 def test_inline_no_meta_start_with_tag():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :paragraph: {:label: lbl} Foo bar.
 
@@ -166,7 +166,7 @@ def test_inline_no_meta_start_with_tag():
 def test_list_within_inline():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         Foo :span: {:types: {t1, t2}} bar :: baz.
 
@@ -200,7 +200,7 @@ def test_list_within_inline():
 
 def test_inline_start_with_brace():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         This span starts with a brace :span: \{ ::.
 
@@ -234,7 +234,7 @@ def test_inline_start_with_brace():
 def test_inline_meta_with_no_space():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         Foo :span: {:strong:} bar ::.
 
@@ -269,7 +269,7 @@ def test_inline_meta_with_no_space():
 def test_inline_meta_with_space_in_between_braces():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         Foo :span: { :strong: } bar ::.
 

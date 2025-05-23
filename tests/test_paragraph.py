@@ -7,7 +7,7 @@ import rsm
 def test_succeeding_blankline():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         Foo.
         ::
@@ -41,7 +41,7 @@ def test_succeeding_blankline():
 def test_succeeding_blankline_with_tag():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :paragraph: {:types: foo}This is a paragraph.
         ::
@@ -75,7 +75,7 @@ def test_succeeding_blankline_with_tag():
 def test_tag_no_meta():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :paragraph: This is a paragraph.
         ::
@@ -109,7 +109,7 @@ def test_tag_no_meta():
 def test_start_with_tag():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :span: {:strong:} this tag :: starts the paragraph.
 
@@ -144,7 +144,7 @@ def test_start_with_tag():
 def test_start_with_shortcut():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :|-: A claim::.
 
@@ -179,7 +179,7 @@ def test_start_with_shortcut():
 def test_simple():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :label: mylbl
           :title: The Perron non-backtracking eigenvalue after node addition
           :date: 2022-03-29
@@ -262,7 +262,7 @@ def test_simple():
 def test_mathblock_inside_paragraph():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: Mathblocks inside paragraphs
 
         This is a paragraph and the following equation
@@ -309,7 +309,7 @@ def test_mathblock_inside_paragraph():
 def test_mathblock_ending_paragraph():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: Mathblocks inside paragraphs
 
         This is a paragraph that ends with an equation.

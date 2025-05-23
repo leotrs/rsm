@@ -7,7 +7,7 @@ import rsm
 def test_no_reftext():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This paragraph has a hyperlink :url:https://www.apache.com::.
 
@@ -42,7 +42,7 @@ def test_no_reftext():
 def test_custom_reftext():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This is a link to :url:https://www.apache.com, Apache::.
 
@@ -77,7 +77,7 @@ def test_custom_reftext():
 def test_no_target():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This is a malformed url :url:::.
 
@@ -110,7 +110,7 @@ def test_no_target():
 
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This is a malformed url with a space :url: ::.
 

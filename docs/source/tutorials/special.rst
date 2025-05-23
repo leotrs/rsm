@@ -17,7 +17,7 @@ standard ``:span:`` tag and another using shorthand notation and asterisks ``*``
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
    This text is :span: {:strong:} bold ::, as
    is *this one*.
    ::
@@ -26,7 +26,7 @@ Similarly, italic text also has a shorthand version using slashes ``/``.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
    This text is :span: {:emphas:} italic ::, as
    is /this one/.
    ::
@@ -36,7 +36,7 @@ for blocks.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    *Inline math.*
 
@@ -47,7 +47,7 @@ for blocks.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    *Math block.*
 
@@ -71,7 +71,7 @@ Code allows shorthand notation using one backtick ````` for inline or three ````
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    *Inline code.*
 
@@ -82,7 +82,7 @@ Code allows shorthand notation using one backtick ````` for inline or three ````
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    *Code block.*
 
@@ -129,7 +129,7 @@ where the Appendix starts.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    # First section
    ::
@@ -162,7 +162,7 @@ added.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    :paragraph: {:label:my-para} This is how you refer to a paragraph of text.
 

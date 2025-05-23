@@ -1,5 +1,5 @@
-:manuscript:
-  :title: Indefinite Linear Algebra of the NBM
+:rsm:
+# Indefinite Linear Algebra of the NBM
   :date: 2024-04-13
 
 
@@ -29,7 +29,7 @@ $$
 :toc:
 
 
-# Introduction
+## Introduction
   :label: sec-intro
 
 :let: $G$ be an undirected, simple graph :: and :let: $m$ be the number of edges in
@@ -146,11 +146,11 @@ to the chapters and sections of :cite:thebook::.  ::
 
 
 
-# Indefinite Inner Products
+## Indefinite Inner Products
 :label: sec-indefinite-inner-products
 
 
-## Definition
+### Definition
 :label: sec-definition
 
 Since every invertible Hermitian matrix defines an indefinite inner product,
@@ -173,7 +173,7 @@ first argument, as $\mb{x}^* \mb{P} \mb{y}$.  Unfortunately, the authors of
 to use their notation.::
 
 
-### The flip and the sip
+#### The flip and the sip
 :label: sec-flip-sip
 :nonum:
 
@@ -201,7 +201,7 @@ of the sip matrix are shared by the flip, both as operators or as matrices.  Wit
 in mind, we will continue to use $\mb{P}$ and the oriented edge order defined above.
 
 
-## Orthogonality and Orthogonal Bases
+### Orthogonality and Orthogonal Bases
 :label: sec-orthogonality
 
 Following example 2.2.1 in :cite:thebook::, we look for a subspace $\mathcal{M}$ whose
@@ -230,7 +230,7 @@ particular $\mathcal{M}$ is degenerate.  Indeed, :claim: $\left[\mb{e}_{\alpha \
 :draft: What about the subspace corresponding to the unit eigenvalues of $\mb{B}$? ::
 
 
-### P-Orthogonal basis
+#### P-Orthogonal basis
 :label: sec-p-orthogonal-basis
 :nonum:
 
@@ -295,11 +295,11 @@ $$
 $$
 
 
-## Classification of Subspaces
+### Classification of Subspaces
 :label: sec-classification-of-subspaces
 
 
-## Exercises
+### Exercises
 :label: sec-exercises
 
 The goal of most of the exercises in this section revolves around finding subspaces with
@@ -424,7 +424,7 @@ and non-positive subspaces.  But what about building all?::
 positive subspace. What about $\lambda = -1$? What about other unitary evals? ::
 
 
-# Orthogonalization and Orthogonal Polynomials
+## Orthogonalization and Orthogonal Polynomials
 :label: sec-orthogonal-polynomials
 
 The canonical basis does not have a regular orthogonalization since the Gram matrix is
@@ -435,11 +435,11 @@ determinant equal to zero.
 
 
 
-# Classes of Linear Transformations
+## Classes of Linear Transformations
 :label: sec-linear-transformations
 
 
-## Adjoint Matrices
+### Adjoint Matrices
 :label: sec-adjoint-matrices
 
 One of the most important facts is that $\mb{B}$ is $\mb{P}$-selfadjoint.  This
@@ -597,11 +597,11 @@ $$
 :draft: are $\mb{P}$ or $\mb{B}$ persymmetric or centrosymmetric?::
 
 
-## H-selfadjoint Matrices\: Examples and Simplest Properties
+### H-selfadjoint Matrices\: Examples and Simplest Properties
 :label: sec-selfadjoint-matrices
 
 
-## H-unitary Matrices\: Examples and Simplest Properties
+### H-unitary Matrices\: Examples and Simplest Properties
 :label: sec-unitary-matrices
 
 According to Proposition 4.3.4 of :cite:thebook::, we have that any Cayley transform of
@@ -622,27 +622,27 @@ unit circle.
 book. ::
 
 
-## A second characterization of H-unitary matrices
+### A second characterization of H-unitary matrices
 :label: sec-charac-unit
 
 
-## Unitary similarity
+### Unitary similarity
 :label: sec-unitary-simil
 
 
-## Contractions
+### Contractions
 :label: sec-contractions
 
 
-## Dissipative matrices
+### Dissipative matrices
 :label: sec-dissipative
 
 
-## Symplectic matrices
+### Symplectic matrices
 :label: sec-symplectic
 
 
-## Exercises
+### Exercises
 :label: sec-4-exercises
 
 :proposition:
@@ -676,7 +676,7 @@ book. ::
 
 
 
-# Scratch
+## Scratch
 :label: sec-scratch
 
 :proposition:
@@ -943,7 +943,7 @@ $\mb{v}^\top \mb{P} \mb{v} = 1$ purely in terms of $\mb{v}$.
 
 
 
-# Diagonalizability
+## Diagonalizability
 :label: sec-diagonaliza
 
 :draft: See exercise 10 of section 5 of the book (page 122) ::

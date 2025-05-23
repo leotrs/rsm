@@ -10,13 +10,13 @@ WIP.
    Base language
    *************
 
-   Every RSM file starts with the string ``:manuscript:`` and ends with the double colon
+   Every RSM file starts with the string ``:rsm:`` and ends with the double colon
    ``::``.  The double colon is referred to as `Halmos
    <https://en.wikipedia.org/wiki/Tombstone_(typography)>`_.
 
    .. code-block:: text
 
-      :manuscript:
+      :rsm:
       Hello, RSM!
       ::
 
@@ -30,8 +30,8 @@ WIP.
    One of the main goals of RSM is to separate your manuscript's content from the look and
    feel.  Accordingly, RSM provides *semantic tags* that annotate the contents of your
    manuscript.  A tag has the form ``:tag-name: <contents> ::``.  As mentioned above, every
-   RSM manuscript starts with the ``:manuscript:`` tag and ends with the Halmos ``::``.
-   The entire contents of your manuscript are the contents of the ``:manuscript:`` tag.
+   RSM manuscript starts with the ``:rsm:`` tag and ends with the Halmos ``::``.
+   The entire contents of your manuscript are the contents of the ``:rsm:`` tag.
 
    Tags being semantic means that a tag determines what its contents *are*, not what they
    should look like.  Two parts of your manuscript may be annotated with the same tag but
@@ -54,7 +54,7 @@ WIP.
 
    .. code-block:: text
 
-      :manuscript:
+      :rsm:
 	 :title: Three types of tags.
 
       Hello, RSM!
@@ -62,9 +62,9 @@ WIP.
       ::
 
    Here the role of the ``:title:`` tag is to associate the title ``Three types of tags``
-   to the enclosing ``:manuscript:`` tag.  This tells RSM that the given title is a
-   property of the contents of the ``:manuscript:`` tag, i.e. a property of the entire
-   manuscript.  We say the ``:title:`` is a *meta key* for the enclosing ``:manuscript:``
+   to the enclosing ``:rsm:`` tag.  This tells RSM that the given title is a
+   property of the contents of the ``:rsm:`` tag, i.e. a property of the entire
+   manuscript.  We say the ``:title:`` is a *meta key* for the enclosing ``:rsm:``
    tag, while the title ``Three types of tags`` is the *meta value* of said key.  Meta tags
    always come in key-values pairs.
 
@@ -74,7 +74,7 @@ WIP.
 
    .. code-block:: text
 
-      :manuscript:
+      :rsm:
 	 :title: Three types of tags.
 
       :section:
@@ -96,7 +96,7 @@ WIP.
 
    .. code-block:: text
 
-      :manuscript:
+      :rsm:
 	 :title: Three types of tags.
 
       :section:

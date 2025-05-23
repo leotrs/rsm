@@ -8,7 +8,7 @@ where in the manuscript the list of references will appear.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    # Some Section
 
@@ -49,7 +49,7 @@ a complete example of the bibliography system.
 
 .. rsm::
 
-   :manuscript:
+   :rsm:
 
    # Some section
 
@@ -81,4 +81,4 @@ will automatically add a link to the DOI of the referenced work, if available.
 .. important::
 
    The ``:bibtex:`` tag is located outside, and immediately after, the closing Halmos of
-   the ``:manuscript:`` tag.
+   the ``:rsm:`` tag.

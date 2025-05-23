@@ -7,7 +7,7 @@ import rsm
 def test_numbered_sections():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :section:
           :title: First
@@ -68,7 +68,7 @@ def test_numbered_sections():
 def test_nonum():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :section:
           :title: First

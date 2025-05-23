@@ -53,7 +53,7 @@ also provide RSM source directly at the terminal via the ``-c`` flag:
 
 .. code-block:: bash
 
-   $ rsm-make ":manuscript: Hello. ::" -c
+   $ rsm-make ":rsm: Hello. ::" -c
 
 
 Automatic builds

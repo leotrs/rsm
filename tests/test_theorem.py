@@ -4,7 +4,7 @@ from conftest import compare_have_want, compare_have_want_handrails
 def test_simple():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :theorem:
 
@@ -53,7 +53,7 @@ def test_simple():
 def test_multiple():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         :theorem:
 

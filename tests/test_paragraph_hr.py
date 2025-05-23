@@ -4,7 +4,7 @@ from conftest import compare_have_want_handrails
 def test_paragraph_with_mathblock_ending_with_text():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
 
         This is a paragraph with math inside of it
         $$
@@ -166,7 +166,7 @@ def test_paragraph_with_mathblock_ending_with_text():
 def test_paragraph_ending_with_mathblock():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
 
         This is a paragraph with math inside of it
         $$
@@ -327,7 +327,7 @@ def test_paragraph_ending_with_mathblock():
 def test_paragraph_with_icon_ending_with_mathblock():
     compare_have_want_handrails(
         have=r"""
-        :manuscript:
+        :rsm:
 
         :paragraph: {:icon: heart} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
         do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -496,7 +496,7 @@ def test_paragraph_with_icon_ending_with_mathblock():
 def test_paragraph_with_icon_with_mathblock_ending_with_text():
     compare_have_want_handrails(
         have=r"""
-        :manuscript:
+        :rsm:
 
         :paragraph: {:icon: heart} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
         do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -665,7 +665,7 @@ def test_paragraph_with_icon_with_mathblock_ending_with_text():
 def test_two_paragraphs_with_icon():
     compare_have_want_handrails(
         have=r"""
-        :manuscript:
+        :rsm:
 
         :paragraph: {:icon: heart} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
         do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -907,7 +907,7 @@ def test_two_paragraphs_with_icon():
 def test_two_paragraphs_with_icon_no_mathblock():
     compare_have_want_handrails(
         have=r"""
-        :manuscript:
+        :rsm:
 
         :paragraph: {:icon: heart} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
         do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

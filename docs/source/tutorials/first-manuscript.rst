@@ -7,7 +7,7 @@ Create a new file called :code:`manuscript.rsm` and add the following contents
 
 .. code-block:: text
 
-   :manuscript:
+   :rsm:
 
    Web-first scientific publishing.
 
@@ -36,7 +36,7 @@ that by editing :code:`manuscript.rsm` as follows
 
 .. code-block:: text
 
-   :manuscript:
+   :rsm:
      :title: ReStructured Manuscripts
 
    Web-first scientific publishing.

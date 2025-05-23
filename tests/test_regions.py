@@ -7,7 +7,7 @@ import rsm
 def test_inline_cannot_contain_block():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This is a paragraph :span: with an inline :section: with a block. :: ::
@@ -39,7 +39,7 @@ def test_inline_cannot_contain_block():
 def test_paragraph_ends_at_block():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
           :title: My Title
 
         This paragraph will terminate before the section starts :section: And this

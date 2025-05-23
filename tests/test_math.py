@@ -7,7 +7,7 @@ import rsm
 def test_display_alone():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         Some math
         :mathblock:
@@ -53,7 +53,7 @@ def test_display_alone():
 def test_inline_no_meta():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This paragraph contains inline math :math: 2 + 2 = 4::.
 
@@ -87,7 +87,7 @@ def test_inline_no_meta():
 def test_inline_with_meta():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         This paragraph contains inline math :math: {:label: bar, :types: smallequation} 2 + 2
         = 4::.
@@ -122,9 +122,9 @@ def test_inline_with_meta():
 
 def test_math_with_shortcuts():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
-        # My Section
+        ## My Section
 
         When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are
         $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
@@ -169,9 +169,9 @@ def test_math_with_shortcuts():
 
 def test_math_ref():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
-        # My Section
+        ## My Section
 
         This is some inline $2+2=4$ math.  And then some display math.
         :mathblock:
@@ -220,7 +220,7 @@ def test_math_ref():
 
 def test_mathblock_nonum():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         Some math
         :mathblock:
@@ -262,7 +262,7 @@ def test_mathblock_nonum():
 
 def test_mathblock_nonum_with_shortcut():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         Some math
         $$
@@ -304,7 +304,7 @@ def test_mathblock_nonum_with_shortcut():
 
 def test_unclosed_dollar_sign():
     compare_have_want(
-        have=r"""        :manuscript:
+        have=r"""        :rsm:
 
         There are three dollar signs here $2+2 $= 0$.
 

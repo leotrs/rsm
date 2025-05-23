@@ -98,7 +98,7 @@ class TSParser:
     Examples
     --------
     >>> src = \"\"\"
-    ... :manuscript:
+    ... :rsm:
     ... Hello, RSM!
     ... ::
     ... \"\"\"
@@ -486,7 +486,7 @@ def _abstractify(cst):
                 end_point=cst_node.end_point,
             )
 
-            if ast_node_type.endswith("section") and (section_title := cst_node.child_by_field_name("title")):
+            if (section_title := cst_node.child_by_field_name("title")):
                 # Sections with a hastag shurtcut ("# Section Title") have the title as
                 # a text child node with field name 'title', so we must extract that
                 # here. Sections with a tag (":section:") have the title as a meta key,

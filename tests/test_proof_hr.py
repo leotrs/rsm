@@ -4,7 +4,7 @@ from conftest import compare_have_want_handrails
 def test_two_steps():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
         :title: Some Title
 
         :proof:
@@ -484,7 +484,7 @@ def test_two_steps():
 def test_sub_step():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
         :title: Some Title
 
         :proof:
@@ -1090,7 +1090,7 @@ def test_sub_step():
 def test_theorem():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
 
         :theorem:
 
@@ -1262,7 +1262,7 @@ def test_theorem():
 def test_proof():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
         :title: Some Title
 
         :proof:
@@ -1594,7 +1594,7 @@ def test_proof():
 def test_proof_with_sketch():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
         :title: Some Title
 
         :sketch: Foo.::

@@ -49,7 +49,7 @@ def test_nonum():
 def test_simple():
     compare_have_want(
         have="""\
-        :manuscript:
+        :rsm:
 
         Some math
         :mathblock:

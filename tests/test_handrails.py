@@ -4,7 +4,7 @@ from conftest import compare_have_want_handrails
 def test_manuscript():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
         :title: Some Title
 
         Hello.
@@ -169,10 +169,10 @@ def test_manuscript():
 def test_section():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
         :title: Some Title
 
-        # Section
+        ## Section
         Hello.
 
         ::
@@ -409,7 +409,7 @@ def test_section():
 def test_abstract():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
         :title: Some Title
 
         :abstract:
@@ -650,7 +650,7 @@ def test_abstract():
 def test_theorem():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
 
         :theorem:
 
@@ -822,7 +822,7 @@ def test_theorem():
 def test_author():
     compare_have_want_handrails(
         have=r"""
-        :manuscript:
+        :rsm:
           :title: Indefinite Linear Algebra of the NBM
           :date: 2024-04-13
 
@@ -994,7 +994,7 @@ def test_author():
 def test_bibliography():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
 
         This is a citation :cite:atiyah2018introduction::.
 
@@ -1239,7 +1239,7 @@ def test_bibliography():
 def test_inline_math_followed_by_dot():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
           :title: title
 
         one $2+2=4$.
@@ -1540,7 +1540,7 @@ def test_inline_math_followed_by_dot():
 def test_mathblock_nonum():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
 
         This one has a number
         $$
@@ -1836,7 +1836,7 @@ def test_mathblock_nonum():
 def test_toc_no_labels():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
                   :title: Foo
 
                 :abstract:
@@ -1845,11 +1845,11 @@ def test_toc_no_labels():
 
                 :toc:
 
-                # Section
+                ## Section
 
-                # Section
+                ## Section
 
-                ## Sub-section
+                ### Sub-section
 
                 ::
         """,
@@ -2463,7 +2463,7 @@ def test_toc_no_labels():
 def test_toc_with_labels():
     compare_have_want_handrails(
         have="""
-        :manuscript:
+        :rsm:
                   :title: Foo
 
                 :abstract:
@@ -2472,13 +2472,13 @@ def test_toc_with_labels():
 
                 :toc:
 
-                # Section
+                ## Section
                   :label: sec-1
 
-                # Section
+                ## Section
                   :label: sec-2
 
-                ## Sub-section
+                ### Sub-section
                   :label: sub-sec
 
                 ::

@@ -1,0 +1,53 @@
+:rsm:
+
+:paragraph: {:types: hide} preamble
+$$
+  :nonum:
+\newcommand{\into}[2]{{\vec{\mathbf{#1}}}^{{#2}}}
+\newcommand{\from}[2]{{{}}^{{#2}}{\vec{\mathbf{#1}}}}
+\newcommand{\mb}[1]{\mathbf{#1}}
+$$
+
+The canonical basis of $\mathbb{C}^{2m}$ is not $\mb{P}$-orthonormal.
+$$ \left[ \mb{v}^i, \mb{v}^i \right]_\mb{P} =
+\sum_{r=1}^{2m} \mb{v}^i_r \overline{\mb{v}^i_{m+r}} = \mb{v}_i^i
+\mb{v}_{m+i}^i + \mb{v}_{m+i}^i \mb{v}_{i}^i = \begin{cases} - 2, & i \in
+\left\{ -m, \ldots, -1 \right\} \\ \phantom{-} 2, & i \in \left\{ 1, \ldots, m
+\right\}. \\ \end{cases}
+ $$
+
+Additionally,
+$$
+\begin{align}
+\left[\mb{v}^i, \mb{v}^j\right]_\mb{P}
+&=
+0,
+\text{ for each } i \in \{-m, \ldots, -1, 1, \ldots, m\} \text{ and each } j \neq -i, \\
+\left[\mb{v}^i, \mb{v}^{-i} \right]_\mb{P}
+&=
+\sum_{r=1}^{2m} \mb{v}^i_r \overline{\mb{v}^{-i}_{m+r}}
+=
+\mb{v}_i^i \mb{v}_{m+i}^{-i} + \mb{v}_{m+i}^i \mb{v}_{i}^{-i}
+= -1 + 1 = 0.
+\end{align}
+$$
+Therefore, the set $\left\{ \frac{\mb{v}^i}{\sqrt{2}} \colon i = -m,
+\ldots, -1, 1, \ldots, m \right\}$ is a $\mb{P}$-orthonormal basis.
+
+Still, we have the following computation,
+$$
+\begin{align}
+\left(\mb{v}^i\right)^* \mb{v}^i
+&=
+\sum_{r=1}^{2m} \overline{\mb{v}^i_r} \mb{v}^i_{r}
+=
+\overline{\mb{v}^i_i} \mb{v}^i_i + \overline{\mb{v}^i_{m+i}} \mb{v}^i_{m+i} \\
+&=
+1 + 1
+=
+2,
+\text{ for each } i \in \{1, \ldots, m\}
+\end{align}
+$$
+
+::

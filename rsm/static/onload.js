@@ -3,7 +3,7 @@
 // Function to run when the entire document finishes loading
 //
 
-export async function onload(root = null, { path = "/static/", keys = true }) {
+export async function onload(root = null, { path = "/static/", keys = true } = {}) {
   if (!root) root = document;
   console.log("onload root:", root);
 

@@ -206,8 +206,6 @@ def test_simple():
         text. It has several lines of text. It has several lines of text.
 
         ::
-
-        ::
         """,
         want="""\
         <body>

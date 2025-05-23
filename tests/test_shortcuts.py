@@ -244,8 +244,6 @@ def test_section_shortcut():
         This section contains a shortcut
 
         ::
-
-        ::
         """,
         want="""
         <body>
@@ -295,12 +293,6 @@ def test_subsubsection_shortcut():
         ### My Subsubsection
 
         Baz.
-
-        ::
-
-        ::
-
-        ::
 
         ::
         """,
@@ -856,8 +848,6 @@ def test_hashtag_not_at_the_start_of_line():
         # This is a section title
 
         And \# this is not!
-
-        ::
 
         ::
         """,

@@ -105,8 +105,6 @@ $\mb{v}^{-i} := \langle \ldots, 1, \ldots, 0, \ldots, -1, \ldots, 0 \rangle$, th
 vector with a $1$ in the /i/-th component and a $-1$ in the /(m+i)/-th component, for
 each $i = 1, \ldots, m$::.
 
-
-
 :proposition:
   :title: Properties of the flip
   :label: prop-flip
@@ -143,12 +141,9 @@ each $i = 1, \ldots, m$::.
 
 ::
 
-
-
 :remark: In the rest of these notes, each section and subsection is numbered according
 to the chapters and sections of :cite:thebook::.  ::
 
-::
 
 
 # Indefinite Inner Products
@@ -205,10 +200,6 @@ $\mb{S}_{2m}$.  Since the order of the oriented edges is arbitrary, all properti
 of the sip matrix are shared by the flip, both as operators or as matrices.  With this
 in mind, we will continue to use $\mb{P}$ and the oriented edge order defined above.
 
-::
-
-::
-
 
 ## Orthogonality and Orthogonal Bases
 :label: sec-orthogonality
@@ -237,7 +228,6 @@ particular $\mathcal{M}$ is degenerate.  Indeed, :claim: $\left[\mb{e}_{\alpha \
 \mathbb{C}$ ::, but $\mb{e}_{\alpha \to \beta}$ is obviously not zero.
 
 :draft: What about the subspace corresponding to the unit eigenvalues of $\mb{B}$? ::
-
 
 
 ### P-Orthogonal basis
@@ -304,15 +294,9 @@ $$
 \end{align}
 $$
 
-::
-
-::
-
 
 ## Classification of Subspaces
 :label: sec-classification-of-subspaces
-
-::
 
 
 ## Exercises
@@ -439,9 +423,6 @@ and non-positive subspaces.  But what about building all?::
 :draft: The invariant subspace corresponding to $\lambda = 1$ of a NBM is clearly a
 positive subspace. What about $\lambda = -1$? What about other unitary evals? ::
 
-:: ::
-
-
 
 # Orthogonalization and Orthogonal Polynomials
 :label: sec-orthogonal-polynomials
@@ -452,12 +433,11 @@ determinant equal to zero.
 
 :draft: Look for orthogonalizations of paticularly interesting bases. ::
 
-::
-
 
 
 # Classes of Linear Transformations
 :label: sec-linear-transformations
+
 
 ## Adjoint Matrices
 :label: sec-adjoint-matrices
@@ -614,16 +594,11 @@ $$
 \mb{Q}^{*} \mb{S}_{2m} \mb{B} \mb{Q}^{*}.
 $$
 
-
 :draft: are $\mb{P}$ or $\mb{B}$ persymmetric or centrosymmetric?::
-
-::
 
 
 ## H-selfadjoint Matrices\: Examples and Simplest Properties
 :label: sec-selfadjoint-matrices
-
-::
 
 
 ## H-unitary Matrices\: Examples and Simplest Properties
@@ -646,37 +621,25 @@ unit circle.
 :draft: Is $\mb{B}$ $(\mb{P}, \mb{S})$-unitary? See eqn 4.3.20 in the
 book. ::
 
-::
-
 
 ## A second characterization of H-unitary matrices
 :label: sec-charac-unit
-
-::
 
 
 ## Unitary similarity
 :label: sec-unitary-simil
 
-::
-
 
 ## Contractions
 :label: sec-contractions
-
-::
 
 
 ## Dissipative matrices
 :label: sec-dissipative
 
-::
-
 
 ## Symplectic matrices
 :label: sec-symplectic
-
-::
 
 
 ## Exercises
@@ -711,11 +674,6 @@ book. ::
     $$
  ::
 
-::
-
-::
-
-::
 
 
 # Scratch
@@ -984,7 +942,6 @@ $\mb{v}^\top \mb{P} \mb{v} = 1$ purely in terms of $\mb{v}$.
 ::
 
 
-::
 
 # Diagonalizability
 :label: sec-diagonaliza
@@ -1092,8 +1049,6 @@ $$
 \sum_r \left( \lambda_r - t \right)^{-1} \frac{\mb{v}_r \mb{v}_r^\top \mb{P}}{\mb{v}_r^\top \mb{P} \mb{v}_r}.
 $$
 
-
-::
 
 
 :bibliography: ::

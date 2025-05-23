@@ -36,8 +36,6 @@ def test_simple():
         Lorem ipsum.
 
         ::
-
-        ::
         """,
         want="""\
         <body>

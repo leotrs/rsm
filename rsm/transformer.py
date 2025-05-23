@@ -275,7 +275,6 @@ class Transformer:
         )
         within_appendix = False
         for node in self.tree.traverse():
-
             if isinstance(node, nodes.Appendix):
                 counts[nodes.Manuscript] = defaultdict(lambda: iter(ascii_uppercase))
                 within_appendix = True

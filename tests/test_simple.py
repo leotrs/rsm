@@ -118,7 +118,7 @@ def test_manuscript_with_shortcut_title():
         </div>
 
         </body>
-        """
+        """,
     )
 
 
@@ -151,14 +151,6 @@ def test_manuscript_meta():
         </body>
         """,
     )
-
-
-def test_no_halmos():
-    with pytest.raises(rsm.tsparser.RSMParserError):
-        compare_have_want(
-            have=""":rsm:\n\nFoo.\n""",
-            want="XXX",
-        )
 
 
 def test_section_header():

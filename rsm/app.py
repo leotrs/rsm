@@ -62,8 +62,9 @@ from rsm import (
     translator,
     tsparser,
     writer,
-    RSMParserError,
 )
+from rsm.tsparser import RSMParserError
+
 
 from .rsmlogger import GatherHandler
 
@@ -138,7 +139,7 @@ class RSMApp(Pipeline):
             result = super().run(initial_args)
             logger.info("Done.")
         except RSMParserError as e:
-            logger.error(f"There was an error {e}")
+            logger.error(f"There was an error: {e}")
             result = ""
         return result
 

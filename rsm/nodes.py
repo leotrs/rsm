@@ -1486,7 +1486,19 @@ class Example(Theorem):
     _number_as = Theorem
 
 
+class Exercise(Theorem):
+    _number_as = Theorem
+
+
 class Proposition(Theorem):
+    _number_as = Theorem
+
+
+class Problem(Theorem):
+    _number_as = Theorem
+
+
+class Porism(Theorem):
     _number_as = Theorem
 
 

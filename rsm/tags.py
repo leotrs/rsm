@@ -157,6 +157,8 @@ case = MathTagInfo(None)
 """Prove special case of the goal."""
 define = MathTagInfo(None)
 """Introduce a variable and assumption."""
+exercise = MathTagInfo(None)
+"""Introduce an exercise."""
 let = MathTagInfo(None)
 """Introduce a variable and assumption."""
 new = MathTagInfo(None)
@@ -165,6 +167,8 @@ p = MathTagInfo(None)
 """Sub-proof."""
 pick = MathTagInfo(None)
 """Introduce a variable with a specific property (see 'st')."""
+porism = MathTagInfo(None)
+"""Corollary of a proof."""
 prev = MathTagInfo(None)
 """Reference the previous step."""
 prev2 = MathTagInfo(None)
@@ -173,6 +177,8 @@ prev3 = MathTagInfo(None)
 """Reference the step two steps before."""
 previous = MathTagInfo(None)
 """Reference the previous step."""
+problem = MathTagInfo(None)
+"""Introduce a problem."""
 prove = MathTagInfo(None)
 """Set goal."""
 qed = MathTagInfo(None)

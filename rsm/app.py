@@ -62,6 +62,7 @@ from rsm import (
     translator,
     tsparser,
     writer,
+    RSMParserError,
 )
 
 from .rsmlogger import GatherHandler
@@ -116,7 +117,6 @@ class Pipeline:
 
 
 class RSMApp(Pipeline):
-
     default_log_level = logging.WARNING
 
     def __init__(
@@ -134,8 +134,12 @@ class RSMApp(Pipeline):
         super().__init__(tasks or [])
 
     def run(self, initial_args: Any = None) -> Optional[str]:
-        result = super().run(initial_args)
-        logger.info("Done.")
+        try:
+            result = super().run(initial_args)
+            logger.info("Done.")
+        except RSMParserError as e:
+            logger.error(f"There was an error {e}")
+            result = ""
         return result
 
     def _setup_handler(self) -> None:

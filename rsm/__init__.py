@@ -10,4 +10,4 @@ from . import (
     tsparser,
     writer,
 )
-from .app import lint, make, render
+from .app import lint, make, render, RSMApplicationError

@@ -785,7 +785,7 @@ class Translator:
 
     def leave_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         # See also the comment in visit_paragraph().
-        assert isinstance(node.parent, nodes.Paragraph)
+        assert isinstance(node.parent, nodes.BaseParagraph)
         batch = self.leave_node(node)
 
         # In case this mathblock is the last child of the paragraph, there is nothing
@@ -1136,7 +1136,6 @@ class Translator:
 
 
 class HandrailsTranslator(Translator):
-
     svg = {
         "link": """<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#3C4952" xmlns="http://www.w3.org/2000/svg">
         <path d="M6 12.0003L12 6.00031M8 3.00031L8.463 2.46431C9.40081 1.52663 10.6727 0.999906 11.9989 1C13.325 1.00009 14.5968 1.527 15.5345 2.46481C16.4722 3.40261 16.9989 4.6745 16.9988 6.00066C16.9987 7.32682 16.4718 8.59863 15.534 9.53631L15 10.0003M10.0001 15.0003L9.60314 15.5343C8.65439 16.4725 7.37393 16.9987 6.03964 16.9987C4.70535 16.9987 3.42489 16.4725 2.47614 15.5343C2.0085 15.0719 1.63724 14.5213 1.38385 13.9144C1.13047 13.3076 1 12.6565 1 11.9988C1 11.3412 1.13047 10.69 1.38385 10.0832C1.63724 9.47628 2.0085 8.92571 2.47614 8.46331L3.00014 8.00031" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1585,7 +1584,7 @@ class HandrailsTranslator(Translator):
                 )
             else:
                 circles.append(f'<circle cx="16" cy="{cy}" r="{r}" data-pos="{cy}" />')
-            circle = f'<circle cx="16" cy="{cy}" r="{r-4}" fill="#FCFEFF" data-pos="{cy}" />'
+            circle = f'<circle cx="16" cy="{cy}" r="{r - 4}" fill="#FCFEFF" data-pos="{cy}" />'
             if with_ids:
                 circles.append(circle + "</a>")
             else:

@@ -32,4 +32,4 @@ Please develop your feature or fix in a branch and submit a PR.
 ## Publishing
 
 This project uses `poetry`. Releasing a new version to PyPI is as easy as executing
-`poetry publish`.
+`poetry build && poetry publish`.

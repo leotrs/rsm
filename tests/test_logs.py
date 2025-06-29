@@ -128,13 +128,24 @@ def cmd(src: str, log_format: str, verbose: int = 0):
 
 
 def run(src: str, log_format: str, verbose: int = 0, replace=False, split=False):
-    result = subprocess.run(
+    proc = subprocess.run(
         cmd(src, log_format, verbose),
         check=True,
         shell=True,
         stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    ).stdout.decode("utf-8")
+        stderr=subprocess.PIPE,
+    )
+    # JSON output goes to stderr, warnings go to stderr too, so we need to filter
+    result = proc.stderr.decode("utf-8")
+    
+    # Filter out the pkg_resources warning lines
+    lines = result.split('\n')
+    filtered_lines = []
+    for line in lines:
+        if 'pkg_resources is deprecated' not in line and '__import__("pkg_resources")' not in line:
+            filtered_lines.append(line)
+    result = '\n'.join(filtered_lines).strip()
+    
     if replace:
         result = re.sub(r"}\s*{", "},{", result)
     if split:

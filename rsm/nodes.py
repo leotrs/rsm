@@ -181,7 +181,7 @@ class Node:
         """Types of this node."""
         self.handrail_depth = 0
         """The number of ancestors of this node that have a handrail."""
-        self.number: int = number if number is not None else 0
+        self.number: Optional[int] = number
         """Node number."""
         self.nonum: bool = nonum
         """Whether this node should be automatically given a number."""

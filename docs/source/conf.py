@@ -40,6 +40,9 @@ extensions = [
     "rsm_directive",  # highlight and render rsm code blocks
 ]
 
+# Disable epub3 builder to avoid imghdr module dependency (removed in Python 3.12+)
+exclude_builders = ["epub3"]
+
 
 #########
 # doctest

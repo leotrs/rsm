@@ -124,7 +124,7 @@ class TSParser:
       (:: Point(row=3, column=0) - Point(row=3, column=2)))
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         # Execute these two lines only if we need to compile the parser on the fly.
         #
         # tree_sitter.Language.build_library("languages.so", ["tree-sitter-rsm"])
@@ -201,11 +201,12 @@ class TSParser:
             logger.debug("abstract syntax tree:")
             print(self.ast.sexp())
 
-        self.ast.src = self.cst.root_node.text.decode(encoding)
+        if self.cst.root_node.text is not None:
+            self.ast.src = self.cst.root_node.text.decode(encoding)
         return self.ast
 
 
-def print_cst(tree: TSTree, named_only: bool = False):
+def print_cst(tree: TSTree, named_only: bool = False) -> None:
     """Print a tree-sitter concrete syntax tree.
 
     This is executed by default when processing a manuscript with logging level DEBUG.
@@ -238,7 +239,7 @@ def print_cst(tree: TSTree, named_only: bool = False):
             f'{" "*indent}({node.type} {node.start_point} - {node.end_point}',
             end="",
         )
-        if node.type == "text":
+        if node.type == "text" and node.text is not None:
             print(f' "{node.text.decode("utf-8")}"', end="")
         stack.append((None, None))
         stack += reversed([(indent + 2, n) for n in getattr(node, children_att)])

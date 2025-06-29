@@ -1,7 +1,7 @@
 """Configure the logging module for RSM apps."""
 import logging
 from logging.handlers import BufferingHandler
-from typing import Optional
+from typing import Any, Optional
 
 import ujson as json
 

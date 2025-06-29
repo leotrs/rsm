@@ -32,7 +32,7 @@ import re
 import sys
 from itertools import groupby
 from pathlib import Path
-from typing import Callable, Optional, Union
+from typing import Any, Callable, Optional, Union
 
 import tree_sitter
 import tree_sitter_rsm
@@ -146,9 +146,9 @@ class TSParser:
         #
         self._lang = tree_sitter.Language(tree_sitter_rsm.language())
         self._parser = tree_sitter.Parser(self._lang)
-        self.cst = None
+        self.cst: Optional[TSTree] = None
         """The concrete syntax tree generated from the source."""
-        self.ast = None
+        self.ast: Optional[nodes.Manuscript] = None
         """The abstract manuscript tree generated from the concrete syntax tree."""
 
     def parse(
@@ -183,13 +183,18 @@ class TSParser:
 
         if logger.getEffectiveLevel() <= logging.DEBUG:
             logger.debug("concrete syntax tree:")
-            print_cst(self.cst)
+            if self.cst is not None:
+                print_cst(self.cst)
 
         if not abstractify:
-            return self.cst
+            if self.cst is None:
+                raise RSMParserError("Failed to parse CST")
+            return self.cst  # type: ignore[return-value]
 
         logger.info("Abstractifying...")
         try:
+            if self.cst is None:
+                raise RSMParserError("No CST to abstractify")
             self.ast = _abstractify(self.cst)
         except AttributeError as ex:
             raise RSMParserError(msg="Error abstractifying.") from ex
@@ -302,31 +307,31 @@ CST_TYPE_TO_AST_TYPE: dict[str, Callable] = {
 }
 
 
-def _parse_metakey_list(cst_key: TSNode, cst_val: TSNode):
+def _parse_metakey_list(cst_key: TSNode, cst_val: TSNode) -> tuple[str, list[str]]:
     key = cst_key.named_children[0].type
     if cst_val.named_children:
-        val = [c.text.decode("utf-8").strip() for c in cst_val.named_children]
+        val = [c.text.decode("utf-8").strip() for c in cst_val.named_children if c.text is not None]
     else:
-        val = [c.text.decode("utf-8").strip() for c in cst_val.named_children]
+        val = [c.text.decode("utf-8").strip() for c in cst_val.named_children if c.text is not None]
     return key, val
 
 
-def _parse_metakey_text(cst_key: TSNode, cst_val: TSNode):
+def _parse_metakey_text(cst_key: TSNode, cst_val: TSNode) -> tuple[str, str]:
     key = cst_key.named_children[0].type
-    val = cst_val.text.decode("utf-8").strip()
+    val = cst_val.text.decode("utf-8").strip() if cst_val.text is not None else ""
     return key, val
 
 
-def _parse_metakey_any(cst_key: TSNode, cst_val: TSNode):
+def _parse_metakey_any(cst_key: TSNode, cst_val: TSNode) -> tuple[str, str]:
     return _parse_metakey_text(cst_key, cst_val)
 
 
-def _parse_metakey_bool(cst_key: TSNode, _):
+def _parse_metakey_bool(cst_key: TSNode, _: TSNode) -> tuple[str, bool]:
     key = cst_key.named_children[0].type
     return key, True
 
 
-def _parse_meta_into_dict(node):
+def _parse_meta_into_dict(node: TSNode) -> dict[str, Any]:
     pairs = {}
     for pair in [c for c in node.named_children if c.type.endswith("pair")]:
         if len(pair.named_children) == 1:  # bool meta key
@@ -338,7 +343,7 @@ def _parse_meta_into_dict(node):
     return pairs
 
 
-def _normalize_text(root):
+def _normalize_text(root: TSNode) -> str:
     if root is None:
         return
     for node in root.traverse():
@@ -423,7 +428,7 @@ def _normalize_text(root):
             node.title = EscapedString(node.title, DELIMS).escape()
 
 
-def _abstractify(cst):
+def _abstractify(cst: TSTree) -> nodes.Manuscript:
     ast_root_node = None
     bibliography_node = None
     stack = [(None, cst.root_node)]

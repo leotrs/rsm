@@ -440,7 +440,7 @@ class Node:
         self,
         *,
         condition: Optional[Callable[["Node"], bool]] = None,
-        nodeclass: Optional[type[Node]] = None,
+        nodeclass: Optional[type["Node"]] = None,
     ) -> Generator[NodeSubType, None, None]:
         """Generate the descendents of this Node in depth-first order.
 

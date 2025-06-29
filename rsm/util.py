@@ -32,7 +32,7 @@ def highlight_code(source: str, lang: str) -> str:
         get_lexer_by_name(lang),
         RSMPygmentsFormatter(),
     )
-    return highlighted
+    return highlighted  # type: ignore[no-any-return]
 
 
 class EscapedString:
@@ -69,7 +69,7 @@ class EscapedString:
         return other + self._src
 
     def __eq__(self, other: Any) -> bool:
-        return self._src == other
+        return self._src == other  # type: ignore[no-any-return]
 
     def __hash__(self) -> int:
         return hash(self._src)

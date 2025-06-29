@@ -181,7 +181,7 @@ class Node:
         """Types of this node."""
         self.handrail_depth = 0
         """The number of ancestors of this node that have a handrail."""
-        self.number: int = number
+        self.number: int = number if number is not None else 0
         """Node number."""
         self.nonum: bool = nonum
         """Whether this node should be automatically given a number."""
@@ -415,7 +415,7 @@ class Node:
         return self._number_as or self.__class__
 
     @property
-    def full_number(self) -> str:
+    def full_number(self) -> str | None:
         if self.nonum:
             return None
         ancestor = self.first_ancestor_of_type(self.number_within)
@@ -440,7 +440,7 @@ class Node:
         self,
         *,
         condition: Optional[Callable[["Node"], bool]] = None,
-        nodeclass: Optional[NodeSubType] = None,
+        nodeclass: Optional[type[Node]] = None,
     ) -> Generator[NodeSubType, None, None]:
         """Generate the descendents of this Node in depth-first order.
 
@@ -593,6 +593,7 @@ class Node:
         for idx, child in enumerate(reversed(self.children)):
             if isinstance(child, cls):
                 return (child, len(self.children) - idx - 1) if return_idx else child
+        return (None, None) if return_idx else None
 
     def prev_sibling(
         self, cls: Union[Type["Node"], str, None] = None
@@ -945,7 +946,7 @@ class NodeWithChildren(Node):
             raise TypeError("Can only append a Node or iterable of Nodes as children")
         return self
 
-    def prepend(self, child: Union[Node, Iterable[Node]]) -> None:
+    def prepend(self, child: Union[Node, Iterable[Node]]) -> "NodeWithChildren":
         """Add a child or children before all current children.
 
         For details, see :meth:`append`.
@@ -1414,7 +1415,7 @@ class URL(BaseReference):
 
 
 class PendingCite(Node):
-    def __init__(self, targetlabels: list[str] = None, **kwargs: Any) -> None:
+    def __init__(self, targetlabels: Optional[list[str]] = None, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.targetlabels = targetlabels or []
 

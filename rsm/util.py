@@ -7,7 +7,7 @@ Utilities.
 """
 
 import textwrap
-from typing import Any, Optional, Union
+from typing import Any, Generator, Optional, Union
 
 from pygments import highlight
 from pygments.formatters import HtmlFormatter  # pylint: disable=no-name-in-module
@@ -16,17 +16,17 @@ from pygments.lexers import get_lexer_by_name
 
 # pylint: disable-next=too-few-public-methods
 class RSMPygmentsFormatter(HtmlFormatter):
-    def wrap(self, source):
+    def wrap(self, source: Generator[tuple[int, str], None, None]) -> Generator[tuple[int, str], None, None]:
         return self._wrap_code(source)
 
-    def _wrap_code(self, source):
+    def _wrap_code(self, source: Generator[tuple[int, str], None, None]) -> Generator[tuple[int, str], None, None]:
         yield from source
 
-    def _wrap_div(self, source):
+    def _wrap_div(self, source: Generator[tuple[int, str], None, None]) -> Generator[tuple[int, str], None, None]:
         yield from source
 
 
-def highlight_code(source, lang):
+def highlight_code(source: str, lang: str) -> str:
     highlighted = highlight(
         source,
         get_lexer_by_name(lang),

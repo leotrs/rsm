@@ -23,7 +23,7 @@ List of all tags
 .. autoclass:: figure
 .. autoclass:: itemize
 .. autoclass:: lemma
-.. autoclass:: manuscript
+.. autoclass:: rsm
 .. autoclass:: mathblock
 .. autoclass:: proof
 .. autoclass:: proposition
@@ -32,7 +32,6 @@ List of all tags
 .. autoclass:: sketch
 .. autoclass:: subsection
 .. autoclass:: subsubsection
-.. autoclass:: subsubsubsection
 .. autoclass:: theorem
 .. autoclass:: toc
 

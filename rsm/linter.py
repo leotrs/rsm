@@ -7,7 +7,7 @@ RSM Linter: analyze the manuscript tree and log linting messages.
 """
 
 import logging
-from typing import Optional
+from typing import Any, Optional
 
 from . import nodes
 from .rsmlogger import GatherHandler
@@ -19,9 +19,9 @@ class Linter:
     LINT_LVL = 25
 
     def __init__(self) -> None:
-        logging.LINT = self.LINT_LVL
+        logging.LINT = self.LINT_LVL  # type: ignore
         logging.addLevelName(self.LINT_LVL, "LINT")
-        logger.lint = lambda msg, *args, **kwargs: logger.log(
+        logger.lint = lambda msg, *args, **kwargs: logger.log(  # type: ignore
             self.LINT_LVL, msg, *args, **kwargs
         )
         if logger.level > self.LINT_LVL:

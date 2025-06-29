@@ -7,7 +7,7 @@ Utilities.
 """
 
 import textwrap
-from typing import Any, Optional, Union
+from typing import Any, Generator, Optional, Union
 
 from pygments import highlight
 from pygments.formatters import HtmlFormatter  # pylint: disable=no-name-in-module
@@ -16,23 +16,23 @@ from pygments.lexers import get_lexer_by_name
 
 # pylint: disable-next=too-few-public-methods
 class RSMPygmentsFormatter(HtmlFormatter):
-    def wrap(self, source):
+    def wrap(self, source: Generator[tuple[int, str], None, None]) -> Generator[tuple[int, str], None, None]:
         return self._wrap_code(source)
 
-    def _wrap_code(self, source):
+    def _wrap_code(self, source: Generator[tuple[int, str], None, None]) -> Generator[tuple[int, str], None, None]:
         yield from source
 
-    def _wrap_div(self, source):
+    def _wrap_div(self, source: Generator[tuple[int, str], None, None]) -> Generator[tuple[int, str], None, None]:
         yield from source
 
 
-def highlight_code(source, lang):
+def highlight_code(source: str, lang: str) -> str:
     highlighted = highlight(
         source,
         get_lexer_by_name(lang),
         RSMPygmentsFormatter(),
     )
-    return highlighted
+    return highlighted  # type: ignore[no-any-return]
 
 
 class EscapedString:
@@ -69,7 +69,7 @@ class EscapedString:
         return other + self._src
 
     def __eq__(self, other: Any) -> bool:
-        return self._src == other
+        return self._src == other  # type: ignore[no-any-return]
 
     def __hash__(self) -> int:
         return hash(self._src)

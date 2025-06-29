@@ -785,8 +785,12 @@ class Translator:
 
     def leave_mathblock(self, node: nodes.MathBlock) -> EditCommand:
         # See also the comment in visit_paragraph().
-        assert isinstance(node.parent, nodes.BaseParagraph)
         batch = self.leave_node(node)
+
+        # The paragraph-specific logic only applies when the parent is a BaseParagraph
+        # With grammar changes, MathBlocks can now have other types of parents
+        if not isinstance(node.parent, nodes.BaseParagraph):
+            return batch
 
         # In case this mathblock is the last child of the paragraph, there is nothing
         # special to do since visit_mathblock() already handled the remaining </p> tag.

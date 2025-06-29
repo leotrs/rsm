@@ -345,7 +345,7 @@ def _parse_meta_into_dict(node: TSNode) -> dict[str, Any]:
 
 def _normalize_text(root: TSNode) -> str:
     if root is None:
-        return
+        return ""
     for node in root.traverse():
         # Merge consecutive text nodes (each text node ends at a newline, so consecutive
         # text nodes are just adjacent lines of text and can always be merged).  Also,
@@ -426,6 +426,8 @@ def _normalize_text(root: TSNode) -> str:
             node.title = EscapedString(node.title, DELIMS).escape()
         if isinstance(node, nodes.Manuscript):
             node.title = EscapedString(node.title, DELIMS).escape()
+    
+    return ""  # This function modifies nodes in place
 
 
 def _abstractify(cst: TSTree) -> nodes.Manuscript:

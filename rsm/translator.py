@@ -594,12 +594,13 @@ class AppendNodeTag(AppendOpenTag):
         if isinstance(node, nodes.Asset) and node.static:
             static_src = self._resolve_image_src(node.static) if hasattr(self, '_resolve_image_src') else str(node.static)
             kwargs["data-static"] = static_src
-        if include_source and manuscript_source and hasattr(node.start_point, "row"):
+        # tree-sitter 0.26.0's Point.row/.column getters over-decref the returned
+        # int and corrupt memory (py-tree-sitter #472); read row/column by index
+        # instead. A default (-1, -1) point means no source position, so skip it.
+        if include_source and manuscript_source and node.start_point[0] >= 0:
             source_lines = manuscript_source.split("\n")
-            start_row = node.start_point.row
-            start_col = node.start_point.column
-            end_row = node.end_point.row
-            end_col = node.end_point.column
+            start_row, start_col = node.start_point[0], node.start_point[1]
+            end_row, end_col = node.end_point[0], node.end_point[1]
 
             if start_row < len(source_lines) and end_row < len(source_lines):
                 # Compute character offsets into the full source string
@@ -2134,18 +2135,18 @@ class HandrailsTranslator(Translator):
         if node is not None and getattr(node, "collapsed", False):
             # Marker only: JS collapses on load, so JS-off keeps the block open.
             kwargs["data-start-collapsed"] = "true"
+        # tree-sitter 0.26.0's Point.row/.column getters corrupt memory
+        # (py-tree-sitter #472); read row/column by index instead.
         if (
             self.source_offsets
             and node
             and self.tree
             and self.tree.src
-            and hasattr(node.start_point, "row")
+            and node.start_point[0] >= 0
         ):
             source_lines = self.tree.src.split("\n")
-            start_row = node.start_point.row
-            start_col = node.start_point.column
-            end_row = node.end_point.row
-            end_col = node.end_point.column
+            start_row, start_col = node.start_point[0], node.start_point[1]
+            end_row, end_col = node.end_point[0], node.end_point[1]
 
             if start_row < len(source_lines) and end_row < len(source_lines):
                 start_offset = sum(len(source_lines[r]) + 1 for r in range(start_row)) + start_col

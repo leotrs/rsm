@@ -16,7 +16,30 @@ concurrency:
 
 jobs:
 
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      lsp: ${{ steps.filter.outputs.lsp }}
+      rsmify: ${{ steps.filter.outputs.rsmify }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          lsp:
+            - 'packages/rsm-lsp/**'
+            - 'tree-sitter-rsm/**'
+          rsmify:
+            - 'packages/rsmify/**'
+            - 'rsm/**'
+            - 'tree-sitter-rsm/**'
+            - 'pyproject.toml'
+            - 'uv.lock'
+
   lsp-tests:
+    needs: changes
+    if: ${{ needs.changes.outputs.lsp == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -62,6 +85,8 @@ jobs:
       run: npm test -- --run
 
   rsmify-tests:
+    needs: changes
+    if: ${{ needs.changes.outputs.rsmify == 'true' }}
     runs-on: ubuntu-latest
 
     steps:

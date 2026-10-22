@@ -12,6 +12,8 @@ RestartSec=5
 # on the tailnet), and on its own docker network so egress to the tailnet can be
 # dropped without touching other containers. --dns points at public resolvers
 # because MagicDNS (100.100.100.100) sits inside the dropped tailnet range.
+ExecStartPre=/bin/sh -c 'docker network inspect rsmify-net >/dev/null 2>&1 || docker network create --subnet 172.30.0.0/24 rsmify-net'
+ExecStartPre=/bin/sh -c 'iptables -C DOCKER-USER -s 172.30.0.0/24 -d 100.64.0.0/10 -j DROP 2>/dev/null || iptables -I DOCKER-USER -s 172.30.0.0/24 -d 100.64.0.0/10 -j DROP'
 ExecStartPre=-/usr/bin/docker rm -f rsmify
 ExecStart=/usr/bin/docker run --rm --name rsmify \
   --network rsmify-net \

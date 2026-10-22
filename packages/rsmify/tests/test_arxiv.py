@@ -47,15 +47,38 @@ def test_canonical_requires_version():
 
 
 def test_fetch_refuses_offsite_redirect(monkeypatch):
-    # SSRF guard: a redirect that lands off the arXiv host allowlist is refused.
-    class _URL:
-        host = "evil.com"
+    # SSRF guard: a redirect whose target leaves the arXiv allowlist is refused
+    # before the next request is made.
+    import httpx
 
     class _Resp:
-        url = _URL()
-        status_code = 200
-        content = b"x"
+        is_redirect = True
+        status_code = 302
+        headers = {"location": "https://evil.com/x"}
+        url = httpx.URL("https://export.arxiv.org/e-print/2401.12345v1")
 
-    monkeypatch.setattr(arxiv.httpx, "get", lambda *a, **k: _Resp())
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def iter_bytes(self):
+            return iter(())
+
+    class _Client:
+        def __init__(self, *a, **k):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def stream(self, method, url):
+            return _Resp()
+
+    monkeypatch.setattr(arxiv.httpx, "Client", _Client)
     with pytest.raises(arxiv.FetchError):
         arxiv.fetch_and_flatten(ArxivId("2401.12345", 1))

@@ -35,9 +35,23 @@ _EPRINT = "https://export.arxiv.org/e-print"
 # \input and \include pull another source file into the main document.
 _INPUT = re.compile(r"\\(?:input|include)\{([^}]+)\}")
 
+# The endpoint is public, so bound untrusted input: cap the e-print compressed
+# and uncompressed (the scratch tmpfs is 256 MB), and follow only a few hops.
+_MAX_DOWNLOAD = 50 * 1024 * 1024
+_MAX_EXTRACTED = 100 * 1024 * 1024
+_MAX_REDIRECTS = 5
+
 
 class FetchError(Exception):
-    """A paper's source could not be fetched or unpacked."""
+    """A paper's source could not be fetched or unpacked.
+
+    `message` is user-facing (shown on the error page) and `status` is the HTTP
+    status to return.
+    """
+
+    def __init__(self, message: str, status: int = 502):
+        super().__init__(message)
+        self.status = status
 
 
 @dataclass(frozen=True)
@@ -99,60 +113,120 @@ def fetch_and_flatten(arxiv_id: ArxivId) -> str:
     Figure files are left on disk next to the .tex but not otherwise handled
     here; serving them is bead rsm-ddx.10.
     """
-    url = f"{_EPRINT}/{arxiv_id.canonical()}"
-    try:
-        resp = httpx.get(
-            url,
-            headers={"User-Agent": _USER_AGENT},
-            timeout=60.0,
-            follow_redirects=True,
-        )
-    except httpx.HTTPError as exc:
-        raise FetchError(f"could not reach arXiv: {exc}")
-    if resp.url.host not in ARXIV_HOSTS:
-        raise FetchError(f"refusing redirect off arXiv to {resp.url.host!r}")
-    if resp.status_code != 200:
-        raise FetchError(f"arXiv returned {resp.status_code} for {arxiv_id.canonical()}")
-
+    content = _fetch_eprint(arxiv_id)
     workdir = Path(tempfile.mkdtemp(prefix="rsmify-"))
-    _extract(resp.content, workdir)
+    _extract(content, workdir)
     main_tex = _find_main_tex(workdir)
-    flattened = _flatten(main_tex)
+    flattened = _flatten(main_tex, workdir)
     out = workdir / "_rsmify_flat.tex"
     out.write_text(flattened, encoding="utf-8", errors="replace")
     return str(out)
+
+
+def _fetch_eprint(arxiv_id: ArxivId) -> bytes:
+    """GET the e-print tarball, following redirects by hand so every hop stays on arXiv.
+
+    Redirects are not auto-followed: each hop's host is checked against the
+    allowlist before the next request is made, so an off-arXiv redirect is
+    never even requested. The body is streamed with a size cap.
+    """
+    url = f"{_EPRINT}/{arxiv_id.canonical()}"
+    try:
+        with httpx.Client(
+            headers={"User-Agent": _USER_AGENT}, timeout=60.0, follow_redirects=False
+        ) as client:
+            for _ in range(_MAX_REDIRECTS):
+                with client.stream("GET", url) as resp:
+                    if resp.is_redirect:
+                        location = resp.headers.get("location", "")
+                        target = (
+                            httpx.URL(location)
+                            if "://" in location
+                            else resp.url.join(location)
+                        )
+                        if target.host not in ARXIV_HOSTS:
+                            raise FetchError(
+                                "arXiv tried to send rsmify to an unexpected site, "
+                                "so the download was stopped for safety."
+                            )
+                        url = str(target)
+                        continue
+                    if resp.status_code == 404:
+                        raise FetchError(
+                            f"arXiv has no source for {arxiv_id.canonical()}. "
+                            "Check the id and the version number.",
+                            status=404,
+                        )
+                    if resp.status_code != 200:
+                        raise FetchError(
+                            f"arXiv returned an error ({resp.status_code}) for this "
+                            "paper. Try again in a moment."
+                        )
+                    chunks: list[bytes] = []
+                    total = 0
+                    for chunk in resp.iter_bytes():
+                        total += len(chunk)
+                        if total > _MAX_DOWNLOAD:
+                            raise FetchError(
+                                "This paper's source download is unusually large, "
+                                "so rsmify stopped it.",
+                                status=413,
+                            )
+                        chunks.append(chunk)
+                    return b"".join(chunks)
+    except httpx.HTTPError as exc:
+        raise FetchError(
+            "rsmify could not reach arXiv right now. Try again in a moment."
+        ) from exc
+    raise FetchError("arXiv redirected too many times, so the download was stopped.")
 
 
 def _extract(content: bytes, workdir: Path) -> None:
     """Unpack an arXiv e-print payload, which is a tarball, a single gzipped file, or raw."""
     try:
         with tarfile.open(fileobj=io.BytesIO(content), mode="r:*") as tar:
-            _safe_extract(tar, workdir)
+            members = tar.getmembers()
+            if sum(m.size for m in members) > _MAX_EXTRACTED:
+                raise FetchError(
+                    "This paper's source expands to an unusually large size, so "
+                    "rsmify stopped it.",
+                    status=413,
+                )
+            # filter="data" (Python 3.12+) rejects absolute paths, parent
+            # traversal, and symlinks or hardlinks that point outside workdir,
+            # which the old name-only check missed.
+            tar.extractall(workdir, filter="data")
             return
     except tarfile.ReadError:
         pass
+    (workdir / "main.tex").write_bytes(_gunzip_capped(content))
+
+
+def _gunzip_capped(content: bytes) -> bytes:
+    """Decompress a single gzip member with a size cap, or return the raw bytes."""
     try:
-        data = gzip.decompress(content)
+        with gzip.GzipFile(fileobj=io.BytesIO(content)) as gz:
+            data = gz.read(_MAX_EXTRACTED + 1)
     except (OSError, EOFError):
-        data = content
-    (workdir / "main.tex").write_bytes(data)
-
-
-def _safe_extract(tar: tarfile.TarFile, dest: Path) -> None:
-    """Extract a tar while refusing members that would escape dest (path traversal)."""
-    dest_resolved = dest.resolve()
-    for member in tar.getmembers():
-        target = (dest / member.name).resolve()
-        if not str(target).startswith(str(dest_resolved)):
-            raise FetchError(f"unsafe path in tar: {member.name!r}")
-    tar.extractall(dest)
+        return content
+    if len(data) > _MAX_EXTRACTED:
+        raise FetchError(
+            "This paper's source expands to an unusually large size, so rsmify "
+            "stopped it.",
+            status=413,
+        )
+    return data
 
 
 def _find_main_tex(workdir: Path) -> Path:
     """The main file is the .tex that declares \\documentclass."""
     texs = sorted(workdir.rglob("*.tex"))
     if not texs:
-        raise FetchError("no .tex file found in e-print source")
+        raise FetchError(
+            "rsmify found no LaTeX source for this paper. arXiv may only have a "
+            "PDF, which rsmify cannot render.",
+            status=422,
+        )
     for tex in texs:
         try:
             if "\\documentclass" in tex.read_text(encoding="utf-8", errors="replace"):
@@ -162,23 +236,26 @@ def _find_main_tex(workdir: Path) -> Path:
     return texs[0]
 
 
-def _flatten(path: Path, seen: set[Path] | None = None) -> str:
-    """Inline \\input and \\include targets recursively, guarding against cycles."""
+def _flatten(path: Path, root: Path, seen: set[Path] | None = None) -> str:
+    """Inline \\input and \\include targets recursively, within root, guarding cycles."""
     seen = set() if seen is None else seen
     path = path.resolve()
     if path in seen:
         return ""
     seen.add(path)
     base = path.parent
+    root = root.resolve()
     text = path.read_text(encoding="utf-8", errors="replace")
 
     def repl(match: re.Match[str]) -> str:
         name = match.group(1).strip()
-        child = base / name
+        child = (base / name).resolve()
         if not child.suffix:
             child = child.with_suffix(".tex")
-        if child.exists():
-            return _flatten(child, seen)
+        # Containment: an \input target must stay inside the e-print dir, so a
+        # malicious \input{../../../../etc/passwd} is left as-is, not inlined.
+        if child.is_relative_to(root) and child.exists():
+            return _flatten(child, root, seen)
         return match.group(0)
 
     return _INPUT.sub(repl, text)

@@ -1,0 +1,30 @@
+[Unit]
+Description=rsmify arXiv-to-RSM host service
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=5
+# Replace any stale container, then run it confined: non-root (baked into the
+# image), read-only rootfs, a tmpfs scratch for the arXiv tarballs, all caps
+# dropped, published to localhost only (reachable through nginx, never directly
+# on the tailnet), and on its own docker network so egress to the tailnet can be
+# dropped without touching other containers. --dns points at public resolvers
+# because MagicDNS (100.100.100.100) sits inside the dropped tailnet range.
+ExecStartPre=-/usr/bin/docker rm -f rsmify
+ExecStart=/usr/bin/docker run --rm --name rsmify \
+  --network rsmify-net \
+  --dns 1.1.1.1 --dns 9.9.9.9 \
+  --read-only \
+  --tmpfs /scratch:rw,noexec,nosuid,size=256m \
+  --tmpfs /tmp:rw,size=16m \
+  --cap-drop ALL \
+  --security-opt no-new-privileges \
+  --memory 768m --cpus 1.0 \
+  --publish 127.0.0.1:8700:8000 \
+  rsmify:local
+ExecStop=/usr/bin/docker stop rsmify
+
+[Install]
+WantedBy=multi-user.target

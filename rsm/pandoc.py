@@ -18,12 +18,41 @@ Analogy with the rest of the codebase:
 """
 
 import logging
+import re
+from datetime import datetime
 
 from rsm import nodes
 
 logger = logging.getLogger("RSM").getChild("pandoc")
 
 PANDOC_API_VERSION = [1, 23, 1]
+
+_ISO_DATE = re.compile(r"^\d{4}(-\d{2}(-\d{2})?)?$")
+
+# Pandoc gives \date{...} as free text; RSM's :override-date: wants ISO 8601.
+# These are the common human-written forms; anything else is left for the LLM
+# host pass rather than guessed at.
+_DATE_FORMATS = (
+    ("%B %d, %Y", "%Y-%m-%d"),   # April 13, 2024
+    ("%d %B %Y", "%Y-%m-%d"),    # 13 April 2024
+    ("%b %d, %Y", "%Y-%m-%d"),   # Apr 13, 2024
+    ("%d %b %Y", "%Y-%m-%d"),    # 13 Apr 2024
+    ("%Y/%m/%d", "%Y-%m-%d"),
+    ("%m/%d/%Y", "%Y-%m-%d"),
+    ("%B %Y", "%Y-%m"),          # April 2024
+)
+
+
+def _normalize_date_to_iso(raw: str) -> str:
+    s = raw.strip()
+    if not s or _ISO_DATE.match(s):
+        return s if _ISO_DATE.match(s) else ""
+    for fmt, out in _DATE_FORMATS:
+        try:
+            return datetime.strptime(s, fmt).strftime(out)
+        except ValueError:
+            continue
+    return ""
 
 
 # ─── Export: RSM AST → pandoc JSON ───────────────────────────────────────────
@@ -571,12 +600,31 @@ class PandocImporter:
             title = self._meta_to_text(meta["title"])
             if title:
                 parts.append(f"# {title}\n\n")
+        if "date" in meta:
+            iso = _normalize_date_to_iso(self._meta_to_text(meta["date"]))
+            if iso:
+                parts.append(f":config: {{\n  :override-date: {iso}\n}}\n::\n\n")
         if "author" in meta:
             for item in meta["author"].get("c", []):
                 name = self._meta_to_text(item)
                 if name:
                     parts.append(f":author: {{\n  :name: {name}\n}} ::\n\n")
+        if "abstract" in meta:
+            abstract = self._render_abstract(meta["abstract"])
+            if abstract:
+                parts.append(abstract)
         return "".join(parts)
+
+    def _render_abstract(self, val: dict) -> str:
+        # Pandoc stores the abstract as MetaBlocks (a list of block elements).
+        # RSM's :abstract: wraps block content indented beneath the tag.
+        if val.get("t") != "MetaBlocks":
+            return ""
+        inner = "".join(self._render_block(b) for b in val.get("c", [])).strip()
+        if not inner:
+            return ""
+        body = "\n".join(f"  {line}" if line else line for line in inner.splitlines())
+        return f":abstract:\n\n{body}\n\n::\n\n"
 
     def _meta_to_text(self, val: dict) -> str:
         t = val.get("t", "")

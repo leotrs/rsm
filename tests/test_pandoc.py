@@ -425,6 +425,85 @@ def test_import_author():
     assert "Ada Lovelace" in result
 
 
+def test_import_date_iso():
+    result = IMP.from_json(_ast(
+        meta={"date": {"t": "MetaInlines", "c": [{"t": "Str", "c": "2024-04-13"}]}}
+    ))
+    assert ":override-date: 2024-04-13" in result
+
+
+def test_import_date_month_name_normalized():
+    result = IMP.from_json(_ast(
+        meta={"date": {"t": "MetaInlines", "c": [
+            {"t": "Str", "c": "April"}, {"t": "Space"}, {"t": "Str", "c": "13,"},
+            {"t": "Space"}, {"t": "Str", "c": "2024"},
+        ]}}
+    ))
+    assert ":override-date: 2024-04-13" in result
+
+
+def test_import_date_unparseable_skipped():
+    result = IMP.from_json(_ast(
+        meta={"date": {"t": "MetaInlines", "c": [{"t": "Str", "c": "\\today"}]}}
+    ))
+    assert "override-date" not in result
+
+
+def test_import_date_parses():
+    # The emitted :config: override-date must set the manuscript date.
+    import rsm.nodes as nodes
+
+    result = IMP.from_json(_ast(
+        meta={
+            "title": {"t": "MetaInlines", "c": [{"t": "Str", "c": "T"}]},
+            "date": {"t": "MetaInlines", "c": [{"t": "Str", "c": "2024-04-13"}]},
+        }
+    ))
+    tree = _parse(result)
+    assert str(getattr(tree, "date", "")) == "2024-04-13"
+
+
+def test_import_abstract():
+    result = IMP.from_json(_ast(
+        meta={
+            "abstract": {
+                "t": "MetaBlocks",
+                "c": [{"t": "Para", "c": [
+                    {"t": "Str", "c": "We"},
+                    {"t": "Space"},
+                    {"t": "Str", "c": "study."},
+                ]}],
+            }
+        }
+    ))
+    assert ":abstract:" in result
+    assert "We study." in result
+
+
+def test_import_abstract_parses():
+    # The emitted :abstract: must be valid RSM that yields an Abstract node.
+    result = IMP.from_json(_ast(
+        meta={
+            "title": {"t": "MetaInlines", "c": [{"t": "Str", "c": "T"}]},
+            "abstract": {
+                "t": "MetaBlocks",
+                "c": [{"t": "Para", "c": [{"t": "Str", "c": "Hello."}]}],
+            },
+        }
+    ))
+    import rsm.nodes as nodes
+
+    tree = _parse(result)
+    assert any(isinstance(n, nodes.Abstract) for n in tree.traverse())
+
+
+def test_import_no_abstract():
+    result = IMP.from_json(_ast(
+        meta={"title": {"t": "MetaInlines", "c": [{"t": "Str", "c": "T"}]}}
+    ))
+    assert ":abstract:" not in result
+
+
 def test_import_paragraph():
     result = IMP.from_json(_ast(blocks=[
         {"t": "Para", "c": [

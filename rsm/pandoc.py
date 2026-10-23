@@ -374,7 +374,7 @@ class PandocTranslator:
             parts.append(f'"{node.title}"')
         if node.journal:
             parts.append(node.journal)
-        if node.year and node.year != -1:
+        if node.year:
             parts.append(str(node.year))
         text = ". ".join(p.strip(".") for p in parts) + "." if parts else "?"
         anchor = f"ref-{node.label}" if node.label else ""

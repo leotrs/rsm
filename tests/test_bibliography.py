@@ -1,3 +1,7 @@
+import re
+from textwrap import dedent
+
+import rsm
 from conftest import compare_have_want
 
 
@@ -257,3 +261,31 @@ def test_order():
         </body>
         """,
     )
+
+
+def test_bibitem_without_year_renders():
+    # Regression: year defaulted to the int -1, which is truthy, so a bibitem
+    # with no year appended -1 to the rendered parts and then .strip()'d it as
+    # an int, raising AttributeError. A missing year must simply be omitted.
+    html = rsm.render(
+        dedent(
+            """
+            # T
+
+            :references:
+            @article{a1,
+              author={Smith, J},
+              title={A paper with no year},
+              journal={J. Testing}
+            }
+            ::
+            """
+        ).strip(),
+        handrails=False,
+        source_offsets=False,
+    )
+    item = re.search(r'<li[^>]*class="bibitem"[^>]*>(.*?)</li>', html, re.S)
+    assert item, "bibitem did not render"
+    assert "A paper with no year" in item.group(1)
+    # no sentinel leaking in as a bogus year or entry number
+    assert "-1" not in item.group(1)

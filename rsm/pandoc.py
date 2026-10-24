@@ -727,6 +727,12 @@ class PandocImporter:
     def _block_div(self, c: list) -> str:
         attrs, blocks = c
         _id, classes, _kv = attrs
+        # pandoc wraps a LaTeX bibliography in a Div with this class, but it drops
+        # the \bibitem keys and collapses the entries into one paragraph. The real
+        # references are recovered from the source by rsm.bibextract and emitted
+        # separately (bead rsm-ddx.5.4), so drop pandoc's unusable copy here.
+        if "thebibliography" in classes:
+            return ""
         inner = "".join(self._render_block(b) for b in blocks).strip()
         # Map well-known classes to RSM constructs
         for cls in classes:

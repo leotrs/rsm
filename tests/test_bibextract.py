@@ -186,3 +186,23 @@ def test_bbl_latex_markup_stripped(tmp_path):
     assert "{" not in raw and "}" not in raw
     assert "Y. Bengio" in raw
     assert "Neural networks" in raw
+
+
+def test_cited_keys_ignores_comments():
+    assert cited_keys("% \\cite{ignored}\n\\cite{real}") == {"real"}
+    assert cited_keys("100\\% done, see \\cite{x}") == {"x"}
+
+
+def test_apacite_style_bibitem_key(tmp_path):
+    # apacite wraps the key with % line comments: \bibitem[...]{%\nKey}, so the
+    # key was coming out as "%\nKey" and never matching the cited key.
+    bbl = (
+        "\\begin{thebibliography}{}\n"
+        "\\bibitem[\\protect\\citeauthoryear{%\nAuthor%\n}{%\nAuthor%\n}{%\n1999}]{%\n"
+        "AuthKey}\n"
+        "Author, A. A title. 1999.\n"
+        "\\end{thebibliography}"
+    )
+    _write(tmp_path / "p.bbl", bbl)
+    refs = extract_references(r"\cite{AuthKey} \bibliography{p}", tmp_path, {"AuthKey"})
+    assert [r.key for r in refs] == ["AuthKey"]

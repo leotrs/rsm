@@ -58,13 +58,22 @@ class Reference:
     raw: str
 
 
+def _strip_comments(text: str) -> str:
+    """Remove LaTeX line comments (% to end of line), keeping escaped \\%.
+
+    .bbl files, apacite especially, pepper keys and entries with % comments, and
+    a commented-out \\cite must not count as a citation.
+    """
+    return re.sub(r"(?<!\\)%.*", "", text)
+
+
 def cited_keys(tex: str) -> set[str]:
     """Return the set of keys cited anywhere in the source.
 
     A \\nocite{*} contributes the literal "*", which callers read as "keep all".
     """
     keys: set[str] = set()
-    for match in _CITE.finditer(tex):
+    for match in _CITE.finditer(_strip_comments(tex)):
         for key in match.group(1).split(","):
             key = key.strip()
             if key:
@@ -188,6 +197,7 @@ def _parse_bibitems(text: str) -> list[tuple[str, str]]:
     afterwards in one batch.
     """
     items: list[tuple[str, str]] = []
+    text = _strip_comments(text)
     matches = list(_BIBITEM.finditer(text))
     for idx, match in enumerate(matches):
         key = match.group(1).strip()

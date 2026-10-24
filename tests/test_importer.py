@@ -190,6 +190,30 @@ def test_gzip_single_file(tmp_path):
     assert "GZIP BODY" in resolve_source(gz)
 
 
+def test_preamble_macros_extraction():
+    from rsm.importer import preamble_macros
+
+    tex = (
+        "\\documentclass{article}\n"
+        "\\newcommand{\\RR}{\\mathbb{R}}\n"
+        "\\newcommand{\\abs}[1]{\\lvert #1 \\rvert}\n"
+        "\\renewcommand{\\vv}[1]{\\mathbf{#1}}\n"
+        "\\DeclareMathOperator{\\argmin}{arg\\,min}\n"
+        "\\def\\foo{\\bar}\n"
+        "\\begin{document}\n"
+        "\\newcommand{\\notpicked}{x}\n"
+        "\\end{document}\n"
+    )
+    macros = preamble_macros(tex)
+    assert "\\newcommand{\\RR}{\\mathbb{R}}" in macros
+    assert "\\newcommand{\\abs}[1]{\\lvert #1 \\rvert}" in macros
+    assert "\\renewcommand{\\vv}[1]{\\mathbf{#1}}" in macros
+    assert "\\newcommand{\\argmin}{\\operatorname{arg\\,min}}" in macros
+    assert "\\def\\foo{\\bar}" in macros
+    # definitions after \begin{document} are not in the preamble
+    assert not any("notpicked" in m for m in macros)
+
+
 def test_gzipped_tar(tmp_path):
     arc = tmp_path / "proj.tar.gz"
     with tarfile.open(arc, "w:gz") as tar:

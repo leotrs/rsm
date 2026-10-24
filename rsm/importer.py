@@ -270,3 +270,85 @@ def flatten(main_tex: str | Path, root: str | Path, seen: set[Path] | None = Non
         return match.group(0)
 
     return _INPUT.sub(repl, text)
+
+
+_MACRO_DEF = re.compile(r"\\(newcommand|renewcommand|providecommand|DeclareMathOperator|def)\b")
+
+
+def preamble_macros(tex: str) -> list[str]:
+    """Extract macro definitions from the LaTeX preamble (bead rsm-ddx.2).
+
+    pandoc discards the preamble and expands most macros, but some survive into
+    the math, so carrying the definitions lets Temml expand them. Best-effort:
+    handles \\newcommand, \\renewcommand, \\providecommand (keeping argument
+    specs), \\DeclareMathOperator (translated to a Temml-safe \\newcommand with
+    \\operatorname), and \\def. Anything trickier is left to the LLM host pass.
+    """
+    doc = re.search(r"\\begin\{document\}", tex)
+    preamble = tex[: doc.start()] if doc else tex
+    out: list[str] = []
+    for mo in _MACRO_DEF.finditer(preamble):
+        kind = mo.group(1)
+        j = mo.end()
+        star = ""
+        if j < len(preamble) and preamble[j] == "*":
+            star, j = "*", j + 1
+        j = _skip_ws(preamble, j)
+        name = _read_macro_name(preamble, j)
+        if name is None:
+            continue
+        macroname, j = name
+        j = _skip_ws(preamble, j)
+        if kind == "def":
+            body = _brace_group(preamble, j)
+            if body is not None:
+                out.append(f"\\def{macroname}{{{body[0]}}}")
+            continue
+        if kind == "DeclareMathOperator":
+            body = _brace_group(preamble, j)
+            if body is not None:
+                out.append(
+                    f"\\newcommand{{{macroname}}}{{\\operatorname{star}{{{body[0]}}}}}"
+                )
+            continue
+        brackets = ""
+        while j < len(preamble) and preamble[j] == "[":
+            k = preamble.find("]", j)
+            if k == -1:
+                break
+            brackets += preamble[j : k + 1]
+            j = _skip_ws(preamble, k + 1)
+        body = _brace_group(preamble, j)
+        if body is not None:
+            out.append(f"\\{kind}{{{macroname}}}{brackets}{{{body[0]}}}")
+    return out
+
+
+def _read_macro_name(s: str, i: int) -> tuple[str, int] | None:
+    """Read a macro name at i: either {\\foo} or \\foo. Return (name, end) or None."""
+    if i < len(s) and s[i] == "{":
+        g = _brace_group(s, i)
+        return (g[0].strip(), g[1]) if g is not None else None
+    m = re.match(r"\\[a-zA-Z@]+", s[i:])
+    return (m.group(0), i + m.end()) if m else None
+
+
+def _skip_ws(s: str, i: int) -> int:
+    while i < len(s) and s[i] in " \t\r\n":
+        i += 1
+    return i
+
+
+def _brace_group(s: str, i: int) -> tuple[str, int] | None:
+    """s[i] must be '{'; return (inner content, index after the closing brace)."""
+    if i >= len(s) or s[i] != "{":
+        return None
+    depth = 0
+    for j in range(i, len(s)):
+        if s[j] == "{":
+            depth += 1
+        elif s[j] == "}":
+            depth -= 1
+            if depth == 0:
+                return s[i + 1 : j], j + 1
+    return None

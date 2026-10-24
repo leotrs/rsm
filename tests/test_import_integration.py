@@ -62,3 +62,40 @@ def test_import_project_single_tex_file(tmp_path):
     out = app.import_project(str(f))
     assert ":cite:knuth::" in out
     assert ":references:" in out
+
+
+_XREF = r"""\documentclass{article}
+\newtheorem{theorem}{Theorem}
+\begin{document}
+\section{Intro}\label{sec:intro}
+See Section~\ref{sec:intro}.
+\begin{equation}\label{eq:e}
+E = mc^2
+\end{equation}
+By \eqref{eq:e}.
+\begin{theorem}\label{thm:main}
+A statement.
+\end{theorem}
+See Theorem~\ref{thm:main}.
+\end{document}
+"""
+
+
+def test_import_project_crossrefs(tmp_path):
+    import rsm
+
+    (tmp_path / "main.tex").write_text(_XREF, encoding="utf-8")
+    out = app.import_project(str(tmp_path))
+    # Every section, equation, and theorem gets a plain generated label.
+    assert ":label: sec-1" in out
+    assert ":label: eqn-1" in out
+    assert ":label: thm-1" in out
+    # \ref, \eqref, and \ref to the theorem resolve to those generated labels.
+    assert ":ref:sec-1::" in out
+    assert ":ref:eqn-1::" in out
+    assert ":ref:thm-1::" in out
+    # The result renders with resolvable labels.
+    html = rsm.render(out, handrails=False, source_offsets=False)
+    assert 'id="sec-1"' in html
+    assert 'id="eqn-1"' in html
+    assert 'id="thm-1"' in html

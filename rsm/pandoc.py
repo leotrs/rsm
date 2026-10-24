@@ -569,6 +569,22 @@ class PandocTranslator:
 # ─── Import: pandoc JSON → RSM source text ───────────────────────────────────
 
 
+def _is_display_math(inline: dict) -> bool:
+    return (
+        isinstance(inline, dict)
+        and inline.get("t") == "Math"
+        and isinstance(inline.get("c"), list)
+        and len(inline["c"]) >= 1
+        and isinstance(inline["c"][0], dict)
+        and inline["c"][0].get("t") == "DisplayMath"
+    )
+
+
+def _math_label(src: str) -> str | None:
+    m = re.search(r"\\label\{([^}]*)\}", src)
+    return m.group(1) if m else None
+
+
 class PandocImporter:
     """Convert a pandoc JSON AST dict to RSM source text.
 
@@ -588,9 +604,71 @@ class PandocImporter:
     def from_json(self, pandoc_ast: dict) -> str:
         meta = pandoc_ast.get("meta", {})
         blocks = pandoc_ast.get("blocks", [])
+        # Assign generated labels (sec-N, thm-N, eqn-N) and map each source
+        # \label to its generated name, so a \ref emitted before its target
+        # still resolves.
+        self._label_of: dict[int, str] = {}
+        self._ref_map: dict[str, str] = {}
+        self._label_n = {"sec": 0, "thm": 0, "eqn": 0}
+        self._assign_labels(blocks)
         parts = [self._render_meta(meta)]
         parts += [self._render_block(b) for b in blocks]
         return "".join(p for p in parts if p)
+
+    # ── Cross-reference labels (bead rsm-ddx.4) ─────────────────────────────────
+
+    _THEOREM_CLASSES = (
+        "theorem", "lemma", "corollary", "example", "exercise",
+        "proposition", "problem",
+    )
+
+    def _next_label(self, kind: str) -> str:
+        self._label_n[kind] += 1
+        return f"{kind}-{self._label_n[kind]}"
+
+    def _assign_labels(self, blocks: list) -> None:
+        """Walk the AST, give sections, theorem-likes, and equations a label.
+
+        The generated name is keyed by the identity of the node the emit handler
+        receives, so the two passes agree without re-counting. A node's source
+        \\label (a header or div id, or the \\label inside an equation) is mapped
+        to the generated name so references resolve.
+        """
+        for b in blocks:
+            if not isinstance(b, dict):
+                continue
+            t, c = b.get("t"), b.get("c")
+            if t == "Header":
+                gen = self._next_label("sec")
+                self._label_of[id(c)] = gen
+                if c[1][0]:
+                    self._ref_map[c[1][0]] = gen
+            elif t == "Div":
+                attr, inner_blocks = c
+                if any(cls in self._THEOREM_CLASSES for cls in attr[1]):
+                    gen = self._next_label("thm")
+                    self._label_of[id(c)] = gen
+                    if attr[0]:
+                        self._ref_map[attr[0]] = gen
+                self._assign_labels(inner_blocks)
+            elif t in ("Para", "Plain"):
+                for inl in c:
+                    if _is_display_math(inl):
+                        gen = self._next_label("eqn")
+                        self._label_of[id(inl)] = gen
+                        lbl = _math_label(inl["c"][1])
+                        if lbl:
+                            self._ref_map[lbl] = gen
+            elif t == "BlockQuote":
+                self._assign_labels(c)
+            elif t == "BulletList":
+                for item in c:
+                    self._assign_labels(item)
+            elif t == "OrderedList":
+                for item in c[1]:
+                    self._assign_labels(item)
+            elif t == "Figure":
+                self._assign_labels(c[2])
 
     # ── Meta ──────────────────────────────────────────────────────────────────
 
@@ -652,7 +730,9 @@ class PandocImporter:
         level, _attrs, inlines = c
         text = self._render_inlines(inlines)
         prefix = "#" * level
-        return f"{prefix} {text}\n\n"
+        label = self._label_of.get(id(c))
+        meta = f"\n  {{:label: {label}}}" if label else ""
+        return f"{prefix} {text}{meta}\n\n"
 
     def _block_para(self, c: list) -> str:
         # DisplayMath inside Para inlines must be flushed as a block construct.
@@ -671,7 +751,10 @@ class PandocImporter:
                         result.append(f"{text}\n\n")
                     pending = []
                 src = inline["c"][1] if len(inline["c"]) >= 2 else ""
-                result.append(f":mathblock:\n  {src}\n::\n\n")
+                src = re.sub(r"\\label\{[^}]*\}", "", src)
+                label = self._label_of.get(id(inline))
+                meta = f" {{:label: {label}}}" if label else ""
+                result.append(f":mathblock:{meta}\n  {src}\n::\n\n")
             else:
                 pending.append(inline)
         if pending:
@@ -734,13 +817,14 @@ class PandocImporter:
         if "thebibliography" in classes:
             return ""
         inner = "".join(self._render_block(b) for b in blocks).strip()
+        label = self._label_of.get(id(c))
+        meta = f" {{:label: {label}}}" if label else ""
         # Map well-known classes to RSM constructs
         for cls in classes:
             if cls == "proof":
                 return f":proof:\n\n{inner}\n\n::\n\n"
-            if cls in ("theorem", "lemma", "corollary", "example", "exercise",
-                       "proposition", "problem"):
-                return f":{cls}:\n\n{inner}\n\n::\n\n"
+            if cls in self._THEOREM_CLASSES:
+                return f":{cls}:{meta}\n\n{inner}\n\n::\n\n"
         # Unknown Div: emit inner content directly
         return f"{inner}\n\n" if inner else ""
 
@@ -823,9 +907,14 @@ class PandocImporter:
         return f":math: {src} ::"
 
     def _inline_link(self, c: list) -> str:
-        _attrs, _inlines, target = c
-        url = target[0]
-        return f":url: {url} ::"
+        attrs, _inlines, target = c
+        kv = dict(attrs[2]) if len(attrs) >= 3 else {}
+        # pandoc marks \ref/\eqref/\autoref links with a reference-type; emit an
+        # RSM :ref: to the generated label instead of a URL link.
+        if "reference-type" in kv:
+            tgt = kv.get("reference") or target[0].lstrip("#")
+            return f":ref:{self._ref_map.get(tgt, tgt)}::"
+        return f":url: {target[0]} ::"
 
     def _inline_image(self, c: list) -> str:
         _attrs, _alt, target = c

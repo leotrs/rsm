@@ -1,0 +1,27 @@
+\begin{thebibliography}{1}
+
+\bibitem{shannon1948}
+C.~E. Shannon, ``A mathematical theory of communication,'' {\em Bell System
+  Technical Journal}, vol.~27, no.~3, pp.~379--423, 1948.
+
+\bibitem{knuth1997}
+D.~E. Knuth, {\em The Art of Computer Programming, Volume 1: Fundamental
+  Algorithms}.
+\newblock Addison-Wesley, 3~ed., 1997.
+
+\bibitem{vaswani2017}
+A.~Vaswani, N.~Shazeer, and N.~Parmar, ``Attention is all you need,'' in {\em
+  Advances in Neural Information Processing Systems}, 2017.
+
+\bibitem{bengio2013}
+Y.~Bengio, ``Deep learning of representations,'' in {\em Handbook on Neural
+  Information Processing}, Springer, 2013.
+
+\bibitem{turing1938}
+A.~M. Turing, {\em Systems of Logic Based on Ordinals}.
+\newblock PhD thesis, Princeton University, 1938.
+
+\bibitem{preprint2020}
+J.~Doe, ``A preprint without a venue.'' arXiv:2001.00001, 2020.
+
+\end{thebibliography}

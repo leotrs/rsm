@@ -45,3 +45,39 @@ def test_figure_with_caption_does_not_crash():
     assert ":figure:" in out
     assert "fig.png" in out
     assert "A caption" in out
+    # The image path must sit in a block meta that actually parses as a figure.
+    import rsm
+
+    html = rsm.render("# T\n\n" + out, handrails=False, source_offsets=False)
+    assert 'class="error"' not in html, out
+
+
+def test_figure_empty_path_degrades_to_caption_only():
+    # pandoc sometimes yields a Figure whose image has no resolvable path (the
+    # PDF subfigures in real papers). An empty {:path: } fails to parse, so the
+    # importer must drop the path meta and keep the figure as caption-only.
+    ast = {
+        "blocks": [
+            {
+                "t": "Figure",
+                "c": [
+                    ["", [], []],
+                    [None, [{"t": "Para", "c": [
+                        {"t": "Str", "c": "A"}, {"t": "Space"},
+                        {"t": "Str", "c": "caption"},
+                    ]}]],
+                    [{"t": "Plain", "c": [
+                        {"t": "Image", "c": [["", [], []], [], ["", ""]]}
+                    ]}],
+                ],
+            }
+        ]
+    }
+    out = PandocImporter().from_json(ast)
+    assert ":figure:" in out
+    assert "{:path: }" not in out
+    assert ":path:" not in out
+    assert "A caption" in out
+    import rsm
+    html = rsm.render("# T\n\n" + out, handrails=False, source_offsets=False)
+    assert 'class="error"' not in html, out

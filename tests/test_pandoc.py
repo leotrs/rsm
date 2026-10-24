@@ -542,7 +542,19 @@ def test_import_inline_math():
             {"t": "Math", "c": [{"t": "InlineMath"}, "x^2"]}
         ]}
     ]))
-    assert ":math: x^2 ::" in result
+    # Inline math is emitted as $...$ so it can sit against adjacent text.
+    assert "$x^2$" in result
+
+
+def test_import_inline_math_with_dollar_falls_back():
+    # When the TeX itself holds a $, the $...$ form would close early, so the
+    # verbose :math: ... :: form is used instead.
+    result = IMP.from_json(_ast(blocks=[
+        {"t": "Para", "c": [
+            {"t": "Math", "c": [{"t": "InlineMath"}, r"\$5"]}
+        ]}
+    ]))
+    assert r":math: \$5 ::" in result
 
 
 def test_import_display_math():

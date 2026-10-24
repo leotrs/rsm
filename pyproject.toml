@@ -46,7 +46,7 @@ include = ["rsm*", "braiid"]
 exclude = ["tests*"]
 
 [tool.setuptools.package-data]
-rsm = ["*.so", "*.dll", "static/**/*"]
+rsm = ["*.so", "*.dll", "static/**/*", "*.rb"]
 braiid = ["*.css", "*.md"]
 
 

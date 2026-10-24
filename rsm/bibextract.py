@@ -21,6 +21,8 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from rsm import bibtools
+
 logger = logging.getLogger("RSM").getChild("import")
 
 # Any \cite-family command: \cite, \citep, \citet, \nocite, \autocite, ...
@@ -95,13 +97,13 @@ def extract_references(tex: str, root: str | Path, cited: set[str]) -> list[Refe
         text = bbl_file.read_text(encoding="utf-8", errors="replace")
         bbl = keep(_parse_bibitems(text), "bbl")
         if bbl:
-            return bbl
+            return _clean_refs(bbl)
 
     inline = _THEBIB.search(tex)
     if inline is not None:
         refs = keep(_parse_bibitems(inline.group(0)), "inline")
         if refs:
-            return refs
+            return _clean_refs(refs)
 
     logger.warning("no bibliography (.bib, .bbl, or thebibliography) found")
     return []
@@ -180,7 +182,11 @@ def _find_bbl(root: Path) -> Path | None:
 
 
 def _parse_bibitems(text: str) -> list[tuple[str, str]]:
-    """Split \\bibitem blocks into (key, reference-text) pairs, cleaned of markup."""
+    """Split \\bibitem blocks into (key, reference-text) pairs.
+
+    Whitespace is collapsed but LaTeX markup is kept here. _clean_refs removes it
+    afterwards in one batch.
+    """
     items: list[tuple[str, str]] = []
     matches = list(_BIBITEM.finditer(text))
     for idx, match in enumerate(matches):
@@ -188,10 +194,21 @@ def _parse_bibitems(text: str) -> list[tuple[str, str]]:
         start = match.end()
         end = matches[idx + 1].start() if idx + 1 < len(matches) else len(text)
         chunk = text[start:end].split("\\end{thebibliography}", 1)[0]
-        ref = _clean_latex(chunk)
+        ref = " ".join(chunk.split())
         if key:
             items.append((key, ref))
     return items
+
+
+def _clean_refs(refs: list[Reference]) -> list[Reference]:
+    """Clean LaTeX markup out of each reference's text in one batch.
+
+    Prefers the Ruby latex-decode helper (accents, \\url, and the like), and
+    falls back to the regex cleanup when it is not available.
+    """
+    texts = [r.raw for r in refs]
+    cleaned = bibtools.decode_latex(texts) or [_clean_latex(t) for t in texts]
+    return [Reference(r.key, r.source, c) for r, c in zip(refs, cleaned)]
 
 
 def _clean_latex(text: str) -> str:

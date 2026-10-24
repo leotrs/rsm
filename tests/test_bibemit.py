@@ -2,9 +2,15 @@ import shutil
 
 import pytest
 
-from rsm import anystyle
+import rsm
+from rsm import anystyle, bibtools
 from rsm.anystyle import StructuredReference
 from rsm.bibemit import _emit_structured, references_block
+
+
+def _bibitem_count(block: str) -> int:
+    html = rsm.render("# T\n\n" + block, handrails=False, source_offsets=False)
+    return html.count('class="bibitem"')
 
 HAS_ANYSTYLE = shutil.which("anystyle") is not None
 
@@ -127,3 +133,42 @@ def test_block_structured_real_anystyle(tmp_path):
     block = references_block(tex, tmp_path)
     assert "knuth" in block
     assert "Knuth" in block
+
+
+# --- real-world .bib that is not the brace-only subset (regressions) ---
+
+
+def test_bib_quote_values_render(tmp_path):
+    # Quote-delimited values used to be passed through raw and silently dropped.
+    (tmp_path / "refs.bib").write_text(
+        '@article{k, title = "A Quoted Title", author = "Writer, A.", year = 2001}',
+        encoding="utf-8",
+    )
+    block = references_block(r"\cite{k} \bibliography{refs}", tmp_path)
+    assert "title={A Quoted Title}" in block
+    assert _bibitem_count(block) == 1
+
+
+def test_bib_string_macro_renders_without_crash(tmp_path):
+    # A @string macro used to crash the renderer (ValueError). It must at least
+    # render now, whether or not the macro resolves.
+    (tmp_path / "refs.bib").write_text(
+        "@string{pub = {Springer}}\n"
+        "@book{k, title = {T}, author = {A}, publisher = pub, year = {2001}}",
+        encoding="utf-8",
+    )
+    block = references_block(r"\cite{k} \bibliography{refs}", tmp_path)
+    assert _bibitem_count(block) == 1
+
+
+@pytest.mark.skipif(not shutil.which("ruby"), reason="ruby not installed")
+def test_bib_string_macro_resolved_with_ruby(tmp_path):
+    if not bibtools.available():
+        pytest.skip("bibtex-ruby not available")
+    (tmp_path / "refs.bib").write_text(
+        "@string{pub = {Springer}}\n"
+        "@book{k, title = {T}, author = {A}, publisher = pub, year = {2001}}",
+        encoding="utf-8",
+    )
+    block = references_block(r"\cite{k} \bibliography{refs}", tmp_path)
+    assert "publisher={Springer}" in block

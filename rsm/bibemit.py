@@ -13,9 +13,10 @@ entry carrying its original text in the verbatim field.
 from __future__ import annotations
 
 import re
+from pathlib import Path
 
-from rsm import anystyle
-from rsm.bibextract import Reference, cited_keys, extract_references
+from rsm import anystyle, bibtools
+from rsm.bibextract import _find_bib_files, cited_keys, extract_references
 
 # AnyStyle's CSL type to the RSM bibitem kind. Anything else becomes misc.
 _RSM_KIND = {
@@ -28,6 +29,21 @@ _RSM_KIND = {
     "webpage": "webpage",
 }
 
+# RSM bibitem kinds, and the aliases a bibtex entry type might use for a webpage.
+_BIB_KINDS = {
+    "article", "book", "inproceedings", "conference", "incollection",
+    "phdthesis", "mastersthesis", "techreport", "misc", "unpublished", "software",
+}
+_BIB_KIND_ALIAS = {"online": "webpage", "electronic": "webpage", "www": "webpage"}
+
+# The field keys RSM's bibitem grammar accepts. Any other bibtex field is dropped
+# so it cannot produce a parse error.
+_RSM_FIELDS = (
+    "author", "title", "journal", "booktitle", "publisher", "institution",
+    "school", "series", "edition", "volume", "number", "pages", "year", "month",
+    "doi", "url", "howpublished", "note", "editor", "address", "organization",
+)
+
 
 def references_block(tex: str, root) -> str:
     """Build the full :references: block for a project, or "" if it has none."""
@@ -35,21 +51,41 @@ def references_block(tex: str, root) -> str:
     if not refs:
         return ""
 
-    prose = [r for r in refs if r.source != "bib"]
-    structured = {s.key: s for s in anystyle.structure(prose)}
-
-    entries: list[str] = []
-    for ref in refs:
-        if ref.source == "bib":
-            entries.append(ref.raw.strip())
-            continue
-        s = structured[ref.key]
-        if s.fields is not None:
-            entries.append(_emit_structured(ref.key, s.fields))
-        else:
-            entries.append(_emit_verbatim(ref.key, s.text))
+    # extract_references returns a single source, so all refs share a kind.
+    if refs[0].source == "bib":
+        entries = _emit_bib(tex, Path(root), refs)
+    else:
+        structured = {s.key: s for s in anystyle.structure(refs)}
+        entries = []
+        for ref in refs:
+            s = structured[ref.key]
+            if s.fields is not None:
+                entries.append(_emit_structured(ref.key, s.fields))
+            else:
+                entries.append(_emit_verbatim(ref.key, s.text))
 
     return ":references:\n" + "\n\n".join(entries) + "\n::\n"
+
+
+def _emit_bib(tex: str, root: Path, refs: list) -> list[str]:
+    """Emit the cited .bib entries, parsing real bibtex with the Ruby helper.
+
+    A .bib is not the brace-only subset RSM accepts, so the raw entries cannot be
+    passed through. bibtex-ruby resolves quotes, bare values, and @string into
+    clean fields. Without the helper, a Python best-effort parse pulls the brace-
+    and quote-delimited fields, which still never emits anything RSM cannot read.
+    """
+    parsed = bibtools.parse_bib(_find_bib_files(tex, root))
+    by_key = {e["key"]: e for e in parsed} if parsed else {}
+    entries: list[str] = []
+    for ref in refs:
+        entry = by_key.get(ref.key)
+        if entry is not None:
+            entries.append(_emit_bibtex_fields(entry["type"], ref.key, entry["fields"]))
+        else:
+            btype, fields = _bib_fields_fallback(ref.raw)
+            entries.append(_emit_bibtex_fields(btype, ref.key, fields))
+    return entries
 
 
 def _emit_structured(key: str, fields: dict) -> str:
@@ -92,6 +128,37 @@ def _emit_structured(key: str, fields: dict) -> str:
 
 def _emit_verbatim(key: str, text: str) -> str:
     return _entry("misc", key, [("verbatim", _clean(text))])
+
+
+def _bibtex_kind(btype: str) -> str:
+    btype = (btype or "").lower()
+    if btype in _BIB_KINDS:
+        return btype
+    return _BIB_KIND_ALIAS.get(btype, "misc")
+
+
+def _emit_bibtex_fields(btype: str, key: str, fields: dict) -> str:
+    kind = _bibtex_kind(btype)
+    pairs = [
+        (name, _clean(str(fields.get(name, "")))) for name in _RSM_FIELDS
+    ]
+    pairs = [(name, value) for name, value in pairs if value]
+    return _entry(kind, key, pairs)
+
+
+def _bib_fields_fallback(raw: str) -> tuple[str, dict]:
+    """Pull brace- or quote-delimited fields from a raw entry, without Ruby.
+
+    Bare and @string values are skipped rather than passed through, so the result
+    is always something RSM can read, just less complete.
+    """
+    m = re.match(r"\s*@(\w+)\s*\{", raw)
+    btype = m.group(1).lower() if m else "misc"
+    fields: dict = {}
+    pattern = re.compile(r"(\w+)\s*=\s*(\{(?:[^{}]|\{[^{}]*\})*\}|\"[^\"]*\")")
+    for fm in pattern.finditer(raw):
+        fields[fm.group(1).lower()] = fm.group(2)[1:-1]
+    return btype, fields
 
 
 def _entry(kind: str, key: str, pairs: list[tuple[str, str]]) -> str:

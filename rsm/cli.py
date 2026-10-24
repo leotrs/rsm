@@ -133,23 +133,29 @@ def _cmd_import(args: Namespace) -> int:
         "log_time": args.log_time,
         "log_lineno": args.log_lineno,
     }
+    references = ""
     if args.string:
         kwargs["source"] = args.src
     else:
         import sys
 
-        from rsm.importer import ImporterError, is_archive, resolve_source
+        from rsm.bibemit import references_block
+        from rsm.importer import ImporterError, is_archive, resolve_project
 
         src = Path(args.src)
         if src.is_dir() or is_archive(src) or args.frm == "latex":
             try:
-                kwargs["source"] = resolve_source(src, main=args.main)
+                text, root = resolve_project(src, main=args.main)
             except ImporterError as exc:
                 print(f"import error: {exc}", file=sys.stderr)
                 return 1
+            kwargs["source"] = text
+            references = references_block(text, root)
         else:
             kwargs["path"] = args.src
     result = app.pandoc_import(**kwargs)
+    if references:
+        result = (result or "") + "\n" + references
     if result:
         if args.output:
             Path(args.output).write_text(result)

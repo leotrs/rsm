@@ -44,10 +44,19 @@ class ImporterError(Exception):
 
 
 def resolve_source(input_path: str | Path, main: str | None = None) -> str:
-    """Return the flattened .tex source for a file, folder, or archive.
+    """Return the flattened .tex source for a file, folder, or archive."""
+    return resolve_project(input_path, main)[0]
 
-    `main` names the main .tex relative to the project root and overrides
-    auto-detection. For a single .tex file it defaults to that file.
+
+def resolve_project(
+    input_path: str | Path, main: str | None = None
+) -> tuple[str, Path]:
+    """Return the flattened .tex source and the project root directory.
+
+    The root is where the other project files live (figures, .bib, .bbl), which
+    the bibliography extractor needs. `main` names the main .tex relative to the
+    root and overrides auto-detection. For a single .tex file it defaults to
+    that file.
     """
     p = Path(input_path)
     if not p.exists():
@@ -68,8 +77,9 @@ def resolve_source(input_path: str | Path, main: str | None = None) -> str:
             "or a tar/zip archive"
         )
 
+    root = Path(root).resolve()
     main_tex = find_main_tex(root, override=main)
-    return flatten(main_tex, root)
+    return flatten(main_tex, root), root
 
 
 def is_archive(path: Path) -> bool:

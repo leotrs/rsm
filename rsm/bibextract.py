@@ -37,6 +37,11 @@ _THEBIB = re.compile(
 # Bibtex control entries that are not references.
 _NON_ENTRY = {"comment", "string", "preamble"}
 
+# LaTeX noise a .bbl or thebibliography carries inside a reference line. The
+# first group is bare style switches, the second their \text... forms.
+_STYLE_SWITCH = re.compile(r"\\(?:newblock|em|it|bf|sc|sl|tt|rm|sf|normalfont|upshape)\b")
+_STYLE_WRAP = re.compile(r"\\(?:emph|textit|textbf|textrm|textsc|texttt)\b")
+
 
 @dataclass(frozen=True)
 class Reference:
@@ -74,30 +79,29 @@ def extract_references(tex: str, root: str | Path, cited: set[str]) -> list[Refe
     root = Path(root)
     keep_all = not cited or "*" in cited
 
-    bib_entries = _bib_entries(tex, root)
-    if bib_entries:
-        return [
-            Reference(key, "bib", text)
-            for key, text in bib_entries
-            if keep_all or key in cited
-        ]
+    def keep(pairs: list[tuple[str, str]], source: str) -> list[Reference]:
+        return [Reference(k, source, t) for k, t in pairs if keep_all or k in cited]
 
-    bbl = _find_bbl(root)
-    if bbl is not None:
-        text = bbl.read_text(encoding="utf-8", errors="replace")
-        return [
-            Reference(key, "bbl", ref)
-            for key, ref in _parse_bibitems(text)
-            if keep_all or key in cited
-        ]
+    # Try each source in order and take the first that actually yields cited
+    # references. A source can be present but belong to a different paper (a
+    # stray .bib in a shared directory, say), so a source that produces nothing
+    # falls through to the next rather than ending the search.
+    bib = keep(_bib_entries(tex, root), "bib")
+    if bib:
+        return bib
+
+    bbl_file = _find_bbl(root)
+    if bbl_file is not None:
+        text = bbl_file.read_text(encoding="utf-8", errors="replace")
+        bbl = keep(_parse_bibitems(text), "bbl")
+        if bbl:
+            return bbl
 
     inline = _THEBIB.search(tex)
     if inline is not None:
-        return [
-            Reference(key, "inline", ref)
-            for key, ref in _parse_bibitems(inline.group(0))
-            if keep_all or key in cited
-        ]
+        refs = keep(_parse_bibitems(inline.group(0)), "inline")
+        if refs:
+            return refs
 
     logger.warning("no bibliography (.bib, .bbl, or thebibliography) found")
     return []
@@ -176,7 +180,7 @@ def _find_bbl(root: Path) -> Path | None:
 
 
 def _parse_bibitems(text: str) -> list[tuple[str, str]]:
-    """Split \\bibitem blocks into (key, reference-text) pairs."""
+    """Split \\bibitem blocks into (key, reference-text) pairs, cleaned of markup."""
     items: list[tuple[str, str]] = []
     matches = list(_BIBITEM.finditer(text))
     for idx, match in enumerate(matches):
@@ -184,7 +188,21 @@ def _parse_bibitems(text: str) -> list[tuple[str, str]]:
         start = match.end()
         end = matches[idx + 1].start() if idx + 1 < len(matches) else len(text)
         chunk = text[start:end].split("\\end{thebibliography}", 1)[0]
-        ref = " ".join(chunk.split()).strip()
+        ref = _clean_latex(chunk)
         if key:
             items.append((key, ref))
     return items
+
+
+def _clean_latex(text: str) -> str:
+    """Strip the LaTeX markup a reference line carries, leaving plain prose.
+
+    Removes \\newblock and the font-style commands, turns ~ into a space, and
+    drops the grouping braces those commands leave behind, so AnyStyle and the
+    verbatim fallback both see a clean reference string.
+    """
+    text = text.replace("~", " ")
+    text = _STYLE_SWITCH.sub("", text)
+    text = _STYLE_WRAP.sub("", text)
+    text = text.replace("{", "").replace("}", "")
+    return " ".join(text.split()).strip()

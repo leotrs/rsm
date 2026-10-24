@@ -154,3 +154,35 @@ def test_importer_drops_thebibliography_div():
     assert "Body." in out
     assert "Knuth1968collapsed" not in out
     assert "thebibliography" not in out
+
+
+def test_stray_bib_falls_through_to_inline(tmp_path):
+    # A .bib exists but has none of the cited keys (it belongs to another paper
+    # in a shared directory). The inline bibliography must still be used instead
+    # of the search ending at the unrelated .bib.
+    _write(tmp_path / "other.bib", "@book{unrelated, title={Other}, author={Z}}")
+    tex = r"""
+    We cite \cite{knuth}.
+    \begin{thebibliography}{9}
+    \bibitem{knuth} Knuth. 1968.
+    \end{thebibliography}
+    """
+    refs = extract_references(tex, tmp_path, cited_keys(tex))
+    assert [r.key for r in refs] == ["knuth"]
+    assert refs[0].source == "inline"
+
+
+def test_bbl_latex_markup_stripped(tmp_path):
+    tex = (
+        "\\cite{a}\n"
+        "\\begin{thebibliography}{9}\n"
+        "\\bibitem{a} \\newblock Y.~Bengio. {\\em Neural networks}. \\newblock IEEE, 1994.\n"
+        "\\end{thebibliography}"
+    )
+    raw = extract_references(tex, tmp_path, cited_keys(tex))[0].raw
+    assert "\\newblock" not in raw
+    assert "\\em" not in raw
+    assert "~" not in raw
+    assert "{" not in raw and "}" not in raw
+    assert "Y. Bengio" in raw
+    assert "Neural networks" in raw

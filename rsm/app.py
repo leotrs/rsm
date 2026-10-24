@@ -863,7 +863,7 @@ def import_project(
     the importer.
     """
     from rsm.bibemit import references_block
-    from rsm.importer import resolve_project
+    from rsm.importer import preamble_macros, resolve_project
 
     text, root = resolve_project(path, main)
     rsm_source = pandoc_import(
@@ -874,7 +874,23 @@ def import_project(
         log_time=log_time,
         log_lineno=log_lineno,
     )
+    macros = preamble_macros(text)
+    if macros:
+        preamble = (
+            ":mathblock: {:preamble:}\n"
+            + "\n".join(f"  {m}" for m in macros)
+            + "\n::\n\n"
+        )
+        rsm_source = _insert_preamble(rsm_source or "", preamble)
     block = references_block(text, root)
     if block:
         rsm_source = f"{rsm_source or ''}\n{block}"
     return rsm_source or ""
+
+
+def _insert_preamble(rsm_source: str, preamble: str) -> str:
+    """Place the preamble mathblock just after the document's leading heading."""
+    if rsm_source.lstrip().startswith("# "):
+        head, sep, rest = rsm_source.partition("\n\n")
+        return f"{head}{sep}{preamble}{rest}"
+    return preamble + rsm_source

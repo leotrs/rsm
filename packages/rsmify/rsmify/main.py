@@ -19,6 +19,8 @@ import html
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 
+from rsm.importer import ImporterError
+
 from . import arxiv, pipeline
 
 app = FastAPI(title="rsmify", description="arXiv-to-RSM reader")
@@ -83,8 +85,8 @@ def _error_page(status: int, heading: str, message: str, hint: str = "") -> HTML
 
 
 def _convert(arxiv_id: arxiv.ArxivId) -> str:
-    tex_path = arxiv.fetch_and_flatten(arxiv_id)
-    return pipeline.convert(tex_path)
+    payload = arxiv.fetch(arxiv_id)
+    return pipeline.convert(payload)
 
 
 async def _guarded_convert(arxiv_id: arxiv.ArxivId) -> str:
@@ -161,6 +163,13 @@ async def read_paper(raw: str, request: Request) -> HTMLResponse:
             exc.status,
             _FETCH_HEADINGS.get(exc.status, "Could not fetch this paper"),
             html.escape(str(exc)),
+        )
+    except ImporterError as exc:
+        return _error_page(
+            422,
+            "Could not read this paper's source",
+            html.escape(str(exc)),
+            "The importer could not find or unpack the LaTeX source.",
         )
     except Exception:
         return _error_page(

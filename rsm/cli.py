@@ -126,36 +126,30 @@ def _cmd_export(args: Namespace) -> int:
 
 def _cmd_import(args: Namespace) -> int:
     """Handle 'rsm import' subcommand."""
-    kwargs = {
-        "from_format": args.frm,
+    logkw = {
         "loglevel": app.RSMApp.default_log_level - args.verbose * 10,
         "log_format": args.log_format,
         "log_time": args.log_time,
         "log_lineno": args.log_lineno,
     }
-    references = ""
     if args.string:
-        kwargs["source"] = args.src
+        result = app.pandoc_import(source=args.src, from_format=args.frm, **logkw)
     else:
         import sys
 
-        from rsm.bibemit import references_block
-        from rsm.importer import ImporterError, is_archive, resolve_project
+        from rsm.importer import ImporterError, is_archive
 
         src = Path(args.src)
         if src.is_dir() or is_archive(src) or args.frm == "latex":
             try:
-                text, root = resolve_project(src, main=args.main)
+                result = app.import_project(
+                    str(src), main=args.main, from_format=args.frm, **logkw
+                )
             except ImporterError as exc:
                 print(f"import error: {exc}", file=sys.stderr)
                 return 1
-            kwargs["source"] = text
-            references = references_block(text, root)
         else:
-            kwargs["path"] = args.src
-    result = app.pandoc_import(**kwargs)
-    if references:
-        result = (result or "") + "\n" + references
+            result = app.pandoc_import(path=args.src, from_format=args.frm, **logkw)
     if result:
         if args.output:
             Path(args.output).write_text(result)

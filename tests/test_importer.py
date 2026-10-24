@@ -180,3 +180,21 @@ def test_extract_size_cap(tmp_path, monkeypatch):
         zf.writestr("main.tex", "way too much content")
     with pytest.raises(ImporterError):
         safe_extract(arc, tmp_path / "out")
+
+
+def test_gzip_single_file(tmp_path):
+    import gzip
+
+    gz = tmp_path / "paper.tex.gz"
+    gz.write_bytes(gzip.compress(b"\\documentclass{article}\nGZIP BODY\n"))
+    assert "GZIP BODY" in resolve_source(gz)
+
+
+def test_gzipped_tar(tmp_path):
+    arc = tmp_path / "proj.tar.gz"
+    with tarfile.open(arc, "w:gz") as tar:
+        data = b"\\documentclass{article}\nTARGZ BODY\n"
+        info = tarfile.TarInfo("main.tex")
+        info.size = len(data)
+        tar.addfile(info, io.BytesIO(data))
+    assert "TARGZ BODY" in resolve_source(arc)

@@ -13,6 +13,7 @@ scratch directory or exhaust the disk.
 
 from __future__ import annotations
 
+import gzip
 import io
 import logging
 import re
@@ -33,7 +34,7 @@ _INPUT = re.compile(r"\\(?:input|include)\{([^}]+)\}")
 # When several files declare \documentclass, prefer these stems, in this order.
 _CONVENTIONAL_STEMS = ("main", "ms", "paper")
 
-_ARCHIVE_SUFFIXES = (".zip", ".tar", ".tgz", ".tar.gz", ".tar.bz2", ".tbz2")
+_ARCHIVE_SUFFIXES = (".zip", ".tar", ".tgz", ".tar.gz", ".tar.bz2", ".tbz2", ".gz")
 
 
 class ImporterError(Exception):
@@ -96,10 +97,31 @@ def safe_extract(archive: Path, dest: Path) -> None:
         _extract_zip(archive, dest)
     elif tarfile.is_tarfile(archive):
         _extract_tar(archive, dest)
+    elif _is_gzip(archive):
+        # A single gzipped file, not a tar: an arXiv e-print with one source
+        # file arrives this way. Decompress it as the project's main .tex.
+        _extract_gzip_member(archive, dest)
     else:
         raise ImporterError(
-            f"{archive.name} is not a readable tar or zip archive"
+            f"{archive.name} is not a readable tar, zip, or gzip archive"
         )
+
+
+def _is_gzip(archive: Path) -> bool:
+    with open(archive, "rb") as fh:
+        return fh.read(2) == b"\x1f\x8b"
+
+
+def _extract_gzip_member(archive: Path, dest: Path) -> None:
+    with gzip.open(archive, "rb") as gz:
+        data = gz.read(_MAX_EXTRACTED + 1)
+    if len(data) > _MAX_EXTRACTED:
+        raise ImporterError(
+            f"{archive.name} expands to an unusually large size, so extraction "
+            "was stopped"
+        )
+    dest.mkdir(parents=True, exist_ok=True)
+    (dest / "main.tex").write_bytes(data)
 
 
 def _extract_tar(archive: Path, dest: Path) -> None:

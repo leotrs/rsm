@@ -39,7 +39,7 @@ def test_versionless_redirects(monkeypatch):
 
 
 def test_versioned_renders_with_cache_headers(monkeypatch):
-    monkeypatch.setattr(arxiv, "fetch_and_flatten", lambda aid: "/tmp/ignored.tex")
+    monkeypatch.setattr(arxiv, "fetch", lambda aid: "/tmp/ignored.tex")
     monkeypatch.setattr(pipeline, "convert", lambda path: "<!DOCTYPE html><html></html>")
     r = client.get("/r/2401.12345v2")
     assert r.status_code == 200
@@ -52,13 +52,13 @@ def test_conditional_request_returns_304(monkeypatch):
     def _boom(*a, **k):
         raise AssertionError("fetch must not run on the 304 path")
 
-    monkeypatch.setattr(arxiv, "fetch_and_flatten", _boom)
+    monkeypatch.setattr(arxiv, "fetch", _boom)
     r = client.get("/r/2401.12345v2", headers={"If-None-Match": '"2401.12345v2"'})
     assert r.status_code == 304
 
 
 def test_conversion_failure_shows_page(monkeypatch):
-    monkeypatch.setattr(arxiv, "fetch_and_flatten", lambda aid: "/tmp/ignored.tex")
+    monkeypatch.setattr(arxiv, "fetch", lambda aid: "/tmp/ignored.tex")
 
     def _fail(path):
         raise RuntimeError("pandoc blew up")
@@ -74,11 +74,28 @@ def test_fetch_error_shows_page(monkeypatch):
     def _no_source(aid):
         raise arxiv.FetchError("rsmify found no LaTeX source.", status=422)
 
-    monkeypatch.setattr(arxiv, "fetch_and_flatten", _no_source)
+    monkeypatch.setattr(arxiv, "fetch", _no_source)
     r = client.get("/r/2401.12345v1")
     assert r.status_code == 422
     assert "text/html" in r.headers["content-type"]
     assert "No LaTeX source" in r.text  # the heading for a 422
+
+
+def test_importer_error_shows_page(monkeypatch):
+    # An importer failure from rsm-lang (no usable .tex in the source) renders a
+    # readable page, not a bare error.
+    from rsm.importer import ImporterError
+
+    monkeypatch.setattr(arxiv, "fetch", lambda aid: "/tmp/ignored.gz")
+
+    def _no_source(path):
+        raise ImporterError("no LaTeX source (.tex) found in the project")
+
+    monkeypatch.setattr(pipeline, "convert", _no_source)
+    r = client.get("/r/2401.12345v5")
+    assert r.status_code == 422
+    assert "text/html" in r.headers["content-type"]
+    assert "source" in r.text.lower()
 
 
 @pytest.mark.network

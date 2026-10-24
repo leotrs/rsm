@@ -753,8 +753,10 @@ class PandocImporter:
                     if inline.get("t") == "Image":
                         path = inline["c"][2][0]
         caption_text = ""
-        if caption_obj and isinstance(caption_obj.get("c"), list):
-            cap_blocks = caption_obj["c"][1] if len(caption_obj["c"]) >= 2 else []
+        # A pandoc Figure caption is a list [short-caption, [blocks]], not a
+        # node with a "c" key, so read the blocks positionally.
+        if isinstance(caption_obj, list) and len(caption_obj) >= 2:
+            cap_blocks = caption_obj[1]
             if cap_blocks:
                 caption_text = "".join(
                     self._render_block(b).strip() for b in cap_blocks

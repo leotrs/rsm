@@ -1680,44 +1680,54 @@ class Translator:
         )
 
     def visit_bibitem(self, node: nodes.Bibitem) -> EditCommand:
-        items = [node.author, f'"{node.title}"']
-        if node.number:
-            items.insert(0, f"{node.number}.")
-        if node.kind == "article":
-            if node.journal:
-                items.append(node.journal)
-            else:
-                logger.warning(f"Bibitem {node.label} has no journal")
-        elif node.kind == "book":
-            if node.publisher:
-                items.append(node.publisher)
-            else:
-                logger.warning(f"Bibitem {node.label} has no publisher")
-        elif node.kind in ("inproceedings", "conference"):
-            if node.booktitle:
-                items.append(f"In {node.booktitle}")
-        elif node.kind == "incollection":
-            if node.booktitle:
-                items.append(f"In {node.booktitle}")
-            if node.publisher:
-                items.append(node.publisher)
-        elif node.kind in ("phdthesis", "mastersthesis"):
-            kind_label = "PhD thesis" if node.kind == "phdthesis" else "Master's thesis"
-            items.append(kind_label)
-            if node.school:
-                items.append(node.school)
-        elif node.kind == "techreport":
-            items.append("Technical report")
-            if node.institution:
-                items.append(node.institution)
-        elif node.kind == "misc":
-            if node.howpublished:
-                items.append(node.howpublished)
-        if node.year:
-            items.append(node.year)
+        if node.verbatim:
+            # A verbatim reference is unstructured, so render its text as-is and
+            # warn once here instead of emitting the per-field warnings below.
+            logger.warning(f"Bibitem {node.label} is a verbatim (unparsed) reference")
+            items = [node.verbatim]
+            if node.number:
+                items.insert(0, f"{node.number}.")
         else:
-            logger.warning(f"Bibitem {node.label} has no year")
-        text = ". ".join([i.strip(".") for i in items]) + "."
+            items = [node.author, f'"{node.title}"']
+            if node.number:
+                items.insert(0, f"{node.number}.")
+            if node.kind == "article":
+                if node.journal:
+                    items.append(node.journal)
+                else:
+                    logger.warning(f"Bibitem {node.label} has no journal")
+            elif node.kind == "book":
+                if node.publisher:
+                    items.append(node.publisher)
+                else:
+                    logger.warning(f"Bibitem {node.label} has no publisher")
+            elif node.kind in ("inproceedings", "conference"):
+                if node.booktitle:
+                    items.append(f"In {node.booktitle}")
+            elif node.kind == "incollection":
+                if node.booktitle:
+                    items.append(f"In {node.booktitle}")
+                if node.publisher:
+                    items.append(node.publisher)
+            elif node.kind in ("phdthesis", "mastersthesis"):
+                kind_label = (
+                    "PhD thesis" if node.kind == "phdthesis" else "Master's thesis"
+                )
+                items.append(kind_label)
+                if node.school:
+                    items.append(node.school)
+            elif node.kind == "techreport":
+                items.append("Technical report")
+                if node.institution:
+                    items.append(node.institution)
+            elif node.kind in ("misc", "webpage"):
+                if node.howpublished:
+                    items.append(node.howpublished)
+            if node.year:
+                items.append(node.year)
+            else:
+                logger.warning(f"Bibitem {node.label} has no year")
+        text = ". ".join([str(i).strip(".") for i in items]) + "."
         if node.doi:
             a_tag = _make_tag(
                 "a",
@@ -1736,7 +1746,7 @@ class Translator:
                 target="_blank",
             )
             text = f"{text} {a_tag}[link]</a>"
-        else:
+        elif not node.verbatim:
             logger.warning(f"Bibitem {node.label} has no DOI")
 
         if node.backlinks:
@@ -3226,7 +3236,10 @@ class HandrailsTranslator(Translator):
         pat = r'(<a.*?class="bibitem-(?:doi|url)".*?>).*?</a>'
         mobj = re.search(pat, text)
         if mobj is None:
-            logger.warning("Unable to extract link from {node}")
+            # A verbatim entry has no link and is already flagged once by the
+            # base translator, so do not warn again here.
+            if not node.verbatim:
+                logger.warning(f"Unable to extract link from {node.label}")
             return hr
 
         # ...remove it from the content zone...

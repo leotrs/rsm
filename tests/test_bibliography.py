@@ -1,3 +1,4 @@
+import logging
 import re
 from textwrap import dedent
 
@@ -289,3 +290,74 @@ def test_bibitem_without_year_renders():
     assert "A paper with no year" in item.group(1)
     # no sentinel leaking in as a bogus year or entry number
     assert "-1" not in item.group(1)
+
+
+def _bibitem_html(src: str) -> str:
+    html = rsm.render(dedent(src).strip(), handrails=False, source_offsets=False)
+    match = re.search(r'<li[^>]*class="bibitem"[^>]*>(.*?)</li>', html, re.S)
+    assert match, "bibitem did not render"
+    return match.group(1)
+
+
+def test_verbatim_bibitem_renders_raw_text():
+    # An unparsed reference carries its text in `verbatim` and is rendered as-is,
+    # not formatted through empty author and title fields.
+    item = _bibitem_html(
+        """
+        # T
+
+        :references:
+        @misc{raw1,
+          verbatim={Doe, J. An unparsed reference. Journal of Stuff, 2021.}
+        }
+        ::
+        """
+    )
+    assert "Doe, J. An unparsed reference. Journal of Stuff, 2021." in item
+    assert '""' not in item
+
+
+def test_webpage_kind_renders():
+    item = _bibitem_html(
+        """
+        # T
+
+        :references:
+        @webpage{site1,
+          author={Doe, J},
+          title={A web resource},
+          url={https://example.com/x}
+        }
+        ::
+        """
+    )
+    assert "A web resource" in item
+    assert "https://example.com/x" in item
+
+
+def test_verbatim_bibitem_warns_once(caplog):
+    # A verbatim entry is unstructured, so it gets a single warning saying it is
+    # verbatim, not the per-field warnings (no DOI, no year) nor the handrails
+    # "unable to extract link" warning.
+    caplog.set_level(logging.WARNING, logger="RSM")
+    rsm.render(
+        dedent(
+            """
+            # T
+
+            :references:
+            @misc{raw1,
+              verbatim={Doe, J. An unparsed reference. Journal of Stuff, 2021.}
+            }
+            ::
+            """
+        ).strip(),
+        handrails=True,
+        source_offsets=False,
+    )
+    msgs = [r.getMessage() for r in caplog.records]
+    verbatim = [m for m in msgs if "verbatim" in m.lower() and "raw1" in m]
+    assert len(verbatim) == 1, msgs
+    assert not any("has no DOI" in m for m in msgs)
+    assert not any("has no year" in m for m in msgs)
+    assert not any("Unable to extract link" in m for m in msgs)

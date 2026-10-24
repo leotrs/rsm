@@ -585,6 +585,12 @@ def _math_label(src: str) -> str | None:
     return m.group(1) if m else None
 
 
+def _strip_trailing_colon(text: str) -> str:
+    # \paragraph titles often end in a colon ("Encoder:"), which breaks RSM meta
+    # value parsing and is a run-in convention, not part of the title.
+    return text[:-1].rstrip() if text.endswith(":") else text
+
+
 class PandocImporter:
     """Convert a pandoc JSON AST dict to RSM source text.
 
@@ -611,9 +617,36 @@ class PandocImporter:
         self._ref_map: dict[str, str] = {}
         self._label_n = {"sec": 0, "thm": 0, "eqn": 0}
         self._assign_labels(blocks)
+        # A LaTeX \paragraph (pandoc level 4+) is a run-in titled paragraph, not
+        # a section. _block_header stashes its title here so the next paragraph
+        # can carry it as :paragraph: {:title: ...}. _heading_stack renumbers the
+        # real heading levels so none skips, which RSM's strict nesting rejects.
+        self._pending_para: tuple[str, str | None] | None = None
+        self._heading_stack: list[int] = []
         parts = [self._render_meta(meta)]
-        parts += [self._render_block(b) for b in blocks]
+        for b in blocks:
+            if self._pending_para is not None and b.get("t") != "Para":
+                parts.append(self._flush_pending_para())
+            parts.append(self._render_block(b))
+        if self._pending_para is not None:
+            parts.append(self._flush_pending_para())
         return "".join(p for p in parts if p)
+
+    def _flush_pending_para(self) -> str:
+        """Emit a stashed \\paragraph title that no body paragraph followed."""
+        title, label = self._pending_para
+        self._pending_para = None
+        if label:
+            return f":paragraph: {{:label: {label}}}\n  **{title}**\n\n"
+        return f"**{title}**\n\n"
+
+    def _heading_depth(self, level: int) -> int:
+        """Map a pandoc heading level to a contiguous RSM depth (no skips)."""
+        stack = self._heading_stack
+        while stack and stack[-1] >= level:
+            stack.pop()
+        stack.append(level)
+        return len(stack)
 
     # ── Cross-reference labels (bead rsm-ddx.4) ─────────────────────────────────
 
@@ -729,12 +762,20 @@ class PandocImporter:
     def _block_header(self, c: list) -> str:
         level, _attrs, inlines = c
         text = self._render_inlines(inlines)
-        prefix = "#" * level
         label = self._label_of.get(id(c))
+        if level >= 4:
+            self._pending_para = (_strip_trailing_colon(text), label)
+            return ""
+        # RSM reserves a single leading # for the manuscript title; its sections
+        # start at ## (section), ### (subsection), #### (subsubsection). So a
+        # pandoc \section (level 1) maps to ##, one deeper than its nesting depth.
+        prefix = "#" * (self._heading_depth(level) + 1)
         meta = f"\n  {{:label: {label}}}" if label else ""
         return f"{prefix} {text}{meta}\n\n"
 
     def _block_para(self, c: list) -> str:
+        titled = self._pending_para
+        self._pending_para = None
         # DisplayMath inside Para inlines must be flushed as a block construct.
         result: list[str] = []
         pending: list[dict] = []
@@ -761,7 +802,17 @@ class PandocImporter:
             text = self._render_inlines(pending)
             if text:
                 result.append(f"{text}\n\n")
-        return "".join(result)
+        body = "".join(result)
+        if titled is None:
+            return body
+        title, label = titled
+        meta = f"{{:title: {title}}}" if not label else (
+            f"{{:title: {title}, :label: {label}}}"
+        )
+        indented = "\n".join(
+            f"  {line}" if line else line for line in body.rstrip().splitlines()
+        )
+        return f":paragraph: {meta}\n{indented}\n\n"
 
     def _block_plain(self, c: list) -> str:
         # Pandoc uses Plain (no trailing newline) in list items and table cells.
@@ -846,7 +897,16 @@ class PandocImporter:
                     self._render_block(b).strip() for b in cap_blocks
                 )
         caption_line = f"\n  :caption: {caption_text}" if caption_text else ""
-        return f":figure: {{:path: {path}}}{caption_line}\n::\n\n"
+        # An empty {:path: } fails to parse. When pandoc gave no usable path
+        # (missing or a non-web format), degrade to a caption-only figure, or
+        # drop it entirely if there is nothing to show.
+        if not path:
+            if not caption_text:
+                return ""
+            return f":figure:{caption_line}\n::\n\n"
+        # A figure's :path: lives in a multi-line block meta, not an inline
+        # {:path: ...}; the inline form does not parse as a block.
+        return f":figure: {{\n  :path: {path}\n}}{caption_line}\n::\n\n"
 
     def _block_table(self, c: list) -> str:
         # pandoc Table: [attr, caption, colspecs, head, [bodies], foot].
@@ -933,8 +993,13 @@ class PandocImporter:
 
     def _inline_math(self, c: list) -> str:
         math_type, src = c
-        # DisplayMath inside inlines is handled by _block_para; this is a fallback.
-        return f":math: {src} ::"
+        is_display = isinstance(math_type, dict) and math_type.get("t") == "DisplayMath"
+        # $...$ sits directly against adjacent text; the verbose :math: ... ::
+        # form cannot. Fall back to it for display math (handled by _block_para
+        # normally) or when the TeX holds a $ that would close the delimiter.
+        if is_display or "$" in src:
+            return f":math: {src} ::"
+        return f"${src}$"
 
     def _inline_link(self, c: list) -> str:
         attrs, _inlines, target = c
@@ -949,7 +1014,9 @@ class PandocImporter:
     def _inline_image(self, c: list) -> str:
         _attrs, _alt, target = c
         path = target[0]
-        return f":figure: {{:path: {path}}}\n::"
+        if not path:
+            return ""
+        return f":figure: {{\n  :path: {path}\n}}\n::"
 
     def _inline_cite(self, c: list) -> str:
         citations, _fallback = c

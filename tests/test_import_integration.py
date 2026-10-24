@@ -156,3 +156,90 @@ def test_import_project_crossrefs(tmp_path):
     assert 'id="sec-1"' in html
     assert 'id="eqn-1"' in html
     assert 'id="thm-1"' in html
+
+
+_PARAGRAPH = r"""\documentclass{article}
+\begin{document}
+\section{Model Architecture}
+\subsection{Encoder and Decoder Stacks}
+\paragraph{Encoder:} The encoder is composed of a stack of six identical layers.
+\end{document}
+"""
+
+_SKIP = r"""\documentclass{article}
+\begin{document}
+\section{Results}
+\subsubsection{Machine Translation} We report BLEU scores here.
+\end{document}
+"""
+
+
+def test_import_paragraph_becomes_titled_paragraph(tmp_path):
+    import rsm
+
+    (tmp_path / "main.tex").write_text(_PARAGRAPH, encoding="utf-8")
+    out = app.import_project(str(tmp_path))
+    # A LaTeX \paragraph is a titled paragraph in RSM, not a level-4 heading.
+    assert ":paragraph: {:title: Encoder" in out
+    assert "#### " not in out
+    html = rsm.render(out, handrails=False, source_offsets=False)
+    assert 'class="error"' not in html, out
+    assert "six identical layers" in html
+
+
+def test_import_skipped_heading_levels_renumbered(tmp_path):
+    import rsm
+
+    # A subsubsection directly under a section skips the subsection level, which
+    # RSM's strict nesting rejects unless the importer renumbers.
+    (tmp_path / "main.tex").write_text(_SKIP, encoding="utf-8")
+    out = app.import_project(str(tmp_path))
+    # A section plus a subsubsection renumbers to contiguous ## then ###, never
+    # a #### that skips the subsection level.
+    assert "#### " not in out
+    html = rsm.render(out, handrails=False, source_offsets=False)
+    assert 'class="error"' not in html, out
+
+
+_GLUED_MATH = r"""\documentclass{article}
+\begin{document}
+The model AOP$_1$ performs well in our tests.
+\end{document}
+"""
+
+
+def test_import_inline_math_glues_to_text(tmp_path):
+    import rsm
+
+    (tmp_path / "main.tex").write_text(_GLUED_MATH, encoding="utf-8")
+    out = app.import_project(str(tmp_path))
+    # Inline math uses $...$, which can sit directly against text; the verbose
+    # :math: form cannot, so "AOP$_1$" would otherwise fail to parse.
+    assert "$_1$" in out
+    assert ":math: _1 ::" not in out
+    html = rsm.render(out, handrails=False, source_offsets=False)
+    assert 'class="error"' not in html, out
+
+
+_TITLED = r"""\documentclass{article}
+\title{A Paper}
+\begin{document}
+\maketitle
+\section{Introduction} First section text.
+\section{Background} Second section text.
+\end{document}
+"""
+
+
+def test_import_title_and_sibling_sections(tmp_path):
+    import rsm
+
+    (tmp_path / "main.tex").write_text(_TITLED, encoding="utf-8")
+    out = app.import_project(str(tmp_path))
+    # The paper title is the single leading #; real sections start at ##, so two
+    # sibling \section commands must not collide with the title.
+    assert out.lstrip().startswith("# A Paper")
+    assert "## Introduction" in out
+    assert "## Background" in out
+    html = rsm.render(out, handrails=False, source_offsets=False)
+    assert 'class="error"' not in html, out

@@ -848,9 +848,39 @@ class PandocImporter:
         caption_line = f"\n  :caption: {caption_text}" if caption_text else ""
         return f":figure: {{:path: {path}}}{caption_line}\n::\n\n"
 
-    def _block_table(self, _c: list) -> str:
-        logger.warning("PandocImporter: table import not yet implemented")
-        return ""
+    def _block_table(self, c: list) -> str:
+        # pandoc Table: [attr, caption, colspecs, head, [bodies], foot].
+        if len(c) < 5:
+            logger.warning("PandocImporter: unexpected Table shape, skipping")
+            return ""
+        _attr, _caption, _colspecs, head, bodies = c[0], c[1], c[2], c[3], c[4]
+        head_rows = head[1] if isinstance(head, list) and len(head) >= 2 else []
+        body_rows: list = []
+        for body in bodies:
+            # TableBody: [attr, rowHeadColumns, intermediate_head_rows, rows].
+            if isinstance(body, list) and len(body) >= 4:
+                body_rows.extend(body[2])
+                body_rows.extend(body[3])
+        parts = [":table:\n\n"]
+        if head_rows:
+            parts.append("  :thead:\n\n" + self._table_rows(head_rows) + "  ::\n\n")
+        if body_rows:
+            parts.append("  :tbody:\n\n" + self._table_rows(body_rows) + "  ::\n\n")
+        parts.append("::\n\n")
+        return "".join(parts)
+
+    def _table_rows(self, rows: list) -> str:
+        out = []
+        for row in rows:
+            # Row: [attr, [Cell]]; Cell: [attr, align, rowspan, colspan, [blocks]].
+            cells = row[1] if isinstance(row, list) and len(row) >= 2 else []
+            tds = []
+            for cell in cells:
+                blocks = cell[4] if isinstance(cell, list) and len(cell) >= 5 else []
+                content = "".join(self._render_block(b).strip() for b in blocks)
+                tds.append(f":td:{content}::")
+            out.append("    :tr: " + " ".join(tds) + " ::\n\n")
+        return "".join(out)
 
     def _block_lineblock(self, c: list) -> str:
         lines = [self._render_inlines(line) for line in c]

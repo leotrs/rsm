@@ -15,6 +15,9 @@ RestartSec=5
 ExecStartPre=/bin/sh -c 'docker network inspect rsmify-net >/dev/null 2>&1 || docker network create --subnet 172.30.0.0/24 rsmify-net'
 ExecStartPre=/bin/sh -c 'iptables -C DOCKER-USER -s 172.30.0.0/24 -d 100.64.0.0/10 -j DROP 2>/dev/null || iptables -I DOCKER-USER -s 172.30.0.0/24 -d 100.64.0.0/10 -j DROP'
 ExecStartPre=-/usr/bin/docker rm -f rsmify
+# Pull the published image so a restart alone updates; the rsmify-update cron
+# (see rsmify-update.sh) restarts only when the image actually changed.
+ExecStartPre=-/usr/bin/docker pull ghcr.io/aris-pub/rsmify:latest
 ExecStart=/usr/bin/docker run --rm --name rsmify \
   --network rsmify-net \
   --dns 1.1.1.1 --dns 9.9.9.9 \
@@ -25,7 +28,7 @@ ExecStart=/usr/bin/docker run --rm --name rsmify \
   --security-opt no-new-privileges \
   --memory 768m --cpus 1.0 \
   --publish 127.0.0.1:8700:8000 \
-  rsmify:local
+  ghcr.io/aris-pub/rsmify:latest
 ExecStop=/usr/bin/docker stop rsmify
 
 [Install]

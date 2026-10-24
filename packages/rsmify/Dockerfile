@@ -14,8 +14,14 @@ FROM python:3.13-slim
 # build-essential compiles the tree-sitter-rsm native parser during uv sync;
 # pandoc is the importer; curl is only for the container healthcheck.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        build-essential pandoc curl ca-certificates \
+        build-essential pandoc curl ca-certificates ruby ruby-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# AnyStyle structures bibliography references (bead rsm-ddx.5.8). It is a Ruby
+# gem with a native extension (wapiti), compiled here with build-essential, and
+# installed to a system path so the non-root runtime user can run it. If it is
+# ever missing, the importer falls back to verbatim references.
+RUN gem install --no-document anystyle-cli
 
 # Pinned uv, copied from the official image.
 COPY --from=ghcr.io/astral-sh/uv:0.9.9 /uv /usr/local/bin/uv

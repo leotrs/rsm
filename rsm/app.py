@@ -844,3 +844,37 @@ def pandoc_import(
         log_time=log_time,
         log_lineno=log_lineno,
     ).run()
+
+
+def import_project(
+    path: str,
+    main: str | None = None,
+    from_format: str = "latex",
+    loglevel: int = RSMApp.default_log_level,
+    log_format: str = "rsm",
+    log_time: bool = True,
+    log_lineno: bool = True,
+) -> str:
+    """Import a LaTeX project (a .tex file, folder, or archive) to RSM source.
+
+    Resolves the project to flattened source, converts it with pandoc, and
+    appends the bibliography recovered from the project. This is the single path
+    the `rsm import` CLI and the rsmify service both use, so neither duplicates
+    the importer.
+    """
+    from rsm.bibemit import references_block
+    from rsm.importer import resolve_project
+
+    text, root = resolve_project(path, main)
+    rsm_source = pandoc_import(
+        source=text,
+        from_format=from_format,
+        loglevel=loglevel,
+        log_format=log_format,
+        log_time=log_time,
+        log_lineno=log_lineno,
+    )
+    block = references_block(text, root)
+    if block:
+        rsm_source = f"{rsm_source or ''}\n{block}"
+    return rsm_source or ""

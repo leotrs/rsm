@@ -81,4 +81,4 @@ def test_fetch_refuses_offsite_redirect(monkeypatch):
 
     monkeypatch.setattr(arxiv.httpx, "Client", _Client)
     with pytest.raises(arxiv.FetchError):
-        arxiv.fetch_and_flatten(ArxivId("2401.12345", 1))
+        arxiv.fetch(ArxivId("2401.12345", 1))

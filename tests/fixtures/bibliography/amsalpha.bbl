@@ -1,0 +1,33 @@
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{VSP17}
+
+\bibitem[Ben13]{bengio2013}
+Yoshua Bengio, \emph{Deep learning of representations}, Handbook on Neural
+  Information Processing, Springer, 2013.
+
+\bibitem[Doe20]{preprint2020}
+Jane Doe, \emph{A preprint without a venue}, arXiv:2001.00001, 2020.
+
+\bibitem[Knu97]{knuth1997}
+Donald~E. Knuth, \emph{The art of computer programming, volume 1: Fundamental
+  algorithms}, 3 ed., Addison-Wesley, 1997.
+
+\bibitem[Sha48]{shannon1948}
+Claude~E. Shannon, \emph{A mathematical theory of communication}, Bell System
+  Technical Journal \textbf{27} (1948), no.~3, 379--423.
+
+\bibitem[Tur38]{turing1938}
+Alan~M. Turing, \emph{Systems of logic based on ordinals}, Ph.D. thesis,
+  Princeton University, 1938.
+
+\bibitem[VSP17]{vaswani2017}
+Ashish Vaswani, Noam Shazeer, and Niki Parmar, \emph{Attention is all you
+  need}, Advances in Neural Information Processing Systems, 2017.
+
+\end{thebibliography}

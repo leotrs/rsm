@@ -1738,6 +1738,7 @@ class Bibitem(Node):
         "school",
         "editor",
         "url",
+        "verbatim",
     }
 
     def __init__(
@@ -1745,10 +1746,10 @@ class Bibitem(Node):
         kind: str = "",
         author: str = "",
         title: str = "",
-        year: int = -1,
+        year: int | None = None,
         journal: str = "",
-        volume: int = -1,
-        number: int = -1,
+        volume: int | None = None,
+        number: int | None = None,
         publisher: str = "",
         doi: str = "",
         booktitle: str = "",
@@ -1759,6 +1760,7 @@ class Bibitem(Node):
         school: str = "",
         editor: str = "",
         url: str = "",
+        verbatim: str = "",
         **kwargs: Any,
     ):
         super().__init__(**kwargs)
@@ -1779,6 +1781,7 @@ class Bibitem(Node):
         self.school = school
         self.editor = editor
         self.url = url
+        self.verbatim = verbatim
         self.backlinks = []
 
 

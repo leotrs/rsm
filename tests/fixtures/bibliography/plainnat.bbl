@@ -1,0 +1,40 @@
+\begin{thebibliography}{6}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bengio(2013)]{bengio2013}
+Yoshua Bengio.
+\newblock Deep learning of representations.
+\newblock In \emph{Handbook on Neural Information Processing}. Springer, 2013.
+
+\bibitem[Doe(2020)]{preprint2020}
+Jane Doe.
+\newblock A preprint without a venue.
+\newblock arXiv:2001.00001, 2020.
+
+\bibitem[Knuth(1997)]{knuth1997}
+Donald~E. Knuth.
+\newblock \emph{The Art of Computer Programming, Volume 1: Fundamental
+  Algorithms}.
+\newblock Addison-Wesley, 3 edition, 1997.
+
+\bibitem[Shannon(1948)]{shannon1948}
+Claude~E. Shannon.
+\newblock A mathematical theory of communication.
+\newblock \emph{Bell System Technical Journal}, 27\penalty0 (3):\penalty0
+  379--423, 1948.
+
+\bibitem[Turing(1938)]{turing1938}
+Alan~M. Turing.
+\newblock \emph{Systems of Logic Based on Ordinals}.
+\newblock PhD thesis, Princeton University, 1938.
+
+\bibitem[Vaswani et~al.(2017)Vaswani, Shazeer, and Parmar]{vaswani2017}
+Ashish Vaswani, Noam Shazeer, and Niki Parmar.
+\newblock Attention is all you need.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2017.
+
+\end{thebibliography}

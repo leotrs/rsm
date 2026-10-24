@@ -136,7 +136,19 @@ def _cmd_import(args: Namespace) -> int:
     if args.string:
         kwargs["source"] = args.src
     else:
-        kwargs["path"] = args.src
+        import sys
+
+        from rsm.importer import ImporterError, is_archive, resolve_source
+
+        src = Path(args.src)
+        if src.is_dir() or is_archive(src) or args.frm == "latex":
+            try:
+                kwargs["source"] = resolve_source(src, main=args.main)
+            except ImporterError as exc:
+                print(f"import error: {exc}", file=sys.stderr)
+                return 1
+        else:
+            kwargs["path"] = args.src
     result = app.pandoc_import(**kwargs)
     if result:
         if args.output:
@@ -964,6 +976,11 @@ def main() -> int:
         help="input format (e.g. markdown, latex, docx)",
         default="markdown",
         metavar="FORMAT",
+    )
+    import_group.add_argument(
+        "--main",
+        help="main .tex file relative to the project, overrides auto-detection",
+        default=None,
     )
     import_out = import_parser.add_argument_group("output control")
     import_out.add_argument(

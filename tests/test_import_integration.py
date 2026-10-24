@@ -109,6 +109,35 @@ def test_import_project_emits_preamble_macros(tmp_path):
     assert "math-preamble" in html
 
 
+_TABLE = r"""\documentclass{article}
+\begin{document}
+\section{T}
+\begin{tabular}{ll}
+a & b \\
+c & d \\
+\end{tabular}
+\end{document}
+"""
+
+
+def test_import_project_table(tmp_path):
+    import re
+
+    import rsm
+
+    (tmp_path / "main.tex").write_text(_TABLE, encoding="utf-8")
+    out = app.import_project(str(tmp_path))
+    assert ":table:" in out
+    assert ":td:a::" in out and ":td:d::" in out
+    html = rsm.render(out, handrails=False, source_offsets=False)
+    assert "<table" in html
+    cells = [
+        re.sub("<[^>]+>", "", x).strip()
+        for x in re.findall(r"<td[^>]*>(.*?)</td>", html, re.S)
+    ]
+    assert cells == ["a", "b", "c", "d"]
+
+
 def test_import_project_crossrefs(tmp_path):
     import rsm
 
